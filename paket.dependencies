@@ -81,7 +81,7 @@ group NetcoreBuild
     nuget Fake.DotNet.Testing.XUnit2 prerelease
     nuget Fake.DotNet.Testing.NUnit prerelease
     nuget Fake.Windows.Chocolatey prerelease
-    nuget Mono.Cecil 0.10.0-beta4
+    nuget Mono.Cecil 0.10.0-beta5
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
@@ -97,7 +97,7 @@ group netcore
     nuget NETStandard.Library 1.6.1 framework: netstandard1.6, netcoreapp1.0
     nuget Argu
     nuget Paket.Core 5.0.0-alpha002 prerelease
-    nuget Mono.Cecil 0.10.0-beta4 beta
+    nuget Mono.Cecil 0.10.0-beta5 beta
 
     nuget System.Diagnostics.FileVersionInfo
     nuget System.Diagnostics.Process

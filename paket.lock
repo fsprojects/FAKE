@@ -61,7 +61,7 @@ NUGET
       System.Text.Encoding.Extensions (>= 4.3) - framework: >= netstandard16
       System.Threading (>= 4.3) - framework: >= netstandard16
       System.Threading.Tasks (>= 4.3) - framework: >= netstandard16
-    FSharp.Compiler.Tools (4.1.5) - framework: >= netstandard16
+    FSharp.Compiler.Tools (4.1.15) - framework: >= netstandard16
     FSharp.Core (4.1.12) - redirects: force
       System.Collections (>= 4.0.11) - framework: >= netstandard16
       System.Console (>= 4.0) - framework: >= netstandard16
@@ -87,8 +87,8 @@ NUGET
       System.Threading.ThreadPool (>= 4.0.10) - framework: >= netstandard16
       System.Threading.Timer (>= 4.0.1) - framework: >= netstandard16
       System.ValueTuple (>= 4.3) - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
-    FSharp.NET.Sdk (1.0.2) - framework: >= netstandard16
-      FSharp.Compiler.Tools (>= 4.1.1) - framework: >= net40, >= netstandard13
+    FSharp.NET.Sdk (1.0.3) - framework: >= netstandard16
+      FSharp.Compiler.Tools (>= 4.1.15) - framework: >= net40, >= netstandard13
     HashLib (2.0.1)
     jQuery (3.1.1)
     Knockout (0.0.1)
@@ -260,7 +260,7 @@ NUGET
       System.Runtime.Serialization.Formatters (>= 4.3) - framework: >= netstandard13
       System.Runtime.Serialization.Primitives (>= 4.3) - framework: netstandard10, >= netstandard13
       System.Xml.XmlDocument (>= 4.3) - framework: >= netstandard13
-    NLog (4.4.6)
+    NLog (4.4.7)
     NuGet.CommandLine (3.5)
     NuGet.Core (2.14)
       Microsoft.Web.Xdt (>= 2.1)
@@ -282,10 +282,10 @@ NUGET
     NUnit.Extension.VSProjectLoader (3.5)
     Octokit (0.24)
       Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40-full
-    Paket.Core (5.0.0-alpha001)
+    Paket.Core (5.0.0-alpha005)
       Chessie (>= 0.6)
       FSharp.Core  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
-      FSharp.NET.Sdk (>= 1.0.2) - framework: >= netstandard16
+      FSharp.NET.Sdk (>= 1.0.3) - framework: >= netstandard16
       Mono.Cecil (>= 0.10.0-beta5)
       Newtonsoft.Json  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
       Newtonsoft.Json (>= 10.0.2) - framework: >= netstandard16
@@ -1067,7 +1067,7 @@ GROUP Build
 CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
-    FAKE (4.58.6)
+    FAKE (4.60)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Formatting (2.14.4)
       FSharp.Compiler.Service (2.0.0.6)
@@ -1127,7 +1127,7 @@ NUGET
       System.Text.Encoding.Extensions (>= 4.3) - framework: >= netstandard16
       System.Threading (>= 4.3) - framework: >= netstandard16
       System.Threading.Tasks (>= 4.3) - framework: >= netstandard16
-    FSharp.Compiler.Tools (4.1.5) - framework: >= net40, >= netstandard13
+    FSharp.Compiler.Tools (4.1.15) - framework: >= net40, >= netstandard13
     FSharp.Core (4.1.12)
       System.Collections (>= 4.0.11) - framework: >= netstandard16
       System.Console (>= 4.0) - framework: >= netstandard16
@@ -1153,8 +1153,8 @@ NUGET
       System.Threading.ThreadPool (>= 4.0.10) - framework: >= netstandard16
       System.Threading.Timer (>= 4.0.1) - framework: >= netstandard16
       System.ValueTuple (>= 4.3) - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
-    FSharp.NET.Sdk (1.0.2)
-      FSharp.Compiler.Tools (>= 4.1.1) - framework: >= net40, >= netstandard13
+    FSharp.NET.Sdk (1.0.3)
+      FSharp.Compiler.Tools (>= 4.1.15) - framework: >= net40, >= netstandard13
     Libuv (1.9.1) - framework: netcore10
     Microsoft.CodeAnalysis.Common (2.1) - framework: netcore10
     Microsoft.CodeAnalysis.CSharp (2.1) - framework: netcore10
@@ -1259,7 +1259,7 @@ NUGET
       System.Runtime.Extensions (>= 4.3) - framework: >= netstandard13
       System.Runtime.Handles (>= 4.3) - framework: >= netstandard13
       System.Runtime.InteropServices (>= 4.3) - framework: >= netstandard13
-    Mono.Cecil (0.10.0-beta4)
+    Mono.Cecil (0.10.0-beta5)
       System.Collections (>= 4.0.11) - framework: >= netstandard13
       System.IO.FileSystem (>= 4.0.1) - framework: >= netstandard13
       System.IO.FileSystem.Primitives (>= 4.0.1) - framework: >= netstandard13
@@ -1320,6 +1320,21 @@ NUGET
       System.Runtime.Serialization.Formatters (>= 4.3) - framework: >= netstandard13
       System.Runtime.Serialization.Primitives (>= 4.3) - framework: netstandard10, >= netstandard13
       System.Xml.XmlDocument (>= 4.3) - framework: >= netstandard13
+    Paket.Core (5.0.0-alpha002)
+      Chessie (>= 0.6)
+      FSharp.Core  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
+      FSharp.NET.Sdk (>= 1.0.2) - framework: >= netstandard16
+      Mono.Cecil (>= 0.10.0-beta5)
+      Newtonsoft.Json  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
+      Newtonsoft.Json (>= 10.0.2) - framework: >= netstandard16
+      System.Diagnostics.FileVersionInfo (>= 4.3) - framework: >= netstandard16
+      System.Diagnostics.Process (>= 4.3) - framework: >= netstandard16
+      System.Diagnostics.TraceSource (>= 4.3) - framework: >= netstandard16
+      System.Security.Cryptography.Algorithms (>= 4.3) - framework: >= netstandard16
+      System.Security.Cryptography.ProtectedData (>= 4.3) - framework: >= netstandard16
+      System.Xml.XDocument (>= 4.3) - framework: >= netstandard16
+      System.Xml.XPath.XDocument (>= 4.3) - framework: >= netstandard16
+      System.Xml.XPath.XmlDocument (>= 4.3) - framework: >= netstandard16
     runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3) - framework: >= net45, >= netstandard13, netstandard14
     runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3) - framework: >= net45, >= netstandard13, netstandard14
     runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3) - framework: >= net45, >= netstandard13, netstandard14
@@ -1936,105 +1951,89 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3) - framework: >= netstandard13
       System.Xml.XmlDocument (>= 4.3) - framework: >= net46, >= netstandard13
       System.Xml.XPath (>= 4.3) - framework: >= net46, >= netstandard13
-  remote: https://ci.appveyor.com/nuget/paket
-    Paket.Core (5.0.0-alpha002)
-      Chessie (>= 0.6)
-      FSharp.Core  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
-      FSharp.NET.Sdk (>= 1.0.2) - framework: >= netstandard16
-      Mono.Cecil (>= 0.10.0-beta4)
-      Newtonsoft.Json  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
-      Newtonsoft.Json (>= 10.0.1) - framework: >= netstandard16
-      System.Diagnostics.FileVersionInfo (>= 4.3) - framework: >= netstandard16
-      System.Diagnostics.Process (>= 4.3) - framework: >= netstandard16
-      System.Diagnostics.TraceSource (>= 4.3) - framework: >= netstandard16
-      System.Security.Cryptography.Algorithms (>= 4.3) - framework: >= netstandard16
-      System.Security.Cryptography.ProtectedData (>= 4.3) - framework: >= netstandard16
-      System.Xml.XDocument (>= 4.3) - framework: >= netstandard16
-      System.Xml.XPath.XDocument (>= 4.3) - framework: >= netstandard16
-      System.Xml.XPath.XmlDocument (>= 4.3) - framework: >= netstandard16
 
 GROUP NetcoreBuild
 NUGET
   remote: https://ci.appveyor.com/nuget/fake
-    Fake.Core.BuildServer (5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.BuildServer (5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Context (5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Context (5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Environment (5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Environment (5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Globbing (5.0.0-alpha003)
+    Fake.Core.Globbing (5.0.0-alpha004)
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Process (5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Process (5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
       System.Diagnostics.Process (>= 4.3) - framework: >= net463, >= netstandard16
-    Fake.Core.ReleaseNotes (5.0.0-alpha003)
-      Fake.Core.SemVer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.ReleaseNotes (5.0.0-alpha004)
+      Fake.Core.SemVer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.SemVer (5.0.0-alpha003)
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.SemVer (5.0.0-alpha004)
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.String (5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.String (5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Targets (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Targets (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Tasks (5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Tasks (5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Tracing (5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Tracing (5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Core.Xml (5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Core.Xml (5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
@@ -2043,138 +2042,138 @@ NUGET
       System.Xml.XPath (>= 4.3) - framework: >= net463, >= netstandard16
       System.Xml.XPath.XDocument (>= 4.3) - framework: >= net463, >= netstandard16
       System.Xml.XPath.XmlDocument (>= 4.3) - framework: >= net463, >= netstandard16
-    Fake.DotNet.AssemblyInfoFile (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.AssemblyInfoFile (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.DotNet.Cli (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.Cli (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.DotNet.MsBuild (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.MsBuild (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.DotNet.NuGet (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.SemVer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tasks (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Xml (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.NuGet (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.SemVer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tasks (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Xml (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
       Newtonsoft.Json (>= 10.0.2) - framework: >= net463, >= netstandard16
       System.Net.Http (>= 4.3.1) - framework: >= net463, >= netstandard16
-    Fake.DotNet.Testing.MSpec (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Testing.Common (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.Testing.MSpec (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Testing.Common (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.DotNet.Testing.NUnit (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Testing.Common (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.Testing.NUnit (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Testing.Common (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
       System.Linq.Parallel (>= 4.3) - framework: >= net463, >= netstandard16
       System.Xml.XDocument (>= 4.3) - framework: >= net463, >= netstandard16
-    Fake.DotNet.Testing.XUnit2 (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Testing.Common (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.DotNet.Testing.XUnit2 (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Testing.Common (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.IO.FileSystem (5.0.0-alpha003)
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.IO.FileSystem (5.0.0-alpha004)
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
       System.Diagnostics.FileVersionInfo (>= 4.3) - framework: >= net463, >= netstandard16
-    Fake.IO.Zip (5.0.0-alpha003)
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.IO.Zip (5.0.0-alpha004)
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
       System.IO.Compression (>= 4.3) - framework: >= net463, >= netstandard16
       System.IO.Compression.ZipFile (>= 4.3) - framework: >= net463, >= netstandard16
       System.Runtime.Loader (>= 4.3) - framework: >= net463, >= netstandard16
-    Fake.Testing.Common (5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Testing.Common (5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
-    Fake.Windows.Chocolatey (5.0.0-alpha003)
-      Fake.Core.BuildServer (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Context (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Environment (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Globbing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Process (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.String (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.Core.Tracing (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.DotNet.NuGet (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
-      Fake.IO.FileSystem (>= 5.0.0-alpha003) - framework: >= net463, >= netstandard16
+    Fake.Windows.Chocolatey (5.0.0-alpha004)
+      Fake.Core.BuildServer (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Context (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Environment (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Globbing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Process (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.String (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.Core.Tracing (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.DotNet.NuGet (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
+      Fake.IO.FileSystem (>= 5.0.0-alpha004) - framework: >= net463, >= netstandard16
       FSharp.Core (>= 4.1.12) - framework: >= net463, >= netstandard16
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= net463, >= netstandard16
       NETStandard.Library (>= 1.6) - framework: >= net463, >= netstandard16
   remote: https://www.nuget.org/api/v2
-    FSharp.Compiler.Tools (4.1.5) - framework: >= net463, >= netstandard16
+    FSharp.Compiler.Tools (4.1.15) - framework: >= net463, >= netstandard16
     FSharp.Core (4.1.12) - framework: >= net463, >= netstandard16
       System.Collections (>= 4.0.11) - framework: >= netstandard16
       System.Console (>= 4.0) - framework: >= netstandard16
@@ -2200,8 +2199,8 @@ NUGET
       System.Threading.ThreadPool (>= 4.0.10) - framework: >= netstandard16
       System.Threading.Timer (>= 4.0.1) - framework: >= netstandard16
       System.ValueTuple (>= 4.3) - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
-    FSharp.NET.Sdk (1.0.2) - framework: >= net463, >= netstandard16
-      FSharp.Compiler.Tools (>= 4.1.1) - framework: >= net40, >= netstandard13
+    FSharp.NET.Sdk (1.0.3) - framework: >= net463, >= netstandard16
+      FSharp.Compiler.Tools (>= 4.1.15) - framework: >= net40, >= netstandard13
     Microsoft.CSharp (4.3) - framework: >= net463, >= netstandard16
       System.Collections (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Diagnostics.Debug (>= 4.3) - framework: dnxcore50, >= netstandard13
@@ -2234,7 +2233,7 @@ NUGET
       System.Runtime.Extensions (>= 4.3) - framework: >= netstandard13
       System.Runtime.Handles (>= 4.3) - framework: >= netstandard13
       System.Runtime.InteropServices (>= 4.3) - framework: >= netstandard13
-    Mono.Cecil (0.10.0-beta4)
+    Mono.Cecil (0.10.0-beta5)
       System.Collections (>= 4.0.11) - framework: >= netstandard13
       System.IO.FileSystem (>= 4.0.1) - framework: >= netstandard13
       System.IO.FileSystem.Primitives (>= 4.0.1) - framework: >= netstandard13
