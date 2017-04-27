@@ -401,7 +401,12 @@ let NuGetPack setParams nuspecOrProjectFile =
 let NuGetPublish setParams = 
     let parameters = NuGetDefaults() |> setParams
     use __ = traceStartTaskUsing "NuGet-Push" (packageFileName parameters)
-    publish parameters
+    try
+        publish parameters
+    with exn ->
+        if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message
+        |> replaceAccessKey parameters.AccessKey
+        |> failwith
     
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Creates a new NuGet package, and optionally publishes it.
