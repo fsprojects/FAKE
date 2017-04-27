@@ -1,4 +1,5 @@
-#### 4.59.3 - 27.04.2017
+#### 4.60.0 - 27.04.2017
+* Add support for NUnit3 --params parameter - https://github.com/fsharp/FAKE/pull/1532
 * BUGFIX: Disable caching for now - mono 5 bug - https://github.com/fsharp/FAKE/pull/1535, https://github.com/fsharp/FAKE/pull/1536
 
 #### 4.59.0 - 27.04.2017
