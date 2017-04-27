@@ -486,11 +486,26 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             traceFAKE "%O" strFsiErrorOutput
         // Cache in the error case as well.
         if useCache && not cacheInfo.IsValid then
-            try
-                handleCaching printDetails session fsiErrorOutput cacheDir cacheInfo
-            with e ->
-                // See https://github.com/fsharp/FAKE/pull/1534
-                traceFAKE "Error in FAKE-Caching (might be a bug in the runtime, use the no-cache option to get rid of this warning): %O" e
+            // See https://github.com/fsharp/FAKE/pull/1534
+            let doCaching =
+                match monoVersion with
+                | None -> true
+                | Some (display, version) ->
+                    match version with
+                    | Some v ->
+                        if v.Major = 5 && v.Minor = 0 && v.Build = 0 then
+                            traceFAKE "We don't try to cache, see https://github.com/fsharp/FAKE/pull/1534"
+                            false
+                        else true
+                    | None ->
+                        traceFAKE "Couldn't extract mono version from '%s', please report this as issue" display
+                        true
+            if doCaching then
+                try
+                    handleCaching printDetails session fsiErrorOutput cacheDir cacheInfo
+                with e ->
+                    // See https://github.com/fsharp/FAKE/pull/1534
+                    traceFAKE "Error in FAKE-Caching (might be a bug in the runtime, use the no-cache option to get rid of this warning): %O" e
 
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
 let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) env onErrMsg onOutMsg useCache =
