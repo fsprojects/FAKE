@@ -1,4 +1,4 @@
-#### 4.59.0-alpha002 - 27.04.2017
+#### 4.59.0 - 27.04.2017
 * BUGFIX: Upgraded FSharp.Core and FSharp.Compiler.Service to support mono 5 - https://github.com/fsharp/FAKE/pull/1534
 * BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
 * Added installer for dotnet SDK
