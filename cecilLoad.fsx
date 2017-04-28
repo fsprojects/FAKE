@@ -156,4 +156,4 @@ Target "RenameFSharpCompilerService" (fun _ ->
       asem.Write(dir</>"FAKE.FSharp.Compiler.Service.dll")
 )
 
-echo "testcecilLoad"
+printfn "testcecilLoad"
