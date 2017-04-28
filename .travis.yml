@@ -28,7 +28,8 @@ before install:
 
 
 script: 
-  - $FAKE run build.fsx
+#  - $FAKE run build.fsx
+  - ./build.sh
 
 branches:
   except:
