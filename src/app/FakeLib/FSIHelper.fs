@@ -457,6 +457,7 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
 
     // Contains warnings and errors about the build script.
     if printDetails then
+        Debug.AutoFlush <- true
         let logToConsole = true
         let logToFile = true
         try
@@ -474,6 +475,7 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
                 source.Listeners.Add listener |> ignore)
             listener.Filter <- new EventTypeFilter(levels)
             listener.TraceOutputOptions <- traceOptions
+            Debug.Listeners.Add(listener) |> ignore
 
           if logToConsole then
             new ConsoleTraceListener()
