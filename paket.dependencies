@@ -1,6 +1,7 @@
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
+source https://ci.appveyor.com/nuget/customnuspecs
 source http://nuget.org/api/v2
 
 nuget FSharp.Core redirects: force
@@ -44,7 +45,7 @@ nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
-nuget FSharp.Compiler.Service content: none
+nuget FSharp.Compiler.Service 12.0.6-alpha001 content: none
 nuget Octokit
 nuget Microsoft.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
@@ -86,8 +87,9 @@ group NetcoreBuild
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
+    source https://ci.appveyor.com/nuget/customnuspecs
 
-    nuget FSharp.Compiler.Service content: none, framework: netstandard1.6, netcoreapp1.0
+    nuget FSharp.Compiler.Service 12.0.6-alpha001 content: none, framework: netstandard1.6, netcoreapp1.0
     nuget Microsoft.DotNet.PlatformAbstractions
     nuget FSharp.Core ~> 4.1.2
     nuget FSharp.NET.Sdk ~> 1.0.2
