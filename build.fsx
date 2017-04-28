@@ -875,6 +875,7 @@ Target "StartDnc" DoNothing
 
 // Dependencies
 "Clean"
+    ==> "TestCompilerError"
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
@@ -883,7 +884,6 @@ Target "StartDnc" DoNothing
     //=?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
     ////==> "ILRepack"
     //=?> ("Test", not <| hasBuildParam "SkipTests")
-    ==> "TestCompilerError"
     =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
     //=?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
     //=?> ("CreateNuGet", not isLinux)
