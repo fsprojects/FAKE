@@ -378,7 +378,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
                 ExecProcess (fun info ->
                     info.FileName <- "nuget/dotnetcore/Fake.netcore/current/dotnet"
                     info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "nuget/dotnetcore/Fake.netcore/current/Fake.dll run %s --target %s" script target) timeout
+                    info.Arguments <- sprintf "nuget/dotnetcore/Fake.netcore/current/Fake.dll -v run %s --target %s" script target) timeout
             else
                 ExecProcess (fun info ->
                     info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.exe"

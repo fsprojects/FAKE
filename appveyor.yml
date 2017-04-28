@@ -3,6 +3,8 @@ install:
 build_script:
   - ps: Fake.exe -v run build.fsx
 #  - ps: .\build.cmd
+on_failure:
+  - appveyor PushArtifact FAKE.svclog
 test: off
 artifacts:
   - path: build

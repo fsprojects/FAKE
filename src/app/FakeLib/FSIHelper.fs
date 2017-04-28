@@ -456,6 +456,38 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             if printDetails then trace "Cache doesn't exist"
 
     // Contains warnings and errors about the build script.
+    if printDetails then
+        let logToConsole = true
+        let logToFile = true
+        try
+          let allTraceOptions =
+            TraceOptions.Callstack ||| TraceOptions.DateTime ||| TraceOptions.LogicalOperationStack |||
+            TraceOptions.ProcessId ||| TraceOptions.ThreadId ||| TraceOptions.Timestamp
+          let noTraceOptions = TraceOptions.None
+          let svclogFile = "FAKE.svclog"
+          System.Diagnostics.Trace.AutoFlush <- true
+
+          let setupListener traceOptions levels (listener:TraceListener) =
+            [ Yaaf.FSharp.Scripting.Log.source ]
+            |> Seq.iter (fun source ->
+                source.Switch.Level <- System.Diagnostics.SourceLevels.All
+                source.Listeners.Add listener |> ignore)
+            listener.Filter <- new EventTypeFilter(levels)
+            listener.TraceOutputOptions <- traceOptions
+
+          if logToConsole then
+            new ConsoleTraceListener()
+            |> setupListener noTraceOptions System.Diagnostics.SourceLevels.Verbose
+
+          if logToFile then
+            if System.IO.File.Exists svclogFile then System.IO.File.Delete svclogFile
+            new XmlWriterTraceListener(svclogFile)
+            |> setupListener allTraceOptions System.Diagnostics.SourceLevels.All
+
+          // Test that everything works
+          Yaaf.FSharp.Scripting.Log.infof "Yaaf.FSharp.Scripting Logging setup!"
+        with e ->
+          printfn "Yaaf.FSharp.Scripting Logging setup failed: %A" e
     let fsiErrorOutput = new System.Text.StringBuilder()
     let session =
       try ScriptHost.Create
