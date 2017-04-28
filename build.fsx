@@ -862,14 +862,14 @@ Target "StartDnc" DoNothing
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "DotnetPackage"
-    ==> "DotnetCoreCreateZipPackages"
-    =?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
-    //==> "ILRepack"
-    =?> ("Test", not <| hasBuildParam "SkipTests")
+    //==> "DotnetPackage"
+    //==> "DotnetCoreCreateZipPackages"
+    //=?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
+    ////==> "ILRepack"
+    //=?> ("Test", not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
-    =?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
-    =?> ("CreateNuGet", not isLinux)
+    //=?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
+    //=?> ("CreateNuGet", not isLinux)
     ==> "Default"
     ==> "EnsureTestsRun"
     ==> "CopyLicense"
