@@ -577,6 +577,7 @@ module Fake.Windows.Choco
         | Zip -> "zip"
         | Exe -> "exe"
         | Msi -> "msi"
+        | SelfContained -> failwithf "this should never be used (this type is from us -> to embedd everything) and not known by the choco helpers."
         //match getUnionFields(x, typeof<ChocolateyInstallerType>) with
         //| case, _ -> case.Name.ToLower()
 
