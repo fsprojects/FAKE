@@ -466,8 +466,7 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
     let setBuildParam project projectParams =
         { projectParams with 
             Targets = targets |> split ';' |> List.filter ((<>) "")
-            Properties = projectParams.Properties @ properties project
-            MaxCpuCount = Some ( Some (EnvironmentHelper.getMachineEnvironment().ProcessorCount)) }
+            Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
