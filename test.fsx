@@ -6,9 +6,7 @@ open Fake
 Target "Clean" (fun _ ->
     !! "src/*/*/bin"
     ++ "src/*/*/obj"
-    |> CleanDirs
-
-    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
+    |> CleanDirs)
     
 let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = null)
 printfn "testcecilLoad"
