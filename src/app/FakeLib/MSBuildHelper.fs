@@ -77,14 +77,14 @@ let msBuildExe =
     let msbuildEnvironVar = EnvironmentHelper.environVarOrNone "MSBuild"
 
     match isUnix, EnvironmentHelper.monoVersion with
-    | true, Some(_, Some(version)) when version > monoVersionToUseMSBuildOn -> 
+    | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
         let sources = [
             msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
             msbuildEnvironVar |> Option.bind which
             which "msbuild"
             which "xbuild"
         ]
-        defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
+        defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
     | true, _ -> 
         let sources = [
             msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
