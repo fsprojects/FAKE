@@ -47,6 +47,7 @@ open Fake.Windows
 
 let currentDirectory = Shell.pwd()
 #else
+// Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
 #r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
 //#if DESIGNTIME
 #I @"packages/build/FAKE/tools/"
@@ -368,6 +369,12 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         let executeTarget target =
             if clearCache then clear ()
             if isUnix then
+                let result =
+                    ExecProcess (fun info ->
+                        info.FileName <- "ls"
+                        info.WorkingDirectory <- "."
+                        info.Arguments <- sprintf "-alhs nuget/dotnetcore/Fake.netcore/current") timeout
+                if result <> 0 then failwithf "'ls -alhs nuget/dotnetcore/Fake.netcore/current' failed on unix"
                 let result =
                     ExecProcess (fun info ->
                         info.FileName <- "chmod"
