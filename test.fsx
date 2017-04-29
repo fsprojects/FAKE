@@ -1,6 +1,7 @@
 ;;
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
+open Fake
 
 Target "Clean" (fun _ ->
     !! "src/*/*/bin"
