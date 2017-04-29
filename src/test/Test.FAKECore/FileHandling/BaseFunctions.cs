@@ -28,6 +28,43 @@ namespace Test.FAKECore.FileHandling
 
     public class BaseFunctions
     {
+        private static List<string> DirsToClean = new List<string>
+    	{
+    		"Dir1",
+    		"Dir2",
+    		"Dir3/Sub1",
+    		"Dir3/Sub2",
+    		"Dir4",
+    		"Dir5",
+    		"Dir6/Sub1",
+    		"Dir6/Sub1/Sub1",
+    		"Dir7/Sub1",
+    		"Dir7/Sub2/Sub1",
+    		"Dir8/Sub1"
+    	};
+
+		private static List<string> FilesToTest = new List<string>
+		{
+			"file1.txt",
+			"file2.fff",
+			"file3.txt",
+			"file3.nav",
+			"file3.nat",
+			"Dir1/file1.txt",
+			"Dir1/file2.abc",
+			"Dir1/file3.atr",
+			"Dir6/Sub1/file1.nav",
+			"Dir6/Sub1/file2.nat",
+			"Dir6/Sub1/file3.nav",
+			"Dir7/Sub1/file1.nav",
+			"Dir7/Sub1/file2.nat",
+			"Dir7/Sub1/file3.nav",
+			"Dir7/file1.nav",
+			"Dir7/file2.nat",
+			"Dir7/file3.nav"
+
+		};
+
         /// <summary>
         ///     Gets all files function.
         /// </summary>
@@ -52,17 +89,7 @@ namespace Test.FAKECore.FileHandling
         public static void CreateTestDirStructure()
         {
             CleanDir(TestData.TestDir);
-            CleanDir(Path.Combine(TestData.TestDir, "Dir1"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir2"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir3/Sub1"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir3/Sub2"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir4"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir5"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir6/Sub1"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir6/Sub1/Sub1"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir7/Sub1"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir7/Sub2/Sub1"));
-            CleanDir(Path.Combine(TestData.TestDir, "Dir8/Sub1"));
+            DirsToClean.ForEach(dir => CleanDir(Path.Combine(TestData.TestDir, dir)));
         }
 
         /// <summary>
@@ -144,26 +171,7 @@ namespace Test.FAKECore.FileHandling
         public static void CreateTestFileStructure()
         {
             CreateTestDirStructure();
-
-            CreateTestFile(Path.Combine(TestData.TestDir, "file1.txt"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "file2.fff"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "file3.txt"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "file3.nav"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "file3.nat"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir1/file1.txt"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir1/file2.abc"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir1/file3.atr"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir6/Sub1/file1.nav"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir6/Sub1/file2.nat"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir6/Sub1/file3.nav"));
-
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir7/Sub1/file1.nav"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir7/Sub1/file2.nat"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir7/Sub1/file3.nav"));
-
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir7/file1.nav"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir7/file2.nat"));
-            CreateTestFile(Path.Combine(TestData.TestDir, "Dir7/file3.nav"));
+            FilesToTest.ForEach(file => CreateTestFile(Path.Combine(TestData.TestDir, file)));
         }
 
 

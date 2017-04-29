@@ -19,6 +19,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
+  </ItemGroup>
   <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="Microsoft.Build.Framework">
       <FromP2P>true</FromP2P>
