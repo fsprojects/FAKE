@@ -1,6 +1,7 @@
 ;;
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
+#r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
 open Fake
 
 Target "Clean" (fun _ ->
