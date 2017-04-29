@@ -303,22 +303,6 @@ Target "TestDotnetCore" (fun _ ->
     |> NUnit3 id
 )
 
-Target "TestCompilerError" (fun _ ->
-    if isUnix then
-        let result =
-            ExecProcess (fun info ->
-                info.FileName <- "chmod"
-                info.WorkingDirectory <- "."
-                info.Arguments <- "+x packages/FSharp.Compiler.Tools/tools/fsi.exe") (System.TimeSpan.FromMinutes 1.)
-        if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
-    let result =
-        ExecProcess (fun info ->
-            info.FileName <- "packages/FSharp.Compiler.Tools/tools/fsi.exe"
-            info.WorkingDirectory <- "."
-            info.Arguments <- sprintf "test.fsx" )  (System.TimeSpan.FromMinutes 10.)
-    if result <> 0 then failwith "'fsi text.fsx' failed on unix"
-)
-
 Target "BootstrapTest" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
@@ -875,18 +859,17 @@ Target "StartDnc" DoNothing
 
 // Dependencies
 "Clean"
-    ==> "TestCompilerError"
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    //==> "DotnetPackage"
-    //==> "DotnetCoreCreateZipPackages"
-    //=?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
+    ==> "DotnetPackage"
+    ==> "DotnetCoreCreateZipPackages"
+    =?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
     ////==> "ILRepack"
-    //=?> ("Test", not <| hasBuildParam "SkipTests")
+    =?> ("Test", not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
-    //=?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
-    //=?> ("CreateNuGet", not isLinux)
+    =?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
+    =?> ("CreateNuGet", not isLinux)
     ==> "Default"
     ==> "EnsureTestsRun"
     ==> "CopyLicense"

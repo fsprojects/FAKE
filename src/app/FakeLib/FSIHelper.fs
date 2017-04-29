@@ -456,7 +456,9 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             if printDetails then trace "Cache doesn't exist"
 
     // Contains warnings and errors about the build script.
-    if printDetails then
+    let doTrace = environVar "FAKE_TRACE" = "true"
+    if printDetails && doTrace then
+        // "Debug" is for FCS debugging, use a debug build to get more output...
         Debug.AutoFlush <- true
         let logToConsole = true
         let logToFile = true
@@ -494,7 +496,7 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
     let session =
       try ScriptHost.Create
             (options, preventStdOut = true,
-              reportGlobal = true,
+              reportGlobal = doTrace,
               fsiErrWriter = ScriptHost.CreateForwardWriter
                 ((fun s ->
                     if String.IsNullOrWhiteSpace s |> not then
