@@ -494,6 +494,7 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
     let session =
       try ScriptHost.Create
             (options, preventStdOut = true,
+              reportGlobal = true,
               fsiErrWriter = ScriptHost.CreateForwardWriter
                 ((fun s ->
                     if String.IsNullOrWhiteSpace s |> not then
