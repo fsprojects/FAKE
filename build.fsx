@@ -369,19 +369,6 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         let executeTarget target =
             if clearCache then clear ()
             if isUnix then
-                //let result =
-                //    ExecProcess (fun info ->
-                //        info.FileName <- "ls"
-                //        info.WorkingDirectory <- "."
-                //        info.Arguments <- sprintf "-alhs nuget/dotnetcore/Fake.netcore/current") timeout
-                //if result <> 0 then failwithf "'ls -alhs nuget/dotnetcore/Fake.netcore/current' failed on unix"
-                //let result =
-                //    ExecProcess (fun info ->
-                //        info.FileName <- "chmod"
-                //        info.WorkingDirectory <- "."
-                //        info.Arguments <- sprintf "+x nuget/dotnetcore/Fake.netcore/current/Fake") timeout
-                //if result <> 0 then failwithf "'chmod +x nuget/dotnetcore/Fake.netcore/current/Fake' failed on unix"
-
                 ExecProcess (fun info ->
                     info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake"
                     info.WorkingDirectory <- "."
@@ -635,9 +622,9 @@ Target "DotnetPackage" (fun _ ->
                     Configuration = Release
                     OutputPath = Some outDir
                 }) proj
-            if File.Exists (output </> "dotnet") then
+            if File.Exists (outDir </> "dotnet") then
                 traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
-                File.Move(output </> "dotnet", output </> "Fake")
+                File.Move(outDir </> "dotnet", outDir </> "Fake")
             //File.Copy(win32manifest, outDir + "/default.win32manifest")
         )
     )
