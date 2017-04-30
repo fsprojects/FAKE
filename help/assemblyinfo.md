@@ -1,5 +1,7 @@
 # Generating AssemblyInfo files
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 In this article the AssemblyInfo task is used in order to set specific version information to .NET assemblies.
 
 If you succeeded with the [Getting Started tutorial](gettingstarted.html), then you just have to modify your *BuildApp* target to the following:

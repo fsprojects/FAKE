@@ -1,5 +1,7 @@
 # Deployment using FAKE
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 This introduction assumes Fake.Deploy.exe is available in the current directory or path.
 
 ## Introduction

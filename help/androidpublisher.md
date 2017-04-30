@@ -1,5 +1,7 @@
 # Publish Android apk
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 This module helps android developers to automatically publish their APKs
 
 ## Prerequisite

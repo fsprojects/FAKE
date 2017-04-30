@@ -1,5 +1,7 @@
 # Running targets in "FAKE - F# Make"
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 ## Listing targets
 Before running any specific target it is useful to know all the targets that are available in a build script.
 FAKE can list all the avaiable targets including the dependencies by running the following command:
