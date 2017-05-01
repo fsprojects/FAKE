@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{06A2CB89-4DFC-4436-AB46-B3E81AFDE294}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,9 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		build-web-bundles.cmd = build-web-bundles.cmd
 		build-web-bundles.fsx = build-web-bundles.fsx
-		build.cmd = build.cmd
 		build.fsx = build.fsx
-		build.sh = build.sh
 		fake.cmd = fake.cmd
 		fake.nuspec = fake.nuspec
 		fake.sh = fake.sh
@@ -71,7 +69,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\sonarcube.md = help\sonarcube.md
 		help\specifictargets.md = help\specifictargets.md
 		help\teamcity.md = help\teamcity.md
-		help\templates\template-project.html = help\templates\template-project.html
 		help\typescript.md = help\typescript.md
 		help\users.md = help\users.md
 	EndProjectSection

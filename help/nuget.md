@@ -1,5 +1,7 @@
 # NuGet package restore
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 If you are using a source control system like [git](http://git-scm.com/) you probably don't want to store all binary dependencies in it. 
 With FAKE you can use [NuGet](http://nuget.codeplex.com/) to download all dependent packages during the build.
 

@@ -1,5 +1,7 @@
 # FAKE Command Line
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found [here](commandline.html)**
+
 **Note:  This documentation is for FAKE.exe version 2.18 or later.**
 
 The FAKE.exe command line interface (CLI) is defined as follows:

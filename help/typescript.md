@@ -1,5 +1,7 @@
 # Compiling TypeScript applications
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 FAKE can be used to build a variety of different application types. 
 In this tutorial we are looking at the TypeScript support.
 

@@ -3,44 +3,20 @@
 ## Getting Started
 
 Getting started with the Fake dotnetcore version is easy.
-Just execute a single line of bash (supports git bash on windows):
+Just install the corresponding package for your system:
 
-```bash
-p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ];then mkdir -p $p;curl -fLso $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi;. $f
+```ps
+choco install fake -pre
 ```
 
 now you can use 
 
-```bash
-exec_fake run --help
+```ps
+fake --help
 ```
 
-to simplify calling fake you can create two helper scripts in your repository:
 
-`fake.sh`
-```bash
-#!/usr/bin/env bash
-
-# With this you can lock the version, can be overwritten with the environment variable
-FAKE_VERSION=${FAKE_VERSION:-"core-v1.0-alpha-10"}
-
-p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ];then mkdir -p $p;curl -fLso $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi;. $f
-
-# remove me once out of alpha or nuget packages uploaded to nuget
-# For now you can use 'source .fake/bin/core-v1.0-alpha-10/packages' to reference the (currently unreleased) new packages
-install_fake_packages
-
-exec_fake $*
-```
-
-`fake.cmd`
-```
-@echo off
-
-"C:\Program Files\Git\bin\bash" -c "./fake.sh %*"
-```
-
-This is basically it. You can now execute fake commands. In the future fake will probably provide a command to generate/update the scripts for you.
+This is basically it. You can now execute fake commands.
 
 ## CLI
 
@@ -100,23 +76,26 @@ Please read https://github.com/fsharp/FAKE/issues/1232
 
 ## What is the migration path?
 
-TBD. The current idea is:
-
-- The old 'Fake' will be obsolete but still being updated for quite a while
-  TBD: There might be a wrapper on top of the new code providing the "old" cli for compatibility
-
-- Fake dotnetcore will have a new set of command line options, therefore you need to update all the places
-  where you call Fake in your Build infrastructure.
-
-- The migration path will be that "FakeLib" is updated with the new dotnetcore compatible API.
-  The old API will be marked as obsolete. 
-  In theory you can fix all warnings and switch to dotnetcore by inserting the new header.
+See [Fake 5 Migration Guide](migrate-to-fake5.html)
 
 ## How to specify dependencies?
 
-The Fake runtime will restore packages before running the script. All you need to do is specify them
+The Fake runtime will restore packages before running the script. All you need to do is specify them.
+Fake uses [Paket](https://fsprojects.github.io/Paket/) and a special annotation for integration.
 
-To tell Fake which dependencies are needed a script should start with
+### Specify by paket.dependencies (recommended, but not jet implemented)
+
+The easiest way for projects already using Paket is to annotate a group in the paket.dependencies file
+
+```
+group netcoreBuild // FAKE GROUP
+```
+
+Fake will search for the comment and use the dependencies for the given group. If it finds no marked group or the script has a FAKE Header, Fake will ignore the dependencies file.
+
+### Fake HEADER
+
+To tell Fake which dependencies are needed a script can start with a header as well:
 
 ```
 (* -- Fake Dependencies ***header***
@@ -131,7 +110,7 @@ Fake will write a `loadDependencies.fsx` file for you importing all required ref
 
 There are two headers known by Fake:
 
-### paket-inline
+#### paket-inline
 
 This way you can specify all your dependencies via pakets `paket.dependencies` syntax inline in your Fake script.
 Fake will implicitly use the "Main" paket group for the script.
@@ -149,7 +128,7 @@ nuget FSharp.Formatting ~> 2.14
 
 > For now you probably want to add `source .fake/bin/core-v1.0-alpha-10/packages` if you want to use the FAKE Api.
 
-### paket.dependencies
+#### paket.dependencies
 
 It's also possible to use an existing `paket.dependencies` file and specify the file and group to use (defaults to "paket.dependencies" and "Main"):
 
@@ -169,14 +148,15 @@ This version assumes an existing dotnet sdk installation while the non-portable 
 Just use the `-portable` version of the downloads, extract it and execute.
 
 ```
-dotnet Fake.netcore.dll <regular-arguments>
+dotnet Fake.dll <regular-arguments>
 ```
 
 The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
+The disadvantage is that you need to have a dotnet sdk installed.
 
 ## Examples
 
-- See https://github.com/matthid/FAKE/blob/coreclr/dncbuild.fsx
+- See https://github.com/matthid/FAKE/blob/coreclr/build.fsx
   Note that with the "new" API you should call the modules directly instead of opening them. 
   Therefore this example is actually pretty bad because it just opened everything (for minimal diff to the "normal" build.fsx)
 
@@ -184,6 +164,8 @@ TBD.
 
 ## Downloads
 
-Currently Releases are on my branch: https://github.com/matthid/FAKE/releases/
-
-Alpha 10 is the last known working version: https://github.com/matthid/FAKE/releases/tag/core-v1.0-alpha10
+Currently Releases are on my branch uploaded to AppVeyor on Build:
+ - https://ci.appveyor.com/project/SteffenForkmann/fake -> Find the latest build from my branch -> Artifacts
+ - https://ci.appveyor.com/project/SteffenForkmann/fake/build/1.0.3115/artifacts
+ - Or go directly via github -> https://github.com/fsharp/FAKE/pull/1281 -> Find last commit -> Naviate to the last green AppVeyor build -> Artifacts
+You need to use the https://ci.appveyor.com/nuget/fake feed in your build scripts as long as there is no NuGet release of FAKE 5

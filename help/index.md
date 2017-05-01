@@ -1,5 +1,7 @@
 # FAKE - F# Make - A DSL for build tasks
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 "FAKE - F# Make" is a build automation system with capabilities which are similar to **make** and **rake**.
 It is using an easy domain-specific language (DSL) so that you can start using it without learning F#.
 If you need more than the default functionality you can either write F# or simply reference .NET assemblies.
