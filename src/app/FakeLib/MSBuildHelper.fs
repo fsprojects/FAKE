@@ -45,19 +45,28 @@ let toDict items =
 let getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths) |> List.rev) @ oldMsBuildLocations
 
+/// Versions of Mono prior to this one have faulty implementations of MSBuild
+let monoVersionToUseMSBuildOn = System.Version("5.0.0.0")
 
 /// Tries to detect the right version of MSBuild.
 ///   - On all OS's, we check a `MSBuild` environment variable which is either
 ///     * a direct path to a file to use, or
-///     * a directory that contains a file called `msbuild` on non-Windows systems, or `MSBuild.exe` on Windows systems
+///     * a directory that contains a file called 
+///         * `msbuild` on non-Windows systems with mono >= 5.0.0.0, or
+///         * `xbuild` on non-Windows systems with mono < 5.0.0.0,
+///         * `MSBuild.exe` on Windows systems, or
+///     * a tool that exists on the current PATH
 ///   - In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
-///     * `msbuild`
-///     * `xbuild`
+///     * Mono >= 5.0.0.0: `msbuild`, `xbuild`
+///     * Mono < 5.0.0.0: `xbuild`, `msbuild`
+///     * This is due to several known issues in the Mono < 5.0 implementation of MSBuild.
 ///   - In addition, on Windows systems we
 ///     * try to read the MSBuild tool location from the AppSettings file using a parameter named `MSBuild`, and finally
 ///     * if a `VisualStudioVersion` environment variable is specified, we try to use the specific MSBuild version, matching that Visual Studio version.
 let msBuildExe =
-    /// the value we're given can be a full path to a file or just a directory.
+    /// the value we're given can be a:
+    ///     * full path to a file or
+    ///     * just a directory
     /// if just a directory we can make it the path to a file by Path-Combining the tool name to the directory.
     let exactPathOrBinaryOnPath tool input =
         if FileSystemHelper.isDirectory input && Directory.Exists input
@@ -65,19 +74,27 @@ let msBuildExe =
         else input
 
     let which tool = ProcessHelper.tryFindFileOnPath tool
-    let environVarDir = EnvironmentHelper.environVarOrNone "MSBuild"
+    let msbuildEnvironVar = EnvironmentHelper.environVarOrNone "MSBuild"
 
-    if isUnix
-    then
-        let unixSources = [
-            environVarDir |> Option.map (exactPathOrBinaryOnPath "msbuild")
+    match isUnix, EnvironmentHelper.monoVersion with
+    | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
+        let sources = [
+            msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
+            msbuildEnvironVar |> Option.bind which
             which "msbuild"
             which "xbuild"
         ]
-        defaultArg (unixSources |> List.choose id |> List.tryHead) "xbuild"
-    else
+        defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
+    | true, _ -> 
+        let sources = [
+            msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
+            msbuildEnvironVar |> Option.bind which
+            which "xbuild"
+            which "msbuild"
+        ]
+        defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
+    | false, _ -> 
 
-        let envVarPath = environVarDir |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
         let configIgnoreMSBuild =
             if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
             then Some ""
@@ -90,12 +107,13 @@ let msBuildExe =
 
             ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
 
-        let windowsSources = [
-            envVarPath
+        let sources = [
+            msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
+            msbuildEnvironVar |> Option.bind which
             configIgnoreMSBuild
             findOnVSPathsThenSystemPath
         ]
-        defaultArg (windowsSources |> List.choose id |> List.tryHead) "MSBuild.exe"
+        defaultArg (sources |> List.choose id |> List.tryHead) "MSBuild.exe"
 
 
 /// [omit]
@@ -446,7 +464,9 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
             |> Set.unionMany
 
     let setBuildParam project projectParams =
-        { projectParams with Targets = targets |> split ';' |> List.filter ((<>) ""); Properties = projectParams.Properties @ properties project }
+        { projectParams with 
+            Targets = targets |> split ';' |> List.filter ((<>) "")
+            Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
