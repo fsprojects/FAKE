@@ -16,29 +16,35 @@ type private AzureEmulatorParams = {
 let private AzureEmulatorDefaults = {
     StorageEmulatorToolPath =
         lazy
-            let path = msSdkBasePath @@ "\Azure\Storage Emulator\AzureStorageEmulator.exe"
+            let path = msSdkBasePath @@ @"\Azure\Storage Emulator\AzureStorageEmulator.exe"
             if fileExists path then path
             else failwith (sprintf "Unable to locate Azure Storage Emulator at %s" path)
     CSRunToolPath = "\"C:\Program Files\Microsoft SDKs\Windows Azure\Emulator\csrun.exe\""
     TimeOut = TimeSpan.FromMinutes 5.
     }
 
+let private (|StorageAlreadyStarted|StorageAlreadyStopped|Ok|OtherError|) = function
+    | 0 -> Ok
+    | -5 -> StorageAlreadyStarted
+    | -6 -> StorageAlreadyStopped
+    | _ -> OtherError
+
 /// Stops the storage emulator
 let StopStorageEmulator = (fun _ ->
-    if 0 <> ExecProcess (fun info ->  
+    match ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.StorageEmulatorToolPath.Value
-        info.Arguments <- "stop") AzureEmulatorDefaults.TimeOut
-    then
-        failwithf "Azure Emulator Failure on stop Storage Emulator"
+        info.Arguments <- "stop") AzureEmulatorDefaults.TimeOut with
+    | Ok | StorageAlreadyStopped -> ()
+    | _ -> failwithf "Azure Emulator Failure on stop Storage Emulator"
 )
 
 /// Starts the storage emulator
 let StartStorageEmulator = (fun _ ->
-    if 0 <> ExecProcess (fun info ->  
+    match ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.StorageEmulatorToolPath.Value
-        info.Arguments <- "start") AzureEmulatorDefaults.TimeOut
-    then
-        failwithf "Azure Emulator Failure on start Storage Emulator"
+        info.Arguments <- "start") AzureEmulatorDefaults.TimeOut with
+    | Ok | StorageAlreadyStarted -> ()
+    | _ -> failwithf "Azure Emulator Failure on start Storage Emulator"
 )
 
 /// Stops the compute emulator
