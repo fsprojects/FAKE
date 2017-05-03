@@ -9,6 +9,7 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
 [<assembly: AssemblyInformationalVersionAttribute("5.0.0")>]
 [<assembly: AssemblyFileVersionAttribute("5.0.0")>]
+
 do ()
 
 module internal AssemblyVersionInformation =

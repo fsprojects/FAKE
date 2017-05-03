@@ -46,17 +46,17 @@ let get32BitKey name =
     | HKEYCurrentConfig -> RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32)
     | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)
 
-/// Gets a 64-bit registy key
+/// Gets a 64-bit registry key
 let getRegistryKey64 baseKey subKey (writePermission : bool) =
     (get64BitKey baseKey).OpenSubKey(subKey, writePermission)
 
-/// Gets a registy key and falls back to 32 bit if the 64bit key is not there
+/// Gets a registry key and falls back to 32 bit if the 64bit key is not there
 let getRegistryKey baseKey subKey (writePermission : bool) =
     let x64BitKey = (getKey baseKey).OpenSubKey(subKey, writePermission)
     if x64BitKey <> null then x64BitKey else
     (get32BitKey baseKey).OpenSubKey(subKey, writePermission)  // fall back to 32 bit
 
-/// Gets a registy value as string
+/// Gets a registry value as string
 let getRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey false
     if key = null then
@@ -66,7 +66,7 @@ let getRegistryValue baseKey subKey name =
         failwithf "Registry value is null for key %s" (key.ToString())
     value.ToString()
 
-/// Gets a registy value as string
+/// Gets a registry value as string
 let getRegistryValue64 baseKey subKey name =
     use key = getRegistryKey64 baseKey subKey false
     if key = null then
