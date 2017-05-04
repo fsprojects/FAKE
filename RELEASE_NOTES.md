@@ -1,3 +1,6 @@
+#### 4.61.1 - 04.05.2017
+* BUGFIX: Stop AzureHelper throwing exceptions unnecessarily - https://github.com/fsharp/FAKE/pull/1542
+
 #### 4.61.0 - 02.05.2017
 * BUGFIX: msbuild is no longer being used on mono < 5.0.0.0 instead of xbuild - https://github.com/fsharp/FAKE/pull/1540
 
