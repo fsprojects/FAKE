@@ -501,6 +501,7 @@ Target "CreateNuGet" (fun _ ->
                 Description = description
                 Version = release.NugetVersion
                 OutputPath = nugetLegacyDir
+                WorkingDir = nugetLegacyDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =
