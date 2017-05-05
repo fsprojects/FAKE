@@ -93,7 +93,8 @@ let buildDir = "./build"
 let testDir = "./test"
 let docsDir = "./docs"
 let apidocsDir = "./docs/apidocs/"
-let nugetDir = "./nuget"
+let nugetDncDir = "./nuget/dotnetcore"
+let nugetLegacyDir = "./nuget/legacy"
 let reportDir = "./report"
 let packagesDir = "./packages"
 let buildMergedDir = buildDir </> "merged"
@@ -111,7 +112,7 @@ Target "Clean" (fun _ ->
     ++ "src/*/*/obj"
     |> CleanDirs
 
-    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
+    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir])
 
 Target "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
@@ -458,9 +459,9 @@ Target "CreateNuGet" (fun _ ->
             Project = package.Project + ".x64" }
 
     for package,description in packages do
-        let nugetDocsDir = nugetDir @@ "docs"
-        let nugetToolsDir = nugetDir @@ "tools"
-        let nugetLibDir = nugetDir @@ "lib"
+        let nugetDocsDir = nugetLegacyDir @@ "docs"
+        let nugetToolsDir = nugetLegacyDir @@ "tools"
+        let nugetLibDir = nugetLegacyDir @@ "lib"
         let nugetLib451Dir = nugetLibDir @@ "net451"
 
         CleanDir nugetDocsDir
@@ -499,7 +500,7 @@ Target "CreateNuGet" (fun _ ->
                 Project = package
                 Description = description
                 Version = release.NugetVersion
-                OutputPath = nugetDir
+                OutputPath = nugetLegacyDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =
@@ -557,7 +558,7 @@ Target "DotnetRestore" (fun _ ->
     // Copy nupkgs to nuget/dotnetcore
     !! "lib/nupgks/**/*.nupkg"
     |> Seq.iter (fun file ->
-        let dir = nugetDir @@ "dotnetcore"
+        let dir = nugetDncDir //@@ "dotnetcore"
         ensureDirectory dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
@@ -575,7 +576,7 @@ let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
 Target "DotnetPackage" (fun _ ->
-    let nugetDir = System.IO.Path.GetFullPath nugetDir
+    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     setEnvironVar "Version" release.NugetVersion
 
@@ -583,7 +584,7 @@ Target "DotnetPackage" (fun _ ->
     DotnetPack (fun c ->
         { c with
             Configuration = Release
-            OutputPath = Some (nugetDir @@ "dotnetcore")
+            OutputPath = Some nugetDir
         }) "src/Fake-netcore.sln"
     //netCoreProjs
     //-- "src/app/Fake.netcore/Fake.netcore.fsproj"
@@ -591,7 +592,7 @@ Target "DotnetPackage" (fun _ ->
     //    DotnetPack (fun c ->
     //        { c with
     //            Configuration = Release
-    //            OutputPath = Some (nugetDir @@ "dotnetcore")
+    //            OutputPath = Some (nugetDir)
     //        }) proj
     //)
 
@@ -615,7 +616,7 @@ Target "DotnetPackage" (fun _ ->
                 | None -> "current", info.RID
 
             DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
-            let outDir = nugetDir @@ "dotnetcore" @@ projName @@ runtimeName
+            let outDir = nugetDir @@ projName @@ runtimeName
             DotnetPublish (fun c ->
                 { c with
                     Runtime = Some runtime
@@ -634,7 +635,7 @@ Target "DotnetPackage" (fun _ ->
     let oldContent = File.ReadAllText netcoreFsproj
     try
         // File.WriteAllText(netcoreJson, newContent)
-        let outDir = nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable"
+        let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
         DotnetPublish (fun c ->
             { c with
                 Framework = Some "netcoreapp1.0"
@@ -790,7 +791,11 @@ Target "PublishNuget" (fun _ ->
     Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
-            WorkingDir = nugetDir })
+            WorkingDir = nugetLegacyDir })
+    Paket.Push(fun p ->
+        { p with
+            DegreeOfParallelism = 2
+            WorkingDir = nugetDncDir })
 #else
     printfn "We don't currently have Paket on dotnetcore."
 #endif
