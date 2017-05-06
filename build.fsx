@@ -521,10 +521,10 @@ let LatestTooling options =
     { options with
         InstallerOptions = (fun io ->
             { io with
-                Branch = "rel/1.0.0-rc3"
+                Branch = "rel/1.0.1"
             })
         Channel = None
-        Version = Version "1.0.0-rc4-004771"
+        Version = Version "1.0.3-rc4-004973"
     }
 Target "InstallDotnetCore" (fun _ ->
      DotnetCliInstall LatestTooling
