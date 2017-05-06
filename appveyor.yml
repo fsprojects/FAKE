@@ -7,11 +7,9 @@ on_failure:
   - appveyor PushArtifact FAKE.svclog
 test: off
 artifacts:
-  - path: build
-    name: binaries
   - path: 'nuget\dotnetcore\*.nupkg'
     type: NuGetPackage
-  - path: 'nuget\*.nupkg'
+  - path: 'nuget\legacy\*.nupkg'
     type: NuGetPackage
   - path: 'nuget\dotnetcore\Fake.netcore\*.zip'
     type: Zip
