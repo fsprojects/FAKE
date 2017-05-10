@@ -1,5 +1,7 @@
 # Adding FxCop to a FAKE build script
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 This article is an extension to the [getting started guide](gettingstarted.html). You will improve the same Calculator sample with a task for [FxCop](http://msdn2.microsoft.com/en-us/library/bb429476.aspx).
 
 If you need more details please see the [API docs for the FxCop](apidocs/fake-fxcophelper.html) task.

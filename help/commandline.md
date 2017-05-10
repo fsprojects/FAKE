@@ -1,79 +1,101 @@
 # FAKE Command Line
 
-**Note:  This documentation is for FAKE.exe version 2.18 or later.**
+**Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found [here](legacy_commandline.html)**
 
-The FAKE.exe command line interface (CLI) is defined as follows:
 
-`fake.exe [<buildScriptPath>] [<targetName>] [options]`
+The FAKE.exe command line interface (CLI) is defined as follows:`
 
-## Basic Examples
+```
+USAGE: fake [--help] [--version] [--verbose] [<subcommand> [<options>]]
+SUBCOMMANDS:
 
-**No arguments:** `fake.exe` (FAKE will try and locate your build script).
+    run <options>         Runs a build script.
 
-**Specify build script only:** `fake.exe mybuildscript.fsx`
+    Use 'fake <subcommand> --help' for additional information.
 
-**Specify target name only:** `fake.exe clean` (runs the `clean` target).
+OPTIONS:
 
-**Specify build script and target:** `fake.exe mybuildscript.fsx clean`
+    --version             Prints the version.
+    --verbose, -v         More verbose output.
+    --help                display this list of options.
+```
 
-## `buildScriptPath`
+For now fake only supports the `run` subcommand which is basically equivalent to the Fake as you know it, but more are planned in the future.
 
-Optional.  The path to your `.fsx` build file.  If not specified, FAKE will pick the first `.fsx` it finds in your working directory (and fail if none exist).
+## `--verbose [-v]`
 
-## `targetName`
+Print details of FAKE's activity. Note that `-v` was used for `--version` in previous versions of Fake.
+
+### `--version`
+
+Print FAKE version information.
+
+### `--help`
+
+Prints help information. In contract to the other options you can use --help everywhere.
+For example `fake run --help` to get help about the `run` subcommand.
+
+## Subcommands
+
+### Run
+
+```
+USAGE: fake run [--help] [--script <string>] [--target <string>] [--environmentvariable <string> <string>] [--debug] [--singletarget] [--nocache] [--fsiargs <string>]
+OPTIONS:
+
+    --script <string>     Specify the script to run. (--script is optional)
+    --target, -t <string> The target to run.
+    --environmentvariable, -e <string> <string>
+                          Set an environment variable.
+    --debug, -d           Debug the script (set a breakpoint at the start).
+    --singletarget, -s    Run only the specified target.
+    --nocache, -n         Disable caching of the compiled script.
+    --fsiargs <string>    Arguments passed to the f# interactive.
+    --help                display this list of options.
+```
+
+The run command is basically to start scripts or build-scripts therefore the `--script` is optional and you can just write `fake run build.fsx`.
+
+#### Basic examples
+
+**Specify build script only:** `fake.exe run mybuildscript.fsx`
+
+**Specify target name only:** `fake.exe run build.fsx --target clean` (runs the `clean` target).
+
+#### `script`
+
+Required. The path to your `.fsx` build file. Note the `--script` is optional, you can use it if you have specially crafted file names like `--debug`.
+
+#### `target`
 
 Optional.  The name of the build script target you wish to run.  This will any target you specified to run in the build script.  
 
-## Options
-
-Options begin with -- (long name) or - (short name).
-
-### `--envvar [-ev] <name:string> <value:string>`
+#### `--environmentvariable [-e] <name:string> <value:string>`
 
 Set environment variable name value pair. Supports multiple. 
+                                                   
+#### `--fsiargs <string>`
 
-### `--envflag [-ef] <name:string>`
+Pass an single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
 
-Set environment variable flag name to 'true'. Supports multiple.               
-
-### `--logfile [-lf] <path:string>`
-
-Set the build output log file path.                                                   
-
-### `--printdetails [-pd]`
-
-Print details of FAKE's activity.                                                 
-
-### `--version [-v]`
-
-Print FAKE version information.                                                         
-
-### `--fsiargs [-fa] <string>`
-
-Pass args after this switch to FSI when running the build script.  This consumes all arguments after it.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
-
-Important:  If you use this option, you must include your build script path as one of the fsi args.  For example:
-
-`--fsiargs --debug+ buildscript.fsx someArg1 anotherArg2`
-
-The entire argument string *following* the build script path is set as the value of an environment variable named `fsiargs-buildscriptargs`.  This means you can access this specific set of arguments from within your build script.
-
-### `--boot [-b] <string>`
-
-Bootstrap your FAKE script.  A bootstrapping `build.fsx` script executes twice (in two stages), allowing you to download dependencies with NuGet and do other preparatory work in the first stage, and have these dependencies available in the second stage.
-
-### `--help [-h|/h|/help|/?]`
+#### `--help [-h|/h|/help|/?]`
 
 Display CLI help.
                                                                                                          
 
-
 # Running FAKE targets from the command line
 
-For this short sample we assume you have the latest version of FAKE in *./tools/*. Now consider the following small FAKE script:
+For this short sample we assume you have the latest version of FAKE installed and available in PATH (see [the getting started guide](gettingstarted.html)). Now consider the following small FAKE script:
 
-	#r "FAKE/tools/FakeLib.dll"
-	open Fake 
+    (* -- Fake Dependencies paket-inline
+    source https://nuget.org/api/v2
+    source ../../../nuget/dotnetcore
+
+    nuget Fake.Core.Targets prerelease
+    nuget FSharp.Core prerelease
+    -- Fake Dependencies -- *)
+	open Fake.Core
+	open Fake.Core.Targets
  
 	Target "Clean" (fun () ->  trace " --- Cleaning stuff --- ")
  

@@ -1,38 +1,47 @@
-﻿module Fake.NuGetVersion
+﻿[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
+module Fake.NuGetVersion
 
+#nowarn "44"
 open System
 open System.Net
 open Newtonsoft.Json
 open Fake.SemVerHelper
 open System.Xml
 open System.Xml.Linq
-
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 type NuGetSearchItemResult =
     { Id:string
       Version:string
       Published:DateTime }
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 type NuGetSearchResult = 
     { results:NuGetSearchItemResult list }
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 type NuGetSearchResponse = 
     { d:NuGetSearchResult }
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 type NuGetVersionIncrement = SemVerInfo -> SemVerInfo
 
 /// Increment patch version
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 let IncPatch:NuGetVersionIncrement = 
     fun (v:SemVerInfo) ->
         { v with Build=""; Patch=(v.Patch+1) }
 
 /// Increment minor version
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 let IncMinor:NuGetVersionIncrement = 
     fun (v:SemVerInfo) ->
         { v with Build=""; Patch=0; Minor=(v.Minor+1) }
 
 /// Increment major version
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 let IncMajor:NuGetVersionIncrement = 
     fun (v:SemVerInfo) ->
         { v with Build=""; Patch=0; Minor=0; Major=(v.Major+1) }
 
 /// Arguments for the next NuGet version number computing
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 type NuGetVersionArg =
     { Server:string
       PackageName:string
@@ -46,6 +55,7 @@ type NuGetVersionArg =
           DefaultVersion="1.0" }
 
 /// Retrieve current NuGet version number
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 let getLastNuGetVersion server (packageName:string) = 
     let escape = Uri.EscapeDataString
     let url = 
@@ -97,6 +107,7 @@ let getLastNuGetVersion server (packageName:string) =
     
 
 /// Compute next NuGet version number
+[<System.Obsolete("Use Fake.DotNet.NuGet.Version instead")>]
 let nextVersion (f : NuGetVersionArg -> NuGetVersionArg) =
     let arg = f (NuGetVersionArg.Default())
     match getLastNuGetVersion arg.Server arg.PackageName with

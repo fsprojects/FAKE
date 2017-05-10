@@ -44,7 +44,7 @@ let printUsage () =
     fake.exe [<scriptPath>] [<targetName>] [options]
 
     scriptPath: Optional.  Path to your FAKE build script.  If not specified, FAKE will use the first .fsx file in the working directory and fail if none exists.
-    
+
     targetName: Optional.  Name of the target you wish to run.  This will override the target you specifed to run in the build script.
                            When targetName is equal --listTargets or -lt FAKE will list the targets with their dependencies.
 

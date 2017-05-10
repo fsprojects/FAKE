@@ -1,0 +1,12 @@
+
+group netcore
+FSharp.NET.Sdk
+Paket.Core
+Mono.Cecil
+FSharp.Core
+
+Microsoft.DotNet.PlatformAbstractions
+System.Runtime.Loader
+NETStandard.Library
+
+FSharp.Compiler.Service

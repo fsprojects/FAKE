@@ -11,6 +11,7 @@ open System.Text
 open System.Collections.Generic
 open System.Collections.Concurrent
 open System.ServiceProcess
+open Fake.Core.GuardedAwaitObservable
 
 /// [omit]
 type internal ConcurrentBag<'T> with

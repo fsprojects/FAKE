@@ -1,7 +1,9 @@
 ﻿[<AutoOpen>]
 /// Contains helper functions which allow to deal with git reset.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 module Fake.Git.Reset
 
+#nowarn "44"
 open System
 open Fake.Git.CommandHelper
 
@@ -24,6 +26,7 @@ let internal resetOrCheckout file mode =
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let soft repositoryDir commit file = resetOrCheckout file "soft" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "mixed".
@@ -33,6 +36,7 @@ let soft repositoryDir commit file = resetOrCheckout file "soft" + addArgs commi
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let mixed repositoryDir commit file = resetOrCheckout file "mixed" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "hard".
@@ -42,6 +46,7 @@ let mixed repositoryDir commit file = resetOrCheckout file "mixed" + addArgs com
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let hard repositoryDir commit file = resetOrCheckout file "hard" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "soft" to the current HEAD.
@@ -49,6 +54,7 @@ let hard repositoryDir commit file = resetOrCheckout file "hard" + addArgs commi
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let ResetSoft repositoryDir = soft repositoryDir null null
 
 /// Performs a git reset "mixed" to the current HEAD.
@@ -56,6 +62,7 @@ let ResetSoft repositoryDir = soft repositoryDir null null
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let ResetMixed repositoryDir = mixed repositoryDir null null
 
 /// Performs a git reset "hard" to the current HEAD.
@@ -63,4 +70,5 @@ let ResetMixed repositoryDir = mixed repositoryDir null null
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
+[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let ResetHard repositoryDir = hard repositoryDir null null

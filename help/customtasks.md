@@ -1,5 +1,7 @@
 # Writing custom C# tasks for FAKE
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 "FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks. 
 This tutorial shows how to create a (very simple) custom task in C#.
 
