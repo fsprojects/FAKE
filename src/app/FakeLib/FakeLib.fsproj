@@ -360,6 +360,22 @@
       </ItemGroup>
     </When>
   </Choose>
+  <Choose>
+     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v3.5' Or $(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
+       <ItemGroup>
+         <Reference Include="StyleCop">
+           <HintPath>..\..\..\packages\StyleCop\lib\net35\StyleCop.dll</HintPath>
+           <Private>True</Private>
+           <Paket>True</Paket>
+         </Reference>
+         <Reference Include="StyleCop.CSharp">
+           <HintPath>..\..\..\packages\StyleCop\lib\net35\StyleCop.CSharp.dll</HintPath>
+           <Private>True</Private>
+           <Paket>True</Paket>
+         </Reference>
+       </ItemGroup>
+     </When>
+   </Choose>
   <ItemGroup>
     <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs">
       <Paket>True</Paket>
@@ -526,9 +542,6 @@
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="mscorlib" />
-    <Reference Include="StyleCop.CSharp.Rules">
-      <HintPath>..\..\..\lib\StyleCop.CSharp.Rules.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Caching" />
@@ -536,8 +549,5 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
-    <Reference Include="VSFile">
-      <HintPath>..\..\..\lib\VSFile.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
