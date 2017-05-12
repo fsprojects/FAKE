@@ -2,11 +2,7 @@
 module Fake.StyleCopHelper
 
 open System
-open System.Text
 open Fake
-open VSFile
-open VSFile.Project
-open VSFile.Source
 open StyleCop
 
 /// Type to define the behavior of how StyleCop must react on violations
