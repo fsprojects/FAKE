@@ -38,6 +38,7 @@ nuget HashLib
 nuget FSharp.Compiler.Service
 nuget Octokit
 nuget Microsoft.Net.Http
+nuget StyleCop
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
@@ -51,4 +52,3 @@ nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool
 nuget SourceLink.Fake
 nuget ILRepack
-nuget StyleCop
