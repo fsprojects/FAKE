@@ -519,6 +519,7 @@
     <Compile Include="ChangeLogHelper.fs" />
     <Compile Include="Office365ConnectorHelper.fs" />
     <Compile Include="StyleCopHelper.fs" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -527,10 +528,10 @@
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="mscorlib" />
     <Reference Include="StyleCop">
-      <HintPath>..\..\..\lib\StyleCop.dll</HintPath>
+      <HintPath>..\..\..\packages\StyleCop.4.7.55\lib\net35\StyleCop.dll</HintPath>
     </Reference>
     <Reference Include="StyleCop.CSharp">
-      <HintPath>..\..\..\lib\StyleCop.CSharp.dll</HintPath>
+      <HintPath>..\..\..\packages\StyleCop.4.7.55\lib\net35\StyleCop.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="StyleCop.CSharp.Rules">
       <HintPath>..\..\..\lib\StyleCop.CSharp.Rules.dll</HintPath>
