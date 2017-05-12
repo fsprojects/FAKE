@@ -2940,12 +2940,6 @@
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="mscorlib" />
-    <Reference Include="StyleCop">
-      <HintPath>..\..\..\lib\StyleCop.dll</HintPath>
-    </Reference>
-    <Reference Include="StyleCop.CSharp">
-      <HintPath>..\..\..\lib\StyleCop.CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="StyleCop.CSharp.Rules">
       <HintPath>..\..\..\lib\StyleCop.CSharp.Rules.dll</HintPath>
     </Reference>
