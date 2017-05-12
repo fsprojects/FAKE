@@ -51,3 +51,4 @@ nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool
 nuget SourceLink.Fake
 nuget ILRepack
+nuget StyleCop
