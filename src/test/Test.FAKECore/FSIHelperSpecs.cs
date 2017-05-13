@@ -215,7 +215,10 @@ do ()
                         type.Name = "YOU_CANNOT_FIND_ME_" + i++;
                     }
 
-                    asem.Write(cacheFilePath);
+                    asem.Write(cacheFilePath + ".tmp");
+
+                    File.Delete(cacheFilePath);
+                    File.Move(cacheFilePath + ".tmp", cacheFilePath);
 
                     var result = RunExplicit(scriptFilePath, EmptyArgs, true);
                     result.ShouldContain("Using cache");
@@ -260,7 +263,12 @@ do ()
                             type.Methods.Remove(method);
                         }
                     }
-                    asem.Write(cacheFilePath);
+
+                    asem.Write(cacheFilePath + ".tmp");
+                    
+
+                    File.Delete(cacheFilePath);
+                    File.Move(cacheFilePath + ".tmp", cacheFilePath);
 
                     var result = RunExplicit(scriptFilePath, EmptyArgs, true);
                     result.ShouldContain("Using cache");

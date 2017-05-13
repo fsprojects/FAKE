@@ -147,7 +147,7 @@ You can execute targets with the "RunTargetOrDefault"-function (for more details
 
 	Target "xUnitTest" (fun _ ->
         testDlls
-            |> xUnit (fun p ->
+            |> xUnit2 (fun p ->
                 {p with
                     ShadowCopy = false;
                     HtmlOutput = true;
@@ -255,7 +255,7 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
 
     Target "xUnitTest" (fun _ ->
         !! (testDir + "/xUnit.Test.*.dll")
-            |> xUnit (fun p ->
+            |> xUnit2 (fun p ->
                 {p with
                     ShadowCopy = false;
                     HtmlOutput = true;

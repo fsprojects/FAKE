@@ -39,6 +39,9 @@ let StyleCopDefaults =
 ///         |> StyleCop (fun p -> { p with OutputFile = "violations.xml" }) 
 let StyleCop (setParams : StyleCopParams -> StyleCopParams) (sourceFiles : string seq) =
     let param = setParams StyleCopDefaults
+
+    use __ = traceStartTaskUsing "StyleCop" ""
+    
     let analyser = StyleCopConsole(param.SettingsFile, true, param.OutputFile, null, true)
     let config = Configuration(Array.ofList param.ConfigurationFlags)
 

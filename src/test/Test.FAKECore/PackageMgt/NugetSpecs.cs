@@ -34,6 +34,7 @@ namespace Test.FAKECore.PackageMgt
                     files: ListModule.OfSeq(new [] { new Tuple<string, FSharpOption<string>, FSharpOption<string>>("*.*", FSharpOption<string>.None, FSharpOption<string>.None) }),
 
                     accessKey: p.AccessKey,
+                    symbolAccessKey: p.SymbolAccessKey,
                     copyright: p.Copyright,
                     dependencies: p.Dependencies,
                     dependenciesByFramework: p.DependenciesByFramework,
@@ -45,6 +46,7 @@ namespace Test.FAKECore.PackageMgt
                     publish: p.Publish,
                     publishTrials: p.PublishTrials,
                     publishUrl: p.PublishUrl,
+                    symbolPublishUrl: p.SymbolPublishUrl,
                     references: p.References,
                     referencesByFramework: p.ReferencesByFramework,
                     frameworkAssemblies: p.FrameworkAssemblies,
@@ -90,6 +92,7 @@ namespace Test.FAKECore.PackageMgt
                     files: ListModule.OfSeq(new[] { new Tuple<string, FSharpOption<string>, FSharpOption<string>>("*.*", FSharpOption<string>.None, FSharpOption<string>.None) }),
 
                     accessKey: p.AccessKey,
+                    symbolAccessKey: p.SymbolAccessKey,
                     copyright: p.Copyright,
                     dependencies: p.Dependencies,
                     dependenciesByFramework: p.DependenciesByFramework,
@@ -101,6 +104,7 @@ namespace Test.FAKECore.PackageMgt
                     publish: p.Publish,
                     publishTrials: p.PublishTrials,
                     publishUrl: p.PublishUrl,
+                    symbolPublishUrl: p.SymbolPublishUrl,
                     references: p.References,
                     referencesByFramework: p.ReferencesByFramework,
                     frameworkAssemblies: p.FrameworkAssemblies,
@@ -158,6 +162,7 @@ namespace Test.FAKECore.PackageMgt
                     files: ListModule.OfSeq(new [] { new Tuple<string, FSharpOption<string>, FSharpOption<string>>("*.*", FSharpOption<string>.None, FSharpOption<string>.None) }),
 
                     accessKey: p.AccessKey,
+                    symbolAccessKey: p.SymbolAccessKey,
                     copyright: p.Copyright,
                     dependencies: p.Dependencies,
                     dependenciesByFramework: p.DependenciesByFramework,
@@ -169,6 +174,7 @@ namespace Test.FAKECore.PackageMgt
                     publish: p.Publish,
                     publishTrials: p.PublishTrials,
                     publishUrl: p.PublishUrl,
+                    symbolPublishUrl: p.SymbolPublishUrl,
                     references: p.References,
                     referencesByFramework: p.ReferencesByFramework,
                     frameworkAssemblies: p.FrameworkAssemblies,

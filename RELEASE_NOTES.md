@@ -1,7 +1,23 @@
-#### 4.58.6 - 11.04.2017
-* BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
+#### 4.61.2 - 11.05.2017
+* Allow to specify the default NuGet source - https://github.com/fsharp/FAKE/pull/1551
+* Add support for custom NuGet symbol feed during push https://github.com/fsharp/FAKE/pull/1549
 
-#### 4.58.5 - 11.04.2017
+#### 4.61.1 - 04.05.2017
+* BUGFIX: Stop AzureHelper throwing exceptions unnecessarily - https://github.com/fsharp/FAKE/pull/1542
+
+#### 4.61.0 - 02.05.2017
+* BUGFIX: msbuild is no longer being used on mono < 5.0.0.0 instead of xbuild - https://github.com/fsharp/FAKE/pull/1540
+
+#### 4.60.0 - 27.04.2017
+* Add support for NUnit3 --params parameter - https://github.com/fsharp/FAKE/pull/1532
+* New StyleCode helper - https://github.com/fsharp/FAKE/pull/1526
+* BUGFIX: Fixed FtpHelper.isFolderPresent - https://github.com/fsharp/FAKE/pull/1529
+* BUGFIX: Fixed NuGet key leak if publish fails - https://github.com/fsharp/FAKE/pull/1530
+* BUGFIX: Disable caching for now - mono 5 bug - https://github.com/fsharp/FAKE/pull/1535, https://github.com/fsharp/FAKE/pull/1536
+
+#### 4.59.0 - 27.04.2017
+* BUGFIX: Upgraded FSharp.Core and FSharp.Compiler.Service to support mono 5 - https://github.com/fsharp/FAKE/pull/1534
+* BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
 * Added installer for dotnet SDK
 * Revert single thread build order change - https://github.com/fsharp/FAKE/pull/1516
 

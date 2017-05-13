@@ -5,7 +5,7 @@ module Cli
 open System
 open Argu
 
-type FakeArg = 
+type FakeArg =
     | [<AltCommandLine("-ev")>] EnvVar of string * string
     | [<AltCommandLine("-ef")>] EnvFlag of string
     | [<AltCommandLine("-lf")>] LogFile of string
@@ -17,7 +17,7 @@ type FakeArg =
     | [<AltCommandLine("-st")>] Single_Target
     | [<AltCommandLine("-nc")>] NoCache
     interface IArgParserTemplate with
-        member x.Usage = 
+        member x.Usage =
             match x with
             | EnvVar _ -> "Set environment variable <name> <value>. Supports multiple."
             | EnvFlag _ -> "Set environment variable flag <name> 'true'. Supports multiple."
@@ -31,7 +31,7 @@ type FakeArg =
             | NoCache -> "Disables caching of compiled script"
 
 /// Return the parsed FAKE args or the parse exception.
-let parsedArgsOrEx args = 
+let parsedArgsOrEx args =
     try
         let args = args |> Seq.skip 1 |> Array.ofSeq
         let parser = ArgumentParser.Create<FakeArg>()
@@ -49,23 +49,23 @@ let printUsage () =
                            When targetName is equal --listTargets or -lt FAKE will list the targets with their dependencies.
 
     Options:
-    %s" (ArgumentParser.Create<FakeArg>().Usage())
-    
+    %s" (defaultArg (ArgumentParser.Create<FakeArg>().HelpTextMessage) "")
+
 type Args = { Script: string option; Target: string option; Rest: string [] }
 
 /// Parses the positional args and provides the remaining tail args.
-let parsePositionalArgs (args:string []) = 
+let parsePositionalArgs (args:string []) =
 
     //Support this usage.
     //fake.exe <script>.fsx <targetName> [switches]
     //fake.exe <targetName> [switches]
-    let maybeScript, maybeTarget = 
+    let maybeScript, maybeTarget =
         if args.Length > 1 then
             let isScriptArg (arg:string) = arg.EndsWith(".fsx", StringComparison.InvariantCultureIgnoreCase)
             //Don't consider it the positional target if looks like switch or old kvp arg.
             let isTargetArg (arg:string) = not <| (arg.StartsWith("-") || arg.Contains("="))
             let arg1 = args.[1]
-            let maybeScriptOrTarget = 
+            let maybeScriptOrTarget =
                 if isScriptArg arg1 then Some(Choice1Of2(arg1))
                 elif isTargetArg arg1 then Some(Choice2Of2(arg1))
                 else None
@@ -79,8 +79,8 @@ let parsePositionalArgs (args:string []) =
             | None -> None, None
         else None, None
 
-    let restOfArgs = 
-        let tailIndex = 
+    let restOfArgs =
+        let tailIndex =
             match maybeScript, maybeTarget with
             | Some(_), Some(_) -> 3 | Some(_), None | None, Some(_) -> 2 | None, None -> 1
         if args.Length-1 >= tailIndex

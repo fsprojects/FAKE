@@ -66,6 +66,8 @@ paket-files/
 */.vagrant/*
 # Ignore VS2015 folder
 .vs/
+# Ignore JetBrains Rider folder
+.idea/
 
 Samples/WebNpmGrunt/node_modules
 .fake
