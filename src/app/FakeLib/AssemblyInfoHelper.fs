@@ -244,15 +244,17 @@ let ReplaceAssemblyInfoVersions param =
             |> replaceMetadataAttributes rest
         | _ -> line
 
-    let replaceLine line = 
-        line
-        |> replaceAttribute "AssemblyVersion" parameters.AssemblyVersion
-        |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
-        |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
-        |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
-        |> replaceAttribute "AssemblyCompany" parameters.AssemblyCompany
-        |> replaceAttribute "AssemblyCopyright" parameters.AssemblyCopyright
-        |> replaceMetadataAttributes parameters.AssemblyMetadata
+    let replaceLine (line : string) =
+        if line.TrimStart().StartsWith("//") then line
+        else
+            line
+            |> replaceAttribute "AssemblyVersion" parameters.AssemblyVersion
+            |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
+            |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
+            |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
+            |> replaceAttribute "AssemblyCompany" parameters.AssemblyCompany
+            |> replaceAttribute "AssemblyCopyright" parameters.AssemblyCopyright
+            |> replaceMetadataAttributes parameters.AssemblyMetadata
     
     let encoding = Text.Encoding.GetEncoding "UTF-8"
 
