@@ -68,45 +68,51 @@ Target "RenameFSharpCompilerService" (fun _ ->
       asem.Write(dir </> "FAKE.FSharp.Compiler.Service.dll")
 )
 
+
+let common = [
+    Attribute.Product "FAKE - F# Make"
+    Attribute.Version release.AssemblyVersion
+    Attribute.InformationalVersion release.AssemblyVersion
+    Attribute.FileVersion release.AssemblyVersion]
+
+let assemblyInfos =
+  [ "./src/app/FAKE/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make Command line tool"
+        Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
+    "./src/app/Fake.Deploy/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make Deploy tool"
+        Attribute.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"] @ common
+    "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make Deploy Web"
+        Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
+    "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make Deploy Lib"
+        Attribute.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
+    "./src/app/FakeLib/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make Lib"
+        Attribute.InternalsVisibleTo "Test.FAKECore"
+        Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
+    "./src/app/Fake.SQL/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make SQL Lib"
+        Attribute.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"] @ common
+    "./src/app/Fake.Experimental/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make Experimental Lib"
+        Attribute.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
+    "./src/app/Fake.FluentMigrator/AssemblyInfo.fs",
+      [ Attribute.Title "FAKE - F# Make FluentMigrator Lib"
+        Attribute.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
+
 Target "SetAssemblyInfo" (fun _ ->
-    let common = [
-         Attribute.Product "FAKE - F# Make"
-         Attribute.Version release.AssemblyVersion
-         Attribute.InformationalVersion release.AssemblyVersion
-         Attribute.FileVersion release.AssemblyVersion]
-
-    let assemblyInfos =
-      [ "./src/app/FAKE/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make Command line tool"
-         Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
-        "./src/app/Fake.Deploy/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make Deploy tool"
-         Attribute.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"] @ common
-        "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make Deploy Web"
-         Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-        "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make Deploy Lib"
-         Attribute.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
-        "./src/app/FakeLib/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make Lib"
-         Attribute.InternalsVisibleTo "Test.FAKECore"
-         Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
-        "./src/app/Fake.SQL/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make SQL Lib"
-         Attribute.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"] @ common
-        "./src/app/Fake.Experimental/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make Experimental Lib"
-         Attribute.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
-        "./src/app/Fake.FluentMigrator/AssemblyInfo.fs",
-        [Attribute.Title "FAKE - F# Make FluentMigrator Lib"
-         Attribute.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
-
     for assemblyFile, attributes in assemblyInfos do
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> CreateFSharpAssemblyInfo assemblyFile
+)
+
+Target "UnskipAssemblyInfo" (fun _ ->
+    for assemblyFile, _ in assemblyInfos do
+        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
 )
 
 Target "BuildSolution" (fun _ ->
