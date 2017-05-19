@@ -1,3 +1,6 @@
+#### 4.61.3 - 19.05.2017
+* Upgrade assembly binding redirect for FluentMigrator - https://github.com/fsharp/FAKE/pull/1558
+
 #### 4.61.2 - 11.05.2017
 * Allow to specify the default NuGet source - https://github.com/fsharp/FAKE/pull/1551
 * Add support for custom NuGet symbol feed during push https://github.com/fsharp/FAKE/pull/1549
