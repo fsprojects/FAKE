@@ -8,6 +8,13 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
+#### 4.61.3 - 19.05.2017
+* Upgrade assembly binding redirect for FluentMigrator - https://github.com/fsharp/FAKE/pull/1558
+
+#### 4.61.2 - 11.05.2017
+* Allow to specify the default NuGet source - https://github.com/fsharp/FAKE/pull/1551
+* Add support for custom NuGet symbol feed during push https://github.com/fsharp/FAKE/pull/1549
+
 #### 4.61.1 - 04.05.2017
 * BUGFIX: Stop AzureHelper throwing exceptions unnecessarily - https://github.com/fsharp/FAKE/pull/1542
 

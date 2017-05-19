@@ -58,6 +58,8 @@ type NuGetParams =
       OutputPath : string
       PublishUrl : string
       AccessKey : string
+      SymbolPublishUrl: string
+      SymbolAccessKey: string
       NoDefaultExcludes : bool
       NoPackageAnalysis : bool
       ProjectFile : string
@@ -99,8 +101,10 @@ let NuGetDefaults() =
       IncludeReferencedProjects = false
       OutputPath = "./NuGet"
       WorkingDir = "./NuGet"
-      PublishUrl = null
+      PublishUrl = "https://www.nuget.org/api/v2/package"
       AccessKey = null
+      SymbolPublishUrl = null
+      SymbolAccessKey = null
       NoDefaultExcludes = false
       NoPackageAnalysis = false
       PublishTrials = 5
@@ -141,12 +145,15 @@ let GetPackageVersion deploymentsDir package =
         version
     with
     | exn -> new Exception("Could not detect package version for " + package, exn) |> raise
-    
+
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
-let private replaceAccessKey key (text : string) = 
-    if isNullOrEmpty key then text
-    else text.Replace(key, "PRIVATEKEY")
-    
+let private replaceAccessKeys parameters (text:string) =
+    let replaceKey key (str:string) =
+        if isNullOrEmpty key then str
+        else str.Replace(key, "PRIVATEKEY")
+
+    text |> (replaceKey parameters.AccessKey >> replaceKey parameters.SymbolAccessKey)
+
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let specFile = parameters.WorkingDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
@@ -311,14 +318,20 @@ let private pack parameters nuspecFile =
 let rec private publish parameters = 
     let tracing = enableProcessTracing
     enableProcessTracing <- false
-    let source = 
-        if isNullOrEmpty parameters.PublishUrl then ""
-        else sprintf "-source %s" parameters.PublishUrl
-    
-    let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters
-                                            |> FullName) parameters.AccessKey source
-    tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKey parameters.AccessKey args) 
-        (FullName parameters.WorkingDir) parameters.PublishTrials
+
+    // Newer NuGet requires source to be always specified, so if PublishUrl is empty,
+    // ignore symbol source - the produced source is broken anyway.
+    let normalize str = if isNullOrEmpty str then None else Some str
+    let source = match parameters.PublishUrl |> normalize, parameters.SymbolPublishUrl |> normalize with
+                 | None, _                     -> ""
+                 | Some source, None           -> sprintf "-source %s" source
+                 | Some source, Some symSource -> sprintf "-source %s -SymbolSource %s -SymbolApiKey %s"
+                                                          source symSource parameters.SymbolAccessKey
+
+    let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters |> FullName)
+                                           parameters.AccessKey source
+    tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKeys parameters args)
+                                                      (FullName parameters.WorkingDir) parameters.PublishTrials
     try 
         let result = 
             ExecProcess (fun info -> 
@@ -339,7 +352,7 @@ let rec private publishSymbols parameters =
     let args = 
         sprintf "push -source %s \"%s\" %s" parameters.PublishUrl (packageFileName parameters) parameters.AccessKey
 
-    tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKey parameters.AccessKey args) 
+    tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKeys parameters args)
         (FullName parameters.WorkingDir) parameters.PublishTrials
     try 
         let result = 
@@ -368,7 +381,7 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
-        |> replaceAccessKey parameters.AccessKey
+        |> replaceAccessKeys parameters
         |> failwith
 
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
@@ -390,7 +403,7 @@ let NuGetPack setParams nuspecOrProjectFile =
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
-        |> replaceAccessKey parameters.AccessKey
+        |> replaceAccessKeys parameters
         |> failwith
 
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
@@ -405,7 +418,7 @@ let NuGetPublish setParams =
         publish parameters
     with exn ->
         if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message
-        |> replaceAccessKey parameters.AccessKey
+        |> replaceAccessKeys parameters
         |> failwith
     
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
@@ -431,7 +444,7 @@ let NuGet setParams nuspecOrProjectFile =
     with exn -> 
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
-        |> replaceAccessKey parameters.AccessKey
+        |> replaceAccessKeys parameters
         |> failwith
 
 [<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
