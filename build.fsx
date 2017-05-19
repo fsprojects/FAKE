@@ -103,10 +103,10 @@ Target "SetAssemblyInfo" (fun _ ->
          Attribute.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
 
     for assemblyFile, attributes in assemblyInfos do
-        attributes |> CreateFSharpAssemblyInfo assemblyFile
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
+        attributes |> CreateFSharpAssemblyInfo assemblyFile
 )
 
 Target "BuildSolution" (fun _ ->
