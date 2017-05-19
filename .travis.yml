@@ -1,8 +1,12 @@
 language: csharp
 
 mono:
-  - latest
   - 4.8.1
+  - latest
+
+matrix:
+  allow_failures:
+    - mono: latest
   
 sudo: false  # use the new container-based Travis infrastructure
 
