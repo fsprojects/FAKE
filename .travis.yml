@@ -1,5 +1,9 @@
 language: csharp
 
+mono:
+  - latest
+  - 4.8.1
+  
 sudo: false  # use the new container-based Travis infrastructure
 
 script: 
