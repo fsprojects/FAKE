@@ -44,7 +44,6 @@ open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
 open Fake.Windows
-open Fake.Tools
 
 let currentDirectory = Shell.pwd()
 #else
@@ -191,7 +190,7 @@ let dotnetAssemblyInfos =
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
-      "Fake.Tool.Git", "Running git commands"
+      "Fake.Tools.Git", "Running git commands"
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey" ]
@@ -230,13 +229,14 @@ Target "SetAssemblyInfo" (fun _ ->
     for assemblyFile, attributes in assemblyInfos do
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
-        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
+        //Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> CreateFSharpAssemblyInfo assemblyFile
 )
 
 Target "UnskipAssemblyInfo" (fun _ ->
     for assemblyFile, _ in assemblyInfos do
-        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
+        ()
+        //Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
 )
 
 Target "BuildSolution" (fun _ ->
