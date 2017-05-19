@@ -569,6 +569,20 @@ Target "DotnetRestore" (fun _ ->
         ensureDirectory dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
+    let netcoreFsprojs = netCoreProjs |> Seq.toList
+    let result = Dotnet { DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
+    let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
+    let missingNetCoreProj =
+        netCoreProjs
+        |> Seq.toList
+        |> List.map (fun proj ->
+            let relativePath = proj.Substring srcAbsolutePathLength
+            if result.Messages |> Seq.contains relativePath |> not then
+                traceFAKE "Project '%s' is missing in src/Fake-netcore.sln! Run 'dotnet sln src/Fake-netcore.sln add src/%s'" proj proj
+                true
+            else false)
+        |> Seq.exists id
+    if missingNetCoreProj then failwith "At least one netcore project seems to be missing from the src/Fake-netcore.sln solution!"
     // dotnet restore
     DotnetRestore id "src/Fake-netcore.sln"
     //netCoreProjs
