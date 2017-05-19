@@ -9,7 +9,7 @@ open System.Text
 /// Calculates the SHA1 for a given string.
 let calcSHA1 (text:string) =
     Environment.getDefaultEncoding().GetBytes text
-      |> (new SHA1CryptoServiceProvider()).ComputeHash
+      |> SHA1.Create().ComputeHash
       |> Array.fold (fun acc e ->
            let t = System.Convert.ToString(e, 16)
            if t.Length = 1 then acc + "0" + t else acc + t)

@@ -36,15 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
+    <ProjectReference Include="..\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj" />
-    <ProjectReference Include="..\Fake.Testing.Common\Fake.Testing.Common.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>

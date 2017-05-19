@@ -28,5 +28,6 @@ let setMessage repositoryDir text =
         if isNullOrEmpty text then
             if messageFile.Exists then messageFile.Delete()
         else
-            use textWriter = new StreamWriter(messageFile.FullName, false, new UTF8Encoding(true))
+            use stream = File.OpenWrite(messageFile.FullName)
+            use textWriter = new StreamWriter(stream, new UTF8Encoding(true))
             textWriter.Write text
