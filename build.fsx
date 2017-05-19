@@ -526,7 +526,7 @@ let LatestTooling options =
                 Branch = "release/2.0.0"
             })
         Channel = None
-        Version = Version "2.0.0-preview1-005977"
+        Version = Version "1.0.4"
     }
 Target "InstallDotnetCore" (fun _ ->
      DotnetCliInstall LatestTooling
