@@ -44,6 +44,7 @@ open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
 open Fake.Windows
+open Fake.Tools
 
 let currentDirectory = Shell.pwd()
 #else
