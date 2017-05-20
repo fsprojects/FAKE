@@ -21,8 +21,8 @@ module Trace =
     let trace = trace
     let traceError = traceError
     let traceImportant = traceImportant
-    let traceTask s proj = 
-        { new System.IDisposable with 
+    let traceTask s proj =
+        { new System.IDisposable with
             member x.Dispose() = () }
 module String =
     let replace = replace
@@ -45,7 +45,7 @@ let mutable DefaultDotnetCliDir =
 /// Get dotnet cli executable path
 /// ## Parameters
 ///
-/// - 'dotnetCliDir' - dotnet cli install directory 
+/// - 'dotnetCliDir' - dotnet cli install directory
 let private dotnetCliPath dotnetCliDir = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
 
 /// Get .NET Core SDK download uri
@@ -57,7 +57,7 @@ let private getBashDotnetCliInstallerUrl branch = getGenericDotnetCliInstallerUr
 
 
 /// Download .NET Core SDK installer
-let private downloadDotnetInstallerFromUrl (url:string) fileName =  
+let private downloadDotnetInstallerFromUrl (url:string) fileName =
     //let url = getDotnetCliInstallerUrl branch
 #if USE_HTTPCLIENT
     let h = new System.Net.Http.HttpClient();
@@ -81,7 +81,7 @@ let private md5 (data : byte array) : string =
 
 /// .NET Core SDK installer download options
 type DotNetInstallerOptions =
-    {   
+    {
         /// Always download install script (otherwise install script is cached in temporary folder)
         AlwaysDownload: bool;
         /// Download installer from this github branch
@@ -111,7 +111,7 @@ let DotnetDownloadInstaller setParams =
     match param.AlwaysDownload || not(File.Exists(tempInstallerScript)) with
         | true -> 
             let url = getInstallerUrl param.Branch
-            downloadDotnetInstallerFromUrl url tempInstallerScript 
+            downloadDotnetInstallerFromUrl url tempInstallerScript
         | _ -> ()
 
     tempInstallerScript
@@ -119,23 +119,23 @@ let DotnetDownloadInstaller setParams =
 
 /// .NET Core SDK architecture
 type DotnetCliArchitecture =
-    /// this value represents currently running OS architecture 
+    /// this value represents currently running OS architecture
     | Auto
     | X86
     | X64
 
 /// .NET Core SDK version (used to specify version when installing .NET Core SDK)
 type DotnetCliVersion =
-    /// most latest build on specific channel 
+    /// most latest build on specific channel
     | Latest
     ///  last known good version on specific channel (Note: LKG work is in progress. Once the work is finished, this will become new default)
     | Lkg
     /// 4-part version in a format A.B.C.D - represents specific version of build
     | Version of string
-  
+
 /// .NET Core SDK install options
 type DotNetCliInstallOptions =
-    {   
+    {
         /// Custom installer obtain (download) options
         InstallerOptions: DotNetInstallerOptions -> DotNetInstallerOptions
         /// .NET Core SDK channel (defaults to normalized installer branch)
@@ -158,29 +158,29 @@ type DotNetCliInstallOptions =
     static member Default = {
         InstallerOptions = id
         Channel = None
-        Version = Latest        
+        Version = Latest
         CustomInstallDir = None
-        Architecture = Auto        
+        Architecture = Auto
         DebugSymbols = false
         DryRun = false
         NoPath = true
     }
 
 /// .NET Core SDK install options preconfigured for preview2 tooling
-let Preview2ToolingOptions options = 
+let Preview2ToolingOptions options =
     { options with
-        InstallerOptions = (fun io -> 
+        InstallerOptions = (fun io ->
             { io with
-                Branch = "v1.0.0-preview2"                    
+                Branch = "v1.0.0-preview2"
             })
         Channel = Some "preview"
         Version = Version "1.0.0-preview2-003121"
     }
 
 /// .NET Core SDK install options preconfigured for preview4 tooling
-let LatestPreview4ToolingOptions options = 
+let LatestPreview4ToolingOptions options =
     { options with
-        InstallerOptions = (fun io -> 
+        InstallerOptions = (fun io ->
             { io with
                 Branch = "rel/1.0.0-preview4"
             })
@@ -188,9 +188,9 @@ let LatestPreview4ToolingOptions options =
         Version = Latest
     }
 /// .NET Core SDK install options preconfigured for preview4 tooling
-let Preview4_004233ToolingOptions options = 
+let Preview4_004233ToolingOptions options =
     { options with
-        InstallerOptions = (fun io -> 
+        InstallerOptions = (fun io ->
             { io with
                 Branch = "rel/1.0.0-preview4"
             })
@@ -198,14 +198,25 @@ let Preview4_004233ToolingOptions options =
         Version = Version "1.0.0-preview4-004233"
     }
 /// .NET Core SDK install options preconfigured for preview4 tooling
-let RC4_004771ToolingOptions options = 
+let RC4_004771ToolingOptions options =
     { options with
-        InstallerOptions = (fun io -> 
+        InstallerOptions = (fun io ->
             { io with
                 Branch = "rel/1.0.0-rc3"
             })
         Channel = None
         Version = Version "1.0.0-rc4-004771"
+    }
+
+/// .NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1 release of the .NET Core tools
+let RC4_004973ToolingOptions options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "rel/1.0.1"
+            })
+        Channel = None
+        Version = Version "1.0.3-rc4-004973"
     }
 
 /// [omit]

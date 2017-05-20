@@ -525,10 +525,17 @@ Target "CreateNuGet" (fun _ ->
 #load "src/app/Fake.DotNet.Cli/Dotnet.fs"
 open Fake.DotNet.Cli
 #endif
-
+let LatestTooling options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "release/2.0.0"
+            })
+        Channel = None
+        Version = Version "1.0.4"
+    }
 Target "InstallDotnetCore" (fun _ ->
-//     // DotnetCliInstall Preview2ToolingOptions
-     DotnetCliInstall RC4_004771ToolingOptions
+     DotnetCliInstall LatestTooling
 )
 
 let root = __SOURCE_DIRECTORY__
