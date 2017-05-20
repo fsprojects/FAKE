@@ -53,9 +53,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Testing.Common", "app\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Windows.Chocolatey", "app\Fake.Windows.Chocolatey\Fake.Windows.Chocolatey.fsproj", "{A95B731B-5887-4EF5-A64D-B643FA8EBD92}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.netcore", "app\Fake.netcore\Fake.netcore.fsproj", "{6B339DA3-8DED-4262-A427-3C4CCDD00650}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Tools.Git", "app\Fake.Tools.Git\Fake.Tools.Git.fsproj", "{E32B2631-476A-4C2D-AE18-275ED7A22F10}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Tools.Git", "app\Fake.Tools.Git\Fake.Tools.Git.fsproj", "{E32B2631-476A-4C2D-AE18-275ED7A22F10}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.netcore", "app\Fake.netcore\Fake.netcore.fsproj", "{6B339DA3-8DED-4262-A427-3C4CCDD00650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
