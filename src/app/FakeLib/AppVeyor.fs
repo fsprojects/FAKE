@@ -40,6 +40,12 @@ type AppVeyorEnvironment =
     /// GitHub Pull Request title
     static member PullRequestTitle = environVar "APPVEYOR_PULL_REQUEST_TITLE"
 
+    /// GitHub Pull Request Repo name
+    static member PullRequestRepoName = environVar "APPVEYOR_PULL_REQUEST_REPO_NAME"
+
+    /// GitHub Pull Request branch
+    static member PullRequestRepoBranch = environVar "APPVEYOR_PULL_REQUEST_REPO_BRANCH"
+
     /// AppVeyor unique job ID
     static member JobId = environVar "APPVEYOR_JOB_ID"
 
