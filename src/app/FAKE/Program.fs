@@ -166,5 +166,6 @@ try
 
 finally
     traceEndBuild()
+    restorePreviousConsoleEncoding()
     if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
     if Environment.ExitCode <> 0 then exit Environment.ExitCode
