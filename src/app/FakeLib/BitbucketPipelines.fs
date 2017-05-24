@@ -19,3 +19,8 @@ type BitbucketPipelinesEnvironment =
     /// The name of the account in which the repository lives
     static member RepoOwner = environVar "BITBUCKET_REPO_OWNER"
     
+    /// The absolute path of the directory that the repository is cloned into within the Docker container.
+    static member CloneDir = environVar "BITBUCKET_CLONE_DIR"
+    
+    /// Default value is true. Gets set whenever a pipeline runs.
+    static member CI = environVar "CI"
