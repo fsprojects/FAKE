@@ -38,7 +38,6 @@
     <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="paket.references" />
