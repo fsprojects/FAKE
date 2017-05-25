@@ -223,7 +223,7 @@ let assemblyInfos =
         Attribute.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ] @
    (dotnetAssemblyInfos
     |> List.map (fun (project, description) ->
-        project, [Attribute.Title (sprintf "FAKE - F# Make %s" description) ] @ common))
+        sprintf "./src/app/%s/AssemblyInfo.fs" project, [Attribute.Title (sprintf "FAKE - F# Make %s" description) ] @ common))
 
 Target "SetAssemblyInfo" (fun _ ->
     for assemblyFile, attributes in assemblyInfos do
