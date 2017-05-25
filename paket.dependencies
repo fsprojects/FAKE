@@ -1,3 +1,4 @@
+version 5.0.0-beta006
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
