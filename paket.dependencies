@@ -94,14 +94,12 @@ group netcore
     nuget FSharp.Compiler.Service content: none
     nuget Microsoft.DotNet.PlatformAbstractions
     nuget FSharp.Core ~> 4.1.2
-    nuget FSharp.NET.Sdk ~> 1.0.2
-    //nuget Microsoft.FSharp.Core.netcore 1.0.0-alpha-161023 alpha
-    //nuget Microsoft.NET.Sdk 1.0.0-alpha-20161104-2 alpha
-    nuget Microsoft.NETCore.App 1.1.0
-    nuget NETStandard.Library 1.6.1
+    nuget FSharp.NET.Sdk ~> 1.0
+    nuget Microsoft.NETCore.App ~> 1.0
+    nuget NETStandard.Library ~> 1.0
     nuget Argu
-    nuget Paket.Core 5.0.0-alpha002 prerelease
-    nuget Mono.Cecil 0.10.0-beta5 beta
+    nuget Paket.Core prerelease
+    nuget Mono.Cecil ~> 0.10.0 prerelease
 
     nuget System.Linq.Parallel
     nuget System.Diagnostics.FileVersionInfo

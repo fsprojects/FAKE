@@ -161,7 +161,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     |> Seq.collect (fun p ->
       let installModel =
         paketDependencies.GetInstalledPackageModel(group, p.Name.ToString())
-          .ApplyFrameworkRestrictions(Paket.Requirements.getRestrictionList p.Settings.FrameworkRestrictions)
+          .ApplyFrameworkRestrictions(Paket.Requirements.getExplicitRestriction p.Settings.FrameworkRestrictions)
       let targetProfile = Paket.TargetProfile.SinglePlatform framework
       //let assemblies =
       //  Paket.LoadingScripts.PackageAndAssemblyResolution.getDllsWithinPackage framework installModel
