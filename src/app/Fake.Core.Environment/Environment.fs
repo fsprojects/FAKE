@@ -40,6 +40,7 @@ module Environment =
     open System.Collections.Generic
     open System.Text
     open System.Text.RegularExpressions
+    open System.Reflection
     open Microsoft.Win32
 
     /// Type alias for System.EnvironmentVariableTarget
@@ -193,18 +194,38 @@ module Environment =
     /// Todo: Detect mono on windows
     let isMono = 
     #if NETSTANDARD1_6
-        false
+        not (isNull (Type.GetType("Mono.Runtime")))
     #else
         isUnix
     #endif
 
     let isDotnetCore = 
     #if NETSTANDARD1_6
-        true
+        // See https://github.com/dotnet/corefx/blob/master/src/System.Runtime.InteropServices.RuntimeInformation/src/System/Runtime/InteropServices/RuntimeInformation/RuntimeInformation.cs
+        System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core")
     #else
         false
     #endif
     
+    /// required sometimes to workaround mono crashes
+    /// http://stackoverflow.com/a/8414517/1269722
+    let monoVersion =
+        let t = Type.GetType("Mono.Runtime")
+        if (not (isNull t)) then
+#if NETSTANDARD1_6
+            let t = t.GetTypeInfo()
+#endif
+            let displayNameMeth = t.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic ||| System.Reflection.BindingFlags.Static)
+            let displayName = displayNameMeth.Invoke(null, null).ToString()
+            let pattern = Regex("\d+(\.\d+)+")
+            let m = pattern.Match(displayName)
+            let version =
+                match System.Version.TryParse m.Value with
+                | true, v -> Some v
+                | _ -> None
+            Some (displayName, version)
+        else None
+
 
     /// Gets the list of valid directories included in the PATH environment variable.
     let pathDirectories =
