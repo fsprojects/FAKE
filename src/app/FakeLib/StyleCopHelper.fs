@@ -2,11 +2,7 @@
 module Fake.StyleCopHelper
 
 open System
-open System.Text
 open Fake
-open VSFile
-open VSFile.Project
-open VSFile.Source
 open StyleCop
 
 /// Type to define the behavior of how StyleCop must react on violations
@@ -21,10 +17,7 @@ type StyleCopParams =
       OutputFile : string
       ErrorLevel : StyleCopErrorLevel
       RecursiveSearch : bool
-      SettingsFile : string
-      SourceFiles : List<string>
-      ProjectFiles : List<string>
-      SolutionFiles : List<string> }
+      SettingsFile : string }
 
 /// StyleCop default parameters
 let StyleCopDefaults = 
@@ -32,10 +25,7 @@ let StyleCopDefaults =
       OutputFile = "StyleCopViolations.xml"
       ErrorLevel = Warning
       RecursiveSearch = true
-      SettingsFile = null
-      SourceFiles = List.Empty
-      ProjectFiles = List.Empty
-      SolutionFiles = List.Empty }
+      SettingsFile = null }
 
 /// Runs the StyleCop tool, using the listed source, project and solution files.
 ///
@@ -45,9 +35,9 @@ let StyleCopDefaults =
 ///
 /// ## Sample
 ///
-///     StyleCop (fun p -> { p with 
-///                     SolutionFiles = [ artifactsDir @@ "MySolution.sln" ] }) 
-let StyleCop (setParams : StyleCopParams -> StyleCopParams) =
+///     !! "**/*.cs"
+///         |> StyleCop (fun p -> { p with OutputFile = "violations.xml" }) 
+let StyleCop (setParams : StyleCopParams -> StyleCopParams) (sourceFiles : string seq) =
     let param = setParams StyleCopDefaults
 
     use __ = traceStartTaskUsing "StyleCop" ""
@@ -57,62 +47,31 @@ let StyleCop (setParams : StyleCopParams -> StyleCopParams) =
 
     analyser.OutputGenerated.AddHandler(fun _ e -> trace e.Output)
 
-    /// Create Code Project with a given id and source path
-    let createCodeProject id path = CodeProject(id, path, config)
+    let counter() = 
+        let x = ref 0
+        let increment() = x := !x + 1; !x
+        increment
 
-    /// Create Visual Studio files from the given source paths
-    let visualStudioFiles sourcePaths = VisualStudioFiles(Seq.ofList sourcePaths, param.RecursiveSearch)
+    let nextId = counter()
+
+    /// Create Code Project with a given id and source path
+    let createCodeProject path = CodeProject(nextId(), path, config)
 
     /// Add the source file to the analyser for futher handling
-    let addSourceFile (codeProject : CodeProject) (sourceFile : CSharpSourceFile) =
-        sourceFile.Load()
-        analyser.Core.Environment.AddSourceCode(codeProject, sourceFile.FilePath, null) |> ignore
-
-    let rec combineCodeProjectFromFiles id files func =
+    let addSourceFile (codeProject : CodeProject) sourceFile =
+        analyser.Core.Environment.AddSourceCode(codeProject, sourceFile, null) |> ignore
+    
+    let rec addSourceFiles files =
         match files with
         | [] -> []
         | head :: tail ->
-            let nextId = id + 1
-            let project = func nextId head
-            project :: combineCodeProjectFromFiles nextId tail func
+            let project = createCodeProject head
+            addSourceFile project head
+            project :: addSourceFiles tail
 
-    /// Make 'CodeProject' files from source files
-    let rec addSourceFiles id (files : List<CSharpSourceFile>) =
-        combineCodeProjectFromFiles id files 
-            (fun id head -> 
-                let project = createCodeProject id head.DirectoryPath
-                addSourceFile project head
-                project)
-    
-    /// Make 'CodeProject' files from project files
-    let rec addProjectFiles id (files : List<CSharpProjectFile>) =
-        combineCodeProjectFromFiles id files 
-            (fun id head ->
-                let project = createCodeProject id head.DirectoryPath
-                head.Load()
-                head.SourceFiles |> Seq.iter (addSourceFile project)
-                project)
-
-    /// Make 'CodeProject' files from solution files
-    let rec addSolutionFiles id (files : List<SolutionFile>) =
-        files |> List.collect (fun f -> f.Load(); addProjectFiles id (List.ofSeq f.CSharpProjectFiles)) 
-
-    let sourceFiles = visualStudioFiles param.SourceFiles
     let codeProjects = 
-        /// 1. Add all the C# source files as 'CodeProjects'
-        addSourceFiles 0 (List.ofSeq sourceFiles.CSharpSourceFiles)
-            
-            /// 2. Add all the C# project files as 'CodeProjects'
-            |> (fun projects -> 
-                let projectFiles = visualStudioFiles param.ProjectFiles
-                let codeProjectsFromProjects = addProjectFiles (List.length projects) (List.ofSeq projectFiles.CSharpProjectFiles)
-                List.append projects codeProjectsFromProjects)
-            
-            /// 3. Add all the C# solution files as 'CodeProjects'
-            |> (fun projects ->
-                let solutionFiles = visualStudioFiles param.SolutionFiles
-                let codeProjectsFromSolutions = addSolutionFiles (List.length projects) (List.ofSeq solutionFiles.SolutionFiles)
-                List.append projects codeProjectsFromSolutions)
+        /// Add all the C# source files as 'CodeProjects'
+        addSourceFiles (List.ofSeq sourceFiles)
 
     /// Start analysing
     let ok = analyser.Start(Collections.Generic.List<CodeProject>(codeProjects), true)
