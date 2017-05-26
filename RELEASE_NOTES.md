@@ -1,7 +1,5 @@
-#### 4.61.4 - 26.05.2017
+#### 4.61.3 - 26.05.2017
 * Fix msbuild 15 resolution - fixes https://github.com/fsprojects/Paket/issues/2345
-
-#### 4.61.3 - 19.05.2017
 * Upgrade assembly binding redirect for FluentMigrator - https://github.com/fsharp/FAKE/pull/1558
 
 #### 4.61.2 - 11.05.2017
