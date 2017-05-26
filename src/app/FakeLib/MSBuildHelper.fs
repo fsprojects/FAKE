@@ -29,7 +29,6 @@ let knownMsBuildEntries =
         { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin";
                                      @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin";
                                      @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";
-                                     @"\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin";
                                      @"\MSBuild\15.0\Bin"] }
     ]
 
