@@ -44,6 +44,7 @@ open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
 open Fake.Windows
+open Fake.Tools
 
 let currentDirectory = Shell.pwd()
 #else
@@ -229,20 +230,14 @@ Target "SetAssemblyInfo" (fun _ ->
     for assemblyFile, attributes in assemblyInfos do
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
-#if !DOTNETCORE
         // not jet released
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
-#endif
         attributes |> CreateFSharpAssemblyInfo assemblyFile
 )
 
 Target "UnskipAssemblyInfo" (fun _ ->
     for assemblyFile, _ in assemblyInfos do
-#if DOTNETCORE
-        () // not jet released
-#else
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
-#endif
 )
 
 Target "BuildSolution" (fun _ ->
