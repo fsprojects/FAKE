@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\FSharp.NET.Sdk\build\FSharp.NET.Sdk.props" Condition="Exists('..\..\..\packages\FSharp.NET.Sdk\build\FSharp.NET.Sdk.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\FSharp.Compiler.Tools\build\FSharp.Compiler.Tools.props" Condition="Exists('..\..\..\packages\FSharp.Compiler.Tools\build\FSharp.Compiler.Tools.props')" Label="Paket" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +7,6 @@
     <ProjectGuid>{13D56521-772A-41DB-9772-1DA1A4AA8E3A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FakeLib</RootNamespace>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AssemblyName>FakeLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
@@ -38,6 +35,7 @@
     <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
+    <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -426,6 +424,7 @@
     </Reference>
   </ItemGroup>
   <PropertyGroup>
+    <VisualStudioVersion>15.0</VisualStudioVersion>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
   <Choose>
@@ -3474,6 +3473,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\..\..\packages\FSharp.NET.Sdk\build\FSharp.NET.Core.Sdk.targets" Condition="Exists('..\..\..\packages\FSharp.NET.Sdk\build\FSharp.NET.Core.Sdk.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\FSharp.NET.Sdk\build\FSharp.NET.Current.Sdk.targets" Condition="Exists('..\..\..\packages\FSharp.NET.Sdk\build\FSharp.NET.Current.Sdk.targets')" Label="Paket" />
 </Project>

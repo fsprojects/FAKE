@@ -104,8 +104,8 @@ let additionalFiles = [
     "License.txt"
     "README.markdown"
     "RELEASE_NOTES.md"
-    "./packages/FSharp.Core/lib/net40/FSharp.Core.sigdata"
-    "./packages/FSharp.Core/lib/net40/FSharp.Core.optdata"]
+    "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
+    "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
 // Targets
 Target "Clean" (fun _ ->
@@ -900,12 +900,12 @@ Target "StartDnc" DoNothing
     =?> ("Test", not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
-    =?> ("CreateNuGet", not isLinux)
-    ==> "Default"
-    ==> "EnsureTestsRun"
-    ==> "CopyLicense"
-    =?> ("GenerateDocs", isLocalBuild && not isLinux)
     =?> ("SourceLink", isLocalBuild && not isLinux)
+    =?> ("CreateNuGet", not isLinux)
+    ==> "CopyLicense"
+    ==> "Default"
+    =?> ("GenerateDocs", isLocalBuild && not isLinux)
+    ==> "EnsureTestsRun"
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "DotnetCorePushNuGet"
     ==> "PublishNuget"
