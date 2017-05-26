@@ -24,13 +24,13 @@ type MsBuildEntry = {
 
 let knownMsBuildEntries =
     [
-        { Version = "12.0"; Paths = [@"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64"] }
+        { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
+                                     @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin"
+                                     @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
+                                     @"\MSBuild\15.0\Bin"
+                                     @"\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"] }
         { Version = "14.0"; Paths = [@"\MSBuild\14.0\Bin"] }
-        { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin";
-                                     @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin";
-                                     @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";
-                                     @"\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin";
-                                     @"\MSBuild\15.0\Bin"] }
+        { Version = "12.0"; Paths = [@"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64"] }
     ]
 
 let oldMsBuildLocations =
@@ -43,7 +43,7 @@ let toDict items =
     items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
 
 let getAllKnownPaths =
-    (knownMsBuildEntries |> List.collect (fun m -> m.Paths) |> List.rev) @ oldMsBuildLocations
+    (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
 
 /// Versions of Mono prior to this one have faulty implementations of MSBuild
 let monoVersionToUseMSBuildOn = System.Version("5.0.0.0")
@@ -76,45 +76,51 @@ let msBuildExe =
     let which tool = ProcessHelper.tryFindFileOnPath tool
     let msbuildEnvironVar = EnvironmentHelper.environVarOrNone "MSBuild"
 
-    match isUnix, EnvironmentHelper.monoVersion with
-    | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
-        let sources = [
-            msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
-            msbuildEnvironVar |> Option.bind which
-            which "msbuild"
-            which "xbuild"
-        ]
-        defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
-    | true, _ -> 
-        let sources = [
-            msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
-            msbuildEnvironVar |> Option.bind which
-            which "xbuild"
-            which "msbuild"
-        ]
-        defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
-    | false, _ -> 
-
-        let configIgnoreMSBuild =
-            if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
-            then Some ""
-            else None
-        let findOnVSPathsThenSystemPath =
-            let dict = toDict knownMsBuildEntries
-            let vsVersionPaths =
-                defaultArg (EnvironmentHelper.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
-                |> List.map ((@@) ProgramFilesX86)
-
-            ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
-
-        let sources = [
-            msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
-            msbuildEnvironVar |> Option.bind which
-            configIgnoreMSBuild
-            findOnVSPathsThenSystemPath
-        ]
-        defaultArg (sources |> List.choose id |> List.tryHead) "MSBuild.exe"
-
+    let foundExe =
+        match isUnix, EnvironmentHelper.monoVersion with
+        | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
+            let sources = [
+                msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
+                msbuildEnvironVar |> Option.bind which
+                which "msbuild"
+                which "xbuild"
+            ]
+            defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
+        | true, _ -> 
+            let sources = [
+                msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
+                msbuildEnvironVar |> Option.bind which
+                which "xbuild"
+                which "msbuild"
+            ]
+            defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
+        | false, _ -> 
+    
+            let configIgnoreMSBuild =
+                if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
+                then Some ""
+                else None
+            let findOnVSPathsThenSystemPath =
+                let dict = toDict knownMsBuildEntries
+                let vsVersionPaths =
+                    defaultArg (EnvironmentHelper.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
+                    |> List.map ((@@) ProgramFilesX86)
+    
+                ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
+    
+            let sources = [
+                msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
+                msbuildEnvironVar |> Option.bind which
+                configIgnoreMSBuild
+                findOnVSPathsThenSystemPath
+            ]
+            defaultArg (sources |> List.choose id |> List.tryHead) "MSBuild.exe"
+    
+    if foundExe.Contains @"\BuildTools\" then
+        traceFAKE "If you encounter msbuild errors make sure you have copied the required SDKs, see https://github.com/Microsoft/msbuild/issues/1697"
+    elif foundExe.Contains @"\2017\" then
+        logVerbosefn "Using msbuild of VS2017 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
+    foundExe
 
 /// [omit]
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
