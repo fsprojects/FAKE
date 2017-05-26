@@ -1,3 +1,7 @@
+#### 5.0.0-alpha007 - 26.05.2017
+* CopyDir https://github.com/matthid/FAKE/pull/4
+* Allow to annotate paket groups (no header needed) https://github.com/matthid/FAKE/pull/7
+
 #### 5.0.0-alpha006 - 25.05.2017
 * DotnetCore Support, version 6 will only have the netcore version the old way of using FAKE is obsolete, but supported for now
   Migration guide is available in the documentation.
