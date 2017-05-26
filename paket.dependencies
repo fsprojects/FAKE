@@ -83,6 +83,7 @@ group NetcoreBuild
     nuget Fake.DotNet.Testing.XUnit2 prerelease
     nuget Fake.DotNet.Testing.NUnit prerelease
     nuget Fake.Windows.Chocolatey prerelease
+    nuget Fake.Tools.Git prerelease
     nuget Mono.Cecil 0.10.0-beta5
 
 group netcore
