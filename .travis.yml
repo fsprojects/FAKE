@@ -24,13 +24,7 @@ before install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force openssl ; fi
 
 mono:
-  - 4.8.1
   - latest
-
-matrix:
-  allow_failures:
-    - mono: latest
-
 
 script: 
 #  - $FAKE run build.fsx

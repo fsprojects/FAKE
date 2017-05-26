@@ -8,7 +8,7 @@ source http://nuget.org/api/v2
 nuget FSharp.Core redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core 5.0.0-alpha005 prerelease
+nuget Paket.Core prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu 3.3.0
