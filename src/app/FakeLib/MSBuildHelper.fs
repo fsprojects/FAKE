@@ -76,7 +76,7 @@ let msBuildExe =
     let which tool = ProcessHelper.tryFindFileOnPath tool
     let msbuildEnvironVar = EnvironmentHelper.environVarOrNone "MSBuild"
 
-    let result =
+    let foundExe =
         match isUnix, EnvironmentHelper.monoVersion with
         | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
             let sources = [
@@ -116,11 +116,11 @@ let msBuildExe =
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "MSBuild.exe"
     
-    if result.Contains @"\BuildTools\" then
+    if foundExe.Contains @"\BuildTools\" then
         traceFAKE "If you encounter msbuild errors make sure you have copied the required SDKs, see https://github.com/Microsoft/msbuild/issues/1697"
-    elif results.Contain @"\2017\" then
-        logVerbosefn "Using msbuild of VS2017 (%s), if you encounter build errors make sure you have installed the necessary workflows!" result
-    result
+    elif foundExe.Contains @"\2017\" then
+        logVerbosefn "Using msbuild of VS2017 (%s), if you encounter build errors make sure you have installed the necessary workflows!" foundExe
+    foundExe
 
 /// [omit]
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
