@@ -103,6 +103,9 @@
     <Compile Include="..\Fake.Core.Targets\AdditionalSyntax.fs">
       <Link>Fake.Core.Targets/AdditionalSyntax.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Core.Globbing\Globbing.fs">
+      <Link>Fake.Core.Targets/AdditionalSyntax.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.IO.FileSystem\Path.fs">
       <Link>Fake.IO.FileSystem/Path.fs</Link>
     </Compile>

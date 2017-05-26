@@ -38,7 +38,7 @@ module FileInfo =
             eq
 module DirectoryInfo =
     /// Creates a DirectoryInfo for the given path.
-    let inline ofPath path = new DirectoryInfo(path)
+    let inline ofPath path = DirectoryInfo(path)
 
     /// Gets all subdirectories of a given directory.
     let inline getDirectories (dir : DirectoryInfo) = dir.GetDirectories()
@@ -92,7 +92,7 @@ module DirectoryInfo =
         recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
     
     /// Copies the file structure recursively.
-    let rec copyRecursiveTo overwrite (outputDir : DirectoryInfo) (dir : DirectoryInfo)  = 
+    let rec copyRecursiveTo2 overwrite filter (outputDir : DirectoryInfo) (dir : DirectoryInfo) = 
         let files = 
             dir
             |> getDirectories
@@ -101,17 +101,23 @@ module DirectoryInfo =
                                 |> ofPath
                    ensure newDir
                    d
-                   |> copyRecursiveTo overwrite newDir
+                   |> copyRecursiveTo2 overwrite filter newDir
                    |> fun r -> r @ acc) []
         (dir
          |> getFiles
+         |> Seq.filter (fun f -> filter outputDir f)
          |> Seq.map (fun f -> 
                 let newFileName = outputDir.FullName @@ f.Name
                 f.CopyTo(newFileName, overwrite) |> ignore
                 newFileName)
          |> Seq.toList) @ files
 
+    /// Copies the file structure recursively.
+    let copyRecursiveTo overwrite (outputDir : DirectoryInfo) (dir : DirectoryInfo) = copyRecursiveTo2 overwrite (fun _ _ -> true) outputDir dir
+    /// Copies the file structure recursively.
     let copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = dir |> copyRecursiveTo overwrite outputDir
+    /// Copies the file structure recursively.
+    let copyRecursive2 (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite filter = dir |> copyRecursiveTo2 overwrite filter outputDir
 
 module FileSystemInfo =
     /// Creates a FileInfo or a DirectoryInfo for the given path
