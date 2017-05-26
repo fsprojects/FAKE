@@ -126,7 +126,7 @@ Target "RenameFSharpCompilerService" (fun _ ->
 #if DOTNETCORE
       let reader =
           let searchpaths =
-              [ dir; __SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net40" ]
+              [ dir; __SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net45" ]
           let resolve name =
               let n = AssemblyName(name)
               match searchpaths
@@ -151,7 +151,7 @@ Target "RenameFSharpCompilerService" (fun _ ->
 #else
       let reader = new Mono.Cecil.DefaultAssemblyResolver()
       reader.AddSearchDirectory(dir)
-      reader.AddSearchDirectory(__SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net40")
+      reader.AddSearchDirectory(__SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net45")
 #endif
       let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
       let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </>"FSharp.Compiler.Service.dll", readerParams)
@@ -593,12 +593,6 @@ Target "DotnetRestore" (fun _ ->
     if missingNetCoreProj then failwith "At least one netcore project seems to be missing from the src/Fake-netcore.sln solution!"
     // dotnet restore
     DotnetRestore id "src/Fake-netcore.sln"
-    //netCoreProjs
-    //|> Seq.iter(fun proj ->
-    //    let dir = (FileInfo (Path.GetFullPath proj)).Directory.FullName
-    //    //dotnet dir "restore"
-    //    DotnetRestore id proj
-    //)
 )
 
 let runtimes =
