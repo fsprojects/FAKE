@@ -1,3 +1,4 @@
+image: Visual Studio 2017
 install:
   - cinst fake -pre
 build_script:
