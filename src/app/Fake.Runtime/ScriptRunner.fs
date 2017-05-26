@@ -40,7 +40,7 @@ let private handleCoreCaching (context:FakeContext) (session:IFsiSession) fsiErr
 
         if (not <| targetDirectory.Exists) then targetDirectory.Create()
         if (destinationFile.Exists) then destinationFile.Delete()
-        
+
         try
             // Now we change the AssemblyName of the written Assembly via Mono.Cecil.
             // Strictly speaking this is not needed, however this helps with executing
@@ -136,7 +136,7 @@ let nameParser scriptFileName =
 let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
     if context.Config.PrintDetails then trace "Using cache"
     let exampleName, _, parseName = nameParser context.Config.ScriptFilePath
-    
+
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
     Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
@@ -162,10 +162,10 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let co = context.Config.CompileOptions
-    let options = 
+    let options =
         co.AdditionalArguments
         |> FsiOptions.ofArgs
-        |> fun f -> 
+        |> fun f ->
             { f with
                 References = f.References @ co.CompileReferences }
     if context.Config.PrintDetails then
@@ -240,7 +240,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
 let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     match cache with
     | Some c when context.Config.UseCache ->
-        try c.AsResult, tryRunCached c context 
+        try c.AsResult, tryRunCached c context
         with cacheError ->
             traceFAKE """CACHING WARNING
 this might happen after Updates...
@@ -248,5 +248,5 @@ please open a issue on FAKE and /cc @matthid ONLY IF this happens reproducibly)
 
 Error: %O""" cacheError
             runUncached context
-    | _ -> 
+    | _ ->
         runUncached context

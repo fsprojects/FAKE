@@ -102,19 +102,11 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   let restoreOrUpdate () =
     if printDetails then Trace.log "Restoring with paket..."
 
-    // Check if lockfile is outdated
-    //let hash = HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile)
-    //if File.Exists lockFilePath.FullName && (not <| File.Exists paketDependenciesHashFile || File.ReadAllText paketDependenciesHashFile <> hash) then
-    //  if printDetails then Trace.log "paket lockfile is outdated..."
-      // Maybe for "in-line" but never always...
-      //File.Delete lockFilePath.FullName
-
     // Update
     if not <| File.Exists lockFilePath.FullName then
       if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
       paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
       |> ignore
-      //saveDependenciesHash ()
 
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
@@ -241,22 +233,41 @@ let restoreDependencies printDetails cacheDir section =
   | PaketDependencies (paketDependencies, group) ->
     paketCachingProvider printDetails cacheDir paketDependencies group
 
+let tryFindGroupFromDepsFile scriptDir =
+    let depsFile = Path.Combine(scriptDir, "paket.dependencies")
+    if File.Exists (depsFile) then
+        match
+            File.ReadAllLines(depsFile)
+            |> Seq.map (fun l -> l.Trim())
+            |> Seq.filter (fun l -> l.ToLowerInvariant().StartsWith "group")
+            |> Seq.filter (fun l -> l.Contains "// [ FAKE GROUP ]")
+            |> Seq.map (fun l -> l.Split([|" "|], StringSplitOptions.RemoveEmptyEntries).[1])
+            |> Seq.tryHead with
+        | Some group ->
+            PaketDependencies (Paket.Dependencies(Path.GetFullPath depsFile), Some group) |> Some
+        | _ -> None
+    else None
+
 let prepareFakeScript printDetails script =
-  // read dependencies from the top
-  let scriptDir = Path.GetDirectoryName (script)
-  let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
-  Directory.CreateDirectory (cacheDir) |> ignore
-  let scriptText = File.ReadAllText(script)
-  let section = readFakeSection scriptText
-  match section with
-  | Some s ->
-    let section = parseHeader cacheDir s
-    restoreDependencies printDetails cacheDir section
-  | None ->
-    if printDetails then Trace.traceFAKE "No dependencies section found in script: %s" script
-    if Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" then
+    // read dependencies from the top
+    let scriptDir = Path.GetDirectoryName (script)
+    let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
+    Directory.CreateDirectory (cacheDir) |> ignore
+    let scriptText = File.ReadAllText(script)
+    let section = readFakeSection scriptText
+    let section =
+        match section with
+        | Some s -> parseHeader cacheDir s |> Some
+        | None ->
+            tryFindGroupFromDepsFile scriptDir
+
+    match section, Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" with
+    | _, true ->
+        Trace.traceFAKE "NetCore hack (FAKE_UNDOCUMENTED_NETCORE_HACK) is activated: %s" script
         CoreCache.Cache.defaultProvider
-    else
+    | Some section, _ ->
+        restoreDependencies printDetails cacheDir section
+    | _ ->
         failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 
 let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErrMsg onOutMsg useCache =

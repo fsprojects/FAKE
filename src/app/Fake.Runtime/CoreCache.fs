@@ -328,7 +328,7 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
     // Add arguments to the Environment
     for (k,v) in config.Environment do
       setEnvironVar k v
-      
+
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
     setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.AdditionalArguments))
 

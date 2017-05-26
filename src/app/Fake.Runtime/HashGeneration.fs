@@ -14,12 +14,7 @@ module TokenizerHelper =
         private { Tokens : Token list }
 
     let getTokenized (filePath:string) defines lines =
-//#if NETSTANDARD
-//        let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
-//#else
-//        // After FSC Update -> replace "filePath" with "Some filePath" in next line. Beaking change somewhere between 6 and 8
         let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
-//#endif
         /// Tokenize a single line of F# code
         let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state =
           let raw =
