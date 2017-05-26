@@ -381,7 +381,7 @@ let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
 
 /// Copies the file structure recursively.
-let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = 
+let rec copyRecursive2 (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite filter = 
     let files = 
         dir
         |> subDirectories
@@ -389,9 +389,11 @@ let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrit
                let newDir = outputDir.FullName @@ d.Name
                             |> directoryInfo
                if not newDir.Exists then newDir.Create()
-               copyRecursive d newDir overwrite @ acc) []
+               copyRecursive2 d newDir overwrite filter @ acc) []
+
     (dir
      |> filesInDir
+     |> Seq.filter (fun f -> filter outputDir f)
      |> Seq.map (fun f -> 
             let newFileName = outputDir.FullName @@ f.Name
             f.CopyTo(newFileName, overwrite) |> ignore
@@ -399,7 +401,42 @@ let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrit
      |> Seq.toList) @ files
 
 /// Copies the file structure recursively.
+let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = 
+    copyRecursive2 dir outputDir overwrite (fun _ _ -> true)
+
+/// Copies the file structure recursively.
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
+
+type CopyRecursiveMethod =
+| Overwrite
+| NoOverwrite
+| Skip
+| IncludePattern of string
+| ExcludePattern of string
+| Filter of (DirectoryInfo -> FileInfo -> bool)
+
+open Fake.Globbing
+/// Copies the file structure recursively.
+/// ## Parameters
+/// 
+///  - `method` - the method to decide which files get copied
+///  - `dir` - The source directory.
+///  - `outputDir` - The target directory.
+let CopyRecursive2 method dir outputDir =
+    let dirInfo = directoryInfo dir
+    let outputDirInfo = directoryInfo outputDir   
+    let cr2 = copyRecursive2 dirInfo outputDirInfo false
+    match method with
+    | Overwrite -> copyRecursive dirInfo outputDirInfo true
+    | NoOverwrite -> copyRecursive dirInfo outputDirInfo false
+    | Skip -> cr2 <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
+    | IncludePattern(pattern) ->
+        let regex = globRegexCache.GetOrAdd(pattern, compileGlobToRegex)
+        cr2 <| fun d f -> d.FullName @@ f.Name |> regex.IsMatch
+    | ExcludePattern(pattern) ->
+        let regex = globRegexCache.GetOrAdd(pattern, compileGlobToRegex)
+        cr2 <| fun d f -> d.FullName @@ f.Name |> regex.IsMatch |> not
+    | Filter(f) -> cr2 f
 
 /// Moves a single file to the target and overwrites the existing file.
 /// ## Parameters

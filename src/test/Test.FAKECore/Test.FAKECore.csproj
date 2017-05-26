@@ -57,10 +57,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -132,6 +130,7 @@
     <Compile Include="NUnit3Specs.cs" />
     <Compile Include="XUnitSpecs.cs" />
     <Compile Include="XUnit2Specs.cs" />
+    <Compile Include="FileHandling\CopyRecursiveSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
