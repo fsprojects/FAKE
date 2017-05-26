@@ -7,6 +7,7 @@ SET NO_DOTNETCORE_BOOTSTRAP=true
 SET PAKET_VERSION=5.0.0-beta006
 
 .paket\paket.bootstrapper.exe %PAKET_VERSION%
+
 .paket\paket.exe restore
 if errorlevel 1 (
   exit /b %errorlevel%
