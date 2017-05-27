@@ -1,6 +1,6 @@
 # Getting started with FAKE - F# Make
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found [here](gettingstarted.html)**
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found [here](fake-gettingstarted.html)**
 
 In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
 

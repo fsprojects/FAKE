@@ -3,7 +3,7 @@
 	<head>
 		<title>FAKE - A DSL for build tasks and more</title>
 		<meta charset="utf-8" />
-    <meta name="author" content="@Properties["project-author"]" />
+    	<meta name="author" content="@Properties["project-author"]">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="css/iconmonstr-iconic-font.css" />
@@ -25,21 +25,18 @@
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li @Raw(Properties["current-page"] == "Home" ? "class=\"current_page_item\"" : "")><a href="index.html">Home</a></li>
-									<li @Raw(Properties["current-page"] == "Tutorials" ? "class=\"current_page_item\"" : "")>
+									<li class="current_page_item"><a href="index.html">Home</a></li>
+									<li>
 										<a href="#">Tutorials</a>
 										<ul>
-											<li><a href="fake-gettingstarted.html">Getting Started Tutorial</a></li>
-											<li><a href="fake-cache.html">Build script caching</a></li>
-                      <li><a href="fake-commandline.html">Running FAKE from command line</a></li>
-                      <li><a href="fake-dotnetcore.html">FAKE 5 quickstart</a></li>
-                      <li><a href="fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
-                    </ul>
+											<li><a href="gettingstarted.html">Getting Started</a></li>
+											<li><a href="cache.html">Build script caching</a></li>
+										</ul>
 									</li>
-									<li @Raw(Properties["current-page"] == "Project" ? "class=\"current_page_item\"" : "")>
+									<li>
 										<a href="#">Project</a>
 										<ul>
-											<li><a href="help-users.html">Who is using FAKE?</a></li>
+											<li><a href="users.html">Who is using FAKE?</a></li>
 											<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
 											<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
 											<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
@@ -49,8 +46,8 @@
 											<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
 										</ul>
 									</li>
-									<li @Raw(Properties["current-page"] == "Modules" ? "class=\"current_page_item\"" : "")>
-										<a href="#">Modules</a>
+									<li>
+										<a href="#">Features</a>
 										<ul>
 											<li>
 												<a href="#">Core</a>
@@ -78,12 +75,12 @@
 												<a href="#">DotNet</a>
 												<ul>
 													<li><a href="#">Cli</a></li>
-													<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+													<li><a href="#">AssemblyInfoFile</a></li>
 													<li><a href="#">MsBuild</a></li>
 													<li><a href="#">Testing - NUnit</a></li>
 													<li><a href="#">Testing - MSpec</a></li>
 													<li><a href="#">Testing - XUnit2</a></li>
-													<li><a href="dotnet-nuget.html">NuGet</a></li>
+													<li><a href="#">NuGet</a></li>
 													<li><a href="#">Paket</a></li>
 												</ul>
 											</li>
@@ -96,38 +93,12 @@
 											<li>
 												<a href="#">Windows</a>
 												<ul>
-													<li><a href="windows-chocolatey.html">Chocolatey</a></li>
-												</ul>
-											</li>
-											<li>
-												<a href="#">Legacy / Not Migrated</a>
-												<ul>
-													<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
-													<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
-													<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
-													<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
-													<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
-													<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
-													<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
-													<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-													<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
-													<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
-													<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-													<li><a href="todo-watch.html">IO.FileWatcher</a></li>
-													<li><a href="todo-wix.html">Windows.WiX</a></li>
-													<li><a href="todo-slacknotification.html">API.Slack</a></li>
-													<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-													<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
-													<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
-													<li><a href="todo-deploy.html">Fake.Deploy</a></li>
-													<li><a href="todo-iis.html">?.?.IIS</a></li>
-													<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
-													<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
+													<li><a href="#">Chocolatey</a></li>
 												</ul>
 											</li>
 										</ul>
 									</li>
-									<li @Raw(Properties["current-page"] == "APIReference" ? "class=\"current_page_item\"" : "")><a href="apidocs/index.html">API Reference</a></li>
+									<li><a href="apidocs/index.html">API Reference</a></li>
 								</ul>
 							</nav>
 

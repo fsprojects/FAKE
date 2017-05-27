@@ -1,6 +1,6 @@
 # FAKE Command Line
 
-**Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found [here](legacy_commandline.html)**
+**Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found [here](legacy-commandline.html)**
 
 
 The FAKE.exe command line interface (CLI) is defined as follows:`
