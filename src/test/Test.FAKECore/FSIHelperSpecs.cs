@@ -204,18 +204,20 @@ do ()
                     reader.AddSearchDirectory(Path.GetDirectoryName(TraceHelper.fakePath));
                     reader.AddSearchDirectory(Path.GetDirectoryName(typeof(Microsoft.FSharp.Core.FSharpOption<string>).Assembly.Location));
                     var readerParams = new Mono.Cecil.ReaderParameters() { AssemblyResolver = reader };
-                    var asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(cacheFilePath, readerParams);
-                    var i = 0;
-                    foreach (var type in asem.Modules.SelectMany(mod => mod.Types).Where(t =>
-                        // parseName t.FullName |> Option.isSome
-                        Microsoft.FSharp.Core.OptionModule.IsSome(res.Item3.Invoke(t.FullName))))
+                    using (var asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(cacheFilePath, readerParams))
                     {
-                        // Seems like deleting is not so simple, because others might reference the type
-                        // therefore we just rename the type -> our algorithm can no longer find it.
-                        type.Name = "YOU_CANNOT_FIND_ME_" + i++;
-                    }
+                        var i = 0;
+                        foreach (var type in asem.Modules.SelectMany(mod => mod.Types).Where(t =>
+                            // parseName t.FullName |> Option.isSome
+                            Microsoft.FSharp.Core.OptionModule.IsSome(res.Item3.Invoke(t.FullName))))
+                        {
+                            // Seems like deleting is not so simple, because others might reference the type
+                            // therefore we just rename the type -> our algorithm can no longer find it.
+                            type.Name = "YOU_CANNOT_FIND_ME_" + i++;
+                        }
 
-                    asem.Write(cacheFilePath + ".tmp");
+                        asem.Write(cacheFilePath + ".tmp");
+                    }
 
                     File.Delete(cacheFilePath);
                     File.Move(cacheFilePath + ".tmp", cacheFilePath);
@@ -255,17 +257,18 @@ do ()
                     reader.AddSearchDirectory(Path.GetDirectoryName(TraceHelper.fakePath));
                     reader.AddSearchDirectory(Path.GetDirectoryName(typeof(Microsoft.FSharp.Core.FSharpOption<string>).Assembly.Location));
                     var readerParams = new Mono.Cecil.ReaderParameters() { AssemblyResolver = reader };
-                    var asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(cacheFilePath, readerParams);
-                    foreach (var type in asem.Modules.SelectMany(mod => mod.Types).Where(t => t.HasMethods))
+                    using (var asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(cacheFilePath, readerParams))
                     {
-                        foreach (var method in type.Methods.Where(method => method.Name == "main@").ToList())
+                        foreach (var type in asem.Modules.SelectMany(mod => mod.Types).Where(t => t.HasMethods))
                         {
-                            type.Methods.Remove(method);
+                            foreach (var method in type.Methods.Where(method => method.Name == "main@").ToList())
+                            {
+                                type.Methods.Remove(method);
+                            }
                         }
-                    }
 
-                    asem.Write(cacheFilePath + ".tmp");
-                    
+                        asem.Write(cacheFilePath + ".tmp");
+                    }
 
                     File.Delete(cacheFilePath);
                     File.Move(cacheFilePath + ".tmp", cacheFilePath);

@@ -1,0 +1,6 @@
+group netcore
+FSharp.NET.Sdk
+FSharp.Core
+NETStandard.Library
+System.Net.Http
+Newtonsoft.Json

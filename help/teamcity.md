@@ -1,5 +1,7 @@
 # Integrating a FAKE build script into TeamCity
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 Easy [TeamCity](http://www.jetbrains.com/teamcity/) integration was one of the major goals for the FAKE build system.
 
 In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the [getting started guide](gettingstarted.html).

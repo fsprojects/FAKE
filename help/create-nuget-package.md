@@ -1,5 +1,7 @@
 # Creating NuGet packages
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 ## Creating a .nuspec template
 
 The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.

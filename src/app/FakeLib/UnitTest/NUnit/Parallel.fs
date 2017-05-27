@@ -1,20 +1,24 @@
 ﻿[<AutoOpen>]
 /// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests in parallel.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 module Fake.NUnitParallel
 
+#nowarn "44"
 open System
 open System.IO
 open System.Text
 open System.Xml.Linq
 open System.Linq
 
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type private NUnitParallelResult = 
     { AssemblyName : string
       ErrorOut : StringBuilder
       StandardOut : StringBuilder
       ReturnCode : int
       OutputFile : string }
-
+      
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type private AggFailedResult = 
     { WorseReturnCode : int
       Messages : string list }
@@ -34,6 +38,7 @@ type private AggFailedResult =
 ///         !! (testDir + @"\Test.*.dll") 
 ///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "NUnitParallel" details

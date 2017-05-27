@@ -1,0 +1,69 @@
+<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD</DefineConstants>
+    <DelaySign>true</DelaySign>
+    <DebugType>pdbonly</DebugType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Fake.Runtime</AssemblyName>
+    <OutputType>Library</OutputType>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD1_6;NETSTANDARD1_5</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs" />
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="LegacyApiHelper.fs" />
+    <Compile Include="Environment.fs" />
+    <Compile Include="Path.fs" />
+    <Compile Include="String.fs" />
+    <Compile Include="Trace.fs" />
+    <Compile Include="Runners.fs" />
+    <Compile Include="CompileRunner.fs" />
+    <Compile Include="ScriptRunner.fs" />
+    <Compile Include="HashGeneration.fs" />
+    <Compile Include="CoreCache.fs" />
+    <Compile Include="FakeRuntime.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+  </ItemGroup>
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="mscorlib">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Runtime.Caching">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.ServiceProcess">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Xml">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Core">
+      <FromP2P>true</FromP2P>
+    </Reference>
+  </ItemGroup>-->
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-compile-fsc">
+      <Version>1.0.0-preview2-020000</Version>
+    </DotNetCliToolReference>
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>

@@ -1,4 +1,4 @@
-[<System.Obsolete("Open Fake.Testing to use the latest xUnit2 task.")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 /// DEPRECATED. See [`Fake.Testing.XUnit2`](fake-testing-xunit2.html).
 ///
 /// Contains tasks to run [xUnit](https://github.com/xunit/xunit) unit tests.
@@ -40,7 +40,7 @@ Valid options:
 *)
 
 /// DEPRECATED.
-[<Obsolete("This type will be removed in a future version.")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 type ParallelOption =
     | None = 0
     | Collections = 1
@@ -49,12 +49,12 @@ type ParallelOption =
 
 /// DEPRECATED.
 /// Option which allows to specify if an xUnit error should break the build.
-[<Obsolete("This type alias will be removed in a future version.")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 type XUnit2ErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
 /// DEPRECATED.
 /// The xUnit parameter type
-[<Obsolete("This type will be removed in a future version. See Fake.Testing.XUnit2.XUnit2Params")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 [<CLIMutable>]
 type XUnit2Params =
     { /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
@@ -102,11 +102,11 @@ type XUnit2Params =
 
 /// DEPRECATED.
 /// The xUnit default parameters
-[<Obsolete("This value will be removed in a future version.")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let empty2Trait : (string * string) option = None
 
 /// DEPRECATED.
-[<Obsolete("This value will be removed in a future version. See Fake.Testing.XUnit2.XUnit2Defaults")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let XUnit2Defaults =
     { ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null
@@ -130,7 +130,7 @@ let XUnit2Defaults =
 /// DEPRECATED.
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-[<Obsolete("This function will be removed in a future version.")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let buildXUnit2Args parameters assembly =
     let fi = fileInfo assembly
     let name = fi.Name
@@ -187,7 +187,7 @@ let buildXUnit2Args parameters assembly =
 ///         !! (testDir + @"\xUnit.Test.*.dll")
 ///           |> xUnit2 (fun p -> {p with OutputDir = testDir })
 ///     )
-[<Obsolete("Deprecated. This task will be removed in a future version. Open Fake.Testing to use the latest xUnit2 task.")>]
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
     use __ = traceStartTaskUsing "xUnit2" details

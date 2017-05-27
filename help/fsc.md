@@ -1,5 +1,7 @@
 # Compiling F# Sources
 
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
 The [Fsc task set](apidocs/fake-fschelper.html) in FAKE can be used to build F# source files and output libraries, modules,
 and executables by using the bundled
 [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service). 

@@ -362,9 +362,9 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
             reader.AddSearchDirectory (Path.GetDirectoryName TraceHelper.fakePath)
             reader.AddSearchDirectory (Path.GetDirectoryName typeof<string option>.Assembly.Location)
             let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
-            let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
-            asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
-            asem.Write(wishName + ".dll")
+            ( use asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
+              asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
+              asem.Write(wishName + ".dll"))
             File.Move(wishName + ".dll", cacheInfo.AssemblyPath)
         with exn ->
             // If cecil fails we might want to trigger a warning, but you know what?
@@ -456,10 +456,47 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             if printDetails then trace "Cache doesn't exist"
 
     // Contains warnings and errors about the build script.
+    let doTrace = environVar "FAKE_TRACE" = "true"
+    if printDetails && doTrace then
+        // "Debug" is for FCS debugging, use a debug build to get more output...
+        Debug.AutoFlush <- true
+        let logToConsole = true
+        let logToFile = true
+        try
+          let allTraceOptions =
+            TraceOptions.Callstack ||| TraceOptions.DateTime ||| TraceOptions.LogicalOperationStack |||
+            TraceOptions.ProcessId ||| TraceOptions.ThreadId ||| TraceOptions.Timestamp
+          let noTraceOptions = TraceOptions.None
+          let svclogFile = "FAKE.svclog"
+          System.Diagnostics.Trace.AutoFlush <- true
+
+          let setupListener traceOptions levels (listener:TraceListener) =
+            [ Yaaf.FSharp.Scripting.Log.source ]
+            |> Seq.iter (fun source ->
+                source.Switch.Level <- System.Diagnostics.SourceLevels.All
+                source.Listeners.Add listener |> ignore)
+            listener.Filter <- new EventTypeFilter(levels)
+            listener.TraceOutputOptions <- traceOptions
+            Debug.Listeners.Add(listener) |> ignore
+
+          if logToConsole then
+            new ConsoleTraceListener()
+            |> setupListener noTraceOptions System.Diagnostics.SourceLevels.Verbose
+
+          if logToFile then
+            if System.IO.File.Exists svclogFile then System.IO.File.Delete svclogFile
+            new XmlWriterTraceListener(svclogFile)
+            |> setupListener allTraceOptions System.Diagnostics.SourceLevels.All
+
+          // Test that everything works
+          Yaaf.FSharp.Scripting.Log.infof "Yaaf.FSharp.Scripting Logging setup!"
+        with e ->
+          printfn "Yaaf.FSharp.Scripting Logging setup failed: %A" e
     let fsiErrorOutput = new System.Text.StringBuilder()
     let session =
       try ScriptHost.Create
             (options, preventStdOut = true,
+              reportGlobal = doTrace,
               fsiErrWriter = ScriptHost.CreateForwardWriter
                 ((fun s ->
                     if String.IsNullOrWhiteSpace s |> not then

@@ -1,0 +1,55 @@
+{
+  "version": "__FAKE_TRACING_NANTXML_VERSION__",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "CORE_CLR",
+      "DOTNETCORE"
+    ],
+    "emitEntryPoint": false,
+    "xmlDoc": true,
+    "compile": {
+      "includeFiles": [
+        "AssemblyInfo.fs",
+        "NAntXmlTraceListener.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "dependencies": {
+    "FSharp.Core": "__FSHARP_CORE_VERSION__",
+    "Fake.Core.Tracing": "__FAKE_CORE_TRACING_VERSION__",
+    "Fake.IO.FileSystem": "__FAKE_IO_FILESYSTEM_VERSION__"
+  },
+  "frameworks": {
+    "net46": {
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Xml": "",
+        "System.Xml.Linq": "",
+        "System.Core": ""
+      }
+    },
+    "netstandard1.6": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD1_5"
+        ]
+      },
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}

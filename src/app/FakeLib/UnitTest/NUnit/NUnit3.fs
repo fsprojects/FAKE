@@ -1,12 +1,14 @@
 ﻿[<AutoOpen>]
 module Fake.Testing.NUnit3
 
+#nowarn "44"
 open System
 open System.Text
 open System.IO
 open Fake
 
 /// Process model for NUnit 3 to use.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnit3ProcessModel =
     | DefaultProcessModel
     | SingleProcessModel
@@ -20,6 +22,7 @@ type NUnit3ProcessModel =
         | MultipleProcessModel -> "Multiple"
 
 /// The --domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnit3DomainModel =
     /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
@@ -39,6 +42,7 @@ type NUnit3DomainModel =
 /// The --framework option in running NUnit 3. There are three kinds - VXY, which means either .NET framework or Mono, NetXY (use .NET framework with given version)
 /// and MonoXY (Mono framework with given version). You can use Net or Mono to let NUnit select the version.
 /// You can pass any value using Other.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnit3Runtime =
     /// Uses the runtime under which the assembly was built.
     | Default
@@ -83,9 +87,11 @@ type NUnit3Runtime =
         | Other(name) -> name
 
 /// Option which allows to specify if a NUnit error should break the build.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnit3ErrorLevel = TestRunnerErrorLevel
 
 /// The --trace option in NUnit3 console runner. Specifies the internal nunit runner log level.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnit3TraceLevel =
     | Default
     | Off
@@ -103,6 +109,7 @@ type NUnit3TraceLevel =
         | Verbose -> "Verbose"
 
 /// The --labels option in NUnit3 console runner. Specify whether to write test case names to the output.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type LabelsLevel =
     | Default
     | Off
@@ -118,6 +125,7 @@ type LabelsLevel =
 /// The NUnit 3 Console Parameters type. FAKE will use [NUnit3Defaults](fake-testing-nunit3.html) for values not provided.
 ///
 /// For reference, see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 [<CLIMutable>]
 type NUnit3Params =
     { /// The path to the NUnit3 console runner: `nunit3-console.exe`
@@ -228,6 +236,7 @@ type NUnit3Params =
 /// - `TraceLevel` - `Default` (By default NUnit3 sets this to off internally)
 /// - `Params` - `""`
 /// ## Defaults
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnit3Defaults =
     {
       ToolPath = findToolInSubPath  "nunit3-console.exe" (currentDirectory @@ "tools" @@ "Nunit")
@@ -258,12 +267,14 @@ let NUnit3Defaults =
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let getWorkingDir parameters =
     Seq.find isNotNullOrEmpty [ parameters.WorkingDir
                                 environVar ("teamcity.build.workingDir")
                                 "." ]
     |> Path.GetFullPath
-
+    
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let buildNUnit3Args parameters assemblies =
     let appendResultString results sb =
         match results, sb with
@@ -297,7 +308,8 @@ let buildNUnit3Args parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.Params "--params="
     |> appendFileNamesIfNotNull assemblies
     |> toText
-
+    
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "NUnit" details

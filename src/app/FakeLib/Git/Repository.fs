@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
 /// Contains functions which allow basic operations on git repositories.
 /// All operations assume that the CommandHelper can find git.exe.
+[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 module Fake.Git.Repository
 
+#nowarn "44"
 open Fake
 open System.IO
 
@@ -12,6 +14,7 @@ open System.IO
 ///  - `workingDir` - The working directory.
 ///  - `repoUrl` - The URL to the origin.
 ///  - `toPath` - Specifes the new target subfolder. 
+[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
 /// Clones a single branch of a git repository.
@@ -21,6 +24,7 @@ let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s 
 ///  - `repoUrl` - The URL to the origin.
 ///  - `branchname` - Specifes the target branch.
 ///  - `toPath` - Specifes the new target subfolder.
+[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let cloneSingleBranch workingDir repoUrl branchName toPath =
     sprintf "clone -b %s --single-branch %s %s" branchName repoUrl toPath
     |> runSimpleGitCommand workingDir
@@ -32,6 +36,7 @@ let cloneSingleBranch workingDir repoUrl branchName toPath =
 ///  - `repositoryDir` - The path of the target directory.
 ///  - `bare` - If the new directory is a bare directory.
 ///  - `shared` - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository. 
+[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let init repositoryDir bare shared =
     match bare, shared with
     | true, true -> gitCommand repositoryDir "init --bare --shared=all"
@@ -43,6 +48,7 @@ let init repositoryDir bare shared =
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The path of the directory to clean.
+[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let fullclean repositoryDir =
     let di = directoryInfo repositoryDir
     if di.Exists then

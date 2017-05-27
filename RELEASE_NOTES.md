@@ -1,3 +1,24 @@
+#### 5.0.0-alpha009 - 27.05.2017
+* Change fake group feature because of https://github.com/fsprojects/Paket/issues/2374
+
+#### 5.0.0-alpha008 - 27.05.2017
+* Add Fake.DotNet.FSFormatting module
+* Add Fake.DotNet.Paket module
+
+#### 5.0.0-alpha007 - 26.05.2017
+* CopyDir https://github.com/matthid/FAKE/pull/4
+* Allow to annotate paket groups (no header needed) https://github.com/matthid/FAKE/pull/7
+
+#### 5.0.0-alpha006 - 25.05.2017
+* DotnetCore Support, version 6 will only have the netcore version the old way of using FAKE is obsolete, but supported for now
+  Migration guide is available in the documentation.
+* Cleanup API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6
+* New CLI interface - The netcore version has a new cleaned-up CLI interface
+* No more 'build.sh' and 'build.cmd' files required (though you still can use them of you want a 'zero' dependency build)
+* Chocolatey Helper now supports Self-Contained packages
+* Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
+* Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
+
 #### 4.61.3 - 26.05.2017
 * Fix msbuild 15 resolution - fixes https://github.com/fsprojects/Paket/issues/2345
 * Upgrade assembly binding redirect for FluentMigrator - https://github.com/fsharp/FAKE/pull/1558
