@@ -22,34 +22,20 @@ let DefaultZipLevel = 7
 
 #if DOTNETCORE // Wait for SharpZipLib to become available for netcore
 
-type private MyClass () = class end
-
-let private createZipP fileName comment level (items: (string * string) seq) =
+let private createZip fileName comment level (items: (string * string) seq) =
     use stream = new ZipArchive (File.Create(fileName), ZipArchiveMode.Create)
     let zipLevel = min (max 0 level) 9
-    //tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
-    //stream.SetLevel zipLevel
-    //if not (String.IsNullOrEmpty comment) then stream.SetComment comment
     let buffer = Array.create 32768 0uy
     for item, itemSpec in items do
-        let info = FileInfo.ofPath item
-        let entry = stream.CreateEntryFromFile(item, itemSpec)
+        let fixedSpec = itemSpec.Replace(@"\", "/").TrimStart("/")
+        let entry = stream.CreateEntryFromFile(item, fixedSpec)
         ()
-        //entry.LastWriteTime <- DateTimeOffset(info.LastWriteTime)
 
-let private createZip fileName comment level (items: (string* string) seq) =
-#if NETSTANDARD // see https://github.com/dotnet/coreclr/issues/7043
-    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof<MyClass>.GetTypeInfo().Assembly)
-    let n = AssemblyName "System.IO.Compression.ZipFile"
-    lc.LoadFromAssemblyName(n) |> ignore
-#endif
-    createZipP fileName comment level items
 #else
 
 let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : string) (itemSpec : string) =
     let info = FileInfo.ofPath item
     let itemSpec = ZipEntry.CleanName itemSpec
-    //logfn "Adding File %s" itemSpec
     let entry = new ZipEntry(itemSpec)
     entry.DateTime <- info.LastWriteTime
     entry.Size <- info.Length
@@ -66,14 +52,12 @@ let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : str
 let private createZip fileName comment level (items : (string * string) seq) =
     use stream = new ZipOutputStream(File.Create(fileName))
     let zipLevel = min (max 0 level) 9
-    //tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
     stream.SetLevel zipLevel
     if not (String.IsNullOrEmpty comment) then stream.SetComment comment
     let buffer = Array.create 32768 0uy
     for item, itemSpec in items do
         addZipEntry stream buffer item itemSpec
     stream.Finish()
-    //tracefn "Zip successfully created %s" fileName
 
 #endif
 
