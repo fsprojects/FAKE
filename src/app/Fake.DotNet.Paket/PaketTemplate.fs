@@ -1,25 +1,22 @@
 /// Contains helper functions and task which allow it to generate a paket.template
 /// file for [Paket](http://fsprojects.github.io/Paket/index.html)
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
-module Fake.PaketTemplate
+module Fake.DotNet.PaketTemplate
 
-#nowarn "44"
 open System
 open System.Text
+open Fake.Core
+open Fake.IO.FileSystem
 
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketTemplateType =
     | File
     | Project
-    
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
+
 type PaketFileInfo =
     /// Include a file and store it into a targed
     | Include of string * string
     /// Explicitely exclude a file
     | Exclude of string
-    
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
+
 type PaketDependencyVersion =
     /// A specific version string
     | Version of string
@@ -27,8 +24,7 @@ type PaketDependencyVersion =
     | CURRENTVERSION
     /// Use the currently locked version as dependency
     | LOCKEDVERSION
-    
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
+
 type PaketDependencyVersionInfo =
     /// For example ~> 2.0
     | GreaterOrEqualSafe of PaketDependencyVersion
@@ -38,13 +34,10 @@ type PaketDependencyVersionInfo =
 
     /// no explicit version
     | AnyVersion
-    
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
+
 type PaketDependency = string * PaketDependencyVersionInfo
 
 /// Contains the different parameters to create a paket.template file
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
-[<CLIMutable>]
 type PaketTemplateParams =
     { /// The file path to the `paket.template` file
       /// if omitted, a `paket.template` file will be created in the current directory
@@ -132,7 +125,6 @@ type PaketTemplateParams =
 ///   - RequireLicenseAcceptance - `None`
 ///   - DevelopmentDependency - `None`
 ///   - IncludePDBs - `None`
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 let DefaultPaketTemplateParams =
     { TemplateFilePath = None
       TemplateType = Project
@@ -165,7 +157,7 @@ module internal Rendering =
 
     let inline appendWithNameIfSome name value sb =
         match value with
-        | Some v when (v |> isNullOrWhiteSpace |> not)-> sb |> appendWithName name v
+        | Some v when (v |> String.isNullOrWhiteSpace |> not)-> sb |> appendWithName name v
         | _ -> sb
 
     let inline appendBoolWithNameIfSome name value (sb: StringBuilder) =
@@ -175,7 +167,7 @@ module internal Rendering =
 
     let inline appendIndented value (sb: StringBuilder) =
         match value with
-        | v when (v |> isNullOrWhiteSpace) -> sb
+        | v when (v |> String.isNullOrWhiteSpace) -> sb
         | _ -> sb.Append(sprintf "    %s\n" value)
 
     let inline appendListWithName name lines (sb: StringBuilder) =
@@ -212,7 +204,7 @@ module internal Rendering =
 
     let inline renderPaketDependency (package, versionInfo) =
         match package with
-        | p when (p |> isNullOrWhiteSpace) -> None
+        | p when (p |> String.isNullOrWhiteSpace) -> None
         | _ -> Some (sprintf "%s%s" package (renderPaketDependencyVersionInfo versionInfo))
 
     let inline appendDependencies dependencies sb =
@@ -281,12 +273,11 @@ module internal Rendering =
 ///            }
 ///        )
 ///    )
-[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 let PaketTemplate setParams =
-    use __ = traceStartTaskUsing "PaketTemplate" ""
+    use __ = Trace.traceTask "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams
     let filePath = match parameters.TemplateFilePath with
                    | Some v -> v
                    | _ -> "paket.template"
 
-    WriteStringToFile false filePath (Rendering.createLines parameters)
+    File.WriteStringToFile false filePath (Rendering.createLines parameters)

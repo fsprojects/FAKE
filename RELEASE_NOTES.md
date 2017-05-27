@@ -1,3 +1,7 @@
+#### 5.0.0-alpha008 - 27.05.2017
+* Add Fake.DotNet.FSFormatting module
+* Add Fake.DotNet.Paket module
+
 #### 5.0.0-alpha007 - 26.05.2017
 * CopyDir https://github.com/matthid/FAKE/pull/4
 * Allow to annotate paket groups (no header needed) https://github.com/matthid/FAKE/pull/7

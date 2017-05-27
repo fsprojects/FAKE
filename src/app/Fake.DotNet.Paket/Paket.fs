@@ -1,16 +1,17 @@
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages with [Paket](http://fsprojects.github.io/Paket/index.html).
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
-module Fake.Paket
+module Fake.DotNet.Paket
 
-#nowarn "44"
 open System
 open System.IO
 open System.Xml.Linq
 open System.Text.RegularExpressions
+open Fake.Core.Globbing
+open Fake.Core
+open Fake.IO.FileSystem
+open Fake.IO.FileSystem.Operators
+open Fake.Core.Globbing.Operators
 
 /// Paket pack parameter type
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
-[<CLIMutable>]
 type PaketPackParams =
     { ToolPath : string
       TimeOut : TimeSpan
@@ -30,9 +31,8 @@ type PaketPackParams =
       PinProjectReferences : bool }
 
 /// Paket pack default parameters
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PaketPackDefaults() : PaketPackParams =
-    { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
+    { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
       SpecificVersions = []
@@ -50,8 +50,6 @@ let PaketPackDefaults() : PaketPackParams =
       PinProjectReferences = false }
 
 /// Paket push parameter type
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
-[<CLIMutable>]
 type PaketPushParams =
     { ToolPath : string
       TimeOut : TimeSpan
@@ -62,9 +60,8 @@ type PaketPushParams =
       ApiKey : string }
 
 /// Paket push default parameters
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PaketPushDefaults() : PaketPushParams =
-    { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
+    { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
       PublishUrl = null
       EndPoint =  null
@@ -73,8 +70,6 @@ let PaketPushDefaults() : PaketPushParams =
       ApiKey = null }
 
 /// Paket restore packages type
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
-[<CLIMutable>]
 type PaketRestoreParams =
     { ToolPath : string
       TimeOut : TimeSpan
@@ -85,9 +80,8 @@ type PaketRestoreParams =
       ReferenceFiles: string list }
 
 /// Paket restore default parameters
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PaketRestoreDefaults() : PaketRestoreParams = 
-    { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
+    { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
       WorkingDir = "."
       ForceDownloadOfPackages = false
@@ -99,20 +93,19 @@ let PaketRestoreDefaults() : PaketRestoreParams =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let Pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
-    use __ = traceStartTaskUsing "PaketPack" parameters.WorkingDir
+    use __ = Trace.traceTask "PaketPack" parameters.WorkingDir
 
     let xmlEncode (notEncodedText : string) =
         if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
 
-    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + toParam parameters.Version
-    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
-    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
-    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " buildplatform " + toParam parameters.BuildPlatform
-    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
+    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + Process.toParam parameters.Version
+    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + Process.toParam (xmlEncode parameters.ReleaseNotes)
+    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + Process.toParam parameters.BuildConfig
+    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " buildplatform " + Process.toParam parameters.BuildPlatform
+    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + Process.toParam parameters.TemplateFile
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
     let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
     let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
@@ -123,7 +116,7 @@ let Pack setParams =
 
     let packResult =
         let cmdArgs = sprintf "%s%s%s%s%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates symbols includeReferencedProjects minimumFromLockFile pinProjectReferences
-        ExecProcess
+        Process.ExecProcess
             (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- parameters.WorkingDir
@@ -135,16 +128,15 @@ let Pack setParams =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
-    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + toParam parameters.PublishUrl
-    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + toParam parameters.EndPoint
-    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
+    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + Process.toParam parameters.PublishUrl
+    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + Process.toParam parameters.EndPoint
+    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + Process.toParam parameters.ApiKey
 
-    use __ = traceStartTaskUsing "PaketPush" (separated ", " packages)
+    use __ = Trace.traceTask "PaketPush" (String.separated ", " packages)
 
     if parameters.DegreeOfParallelism > 0 then
         /// Returns a sequence that yields chunks of length n.
@@ -165,9 +157,9 @@ let Push setParams =
                 |> Seq.toArray
                 |> Array.map (fun package -> async {
                         let pushResult =
-                            ExecProcess (fun info ->
+                            Process.ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
-                                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (Process.toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
             Async.Parallel tasks
@@ -177,14 +169,13 @@ let Push setParams =
     else
         for package in packages do
             let pushResult =
-                ExecProcess (fun info ->
+                Process.ExecProcess (fun info ->
                     info.FileName <- parameters.ToolPath
                     info.WorkingDirectory <- parameters.WorkingDir
-                    info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                    info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (Process.toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
 
 /// Returns the dependencies from specified paket.references file
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let GetDependenciesForReferencesFile (referencesFile:string) =
     let getReferenceFilePackages =
         let isSingleFile (line: string) = line.StartsWith "File:"
@@ -224,7 +215,6 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let Restore setParams = 
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
     let forceRestore = if parameters.ForceDownloadOfPackages then " --force " else ""
@@ -235,10 +225,10 @@ let Restore setParams =
         then (sprintf " --references-files %s " (System.String.Join(" ", parameters.ReferenceFiles)))
         else ""
     
-    use __ = traceStartTaskUsing "PaketRestore" parameters.WorkingDir 
+    use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir 
 
     let restoreResult = 
-        ExecProcess (fun info ->
+        Process.ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles) parameters.TimeOut

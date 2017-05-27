@@ -184,6 +184,8 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Cli", "Running the dotnet cli"
       "Fake.DotNet.MsBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
+      "Fake.DotNet.Paket", "Running Paket and publishing packages"
+      "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentatiom"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
@@ -796,8 +798,6 @@ Target "DotnetCorePushNuGet" (fun _ ->
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
 
     // dotnet pack
-    //!! "src/app/*/project.json"
-    //-- "src/app/Fake.netcore/project.json"
     netCoreProjs
     -- "src/app/Fake.netcore/*.fsproj"
     |> Seq.iter(fun proj ->
