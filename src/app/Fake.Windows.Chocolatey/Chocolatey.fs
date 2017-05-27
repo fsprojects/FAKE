@@ -313,7 +313,8 @@ module Fake.Windows.Choco
     let ChocoPushDefaults = {
         Timeout = TimeSpan.FromMinutes 5.
         NonInteractive = true
-        Source = "https://chocolatey.org/"
+        // See https://github.com/chocolatey/chocolatey.org/issues/499
+        Source = "https://push.chocolatey.org/"
         ApiKey = null
         ToolPath = null
         AdditionalArgs = null
