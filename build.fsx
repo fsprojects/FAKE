@@ -254,9 +254,6 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocs" (fun _ ->
-#if DOTNETCORE
-    printfn "No Documentation helpers on dotnetcore jet."
-#else
     let source = "./help"
     let template = "./help/literate/templates/template-project.html"
     let templatesDir = "./help/templates/reference/"
@@ -291,7 +288,6 @@ Target "GenerateDocs" (fun _ ->
 
     CopyDir (docsDir @@ "content") "help/content" allFiles
     CopyDir (docsDir @@ "pics") "help/pics" allFiles
-#endif
 )
 
 Target "CopyLicense" (fun _ ->
@@ -801,14 +797,16 @@ Target "DotnetCorePushNuGet" (fun _ ->
 )
 
 Target "PublishNuget" (fun _ ->
+    // uses NugetKey environment variable.
     Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
             WorkingDir = nugetLegacyDir })
-    Paket.Push(fun p ->
-        { p with
-            DegreeOfParallelism = 2
-            WorkingDir = nugetDncDir })
+    // We have some nugets in there we don't want to push
+    //Paket.Push(fun p ->
+    //    { p with
+    //        DegreeOfParallelism = 2
+    //        WorkingDir = nugetDncDir })
 )
 
 Target "ReleaseDocs" (fun _ ->
