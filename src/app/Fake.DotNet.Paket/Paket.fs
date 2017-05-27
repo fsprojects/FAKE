@@ -209,7 +209,7 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
     let refLines = getReferenceFilePackages referencesFile
 
     getLockFilePackages referencesFile
-    |> Array.filter (fun (n, _) -> refLines |> Array.exists (fun pn -> pn.Equals(n, StringComparison.InvariantCultureIgnoreCase)))
+    |> Array.filter (fun (n, _) -> refLines |> Array.exists (fun pn -> pn.Equals(n, StringComparison.OrdinalIgnoreCase)))
 
 /// Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket
 /// ## Parameters

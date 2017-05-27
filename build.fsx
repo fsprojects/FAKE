@@ -588,7 +588,7 @@ Target "DotnetRestore" (fun _ ->
         |> List.map (fun proj ->
             let relativePath = proj.Substring srcAbsolutePathLength
             if result.Messages |> Seq.contains relativePath |> not then
-                traceFAKE "Project '%s' is missing in src/Fake-netcore.sln! Run 'dotnet sln src/Fake-netcore.sln add src/%s'" proj proj
+                traceFAKE "Project '%s' is missing in src/Fake-netcore.sln! Run 'dotnet sln src/Fake-netcore.sln add src/%s'" proj (relativePath.Replace("\\", "/"))
                 true
             else false)
         |> Seq.exists id
