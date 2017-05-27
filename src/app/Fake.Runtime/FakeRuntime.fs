@@ -239,12 +239,21 @@ let tryFindGroupFromDepsFile scriptDir =
         match
             File.ReadAllLines(depsFile)
             |> Seq.map (fun l -> l.Trim())
-            |> Seq.filter (fun l -> l.ToLowerInvariant().StartsWith "group")
             |> Seq.fold (fun (takeNext, result) l ->
                 // find '// [ FAKE GROUP ]' and take the next one.
                 match takeNext, result with
-                | _, Some s -> Some s
-                | true, None -> Some (l.Split([|" "|], StringSplitOptions.RemoveEmptyEntries).[1])
+                | _, Some s -> takeNext, Some s
+                | true, None ->
+                    if not (l.ToLowerInvariant().StartsWith "group") then
+                        Trace.traceFAKE "Expected a group after '// [ FAKE GROUP]' comment, but got %s" l
+                        false, None
+                    else
+                        let splits = l.Split([|" "|], StringSplitOptions.RemoveEmptyEntries)
+                        if splits.Length < 2 then
+                            Trace.traceFAKE "Expected a group name after '// [ FAKE GROUP]' comment, but got %s" l
+                            false, None
+                        else
+                            false, Some (splits.[1])
                 | _ -> if l.Contains "// [ FAKE GROUP ]" then true, None else false, None) (false, None)
             |> snd with
         | Some group ->
