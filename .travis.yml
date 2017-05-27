@@ -15,7 +15,7 @@ before_script:
   - mkdir fake-dotnetcore
   - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
   - export PATH=$PATH:$PWD/fake-dotnetcore/
-#  - chmod +x $PWD/fake-dotnetcore/dotnet
+  - chmod +x $PWD/fake-dotnetcore/Fake
 #  - export FAKE="$PWD/fake-dotnetcore/Fake"
   
 before install:
