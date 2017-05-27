@@ -254,9 +254,6 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocs" (fun _ ->
-#if DOTNETCORE
-    printfn "No Documentation helpers on dotnetcore jet."
-#else
     let source = "./help"
     let template = "./help/literate/templates/template-project.html"
     let templatesDir = "./help/templates/reference/"
@@ -291,7 +288,6 @@ Target "GenerateDocs" (fun _ ->
 
     CopyDir (docsDir @@ "content") "help/content" allFiles
     CopyDir (docsDir @@ "pics") "help/pics" allFiles
-#endif
 )
 
 Target "CopyLicense" (fun _ ->
@@ -690,7 +686,6 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
 Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
     ensureDirectory "nuget/dotnetcore/chocolatey"
-#if DOTNETCORE // Remove me once the SelfContained change is in the release...
     Choco.PackFromTemplate (fun p ->
         { p with
             PackageId = "fake"
@@ -699,14 +694,14 @@ Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
             Version = release.NugetVersion
             Files = [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None ]
             OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
-#else
-    failwithf "Currently only supported in the netcore FAKE version."
-#endif
     ()
 )
 Target "DotnetCorePushChocolateyPackage" (fun _ ->
     let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    path |> Choco.Push (fun p -> { p with ApiKey = environVarOrFail "CHOCOLATEY_API_KEY" })
+    path |> Choco.Push (fun p ->
+        { p with
+            Source = "https://push.chocolatey.org/"
+            ApiKey = environVarOrFail "CHOCOLATEY_API_KEY" })
 )
 
 let executeFPM args =
@@ -788,7 +783,7 @@ Target "DotnetCorePushNuGet" (fun _ ->
         if not <| System.String.IsNullOrEmpty apikey then
             ExecProcess (fun info ->
                 info.FileName <- nuget_exe
-                info.Arguments <- sprintf "push '%s' '%s' -Source '%s'" nugetpackage apikey nugetsource) (System.TimeSpan.FromMinutes 5.)
+                info.Arguments <- sprintf "push %s %s -Source %s" (toParam nugetpackage) (toParam apikey) (toParam nugetsource)) (System.TimeSpan.FromMinutes 5.)
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
 
     // dotnet pack
@@ -802,14 +797,16 @@ Target "DotnetCorePushNuGet" (fun _ ->
 )
 
 Target "PublishNuget" (fun _ ->
+    // uses NugetKey environment variable.
     Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
             WorkingDir = nugetLegacyDir })
-    Paket.Push(fun p ->
-        { p with
-            DegreeOfParallelism = 2
-            WorkingDir = nugetDncDir })
+    // We have some nugets in there we don't want to push
+    //Paket.Push(fun p ->
+    //    { p with
+    //        DegreeOfParallelism = 2
+    //        WorkingDir = nugetDncDir })
 )
 
 Target "ReleaseDocs" (fun _ ->
