@@ -49,7 +49,8 @@ open Fake.Windows
 open Fake.Tools
 open Fake.Tools.Git
 open Fake.Tools.Git.Repository
-open Fake.Tools.Git.Stages
+open Fake.Tools.Git.Staging
+open Fake.Tools.Git.Commit
 
 let currentDirectory = Shell.pwd()
 #else
@@ -876,9 +877,11 @@ Target "StartDnc" DoNothing
     =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
     ==> "CopyLicense"
+    =?> ("DotnetCoreCreateChocolateyPackage", not isLinux)
     ==> "Default"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
     ==> "EnsureTestsRun"
+    =?> ("DotnetCorePushChocolateyPackage", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "DotnetCorePushNuGet"
     ==> "PublishNuget"
