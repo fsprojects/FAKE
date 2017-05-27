@@ -1,4 +1,4 @@
-#### 5.0.0-alpha008 - 27.05.2017
+#### 5.0.0-alpha009 - 27.05.2017
 * Change fake group feature because of https://github.com/fsprojects/Paket/issues/2374
 
 #### 5.0.0-alpha008 - 27.05.2017
