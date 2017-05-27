@@ -33,6 +33,8 @@ open Fake.IO.FileSystem.Directory
 open Fake.IO.FileSystem.File
 open Fake.IO.FileSystem.Operators
 open Fake.IO.FileSystem.Shell
+open Fake.DotNet
+open Fake.DotNet.FSFormatting
 open Fake.DotNet.AssemblyInfoFile
 open Fake.DotNet.AssemblyInfoFile.AssemblyInfo
 open Fake.DotNet.MsBuild
@@ -45,6 +47,9 @@ open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
 open Fake.Windows
 open Fake.Tools
+open Fake.Tools.Git
+open Fake.Tools.Git.Repository
+open Fake.Tools.Git.Stages
 
 let currentDirectory = Shell.pwd()
 #else
@@ -611,15 +616,6 @@ Target "DotnetPackage" (fun _ ->
             Configuration = Release
             OutputPath = Some nugetDir
         }) "src/Fake-netcore.sln"
-    //netCoreProjs
-    //-- "src/app/Fake.netcore/Fake.netcore.fsproj"
-    //|> Seq.iter(fun proj ->
-    //    DotnetPack (fun c ->
-    //        { c with
-    //            Configuration = Release
-    //            OutputPath = Some (nugetDir)
-    //        }) proj
-    //)
 
     let info = DotnetInfo id
 
@@ -684,12 +680,9 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
 
     ("portable" :: runtimes)
     |> Seq.iter (fun runtime ->
-      //try
         let runtimeDir = sprintf "nuget/dotnetcore/Fake.netcore/%s" runtime
         !! (sprintf "%s/**" runtimeDir)
         |> Zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
-      //with _ ->
-      //  printfn "FIXME: Runtime '%s' failed to zip!" runtime
     )
 )
 
@@ -804,13 +797,10 @@ Target "DotnetCorePushNuGet" (fun _ ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
         !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
         -- (sprintf "nuget/dotnetcore/%s.*.symbols.nupkg" projName)
-        |> Seq.iter(fun nugetpackage ->
-          nugetPush nugetpackage)
-    )
+        |> Seq.iter nugetPush)
 )
 
 Target "PublishNuget" (fun _ ->
-#if !DOTNETCORE
     Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
@@ -819,13 +809,9 @@ Target "PublishNuget" (fun _ ->
         { p with
             DegreeOfParallelism = 2
             WorkingDir = nugetDncDir })
-#else
-    printfn "We don't currently have Paket on dotnetcore."
-#endif
 )
 
 Target "ReleaseDocs" (fun _ ->
-#if !DOTNETCORE
     CleanDir "gh-pages"
     cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
 
@@ -835,22 +821,15 @@ Target "ReleaseDocs" (fun _ ->
     StageAll "gh-pages"
     Commit "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
     Branches.push "gh-pages"
-#else
-    printfn "We don't currently have Git on dotnetcore."
-#endif
 )
 
 Target "Release" (fun _ ->
-#if !DOTNETCORE
     StageAll ""
     Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     Branches.push ""
 
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
-#else
-    printfn "We don't currently have Git on dotnetcore."
-#endif
 )
 open System
 Target "PrintColors" (fun s ->

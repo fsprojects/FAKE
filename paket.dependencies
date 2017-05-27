@@ -2,7 +2,6 @@ version 5.0.0-beta006
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
-source https://ci.appveyor.com/nuget/customnuspecs
 source http://nuget.org/api/v2
 
 nuget FSharp.Core redirects: force
@@ -56,6 +55,7 @@ github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharp
 group Build
     content: none
     source http://nuget.org/api/v2
+    source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
     
     nuget Nuget.CommandLine
@@ -65,6 +65,7 @@ group Build
     nuget SourceLink.Fake
     nuget ILRepack
 
+// [ FAKE GROUP ]
 group NetcoreBuild
     source https://nuget.org/api/v2
     source https://ci.appveyor.com/nuget/fake
@@ -80,17 +81,18 @@ group NetcoreBuild
     nuget Fake.DotNet.MsBuild prerelease
     nuget Fake.DotNet.Cli prerelease
     nuget Fake.DotNet.NuGet prerelease
+    nuget Fake.DotNet.Paket prerelease
+    nuget Fake.DotNet.FSFormatting prerelease
     nuget Fake.DotNet.Testing.MSpec prerelease
     nuget Fake.DotNet.Testing.XUnit2 prerelease
     nuget Fake.DotNet.Testing.NUnit prerelease
     nuget Fake.Windows.Chocolatey prerelease
     nuget Fake.Tools.Git prerelease
-    nuget Mono.Cecil 0.10.0-beta5
+    nuget Mono.Cecil ~> 0.10.0 prerelease
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
-    source https://ci.appveyor.com/nuget/customnuspecs
     framework: netstandard1.6, netcoreapp1.0
 
     nuget FSharp.Compiler.Service content: none

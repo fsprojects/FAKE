@@ -240,9 +240,13 @@ let tryFindGroupFromDepsFile scriptDir =
             File.ReadAllLines(depsFile)
             |> Seq.map (fun l -> l.Trim())
             |> Seq.filter (fun l -> l.ToLowerInvariant().StartsWith "group")
-            |> Seq.filter (fun l -> l.Contains "// [ FAKE GROUP ]")
-            |> Seq.map (fun l -> l.Split([|" "|], StringSplitOptions.RemoveEmptyEntries).[1])
-            |> Seq.tryHead with
+            |> Seq.fold (fun (takeNext, result) l ->
+                // find '// [ FAKE GROUP ]' and take the next one.
+                match takeNext, result with
+                | _, Some s -> Some s
+                | true, None -> Some (l.Split([|" "|], StringSplitOptions.RemoveEmptyEntries).[1])
+                | _ -> if l.Contains "// [ FAKE GROUP ]" then true, None else false, None) (false, None)
+            |> snd with
         | Some group ->
             PaketDependencies (Paket.Dependencies(Path.GetFullPath depsFile), Some group) |> Some
         | _ -> None
