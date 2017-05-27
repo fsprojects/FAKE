@@ -89,7 +89,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L9-9" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L12-12" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -109,7 +109,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L177-177" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L191-191" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -129,14 +129,14 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 <span class="l">7: </span>
 <span class="l">8: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;RestorePackages&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;RestorePackages&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
      <span class="s">&quot;./src/Everything.sln&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">RestoreMSSolutionPackages</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-         { <span class="i">p</span> <span class="k">with</span>
-             <span class="i">Sources</span> <span class="o">=</span> <span class="s">&quot;http://myNugetSources.com&quot;</span> <span class="o">::</span> <span class="i">p</span><span class="o">.</span><span class="i">Sources</span>
-             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">outputDir</span>
-             <span class="i">Retries</span> <span class="o">=</span> <span class="n">4</span> })
- )
+     <span class="o">|&gt;</span> <span class="id">RestoreMSSolutionPackages</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+         <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+             <span class="id">Sources</span> <span class="o">=</span> <span class="s">&quot;http://myNugetSources.com&quot;</span> <span class="o">::</span> <span class="id">p</span><span class="pn">.</span><span class="id">Sources</span>
+             <span class="id">OutputPath</span> <span class="o">=</span> <span class="id">outputDir</span>
+             <span class="id">Retries</span> <span class="o">=</span> <span class="n">4</span> <span class="pn">}</span><span class="pn">)</span>
+ <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -155,7 +155,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L144-144" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L156-156" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -175,14 +175,14 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 <span class="l">7: </span>
 <span class="l">8: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;RestorePackages&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;RestorePackages&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
      <span class="s">&quot;./src/ProjectA/packages.config&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">RestorePackage</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-         { <span class="i">p</span> <span class="k">with</span>
-             <span class="i">Sources</span> <span class="o">=</span> <span class="s">&quot;http://myNugetSources.com&quot;</span> <span class="o">::</span> <span class="i">p</span><span class="o">.</span><span class="i">Sources</span>
-             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">outputDir</span>
-             <span class="i">Retries</span> <span class="o">=</span> <span class="n">4</span> })
- )
+     <span class="o">|&gt;</span> <span class="id">RestorePackage</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+         <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+             <span class="id">Sources</span> <span class="o">=</span> <span class="s">&quot;http://myNugetSources.com&quot;</span> <span class="o">::</span> <span class="id">p</span><span class="pn">.</span><span class="id">Sources</span>
+             <span class="id">OutputPath</span> <span class="o">=</span> <span class="id">outputDir</span>
+             <span class="id">Retries</span> <span class="o">=</span> <span class="n">4</span> <span class="pn">}</span><span class="pn">)</span>
+ <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -201,7 +201,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L55-55" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L60-60" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -221,7 +221,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L121-121" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L132-132" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -241,7 +241,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L157-157" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L170-170" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -261,7 +261,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L76-76" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RestorePackageHelper.fs#L83-83" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>

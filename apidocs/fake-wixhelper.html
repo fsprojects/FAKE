@@ -664,23 +664,23 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
 <span class="l">16: </span>
 <span class="l">17: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FillInWixScript</span> <span class="s">&quot;&quot;</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                       {<span class="i">f</span> <span class="k">with</span>
-                           <span class="i">ProductCode</span> <span class="o">=</span> <span class="i">WiXProductCode</span>
-                           <span class="i">ProductName</span> <span class="o">=</span> <span class="i">WiXProductName</span>
-                           <span class="i">Description</span> <span class="o">=</span> <span class="i">projectDescription</span>
-                           <span class="i">ProductLanguage</span> <span class="o">=</span> <span class="i">WiXProductLanguage</span>
-                           <span class="i">ProductVersion</span> <span class="o">=</span> <span class="i">WiXProductVersion</span>
-                           <span class="i">ProductPublisher</span> <span class="o">=</span> <span class="i">WixProductPublisher</span>
-                           <span class="i">UpgradeGuid</span> <span class="o">=</span> <span class="i">WixProductUpgradeGuid</span>
-                           <span class="i">UIRefs</span> <span class="o">=</span> <span class="i">uiRef1</span><span class="o">.</span><span class="i">ToString</span>() <span class="o">+</span> <span class="i">uiRef2</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">WiXVariables</span> <span class="o">=</span> <span class="i">wiXLicense</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">Directories</span> <span class="o">=</span> <span class="i">directories</span>
-                           <span class="i">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
-                           <span class="i">Features</span> <span class="o">=</span> <span class="i">rootFeature</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">CustomActions</span> <span class="o">=</span> <span class="i">action1</span><span class="o">.</span><span class="i">ToString</span>() <span class="o">+</span> <span class="i">action2</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">ActionSequences</span> <span class="o">=</span> <span class="i">actionExecution1</span><span class="o">.</span><span class="i">ToString</span>() <span class="o">+</span> <span class="i">actionExecution2</span><span class="o">.</span><span class="i">ToString</span>()
-                       })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">FillInWixScript</span> <span class="s">&quot;&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                       <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                           <span class="id">ProductCode</span> <span class="o">=</span> <span class="id">WiXProductCode</span>
+                           <span class="id">ProductName</span> <span class="o">=</span> <span class="id">WiXProductName</span>
+                           <span class="id">Description</span> <span class="o">=</span> <span class="id">projectDescription</span>
+                           <span class="id">ProductLanguage</span> <span class="o">=</span> <span class="id">WiXProductLanguage</span>
+                           <span class="id">ProductVersion</span> <span class="o">=</span> <span class="id">WiXProductVersion</span>
+                           <span class="id">ProductPublisher</span> <span class="o">=</span> <span class="id">WixProductPublisher</span>
+                           <span class="id">UpgradeGuid</span> <span class="o">=</span> <span class="id">WixProductUpgradeGuid</span>
+                           <span class="id">UIRefs</span> <span class="o">=</span> <span class="id">uiRef1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">uiRef2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">WiXVariables</span> <span class="o">=</span> <span class="id">wiXLicense</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">Directories</span> <span class="o">=</span> <span class="id">directories</span>
+                           <span class="id">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+                           <span class="id">Features</span> <span class="o">=</span> <span class="id">rootFeature</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">CustomActions</span> <span class="o">=</span> <span class="id">action1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">action2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">ActionSequences</span> <span class="o">=</span> <span class="id">actionExecution1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">actionExecution2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                       <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -729,24 +729,24 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
 <span class="l">17: </span>
 <span class="l">18: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FillInWixScript</span> <span class="s">&quot;&quot;</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                       {<span class="i">f</span> <span class="k">with</span>
-                           <span class="i">ProductCode</span> <span class="o">=</span> <span class="i">WiXProductCode</span>
-                           <span class="i">ProductName</span> <span class="o">=</span> <span class="i">WiXProductName</span>
-                           <span class="i">Description</span> <span class="o">=</span> <span class="i">projectDescription</span>
-                           <span class="i">ProductLanguage</span> <span class="o">=</span> <span class="i">WiXProductLanguage</span>
-                           <span class="i">ProductVersion</span> <span class="o">=</span> <span class="i">WiXProductVersion</span>
-                           <span class="i">ProductPublisher</span> <span class="o">=</span> <span class="i">WixProductPublisher</span>
-                           <span class="i">UpgradeGuid</span> <span class="o">=</span> <span class="i">WixProductUpgradeGuid</span>
-                           <span class="i">UIRefs</span> <span class="o">=</span> <span class="i">uiRef1</span><span class="o">.</span><span class="i">ToString</span>() <span class="o">+</span> <span class="i">uiRef2</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">WiXVariables</span> <span class="o">=</span> <span class="i">wiXLicense</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">Directories</span> <span class="o">=</span> <span class="i">directories</span>
-                           <span class="i">DirectoryRefs</span> <span class="o">=</span> <span class="i">directoryrefs</span>
-                           <span class="i">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
-                           <span class="i">Features</span> <span class="o">=</span> <span class="i">rootFeature</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">CustomActions</span> <span class="o">=</span> <span class="i">action1</span><span class="o">.</span><span class="i">ToString</span>() <span class="o">+</span> <span class="i">action2</span><span class="o">.</span><span class="i">ToString</span>()
-                           <span class="i">ActionSequences</span> <span class="o">=</span> <span class="i">actionExecution1</span><span class="o">.</span><span class="i">ToString</span>() <span class="o">+</span> <span class="i">actionExecution2</span><span class="o">.</span><span class="i">ToString</span>()
-                       })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">FillInWixScript</span> <span class="s">&quot;&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                       <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                           <span class="id">ProductCode</span> <span class="o">=</span> <span class="id">WiXProductCode</span>
+                           <span class="id">ProductName</span> <span class="o">=</span> <span class="id">WiXProductName</span>
+                           <span class="id">Description</span> <span class="o">=</span> <span class="id">projectDescription</span>
+                           <span class="id">ProductLanguage</span> <span class="o">=</span> <span class="id">WiXProductLanguage</span>
+                           <span class="id">ProductVersion</span> <span class="o">=</span> <span class="id">WiXProductVersion</span>
+                           <span class="id">ProductPublisher</span> <span class="o">=</span> <span class="id">WixProductPublisher</span>
+                           <span class="id">UpgradeGuid</span> <span class="o">=</span> <span class="id">WixProductUpgradeGuid</span>
+                           <span class="id">UIRefs</span> <span class="o">=</span> <span class="id">uiRef1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">uiRef2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">WiXVariables</span> <span class="o">=</span> <span class="id">wiXLicense</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">Directories</span> <span class="o">=</span> <span class="id">directories</span>
+                           <span class="id">DirectoryRefs</span> <span class="o">=</span> <span class="id">directoryrefs</span>
+                           <span class="id">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+                           <span class="id">Features</span> <span class="o">=</span> <span class="id">rootFeature</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">CustomActions</span> <span class="o">=</span> <span class="id">action1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">action2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">ActionSequences</span> <span class="o">=</span> <span class="id">actionExecution1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">actionExecution2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                       <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -828,15 +828,15 @@ ExeCommand are the parameters passed to your executable</p>
 <span class="l">8: </span>
 <span class="l">9: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">action</span> <span class="o">=</span> <span class="i">generateCustomAction</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                       {<span class="i">f</span> <span class="k">with</span>
-                                           <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueActionId&quot;</span>
-                                           <span class="i">FileKey</span> <span class="o">=</span> <span class="s">&quot;fi_5&quot;</span>
-                                           <span class="i">Execute</span> <span class="o">=</span> <span class="s">&quot;deferred&quot;</span>
-                                           <span class="i">Impersonate</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span>
-                                           <span class="i">ExeCommand</span> <span class="o">=</span> <span class="s">&quot;install&quot;</span>
-                                           <span class="i">Return</span> <span class="o">=</span> <span class="s">&quot;check&quot;</span>
-                                       })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">action</span> <span class="o">=</span> <span class="id">generateCustomAction</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                       <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                           <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueActionId&quot;</span>
+                                           <span class="id">FileKey</span> <span class="o">=</span> <span class="s">&quot;fi_5&quot;</span>
+                                           <span class="id">Execute</span> <span class="o">=</span> <span class="s">&quot;deferred&quot;</span>
+                                           <span class="id">Impersonate</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span>
+                                           <span class="id">ExeCommand</span> <span class="o">=</span> <span class="s">&quot;install&quot;</span>
+                                           <span class="id">Return</span> <span class="o">=</span> <span class="s">&quot;check&quot;</span>
+                                       <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -875,13 +875,13 @@ Condition in sample makes execute only on install</p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">actionExecution</span> <span class="o">=</span> <span class="i">generateCustomActionExecution</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                                           {<span class="i">f</span> <span class="k">with</span> 
-                                                               <span class="i">ActionId</span> <span class="o">=</span> <span class="i">action</span><span class="o">.</span><span class="i">Id</span>
-                                                               <span class="i">Verb</span> <span class="o">=</span> <span class="s">&quot;After&quot;</span>
-                                                               <span class="i">Target</span> <span class="o">=</span> <span class="s">&quot;InstallFiles&quot;</span>                                                                        
-                                                               <span class="i">Condition</span> <span class="o">=</span> <span class="s">&quot;&lt;![CDATA[(&amp;&quot;</span> <span class="o">+</span> <span class="i">feature</span><span class="o">.</span><span class="i">Id</span> <span class="o">+</span> <span class="s">&quot; = 3) AND NOT (!&quot;</span> <span class="o">+</span> <span class="i">feature</span><span class="o">.</span><span class="i">Id</span> <span class="o">+</span> <span class="s">&quot; = 3)]]&gt;&quot;</span>
-                                                           })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">actionExecution</span> <span class="o">=</span> <span class="id">generateCustomActionExecution</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                                           <span class="pn">{</span><span class="id">f</span> <span class="k">with</span> 
+                                                               <span class="id">ActionId</span> <span class="o">=</span> <span class="id">action</span><span class="pn">.</span><span class="id">Id</span>
+                                                               <span class="id">Verb</span> <span class="o">=</span> <span class="s">&quot;After&quot;</span>
+                                                               <span class="id">Target</span> <span class="o">=</span> <span class="s">&quot;InstallFiles&quot;</span>                                                                        
+                                                               <span class="id">Condition</span> <span class="o">=</span> <span class="s">&quot;&lt;![CDATA[(&amp;&quot;</span> <span class="o">+</span> <span class="id">feature</span><span class="pn">.</span><span class="id">Id</span> <span class="o">+</span> <span class="s">&quot; = 3) AND NOT (!&quot;</span> <span class="o">+</span> <span class="id">feature</span><span class="pn">.</span><span class="id">Id</span> <span class="o">+</span> <span class="s">&quot; = 3)]]&gt;&quot;</span>
+                                                           <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -962,15 +962,15 @@ You can pass other features into InnerContent for making a hierarchy</p>
 <span class="l">8: </span>
 <span class="l">9: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">feature</span> <span class="o">=</span> <span class="i">generateFeature</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
-                                   {<span class="i">f</span> <span class="k">with</span>  
-                                       <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueName&quot;</span>
-                                       <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Title which is shown&quot;</span>
-                                       <span class="i">Level</span> <span class="o">=</span> <span class="n">1</span> 
-                                       <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Somewhat longer description&quot;</span> 
-                                       <span class="i">Display</span> <span class="o">=</span> <span class="s">&quot;expand&quot;</span> 
-                                       <span class="i">InnerContent</span> <span class="o">=</span> <span class="i">otherFeature</span><span class="o">.</span><span class="i">ToString</span>()
-                                   })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">feature</span> <span class="o">=</span> <span class="id">generateFeature</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> 
+                                   <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>  
+                                       <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueName&quot;</span>
+                                       <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Title which is shown&quot;</span>
+                                       <span class="id">Level</span> <span class="o">=</span> <span class="n">1</span> 
+                                       <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Somewhat longer description&quot;</span> 
+                                       <span class="id">Display</span> <span class="o">=</span> <span class="s">&quot;expand&quot;</span> 
+                                       <span class="id">InnerContent</span> <span class="o">=</span> <span class="id">otherFeature</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                                   <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1011,15 +1011,15 @@ You can pass other features into InnerContent for making a hierarchy</p>
 <span class="l">8: </span>
 <span class="l">9: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">feature</span> <span class="o">=</span> <span class="i">generateFeature</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
-                                   {<span class="i">f</span> <span class="k">with</span>  
-                                       <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueName&quot;</span>
-                                       <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Title which is shown&quot;</span>
-                                       <span class="i">Level</span> <span class="o">=</span> <span class="n">1</span> 
-                                       <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Somewhat longer description&quot;</span> 
-                                       <span class="i">Display</span> <span class="o">=</span> <span class="s">&quot;expand&quot;</span> 
-                                       <span class="i">InnerContent</span> <span class="o">=</span> [<span class="i">otherFeature1</span>; <span class="i">otherFeature2</span>]
-                                   })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">feature</span> <span class="o">=</span> <span class="id">generateFeature</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> 
+                                   <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>  
+                                       <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueName&quot;</span>
+                                       <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Title which is shown&quot;</span>
+                                       <span class="id">Level</span> <span class="o">=</span> <span class="n">1</span> 
+                                       <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Somewhat longer description&quot;</span> 
+                                       <span class="id">Display</span> <span class="o">=</span> <span class="s">&quot;expand&quot;</span> 
+                                       <span class="id">InnerContent</span> <span class="o">=</span> <span class="pn">[</span><span class="id">otherFeature1</span><span class="pn">;</span> <span class="id">otherFeature2</span><span class="pn">]</span>
+                                   <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1054,10 +1054,10 @@ You can pass other features into InnerContent for making a hierarchy</p>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">majorUpgradeVersion</span> <span class="o">=</span> <span class="i">generateMajorUpgradeVersion</span>(<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                                {<span class="i">f</span> <span class="k">with</span> 
-                                                    <span class="i">DowngradeErrorMessage</span> <span class="o">=</span> <span class="s">&quot;A later version is already installed, exiting.&quot;</span>
-                                                })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">majorUpgradeVersion</span> <span class="o">=</span> <span class="id">generateMajorUpgradeVersion</span><span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                                <span class="pn">{</span><span class="id">f</span> <span class="k">with</span> 
+                                                    <span class="id">DowngradeErrorMessage</span> <span class="o">=</span> <span class="s">&quot;A later version is already installed, exiting.&quot;</span>
+                                                <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1243,10 +1243,10 @@ Value = "2"
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">UIRef</span> <span class="o">=</span> <span class="i">generateUIRef</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                               {<span class="i">f</span> <span class="k">with</span>
-                                   <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_Mondo&quot;</span>
-                               })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">UIRef</span> <span class="o">=</span> <span class="id">generateUIRef</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                               <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                   <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_Mondo&quot;</span>
+                               <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1281,10 +1281,10 @@ Value = "2"
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">upgrade</span> <span class="o">=</span> <span class="i">generateUpgrade</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                  {<span class="i">f</span> <span class="k">with</span>
-                                     <span class="i">Id</span> <span class="o">=</span> <span class="i">productUpgradeCode</span>
-                                  })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">upgrade</span> <span class="o">=</span> <span class="id">generateUpgrade</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                  <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                     <span class="id">Id</span> <span class="o">=</span> <span class="id">productUpgradeCode</span>
+                                  <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1320,11 +1320,11 @@ Value = "2"
 <span class="l">4: </span>
 <span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">upgradeVersion</span> <span class="o">=</span> <span class="i">generateUpgradeVersion</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                                {<span class="i">f</span> <span class="k">with</span>
-                                                   <span class="i">Minimum</span> <span class="o">=</span> <span class="i">productVersion</span>
-                                                   <span class="i">OnlyDetect</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span>
-                                                })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">upgradeVersion</span> <span class="o">=</span> <span class="id">generateUpgradeVersion</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                                <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                                   <span class="id">Minimum</span> <span class="o">=</span> <span class="id">productVersion</span>
+                                                   <span class="id">OnlyDetect</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span>
+                                                <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1357,7 +1357,7 @@ You need to run this once every build an then use FillInWiXScript to replace pla
 <h2>Sample</h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">generateWiXScript</span> <span class="s">&quot;Setup.wxs&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">generateWiXScript</span> <span class="s">&quot;Setup.wxs&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1389,8 +1389,8 @@ You need to run this once every build an then use FillInWiXScript to replace pla
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">directoryString</span> <span class="o">=</span> <span class="i">wixDir</span> (<span class="k">fun</span> <span class="i">file</span> <span class="k">-&gt;</span> <span class="k">true</span>) <span class="k">true</span> (<span class="i">DirectoryInfo</span> <span class="i">directoryWithFilesForSetup</span>)
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">componentIds</span> <span class="o">=</span> <span class="i">getComponentIdsFromWiXString</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">directoryString</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">directoryString</span> <span class="o">=</span> <span class="id">wixDir</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">file</span> <span class="k">-&gt;</span> <span class="k">true</span><span class="pn">)</span> <span class="k">true</span> <span class="pn">(</span><span class="id">DirectoryInfo</span> <span class="id">directoryWithFilesForSetup</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">componentIds</span> <span class="o">=</span> <span class="id">getComponentIdsFromWiXString</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">directoryString</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1445,8 +1445,8 @@ You need to run this once every build an then use FillInWiXScript to replace pla
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">directoryString</span> <span class="o">=</span> <span class="i">wixDir</span> (<span class="k">fun</span> <span class="i">file</span> <span class="k">-&gt;</span> <span class="k">true</span>) <span class="k">true</span> (<span class="i">DirectoryInfo</span> <span class="i">directoryWithFilesForSetup</span>)
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">executableFileId</span> <span class="o">=</span> <span class="i">getFileIdFromWiXString</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">directoryString</span> <span class="s">&quot;\S*.exe&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">directoryString</span> <span class="o">=</span> <span class="id">wixDir</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">file</span> <span class="k">-&gt;</span> <span class="k">true</span><span class="pn">)</span> <span class="k">true</span> <span class="pn">(</span><span class="id">DirectoryInfo</span> <span class="id">directoryWithFilesForSetup</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">executableFileId</span> <span class="o">=</span> <span class="id">getFileIdFromWiXString</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">directoryString</span> <span class="s">&quot;\S*.exe&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -1631,36 +1631,36 @@ This is useful for config files, since they are not replaced on upgrade like tha
 <span class="l">23: </span>
 <span class="l">24: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;BuildSetup&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;BuildSetup&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="c">// Copy all important files to the deploy directory</span>
-    <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.dll&quot;</span>)
-      <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.exe&quot;</span>)
-      <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.config&quot;</span>)
-      <span class="o">|&gt;</span> <span class="i">Copy</span> <span class="i">deployPrepDir</span> 
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.dll&quot;</span><span class="pn">)</span>
+      <span class="o">++</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.exe&quot;</span><span class="pn">)</span>
+      <span class="o">++</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.config&quot;</span><span class="pn">)</span>
+      <span class="o">|&gt;</span> <span class="id">Copy</span> <span class="id">deployPrepDir</span> 
 
     <span class="c">// replace tags in a template file in order to generate a WiX script</span>
-    <span class="k">let</span> <span class="i">ALLFILES</span> <span class="o">=</span> <span class="k">fun</span> _ <span class="k">-&gt;</span> <span class="k">true</span>
+    <span class="k">let</span> <span class="id">ALLFILES</span> <span class="o">=</span> <span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="k">true</span>
 
-    <span class="k">let</span> <span class="i">replacements</span> <span class="o">=</span> [
-        <span class="s">&quot;@build.number@&quot;</span>,<span class="k">if</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">not</span> <span class="i">isLocalBuild</span> <span class="k">then</span> <span class="i">buildVersion</span> <span class="k">else</span> <span class="s">&quot;0.1.0.0&quot;</span>
-        <span class="s">&quot;@product.productcode@&quot;</span>,<span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">Guid</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">NewGuid</span>()<span class="o">.</span><span class="i">ToString</span>()
-        <span class="s">&quot;@HelpFiles@&quot;</span>,<span class="i">getFilesAsWiXString</span> <span class="i">helpFiles</span>
-        <span class="s">&quot;@ScriptFiles@&quot;</span>,<span class="i">getFilesAsWiXString</span> <span class="i">scriptFiles</span>
-        <span class="s">&quot;@icons@&quot;</span>,<span class="i">wixDir</span> <span class="i">ALLFILES</span> <span class="k">true</span> (<span class="i">directoryInfo</span>(<span class="i">bundledDir</span> <span class="o">@@</span> <span class="s">&quot;icons&quot;</span>))]
+    <span class="k">let</span> <span class="id">replacements</span> <span class="o">=</span> <span class="pn">[</span>
+        <span class="s">&quot;@build.number@&quot;</span><span class="pn">,</span><span class="k">if</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">not</span> <span class="id">isLocalBuild</span> <span class="k">then</span> <span class="id">buildVersion</span> <span class="k">else</span> <span class="s">&quot;0.1.0.0&quot;</span>
+        <span class="s">&quot;@product.productcode@&quot;</span><span class="pn">,</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Guid</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">NewGuid</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+        <span class="s">&quot;@HelpFiles@&quot;</span><span class="pn">,</span><span class="id">getFilesAsWiXString</span> <span class="id">helpFiles</span>
+        <span class="s">&quot;@ScriptFiles@&quot;</span><span class="pn">,</span><span class="id">getFilesAsWiXString</span> <span class="id">scriptFiles</span>
+        <span class="s">&quot;@icons@&quot;</span><span class="pn">,</span><span class="id">wixDir</span> <span class="id">ALLFILES</span> <span class="k">true</span> <span class="pn">(</span><span class="id">directoryInfo</span><span class="pn">(</span><span class="id">bundledDir</span> <span class="id">@@</span> <span class="s">&quot;icons&quot;</span><span class="pn">)</span><span class="pn">)</span><span class="pn">]</span>
 
-    <span class="i">processTemplates</span> <span class="i">replacements</span> <span class="i">setupFiles</span>
+    <span class="id">processTemplates</span> <span class="id">replacements</span> <span class="id">setupFiles</span>
 
     <span class="c">// run the WiX tools</span>
-    <span class="i">WiX</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">ToolDirectory</span> <span class="o">=</span> <span class="i">WiXPath</span>}) 
-        <span class="i">setupFileName</span>
-        (<span class="i">setupBuildDir</span> <span class="o">+</span> <span class="s">&quot;Setup.wxs.template&quot;</span>)
-)
+    <span class="id">WiX</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">ToolDirectory</span> <span class="o">=</span> <span class="id">WiXPath</span><span class="pn">}</span><span class="pn">)</span> 
+        <span class="id">setupFileName</span>
+        <span class="pn">(</span><span class="id">setupBuildDir</span> <span class="o">+</span> <span class="s">&quot;Setup.wxs.template&quot;</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
 <div class="tip" id="fs1">val not : value:bool -&gt; bool<br /><br />Full name: Microsoft.FSharp.Core.Operators.not</div>
 <div class="tip" id="fs2">namespace System</div>
-<div class="tip" id="fs3">Multiple items<br />type Guid =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : b:byte[] -&gt; Guid + 4 overloads<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Equals : o:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member ToByteArray : unit -&gt; byte[]<br />&#160;&#160;&#160;&#160;member ToString : unit -&gt; string + 2 overloads<br />&#160;&#160;&#160;&#160;static val Empty : Guid<br />&#160;&#160;&#160;&#160;static member NewGuid : unit -&gt; Guid<br />&#160;&#160;&#160;&#160;static member Parse : input:string -&gt; Guid<br />&#160;&#160;&#160;&#160;static member ParseExact : input:string * format:string -&gt; Guid<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.Guid<br /><br />--------------------<br />System.Guid()<br />System.Guid(b: byte []) : unit<br />System.Guid(g: string) : unit<br />System.Guid(a: int, b: int16, c: int16, d: byte []) : unit<br />System.Guid(a: uint32, b: uint16, c: uint16, d: byte, e: byte, f: byte, g: byte, h: byte, i: byte, j: byte, k: byte) : unit<br />System.Guid(a: int, b: int16, c: int16, d: byte, e: byte, f: byte, g: byte, h: byte, i: byte, j: byte, k: byte) : unit</div>
+<div class="tip" id="fs3">Multiple items<br />type Guid =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : b:byte[] -&gt; Guid + 4 overloads<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Equals : o:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member ToByteArray : unit -&gt; byte[]<br />&#160;&#160;&#160;&#160;member ToString : unit -&gt; string + 2 overloads<br />&#160;&#160;&#160;&#160;static val Empty : Guid<br />&#160;&#160;&#160;&#160;static member NewGuid : unit -&gt; Guid<br />&#160;&#160;&#160;&#160;static member Parse : input:string -&gt; Guid<br />&#160;&#160;&#160;&#160;static member ParseExact : input:string * format:string -&gt; Guid<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.Guid<br /><br />--------------------<br />System.Guid ()<br />System.Guid(b: byte []) : unit<br />System.Guid(g: string) : unit<br />System.Guid(a: int, b: int16, c: int16, d: byte []) : unit<br />System.Guid(a: uint32, b: uint16, c: uint16, d: byte, e: byte, f: byte, g: byte, h: byte, i: byte, j: byte, k: byte) : unit<br />System.Guid(a: int, b: int16, c: int16, d: byte, e: byte, f: byte, g: byte, h: byte, i: byte, j: byte, k: byte) : unit</div>
 <div class="tip" id="fs4">System.Guid.NewGuid() : System.Guid</div>
 
 

@@ -146,14 +146,14 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
 <span class="l">7: </span>
 <span class="l">8: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">parse</span> <span class="s">&quot;1.0.0-rc.1&quot;</span>     <span class="o">&lt;</span> <span class="i">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true</span>
-<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.2&quot;</span>          <span class="c">// true</span>
-<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="c">// true, but only because of lexical compare</span>
-<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha002&quot;</span> <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha1&quot;</span>   <span class="c">// false, due to lexical compare</span>
-<span class="i">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-rc.1&quot;</span>     <span class="c">// false, due to lexical compare of first prerelease identitifer</span>
-<span class="i">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-beta.3&quot;</span>   <span class="c">// true, due to numeric compare of second prerelease identitifer</span>
-<span class="i">parse</span> <span class="s">&quot;1.5.0-0123.001&quot;</span> <span class="o">&lt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-0123.002&quot;</span> <span class="c">// true, due to numeric compare of second prerelease identifier</span>
-<span class="i">parse</span> <span class="s">&quot;1.0.0+lol&quot;</span>      <span class="o">=</span> <span class="i">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true, because build identifiers do not influence comparison</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">parse</span> <span class="s">&quot;1.0.0-rc.1&quot;</span>     <span class="o">&lt;</span> <span class="id">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true</span>
+<span class="id">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.2&quot;</span>          <span class="c">// true</span>
+<span class="id">parse</span> <span class="s">&quot;1.2.3-alpha2&quot;</span>   <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="c">// true, but only because of lexical compare</span>
+<span class="id">parse</span> <span class="s">&quot;1.2.3-alpha002&quot;</span> <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha1&quot;</span>   <span class="c">// false, due to lexical compare</span>
+<span class="id">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.5.0-rc.1&quot;</span>     <span class="c">// false, due to lexical compare of first prerelease identitifer</span>
+<span class="id">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.5.0-beta.3&quot;</span>   <span class="c">// true, due to numeric compare of second prerelease identitifer</span>
+<span class="id">parse</span> <span class="s">&quot;1.5.0-0123.001&quot;</span> <span class="o">&lt;</span> <span class="id">parse</span> <span class="s">&quot;1.5.0-0123.002&quot;</span> <span class="c">// true, due to numeric compare of second prerelease identifier</span>
+<span class="id">parse</span> <span class="s">&quot;1.0.0+lol&quot;</span>      <span class="o">=</span> <span class="id">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true, because build identifiers do not influence comparison</span>
 </code></pre></td>
 </tr>
 </table>

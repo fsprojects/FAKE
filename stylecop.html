@@ -48,12 +48,12 @@
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Inspect&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">StyleCop</span> 
-        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-            { <span class="i">p</span> <span class="k">with</span> 
-                <span class="i">SolutionFiles</span> <span class="o">=</span> [ <span class="s">&quot;MySolution.sln&quot;</span> ] })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Inspect&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">StyleCop</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+            <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+                <span class="id">SolutionFiles</span> <span class="o">=</span> <span class="pn">[</span> <span class="s">&quot;MySolution.sln&quot;</span> <span class="pn">]</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -70,13 +70,13 @@ Now <strong>StyleCop</strong> will inspect all the source files in your solution
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Inspect&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">StyleCop</span> 
-        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-            { <span class="i">p</span> <span class="k">with</span> 
-                <span class="i">SolutionFiles</span> <span class="o">=</span> [ <span class="s">&quot;MySolution.sln&quot;</span> ]
-                <span class="i">ErrorLevel</span> <span class="o">=</span> <span class="i">Fail</span> })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Inspect&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">StyleCop</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+            <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+                <span class="id">SolutionFiles</span> <span class="o">=</span> <span class="pn">[</span> <span class="s">&quot;MySolution.sln&quot;</span> <span class="pn">]</span>
+                <span class="id">ErrorLevel</span> <span class="o">=</span> <span class="id">Fail</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -91,13 +91,13 @@ Now <strong>StyleCop</strong> will inspect all the source files in your solution
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Inspect&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">StyleCop</span> 
-        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-            { <span class="i">p</span> <span class="k">with</span> 
-                <span class="i">SolutionFiles</span> <span class="o">=</span> [ <span class="s">&quot;MySolution.sln&quot;</span> ]
-                <span class="i">SettingsFile</span> <span class="o">=</span> <span class="s">&quot;Settings.StyleCop&quot;</span> })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Inspect&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">StyleCop</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+            <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+                <span class="id">SolutionFiles</span> <span class="o">=</span> <span class="pn">[</span> <span class="s">&quot;MySolution.sln&quot;</span> <span class="pn">]</span>
+                <span class="id">SettingsFile</span> <span class="o">=</span> <span class="s">&quot;Settings.StyleCop&quot;</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

@@ -141,10 +141,10 @@ in the given assembly fail.</p>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">@&quot;\xUnit.Test.*.dll&quot;</span>)
-      <span class="o">|&gt;</span> <span class="i">xUnit2</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">OutputDir</span> <span class="o">=</span> <span class="i">testDir</span> })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">@&quot;\xUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+      <span class="o">|&gt;</span> <span class="id">xUnit2</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">OutputDir</span> <span class="o">=</span> <span class="id">testDir</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Adding FxCop to a FAKE build script</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>This article is an extension to the <a href="gettingstarted.html">getting started guide</a>. You will improve the same Calculator sample with a task for <a href="http://msdn2.microsoft.com/en-us/library/bb429476.aspx">FxCop</a>.</p>
 <p>If you need more details please see the <a href="apidocs/fake-fxcophelper.html">API docs for the FxCop</a> task.</p>
 <h2>Setting up FxCop</h2>
@@ -53,16 +54,16 @@
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;FxCop&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  
-    <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.dll&quot;</span>) 
-    <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.exe&quot;</span>) 
-    <span class="o">|&gt;</span> <span class="i">FxCop</span> 
-        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-            {<span class="i">p</span> <span class="k">with</span> 
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;FxCop&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">++</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.exe&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">FxCop</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> 
               <span class="c">// override default parameters</span>
-              <span class="i">ReportFileName</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;FXCopResults.xml&quot;</span>
-              <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;FxCopCmd.exe&quot;</span>})
-)
+              <span class="id">ReportFileName</span> <span class="o">=</span> <span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;FXCopResults.xml&quot;</span>
+              <span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;FxCopCmd.exe&quot;</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -101,17 +102,17 @@
 <span class="l">10: </span>
 <span class="l">11: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;FxCop&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  
-    <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.dll&quot;</span>) 
-    <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.exe&quot;</span>) 
-    <span class="o">|&gt;</span> <span class="i">FxCop</span> 
-        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-            {<span class="i">p</span> <span class="k">with</span> 
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;FxCop&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">++</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">@&quot;\**\*.exe&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">FxCop</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> 
               <span class="c">// override default parameters</span>
-              <span class="i">ReportFileName</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;FXCopResults.xml&quot;</span>
-              <span class="i">FailOnError</span> <span class="o">=</span> <span class="i">FxCopErrorLevel</span><span class="o">.</span><span class="i">CriticalWarning</span>
-              <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;FxCopCmd.exe&quot;</span>})
-)
+              <span class="id">ReportFileName</span> <span class="o">=</span> <span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;FXCopResults.xml&quot;</span>
+              <span class="id">FailOnError</span> <span class="o">=</span> <span class="id">FxCopErrorLevel</span><span class="pn">.</span><span class="id">CriticalWarning</span>
+              <span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;FxCopCmd.exe&quot;</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

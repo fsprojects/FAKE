@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Writing custom C# tasks for FAKE</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>"FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks.
 This tutorial shows how to create a (very simple) custom task in C#.</p>
 <h2>Creating a custom task</h2>
@@ -88,19 +89,19 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 <span class="l">14: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake libs</span>
-<span class="prep">#I</span> <span class="s">@&quot;tools\FAKE&quot;</span>
-<span class="prep">#r</span> <span class="s">&quot;FakeLib.dll&quot;</span>
+<span class="pp">#I</span> <span class="s">@&quot;tools\FAKE&quot;</span>
+<span class="pp">#r</span> <span class="s">&quot;FakeLib.dll&quot;</span>
 
 <span class="c">// include CustomTask</span>
-<span class="prep">#r</span> <span class="s">&quot;MyCustomTask.dll&quot;</span>
-<span class="k">open</span> <span class="i">Fake</span> 
+<span class="pp">#r</span> <span class="s">&quot;MyCustomTask.dll&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span> 
 
 <span class="c">// open CustomNamespace</span>
-<span class="k">open</span> <span class="i">MyCustomTask</span>
+<span class="k">open</span> <span class="id">MyCustomTask</span>
 
 <span class="c">// use custom functionality</span>
-<span class="i">RandomNumberTask</span><span class="o">.</span><span class="i">RandomNumber</span>(<span class="n">2</span>,<span class="n">13</span>)
-  <span class="o">|&gt;</span> <span class="i">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
+<span class="id">RandomNumberTask</span><span class="pn">.</span><span class="id">RandomNumber</span><span class="pn">(</span><span class="n">2</span><span class="pn">,</span><span class="n">13</span><span class="pn">)</span>
+  <span class="o">|&gt;</span> <span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
 </code></pre></td>
 </tr>
 </table>

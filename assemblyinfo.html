@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Generating AssemblyInfo files</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>In this article the AssemblyInfo task is used in order to set specific version information to .NET assemblies.</p>
 <p>If you succeeded with the <a href="gettingstarted.html">Getting Started tutorial</a>, then you just have to modify your <em>BuildApp</em> target to the following:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -63,28 +64,28 @@
 <span class="l">21: </span>
 <span class="l">22: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">AssemblyInfoFile</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">AssemblyInfoFile</span>
 
-<span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="i">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/Calculator/Properties/AssemblyInfo.cs&quot;</span>
-		[<span class="i">Attribute</span><span class="o">.</span><span class="i">Title</span> <span class="s">&quot;Calculator Command line tool&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Guid</span> <span class="s">&quot;A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Product</span> <span class="s">&quot;Calculator&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Version</span> <span class="i">version</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">FileVersion</span> <span class="i">version</span>]
+<span class="id">Target</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="id">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/Calculator/Properties/AssemblyInfo.cs&quot;</span>
+		<span class="pn">[</span><span class="id">Attribute</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator Command line tool&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Version</span> <span class="id">version</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">FileVersion</span> <span class="id">version</span><span class="pn">]</span>
 
-	<span class="i">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/CalculatorLib/Properties/AssemblyInfo.cs&quot;</span>
-		[<span class="i">Attribute</span><span class="o">.</span><span class="i">Title</span> <span class="s">&quot;Calculator library&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Guid</span> <span class="s">&quot;EE5621DB-B86B-44eb-987F-9C94BCC98441&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Product</span> <span class="s">&quot;Calculator&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Version</span> <span class="i">version</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">FileVersion</span> <span class="i">version</span>]
+	<span class="id">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/CalculatorLib/Properties/AssemblyInfo.cs&quot;</span>
+		<span class="pn">[</span><span class="id">Attribute</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator library&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;EE5621DB-B86B-44eb-987F-9C94BCC98441&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Version</span> <span class="id">version</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">FileVersion</span> <span class="id">version</span><span class="pn">]</span>
 
-	<span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span> <span class="i">appReferences</span>
-	  <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
-)
+	<span class="id">MSBuildRelease</span> <span class="id">buildDir</span> <span class="s">&quot;Build&quot;</span> <span class="id">appReferences</span>
+	  <span class="o">|&gt;</span> <span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -96,10 +97,10 @@
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">version</span> <span class="o">=</span>
-  <span class="k">match</span> <span class="i">buildServer</span> <span class="k">with</span>
-  | <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">TeamCity</span> <span class="k">-&gt;</span> <span class="i">buildVersion</span>
-  | _ <span class="k">-&gt;</span> <span class="s">&quot;0.2&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">version</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="id">buildServer</span> <span class="k">with</span>
+  <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">TeamCity</span> <span class="k">-&gt;</span> <span class="id">buildVersion</span>
+  <span class="pn">|</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="s">&quot;0.2&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -110,14 +111,14 @@ directly fits with doing this, but one way is by storing it as Metadata (warning
 <p>If your solution is inside a git repository you can get the git hash like this (remember to <code>open Fake.Git</code>):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">commitHash</span> <span class="o">=</span> <span class="i">Information</span><span class="o">.</span><span class="i">getCurrentHash</span>()
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">commitHash</span> <span class="o">=</span> <span class="id">Information</span><span class="pn">.</span><span class="id">getCurrentHash</span><span class="pn">(</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
 <p>And set like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Attribute</span><span class="o">.</span><span class="i">Metadata</span>(<span class="s">&quot;githash&quot;</span>, <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">commitHash</span>)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Attribute</span><span class="pn">.</span><span class="id">Metadata</span><span class="pn">(</span><span class="s">&quot;githash&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">commitHash</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

@@ -129,28 +129,28 @@
 <span class="l">21: </span>
 <span class="l">22: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;PackageXamarinDistribution&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
-     <span class="i">xpkgPack</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-         {<span class="i">p</span> <span class="k">with</span>
-             <span class="i">ToolPath</span> <span class="o">=</span> <span class="i">xpkgExecutable</span>;
-             <span class="i">Package</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing&quot;</span>;
-             <span class="i">Version</span> <span class="o">=</span> <span class="i">assemblyFileVersion</span>;
-             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">publishDir</span>
-             <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing&quot;</span>
-             <span class="i">Summary</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing is a cross platform licensing tool&quot;</span>
-             <span class="i">Publisher</span> <span class="o">=</span> <span class="s">&quot;Nauck IT KG&quot;</span>
-             <span class="i">Website</span> <span class="o">=</span> <span class="s">&quot;http://dev.nauck-it.de&quot;</span>
-             <span class="i">Details</span> <span class="o">=</span> <span class="s">&quot;./Xamarin/Details.md&quot;</span>
-             <span class="i">License</span> <span class="o">=</span> <span class="s">&quot;License.md&quot;</span>
-             <span class="i">GettingStarted</span> <span class="o">=</span> <span class="s">&quot;./Xamarin/GettingStarted.md&quot;</span>
-             <span class="i">Icons</span> <span class="o">=</span> [<span class="s">&quot;./Xamarin/Portable.Licensing_512x512.png&quot;</span>
-                      <span class="s">&quot;./Xamarin/Portable.Licensing_128x128.png&quot;</span>]
-             <span class="i">Libraries</span> <span class="o">=</span> [<span class="s">&quot;mobile&quot;</span>, <span class="s">&quot;./Distribution/lib/Portable.Licensing.dll&quot;</span>]
-             <span class="i">Samples</span> <span class="o">=</span> [<span class="s">&quot;Android Sample.&quot;</span>, <span class="s">&quot;./Samples/Android/Android.Sample.sln&quot;</span>
-                        <span class="s">&quot;iOS Sample.&quot;</span>, <span class="s">&quot;./Samples/iOS/iOS.Sample.sln&quot;</span>]
-         }
-     )
- )
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;PackageXamarinDistribution&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
+     <span class="id">xpkgPack</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+         <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+             <span class="id">ToolPath</span> <span class="o">=</span> <span class="id">xpkgExecutable</span><span class="pn">;</span>
+             <span class="id">Package</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing&quot;</span><span class="pn">;</span>
+             <span class="id">Version</span> <span class="o">=</span> <span class="id">assemblyFileVersion</span><span class="pn">;</span>
+             <span class="id">OutputPath</span> <span class="o">=</span> <span class="id">publishDir</span>
+             <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing&quot;</span>
+             <span class="id">Summary</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing is a cross platform licensing tool&quot;</span>
+             <span class="id">Publisher</span> <span class="o">=</span> <span class="s">&quot;Nauck IT KG&quot;</span>
+             <span class="id">Website</span> <span class="o">=</span> <span class="s">&quot;http://dev.nauck-it.de&quot;</span>
+             <span class="id">Details</span> <span class="o">=</span> <span class="s">&quot;./Xamarin/Details.md&quot;</span>
+             <span class="id">License</span> <span class="o">=</span> <span class="s">&quot;License.md&quot;</span>
+             <span class="id">GettingStarted</span> <span class="o">=</span> <span class="s">&quot;./Xamarin/GettingStarted.md&quot;</span>
+             <span class="id">Icons</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;./Xamarin/Portable.Licensing_512x512.png&quot;</span>
+                      <span class="s">&quot;./Xamarin/Portable.Licensing_128x128.png&quot;</span><span class="pn">]</span>
+             <span class="id">Libraries</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;mobile&quot;</span><span class="pn">,</span> <span class="s">&quot;./Distribution/lib/Portable.Licensing.dll&quot;</span><span class="pn">]</span>
+             <span class="id">Samples</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;Android Sample.&quot;</span><span class="pn">,</span> <span class="s">&quot;./Samples/Android/Android.Sample.sln&quot;</span>
+                        <span class="s">&quot;iOS Sample.&quot;</span><span class="pn">,</span> <span class="s">&quot;./Samples/iOS/iOS.Sample.sln&quot;</span><span class="pn">]</span>
+         <span class="pn">}</span>
+     <span class="pn">)</span>
+ <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

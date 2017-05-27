@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Sending Notifications to a Slack Webhook</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>In this article you will learn how to create a <a href="https://slack.com">Slack</a> webhook integration and send a notification to it. This article assumes that you already have a Slack team setup.</p>
 <h2>Adding a Webhook Integration to a Channel</h2>
 <p>Follow the <a href="https://my.slack.com/services/new/incoming-webhook/">instructions</a> for setting up an incoming webhook integration. When finished, you should have a Webhook URL that looks like "<a href="https://hooks.slack.com/services/some/random/text".">https://hooks.slack.com/services/some/random/text".</a></p>
@@ -74,35 +75,35 @@
 <span class="l">30: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// The webhook URL from the integration you set up</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">webhookUrl</span> <span class="o">=</span> <span class="s">&quot;https://hooks.slack.com/services/some/random/text&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">webhookUrl</span> <span class="o">=</span> <span class="s">&quot;https://hooks.slack.com/services/some/random/text&quot;</span>
 
-<span class="i">SlackNotification</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">webhookUrl</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-    {<span class="i">p</span> <span class="k">with</span>
-        <span class="i">Text</span> <span class="o">=</span> <span class="s">&quot;My Slack Notification!</span><span class="e">\n</span><span class="s">&lt;https://google.com|Click Here&gt;!&quot;</span>
-        <span class="i">Channel</span> <span class="o">=</span> <span class="s">&quot;@SomeoneImportant&quot;</span>
-        <span class="i">Icon_Emoji</span> <span class="o">=</span> <span class="s">&quot;:ghost:&quot;</span>
-        <span class="i">Attachments</span> <span class="o">=</span> [| 
-            {<span class="i">SlackNotificationAttachmentDefaults</span> <span class="k">with</span>
-                <span class="i">Fallback</span> <span class="o">=</span> <span class="s">&quot;Attachment Plain&quot;</span>
-                <span class="i">Text</span> <span class="o">=</span> <span class="s">&quot;Attachment Rich&quot;</span>
-                <span class="i">Pretext</span> <span class="o">=</span> <span class="s">&quot;Attachment Pretext&quot;</span>
-                <span class="i">Color</span> <span class="o">=</span> <span class="s">&quot;danger&quot;</span>
-                <span class="i">Fields</span> <span class="o">=</span> [|
-                    {<span class="i">SlackNotificationAttachmentFieldDefaults</span> <span class="k">with</span>
-                        <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Field Title 1&quot;</span>
-                        <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;Field Value 2&quot;</span>}
-                    {<span class="i">SlackNotificationAttachmentFieldDefaults</span> <span class="k">with</span>
-                        <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Field Title 1&quot;</span>
-                        <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;Field Value 2&quot;</span>}|]
-            }
-            {<span class="i">SlackNotificationAttachmentDefaults</span> <span class="k">with</span>
-                <span class="i">Fallback</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Plain&quot;</span>
-                <span class="i">Text</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Rich&quot;</span>
-                <span class="i">Pretext</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Pretext&quot;</span>
-                <span class="i">Color</span> <span class="o">=</span> <span class="s">&quot;#FFCCDD&quot;</span>
-            }|]
-    })
-<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="f">printfn</span> <span class="s">&quot;Result: </span><span class="pf">%s</span><span class="s">&quot;</span>
+<span class="id">SlackNotification</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">webhookUrl</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+        <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;My Slack Notification!\n&lt;https://google.com|Click Here&gt;!&quot;</span>
+        <span class="id">Channel</span> <span class="o">=</span> <span class="s">&quot;@SomeoneImportant&quot;</span>
+        <span class="id">Icon_Emoji</span> <span class="o">=</span> <span class="s">&quot;:ghost:&quot;</span>
+        <span class="id">Attachments</span> <span class="o">=</span> <span class="pn">[|</span> 
+            <span class="pn">{</span><span class="id">SlackNotificationAttachmentDefaults</span> <span class="k">with</span>
+                <span class="id">Fallback</span> <span class="o">=</span> <span class="s">&quot;Attachment Plain&quot;</span>
+                <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;Attachment Rich&quot;</span>
+                <span class="id">Pretext</span> <span class="o">=</span> <span class="s">&quot;Attachment Pretext&quot;</span>
+                <span class="id">Color</span> <span class="o">=</span> <span class="s">&quot;danger&quot;</span>
+                <span class="id">Fields</span> <span class="o">=</span> <span class="pn">[|</span>
+                    <span class="pn">{</span><span class="id">SlackNotificationAttachmentFieldDefaults</span> <span class="k">with</span>
+                        <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Field Title 1&quot;</span>
+                        <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;Field Value 2&quot;</span><span class="pn">}</span>
+                    <span class="pn">{</span><span class="id">SlackNotificationAttachmentFieldDefaults</span> <span class="k">with</span>
+                        <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Field Title 1&quot;</span>
+                        <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;Field Value 2&quot;</span><span class="pn">}</span><span class="pn">|]</span>
+            <span class="pn">}</span>
+            <span class="pn">{</span><span class="id">SlackNotificationAttachmentDefaults</span> <span class="k">with</span>
+                <span class="id">Fallback</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Plain&quot;</span>
+                <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Rich&quot;</span>
+                <span class="id">Pretext</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Pretext&quot;</span>
+                <span class="id">Color</span> <span class="o">=</span> <span class="s">&quot;#FFCCDD&quot;</span>
+            <span class="pn">}</span><span class="pn">|]</span>
+    <span class="pn">}</span><span class="pn">)</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="fn">printfn</span> <span class="s">&quot;Result: </span><span class="pf">%s</span><span class="s">&quot;</span>
 </code></pre></td>
 </tr>
 </table>

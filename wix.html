@@ -113,10 +113,10 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
 <span class="l">70: </span>
 <span class="l">71: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;BuildWiXSetup&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;BuildWiXSetup&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="c">// This defines, which files should be collected when running bulkComponentCreation</span>
-    <span class="k">let</span> <span class="i">fileFilter</span> <span class="o">=</span> <span class="k">fun</span> (<span class="i">file</span> <span class="o">:</span> <span class="i">FileInfo</span>) <span class="k">-&gt;</span> 
-        <span class="k">if</span> <span class="i">file</span><span class="o">.</span><span class="i">Extension</span> <span class="o">=</span> <span class="s">&quot;.dll&quot;</span> <span class="o">||</span> <span class="i">file</span><span class="o">.</span><span class="i">Extension</span> <span class="o">=</span> <span class="s">&quot;.exe&quot;</span> <span class="o">||</span> <span class="i">file</span><span class="o">.</span><span class="i">Extension</span> <span class="o">=</span> <span class="s">&quot;.config&quot;</span> <span class="k">then</span> 
+    <span class="k">let</span> <span class="id">fileFilter</span> <span class="o">=</span> <span class="k">fun</span> <span class="pn">(</span><span class="id">file</span> <span class="pn">:</span> <span class="id">FileInfo</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+        <span class="k">if</span> <span class="id">file</span><span class="pn">.</span><span class="id">Extension</span> <span class="o">=</span> <span class="s">&quot;.dll&quot;</span> <span class="o">||</span> <span class="id">file</span><span class="pn">.</span><span class="id">Extension</span> <span class="o">=</span> <span class="s">&quot;.exe&quot;</span> <span class="o">||</span> <span class="id">file</span><span class="pn">.</span><span class="id">Extension</span> <span class="o">=</span> <span class="s">&quot;.config&quot;</span> <span class="k">then</span> 
             <span class="k">true</span> 
         <span class="k">else</span> 
             <span class="k">false</span>
@@ -124,66 +124,66 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
     <span class="c">// Collect Files which should be shipped. Pass directory with your deployment output for deployDir</span>
     <span class="c">// along with the targeted architecture.</span>
     
-    <span class="k">let</span> <span class="i">components</span> <span class="o">=</span> <span class="i">bulkComponentCreation</span> <span class="i">fileFilter</span> (<span class="i">DirectoryInfo</span> <span class="i">deployDir</span>) <span class="i">Architecture</span><span class="o">.</span><span class="i">X86</span>
+    <span class="k">let</span> <span class="id">components</span> <span class="o">=</span> <span class="id">bulkComponentCreation</span> <span class="id">fileFilter</span> <span class="pn">(</span><span class="id">DirectoryInfo</span> <span class="id">deployDir</span><span class="pn">)</span> <span class="id">Architecture</span><span class="pn">.</span><span class="id">X86</span>
              
     <span class="c">// Collect component references for usage in features</span>
-    <span class="k">let</span> <span class="i">componentRefs</span> <span class="o">=</span> <span class="i">components</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">map</span>(<span class="k">fun</span> <span class="i">comp</span> <span class="k">-&gt;</span> <span class="i">comp</span><span class="o">.</span><span class="i">ToComponentRef</span>())
+    <span class="k">let</span> <span class="id">componentRefs</span> <span class="o">=</span> <span class="id">components</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">map</span><span class="pn">(</span><span class="k">fun</span> <span class="id">comp</span> <span class="k">-&gt;</span> <span class="id">comp</span><span class="pn">.</span><span class="id">ToComponentRef</span><span class="pn">(</span><span class="pn">)</span><span class="pn">)</span>
 
-    <span class="k">let</span> <span class="i">completeFeature</span> <span class="o">=</span> <span class="i">generateFeatureElement</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
-                                                    {<span class="i">f</span> <span class="k">with</span>  
-                                                        <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;Complete&quot;</span>
-                                                        <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Complete Feature&quot;</span>
-                                                        <span class="i">Level</span> <span class="o">=</span> <span class="n">1</span> 
-                                                        <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Installs all features&quot;</span>
-                                                        <span class="i">Components</span> <span class="o">=</span> <span class="i">componentRefs</span>
-                                                        <span class="i">Display</span> <span class="o">=</span> <span class="i">Expand</span> 
-                                                    })
+    <span class="k">let</span> <span class="id">completeFeature</span> <span class="o">=</span> <span class="id">generateFeatureElement</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> 
+                                                    <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>  
+                                                        <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;Complete&quot;</span>
+                                                        <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Complete Feature&quot;</span>
+                                                        <span class="id">Level</span> <span class="o">=</span> <span class="n">1</span> 
+                                                        <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Installs all features&quot;</span>
+                                                        <span class="id">Components</span> <span class="o">=</span> <span class="id">componentRefs</span>
+                                                        <span class="id">Display</span> <span class="o">=</span> <span class="id">Expand</span> 
+                                                    <span class="pn">}</span><span class="pn">)</span>
 
     <span class="c">// Generates a predefined WiX template with placeholders which will be replaced in &quot;FillInWiXScript&quot;</span>
-    <span class="i">generateWiXScript</span> <span class="s">&quot;SetupTemplate.wxs&quot;</span>
+    <span class="id">generateWiXScript</span> <span class="s">&quot;SetupTemplate.wxs&quot;</span>
 
-    <span class="k">let</span> <span class="i">WiXUIMondo</span> <span class="o">=</span> <span class="i">generateUIRef</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                        {<span class="i">f</span> <span class="k">with</span>
-                                            <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_Mondo&quot;</span>
-                                        })
+    <span class="k">let</span> <span class="id">WiXUIMondo</span> <span class="o">=</span> <span class="id">generateUIRef</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                        <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                            <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_Mondo&quot;</span>
+                                        <span class="pn">}</span><span class="pn">)</span>
 
-    <span class="k">let</span> <span class="i">WiXUIError</span> <span class="o">=</span> <span class="i">generateUIRef</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                        {<span class="i">f</span> <span class="k">with</span>
-                                            <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_ErrorProgressText&quot;</span>
-                                        })
+    <span class="k">let</span> <span class="id">WiXUIError</span> <span class="o">=</span> <span class="id">generateUIRef</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                        <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                            <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_ErrorProgressText&quot;</span>
+                                        <span class="pn">}</span><span class="pn">)</span>
 
-    <span class="k">let</span> <span class="i">MajorUpgrade</span> <span class="o">=</span> <span class="i">generateMajorUpgradeVersion</span>(
-                            <span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                                {<span class="i">f</span> <span class="k">with</span> 
-                                    <span class="i">Schedule</span> <span class="o">=</span> <span class="i">MajorUpgradeSchedule</span><span class="o">.</span><span class="i">AfterInstallExecute</span>
-                                    <span class="i">DowngradeErrorMessage</span> <span class="o">=</span> <span class="s">&quot;A later version is already installed, exiting.&quot;</span>
-                                })
+    <span class="k">let</span> <span class="id">MajorUpgrade</span> <span class="o">=</span> <span class="id">generateMajorUpgradeVersion</span><span class="pn">(</span>
+                            <span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                <span class="pn">{</span><span class="id">f</span> <span class="k">with</span> 
+                                    <span class="id">Schedule</span> <span class="o">=</span> <span class="id">MajorUpgradeSchedule</span><span class="pn">.</span><span class="id">AfterInstallExecute</span>
+                                    <span class="id">DowngradeErrorMessage</span> <span class="o">=</span> <span class="s">&quot;A later version is already installed, exiting.&quot;</span>
+                                <span class="pn">}</span><span class="pn">)</span>
 
-    <span class="i">FillInWiXTemplate</span> <span class="s">&quot;&quot;</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                            {<span class="i">f</span> <span class="k">with</span>
+    <span class="id">FillInWiXTemplate</span> <span class="s">&quot;&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                            <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
                                 <span class="c">// Guid which should be generated on every build</span>
-                                <span class="i">ProductCode</span> <span class="o">=</span> <span class="i">Guid</span><span class="o">.</span><span class="i">NewGuid</span>()
-                                <span class="i">ProductName</span> <span class="o">=</span> <span class="s">&quot;Test Setup&quot;</span>
-                                <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Description of Test Setup&quot;</span>
-                                <span class="i">ProductLanguage</span> <span class="o">=</span> <span class="n">1033</span>
-                                <span class="i">ProductVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
-                                <span class="i">ProductPublisher</span> <span class="o">=</span> <span class="s">&quot;YouOrYourCompany&quot;</span>
+                                <span class="id">ProductCode</span> <span class="o">=</span> <span class="id">Guid</span><span class="pn">.</span><span class="id">NewGuid</span><span class="pn">(</span><span class="pn">)</span>
+                                <span class="id">ProductName</span> <span class="o">=</span> <span class="s">&quot;Test Setup&quot;</span>
+                                <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Description of Test Setup&quot;</span>
+                                <span class="id">ProductLanguage</span> <span class="o">=</span> <span class="n">1033</span>
+                                <span class="id">ProductVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+                                <span class="id">ProductPublisher</span> <span class="o">=</span> <span class="s">&quot;YouOrYourCompany&quot;</span>
                                 <span class="c">// Set fixed upgrade guid, this should never change for this project!</span>
-                                <span class="i">UpgradeGuid</span> <span class="o">=</span> <span class="i">WixProductUpgradeGuid</span>
-                                <span class="i">MajorUpgrade</span> <span class="o">=</span> [<span class="i">MajorUpgrade</span>]
-                                <span class="i">UIRefs</span> <span class="o">=</span> [<span class="i">WiXUIMondo</span>; <span class="i">WiXUIError</span>]
-                                <span class="i">ProgramFilesFolder</span> <span class="o">=</span> <span class="i">ProgramFiles32</span>
-                                <span class="i">Components</span> <span class="o">=</span> <span class="i">components</span>
-                                <span class="i">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;Build number&quot;</span>
-                                <span class="i">Features</span> <span class="o">=</span> [<span class="i">completeFeature</span>]
-                            })
+                                <span class="id">UpgradeGuid</span> <span class="o">=</span> <span class="id">WixProductUpgradeGuid</span>
+                                <span class="id">MajorUpgrade</span> <span class="o">=</span> <span class="pn">[</span><span class="id">MajorUpgrade</span><span class="pn">]</span>
+                                <span class="id">UIRefs</span> <span class="o">=</span> <span class="pn">[</span><span class="id">WiXUIMondo</span><span class="pn">;</span> <span class="id">WiXUIError</span><span class="pn">]</span>
+                                <span class="id">ProgramFilesFolder</span> <span class="o">=</span> <span class="id">ProgramFiles32</span>
+                                <span class="id">Components</span> <span class="o">=</span> <span class="id">components</span>
+                                <span class="id">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;Build number&quot;</span>
+                                <span class="id">Features</span> <span class="o">=</span> <span class="pn">[</span><span class="id">completeFeature</span><span class="pn">]</span>
+                            <span class="pn">}</span><span class="pn">)</span>
         
 
     <span class="c">// run the WiX tools</span>
-    <span class="i">WiX</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">ToolDirectory</span> <span class="o">=</span> <span class="i">WiXPath</span>}) 
-        <span class="i">setupFileName</span>
+    <span class="id">WiX</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">ToolDirectory</span> <span class="o">=</span> <span class="id">WiXPath</span><span class="pn">}</span><span class="pn">)</span> 
+        <span class="id">setupFileName</span>
         <span class="s">@&quot;.\SetupTemplate.wxs&quot;</span>
-)
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -214,24 +214,24 @@ You can use the attachServiceToControlComponents function for attaching service 
 <span class="l">17: </span>
 <span class="l">18: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">serviceControl</span> <span class="o">=</span> <span class="i">generateServiceControl</span>(<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> {<span class="i">f</span> <span class="k">with</span> 
-                                                        <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;PickAnId&quot;</span>
-                                                        <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;QualifiedNameOfYourService&quot;</span>
-                                                        <span class="i">Start</span> <span class="o">=</span> <span class="i">InstallUninstall</span><span class="o">.</span><span class="i">Install</span>
-                                                        <span class="i">Stop</span> <span class="o">=</span> <span class="i">InstallUninstall</span><span class="o">.</span><span class="i">Both</span>
-                                                        <span class="i">Remove</span> <span class="o">=</span> <span class="i">InstallUninstall</span><span class="o">.</span><span class="i">Uninstall</span>})
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">serviceControl</span> <span class="o">=</span> <span class="id">generateServiceControl</span><span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">f</span> <span class="k">with</span> 
+                                                        <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;PickAnId&quot;</span>
+                                                        <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;QualifiedNameOfYourService&quot;</span>
+                                                        <span class="id">Start</span> <span class="o">=</span> <span class="id">InstallUninstall</span><span class="pn">.</span><span class="id">Install</span>
+                                                        <span class="id">Stop</span> <span class="o">=</span> <span class="id">InstallUninstall</span><span class="pn">.</span><span class="id">Both</span>
+                                                        <span class="id">Remove</span> <span class="o">=</span> <span class="id">InstallUninstall</span><span class="pn">.</span><span class="id">Uninstall</span><span class="pn">}</span><span class="pn">)</span>
 
 <span class="c">// This defines, that all executable files should be tagged with the service control element</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="f">componentSelector</span> <span class="o">=</span> <span class="k">fun</span> (<span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">comp</span> <span class="o">:</span> <span class="i">WiXComponent</span>) <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">comp</span><span class="o">.</span><span class="i">Files</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="f">exists</span>(<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="i">file</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs7', 10)" onmouseover="showTip(event, 'fs7', 10)" class="i">file</span><span class="o">.</span><span class="i">Name</span><span class="o">.</span><span class="i">EndsWith</span>(<span class="s">&quot;.exe&quot;</span>)) 
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="fn">componentSelector</span> <span class="o">=</span> <span class="k">fun</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">comp</span> <span class="pn">:</span> <span class="id">WiXComponent</span><span class="pn">)</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">comp</span><span class="pn">.</span><span class="id">Files</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="id">exists</span><span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="id">file</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs7', 10)" onmouseover="showTip(event, 'fs7', 10)" class="id">file</span><span class="pn">.</span><span class="id">Name</span><span class="pn">.</span><span class="id">EndsWith</span><span class="pn">(</span><span class="s">&quot;.exe&quot;</span><span class="pn">)</span><span class="pn">)</span> 
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 11)" onmouseover="showTip(event, 'fs8', 11)" class="i">components</span> <span class="o">=</span> <span class="i">attachServiceControlToComponents</span>
-                    (<span class="i">bulkComponentCreation</span> (<span class="k">fun</span> <span class="i">file</span> <span class="k">-&gt;</span> 
-                        <span class="k">if</span> <span class="i">file</span><span class="o">.</span><span class="i">Extension</span> <span class="o">=</span> <span class="s">&quot;.dll&quot;</span> <span class="o">||</span> <span class="i">file</span><span class="o">.</span><span class="i">Extension</span> <span class="o">=</span> <span class="s">&quot;.exe&quot;</span> <span class="o">||</span> <span class="i">file</span><span class="o">.</span><span class="i">Extension</span> <span class="o">=</span> <span class="s">&quot;.config&quot;</span> <span class="k">then</span> 
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 11)" onmouseover="showTip(event, 'fs8', 11)" class="id">components</span> <span class="o">=</span> <span class="id">attachServiceControlToComponents</span>
+                    <span class="pn">(</span><span class="id">bulkComponentCreation</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">file</span> <span class="k">-&gt;</span> 
+                        <span class="k">if</span> <span class="id">file</span><span class="pn">.</span><span class="id">Extension</span> <span class="o">=</span> <span class="s">&quot;.dll&quot;</span> <span class="o">||</span> <span class="id">file</span><span class="pn">.</span><span class="id">Extension</span> <span class="o">=</span> <span class="s">&quot;.exe&quot;</span> <span class="o">||</span> <span class="id">file</span><span class="pn">.</span><span class="id">Extension</span> <span class="o">=</span> <span class="s">&quot;.config&quot;</span> <span class="k">then</span> 
                             <span class="k">true</span> 
                         <span class="k">else</span> 
-                            <span class="k">false</span>) (<span class="i">DirectoryInfo</span> <span class="i">deployDir</span>))
-                    <span onmouseout="hideTip(event, 'fs4', 12)" onmouseover="showTip(event, 'fs4', 12)" class="i">componentSelector</span> 
-                    [<span onmouseout="hideTip(event, 'fs3', 13)" onmouseover="showTip(event, 'fs3', 13)" class="i">serviceControl</span>]
+                            <span class="k">false</span><span class="pn">)</span> <span class="pn">(</span><span class="id">DirectoryInfo</span> <span class="id">deployDir</span><span class="pn">)</span><span class="pn">)</span>
+                    <span onmouseout="hideTip(event, 'fs4', 12)" onmouseover="showTip(event, 'fs4', 12)" class="id">componentSelector</span> 
+                    <span class="pn">[</span><span onmouseout="hideTip(event, 'fs3', 13)" onmouseover="showTip(event, 'fs3', 13)" class="id">serviceControl</span><span class="pn">]</span>
 </code></pre></td>
 </tr>
 </table>
@@ -260,26 +260,26 @@ You can use the attachServiceToControlComponents function for attaching service 
 <span class="l">19: </span>
 <span class="l">20: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="i">registryDefinition</span> <span class="o">=</span> <span class="i">generateRegistryKey</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> {<span class="i">f</span> <span class="k">with</span>
-                                                          <span class="i">Root</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="i">Some</span> <span class="i">WiXRegistryRootType</span><span class="o">.</span><span class="i">HKCU</span>
-                                                          <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;Some key name&quot;</span>
-                                                          <span class="i">Values</span> <span class="o">=</span> [
-                                                            <span class="i">generateRegistryValue</span>(<span class="k">fun</span> <span class="i">v</span> <span class="k">-&gt;</span> 
-                                                                                    {<span class="i">v</span> <span class="k">with</span>
-                                                                                       <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Something&quot;</span>
-                                                                                       <span class="i">Type</span> <span class="o">=</span> <span class="i">WiXRegistryValueType</span><span class="o">.</span><span class="i">Integer</span>
-                                                                                       <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span>
-                                                                                    })
-                                                          ]
-                                                          <span class="i">Keys</span> <span class="o">=</span> [
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="id">registryDefinition</span> <span class="o">=</span> <span class="id">generateRegistryKey</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                                          <span class="id">Root</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="id">Some</span> <span class="id">WiXRegistryRootType</span><span class="pn">.</span><span class="id">HKCU</span>
+                                                          <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;Some key name&quot;</span>
+                                                          <span class="id">Values</span> <span class="o">=</span> <span class="pn">[</span>
+                                                            <span class="id">generateRegistryValue</span><span class="pn">(</span><span class="k">fun</span> <span class="id">v</span> <span class="k">-&gt;</span> 
+                                                                                    <span class="pn">{</span><span class="id">v</span> <span class="k">with</span>
+                                                                                       <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Something&quot;</span>
+                                                                                       <span class="id">Type</span> <span class="o">=</span> <span class="id">WiXRegistryValueType</span><span class="pn">.</span><span class="id">Integer</span>
+                                                                                       <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span>
+                                                                                    <span class="pn">}</span><span class="pn">)</span>
+                                                          <span class="pn">]</span>
+                                                          <span class="id">Keys</span> <span class="o">=</span> <span class="pn">[</span>
                                                             <span class="c">//Could nest more keys here</span>
-                                                          ]
-                                                       })
+                                                          <span class="pn">]</span>
+                                                       <span class="pn">}</span><span class="pn">)</span>
                                                       
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="i">regComponent</span> <span class="o">=</span> <span class="i">C</span> (<span class="i">generateComponent</span> (<span class="k">fun</span> <span class="i">c</span> <span class="k">-&gt;</span> {<span class="i">c</span> <span class="k">with</span>
-                                                     <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;RegistryEntries&quot;</span>
-                                                     <span class="i">RegistryKeys</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs9', 17)" onmouseover="showTip(event, 'fs9', 17)" class="i">registryDefinition</span>]
-                                                  }))
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="id">regComponent</span> <span class="o">=</span> <span class="id">C</span> <span class="pn">(</span><span class="id">generateComponent</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">c</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">c</span> <span class="k">with</span>
+                                                     <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;RegistryEntries&quot;</span>
+                                                     <span class="id">RegistryKeys</span> <span class="o">=</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs9', 17)" onmouseover="showTip(event, 'fs9', 17)" class="id">registryDefinition</span><span class="pn">]</span>
+                                                  <span class="pn">}</span><span class="pn">)</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -289,10 +289,10 @@ You can use the attachServiceToControlComponents function for attaching service 
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 18)" onmouseover="showTip(event, 'fs12', 18)" class="i">targetDirRef</span> <span class="o">=</span> <span class="i">generateDirectoryRef</span> (<span class="k">fun</span> <span class="i">r</span> <span class="k">-&gt;</span> {<span class="i">r</span> <span class="k">with</span>
-                                                     <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;TARGETDIR&quot;</span>
-                                                     <span class="i">Components</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="i">regComponent</span>]
-                                                  })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 18)" onmouseover="showTip(event, 'fs12', 18)" class="id">targetDirRef</span> <span class="o">=</span> <span class="id">generateDirectoryRef</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">r</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">r</span> <span class="k">with</span>
+                                                     <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;TARGETDIR&quot;</span>
+                                                     <span class="id">Components</span> <span class="o">=</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="id">regComponent</span><span class="pn">]</span>
+                                                  <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -329,37 +329,37 @@ You can use the attachServiceToControlComponents function for attaching service 
 <span class="l">30: </span>
 <span class="l">31: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 20)" onmouseover="showTip(event, 'fs13', 20)" class="i">componentRefs</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'fs1', 21)" onmouseover="showTip(event, 'fs1', 21)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 22)" onmouseover="showTip(event, 'fs14', 22)" class="f">append</span> <span onmouseout="hideTip(event, 'fs8', 23)" onmouseover="showTip(event, 'fs8', 23)" class="i">components</span> [<span onmouseout="hideTip(event, 'fs11', 24)" onmouseover="showTip(event, 'fs11', 24)" class="i">regComponent</span>]) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 25)" onmouseover="showTip(event, 'fs1', 25)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 26)" onmouseover="showTip(event, 'fs2', 26)" class="f">map</span>(<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs15', 27)" onmouseover="showTip(event, 'fs15', 27)" class="i">comp</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs15', 28)" onmouseover="showTip(event, 'fs15', 28)" class="i">comp</span><span class="o">.</span><span class="i">ToComponentRef</span>())
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 20)" onmouseover="showTip(event, 'fs13', 20)" class="id">componentRefs</span> <span class="o">=</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs1', 21)" onmouseover="showTip(event, 'fs1', 21)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs14', 22)" onmouseover="showTip(event, 'fs14', 22)" class="id">append</span> <span onmouseout="hideTip(event, 'fs8', 23)" onmouseover="showTip(event, 'fs8', 23)" class="id">components</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs11', 24)" onmouseover="showTip(event, 'fs11', 24)" class="id">regComponent</span><span class="pn">]</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 25)" onmouseover="showTip(event, 'fs1', 25)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 26)" onmouseover="showTip(event, 'fs2', 26)" class="id">map</span><span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs15', 27)" onmouseover="showTip(event, 'fs15', 27)" class="id">comp</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs15', 28)" onmouseover="showTip(event, 'fs15', 28)" class="id">comp</span><span class="pn">.</span><span class="id">ToComponentRef</span><span class="pn">(</span><span class="pn">)</span><span class="pn">)</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs16', 29)" onmouseover="showTip(event, 'fs16', 29)" class="i">completeFeature</span> <span class="o">=</span> <span class="i">generateFeatureElement</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
-                                                {<span class="i">f</span> <span class="k">with</span>  
-                                                    <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;Complete&quot;</span>
-                                                    <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Complete Feature&quot;</span>
-                                                    <span class="i">Level</span> <span class="o">=</span> <span class="n">1</span> 
-                                                    <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Installs all features&quot;</span>
-                                                    <span class="i">Components</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 30)" onmouseover="showTip(event, 'fs13', 30)" class="i">componentRefs</span>
-                                                    <span class="i">Display</span> <span class="o">=</span> <span class="i">Expand</span> 
-                                                })
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs16', 29)" onmouseover="showTip(event, 'fs16', 29)" class="id">completeFeature</span> <span class="o">=</span> <span class="id">generateFeatureElement</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> 
+                                                <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>  
+                                                    <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;Complete&quot;</span>
+                                                    <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Complete Feature&quot;</span>
+                                                    <span class="id">Level</span> <span class="o">=</span> <span class="n">1</span> 
+                                                    <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Installs all features&quot;</span>
+                                                    <span class="id">Components</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 30)" onmouseover="showTip(event, 'fs13', 30)" class="id">componentRefs</span>
+                                                    <span class="id">Display</span> <span class="o">=</span> <span class="id">Expand</span> 
+                                                <span class="pn">}</span><span class="pn">)</span>
 
-<span class="i">FillInWiXTemplate</span> <span class="s">&quot;&quot;</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
-                        {<span class="i">f</span> <span class="k">with</span>
+<span class="id">FillInWiXTemplate</span> <span class="s">&quot;&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                        <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
                             <span class="c">// Guid which should be generated on every build</span>
-                            <span class="i">ProductCode</span> <span class="o">=</span> <span class="i">Guid</span><span class="o">.</span><span class="i">NewGuid</span>()
-                            <span class="i">ProductName</span> <span class="o">=</span> <span class="s">&quot;Test Setup&quot;</span>
-                            <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Description of Test Setup&quot;</span>
-                            <span class="i">ProductLanguage</span> <span class="o">=</span> <span class="n">1033</span>
-                            <span class="i">ProductVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
-                            <span class="i">ProductPublisher</span> <span class="o">=</span> <span class="s">&quot;YouOrYourCompany&quot;</span>
+                            <span class="id">ProductCode</span> <span class="o">=</span> <span class="id">Guid</span><span class="pn">.</span><span class="id">NewGuid</span><span class="pn">(</span><span class="pn">)</span>
+                            <span class="id">ProductName</span> <span class="o">=</span> <span class="s">&quot;Test Setup&quot;</span>
+                            <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Description of Test Setup&quot;</span>
+                            <span class="id">ProductLanguage</span> <span class="o">=</span> <span class="n">1033</span>
+                            <span class="id">ProductVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+                            <span class="id">ProductPublisher</span> <span class="o">=</span> <span class="s">&quot;YouOrYourCompany&quot;</span>
                             <span class="c">// Set fixed upgrade guid, this should never change for this project!</span>
-                            <span class="i">UpgradeGuid</span> <span class="o">=</span> <span class="i">WixProductUpgradeGuid</span>
-                            <span class="i">MajorUpgrade</span> <span class="o">=</span> [<span class="i">MajorUpgrade</span>]
-                            <span class="i">UIRefs</span> <span class="o">=</span> [<span class="i">WiXUIMondo</span>; <span class="i">WiXUIError</span>]
-                            <span class="i">ProgramFilesFolder</span> <span class="o">=</span> <span class="i">ProgramFiles32</span>
-                            <span class="i">Components</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs8', 31)" onmouseover="showTip(event, 'fs8', 31)" class="i">components</span>
-                            <span class="i">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;Build number&quot;</span>
-                            <span class="i">Features</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs16', 32)" onmouseover="showTip(event, 'fs16', 32)" class="i">completeFeature</span>]
-                            <span class="i">DirectoryRefs</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="i">targetDirRef</span>]
-                        })
+                            <span class="id">UpgradeGuid</span> <span class="o">=</span> <span class="id">WixProductUpgradeGuid</span>
+                            <span class="id">MajorUpgrade</span> <span class="o">=</span> <span class="pn">[</span><span class="id">MajorUpgrade</span><span class="pn">]</span>
+                            <span class="id">UIRefs</span> <span class="o">=</span> <span class="pn">[</span><span class="id">WiXUIMondo</span><span class="pn">;</span> <span class="id">WiXUIError</span><span class="pn">]</span>
+                            <span class="id">ProgramFilesFolder</span> <span class="o">=</span> <span class="id">ProgramFiles32</span>
+                            <span class="id">Components</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs8', 31)" onmouseover="showTip(event, 'fs8', 31)" class="id">components</span>
+                            <span class="id">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;Build number&quot;</span>
+                            <span class="id">Features</span> <span class="o">=</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs16', 32)" onmouseover="showTip(event, 'fs16', 32)" class="id">completeFeature</span><span class="pn">]</span>
+                            <span class="id">DirectoryRefs</span> <span class="o">=</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="id">targetDirRef</span><span class="pn">]</span>
+                        <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

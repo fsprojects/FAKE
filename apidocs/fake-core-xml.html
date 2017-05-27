@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Xml - FAKE - F# Make</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="http://fsharp.github.io/FAKE/index.html">FAKE - F# Make</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>Xml</h1>
+<div class="xmldoc">
+<p>Contains functions to read and write XML files.</p>
+
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1326', 1326)" onmouseover="showTip(event, '1326', 1326)">
+            Attribute name value writer
+          </code>
+          <div class="tip" id="1326">
+            <strong>Signature:</strong> name:string -&gt; value:&#39;?14848 -&gt; writer:XmlWriter -&gt; XmlWriter<br />
+                          <strong>Type parameters:</strong> '?14848          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L75-75" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes an XML attribute to current element of the given XmlTextWriter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1327', 1327)" onmouseover="showTip(event, '1327', 1327)">
+            CDataElement elementName data writer
+          </code>
+          <div class="tip" id="1327">
+            <strong>Signature:</strong> elementName:string -&gt; data:string -&gt; writer:XmlWriter -&gt; XmlWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L80-80" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes an CData element to the given XmlTextWriter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1328', 1328)" onmouseover="showTip(event, '1328', 1328)">
+            Comment comment writer
+          </code>
+          <div class="tip" id="1328">
+            <strong>Signature:</strong> comment:string -&gt; writer:XmlWriter -&gt; XmlWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L60-60" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes an XML comment to the given XmlTextWriter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1329', 1329)" onmouseover="showTip(event, '1329', 1329)">
+            Doc text
+          </code>
+          <div class="tip" id="1329">
+            <strong>Signature:</strong> text:string -&gt; XmlDocument<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L111-111" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Loads the given text into a XmlDocument</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1330', 1330)" onmouseover="showTip(event, '1330', 1330)">
+            DocElement doc
+          </code>
+          <div class="tip" id="1330">
+            <strong>Signature:</strong> doc:XmlDocument -&gt; XmlElement<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L119-119" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets the DocumentElement of the XmlDocument</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1331', 1331)" onmouseover="showTip(event, '1331', 1331)">
+            EndElement writer
+          </code>
+          <div class="tip" id="1331">
+            <strong>Signature:</strong> writer:XmlWriter -&gt; XmlWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L70-70" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes an XML end element to the given XmlTextWriter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1332', 1332)" onmouseover="showTip(event, '1332', 1332)">
+            getAttribute name node
+          </code>
+          <div class="tip" id="1332">
+            <strong>Signature:</strong> name:string -&gt; node:&#39;?14851 -&gt; string<br />
+                          <strong>Type parameters:</strong> '?14851          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L86-86" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets the attribute with the given name from the given XmlNode</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1333', 1333)" onmouseover="showTip(event, '1333', 1333)">
+            getChilds node
+          </code>
+          <div class="tip" id="1333">
+            <strong>Signature:</strong> node:&#39;?14853 -&gt; seq&lt;XmlNode&gt;<br />
+                          <strong>Type parameters:</strong> '?14853          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L91-91" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets a sequence of all child nodes for the given XmlNode</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1334', 1334)" onmouseover="showTip(event, '1334', 1334)">
+            getSubNode name node
+          </code>
+          <div class="tip" id="1334">
+            <strong>Signature:</strong> name:string -&gt; node:XmlNode -&gt; XmlNode<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L97-97" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets the first sub node with the given name from the given XmlNode</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1335', 1335)" onmouseover="showTip(event, '1335', 1335)">
+            parse name f node
+          </code>
+          <div class="tip" id="1335">
+            <strong>Signature:</strong> name:string -&gt; f:(&#39;?14856 -&gt; &#39;?14857) -&gt; node:&#39;?14856 -&gt; &#39;?14857<br />
+                          <strong>Type parameters:</strong> '?14856, '?14857          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L103-103" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Parses a XmlNode</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1336', 1336)" onmouseover="showTip(event, '1336', 1336)">
+            parseSubNode name f
+          </code>
+          <div class="tip" id="1336">
+            <strong>Signature:</strong> name:string -&gt; f:(XmlNode -&gt; &#39;?14859) -&gt; XmlNode -&gt; &#39;?14859<br />
+                          <strong>Type parameters:</strong> '?14859          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L108-108" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Parses a XML subnode</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1337', 1337)" onmouseover="showTip(event, '1337', 1337)">
+            Poke fileName xpath value
+          </code>
+          <div class="tip" id="1337">
+            <strong>Signature:</strong> fileName:string -&gt; xpath:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L153-153" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces text in a XML file at the location specified by a XPath expression.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1338', 1338)" onmouseover="showTip(event, '1338', 1338)">
+            PokeInnerText (...)
+          </code>
+          <div class="tip" id="1338">
+            <strong>Signature:</strong> fileName:string -&gt; xpath:string -&gt; innerTextValue:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L158-158" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1339', 1339)" onmouseover="showTip(event, '1339', 1339)">
+            PokeInnerTextNS (...)
+          </code>
+          <div class="tip" id="1339">
+            <strong>Signature:</strong> fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; innerTextValue:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L190-190" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1340', 1340)" onmouseover="showTip(event, '1340', 1340)">
+            PokeNS fileName namespaces xpath value
+          </code>
+          <div class="tip" id="1340">
+            <strong>Signature:</strong> fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L184-184" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1341', 1341)" onmouseover="showTip(event, '1341', 1341)">
+            Read (...)
+          </code>
+          <div class="tip" id="1341">
+            <strong>Signature:</strong> failOnError:bool -&gt; xmlFileName:string -&gt; nameSpace:string -&gt; prefix:string -&gt; xPath:string -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L20-20" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Reads a value from a XML document using a XPath</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1342', 1342)" onmouseover="showTip(event, '1342', 1342)">
+            Read_Int (...)
+          </code>
+          <div class="tip" id="1342">
+            <strong>Signature:</strong> failOnError:bool -&gt; xmlFileName:string -&gt; nameSpace:string -&gt; prefix:string -&gt; xPath:string -&gt; bool * int<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L43-43" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Reads a value from a XML document using a XPath
+Returns if the value is an int and the value</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1343', 1343)" onmouseover="showTip(event, '1343', 1343)">
+            StartElement name writer
+          </code>
+          <div class="tip" id="1343">
+            <strong>Signature:</strong> name:string -&gt; writer:XmlWriter -&gt; XmlWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L65-65" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes an XML start element to the given XmlTextWriter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1344', 1344)" onmouseover="showTip(event, '1344', 1344)">
+            Writer fileName
+          </code>
+          <div class="tip" id="1344">
+            <strong>Signature:</strong> fileName:string -&gt; XmlWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L54-54" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a XmlWriter which writes to the given file name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1345', 1345)" onmouseover="showTip(event, '1345', 1345)">
+            XmlTransform stylesheetUri fileName
+          </code>
+          <div class="tip" id="1345">
+            <strong>Signature:</strong> stylesheetUri:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L229-229" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Transforms a XML file using a XSL stylesheet file.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>stylesheetUri</code> - The Uri for the XSL stylesheet file.</li>
+<li><code>fileName</code> - The XML file to transform.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1346', 1346)" onmouseover="showTip(event, '1346', 1346)">
+            XPathReplace xpath value doc
+          </code>
+          <div class="tip" id="1346">
+            <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L122-122" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces text in the XML document specified by a XPath expression.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1347', 1347)" onmouseover="showTip(event, '1347', 1347)">
+            XPathReplaceInnerText (...)
+          </code>
+          <div class="tip" id="1347">
+            <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L130-130" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces the inner text of an xml node in the XML document specified by a XPath expression.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1348', 1348)" onmouseover="showTip(event, '1348', 1348)">
+            XPathReplaceInnerTextNS (...)
+          </code>
+          <div class="tip" id="1348">
+            <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; namespaces:&#39;?14873 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                          <strong>Type parameters:</strong> '?14873          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L174-174" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1349', 1349)" onmouseover="showTip(event, '1349', 1349)">
+            XPathReplaceNS (...)
+          </code>
+          <div class="tip" id="1349">
+            <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; namespaces:&#39;?14871 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                          <strong>Type parameters:</strong> '?14871          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L164-164" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces text in a XML document specified by a XPath expression, with support for namespaces.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1350', 1350)" onmouseover="showTip(event, '1350', 1350)">
+            XPathValue xpath namespaces doc
+          </code>
+          <div class="tip" id="1350">
+            <strong>Signature:</strong> xpath:string -&gt; namespaces:&#39;a -&gt; doc:XmlDocument -&gt; string<br />
+                          <strong>Type parameters:</strong> 'a          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L138-138" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Selects a xml node value via XPath from the given document</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1351', 1351)" onmouseover="showTip(event, '1351', 1351)">
+            XslTransform xsl doc
+          </code>
+          <div class="tip" id="1351">
+            <strong>Signature:</strong> xsl:XslCompiledTransform -&gt; doc:XmlDocument -&gt; XmlDocument<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L210-210" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Transforms a XmlDocument using a XslCompiledTransform.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>xsl</code> - The XslCompiledTransform which should be applied.</li>
+<li><code>doc</code> - The XmlDocument to transform.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1352', 1352)" onmouseover="showTip(event, '1352', 1352)">
+            XslTransformer text
+          </code>
+          <div class="tip" id="1352">
+            <strong>Signature:</strong> text:string -&gt; XslCompiledTransform<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Xml/Xml.fs#L198-198" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Loads the given text into a XslCompiledTransform.</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <a href="http://fsharp.github.io/FAKE/index.html">
+            <img src="http://fsharp.github.io/FAKE/pics/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">FAKE - F# Make</li>
+
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+
+            <li><a href="https://www.nuget.org/packages/FAKE">Get FAKE - F# Make via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/License.txt">License (Apache 2)</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/RELEASE_NOTES.html">Release Notes</a></li>
+            <li><a href="http://fsharp.github.io/FAKE//contributing.html">Contributing to FAKE - F# Make</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/users.html">Who is using FAKE?</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
+            <li class="nav-header">Tutorials</li>
+            <li><a href="http://fsharp.github.io/FAKE/gettingstarted.html">Getting started</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/cache.html">Build script caching</a></li>
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/nuget.html">NuGet package restore</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fxcop.html">Using FxCop in a build</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/assemblyinfo.html">Generating AssemblyInfo</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/create-nuget-package.html">Create NuGet packages</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/specifictargets.html">Running specific targets</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/commandline.html">Running FAKE from command line</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/parallel-build.html">Running targets in parallel</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fsc.html">Using the F# compiler from FAKE</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/customtasks.html">Creating custom tasks</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/soft-dependencies.html">Soft dependencies</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/teamcity.html">TeamCity integration</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/teamcityadvanced.html">TeamCity integration (Advanced)</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/canopy.html">Running canopy tests</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/octopusdeploy.html">Octopus Deploy</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/typescript.html">TypeScript support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/azurewebjobs.html">Azure WebJobs support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/azurecloudservices.html">Azure Cloud Services support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fluentmigrator.html">FluentMigrator support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/androidpublisher.html">Android publisher</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/watch.html">File Watcher</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/msteamsnotification.html">Using Microsoft Teams</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/iis.html">Fake.IIS</a></li>
+            <li class="nav-header">Reference</li>
+
+            <li><a href="http://fsharp.github.io/FAKE/apidocs/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

@@ -157,11 +157,11 @@
 <span class="l">4: </span>
 <span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    [<span class="s">&quot;process1.exe&quot;</span>,<span class="s">&quot;argument1&quot;</span>
-     <span class="s">&quot;process2.exe&quot;</span>,<span class="s">&quot;argument2&quot;</span>]
-      <span class="o">|&gt;</span> <span class="i">RunConsoleTests</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">TimeOut</span> <span class="o">=</span> <span class="i">TimeSpan</span><span class="o">.</span><span class="i">FromMinutes</span> <span class="n">1.</span> })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span><span class="s">&quot;process1.exe&quot;</span><span class="pn">,</span><span class="s">&quot;argument1&quot;</span>
+     <span class="s">&quot;process2.exe&quot;</span><span class="pn">,</span><span class="s">&quot;argument2&quot;</span><span class="pn">]</span>
+      <span class="o">|&gt;</span> <span class="id">RunConsoleTests</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">TimeOut</span> <span class="o">=</span> <span class="id">TimeSpan</span><span class="pn">.</span><span class="id">FromMinutes</span> <span class="n">1.</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

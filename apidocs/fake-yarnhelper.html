@@ -162,19 +162,19 @@ to use you can set the <code>YarnFilePath</code> parameter with the <code>setPar
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="i">Target</span> <span class="s">&quot;Web&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-        <span class="i">Yarn</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-                { <span class="i">p</span> <span class="k">with</span>
-                    <span class="i">Command</span> <span class="o">=</span> <span class="i">Install</span> <span class="i">Standard</span>
-                    <span class="i">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="id">Target</span> <span class="s">&quot;Web&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+        <span class="id">Yarn</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+                <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+                    <span class="id">Command</span> <span class="o">=</span> <span class="id">Install</span> <span class="id">Standard</span>
+                    <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
+                <span class="pn">}</span><span class="pn">)</span>
 
-        <span class="i">Yarn</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-                { <span class="i">p</span> <span class="k">with</span>
-                    <span class="i">Command</span> <span class="o">=</span> (<span class="i">Run</span> <span class="s">&quot;build&quot;</span>)
-                    <span class="i">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                })
-    )
+        <span class="id">Yarn</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+                <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+                    <span class="id">Command</span> <span class="o">=</span> <span class="pn">(</span><span class="id">Run</span> <span class="s">&quot;build&quot;</span><span class="pn">)</span>
+                    <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
+                <span class="pn">}</span><span class="pn">)</span>
+    <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

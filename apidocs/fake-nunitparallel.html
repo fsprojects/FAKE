@@ -61,7 +61,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Parallel.fs#L37-37" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Parallel.fs#L42-42" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -77,10 +77,10 @@
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">@&quot;\Test.*.dll&quot;</span>) 
-      <span class="o">|&gt;</span> <span class="i">NUnitParallel</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">ErrorLevel</span> <span class="o">=</span> <span class="i">DontFailBuild</span> })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">@&quot;\Test.*.dll&quot;</span><span class="pn">)</span> 
+      <span class="o">|&gt;</span> <span class="id">NUnitParallel</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">ErrorLevel</span> <span class="o">=</span> <span class="id">DontFailBuild</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

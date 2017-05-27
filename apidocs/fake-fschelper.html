@@ -185,13 +185,13 @@ e.g. <code>resource.dat,rezName,public</code></p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
-<span class="o">|&gt;</span> <span class="i">compile</span> [<span class="i">Out</span> <span class="s">&quot;&quot;</span> 
-            <span class="i">Target</span> <span class="i">Exe</span>
-            <span class="i">Platform</span> <span class="i">AnyCpu</span>
-            <span class="i">References</span> []
-            <span class="i">Debug</span> <span class="k">false</span> 
-        ]
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[</span><span class="s">&quot;file1.fs&quot;</span><span class="pn">;</span> <span class="s">&quot;file2.fs&quot;</span><span class="pn">]</span>
+<span class="o">|&gt;</span> <span class="id">compile</span> <span class="pn">[</span><span class="id">Out</span> <span class="s">&quot;&quot;</span> 
+            <span class="id">Target</span> <span class="id">Exe</span>
+            <span class="id">Platform</span> <span class="id">AnyCpu</span>
+            <span class="id">References</span> <span class="pn">[</span><span class="pn">]</span>
+            <span class="id">Debug</span> <span class="k">false</span> 
+        <span class="pn">]</span>
 </code></pre></td>
 </tr>
 </table>
@@ -229,13 +229,13 @@ e.g. <code>resource.dat,rezName,public</code></p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
-<span class="o">|&gt;</span> <span class="i">Compile</span> [<span class="i">Out</span> <span class="s">&quot;&quot;</span> 
-            <span class="i">Target</span> <span class="i">Exe</span>
-            <span class="i">Platform</span> <span class="i">AnyCpu</span>
-            <span class="i">References</span> []
-            <span class="i">Debug</span> <span class="k">false</span> 
-        ]
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[</span><span class="s">&quot;file1.fs&quot;</span><span class="pn">;</span> <span class="s">&quot;file2.fs&quot;</span><span class="pn">]</span>
+<span class="o">|&gt;</span> <span class="id">Compile</span> <span class="pn">[</span><span class="id">Out</span> <span class="s">&quot;&quot;</span> 
+            <span class="id">Target</span> <span class="id">Exe</span>
+            <span class="id">Platform</span> <span class="id">AnyCpu</span>
+            <span class="id">References</span> <span class="pn">[</span><span class="pn">]</span>
+            <span class="id">Debug</span> <span class="k">false</span> 
+        <span class="pn">]</span>
 </code></pre></td>
 </tr>
 </table>
@@ -295,11 +295,11 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
 <span class="l">4: </span>
 <span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
-<span class="o">|&gt;</span> <span class="i">fsc</span> (<span class="k">fun</span> <span class="i">parameters</span> <span class="k">-&gt;</span>
-         { <span class="i">parameters</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
-                           <span class="i">FscTarget</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
-                           <span class="o">..</span><span class="o">.</span> })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[</span><span class="s">&quot;file1.fs&quot;</span><span class="pn">;</span> <span class="s">&quot;file2.fs&quot;</span><span class="pn">]</span>
+<span class="o">|&gt;</span> <span class="id">fsc</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">parameters</span> <span class="k">-&gt;</span>
+         <span class="pn">{</span> <span class="id">parameters</span> <span class="k">with</span> <span class="id">Output</span> <span class="o">=</span> <span class="o">..</span><span class="pn">.</span>
+                           <span class="id">FscTarget</span> <span class="o">=</span> <span class="o">..</span><span class="pn">.</span>
+                           <span class="o">..</span><span class="pn">.</span> <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -335,11 +335,11 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
 <span class="l">4: </span>
 <span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
-<span class="o">|&gt;</span> <span class="i">Fsc</span> (<span class="k">fun</span> <span class="i">parameters</span> <span class="k">-&gt;</span>
-              { <span class="i">parameters</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
-                                <span class="i">FscTarget</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
-                                <span class="o">..</span><span class="o">.</span> })
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[</span><span class="s">&quot;file1.fs&quot;</span><span class="pn">;</span> <span class="s">&quot;file2.fs&quot;</span><span class="pn">]</span>
+<span class="o">|&gt;</span> <span class="id">Fsc</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">parameters</span> <span class="k">-&gt;</span>
+              <span class="pn">{</span> <span class="id">parameters</span> <span class="k">with</span> <span class="id">Output</span> <span class="o">=</span> <span class="o">..</span><span class="pn">.</span>
+                                <span class="id">FscTarget</span> <span class="o">=</span> <span class="o">..</span><span class="pn">.</span>
+                                <span class="o">..</span><span class="pn">.</span> <span class="pn">}</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

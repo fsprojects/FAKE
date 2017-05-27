@@ -80,41 +80,41 @@
 <span class="l">36: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// The webhook URL from the integration you set up</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">webhookUrl</span> <span class="o">=</span> <span class="s">&quot;https://outlook.office.com/webhook/some-random-text/IncomingWebhook/some/random/text&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">webhookUrl</span> <span class="o">=</span> <span class="s">&quot;https://outlook.office.com/webhook/some-random-text/IncomingWebhook/some/random/text&quot;</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="f">imageUrl</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="f">sprintf</span> <span class="s">&quot;https://connectorsdemo.azurewebsites.net/images/</span><span class="pf">%s</span><span class="s">&quot;</span> 
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="fn">imageUrl</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="fn">sprintf</span> <span class="s">&quot;https://connectorsdemo.azurewebsites.net/images/</span><span class="pf">%s</span><span class="s">&quot;</span> 
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="f">notification</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">p</span> <span class="o">=</span>
-    { <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">p</span> <span class="k">with</span>
-        <span class="i">Summary</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="i">Some</span> <span class="s">&quot;Max Muster ran a build&quot;</span>
-        <span class="i">Title</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="i">Some</span> <span class="s">&quot;Sample Project&quot;</span>
-        <span class="i">Sections</span> <span class="o">=</span>
-           [ { <span class="i">SectionDefaults</span> <span class="k">with</span>
-                 <span class="i">ActivityTitle</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="i">Some</span> <span class="s">&quot;Max Muster&quot;</span>
-                 <span class="i">ActivitySubtitle</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="i">Some</span> <span class="s">&quot;on Sample Project&quot;</span>
-                 <span class="i">ActivityText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="i">Some</span> <span class="s">&quot;Build successful!&quot;</span>
-                 <span class="i">ActivityImage</span> <span class="o">=</span>
-                    <span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="i">imageUrl</span> <span class="s">&quot;MSC12_Oscar_002.jpg&quot;</span>
-                    <span class="o">|&gt;</span> <span class="i">ImageUri</span><span class="o">.</span><span class="i">FromUrl</span>
-                    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="i">Some</span>
-             }
-             { <span class="i">SectionDefaults</span> <span class="k">with</span>
-                 <span class="i">Title</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="i">Some</span> <span class="s">&quot;Details&quot;</span>
-                 <span class="i">Facts</span> <span class="o">=</span> [ { <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Labels&quot;</span>; <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;FOO, BAR&quot;</span> }
-                           { <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Version&quot;</span>; <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> }
-                           { <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Trello Id&quot;</span>; <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;1101&quot;</span> } ]
-             }
-           ]
-        <span class="i">PotentialActions</span> <span class="o">=</span>
-           [
-             {
-               <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;View in Trello&quot;</span>
-               <span class="i">Target</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs7', 15)" onmouseover="showTip(event, 'fs7', 15)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 16)" onmouseover="showTip(event, 'fs8', 16)" class="i">Uri</span>(<span class="s">&quot;https://trello.com/c/1101/&quot;</span>)
-             }
-           ]
-    }
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="fn">notification</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">p</span> <span class="o">=</span>
+    <span class="pn">{</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">p</span> <span class="k">with</span>
+        <span class="id">Summary</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">Some</span> <span class="s">&quot;Max Muster ran a build&quot;</span>
+        <span class="id">Title</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="id">Some</span> <span class="s">&quot;Sample Project&quot;</span>
+        <span class="id">Sections</span> <span class="o">=</span>
+           <span class="pn">[</span> <span class="pn">{</span> <span class="id">SectionDefaults</span> <span class="k">with</span>
+                 <span class="id">ActivityTitle</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="id">Some</span> <span class="s">&quot;Max Muster&quot;</span>
+                 <span class="id">ActivitySubtitle</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="id">Some</span> <span class="s">&quot;on Sample Project&quot;</span>
+                 <span class="id">ActivityText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="id">Some</span> <span class="s">&quot;Build successful!&quot;</span>
+                 <span class="id">ActivityImage</span> <span class="o">=</span>
+                    <span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="id">imageUrl</span> <span class="s">&quot;MSC12_Oscar_002.jpg&quot;</span>
+                    <span class="o">|&gt;</span> <span class="id">ImageUri</span><span class="pn">.</span><span class="id">FromUrl</span>
+                    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="id">Some</span>
+             <span class="pn">}</span>
+             <span class="pn">{</span> <span class="id">SectionDefaults</span> <span class="k">with</span>
+                 <span class="id">Title</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">Some</span> <span class="s">&quot;Details&quot;</span>
+                 <span class="id">Facts</span> <span class="o">=</span> <span class="pn">[</span> <span class="pn">{</span> <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Labels&quot;</span><span class="pn">;</span> <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;FOO, BAR&quot;</span> <span class="pn">}</span>
+                           <span class="pn">{</span> <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Version&quot;</span><span class="pn">;</span> <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> <span class="pn">}</span>
+                           <span class="pn">{</span> <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Trello Id&quot;</span><span class="pn">;</span> <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;1101&quot;</span> <span class="pn">}</span> <span class="pn">]</span>
+             <span class="pn">}</span>
+           <span class="pn">]</span>
+        <span class="id">PotentialActions</span> <span class="o">=</span>
+           <span class="pn">[</span>
+             <span class="pn">{</span>
+               <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;View in Trello&quot;</span>
+               <span class="id">Target</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs7', 15)" onmouseover="showTip(event, 'fs7', 15)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs8', 16)" onmouseover="showTip(event, 'fs8', 16)" class="id">Uri</span><span class="pn">(</span><span class="s">&quot;https://trello.com/c/1101/&quot;</span><span class="pn">)</span>
+             <span class="pn">}</span>
+           <span class="pn">]</span>
+    <span class="pn">}</span>
 
-<span class="i">Office365Notification</span> <span onmouseout="hideTip(event, 'fs1', 17)" onmouseover="showTip(event, 'fs1', 17)" class="i">webhookUrl</span> <span onmouseout="hideTip(event, 'fs4', 18)" onmouseover="showTip(event, 'fs4', 18)" class="i">notification</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs9', 19)" onmouseover="showTip(event, 'fs9', 19)" class="f">ignore</span>
+<span class="id">Office365Notification</span> <span onmouseout="hideTip(event, 'fs1', 17)" onmouseover="showTip(event, 'fs1', 17)" class="id">webhookUrl</span> <span onmouseout="hideTip(event, 'fs4', 18)" onmouseover="showTip(event, 'fs4', 18)" class="id">notification</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs9', 19)" onmouseover="showTip(event, 'fs9', 19)" class="fn">ignore</span>
 </code></pre></td>
 </tr>
 </table>

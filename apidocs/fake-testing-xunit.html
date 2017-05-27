@@ -72,15 +72,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1213', 1213)" onmouseover="showTip(event, '1213', 1213)">
+          <code onmouseout="hideTip(event, '1768', 1768)" onmouseover="showTip(event, '1768', 1768)">
             xUnit setParams assemblies
           </code>
-          <div class="tip" id="1213">
+          <div class="tip" id="1768">
             <strong>Signature:</strong> setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit.fs#L193-193" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit.fs#L201-201" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -104,10 +104,10 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;xUnit.Test.*.dll&quot;</span>)
-      <span class="o">|&gt;</span> <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">HtmlOutputPath</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;html&quot;</span>})
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+      <span class="o">|&gt;</span> <span class="id">xUnit</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">HtmlOutputPath</span> <span class="o">=</span> <span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;html&quot;</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -118,15 +118,15 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1214', 1214)" onmouseover="showTip(event, '1214', 1214)">
+          <code onmouseout="hideTip(event, '1769', 1769)" onmouseover="showTip(event, '1769', 1769)">
             XUnitDefaults 
           </code>
-          <div class="tip" id="1214">
+          <div class="tip" id="1769">
             <strong>Signature:</strong> XUnitParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit.fs#L54-54" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit.fs#L58-58" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -153,15 +153,15 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1215', 1215)" onmouseover="showTip(event, '1215', 1215)">
+          <code onmouseout="hideTip(event, '1770', 1770)" onmouseover="showTip(event, '1770', 1770)">
             xUnitSingle setParams assembly
           </code>
-          <div class="tip" id="1215">
+          <div class="tip" id="1770">
             <strong>Signature:</strong> setParams:(XUnitParams -&gt; XUnitParams) -&gt; assembly:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit.fs#L151-151" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit.fs#L158-158" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -179,9 +179,9 @@ in the given assembly fail.</p>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">HtmlOutputPath</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;xunit.html&quot;</span>}) <span class="s">&quot;xUnit.Test.dll&quot;</span>
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">xUnit</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">HtmlOutputPath</span> <span class="o">=</span> <span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xunit.html&quot;</span><span class="pn">}</span><span class="pn">)</span> <span class="s">&quot;xUnit.Test.dll&quot;</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

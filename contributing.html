@@ -65,7 +65,7 @@ It turns <code>*.md</code> (Markdown with embedded code snippets) and <code>*.fs
 <p>Add a new git remote in order to retrieve upstream changes.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="i">git</span> <span class="i">remote</span> <span class="i">add</span> <span class="i">upstream</span> <span class="i">https</span><span class="o">:</span><span class="c">//github.com/fsharp/FAKE.git</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="id">git</span> <span class="id">remote</span> <span class="id">add</span> <span class="id">upstream</span> <span class="id">https</span><span class="pn">:</span><span class="c">//github.com/fsharp/FAKE.git</span>
 </code></pre></td>
 </tr>
 </table>
@@ -100,7 +100,7 @@ to automatically deploy a preconfigured virtual machine. See the <a href="vagran
 <p>Create a new feature branch.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="i">git</span> <span class="i">checkout</span> <span class="o">-</span><span class="i">b</span> <span class="i">myfeature</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="id">git</span> <span class="id">checkout</span> <span class="o">-</span><span class="id">b</span> <span class="id">myfeature</span>
 </code></pre></td>
 </tr>
 </table>
@@ -119,9 +119,9 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="i">git</span> <span class="i">fetch</span> <span class="i">upstream</span>
-  <span class="i">git</span> <span class="i">rebase</span> <span class="i">upstream</span><span class="o">/</span><span class="i">master</span>
-  <span class="i">git</span> <span class="i">push</span> <span class="i">origin</span> <span class="i">myfeature</span> <span class="o">-</span><span class="i">f</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="id">git</span> <span class="id">fetch</span> <span class="id">upstream</span>
+  <span class="id">git</span> <span class="id">rebase</span> <span class="id">upstream</span><span class="o">/</span><span class="id">master</span>
+  <span class="id">git</span> <span class="id">push</span> <span class="id">origin</span> <span class="id">myfeature</span> <span class="o">-</span><span class="id">f</span>
 </code></pre></td>
 </tr>
 </table>

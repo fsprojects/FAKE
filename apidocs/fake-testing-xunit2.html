@@ -88,15 +88,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
+          <code onmouseout="hideTip(event, '1771', 1771)" onmouseover="showTip(event, '1771', 1771)">
             buildXUnit2Args assemblies parameters
           </code>
-          <div class="tip" id="1216">
+          <div class="tip" id="1771">
             <strong>Signature:</strong> assemblies:seq&lt;string&gt; -&gt; parameters:XUnit2Params -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit2.fs#L188-188" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit2.fs#L195-195" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -106,15 +106,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
+          <code onmouseout="hideTip(event, '1772', 1772)" onmouseover="showTip(event, '1772', 1772)">
             xUnit2 setParams assemblies
           </code>
-          <div class="tip" id="1217">
+          <div class="tip" id="1772">
             <strong>Signature:</strong> setParams:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit2.fs#L262-262" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit2.fs#L272-272" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -133,10 +133,10 @@ in the given assembly fail.</p>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;xUnit.Test.*.dll&quot;</span>)
-    <span class="o">|&gt;</span> <span class="i">xUnit2</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">HtmlOutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Some</span> (<span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;xunit.html&quot;</span>) })
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">xUnit2</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">HtmlOutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Some</span> <span class="pn">(</span><span class="id">testDir</span> <span class="id">@@</span> <span class="s">&quot;xunit.html&quot;</span><span class="pn">)</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -148,15 +148,15 @@ in the given assembly fail.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
+          <code onmouseout="hideTip(event, '1773', 1773)" onmouseover="showTip(event, '1773', 1773)">
             XUnit2Defaults 
           </code>
-          <div class="tip" id="1218">
+          <div class="tip" id="1773">
             <strong>Signature:</strong> XUnit2Params<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit2.fs#L165-165" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnit2.fs#L171-171" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -164,7 +164,7 @@ in the given assembly fail.</p>
 <h2>Defaults</h2>
 <ul>
 <li><code>NoAppDomain</code> - <code>false</code></li>
-<li><code>Parallel</code> - <code>NoParallelization</code></li>
+<li><a href="fake-dotnet-testing-nunit-parallel.html" title="Parallel"><code>Parallel</code></a> - <code>NoParallelization</code></li>
 <li><code>MaxThreads</code> - <code>Default</code></li>
 <li><code>HtmlOutputPath</code> - <code>None</code></li>
 <li><code>XmlOutputPath</code> - <code>None</code></li>

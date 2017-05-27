@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Targets - FAKE - F# Make</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="http://fsharp.github.io/FAKE/index.html">FAKE - F# Make</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>Targets</h1>
+<div class="xmldoc">
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-targets-builderror.html">BuildError</a>
+          </td>
+          <td class="xmldoc"><p>Represents build errors</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1252', 1252)" onmouseover="showTip(event, '1252', 1252)">
+            ( &lt;== ) x ys
+          </code>
+          <div class="tip" id="1252">
+            <strong>Signature:</strong> x:string -&gt; ys:string list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L171-171" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Backwards dependencies operator - x is dependent on ys.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1253', 1253)" onmouseover="showTip(event, '1253', 1253)">
+            ActivateBuildFailureTarget name
+          </code>
+          <div class="tip" id="1253">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L571-571" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Activates the BuildFailureTarget.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1254', 1254)" onmouseover="showTip(event, '1254', 1254)">
+            ActivateFinalTarget name
+          </code>
+          <div class="tip" id="1254">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L581-581" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Activates the FinalTarget.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1255', 1255)" onmouseover="showTip(event, '1255', 1255)">
+            addExecutedTarget target time
+          </code>
+          <div class="tip" id="1255">
+            <strong>Signature:</strong> target:string -&gt; time:TimeSpan -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L284-284" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1256', 1256)" onmouseover="showTip(event, '1256', 1256)">
+            BuildFailureTarget name body
+          </code>
+          <div class="tip" id="1256">
+            <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L566-566" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Registers a BuildFailureTarget (not activated).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1257', 1257)" onmouseover="showTip(event, '1257', 1257)">
+            BuildFailureTargets 
+          </code>
+          <div class="tip" id="1257">
+            <strong>Signature:</strong> Dictionary&lt;string,bool&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L56-56" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>BuildFailureTargets - stores build failure targets and if they are activated.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1258', 1258)" onmouseover="showTip(event, '1258', 1258)">
+            dependencyString target
+          </code>
+          <div class="tip" id="1258">
+            <strong>Signature:</strong> target:&#39;?15128 TargetTemplate -&gt; string<br />
+                          <strong>Type parameters:</strong> '?15128          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L88-88" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns the DependencyString for the given target.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1259', 1259)" onmouseover="showTip(event, '1259', 1259)">
+            determineBuildOrder target
+          </code>
+          <div class="tip" id="1259">
+            <strong>Signature:</strong> target:string -&gt; unit TargetTemplate [] list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L442-442" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determines a parallel build order for the given set of targets</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1260', 1260)" onmouseover="showTip(event, '1260', 1260)">
+            doesTargetMeanListTargets target
+          </code>
+          <div class="tip" id="1260">
+            <strong>Signature:</strong> target:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L438-438" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1261', 1261)" onmouseover="showTip(event, '1261', 1261)">
+            DoNothing ()
+          </code>
+          <div class="tip" id="1261">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L104-104" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1262', 1262)" onmouseover="showTip(event, '1262', 1262)">
+            ExecutedTargets 
+          </code>
+          <div class="tip" id="1262">
+            <strong>Signature:</strong> HashSet&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L59-59" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The executed targets.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1263', 1263)" onmouseover="showTip(event, '1263', 1263)">
+            FinalTarget name body
+          </code>
+          <div class="tip" id="1263">
+            <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L576-576" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Registers a final target (not activated).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1264', 1264)" onmouseover="showTip(event, '1264', 1264)">
+            FinalTargets 
+          </code>
+          <div class="tip" id="1264">
+            <strong>Signature:</strong> Dictionary&lt;string,bool&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L53-53" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Final Targets - stores final targets and if they are activated.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1265', 1265)" onmouseover="showTip(event, '1265', 1265)">
+            getAllTargetsNames ()
+          </code>
+          <div class="tip" id="1265">
+            <strong>Signature:</strong> unit -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L75-75" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns a list with all target names.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1266', 1266)" onmouseover="showTip(event, '1266', 1266)">
+            GetErrors ()
+          </code>
+          <div class="tip" id="1266">
+            <strong>Signature:</strong> unit -&gt; BuildError list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L253-253" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get Errors - Returns the errors that occured during execution</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
+            getTarget name
+          </code>
+          <div class="tip" id="1267">
+            <strong>Signature:</strong> name:string -&gt; unit TargetTemplate<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L78-78" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets a target with the given name from the target dictionary.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
+            listTargets ()
+          </code>
+          <div class="tip" id="1268">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L430-430" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Prints all available targets.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1269', 1269)" onmouseover="showTip(event, '1269', 1269)">
+            PrintDependencyGraph verbose target
+          </code>
+          <div class="tip" id="1269">
+            <strong>Signature:</strong> verbose:bool -&gt; target:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L368-368" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes a dependency graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
+            PrintTargets ()
+          </code>
+          <div class="tip" id="1270">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L324-324" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Prints all targets.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
+            removeCurrentTargetOrder 
+          </code>
+          <div class="tip" id="1271">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L497-497" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
+            removeErrors 
+          </code>
+          <div class="tip" id="1272">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L249-249" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
+            removeLastDescription 
+          </code>
+          <div class="tip" id="1273">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L36-36" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
+            run targetName
+          </code>
+          <div class="tip" id="1274">
+            <strong>Signature:</strong> targetName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L501-501" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs a target and its dependencies.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
+            runSingleTarget target
+          </code>
+          <div class="tip" id="1275">
+            <strong>Signature:</strong> target:unit TargetTemplate -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L470-470" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs a single target without its dependencies</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
+            runTargetsParallel count targets
+          </code>
+          <div class="tip" id="1276">
+            <strong>Signature:</strong> count:int -&gt; targets:Target [] -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L482-482" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the given array of targets in parallel using count tasks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
+            setCurrentTargetOrder 
+          </code>
+          <div class="tip" id="1277">
+            <strong>Signature:</strong> string list list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L497-497" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
+            setErrors 
+          </code>
+          <div class="tip" id="1278">
+            <strong>Signature:</strong> BuildError list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L249-249" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
+            setLastDescription 
+          </code>
+          <div class="tip" id="1279">
+            <strong>Signature:</strong> string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L36-36" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1280', 1280)" onmouseover="showTip(event, '1280', 1280)">
+            setPrintStackTraceOnError 
+          </code>
+          <div class="tip" id="1280">
+            <strong>Signature:</strong> bool -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L30-30" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1281', 1281)" onmouseover="showTip(event, '1281', 1281)">
+            softDependencyString target
+          </code>
+          <div class="tip" id="1281">
+            <strong>Signature:</strong> target:&#39;?15130 TargetTemplate -&gt; string<br />
+                          <strong>Type parameters:</strong> '?15130          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L96-96" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns the soft  DependencyString for the given target.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1282', 1282)" onmouseover="showTip(event, '1282', 1282)">
+            Target name body
+          </code>
+          <div class="tip" id="1282">
+            <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L240-240" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a Target.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1283', 1283)" onmouseover="showTip(event, '1283', 1283)">
+            TargetTemplate body
+          </code>
+          <div class="tip" id="1283">
+            <strong>Signature:</strong> body:(&#39;?15148 -&gt; unit) -&gt; string -&gt; &#39;?15148 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?15148          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L237-237" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a TargetTemplate.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1284', 1284)" onmouseover="showTip(event, '1284', 1284)">
+            TargetTemplateWithDependencies (...)
+          </code>
+          <div class="tip" id="1284">
+            <strong>Signature:</strong> dependencies:string list -&gt; body:(&#39;?15146 -&gt; unit) -&gt; name:string -&gt; parameters:&#39;?15146 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?15146          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L227-227" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a TargetTemplate with dependencies.</p>
+<h2>Sample</h2>
+<p>The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Create target creation functions</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">createCompileTarget</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">name</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">strategy</span> <span class="o">=</span>
+<span class="id">TargetTemplateWithDependencies</span>
+    <span class="pn">[</span><span class="s">&quot;Clean&quot;</span><span class="pn">;</span> <span class="s">&quot;ResolveDependencies&quot;</span><span class="pn">]</span> <span class="c">// dependencies to other targets</span>
+    <span class="pn">(</span><span class="k">fun</span> <span class="id">targetParameter</span> <span class="k">-&gt;</span>
+      <span class="id">tracefn</span> <span class="s">&quot;--- start compile product...&quot;</span>
+      <span class="k">if</span> <span class="id">targetParameter</span> <span class="o">=</span> <span class="s">&quot;a&quot;</span> <span class="k">then</span>
+        <span class="id">tracefn</span> <span class="s">&quot;    ---- Strategy A&quot;</span>
+      <span class="k">else</span>
+        <span class="id">tracefn</span> <span class="s">&quot;    ---- Strategy B&quot;</span>
+      <span class="id">tracefn</span> <span class="s">&quot;--- finish compile product ...&quot;</span>
+    <span class="pn">)</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">name</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="id">strategy</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 6)" onmouseover="showTip(event, 'fs4', 6)" class="fn">createTestTarget</span> <span onmouseout="hideTip(event, 'fs5', 7)" onmouseover="showTip(event, 'fs5', 7)" class="id">name</span> <span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="id">dependencies</span> <span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="id">filePattern</span> <span class="o">=</span>
+  <span class="id">TargetTemplateWithDependencies</span>
+    <span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="id">dependencies</span>
+    <span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="id">filePattern</span> <span class="k">-&gt;</span>
+      <span class="id">tracefn</span> <span class="s">&quot;--- start compile tests ...&quot;</span>
+      <span class="o">!!</span> <span onmouseout="hideTip(event, 'fs7', 12)" onmouseover="showTip(event, 'fs7', 12)" class="id">filePattern</span>
+      <span class="o">|&gt;</span> <span class="id">RunTests</span>
+      <span class="id">tracefn</span> <span class="s">&quot;--- finish compile tests ...&quot;</span><span class="pn">)</span>
+    <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">name</span> <span onmouseout="hideTip(event, 'fs7', 14)" onmouseover="showTip(event, 'fs7', 14)" class="id">filePattern</span>
+
+<span class="c">// create some targets</span>
+<span class="id">createCompileTarget</span> <span class="s">&quot;C1&quot;</span> <span class="s">&quot;a&quot;</span>
+<span class="id">createCompileTarget</span> <span class="s">&quot;C2&quot;</span> <span class="s">&quot;b&quot;</span>
+
+<span onmouseout="hideTip(event, 'fs4', 15)" onmouseover="showTip(event, 'fs4', 15)" class="fn">createTestTarget</span> <span class="s">&quot;T1&quot;</span> <span class="pn">[</span><span class="s">&quot;C1&quot;</span><span class="pn">]</span> <span class="s">&quot;**/C1/*.*&quot;</span>
+<span onmouseout="hideTip(event, 'fs4', 16)" onmouseover="showTip(event, 'fs4', 16)" class="fn">createTestTarget</span> <span class="s">&quot;T2&quot;</span> <span class="pn">[</span><span class="s">&quot;C1&quot;</span><span class="pn">;</span> <span class="s">&quot;C2&quot;</span><span class="pn">]</span> <span class="s">&quot;**/C?/*.*&quot;</span>
+
+<span class="c">// hook targets to normal build pipeline</span>
+<span class="s">&quot;T1&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;T2&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Test&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val createCompileTarget : name:&#39;a -&gt; strategy:&#39;b -&gt; obj<br /><br />Full name: docs.createCompileTarget</div>
+<div class="tip" id="fs2">val name : &#39;a</div>
+<div class="tip" id="fs3">val strategy : &#39;b</div>
+<div class="tip" id="fs4">val createTestTarget : (&#39;c -&gt; &#39;d -&gt; &#39;e -&gt; &#39;f)</div>
+<div class="tip" id="fs5">val name : &#39;c</div>
+<div class="tip" id="fs6">val dependencies : &#39;d</div>
+<div class="tip" id="fs7">val filePattern : &#39;e</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1285', 1285)" onmouseover="showTip(event, '1285', 1285)">
+            WriteErrors ()
+          </code>
+          <div class="tip" id="1285">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L389-389" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes a summary of errors reported during build.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1286', 1286)" onmouseover="showTip(event, '1286', 1286)">
+            WriteTaskTimeSummary total
+          </code>
+          <div class="tip" id="1286">
+            <strong>Signature:</strong> total:&#39;?15176 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?15176          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Targets.fs#L397-397" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes a build time report.</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <a href="http://fsharp.github.io/FAKE/index.html">
+            <img src="http://fsharp.github.io/FAKE/pics/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">FAKE - F# Make</li>
+
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+
+            <li><a href="https://www.nuget.org/packages/FAKE">Get FAKE - F# Make via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/License.txt">License (Apache 2)</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/RELEASE_NOTES.html">Release Notes</a></li>
+            <li><a href="http://fsharp.github.io/FAKE//contributing.html">Contributing to FAKE - F# Make</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/users.html">Who is using FAKE?</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
+            <li class="nav-header">Tutorials</li>
+            <li><a href="http://fsharp.github.io/FAKE/gettingstarted.html">Getting started</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/cache.html">Build script caching</a></li>
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/nuget.html">NuGet package restore</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fxcop.html">Using FxCop in a build</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/assemblyinfo.html">Generating AssemblyInfo</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/create-nuget-package.html">Create NuGet packages</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/specifictargets.html">Running specific targets</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/commandline.html">Running FAKE from command line</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/parallel-build.html">Running targets in parallel</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fsc.html">Using the F# compiler from FAKE</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/customtasks.html">Creating custom tasks</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/soft-dependencies.html">Soft dependencies</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/teamcity.html">TeamCity integration</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/teamcityadvanced.html">TeamCity integration (Advanced)</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/canopy.html">Running canopy tests</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/octopusdeploy.html">Octopus Deploy</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/typescript.html">TypeScript support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/azurewebjobs.html">Azure WebJobs support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/azurecloudservices.html">Azure Cloud Services support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fluentmigrator.html">FluentMigrator support</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/androidpublisher.html">Android publisher</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/watch.html">File Watcher</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/msteamsnotification.html">Using Microsoft Teams</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/iis.html">Fake.IIS</a></li>
+            <li class="nav-header">Reference</li>
+
+            <li><a href="http://fsharp.github.io/FAKE/apidocs/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

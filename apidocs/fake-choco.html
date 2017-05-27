@@ -108,7 +108,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L247-247" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L256-256" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -128,7 +128,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L265-265" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L275-275" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -148,7 +148,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L310-310" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L321-321" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -168,14 +168,14 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L697-697" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L713-713" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsInstall">install</a> a package</p>
 <h2>Parameters</h2>
 <ul>
-<li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <a href="fake-choco-chocoinstallparams.html" title="ChocoInstallParams"><code>ChocoInstallParams</code></a></p></li>
+<li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoInstallParams</code></p></li>
 <li>
 <p><code>packages</code> - Names of packages, path to packages.config, .nuspec or .nupkg to install</p>
 <h2>Sample usage</h2>
@@ -199,7 +199,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L686-686" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L701-701" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -207,7 +207,7 @@
 <h2>Sample usage</h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Build&quot;</span> <span class="o">=?&gt;</span> (<span class="s">&quot;ChocoInstall&quot;</span>, <span class="i">Choco</span><span class="o">.</span><span class="i">IsAvailable</span>)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Build&quot;</span> <span class="o">=?&gt;</span> <span class="pn">(</span><span class="s">&quot;ChocoInstall&quot;</span><span class="pn">,</span> <span class="id">Choco</span><span class="pn">.</span><span class="id">IsAvailable</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -226,7 +226,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L729-729" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L746-746" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -234,7 +234,7 @@
 <h2>Parameters</h2>
 <ul>
 <li>
-<p><code>setParams</code> - Function used to manipulate the default choco parameters. See <a href="fake-choco-chocopackparams.html" title="ChocoPackParams"><code>ChocoPackParams</code></a></p>
+<p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPackParams</code></p>
 <h2>Sample usage</h2>
 <p>Target "ChocoPack" (fun _ -&gt;
 Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
@@ -256,14 +256,14 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L757-757" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L775-775" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPack">pack</a> a package</p>
 <h2>Parameters</h2>
 <ul>
-<li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <a href="fake-choco-chocopackparams.html" title="ChocoPackParams"><code>ChocoPackParams</code></a></p></li>
+<li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPackParams</code></p></li>
 <li>
 <p><code>nuspecPath</code> - path to the .nuspec to pack</p>
 <h2>Sample usage</h2>
@@ -287,14 +287,14 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L795-795" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChocoHelper.fs#L816-816" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Call choco to <a href="https://github.com/chocolatey/choco/wiki/CommandsPush">push</a> a package</p>
 <h2>Parameters</h2>
 <ul>
-<li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <a href="fake-choco-chocopushparams.html" title="ChocoPushParams"><code>ChocoPushParams</code></a></p></li>
+<li><p><code>setParams</code> - Function used to manipulate the default choco parameters. See <code>ChocoPushParams</code></p></li>
 <li>
 <p><code>nupkgPath</code> - path to the .nupkg to push</p>
 <h2>Sample usage</h2>

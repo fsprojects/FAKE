@@ -130,15 +130,15 @@ Returns an IDisposable which allows to dispose all FileSystemWatchers.</p>
 <span class="l">8: </span>
 <span class="l">9: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Watch&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="k">use</span> <span class="i">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;c:/projects/watchDir/*.txt&quot;</span> <span class="o">|&gt;</span> <span class="i">WatchChanges</span> (<span class="k">fun</span> <span class="i">changes</span> <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Watch&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="k">use</span> <span class="id">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;c:/projects/watchDir/*.txt&quot;</span> <span class="o">|&gt;</span> <span class="id">WatchChanges</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">changes</span> <span class="k">-&gt;</span>
         <span class="c">// do something</span>
-    )
+    <span class="pn">)</span>
 
-    <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Console</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">ReadLine</span>() <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">ignore</span>
+    <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Console</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">ReadLine</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">ignore</span>
 
-    <span class="i">watcher</span><span class="o">.</span><span class="i">Dispose</span>() <span class="c">// if you need to cleanup the watches.</span>
-)
+    <span class="id">watcher</span><span class="pn">.</span><span class="id">Dispose</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// if you need to cleanup the watches.</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

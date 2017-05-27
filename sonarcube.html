@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Analyze your code with SonarQube</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>From the <a href="http://sonarqube.org">web page</a>:
 "The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, from project portfolio down to the method level"</p>
 <p>It can analyze a lot of different programming languages, from PHP, Erlang, CSS to Cobol. C# can be installed
@@ -73,20 +74,20 @@ compilation has finished. The result is then collected and sent to the SonarQube
 <span class="l">24: </span>
 <span class="l">25: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;BeginSonarQube&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-  <span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-    {<span class="i">p</span> <span class="k">with</span>
-     <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-     <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-     <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> }
-    )
-  )
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;BeginSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">SonarQube</span> <span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+     <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+     <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+     <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> <span class="pn">}</span>
+    <span class="pn">)</span>
+  <span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;EndSonarQube&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-  <span class="i">SonarQubeEnd</span>()
-)
+<span class="id">Target</span> <span class="s">&quot;EndSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">SonarQubeEnd</span><span class="pn">(</span><span class="pn">)</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Default&quot;</span> <span class="i">DoNothing</span>
+<span class="id">Target</span> <span class="s">&quot;Default&quot;</span> <span class="id">DoNothing</span>
 
 <span class="s">&quot;Clean&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;SetAssemblyInfo&quot;</span>
@@ -97,7 +98,7 @@ compilation has finished. The result is then collected and sent to the SonarQube
   <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -115,13 +116,13 @@ In the SonarQubeParams, this is the new field Settings:</p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-  {<span class="i">p</span> <span class="k">with</span>
-   <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-   <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-   <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
-   <span class="i">Settings</span> <span class="o">=</span> [<span class="s">&quot;sonar.debug&quot;</span>; <span class="s">&quot;sonar.newversion&quot;</span>] }
-  )
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span> <span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+   <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+   <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+   <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
+   <span class="id">Settings</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;sonar.debug&quot;</span><span class="pn">;</span> <span class="s">&quot;sonar.newversion&quot;</span><span class="pn">]</span> <span class="pn">}</span>
+  <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -137,13 +138,13 @@ This can be done with the new field Config:</p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-  {<span class="i">p</span> <span class="k">with</span>
-   <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-   <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-   <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
-   <span class="i">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Some</span>(<span class="s">&quot;myconfig.cfg&quot;</span>) }
-  )
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span> <span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+   <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+   <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+   <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
+   <span class="id">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Some</span><span class="pn">(</span><span class="s">&quot;myconfig.cfg&quot;</span><span class="pn">)</span> <span class="pn">}</span>
+  <span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

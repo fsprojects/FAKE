@@ -1130,6 +1130,443 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
   </table>
 
     </div>
+    <h2>Fake.Core Namespace</h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-consoletracelistener.html">ConsoleTraceListener</a>
+          </td>
+          <td class="xmldoc"><p>Implements a TraceListener for System.Console.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-itracelistener.html">ITraceListener</a>
+          </td>
+          <td class="xmldoc"><p>Defines a TraceListener interface</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-knowntags.html">KnownTags</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-target.html">Target</a>
+          </td>
+          <td class="xmldoc"><p>A Target can be run during the build</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-tracedata.html">TraceData</a>
+          </td>
+          <td class="xmldoc"><p>Defines Tracing information for TraceListeners</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-buildserver.html">BuildServer</a>
+          </td>
+          <td class="xmldoc"><p>Contains functions which allow build scripts to interact with a build server.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-context.html">Context</a>
+          </td>
+          <td class="xmldoc"><p>This module tracks the context of the build.
+This allows us to run some modules without any context and change behavior depending on the context
+(For example <code>Fake.Process</code> kills all processes when the Fake Context exists, but it should not when used as library)</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-coretracing.html">CoreTracing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-environment.html">Environment</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-process.html">Process</a>
+          </td>
+          <td class="xmldoc"><p>Contains functions which can be used to start other tools.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-releasenotes.html">ReleaseNotes</a>
+          </td>
+          <td class="xmldoc"><p>Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-semver.html">SemVer</a>
+          </td>
+          <td class="xmldoc"><p>Contains helpers which allow to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-string.html">String</a>
+          </td>
+          <td class="xmldoc"><p>Contains basic functions for string manipulation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-targetoperators.html">TargetOperators</a>
+          </td>
+          <td class="xmldoc"><p>Provides functions and operators to deal with FAKE targets and target dependencies.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-targets.html">Targets</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-taskrunner.html">TaskRunner</a>
+          </td>
+          <td class="xmldoc"><p>Contains a helper which can be used to implement timeouts and retries.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-trace.html">Trace</a>
+          </td>
+          <td class="xmldoc"><p>This module contains function which allow to trace build output</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-xml.html">Xml</a>
+          </td>
+          <td class="xmldoc"><p>Contains functions to read and write XML files.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.Core.Globbing Namespace</h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-globbing-fileincludes.html">FileIncludes</a>
+          </td>
+          <td class="xmldoc"><p>Internal representation of a file set.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-globbing-fileincludesmodule.html">FileIncludes</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-globbing-glob.html">Glob</a>
+          </td>
+          <td class="xmldoc"><p>This module contains a file pattern globbing implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-globbing-operators.html">Operators</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-globbing-tools.html">Tools</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.DotNet Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-cli.html">Cli</a>
+          </td>
+          <td class="xmldoc"><p>.NET Core + CLI tools helpers</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-fsformatting.html">FSFormatting</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-msbuild.html">MsBuild</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks which allow to use MSBuild (or xBuild on Linux/Unix) to build .NET project files or solution files.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-msbuildlogger.html">MsBuildLogger</a>
+          </td>
+          <td class="xmldoc"><p>Contains Logger implementations for MsBuild.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-paket.html">Paket</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages with <a href="http://fsprojects.github.io/Paket/index.html">Paket</a>.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-pakettemplate.html">PaketTemplate</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions and task which allow it to generate a paket.template
+file for <a href="http://fsprojects.github.io/Paket/index.html">Paket</a></p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.DotNet.AssemblyInfoFile Namespace</h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-assemblyinfofile-assemblyinfofileconfig.html">AssemblyInfoFileConfig</a>
+          </td>
+          <td class="xmldoc"><p>Represents options for configuring the emission of AssemblyInfo</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-assemblyinfofile-attribute.html">Attribute</a>
+          </td>
+          <td class="xmldoc"><p>Represents AssemblyInfo attributes</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-assemblyinfofile-assemblyinfo.html">AssemblyInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.DotNet.NuGet Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-nuget-install.html">Install</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks for installing NuGet packages using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Install_Command">nuget.exe install command</a>.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-nuget-nuget.html">NuGet</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages.
+There is also a tutorial about <a href="../create-nuget-package.html">nuget package creating</a> available.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-nuget-restore.html">Restore</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.
+There is also a tutorial about <a href="../nuget.html">nuget package restore</a> available.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-nuget-update.html">Update</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks for updating NuGet packages including assembly hint paths in the project files using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Update_Command">nuget.exe update command</a>.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-nuget-version.html">Version</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.DotNet.Testing Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-mspec.html">MSpec</a>
+          </td>
+          <td class="xmldoc"><p>Contains a task to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> tests.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-nunit3.html">NUnit3</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-xunit2.html">XUnit2</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.DotNet.Testing.NUnit Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-nunit-common.html">Common</a>
+          </td>
+          <td class="xmldoc"><p>Contains types and utility functions relaited to running <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-nunit-parallel.html">Parallel</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-nunit-sequential.html">Sequential</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-nunit-xml.html">Xml</a>
+          </td>
+          <td class="xmldoc"><p>Contains types and functions for working with <a href="http://www.nunit.org/">NUnit</a> unit tests result xml.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
     <h2>Fake.Git Namespace</h2>
     <div>
         <table class="table table-bordered module-list">
@@ -1262,6 +1699,101 @@ All operations assume that the CommandHelper can find git.exe.</p>
   </table>
 
     </div>
+    <h2>Fake.IO Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-zip.html">Zip</a>
+          </td>
+          <td class="xmldoc"><p>This module contains helper function to create and extract zip archives.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.IO.FileSystem Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-directory.html">Directory</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-directoryinfo.html">DirectoryInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-file.html">File</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-filefilter.html">FileFilter</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-fileinfo.html">FileInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-filesysteminfo.html">FileSystemInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-operators.html">Operators</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-path.html">Path</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper function which allow to deal with files and directories.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-shell.html">Shell</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-filesystem-templates.html">Templates</a>
+          </td>
+          <td class="xmldoc"><p>NOTE: Maybe this should be an extra module?
+Contains basic templating functions. Used in other helpers.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
     <h2>Fake.MSBuild Namespace</h2>
     <div>
         <table class="table table-bordered module-list">
@@ -1316,6 +1848,101 @@ All operations assume that the CommandHelper can find git.exe.</p>
   </table>
 
     </div>
+    <h2>Fake.Runtime Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-compilerunner.html">CompileRunner</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-corecache.html">CoreCache</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-environment.html">Environment</a>
+          </td>
+          <td class="xmldoc"><p>This module contains functions which allow to read and write environment variables and build parameters</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-fakeruntime.html">FakeRuntime</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-hashgeneration.html">HashGeneration</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-legacyapihelper.html">LegacyApiHelper</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-path.html">Path</a>
+          </td>
+          <td class="xmldoc"><p>Contains basic functions for string manipulation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-runners.html">Runners</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-scriptrunner.html">ScriptRunner</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-string.html">String</a>
+          </td>
+          <td class="xmldoc"><p>Contains basic functions for string manipulation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-trace.html">Trace</a>
+          </td>
+          <td class="xmldoc"><p>This module contains function which allow to trace build output</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
     <h2>Fake.Sql Namespace</h2>
     <div>
         <table class="table table-bordered module-list">
@@ -1344,6 +1971,12 @@ All operations assume that the CommandHelper can find git.exe.</p>
     <tbody>
         <tr>
           <td class="module-name">
+            <a href="fake-testing-common.html">Common</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-testing-expecto.html">Expecto</a>
           </td>
           <td class="xmldoc"><p>Contains tasks to run <a href="https://github.com/haf/expecto">expecto</a> v2 unit tests.</p>
@@ -1369,6 +2002,184 @@ All operations assume that the CommandHelper can find git.exe.</p>
             <a href="fake-testing-xunit2.html">XUnit2</a>
           </td>
           <td class="xmldoc"><p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.Tools.Git Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-branches.html">Branches</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git branches.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-commandhelper.html">CommandHelper</a>
+          </td>
+          <td class="xmldoc"><p>Contains helpers which allow to interact with <a href="http://git-scm.com/">git</a> via the command line.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-commit.html">Commit</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to commit to git repositories.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-commitmessage.html">CommitMessage</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to get and set the git commit message.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-filestatus.html">FileStatus</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which can be used to retrieve file status information from git.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-information.html">Information</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which can be used to retrieve status information from git.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-merge.html">Merge</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git merge.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-rebase.html">Rebase</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git rebase.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-repository.html">Repository</a>
+          </td>
+          <td class="xmldoc"><p>Contains functions which allow basic operations on git repositories.
+All operations assume that the CommandHelper can find git.exe.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-reset.html">Reset</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git reset.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-sha1.html">SHA1</a>
+          </td>
+          <td class="xmldoc"><p>Contains functions which allow the SHA1 of a file with git and without it.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-sanitychecks.html">SanityChecks</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper function which can be used for sanity checks.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-staging.html">Staging</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git's staging area.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-stash.html">Stash</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git stash.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-git-submodule.html">Submodule</a>
+          </td>
+          <td class="xmldoc"><p>Contains helper functions which allow to deal with git submodules.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.Tracing Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tracing-nantxml.html">NAntXml</a>
+          </td>
+          <td class="xmldoc"><p>This module contains function which allow to trace build output</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2>Fake.Windows Namespace</h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-windows-choco.html">Choco</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks which allow to call <a href="https://chocolatey.org">Chocolatey</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-windows-servicecontrol.html">ServiceControl</a>
+          </td>
+          <td class="xmldoc"><p>Contains functions which can be used to start other tools.</p>
 
 </td>
         </tr>

@@ -68,37 +68,37 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <span class="l">23: </span>
 <span class="l">24: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;canopy.dll&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;canopy.dll&quot;</span>
 
-<span class="k">open</span> <span class="i">canopy</span>
-<span class="k">open</span> <span class="i">runner</span>
-<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span>
+<span class="k">open</span> <span class="id">canopy</span>
+<span class="k">open</span> <span class="id">runner</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">System</span>
 
 <span class="c">//overwrite default path</span>
-<span class="i">canopy</span><span class="o">.</span><span class="i">configuration</span><span class="o">.</span><span class="i">phantomJSDir</span> <span class="o">&lt;-</span> <span class="s">@&quot;.\&quot;</span>
+<span class="id">canopy</span><span class="pn">.</span><span class="id">configuration</span><span class="pn">.</span><span class="id">phantomJSDir</span> <span class="k">&lt;-</span> <span class="s">@&quot;.\&quot;</span>
 
 <span class="c">//start an instance of the browser</span>
-<span class="i">start</span> <span class="i">phantomJS</span>
+<span class="id">start</span> <span class="id">phantomJS</span>
 
-<span class="s">&quot;taking canopy for a spin&quot;</span> <span class="o">&amp;&amp;&amp;</span> <span class="k">fun</span> _ <span class="k">-&gt;</span>
+<span class="s">&quot;taking canopy for a spin&quot;</span> <span class="o">&amp;&amp;&amp;</span> <span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 
     <span class="c">//go to url</span>
-    <span class="i">url</span> <span class="s">&quot;http://localhost:81/canopy/testpages/&quot;</span>
+    <span class="id">url</span> <span class="s">&quot;http://localhost:81/canopy/testpages/&quot;</span>
 
     <span class="c">//assert that the element with an id of &#39;welcome&#39; has the text &#39;Welcome&#39;</span>
     <span class="s">&quot;#welcome&quot;</span> <span class="o">==</span> <span class="s">&quot;Welcome&quot;</span>
 
 <span class="c">//run all tests</span>
-<span class="i">run</span>()
+<span class="id">run</span><span class="pn">(</span><span class="pn">)</span>
 
-<span class="i">quit</span>()
+<span class="id">quit</span><span class="pn">(</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
 <p>Although <a href="http://docs.seleniumhq.org/">Selenium</a> (which is the framework behind canopy) supports all browsers you might want to run your tests with the headless browser PhantomJS. To grab the latest version just install the NuGet package:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">install</span><span class="o">-</span><span class="i">package</span> <span class="i">PhantomJS</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">install</span><span class="o">-</span><span class="id">package</span> <span class="id">PhantomJS</span>
 </code></pre></td>
 </tr>
 </table>
@@ -124,23 +124,23 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <span class="l">16: </span>
 <span class="l">17: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CanopyTests&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="k">let</span> <span class="i">hostName</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
-	<span class="k">let</span> <span class="i">port</span> <span class="o">=</span> <span class="n">81</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;CanopyTests&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="k">let</span> <span class="id">hostName</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
+	<span class="k">let</span> <span class="id">port</span> <span class="o">=</span> <span class="n">81</span>
 
-    <span class="k">let</span> <span class="i">config</span> <span class="o">=</span> <span class="i">createConfigFile</span>(<span class="i">project</span>, <span class="n">1</span>, <span class="s">&quot;iisexpress-template.config&quot;</span>, <span class="i">websiteDir</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="i">project</span>, <span class="i">hostName</span>, <span class="i">port</span>)
-    <span class="k">let</span> <span class="i">webSiteProcess</span> <span class="o">=</span> <span class="i">HostWebsite</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">id</span> <span class="i">config</span> <span class="n">1</span>
+    <span class="k">let</span> <span class="id">config</span> <span class="o">=</span> <span class="id">createConfigFile</span><span class="pn">(</span><span class="id">project</span><span class="pn">,</span> <span class="n">1</span><span class="pn">,</span> <span class="s">&quot;iisexpress-template.config&quot;</span><span class="pn">,</span> <span class="id">websiteDir</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="id">project</span><span class="pn">,</span> <span class="id">hostName</span><span class="pn">,</span> <span class="id">port</span><span class="pn">)</span>
+    <span class="k">let</span> <span class="id">webSiteProcess</span> <span class="o">=</span> <span class="id">HostWebsite</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">id</span> <span class="id">config</span> <span class="n">1</span>
 
-    <span class="k">let</span> <span class="i">result</span> <span class="o">=</span>
-        <span class="i">ExecProcess</span> (<span class="k">fun</span> <span class="i">info</span> <span class="k">-&gt;</span>
-            <span class="i">info</span><span class="o">.</span><span class="i">FileName</span> <span class="o">&lt;-</span> (<span class="i">buildDir</span> <span class="o">@@</span> <span class="s">&quot;CanopyTests.exe&quot;</span>)
-            <span class="i">info</span><span class="o">.</span><span class="i">WorkingDirectory</span> <span class="o">&lt;-</span> <span class="i">buildDir</span>
-        ) (<span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">TimeSpan</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="i">FromMinutes</span> <span class="n">5.</span>)
+    <span class="k">let</span> <span class="id">result</span> <span class="o">=</span>
+        <span class="id">ExecProcess</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">info</span> <span class="k">-&gt;</span>
+            <span class="id">info</span><span class="pn">.</span><span class="id">FileName</span> <span class="k">&lt;-</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="id">@@</span> <span class="s">&quot;CanopyTests.exe&quot;</span><span class="pn">)</span>
+            <span class="id">info</span><span class="pn">.</span><span class="id">WorkingDirectory</span> <span class="k">&lt;-</span> <span class="id">buildDir</span>
+        <span class="pn">)</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">TimeSpan</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">FromMinutes</span> <span class="n">5.</span><span class="pn">)</span>
 
-    <span class="i">ProcessHelper</span><span class="o">.</span><span class="i">killProcessById</span> <span class="i">webSiteProcess</span><span class="o">.</span><span class="i">Id</span>
+    <span class="id">ProcessHelper</span><span class="pn">.</span><span class="id">killProcessById</span> <span class="id">webSiteProcess</span><span class="pn">.</span><span class="id">Id</span>
  
-    <span class="k">if</span> <span class="i">result</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">failwith</span> <span class="s">&quot;Failed result from canopy tests&quot;</span>
-)
+    <span class="k">if</span> <span class="id">result</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">failwith</span> <span class="s">&quot;Failed result from canopy tests&quot;</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -148,7 +148,7 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 
           <div class="tip" id="fs1">namespace System</div>
 <div class="tip" id="fs2">val id : x:&#39;T -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.Operators.id</div>
-<div class="tip" id="fs3">Multiple items<br />type TimeSpan =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : ticks:int64 -&gt; TimeSpan + 3 overloads<br />&#160;&#160;&#160;&#160;member Add : ts:TimeSpan -&gt; TimeSpan<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Days : int<br />&#160;&#160;&#160;&#160;member Duration : unit -&gt; TimeSpan<br />&#160;&#160;&#160;&#160;member Equals : value:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member Hours : int<br />&#160;&#160;&#160;&#160;member Milliseconds : int<br />&#160;&#160;&#160;&#160;member Minutes : int<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.TimeSpan<br /><br />--------------------<br />TimeSpan()<br />TimeSpan(ticks: int64) : unit<br />TimeSpan(hours: int, minutes: int, seconds: int) : unit<br />TimeSpan(days: int, hours: int, minutes: int, seconds: int) : unit<br />TimeSpan(days: int, hours: int, minutes: int, seconds: int, milliseconds: int) : unit</div>
+<div class="tip" id="fs3">Multiple items<br />type TimeSpan =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : ticks:int64 -&gt; TimeSpan + 3 overloads<br />&#160;&#160;&#160;&#160;member Add : ts:TimeSpan -&gt; TimeSpan<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Days : int<br />&#160;&#160;&#160;&#160;member Duration : unit -&gt; TimeSpan<br />&#160;&#160;&#160;&#160;member Equals : value:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member Hours : int<br />&#160;&#160;&#160;&#160;member Milliseconds : int<br />&#160;&#160;&#160;&#160;member Minutes : int<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.TimeSpan<br /><br />--------------------<br />TimeSpan ()<br />TimeSpan(ticks: int64) : unit<br />TimeSpan(hours: int, minutes: int, seconds: int) : unit<br />TimeSpan(days: int, hours: int, minutes: int, seconds: int) : unit<br />TimeSpan(days: int, hours: int, minutes: int, seconds: int, milliseconds: int) : unit</div>
 <div class="tip" id="fs4">TimeSpan.FromMinutes(value: float) : TimeSpan</div>
 <div class="tip" id="fs5">val failwith : message:string -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.Operators.failwith</div>
           

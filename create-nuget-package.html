@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Creating NuGet packages</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <h2>Creating a .nuspec template</h2>
 <p>The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
 The following code shows such .nuspec file from the <a href="https://github.com/octokit/octokit.net">OctoKit</a> project.</p>
@@ -163,23 +164,23 @@ It also contains some specific information like the copyright which is not handl
 <span class="l">16: </span>
 <span class="l">17: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CreatePackage&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;CreatePackage&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="c">// Copy all the package files into a package folder</span>
-	<span class="i">CopyFiles</span> <span class="i">packagingDir</span> <span class="i">allPackageFiles</span>
+	<span class="id">CopyFiles</span> <span class="id">packagingDir</span> <span class="id">allPackageFiles</span>
 
-	<span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-		{<span class="i">p</span> <span class="k">with</span>
-			<span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
-			<span class="i">Project</span> <span class="o">=</span> <span class="i">projectName</span>
-			<span class="i">Description</span> <span class="o">=</span> <span class="i">projectDescription</span>                               
-			<span class="i">OutputPath</span> <span class="o">=</span> <span class="i">packagingRoot</span>
-			<span class="i">Summary</span> <span class="o">=</span> <span class="i">projectSummary</span>
-			<span class="i">WorkingDir</span> <span class="o">=</span> <span class="i">packagingDir</span>
-			<span class="i">Version</span> <span class="o">=</span> <span class="i">buildVersion</span>
-			<span class="i">AccessKey</span> <span class="o">=</span> <span class="i">myAccesskey</span>
-			<span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
+	<span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+		<span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+			<span class="id">Authors</span> <span class="o">=</span> <span class="id">authors</span>
+			<span class="id">Project</span> <span class="o">=</span> <span class="id">projectName</span>
+			<span class="id">Description</span> <span class="o">=</span> <span class="id">projectDescription</span>                               
+			<span class="id">OutputPath</span> <span class="o">=</span> <span class="id">packagingRoot</span>
+			<span class="id">Summary</span> <span class="o">=</span> <span class="id">projectSummary</span>
+			<span class="id">WorkingDir</span> <span class="o">=</span> <span class="id">packagingDir</span>
+			<span class="id">Version</span> <span class="o">=</span> <span class="id">buildVersion</span>
+			<span class="id">AccessKey</span> <span class="o">=</span> <span class="id">myAccesskey</span>
+			<span class="id">Publish</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span> 
 			<span class="s">&quot;myProject.nuspec&quot;</span>
-)
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -214,25 +215,25 @@ Here is a small sample which sets up dependencies for different framework versio
 <span class="l">19: </span>
 <span class="l">20: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-            {<span class="i">p</span> <span class="k">with</span>
-                    <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                    <span class="id">Authors</span> <span class="o">=</span> <span class="id">authors</span>
                     <span class="c">// ...</span>
-                    <span class="i">Dependencies</span> <span class="o">=</span>  <span class="c">// fallback - for all unspecified frameworks</span>
-				[<span class="s">&quot;Octokit&quot;</span>, <span class="s">&quot;0.1&quot;</span>
-				<span class="s">&quot;Rx-Main&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;Rx-Main&quot;</span>]
-                    <span class="i">DependenciesByFramework</span> <span class="o">=</span>
-                                    [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net40&quot;</span>
-                                    <span class="i">Dependencies</span> <span class="o">=</span> 
-                                            [<span class="s">&quot;Octokit&quot;</span>, <span class="s">&quot;0.1&quot;</span>
-                                             <span class="s">&quot;Rx-Main&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;Rx-Main&quot;</span>
-                                             <span class="s">&quot;SignalR&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;SignalR&quot;</span>]}
-                                    { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net45&quot;</span>
-                                    <span class="i">Dependencies</span> <span class="o">=</span> 
-                                            [<span class="s">&quot;Octokit&quot;</span>, <span class="s">&quot;0.1&quot;</span>
-                                             <span class="s">&quot;SignalR&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;SignalR&quot;</span>]}]
+                    <span class="id">Dependencies</span> <span class="o">=</span>  <span class="c">// fallback - for all unspecified frameworks</span>
+				<span class="pn">[</span><span class="s">&quot;Octokit&quot;</span><span class="pn">,</span> <span class="s">&quot;0.1&quot;</span>
+				<span class="s">&quot;Rx-Main&quot;</span><span class="pn">,</span> <span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;Rx-Main&quot;</span><span class="pn">]</span>
+                    <span class="id">DependenciesByFramework</span> <span class="o">=</span>
+                                    <span class="pn">[</span><span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net40&quot;</span>
+                                    <span class="id">Dependencies</span> <span class="o">=</span> 
+                                            <span class="pn">[</span><span class="s">&quot;Octokit&quot;</span><span class="pn">,</span> <span class="s">&quot;0.1&quot;</span>
+                                             <span class="s">&quot;Rx-Main&quot;</span><span class="pn">,</span> <span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;Rx-Main&quot;</span>
+                                             <span class="s">&quot;SignalR&quot;</span><span class="pn">,</span> <span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;SignalR&quot;</span><span class="pn">]</span><span class="pn">}</span>
+                                    <span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net45&quot;</span>
+                                    <span class="id">Dependencies</span> <span class="o">=</span> 
+                                            <span class="pn">[</span><span class="s">&quot;Octokit&quot;</span><span class="pn">,</span> <span class="s">&quot;0.1&quot;</span>
+                                             <span class="s">&quot;SignalR&quot;</span><span class="pn">,</span> <span class="id">GetPackageVersion</span> <span class="s">&quot;./packages/&quot;</span> <span class="s">&quot;SignalR&quot;</span><span class="pn">]</span><span class="pn">}</span><span class="pn">]</span>
                     <span class="c">// ...</span>
-                    <span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
+                    <span class="id">Publish</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span> 
                     <span class="s">&quot;myProject.nuspec&quot;</span>
 </code></pre></td>
 </tr>
@@ -252,16 +253,16 @@ Here is a code snippet showing how to use these:</p>
 <span class="l">10: </span>
 <span class="l">11: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-    {<span class="i">p</span> <span class="k">with</span>
-        <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+        <span class="id">Authors</span> <span class="o">=</span> <span class="id">authors</span>
         <span class="c">// ...</span>
-        <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;a.dll&quot;</span>]
-        <span class="i">ReferencesByFramework</span> <span class="o">=</span>
-            [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net40&quot;</span>; <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;b.dll&quot;</span>]}
-             { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net45&quot;</span>; <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;c.dll&quot;</span>]}]
+        <span class="id">References</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;a.dll&quot;</span><span class="pn">]</span>
+        <span class="id">ReferencesByFramework</span> <span class="o">=</span>
+            <span class="pn">[</span><span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net40&quot;</span><span class="pn">;</span> <span class="id">References</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;b.dll&quot;</span><span class="pn">]</span><span class="pn">}</span>
+             <span class="pn">{</span> <span class="id">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;net45&quot;</span><span class="pn">;</span> <span class="id">References</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;c.dll&quot;</span><span class="pn">]</span><span class="pn">}</span><span class="pn">]</span>
         <span class="c">// ...</span>
-        <span class="i">Publish</span> <span class="o">=</span> <span class="k">false</span> })
+        <span class="id">Publish</span> <span class="o">=</span> <span class="k">false</span> <span class="pn">}</span><span class="pn">)</span>
         <span class="s">&quot;template.nuspec&quot;</span>
 </code></pre></td>
 </tr>
@@ -286,15 +287,15 @@ Here is a code snippet showing how to use this:</p>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.</span>
 <span class="c">// Note that the include paths are relative to the location of the .nuspec file</span>
 <span class="c">// See [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Files_to_Include_in_the_Package) for more detailed examples of how to specify file includes, as this follows the same syntax.</span>
-<span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-	{<span class="i">p</span> <span class="k">with</span>
+<span class="id">NuGet</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+	<span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
 		<span class="c">// ...</span>
-		<span class="i">Files</span> <span class="o">=</span> [
-			(<span class="s">@&quot;tools\**\*.*&quot;</span>, <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">None</span>, <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">None</span>)
-			(<span class="s">@&quot;bin\Debug\*.dll&quot;</span>, <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="i">Some</span> <span class="s">&quot;lib&quot;</span>, <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="i">Some</span> <span class="s">&quot;badfile.css;otherbadfile.css&quot;</span>)
-		]
+		<span class="id">Files</span> <span class="o">=</span> <span class="pn">[</span>
+			<span class="pn">(</span><span class="s">@&quot;tools\**\*.*&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">None</span><span class="pn">)</span>
+			<span class="pn">(</span><span class="s">@&quot;bin\Debug\*.dll&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">Some</span> <span class="s">&quot;lib&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">Some</span> <span class="s">&quot;badfile.css;otherbadfile.css&quot;</span><span class="pn">)</span>
+		<span class="pn">]</span>
 		<span class="c">// ...</span>
-	})
+	<span class="pn">}</span><span class="pn">)</span>
 	<span class="s">&quot;template.nuspec&quot;</span>
 </code></pre></td>
 </tr>

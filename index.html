@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>FAKE - F# Make - A DSL for build tasks</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>"FAKE - F# Make" is a build automation system with capabilities which are similar to <strong>make</strong> and <strong>rake</strong>.
 It is using an easy domain-specific language (DSL) so that you can start using it without learning F#.
 If you need more than the default functionality you can either write F# or simply reference .NET assemblies.</p>
@@ -59,22 +60,22 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">15: </span>
 <span class="l">16: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;tools/FAKE/tools/FakeLib.dll&quot;</span> <span class="c">// include Fake lib</span>
-<span class="k">open</span> <span class="i">Fake</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;tools/FAKE/tools/FakeLib.dll&quot;</span> <span class="c">// include Fake lib</span>
+<span class="k">open</span> <span class="id">Fake</span>
 
 
-<span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="i">trace</span> <span class="s">&quot;Testing stuff...&quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="id">trace</span> <span class="s">&quot;Testing stuff...&quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Deploy&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="i">trace</span> <span class="s">&quot;Heavy deploy action&quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="id">trace</span> <span class="s">&quot;Heavy deploy action&quot;</span>
+<span class="pn">)</span>
 
 <span class="s">&quot;Test&quot;</span>            <span class="c">// define the dependencies</span>
    <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
-<span class="i">Run</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="id">Run</span> <span class="s">&quot;Deploy&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -120,9 +121,9 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">4: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// The clean target cleans the build and deploy folders</span>
-<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="i">CleanDirs</span> [<span class="s">&quot;./build/&quot;</span>; <span class="s">&quot;./deploy/&quot;</span>]
-)
+<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="id">CleanDirs</span> <span class="pn">[</span><span class="s">&quot;./build/&quot;</span><span class="pn">;</span> <span class="s">&quot;./deploy/&quot;</span><span class="pn">]</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -148,7 +149,7 @@ If you need more than the default functionality you can either write F# or simpl
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Clean&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
-  <span class="o">=?&gt;</span> (<span class="s">&quot;Test&quot;</span>,<span class="i">hasBuildParam</span> <span class="s">&quot;xUnitTest&quot;</span>)  <span class="c">// only if FAKE was called with parameter xUnitTest</span>
+  <span class="o">=?&gt;</span> <span class="pn">(</span><span class="s">&quot;Test&quot;</span><span class="pn">,</span><span class="id">hasBuildParam</span> <span class="s">&quot;xUnitTest&quot;</span><span class="pn">)</span>  <span class="c">// only if FAKE was called with parameter xUnitTest</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
@@ -157,7 +158,7 @@ If you need more than the default functionality you can either write F# or simpl
 <p>You can execute targets with the "RunTargetOrDefault"-function (for more details see <a href="specifictargets.html">Running specific targets</a>):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -205,15 +206,15 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">10: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test dlls</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">testDlls</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span>)
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">testDlls</span> <span class="o">=</span> <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span><span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;NUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">testDlls</span>
-		<span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-			{<span class="i">p</span> <span class="k">with</span>
-				<span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-				<span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span>})
-)
+<span class="id">Target</span> <span class="s">&quot;NUnitTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">testDlls</span>
+		<span class="o">|&gt;</span> <span class="id">NUnit</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+			<span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+				<span class="id">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span><span class="pn">;</span>
+				<span class="id">OutputFile</span> <span class="o">=</span> <span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -230,15 +231,15 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">10: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test dlls</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">testDlls</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span>)
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">testDlls</span> <span class="o">=</span> <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span><span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;MSpecTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">testDlls</span>
-		<span class="o">|&gt;</span> <span class="i">MSpec</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-			{<span class="i">p</span> <span class="k">with</span>
-				<span class="i">ExcludeTags</span> <span class="o">=</span> [<span class="s">&quot;LongRunning&quot;</span>]
-				<span class="i">HtmlOutputDir</span> <span class="o">=</span> <span class="i">testOutputDir</span>})
-)
+<span class="id">Target</span> <span class="s">&quot;MSpecTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">testDlls</span>
+		<span class="o">|&gt;</span> <span class="id">MSpec</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+			<span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+				<span class="id">ExcludeTags</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;LongRunning&quot;</span><span class="pn">]</span>
+				<span class="id">HtmlOutputDir</span> <span class="o">=</span> <span class="id">testOutputDir</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -257,17 +258,17 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">12: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test dlls</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="i">testDlls</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span>)
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">testDlls</span> <span class="o">=</span> <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span><span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;xUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">testDlls</span>
-        <span class="o">|&gt;</span> <span class="i">xUnit2</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-            {<span class="i">p</span> <span class="k">with</span>
-                <span class="i">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span>;
-                <span class="i">HtmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
-                <span class="i">XmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
-                <span class="i">OutputDir</span> <span class="o">=</span> <span class="i">testDir</span> })
-)
+<span class="id">Target</span> <span class="s">&quot;xUnitTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="id">testDlls</span>
+        <span class="o">|&gt;</span> <span class="id">xUnit2</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                <span class="id">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span><span class="pn">;</span>
+                <span class="id">HtmlOutput</span> <span class="o">=</span> <span class="k">true</span><span class="pn">;</span>
+                <span class="id">XmlOutput</span> <span class="o">=</span> <span class="k">true</span><span class="pn">;</span>
+                <span class="id">OutputDir</span> <span class="o">=</span> <span class="id">testDir</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -291,22 +292,22 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">17: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test executables</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">testExecutables</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.exe&quot;</span>)
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="id">testExecutables</span> <span class="o">=</span> <span class="o">!!</span> <span class="pn">(</span><span class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.exe&quot;</span><span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;expectoTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span onmouseout="hideTip(event, 'fs2', 8)" onmouseover="showTip(event, 'fs2', 8)" class="i">testExecutables</span>
-    <span class="o">|&gt;</span> <span class="i">Expecto</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-        { <span class="i">p</span> <span class="k">with</span>
-            <span class="i">Debug</span> <span class="o">=</span> <span class="k">true</span>
-            <span class="i">Parallel</span> <span class="o">=</span> <span class="k">true</span>
+<span class="id">Target</span> <span class="s">&quot;expectoTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span onmouseout="hideTip(event, 'fs2', 8)" onmouseover="showTip(event, 'fs2', 8)" class="id">testExecutables</span>
+    <span class="o">|&gt;</span> <span class="id">Expecto</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+        <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
+            <span class="id">Debug</span> <span class="o">=</span> <span class="k">true</span>
+            <span class="id">Parallel</span> <span class="o">=</span> <span class="k">true</span>
             <span class="c">// use only one of the following parameters</span>
-            <span class="i">Filter</span> <span class="o">=</span> <span class="s">&quot;TestPrefix&quot;</span>
-            <span class="i">FilterTestCase</span> <span class="o">=</span> <span class="s">&quot;TestCaseNameSubstring&quot;</span>
-            <span class="i">FilterTestList</span> <span class="o">=</span> <span class="s">&quot;TestListNameSubstring&quot;</span>
-            <span class="i">Run</span> <span class="o">=</span> [<span class="s">&quot;Test1&quot;</span>; <span class="s">&quot;Test2&quot;</span>]
-            <span class="i">ListTests</span> <span class="o">=</span> <span class="k">false</span>
-        })
-)
+            <span class="id">Filter</span> <span class="o">=</span> <span class="s">&quot;TestPrefix&quot;</span>
+            <span class="id">FilterTestCase</span> <span class="o">=</span> <span class="s">&quot;TestCaseNameSubstring&quot;</span>
+            <span class="id">FilterTestList</span> <span class="o">=</span> <span class="s">&quot;TestListNameSubstring&quot;</span>
+            <span class="id">Run</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;Test1&quot;</span><span class="pn">;</span> <span class="s">&quot;Test2&quot;</span><span class="pn">]</span>
+            <span class="id">ListTests</span> <span class="o">=</span> <span class="k">false</span>
+        <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -423,92 +424,92 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">99: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake libs</span>
-<span class="prep">#r</span> <span class="s">&quot;tools/FAKE/FakeLib.dll&quot;</span>
+<span class="pp">#r</span> <span class="s">&quot;tools/FAKE/FakeLib.dll&quot;</span>
 
-<span class="k">open</span> <span class="i">Fake</span>
+<span class="k">open</span> <span class="id">Fake</span>
 
 <span class="c">// Directories</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 9)" onmouseover="showTip(event, 'fs3', 9)" class="i">buildDir</span>  <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">testDir</span>   <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="i">deployDir</span> <span class="o">=</span> <span class="s">&quot;./deploy/&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 9)" onmouseover="showTip(event, 'fs3', 9)" class="id">buildDir</span>  <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="id">testDir</span>   <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="id">deployDir</span> <span class="o">=</span> <span class="s">&quot;./deploy/&quot;</span>
 
 <span class="c">// tools</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 12)" onmouseover="showTip(event, 'fs6', 12)" class="i">fxCopRoot</span> <span class="o">=</span> <span class="s">&quot;./Tools/FxCop/FxCopCmd.exe&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 12)" onmouseover="showTip(event, 'fs6', 12)" class="id">fxCopRoot</span> <span class="o">=</span> <span class="s">&quot;./Tools/FxCop/FxCopCmd.exe&quot;</span>
 
 <span class="c">// Filesets</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs7', 13)" onmouseover="showTip(event, 'fs7', 13)" class="i">appReferences</span>  <span class="o">=</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs7', 13)" onmouseover="showTip(event, 'fs7', 13)" class="id">appReferences</span>  <span class="o">=</span>
     <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
       <span class="o">++</span> <span class="s">&quot;src/app/**/*.fsproj&quot;</span>
 
-<span class="k">let</span> <span class="i">testReferences</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 14)" onmouseover="showTip(event, 'fs8', 14)" class="id">testReferences</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
 
 <span class="c">// version info</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 14)" onmouseover="showTip(event, 'fs8', 14)" class="i">version</span> <span class="o">=</span> <span class="s">&quot;0.2&quot;</span>  <span class="c">// or retrieve from CI server</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 15)" onmouseover="showTip(event, 'fs9', 15)" class="id">version</span> <span class="o">=</span> <span class="s">&quot;0.2&quot;</span>  <span class="c">// or retrieve from CI server</span>
 
 <span class="c">// Targets</span>
-<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span onmouseout="hideTip(event, 'fs3', 15)" onmouseover="showTip(event, 'fs3', 15)" class="i">buildDir</span>; <span onmouseout="hideTip(event, 'fs4', 16)" onmouseover="showTip(event, 'fs4', 16)" class="i">testDir</span>; <span onmouseout="hideTip(event, 'fs5', 17)" onmouseover="showTip(event, 'fs5', 17)" class="i">deployDir</span>]
-)
+<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">CleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs3', 16)" onmouseover="showTip(event, 'fs3', 16)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs4', 17)" onmouseover="showTip(event, 'fs4', 17)" class="id">testDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs5', 18)" onmouseover="showTip(event, 'fs5', 18)" class="id">deployDir</span><span class="pn">]</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="i">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/Calculator/Properties/AssemblyInfo.cs&quot;</span>
-		[<span class="i">Attribute</span><span class="o">.</span><span class="i">Title</span> <span class="s">&quot;Calculator Command line tool&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Guid</span> <span class="s">&quot;A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Product</span> <span class="s">&quot;Calculator&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Version</span> <span onmouseout="hideTip(event, 'fs8', 18)" onmouseover="showTip(event, 'fs8', 18)" class="i">version</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">FileVersion</span> <span onmouseout="hideTip(event, 'fs8', 19)" onmouseover="showTip(event, 'fs8', 19)" class="i">version</span>]
+<span class="id">Target</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="id">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/Calculator/Properties/AssemblyInfo.cs&quot;</span>
+		<span class="pn">[</span><span class="id">Attribute</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator Command line tool&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Version</span> <span onmouseout="hideTip(event, 'fs9', 19)" onmouseover="showTip(event, 'fs9', 19)" class="id">version</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">FileVersion</span> <span onmouseout="hideTip(event, 'fs9', 20)" onmouseover="showTip(event, 'fs9', 20)" class="id">version</span><span class="pn">]</span>
 
-	<span class="i">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/CalculatorLib/Properties/AssemblyInfo.cs&quot;</span>
-		[<span class="i">Attribute</span><span class="o">.</span><span class="i">Title</span> <span class="s">&quot;Calculator library&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Guid</span> <span class="s">&quot;EE5621DB-B86B-44eb-987F-9C94BCC98441&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Product</span> <span class="s">&quot;Calculator&quot;</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">Version</span> <span onmouseout="hideTip(event, 'fs8', 20)" onmouseover="showTip(event, 'fs8', 20)" class="i">version</span>
-		 <span class="i">Attribute</span><span class="o">.</span><span class="i">FileVersion</span> <span onmouseout="hideTip(event, 'fs8', 21)" onmouseover="showTip(event, 'fs8', 21)" class="i">version</span>]
+	<span class="id">CreateCSharpAssemblyInfo</span> <span class="s">&quot;./src/app/CalculatorLib/Properties/AssemblyInfo.cs&quot;</span>
+		<span class="pn">[</span><span class="id">Attribute</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator library&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;EE5621DB-B86B-44eb-987F-9C94BCC98441&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">Version</span> <span onmouseout="hideTip(event, 'fs9', 21)" onmouseover="showTip(event, 'fs9', 21)" class="id">version</span>
+		 <span class="id">Attribute</span><span class="pn">.</span><span class="id">FileVersion</span> <span onmouseout="hideTip(event, 'fs9', 22)" onmouseover="showTip(event, 'fs9', 22)" class="id">version</span><span class="pn">]</span>
 
     <span class="c">// compile all projects below src/app/</span>
-    <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs3', 22)" onmouseover="showTip(event, 'fs3', 22)" class="i">buildDir</span> <span class="s">&quot;Build&quot;</span> <span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="i">appReferences</span>
-        <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
-)
+    <span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs3', 23)" onmouseover="showTip(event, 'fs3', 23)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span> <span onmouseout="hideTip(event, 'fs7', 24)" onmouseover="showTip(event, 'fs7', 24)" class="id">appReferences</span>
+        <span class="o">|&gt;</span> <span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs4', 24)" onmouseover="showTip(event, 'fs4', 24)" class="i">testDir</span> <span class="s">&quot;Build&quot;</span> <span class="i">testReferences</span>
-        <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs4', 25)" onmouseover="showTip(event, 'fs4', 25)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span> <span onmouseout="hideTip(event, 'fs8', 26)" onmouseover="showTip(event, 'fs8', 26)" class="id">testReferences</span>
+        <span class="o">|&gt;</span> <span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;NUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs4', 25)" onmouseover="showTip(event, 'fs4', 25)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
-        <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-            {<span class="i">p</span> <span class="k">with</span>
-                <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-                <span class="i">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 26)" onmouseover="showTip(event, 'fs4', 26)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span>})
-)
+<span class="id">Target</span> <span class="s">&quot;NUnitTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs4', 27)" onmouseover="showTip(event, 'fs4', 27)" class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+        <span class="o">|&gt;</span> <span class="id">NUnit</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                <span class="id">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span><span class="pn">;</span>
+                <span class="id">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 28)" onmouseover="showTip(event, 'fs4', 28)" class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;xUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs4', 27)" onmouseover="showTip(event, 'fs4', 27)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/xUnit.Test.*.dll&quot;</span>)
-        <span class="o">|&gt;</span> <span class="i">xUnit2</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-            {<span class="i">p</span> <span class="k">with</span>
-                <span class="i">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span>;
-                <span class="i">HtmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
-                <span class="i">XmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
-                <span class="i">OutputDir</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 28)" onmouseover="showTip(event, 'fs4', 28)" class="i">testDir</span> })
-)
+<span class="id">Target</span> <span class="s">&quot;xUnitTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs4', 29)" onmouseover="showTip(event, 'fs4', 29)" class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/xUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+        <span class="o">|&gt;</span> <span class="id">xUnit2</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                <span class="id">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span><span class="pn">;</span>
+                <span class="id">HtmlOutput</span> <span class="o">=</span> <span class="k">true</span><span class="pn">;</span>
+                <span class="id">XmlOutput</span> <span class="o">=</span> <span class="k">true</span><span class="pn">;</span>
+                <span class="id">OutputDir</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 30)" onmouseover="showTip(event, 'fs4', 30)" class="id">testDir</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;FxCop&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs3', 29)" onmouseover="showTip(event, 'fs3', 29)" class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.dll&quot;</span>)
-        <span class="o">++</span> (<span onmouseout="hideTip(event, 'fs3', 30)" onmouseover="showTip(event, 'fs3', 30)" class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.exe&quot;</span>)
-        <span class="o">|&gt;</span> <span class="i">FxCop</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-            {<span class="i">p</span> <span class="k">with</span>
-                <span class="i">ReportFileName</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 31)" onmouseover="showTip(event, 'fs4', 31)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;FXCopResults.xml&quot;</span>;
-                <span class="i">ToolPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 32)" onmouseover="showTip(event, 'fs6', 32)" class="i">fxCopRoot</span>})
-)
+<span class="id">Target</span> <span class="s">&quot;FxCop&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 31)" onmouseover="showTip(event, 'fs3', 31)" class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.dll&quot;</span><span class="pn">)</span>
+        <span class="o">++</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 32)" onmouseover="showTip(event, 'fs3', 32)" class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.exe&quot;</span><span class="pn">)</span>
+        <span class="o">|&gt;</span> <span class="id">FxCop</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+            <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                <span class="id">ReportFileName</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 33)" onmouseover="showTip(event, 'fs4', 33)" class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;FXCopResults.xml&quot;</span><span class="pn">;</span>
+                <span class="id">ToolPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 34)" onmouseover="showTip(event, 'fs6', 34)" class="id">fxCopRoot</span><span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Deploy&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs3', 33)" onmouseover="showTip(event, 'fs3', 33)" class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.*&quot;</span>)
+<span class="id">Target</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 35)" onmouseover="showTip(event, 'fs3', 35)" class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.*&quot;</span><span class="pn">)</span>
         <span class="o">--</span> <span class="s">&quot;*.zip&quot;</span>
-        <span class="o">|&gt;</span> <span class="i">Zip</span> <span onmouseout="hideTip(event, 'fs3', 34)" onmouseover="showTip(event, 'fs3', 34)" class="i">buildDir</span> (<span onmouseout="hideTip(event, 'fs5', 35)" onmouseover="showTip(event, 'fs5', 35)" class="i">deployDir</span> <span class="o">+</span> <span class="s">&quot;Calculator.&quot;</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs8', 36)" onmouseover="showTip(event, 'fs8', 36)" class="i">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span>)
-)
+        <span class="o">|&gt;</span> <span class="id">Zip</span> <span onmouseout="hideTip(event, 'fs3', 36)" onmouseover="showTip(event, 'fs3', 36)" class="id">buildDir</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs5', 37)" onmouseover="showTip(event, 'fs5', 37)" class="id">deployDir</span> <span class="o">+</span> <span class="s">&quot;Calculator.&quot;</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs9', 38)" onmouseover="showTip(event, 'fs9', 38)" class="id">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span><span class="pn">)</span>
+<span class="pn">)</span>
 
 <span class="c">// Build order</span>
 <span class="s">&quot;Clean&quot;</span>
@@ -516,11 +517,11 @@ If you need more than the default functionality you can either write F# or simpl
   <span class="o">==&gt;</span> <span class="s">&quot;BuildTest&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;FxCop&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;NUnitTest&quot;</span>
-  <span class="o">=?&gt;</span> (<span class="s">&quot;xUnitTest&quot;</span>,<span class="i">hasBuildParam</span> <span class="s">&quot;xUnitTest&quot;</span>)  <span class="c">// only if FAKE was called with parameter xUnitTest</span>
+  <span class="o">=?&gt;</span> <span class="pn">(</span><span class="s">&quot;xUnitTest&quot;</span><span class="pn">,</span><span class="id">hasBuildParam</span> <span class="s">&quot;xUnitTest&quot;</span><span class="pn">)</span>  <span class="c">// only if FAKE was called with parameter xUnitTest</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="c">// start build</span>
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="id">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -532,7 +533,8 @@ If you need more than the default functionality you can either write F# or simpl
 <div class="tip" id="fs5">val deployDir : string<br /><br />Full name: index.deployDir</div>
 <div class="tip" id="fs6">val fxCopRoot : string<br /><br />Full name: index.fxCopRoot</div>
 <div class="tip" id="fs7">val appReferences : &#39;_arg3<br /><br />Full name: index.appReferences</div>
-<div class="tip" id="fs8">val version : string<br /><br />Full name: index.version</div>
+<div class="tip" id="fs8">val testReferences : &#39;a<br /><br />Full name: index.testReferences</div>
+<div class="tip" id="fs9">val version : string<br /><br />Full name: index.version</div>
           
         </div>
         <div class="span3">

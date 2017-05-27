@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Running targets in "FAKE - F# Make"</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <h2>Listing targets</h2>
 <p>Before running any specific target it is useful to know all the targets that are available in a build script.
 FAKE can list all the avaiable targets including the dependencies by running the following command:</p>
@@ -74,22 +75,22 @@ FAKE can list all the avaiable targets including the dependencies by running the
 <span class="l">25: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake libs</span>
-<span class="prep">#I</span> <span class="s">@&quot;tools\FAKE&quot;</span>
-<span class="prep">#r</span> <span class="s">&quot;FakeLib.dll&quot;</span>
-<span class="k">open</span> <span class="i">Fake</span> 
+<span class="pp">#I</span> <span class="s">@&quot;tools\FAKE&quot;</span>
+<span class="pp">#r</span> <span class="s">&quot;FakeLib.dll&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span> 
 
 <span class="c">// *** Define Targets ***</span>
-<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-	<span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+	<span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Build&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-	<span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+	<span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Deploy&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-	<span class="i">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+	<span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
+<span class="pn">)</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Clean&quot;</span>
@@ -97,7 +98,7 @@ FAKE can list all the avaiable targets including the dependencies by running the
   <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="c">// *** Start Build ***</span>
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="id">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -119,12 +120,12 @@ These targets will be executed even if the build fails but have to be activated 
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">FinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 	<span class="c">// close stuff and release resources</span>
-)
+<span class="pn">)</span>
 
 <span class="c">// Activate FinalTarget somewhere during build</span>
-<span class="i">ActivateFinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span>
+<span class="id">ActivateFinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -138,12 +139,12 @@ These targets will be executed only after a build failure but have to be activat
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">BuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">BuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 	<span class="c">// send mail about the failure</span>
-)
+<span class="pn">)</span>
 
 <span class="c">// Activate BuildFailureTarget somewhere during build</span>
-<span class="i">ActivateBuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span>
+<span class="id">ActivateBuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -155,7 +156,7 @@ the dependency graph to the standard output <em>instead</em> of building anythin
 the build script contains a call like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -178,7 +179,7 @@ the build script contains a call like this:</p>
 <p>The following command saves the target dependency graph in the <code>graph.png</code> file (PowerShell syntax):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FAKE</span><span class="o">.</span><span class="i">exe</span> <span class="i">build</span><span class="o">.</span><span class="i">fsx</span> <span class="o">-</span><span class="i">dg</span> | <span class="o">&amp;</span> <span class="o">&#39;</span><span class="i">C</span><span class="o">:</span><span class="o">/</span><span class="i">Program</span> <span class="i">Files</span> (<span class="i">x86</span>)<span class="o">/</span><span class="i">Graphviz2</span><span class="o">.</span><span class="n">38</span><span class="o">/</span><span class="i">bin</span><span class="o">/</span><span class="i">dot</span><span class="o">.</span><span class="i">exe&#39;</span> <span class="o">-</span><span class="i">Tpng</span> <span class="o">-</span><span class="i">o</span> <span class="o">.</span><span class="o">/</span><span class="i">graph</span><span class="o">.</span><span class="i">png</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">FAKE</span><span class="pn">.</span><span class="id">exe</span> <span class="id">build</span><span class="pn">.</span><span class="id">fsx</span> <span class="o">-</span><span class="id">dg</span> <span class="pn">|</span> <span class="o">&amp;</span> <span class="id">&#39;</span><span class="id">C</span><span class="pn">:</span><span class="o">/</span><span class="id">Program</span> <span class="id">Files</span> <span class="pn">(</span><span class="id">x86</span><span class="pn">)</span><span class="o">/</span><span class="id">Graphviz2</span><span class="pn">.</span><span class="n">38</span><span class="o">/</span><span class="id">bin</span><span class="o">/</span><span class="id">dot</span><span class="pn">.</span><span class="id">exe&#39;</span> <span class="o">-</span><span class="id">Tpng</span> <span class="o">-</span><span class="id">o</span> <span class="pn">.</span><span class="o">/</span><span class="id">graph</span><span class="pn">.</span><span class="id">png</span>
 </code></pre></td>
 </tr>
 </table>

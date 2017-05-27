@@ -35,7 +35,34 @@
       <hr />
       <div class="row">
         <div class="span9" id="main">
-          <h4>4.61.3 - 26.05.2017</h4>
+          <h4>5.0.0-alpha009 - 27.05.2017</h4>
+<ul>
+<li>Change fake group feature because of <a href="https://github.com/fsprojects/Paket/issues/2374">https://github.com/fsprojects/Paket/issues/2374</a></li>
+</ul>
+<h4>5.0.0-alpha008 - 27.05.2017</h4>
+<ul>
+<li>Add Fake.DotNet.FSFormatting module</li>
+<li>Add Fake.DotNet.Paket module</li>
+</ul>
+<h4>5.0.0-alpha007 - 26.05.2017</h4>
+<ul>
+<li>CopyDir <a href="https://github.com/matthid/FAKE/pull/4">https://github.com/matthid/FAKE/pull/4</a></li>
+<li>Allow to annotate paket groups (no header needed) <a href="https://github.com/matthid/FAKE/pull/7">https://github.com/matthid/FAKE/pull/7</a></li>
+</ul>
+<h4>5.0.0-alpha006 - 25.05.2017</h4>
+<ul>
+<li>
+DotnetCore Support, version 6 will only have the netcore version the old way of using FAKE is obsolete, but supported for now
+Migration guide is available in the documentation.
+</li>
+<li>Cleanup API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6</li>
+<li>New CLI interface - The netcore version has a new cleaned-up CLI interface</li>
+<li>No more 'build.sh' and 'build.cmd' files required (though you still can use them of you want a 'zero' dependency build)</li>
+<li>Chocolatey Helper now supports Self-Contained packages</li>
+<li>Fix NuGet key leak if push fails (<a href="https://github.com/matthid/FAKE/pull/2)">https://github.com/matthid/FAKE/pull/2)</a></li>
+<li>Coreclr nunit3 params (<a href="https://github.com/matthid/FAKE/pull/3)">https://github.com/matthid/FAKE/pull/3)</a></li>
+</ul>
+<h4>4.61.3 - 26.05.2017</h4>
 <ul>
 <li>Fix msbuild 15 resolution - fixes <a href="https://github.com/fsprojects/Paket/issues/2345">https://github.com/fsprojects/Paket/issues/2345</a></li>
 <li>Upgrade assembly binding redirect for FluentMigrator - <a href="https://github.com/fsharp/FAKE/pull/1558">https://github.com/fsharp/FAKE/pull/1558</a></li>

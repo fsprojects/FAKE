@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Automating Deployment using FAKE and Octopus Deploy</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p><a href="http://octopusdeploy.com/">Octopus Deploy</a> is a great tool for simple and user-friendly release management.</p>
 <h2>Installing Octopus Deploy</h2>
 <p>You can download the <a href="http://octopusdeploy.com/purchase">free community edition</a> of Octopus Deploy from <a href="http://octopusdeploy.com/downloads"><a href="http://octopusdeploy.com/downloads">http://octopusdeploy.com/downloads</a></a> - and then follow the <a href="http://octopusdeploy.com/documentation/install/octopus">Installation Instructions</a> to get yourself up and running.</p>
@@ -67,19 +68,19 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">OctoTools</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">OctoTools</span>
 
-<span class="i">Target</span> <span class="s">&quot;Release&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="k">let</span> <span class="i">release</span> <span class="o">=</span> { <span class="i">releaseOptions</span> <span class="k">with</span> <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;Order Processor&quot;</span> }
-	<span class="k">let</span> <span class="i">server</span> <span class="o">=</span> { <span class="i">Server</span> <span class="o">=</span> <span class="s">&quot;http://your-octopus-server/api&quot;</span>; <span class="i">ApiKey</span>   <span class="o">=</span> <span class="s">&quot;YOUR-CI-API-KEY-HERE&quot;</span> }
+<span class="id">Target</span> <span class="s">&quot;Release&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="k">let</span> <span class="id">release</span> <span class="o">=</span> <span class="pn">{</span> <span class="id">releaseOptions</span> <span class="k">with</span> <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Order Processor&quot;</span> <span class="pn">}</span>
+	<span class="k">let</span> <span class="id">server</span> <span class="o">=</span> <span class="pn">{</span> <span class="id">Server</span> <span class="o">=</span> <span class="s">&quot;http://your-octopus-server/api&quot;</span><span class="pn">;</span> <span class="id">ApiKey</span>   <span class="o">=</span> <span class="s">&quot;YOUR-CI-API-KEY-HERE&quot;</span> <span class="pn">}</span>
 
-	<span class="i">Octo</span> (<span class="k">fun</span> <span class="i">octoParams</span> <span class="k">-&gt;</span>
-		{ <span class="i">octoParams</span> <span class="k">with</span>
-			<span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;./packages/octopustools/tools&quot;</span>
-			<span class="i">Server</span>   <span class="o">=</span> <span class="i">server</span>
-			<span class="i">Command</span>  <span class="o">=</span> <span class="i">CreateRelease</span> (<span class="i">release</span>, <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">None</span>) }
-	)
-)
+	<span class="id">Octo</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">octoParams</span> <span class="k">-&gt;</span>
+		<span class="pn">{</span> <span class="id">octoParams</span> <span class="k">with</span>
+			<span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;./packages/octopustools/tools&quot;</span>
+			<span class="id">Server</span>   <span class="o">=</span> <span class="id">server</span>
+			<span class="id">Command</span>  <span class="o">=</span> <span class="id">CreateRelease</span> <span class="pn">(</span><span class="id">release</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span><span class="pn">)</span> <span class="pn">}</span>
+	<span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -102,20 +103,20 @@
 <span class="l">13: </span>
 <span class="l">14: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">OctoTools</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">OctoTools</span>
 
-<span class="i">Target</span> <span class="s">&quot;ReleaseAndDeploy&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="k">let</span> <span class="i">release</span> <span class="o">=</span> { <span class="i">releaseOptions</span> <span class="k">with</span> <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;Order Processor&quot;</span> }
-	<span class="k">let</span> <span class="i">deploy</span>  <span class="o">=</span> { <span class="i">deployOptions</span> <span class="k">with</span> <span class="i">DeployTo</span> <span class="o">=</span> <span class="s">&quot;TestEnvironment&quot;</span> }
-	<span class="k">let</span> <span class="i">server</span> <span class="o">=</span> { <span class="i">Server</span> <span class="o">=</span> <span class="s">&quot;http://your-octopus-server/api&quot;</span>; <span class="i">ApiKey</span>   <span class="o">=</span> <span class="s">&quot;YOUR-CI-API-KEY-HERE&quot;</span> }
+<span class="id">Target</span> <span class="s">&quot;ReleaseAndDeploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="k">let</span> <span class="id">release</span> <span class="o">=</span> <span class="pn">{</span> <span class="id">releaseOptions</span> <span class="k">with</span> <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Order Processor&quot;</span> <span class="pn">}</span>
+	<span class="k">let</span> <span class="id">deploy</span>  <span class="o">=</span> <span class="pn">{</span> <span class="id">deployOptions</span> <span class="k">with</span> <span class="id">DeployTo</span> <span class="o">=</span> <span class="s">&quot;TestEnvironment&quot;</span> <span class="pn">}</span>
+	<span class="k">let</span> <span class="id">server</span> <span class="o">=</span> <span class="pn">{</span> <span class="id">Server</span> <span class="o">=</span> <span class="s">&quot;http://your-octopus-server/api&quot;</span><span class="pn">;</span> <span class="id">ApiKey</span>   <span class="o">=</span> <span class="s">&quot;YOUR-CI-API-KEY-HERE&quot;</span> <span class="pn">}</span>
 
-	<span class="i">Octo</span> (<span class="k">fun</span> <span class="i">octoParams</span> <span class="k">-&gt;</span>
-		{ <span class="i">octoParams</span> <span class="k">with</span>
-			<span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;./packages/octopustools/tools&quot;</span>
-			<span class="i">Server</span>   <span class="o">=</span> <span class="i">server</span>
-			<span class="i">Command</span>  <span class="o">=</span> <span class="i">CreateRelease</span> (<span class="i">release</span>, <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Some</span> <span class="i">deploy</span>) }
-	)
-)
+	<span class="id">Octo</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">octoParams</span> <span class="k">-&gt;</span>
+		<span class="pn">{</span> <span class="id">octoParams</span> <span class="k">with</span>
+			<span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;./packages/octopustools/tools&quot;</span>
+			<span class="id">Server</span>   <span class="o">=</span> <span class="id">server</span>
+			<span class="id">Command</span>  <span class="o">=</span> <span class="id">CreateRelease</span> <span class="pn">(</span><span class="id">release</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Some</span> <span class="id">deploy</span><span class="pn">)</span> <span class="pn">}</span>
+	<span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -138,21 +139,21 @@
 <span class="l">14: </span>
 <span class="l">15: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">OctoTools</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">OctoTools</span>
 
-<span class="i">Target</span> <span class="s">&quot;PromoteRelease&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-	<span class="k">let</span> <span class="i">promote</span> <span class="o">=</span> { <span class="i">deployOptions</span> <span class="k">with</span> 
-                      <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;Order Processor&quot;</span>
-                      <span class="i">DeployTo</span> <span class="o">=</span> <span class="s">&quot;UatEnvironment&quot;</span> }
-	<span class="k">let</span> <span class="i">server</span> <span class="o">=</span> { <span class="i">Server</span> <span class="o">=</span> <span class="s">&quot;http://your-octopus-server/api&quot;</span>; <span class="i">ApiKey</span>   <span class="o">=</span> <span class="s">&quot;YOUR-CI-API-KEY-HERE&quot;</span> }
+<span class="id">Target</span> <span class="s">&quot;PromoteRelease&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+	<span class="k">let</span> <span class="id">promote</span> <span class="o">=</span> <span class="pn">{</span> <span class="id">deployOptions</span> <span class="k">with</span> 
+                      <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Order Processor&quot;</span>
+                      <span class="id">DeployTo</span> <span class="o">=</span> <span class="s">&quot;UatEnvironment&quot;</span> <span class="pn">}</span>
+	<span class="k">let</span> <span class="id">server</span> <span class="o">=</span> <span class="pn">{</span> <span class="id">Server</span> <span class="o">=</span> <span class="s">&quot;http://your-octopus-server/api&quot;</span><span class="pn">;</span> <span class="id">ApiKey</span>   <span class="o">=</span> <span class="s">&quot;YOUR-CI-API-KEY-HERE&quot;</span> <span class="pn">}</span>
 
-	<span class="i">Octo</span> (<span class="k">fun</span> <span class="i">octoParams</span> <span class="k">-&gt;</span>
-		{ <span class="i">octoParams</span> <span class="k">with</span>
-			<span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;./packages/octopustools/tools&quot;</span>
-			<span class="i">Server</span>   <span class="o">=</span> <span class="i">server</span>
-			<span class="i">Command</span>  <span class="o">=</span> <span class="i">DeployRelease</span> (<span class="i">promote</span>) }
-	)
-)
+	<span class="id">Octo</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">octoParams</span> <span class="k">-&gt;</span>
+		<span class="pn">{</span> <span class="id">octoParams</span> <span class="k">with</span>
+			<span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;./packages/octopustools/tools&quot;</span>
+			<span class="id">Server</span>   <span class="o">=</span> <span class="id">server</span>
+			<span class="id">Command</span>  <span class="o">=</span> <span class="id">DeployRelease</span> <span class="pn">(</span><span class="id">promote</span><span class="pn">)</span> <span class="pn">}</span>
+	<span class="pn">)</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>

@@ -73,15 +73,15 @@ say that target B has a soft dependency on target A:</p>
 <span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// *** Define Targets ***</span>
-<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-	<span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+	<span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Build&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-	<span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+	<span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Rebuild&quot;</span> <span class="i">DoNothing</span>
+<span class="id">Target</span> <span class="s">&quot;Rebuild&quot;</span> <span class="id">DoNothing</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Build&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Rebuild&quot;</span>

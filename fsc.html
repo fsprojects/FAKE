@@ -38,6 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Compiling F# Sources</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>The <a href="apidocs/fake-fschelper.html">Fsc task set</a> in FAKE can be used to build F# source files and output libraries, modules,
 and executables by using the bundled
 <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
@@ -63,24 +64,24 @@ In this tutorial we will look at these compile tasks.</p>
 <span class="l">17: </span>
 <span class="l">18: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;/path/to/FakeLib.dll&quot;</span>
-<span class="k">open</span> <span class="i">Fake</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;/path/to/FakeLib.dll&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span>
 
-<span class="i">Target</span> <span class="s">&quot;Otherthing.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    [<span class="s">&quot;Otherthing.fs&quot;</span>; <span class="s">&quot;Otherthing2.fs&quot;</span>]
-    <span class="o">|&gt;</span> <span class="i">FscHelper</span><span class="o">.</span><span class="i">compile</span> [
-        <span class="i">FscHelper</span><span class="o">.</span><span class="i">Target</span> <span class="i">FscHelper</span><span class="o">.</span><span class="i">TargetType</span><span class="o">.</span><span class="i">Library</span>
-    ]
-    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> () | <span class="i">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="i">c</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Otherthing.dll&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span><span class="s">&quot;Otherthing.fs&quot;</span><span class="pn">;</span> <span class="s">&quot;Otherthing2.fs&quot;</span><span class="pn">]</span>
+    <span class="o">|&gt;</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">[</span>
+        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Target</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">TargetType</span><span class="pn">.</span><span class="id">Library</span>
+    <span class="pn">]</span>
+    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> <span class="pn">(</span><span class="pn">)</span> <span class="pn">|</span> <span class="id">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="id">c</span>
+<span class="pn">)</span>
 
-<span class="i">Target</span> <span class="s">&quot;Main.exe&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    [<span class="s">&quot;Main.fs&quot;</span>]
-    <span class="o">|&gt;</span> <span class="i">FscHelper</span><span class="o">.</span><span class="i">compile</span> [
-        <span class="i">FscHelper</span><span class="o">.</span><span class="i">References</span> [<span class="s">&quot;Something.dll&quot;</span>; <span class="s">&quot;Otherthing.dll&quot;</span>]
-    ]
-    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> () | <span class="i">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="i">c</span>
-)
+<span class="id">Target</span> <span class="s">&quot;Main.exe&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span><span class="s">&quot;Main.fs&quot;</span><span class="pn">]</span>
+    <span class="o">|&gt;</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">[</span>
+        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">References</span> <span class="pn">[</span><span class="s">&quot;Something.dll&quot;</span><span class="pn">;</span> <span class="s">&quot;Otherthing.dll&quot;</span><span class="pn">]</span>
+    <span class="pn">]</span>
+    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> <span class="pn">(</span><span class="pn">)</span> <span class="pn">|</span> <span class="id">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="id">c</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -112,16 +113,16 @@ you want to use. All F# compiler parameters are available as <code>FscParam</cod
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Something.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    [<span class="s">&quot;Something.fs&quot;</span>]
-    <span class="o">|&gt;</span> <span class="i">FscHelper</span><span class="o">.</span><span class="i">compile</span> [
-        <span class="i">FscHelper</span><span class="o">.</span><span class="i">Out</span> <span class="s">&quot;Something.dll&quot;</span>
-        <span class="i">FscHelper</span><span class="o">.</span><span class="i">Target</span> <span class="i">FscHelper</span><span class="o">.</span><span class="i">TargetType</span><span class="o">.</span><span class="i">Library</span>
-        <span class="i">FscHelper</span><span class="o">.</span><span class="i">NoOptimizationData</span>
-        <span class="i">FscHelper</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="i">Checked</span> <span class="k">true</span>
-    ]
-    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> () | <span class="i">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="i">c</span>
-)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Something.dll&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span><span class="s">&quot;Something.fs&quot;</span><span class="pn">]</span>
+    <span class="o">|&gt;</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">[</span>
+        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Out</span> <span class="s">&quot;Something.dll&quot;</span>
+        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Target</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">TargetType</span><span class="pn">.</span><span class="id">Library</span>
+        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">NoOptimizationData</span>
+        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Checked</span> <span class="k">true</span>
+    <span class="pn">]</span>
+    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> <span class="pn">(</span><span class="pn">)</span> <span class="pn">|</span> <span class="id">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="id">c</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -149,7 +150,6 @@ to split the string on whitespace, and pass the resulting list into
 <code>FscHelper.compileFiles</code>.</p>
 
           <div class="tip" id="fs1">val failwithf : format:Printf.StringFormat&lt;&#39;T,&#39;Result&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.failwithf</div>
-<div class="tip" id="fs2">Multiple items<br />module Checked<br /><br />from Microsoft.FSharp.Core.ExtraTopLevelOperators<br /><br />--------------------<br />module Checked<br /><br />from Microsoft.FSharp.Core.Operators</div>
           
         </div>
         <div class="span3">

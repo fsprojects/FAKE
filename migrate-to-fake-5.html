@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- 
+      The The FAKE 5 Migration Guide
+ parameters will be replaced with the 
+      document title extracted from the <h1> element or
+      file name, if there is no <h1> heading
+    -->
+    <title>The FAKE 5 Migration Guide
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FAKE - F# Make">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="content/style.css" />
+    <script src="content/tips.js" type="text/javascript"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/fsharp/FAKE">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          <h1>The FAKE 5 Migration Guide</h1>
+<h2>Intro</h2>
+<p>In this tutorial you will learn how to migrate your existing build scripts to the new FAKE 5 dotnet-core version.</p>
+<p>First we want you to know that there are two version of FAKE 5. One is just an update to the regular FAKE 4, but contains the new netcore API.
+We will call this the "legacy FAKE version" it is just like the FAKE you are already used to. The second version is the "new/dotnetcore/standalone FAKE 5" or just "FAKE 5".
+This "new" version has several advantages:</p>
+<ul>
+<li>It can run without Mono or .Net installed</li>
+<li>It is extendible via paket</li>
+<li>Paket bootstrapper / build.cmd and build.sh are no longer required (you can still use them)</li>
+<li>This will be the only Version available in FAKE 6</li>
+</ul>
+<p>Therefore you have the FAKE 5 timeframe to update your build scripts to the new version.</p>
+<h2>Migration Guide</h2>
+<p>Upgrading to FAKE 5 is a multi step process and has various manual steps in between. Here are the steps:</p>
+<ul>
+<li>Regular update to FAKE 5. This should not be breaking. If it breaks you please open an issue.</li>
+<li>
+<p>Fix all the (obsolete) warnings in your build-script to use the new API (see the 'Use the new FAKE-API' section).
+This should still not break your build. If things break here or you have difficulties after reading the 'Use the new FAKE-API' section
+please open an issue.</p>
+</li>
+<li>
+<p>Change to the new version of FAKE 5.</p>
+<ul>
+<li>
+<p>This is for example done by installing FAKE as dependency on your build infrastructure.
+There are a variety of installing options available. (TODO: Link to 'installing FAKE' section)</p>
+</li>
+<li>
+<p>Add a FAKE header (TODO: add Link), and tell FAKE which features/packages you want to use in the dependencies file or in-line.
+See the 'Adding FAKE dependencies' section below.</p>
+</li>
+<li>
+<p>Run the build with the new version of FAKE :). You might want to read the 'CLI migration' section</p>
+<p>If things break in the last step please let us know as well.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>If you do these steps out of order it will be a lot harder for you to migrate the script successfully.</p>
+<h3>Use the new FAKE-API</h3>
+<p>The most important part to know is that basically every feature/function changes its location and sometimes they were even grouped in different modules
+as the old API was growing several years now and we never could do breaking changes.</p>
+<blockquote>
+<p>IMPORTANT NOTE: If you feel like an API is still in the wrong place. Please let us know and open an issue.
+We can make breaking changes as long as we are in the alpha/beta phase.
+IMPORTANT NODE: It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
+So things might break in the alpha phase. However this doesn't mean you should be afraid to use the new FAKE version.
+In fact due to the modular design we hopefully can make breaking changes a lot more often, without breaking your builds!
+So please try it out and if stuff breaks let us know :).
+The good thing is you can always "lock" the versions of the FAKE modules until you are ready to upgrade.</p>
+</blockquote>
+<p>After upgrading to legacy FAKE 5 the warnings should tell you exactly what you do. If there is stuff missing or a warning message should be improved let us know.
+Some warnings indicate how we want the new FAKE version to be used.</p>
+<p>The "open Fake" and AutoOpen modules are completely obsolete.
+We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
+This removes a lot of automatically opened stuff and if your build fails you ar probably stuff where we forgot to add the obsolete warning (let us know) or that
+stuff you are using was not migrated yet (let us know or send a PR, TODO: Add link to guideline).</p>
+<p>In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
+"ReadFile argument" (the module probably even opened via <code>[&lt;AutoOpen&gt;]</code>), which is considered bad style now.
+In the new world we would open the <code>Fake.IO.FileSystem</code> namespace to indicate that we are using the file-system.
+At the same time we would write <code>File.Read argument</code>, which is only a bit longer but now the IDE can help you a lot better and the code looks a lot more ideomatic and clean.</p>
+<blockquote>
+<p>If you still find places where we use the "bad" style in the new API, let us know (open an issue).</p>
+</blockquote>
+<h3>Add FAKE dependencies</h3>
+<p>All your dependencies no longer are bundled with the FAKE nuget package (or the FAKE distribution for that matter). This has some advantages:
+- You can extend the build with your own packages easily
+- You only pay what you use
+- You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).</p>
+<p>The drawback however is that you now need to know where stuff lives and add those packages to your build.</p>
+<p>Already a paket user?</p>
+<p>For now its quite simple: The namespace or module name is used as the package name, just search for the package and then
+add it to the dependencies file to a new group (for example netcorebuild).</p>
+<p>Not a paket user?</p>
+<p>We currently don't have any simple advice but to read the dependencies file docs and go to the 'Already a paket user?' section.</p>
+<p>Once you added all your dependencies to a particular new group (for example netcorebuild). You can add the following header to your build script</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket.dependencies</span>
+<span class="c">file ./paket.dependencies</span>
+<span class="c">group netcorebuild</span>
+<span class="c">-- Fake Dependencies -- *)</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Now you can install and run the netcore version of FAKE and it will restore and use the dependencies (you might need to do a <code>./paket update</code> before FAKE can properly restore the packages).</p>
+<h3>CLI Migration</h3>
+<p>Yes we even broke the CLI. The old CLI was actually a mixture of two different CLI styles, confused a lot of users and to be honest was an ugly hack.
+It was obvious that we would not even try to make things compatible with it in any way.
+However your changes should only be minimal in the most cases. I'd say in 80% its just about adding the <code>run</code> verb between the <code>fake.exe</code> and the build script.
+<code>fake build.fsx</code> will be <code>fake run build.fsx</code>. Running a particular target is as easy <code>fake target</code> will be <code>fake run build.fsx --target target</code>.
+For a full reference use <code>--help</code> or the documentation.</p>
+<p>If you used special cases which aren't mentioned here please edit this page or open an issue.</p>
+
+                    
+        </div>
+        <div class="span3">
+          <a href="index.html">
+            <img src="pics/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+              <li><a href="index.html">Home page</a></li>
+              <li class="divider"></li>              
+            <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
+              <li><a href="https://github.com/fsharp/FAKE">Source Code on GitHub</a></li>              
+              <li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License (Apache 2)</a></li>            
+              <li><a href="RELEASE_NOTES.html">Release Notes</a></li>
+              <li><a href="contributing.html">Contributing to FAKE</a></li>
+              <li><a href="users.html">Who is using FAKE?</a></li>
+              <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
+            <li class="nav-header">Tutorials</li>
+              <li><a href="gettingstarted.html">Getting started</a></li>
+              <li><a href="cache.html">Build script caching</a></li>
+              <li class="divider"></li>
+              <li><a href="nuget.html">NuGet package restore</a></li>
+              <li><a href="fxcop.html">Using FxCop in a build</a></li>
+              <li><a href="assemblyinfo.html">Generating AssemblyInfo</a></li>
+              <li><a href="create-nuget-package.html">Create NuGet packages</a></li>
+              <li><a href="specifictargets.html">Running specific targets</a></li>
+              <li><a href="commandline.html">Running FAKE from command line</a></li>
+              <li><a href="parallel-build.html">Running targets in parallel</a></li>
+              <li><a href="fsc.html">Using the F# compiler from FAKE</a></li>
+              <li><a href="customtasks.html">Creating custom tasks</a></li>
+              <li><a href="soft-dependencies.html">Soft dependencies</a></li>
+              <li><a href="teamcity.html">TeamCity integration</a></li>
+              <li><a href="canopy.html">Running canopy tests</a></li>
+              <li><a href="octopusdeploy.html">Octopus Deploy</a></li>
+              <li><a href="typescript.html">TypeScript support</a></li>
+              <li><a href="azurewebjobs.html">Azure WebJobs support</a></li>
+              <li><a href="azurecloudservices.html">Azure Cloud Services support</a></li>
+              <li><a href="dacpac.html">SQL DACPAC support</a></li>
+              <li><a href="fluentmigrator.html">FluentMigrator support</a></li>
+              <li><a href="androidpublisher.html">Android publisher</a></li>
+              <li><a href="watch.html">File Watcher</a></li>
+              <li><a href="wix.html">WiX Setup Generation</a></li>
+              <li><a href="chocolatey.html">Using Chocolatey</a></li>
+              <li><a href="slacknotification.html">Using Slack</a></li>
+              <li><a href="msteamsnotification.html">Using Microsoft Teams</a></li>
+              <li><a href="sonarcube.html">Using SonarQube</a></li>
+              <li class="divider"></li>
+              <li><a href="deploy.html">Fake.Deploy</a></li>
+              <li><a href="iis.html">Fake.IIS</a></li>
+              <li class="nav-header">Reference</li>
+              <li><a href="apidocs/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/fsharp/FAKE"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+  </body>
+</html>
