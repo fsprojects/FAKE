@@ -55,11 +55,11 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Windows.Chocolatey", "
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Tools.Git", "app\Fake.Tools.Git\Fake.Tools.Git.fsproj", "{E32B2631-476A-4C2D-AE18-275ED7A22F10}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.DotNet.FSFormatting", "app\Fake.DotNet.FSFormatting\Fake.DotNet.FSFormatting.fsproj", "{80314941-78D5-4928-B943-93FC945E050F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.DotNet.Paket", "app\Fake.DotNet.Paket\Fake.DotNet.Paket.fsproj", "{CDFB2B10-050A-4188-8F72-2BCC61E9814F}"
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.netcore", "app\Fake.netcore\Fake.netcore.fsproj", "{6B339DA3-8DED-4262-A427-3C4CCDD00650}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.FSFormatting", "app\Fake.DotNet.FSFormatting\Fake.DotNet.FSFormatting.fsproj", "{80314941-78D5-4928-B943-93FC945E050F}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Paket", "app\Fake.DotNet.Paket\Fake.DotNet.Paket.fsproj", "{CDFB2B10-050A-4188-8F72-2BCC61E9814F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
