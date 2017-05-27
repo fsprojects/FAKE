@@ -787,7 +787,7 @@ Target "DotnetCorePushNuGet" (fun _ ->
         if not <| System.String.IsNullOrEmpty apikey then
             ExecProcess (fun info ->
                 info.FileName <- nuget_exe
-                info.Arguments <- sprintf "push '%s' '%s' -Source '%s'" nugetpackage apikey nugetsource) (System.TimeSpan.FromMinutes 5.)
+                info.Arguments <- sprintf "push %s %s -Source %s" (toParam nugetpackage) (toParam apikey) (toParam nugetsource)) (System.TimeSpan.FromMinutes 5.)
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
 
     // dotnet pack
