@@ -269,7 +269,7 @@ Target "BuildSolution" (fun _ ->
 
 /// Specifies the fsformatting executable
 let mutable toolPath =
-    Tools.findToolInSubPath "fsformatting.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
+    findToolInSubPath "fsformatting.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
 let private run toolPath command = 
