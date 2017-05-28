@@ -384,9 +384,11 @@ Target "GenerateDocs" (fun _ ->
     let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
     CopyDir (docsDir) "help/content" allFiles
+    WriteStringToFile false "./docs/.nojekyll" ""
+    WriteStringToFile false "./docs/CNAME" "fake.build"
     //CopyDir (docsDir @@ "pics") "help/pics" allFiles
-    Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
 
+    Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
     CreateDocs (fun s ->
         { s with
             Source = source @@ "markdown"
@@ -424,7 +426,6 @@ Target "GenerateDocs" (fun _ ->
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" }) 
 
-    WriteStringToFile false "./docs/.nojekyll" ""
 )
 
 Target "CopyLicense" (fun _ ->
