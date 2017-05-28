@@ -948,7 +948,7 @@ Target "PublishNuget" (fun _ ->
 
 Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
-    cloneSingleBranch "" "https://github.com/matthid/FAKE.git" "gh-pages" "gh-pages"
+    cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
 
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"

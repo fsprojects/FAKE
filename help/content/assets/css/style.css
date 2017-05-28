@@ -112,6 +112,10 @@ hr {
   margin:0px 0px 20px 0px;
 }
 
+#content ul, #content ol {
+  list-style: disc;
+}
+
 /* Make table headings and td.title bold */
 td.title, thead {
   font-weight:bold;
