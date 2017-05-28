@@ -16,40 +16,96 @@ let mutable toolPath =
     Tools.findToolInSubPath "fsformatting.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
-let run command = 
+let private run toolPath command = 
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- toolPath
                 info.Arguments <- command) System.TimeSpan.MaxValue
     then failwithf "FSharp.Formatting %s failed." command
 
-let CreateDocs source outputDir template projectParameters = 
+type LiterateArguments =
+    { ToolPath : string
+      Source : string
+      OutputDirectory : string 
+      Template : string
+      ProjectParameters : (string * string) list
+      LayoutRoots : string list }
+
+let defaultLiterateArguments =
+    { ToolPath = toolPath
+      Source = ""
+      OutputDirectory = ""
+      Template = ""
+      ProjectParameters = []
+      LayoutRoots = [] }
+
+let CreateDocs p =
+    let arguments = (p:LiterateArguments->LiterateArguments) defaultLiterateArguments
+    let layoutroots =
+        if arguments.LayoutRoots.IsEmpty then []
+        else [ "--layoutRoots" ] @ arguments.LayoutRoots
+    let source = arguments.Source
+    let template = arguments.Template
+    let outputDir = arguments.OutputDirectory
+
     let command = 
-        projectParameters
+        arguments.ProjectParameters
         |> Seq.map (fun (k, v) -> [ k; v ])
         |> Seq.concat
         |> Seq.append 
-               ([ "literate"; "--processdirectory"; "--inputdirectory"; source; "--templatefile"; template; 
+               (["literate"; "--processdirectory" ] @ layoutroots @ [ "--inputdirectory"; source; "--templatefile"; template; 
                   "--outputDirectory"; outputDir; "--replacements" ])
         |> Seq.map (fun s -> 
                if s.StartsWith "\"" then s
                else sprintf "\"%s\"" s)
         |> separated " "
-    run command
+    run arguments.ToolPath command
     printfn "Successfully generated docs for %s" source
 
-let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo dllFiles = 
+type MetadataFormatArguments =
+    { ToolPath : string
+      Source : string
+      SourceRepository : string
+      OutputDirectory : string 
+      Template : string
+      ProjectParameters : (string * string) list
+      LayoutRoots : string list
+      LibDirs : string list }
+
+let defaultMetadataFormatArguments =
+    { ToolPath = toolPath
+      Source = Directory.GetCurrentDirectory()
+      SourceRepository = ""
+      OutputDirectory = ""
+      Template = ""
+      ProjectParameters = []
+      LayoutRoots = []
+      LibDirs = [] }
+
+let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
+    let arguments = p defaultMetadataFormatArguments
+    let outputDir = arguments.OutputDirectory
+    let projectParameters = arguments.ProjectParameters
+    let sourceRepo = arguments.SourceRepository
+    let libdirs = 
+        if arguments.LibDirs.IsEmpty then []
+        else [ "--libDirs" ] @ arguments.LibDirs
+
+    let layoutroots =
+        if arguments.LayoutRoots.IsEmpty then []
+        else [ "--layoutRoots" ] @ arguments.LayoutRoots
+
     for file in dllFiles do
         projectParameters
         |> Seq.map (fun (k, v) -> [ k; v ])
         |> Seq.concat
         |> Seq.append 
-                ([ "metadataformat"; "--generate"; "--outdir"; outputDir; "--layoutroots"; "./help/templates/"; 
-                    templatesDir; "--sourceRepo"; sourceRepo; "--sourceFolder"; Directory.GetCurrentDirectory(); "--parameters" ])
+                ([ "metadataformat"; "--generate"; "--outdir"; outputDir] @ layoutroots @ libdirs @ [ "--sourceRepo"; sourceRepo;
+                   "--sourceFolder"; arguments.Source; "--parameters" ])
         |> Seq.map (fun s -> 
                 if s.StartsWith "\"" then s
                 else sprintf "\"%s\"" s)
         |> separated " "
         |> fun prefix -> sprintf "%s --dllfiles \"%s\"" prefix file
-        |> run
+        |> run arguments.ToolPath
 
         printfn "Successfully generated docs for DLL %s" file

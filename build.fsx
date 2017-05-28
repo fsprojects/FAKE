@@ -80,7 +80,7 @@ open Fake.Testing.NUnit3
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
-let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
+let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
@@ -253,10 +253,124 @@ Target "BuildSolution" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
+// START _________________ MOVE TO Fake.DotNet.FSFormatting
+// START _________________ MOVE TO Fake.DotNet.FSFormatting
+// START _________________ MOVE TO Fake.DotNet.FSFormatting
+// START _________________ MOVE TO Fake.DotNet.FSFormatting
+// START _________________ MOVE TO Fake.DotNet.FSFormatting
+// START _________________ MOVE TO Fake.DotNet.FSFormatting
+
+/// Specifies the fsformatting executable
+let mutable toolPath =
+    Tools.findToolInSubPath "fsformatting.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
+
+/// Runs fsformatting.exe with the given command in the given repository directory.
+let private run toolPath command = 
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- toolPath
+                info.Arguments <- command) System.TimeSpan.MaxValue
+    then failwithf "FSharp.Formatting %s failed." command
+
+type LiterateArguments =
+    { ToolPath : string
+      Source : string
+      OutputDirectory : string 
+      Template : string
+      ProjectParameters : (string * string) list
+      LayoutRoots : string list }
+
+let defaultLiterateArguments =
+    { ToolPath = toolPath
+      Source = ""
+      OutputDirectory = ""
+      Template = ""
+      ProjectParameters = []
+      LayoutRoots = [] }
+
+let CreateDocs p =
+    let arguments = (p:LiterateArguments->LiterateArguments) defaultLiterateArguments
+    let layoutroots =
+        if arguments.LayoutRoots.IsEmpty then []
+        else [ "--layoutRoots" ] @ arguments.LayoutRoots
+    let source = arguments.Source
+    let template = arguments.Template
+    let outputDir = arguments.OutputDirectory
+
+    let command = 
+        arguments.ProjectParameters
+        |> Seq.map (fun (k, v) -> [ k; v ])
+        |> Seq.concat
+        |> Seq.append 
+               (["literate"; "--processdirectory" ] @ layoutroots @ [ "--inputdirectory"; source; "--templatefile"; template; 
+                  "--outputDirectory"; outputDir; "--replacements" ])
+        |> Seq.map (fun s -> 
+               if s.StartsWith "\"" then s
+               else sprintf "\"%s\"" s)
+        |> separated " "
+    run arguments.ToolPath command
+    printfn "Successfully generated docs for %s" source
+
+type MetadataFormatArguments =
+    { ToolPath : string
+      Source : string
+      SourceRepository : string
+      OutputDirectory : string 
+      Template : string
+      ProjectParameters : (string * string) list
+      LayoutRoots : string list
+      LibDirs : string list }
+
+let defaultMetadataFormatArguments =
+    { ToolPath = toolPath
+      Source = Directory.GetCurrentDirectory()
+      SourceRepository = ""
+      OutputDirectory = ""
+      Template = ""
+      ProjectParameters = []
+      LayoutRoots = []
+      LibDirs = [] }
+
+let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
+    let arguments = p defaultMetadataFormatArguments
+    let outputDir = arguments.OutputDirectory
+    let projectParameters = arguments.ProjectParameters
+    let sourceRepo = arguments.SourceRepository
+    let libdirs = 
+        if arguments.LibDirs.IsEmpty then []
+        else [ "--libDirs" ] @ arguments.LibDirs
+
+    let layoutroots =
+        if arguments.LayoutRoots.IsEmpty then []
+        else [ "--layoutRoots" ] @ arguments.LayoutRoots
+
+    for file in dllFiles do
+        projectParameters
+        |> Seq.map (fun (k, v) -> [ k; v ])
+        |> Seq.concat
+        |> Seq.append 
+                ([ "metadataformat"; "--generate"; "--outdir"; outputDir] @ layoutroots @ libdirs @ [ "--sourceRepo"; sourceRepo;
+                   "--sourceFolder"; arguments.Source; "--parameters" ])
+        |> Seq.map (fun s -> 
+                if s.StartsWith "\"" then s
+                else sprintf "\"%s\"" s)
+        |> separated " "
+        |> fun prefix -> sprintf "%s --dllfiles \"%s\"" prefix file
+        |> run arguments.ToolPath
+
+        printfn "Successfully generated docs for DLL %s" file
+
+// END _________________ MOVE TO Fake.DotNet.FSFormatting
+// END _________________ MOVE TO Fake.DotNet.FSFormatting
+// END _________________ MOVE TO Fake.DotNet.FSFormatting
+// END _________________ MOVE TO Fake.DotNet.FSFormatting
+// END _________________ MOVE TO Fake.DotNet.FSFormatting
+// END _________________ MOVE TO Fake.DotNet.FSFormatting
+
+
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
-    let template = "./help/literate/templates/template-project.html"
-    let templatesDir = "./help/templates/reference/"
+    let docsTemplate = "docpage.cshtml"
+    let indexTemplate = "indexpage.cshtml"
     let githubLink = "https://github.com/fsharp/FAKE"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
@@ -267,10 +381,27 @@ Target "GenerateDocs" (fun _ ->
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
         "project-name", "FAKE - F# Make" ]
+    let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
-    Copy source ["RELEASE_NOTES.md"]
+    CopyDir (docsDir) "help/content" allFiles
+    //CopyDir (docsDir @@ "pics") "help/pics" allFiles
+    Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
 
-    CreateDocs source docsDir template projInfo
+    CreateDocs (fun s ->
+        { s with
+            Source = source @@ "markdown"
+            OutputDirectory = docsDir
+            Template = docsTemplate
+            ProjectParameters = ("CurrentPage", "Modules") :: projInfo
+            LayoutRoots = layoutroots })
+    CreateDocs (fun s ->
+        { s with
+            Source = source @@ "startpage"
+            OutputDirectory = docsDir
+            Template = indexTemplate
+            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+            ProjectParameters = ("CurrentPage", "Home") :: projInfo
+            LayoutRoots = layoutroots })
 
     let dllFiles =
         !! "./build/**/Fake.*.dll"
@@ -282,12 +413,18 @@ Target "GenerateDocs" (fun _ ->
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
-    CreateDocsForDlls apidocsDir templatesDir (projInfo @ ["--libDirs", "./build"]) (githubLink + "/blob/master") dllFiles
+    ensureDirectory apidocsDir
+    dllFiles
+    |> CreateDocsForDlls (fun s -> 
+        { s with 
+            OutputDirectory = apidocsDir
+            LayoutRoots = layoutroots 
+            LibDirs = [ "./build" ]
+            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            SourceRepository = githubLink + "/blob/master" }) 
 
     WriteStringToFile false "./docs/.nojekyll" ""
-
-    CopyDir (docsDir @@ "content") "help/content" allFiles
-    CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
 Target "CopyLicense" (fun _ ->
@@ -811,7 +948,7 @@ Target "PublishNuget" (fun _ ->
 
 Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
-    cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
+    cloneSingleBranch "" "https://github.com/matthid/FAKE.git" "gh-pages" "gh-pages"
 
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"

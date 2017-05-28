@@ -1,10 +1,10 @@
 ﻿@{
   Layout = "template";
-  Title = Properties["page-title"];
   //Description = Properties["project-summary"];
   
   // Properties["current-page"] = "APIReference";
   ViewBag.CurrentPage = "APIReference";
+  ViewBag.PathPrefix = "../";
 }
 
 					<div class="wrapper style2">
@@ -14,8 +14,7 @@
 
 									<!-- Content -->
                       <article>
-@Properties["document"]
-@Properties["tooltips"]
+          			@RenderBody()
                       </article>
 								</div>
 							</div>

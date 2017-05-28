@@ -60,7 +60,7 @@ tools/SourceLink.Fake
 
 release.cmd
 Samples/typescript/out/
-help/RELEASE_NOTES.md
+help/markdown/RELEASE_NOTES.md
 paket.exe
 paket-files/
 
