@@ -1,0 +1,457 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Deployment using FAKE
+</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li ><a href="index.html">Home</a></li>
+												<li >
+													<a href="fake-what-is-fake.html">Tutorials</a>
+													<ul>
+														<li><a href="fake-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="fake-cache.html">Build script caching</a></li>
+														<li><a href="fake-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+														<li><a href="fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+													<a href="fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="404.html">Core</a>
+															<ul>
+																<li><a href="404.html">Targets</a></li>
+																<li><a href="404.html">Globbing</a></li>
+																<li><a href="404.html">Environment</a></li>
+																<li><a href="404.html">Process</a></li>
+																<li><a href="404.html">String</a></li>
+																<li><a href="404.html">BuildServer</a></li>
+																<li><a href="404.html">Tracing</a></li>
+																<li><a href="404.html">Context</a></li>
+																<li><a href="404.html">Xml</a></li>
+																<li><a href="404.html">Tasks</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">IO</a>
+															<ul>
+																<li><a href="404.html">FileSystem</a></li>
+																<li><a href="404.html">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">DotNet</a>
+															<ul>
+																<li><a href="404.html">Cli</a></li>
+																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="404.html">MsBuild</a></li>
+																<li><a href="404.html">Testing - NUnit</a></li>
+																<li><a href="404.html">Testing - MSpec</a></li>
+																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-nuget.html">NuGet</a></li>
+																<li><a href="404.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Tools</a>
+															<ul>
+																<li><a href="404.html">Git</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Windows</a>
+															<ul>
+																<li><a href="windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
+																<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
+																<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
+																<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
+																<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
+																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
+																<li><a href="todo-wix.html">Windows.WiX</a></li>
+																<li><a href="todo-slacknotification.html">API.Slack</a></li>
+																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
+																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="todo-iis.html">?.?.IIS</a></li>
+																<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
+																<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li ><a href="apidocs/index.html">API Reference</a></li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+
+									<!-- Content -->
+                      <article>
+<h1>Deployment using FAKE</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
+<p>This introduction assumes Fake.Deploy.exe is available in the current directory or path.</p>
+<h2>Introduction</h2>
+<p>The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows:</p>
+<ul>
+<li>Build an application -&gt; run tests -&gt; create artifacts and save on build server (Classical FAKE build workflow)</li>
+<li>Extract artifacts from build server and create a NuGet deployment package</li>
+<li>Push the NuGet package to the desired computer this will run the package's FAKE script on the remote machine</li>
+</ul>
+<h2>Installing Fake deployment services</h2>
+<p>In order to deploy application to a remote computer a deployment agent needs to be running on that server.</p>
+<p>The simplest way to install the agent on a remote server is to use the <a href="http://docs.nuget.org/consume/installing-nuget">Nuget command line tool</a> to download the FAKE nuget and extract the binaries into a <em>fake/tools</em> subfolder.  Once  <em>nuget.exe</em> is available on the path, use the following command in a command shell:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="batchfile">nuGet.exe Install FAKE -ExcludeVersion
+</code></pre></td></tr></table>
+<p>Adding the <em>.../fake/tools</em> folder to the path will simplify executing the Fake.Deploy.exe.</p>
+<p>To run an agent in a console, simply run:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Fake</span><span class="pn">.</span><span class="id">Deploy</span>
+</code></pre></td>
+</tr>
+</table>
+<p>To install a windows service on that agent:</p>
+<ul>
+<li>Open a command prompt with Administrator Privilege</li>
+<li>Run Fake.Deploy /install</li>
+</ul>
+<p>By default the service starts a listener on port 8080. This can however be configured by editing the Fake.Deploy.exe.config file
+and changing</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">&lt;</span><span class="id">add</span> <span class="id">key</span><span class="o">=</span><span class="s">&quot;ServerName&quot;</span> <span class="id">value</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span> <span class="o">/&gt;</span>
+<span class="pn">&lt;</span><span class="id">add</span> <span class="id">key</span><span class="o">=</span><span class="s">&quot;Port&quot;</span> <span class="id">value</span><span class="o">=</span><span class="s">&quot;8080&quot;</span> <span class="o">/&gt;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>to the desired value. If you use the asterisk as port no. then Fake.Deploy will assign the first open port behind of 8080.</p>
+<p>To ensure the service is running you can navigate to <a href="http://{computer}:{port}/fake/">http://{computer}:{port}/fake/</a> and you should be presented with a page giving the
+status if the service</p>
+<h2>Uninstalling Fake deployment services</h2>
+<p>To uninstall an agent</p>
+<ul>
+<li>Open a command prompt with Administrator Privilege</li>
+<li>Run Fake.Deploy /uninstall</li>
+</ul>
+<h2>Running a FAKE Deployment Package</h2>
+<h2>Getting help</h2>
+<p>If you want to learn about Fake.Deploy's command line switches then run:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Fake</span><span class="pn">.</span><span class="id">Deploy</span> <span class="o">/</span><span class="id">help</span>
+</code></pre></td>
+</tr>
+</table>
+<h2>Creating a Deployment package</h2>
+<p>Since Fake.Deploy uses Nuget packages for deployment you only need to create one of those and include a .fsx file in the root folder of the package.</p>
+<p>Instructions for creating nuget packages can be found <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package">at the NuGet document page</a></p>
+<h2>Running deployment</h2>
+<p>Fake deployment packages can be run manually on the current machine or they can be pushed to an agent on a remote machine.</p>
+<p>To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Fake</span><span class="pn">.</span><span class="id">Deploy</span> <span class="o">/</span><span class="id">deploy</span> <span class="id">C</span><span class="pn">:</span><span class="o">/</span><span class="id">Appdev</span><span class="o">/</span><span class="id">MyDeployment</span><span class="pn">.</span><span class="id">nupkg</span>
+</code></pre></td>
+</tr>
+</table>
+<p>To run the same package on a remote computer (e.g. integration-1) you can run:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Fake</span><span class="pn">.</span><span class="id">Deploy</span> <span class="o">/</span><span class="id">deployRemote</span> <span class="id">http</span><span class="pn">:</span><span class="c">//integration-1:8080/fake C:/Appdev/MyDeployment.nupkg</span>
+</code></pre></td>
+</tr>
+</table>
+<p>It's also possible to just make a HTTP-POST with the package to <a href="http://integration-1:8080/fake">http://integration-1:8080/fake</a></p>
+<p>This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the
+listening agent (see. Installing Fake deployment service)</p>
+<h2>Getting information about the deployments</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">The</span> <span class="id">following</span> <span class="id">assumes</span> <span class="id">you</span> <span class="id">have</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Deploy</span> <span class="id">running</span><span class="pn">.</span>
+</code></pre></td>
+</tr>
+</table>
+<p>It's easy to get information about the deployments. Just make a HTTP request to server with:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">fake</span><span class="o">/</span><span class="id">deployments</span><span class="o">/</span>                     <span class="k">-&gt;</span> <span class="id">gives</span> <span class="id">all</span> <span class="id">releases</span>
+<span class="id">fake</span><span class="o">/</span><span class="id">deployments</span><span class="o">?</span><span class="id">status</span><span class="o">=</span><span class="id">active</span>        <span class="k">-&gt;</span> <span class="id">gives</span> <span class="id">all</span> <span class="id">active</span> <span class="id">releases</span>
+<span class="id">fake</span><span class="o">/</span><span class="id">deployments</span><span class="o">/</span><span class="pn">{</span><span class="id">app</span><span class="pn">}</span>                <span class="k">-&gt;</span> <span class="id">gives</span> <span class="id">all</span> <span class="id">releases</span> <span class="k">of</span> <span class="id">app</span>
+<span class="id">fake</span><span class="o">/</span><span class="id">deployments</span><span class="o">/</span><span class="pn">{</span><span class="id">app</span><span class="pn">}</span><span class="o">?</span><span class="id">status</span><span class="o">=</span><span class="id">active</span>  <span class="k">-&gt;</span> <span class="id">gives</span> <span class="id">the</span> <span class="id">active</span> <span class="id">release</span> <span class="k">of</span> <span class="id">the</span> <span class="id">app</span>
+</code></pre></td>
+</tr>
+</table>
+<h2>Rollback of releases</h2>
+<p>If you want to perform a rollback of a release so do a HTTP-PUT to:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">fake</span><span class="o">/</span><span class="id">deployments</span><span class="o">/</span><span class="pn">{</span><span class="id">app</span><span class="pn">}</span><span class="o">?</span><span class="id">version</span><span class="o">=</span><span class="pn">{</span><span class="id">version</span><span class="pn">}</span> <span class="k">-&gt;</span> <span class="id">rolls</span> <span class="id">the</span> <span class="id">app</span> <span class="id">back</span> <span class="k">to</span> <span class="id">the</span> <span class="id">given</span> <span class="id">version</span>
+<span class="id">fake</span><span class="o">/</span><span class="id">deployments</span><span class="o">/</span><span class="pn">{</span><span class="id">app</span><span class="pn">}</span><span class="o">?</span><span class="id">version</span><span class="o">=</span><span class="id">HEAD</span><span class="k">~</span><span class="n">2</span>    <span class="k">-&gt;</span> <span class="id">relative</span> <span class="id">rollback</span> <span class="k">of</span> <span class="id">the</span> <span class="id">app</span> <span class="pn">(</span><span class="id">two</span> <span class="id">versions</span> <span class="id">earlier</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<h2>Security</h2>
+<p>To turn on authentication in Fake.Deploy set the configuration value for 'Authorization' to 'On' (default is 'Off') in fake.deploy.config.
+When you set this value to 'On' you must also set the configuration key 'AuthorizedKeysFile' to point to a file that that contains the mapping between keys and usernames.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">&lt;</span><span class="id">add</span> <span class="id">key</span><span class="o">=</span><span class="s">&quot;Authorization&quot;</span> <span class="id">value</span><span class="o">=</span><span class="s">&quot;On&quot;</span> <span class="o">/&gt;</span>
+<span class="pn">&lt;</span><span class="id">add</span> <span class="id">key</span><span class="o">=</span><span class="s">&quot;AuthorizedKeysFile&quot;</span> <span class="id">value</span><span class="o">=</span><span class="s">&quot;c:\fake_deploy\authorized_keys&quot;</span> <span class="o">/&gt;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>If you deploy from a fake buildscript you need to make a call to <code>FakeDeployAgentHelper.authenticate</code> before you perfrom any other call to the agent.
+<code>authenticate</code> takes 4 parameters, <code>server</code>, <code>userId</code>, <code>pathToPrivateKey</code> and the <code>password</code> for the private key</p>
+<h3>AuthorizedKeysFile</h3>
+<p>Is a rsa-pub key file where each line represents one user.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">ssh</span><span class="o">-</span><span class="id">rsa</span> <span class="id">AAAAB3NzaC1yc2EAAAABJ_some_parts_removed_E91p</span><span class="o">+</span><span class="n">8JLFCaF3tLc8Aw</span><span class="o">==</span> <span class="id">Test</span><span class="id">@</span><span class="id">Fake</span><span class="pn">.</span><span class="id">org</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Each row has 3 values separated by space</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">*</span> <span class="id">which</span> <span class="k">type</span> <span class="k">of</span> <span class="id">key</span> <span class="id">it</span> <span class="id">is</span><span class="pn">,</span> <span class="id">it</span> <span class="id">must</span> <span class="id">be</span> <span class="id">&#39;</span><span class="id">ssh</span><span class="o">-</span><span class="id">rsa&#39;</span>
+<span class="pn">*</span> <span class="k">public</span> <span class="id">key</span> <span class="k">in</span> <span class="id">base64</span> <span class="id">format</span>
+<span class="pn">*</span> <span class="id">username</span> <span class="id">the</span> <span class="id">key</span> <span class="id">maps</span> <span class="k">to</span><span class="pn">.</span>
+</code></pre></td>
+</tr>
+</table>
+<h3>How to authorize against Fake.Deploy</h3>
+<p>First you must perform a HTTP-GET to:
+fake/login/yourUserId</p>
+<p>From the response from this request, you take the body and base64 decode it, then you sign that value with your private key.
+Then you submit a HTTP-POST to
+/fake/login.
+There are 2 values you need to supply in the HTTP-POST.</p>
+<ol>
+<li><code>challenge</code> which should have the same base64 encoded value you received in the body of get fake/login/userId.</li>
+<li><code>signature</code> which should contain the signature you created using the <code>challenge</code> value and your private key.</li>
+</ol>
+<p>The body of the response from the HTTP-POST contains a guid, this guid should be passed in the header with the name <code>AuthToken</code>.
+To logout make a HTTP-GET to:
+fake/logout</p>
+<h3>How do I generate a key on Windows?</h3>
+<p>Get <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTYgen</a>.
+Run it.
+Make sure the key is 'SSH-2 RSA' and number of bits is (at least) 2048.
+Click <code>Generate</code> and follow the instructions to genereate the key.
+When the key is generated, change <code>Key comment</code> to be your username and set a passphrase.
+Then save the public key, you need to put this into Fake.Deploy's authorized keys file.
+To save the private key, click <code>Conversions</code> menu option and then click <code>Export OpenSSH key</code></p>
+<h3>Linux</h3>
+<p>ssh-keygen -t rsa -b 2048 -N password</p>
+
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="404.html">Quickstart</a></li>
+											<li><a href="404.html">Installation</a></li>
+											<li><a href="404.html">Modules</a></li>
+											<li><a href="404.html">FAKE Header</a></li>
+											<li><a href="404.html">Git</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="404.html">Paket</a></li>
+											<li><a href="404.html">FSharp Formatting</a></li>
+											<li><a href="404.html">F#</a></li>
+											<li><a href="404.html">Ionide</a></li>
+											<li><a href="404.html">Forge</a></li>
+											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links -->
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="404.html">Tutorial 1</a></li>
+											<li><a href="404.html">Tutorial 2</a></li>
+											<li><a href="404.html">Tutorial 3</a></li>
+											<li><a href="404.html">Tutorial 4</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

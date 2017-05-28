@@ -1,38 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>MarkdownString - FAKE - F# Make</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+<!DOCTYPE HTML>
 
-    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+<html>
+	<head>
+		<title>MarkdownString - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="../assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="../assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
 
-    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
-    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="container">
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="http://fsharp.org">fsharp.org</a></li>
-          <li><a href="http://github.com/fsharp/fake">github page</a></li>
-        </ul>
-        <h3 class="muted"><a href="http://fsharp.github.io/FAKE/index.html">FAKE - F# Make</a></h3>
-      </div>
-      <hr />
-      <div class="row">
-        <div class="span9" id="main">
-          
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="../index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li ><a href="../index.html">Home</a></li>
+												<li >
+													<a href="../fake-what-is-fake.html">Tutorials</a>
+													<ul>
+														<li><a href="../fake-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="../fake-cache.html">Build script caching</a></li>
+														<li><a href="../fake-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="../fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+														<li><a href="../fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="../fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="../help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="../RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="../contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="../fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="../404.html">Core</a>
+															<ul>
+																<li><a href="../404.html">Targets</a></li>
+																<li><a href="../404.html">Globbing</a></li>
+																<li><a href="../404.html">Environment</a></li>
+																<li><a href="../404.html">Process</a></li>
+																<li><a href="../404.html">String</a></li>
+																<li><a href="../404.html">BuildServer</a></li>
+																<li><a href="../404.html">Tracing</a></li>
+																<li><a href="../404.html">Context</a></li>
+																<li><a href="../404.html">Xml</a></li>
+																<li><a href="../404.html">Tasks</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../404.html">IO</a>
+															<ul>
+																<li><a href="../404.html">FileSystem</a></li>
+																<li><a href="../404.html">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../404.html">DotNet</a>
+															<ul>
+																<li><a href="../404.html">Cli</a></li>
+																<li><a href="../dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="../404.html">MsBuild</a></li>
+																<li><a href="../404.html">Testing - NUnit</a></li>
+																<li><a href="../404.html">Testing - MSpec</a></li>
+																<li><a href="../404.html">Testing - XUnit2</a></li>
+																<li><a href="../dotnet-nuget.html">NuGet</a></li>
+																<li><a href="../404.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../404.html">Tools</a>
+															<ul>
+																<li><a href="../404.html">Git</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../404.html">Windows</a>
+															<ul>
+																<li><a href="../windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../404.html">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="../todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="../todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="../todo-teamcity.html">BuildServer.TeamCity</a></li>
+																<li><a href="../todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
+																<li><a href="../todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="../todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="../todo-typescript.html">JavaScript?.TypeScript</a></li>
+																<li><a href="../todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
+																<li><a href="../todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
+																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="../todo-watch.html">IO.FileWatcher</a></li>
+																<li><a href="../todo-wix.html">Windows.WiX</a></li>
+																<li><a href="../todo-slacknotification.html">API.Slack</a></li>
+																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="../todo-sonarcube.html">Testing.SonarQube</a></li>
+																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="../todo-iis.html">?.?.IIS</a></li>
+																<li><a href="../todo-dacpac.html">?.?.DacPac</a></li>
+																<li><a href="../todo-vagrant.html">?.?.Vagrant</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item"><a href="../apidocs/index.html">API Reference</a></li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+
+									<!-- Content -->
+                      <article>
+          			
 
 
 
@@ -78,66 +203,132 @@
     </tbody>
   </table>
 
-        </div>
-        <div class="span3">
-          <a href="http://fsharp.github.io/FAKE/index.html">
-            <img src="http://fsharp.github.io/FAKE/pics/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
-          </a>
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
 
-          <ul class="nav nav-list" id="menu">
+				</div>
 
-            <li class="nav-header">FAKE - F# Make</li>
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
 
-            <li class="divider"></li>
-            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
-            <li class="divider"></li>
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="../404.html">Quickstart</a></li>
+											<li><a href="../404.html">Installation</a></li>
+											<li><a href="../404.html">Modules</a></li>
+											<li><a href="../404.html">FAKE Header</a></li>
+											<li><a href="../404.html">Git</a></li>
+										</ul>
+									</section>
 
-            <li><a href="https://www.nuget.org/packages/FAKE">Get FAKE - F# Make via NuGet</a></li>
-            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-            <li><a href="http://github.com/fsharp/fake/blob/master/License.txt">License (Apache 2)</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/RELEASE_NOTES.html">Release Notes</a></li>
-            <li><a href="http://fsharp.github.io/FAKE//contributing.html">Contributing to FAKE - F# Make</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/users.html">Who is using FAKE?</a></li>
-            <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-            <li class="nav-header">Tutorials</li>
-            <li><a href="http://fsharp.github.io/FAKE/gettingstarted.html">Getting started</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/cache.html">Build script caching</a></li>
-            <li class="divider"></li>
-            <li><a href="http://fsharp.github.io/FAKE/nuget.html">NuGet package restore</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/fxcop.html">Using FxCop in a build</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/assemblyinfo.html">Generating AssemblyInfo</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/create-nuget-package.html">Create NuGet packages</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/specifictargets.html">Running specific targets</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/commandline.html">Running FAKE from command line</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/parallel-build.html">Running targets in parallel</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/fsc.html">Using the F# compiler from FAKE</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/customtasks.html">Creating custom tasks</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/soft-dependencies.html">Soft dependencies</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/teamcity.html">TeamCity integration</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/teamcityadvanced.html">TeamCity integration (Advanced)</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/canopy.html">Running canopy tests</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/octopusdeploy.html">Octopus Deploy</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/typescript.html">TypeScript support</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/azurewebjobs.html">Azure WebJobs support</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/azurecloudservices.html">Azure Cloud Services support</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/fluentmigrator.html">FluentMigrator support</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/androidpublisher.html">Android publisher</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/watch.html">File Watcher</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/msteamsnotification.html">Using Microsoft Teams</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
-            <li class="divider"></li>
-            <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
-            <li><a href="http://fsharp.github.io/FAKE/iis.html">Fake.IIS</a></li>
-            <li class="nav-header">Reference</li>
+							</div>
+							<div class="3u 12u(mobile)">
 
-            <li><a href="http://fsharp.github.io/FAKE/apidocs/index.html">API Reference</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-  </body>
-  </html>
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="../404.html">Paket</a></li>
+											<li><a href="../404.html">FSharp Formatting</a></li>
+											<li><a href="../404.html">F#</a></li>
+											<li><a href="../404.html">Ionide</a></li>
+											<li><a href="../404.html">Forge</a></li>
+											<li><a href="../404.html">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links -->
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="../404.html">Tutorial 1</a></li>
+											<li><a href="../404.html">Tutorial 2</a></li>
+											<li><a href="../404.html">Tutorial 3</a></li>
+											<li><a href="../404.html">Tutorial 4</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="../contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="../assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/skel-viewport.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

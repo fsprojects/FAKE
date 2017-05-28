@@ -1,0 +1,493 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Using Chocolatey
+</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li ><a href="index.html">Home</a></li>
+												<li >
+													<a href="fake-what-is-fake.html">Tutorials</a>
+													<ul>
+														<li><a href="fake-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="fake-cache.html">Build script caching</a></li>
+														<li><a href="fake-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+														<li><a href="fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+													<a href="fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="404.html">Core</a>
+															<ul>
+																<li><a href="404.html">Targets</a></li>
+																<li><a href="404.html">Globbing</a></li>
+																<li><a href="404.html">Environment</a></li>
+																<li><a href="404.html">Process</a></li>
+																<li><a href="404.html">String</a></li>
+																<li><a href="404.html">BuildServer</a></li>
+																<li><a href="404.html">Tracing</a></li>
+																<li><a href="404.html">Context</a></li>
+																<li><a href="404.html">Xml</a></li>
+																<li><a href="404.html">Tasks</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">IO</a>
+															<ul>
+																<li><a href="404.html">FileSystem</a></li>
+																<li><a href="404.html">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">DotNet</a>
+															<ul>
+																<li><a href="404.html">Cli</a></li>
+																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="404.html">MsBuild</a></li>
+																<li><a href="404.html">Testing - NUnit</a></li>
+																<li><a href="404.html">Testing - MSpec</a></li>
+																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-nuget.html">NuGet</a></li>
+																<li><a href="404.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Tools</a>
+															<ul>
+																<li><a href="404.html">Git</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Windows</a>
+															<ul>
+																<li><a href="windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
+																<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
+																<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
+																<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
+																<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
+																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
+																<li><a href="todo-wix.html">Windows.WiX</a></li>
+																<li><a href="todo-slacknotification.html">API.Slack</a></li>
+																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
+																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="todo-iis.html">?.?.IIS</a></li>
+																<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
+																<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li ><a href="apidocs/index.html">API Reference</a></li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+
+									<!-- Content -->
+                      <article>
+<h1>Using Chocolatey</h1>
+<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
+<h2>Install</h2>
+<p>The <a href="apidocs/fake-choco.html"><code>Install</code></a> method allow to easily install packages from <a href="https://chocolatey.org">Chocolatey</a>.<br />
+By default all user interaction are skipped but it can be modified through the <code>NonInteractive</code> property.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;BuildApp&quot;</span> <span class="o">=?&gt;</span> <span class="pn">(</span><span class="s">&quot;InspectCodeAnalysis&quot;</span><span class="pn">,</span> <span class="id">Choco</span><span class="pn">.</span><span class="id">IsAvailable</span><span class="pn">)</span>
+
+<span class="id">Target</span> <span class="s">&quot;InspectCodeAnalysis&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="s">&quot;resharper-clt.portable&quot;</span> <span class="o">|&gt;</span> <span class="id">Choco</span><span class="pn">.</span><span class="id">Install</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">id</span>
+    <span class="o">..</span><span class="pn">.</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<h2>Pack</h2>
+<p>The <a href="apidocs/fake-choco.html"><code>Pack</code></a> and <a href="apidocs/fake-choco.html"><code>PackFromTemplate</code></a> methods allow to pack a .nuspec, chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 file to a package (.nupkg).
+It is based on <a href="create-nuget-package.html"><code>NuGet</code></a> but have some specifics, the package can be base on templates for the .nuspec, the chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 but it's not mandatory.
+It is also possible to only defines the fields in ChocoPackParams and the corresponding files will be created.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;ChocoPack&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Choco</span><span class="pn">.</span><span class="id">Pack</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> 
+        <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+            <span class="id">PackageId</span> <span class="o">=</span> <span class="s">&quot;nvika&quot;</span>
+            <span class="id">Version</span> <span class="o">=</span> <span class="id">version</span>
+            <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;NVika&quot;</span>
+            <span class="id">Authors</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;laedit&quot;</span><span class="pn">]</span>
+            <span class="id">Owners</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;laedit&quot;</span><span class="pn">]</span>
+            <span class="id">ProjectUrl</span> <span class="o">=</span> <span class="s">&quot;https://github.com/laedit/vika&quot;</span>
+            <span class="id">IconUrl</span> <span class="o">=</span> <span class="s">&quot;https://cdn.rawgit.com/laedit/vika/master/icon.png&quot;</span>
+            <span class="id">LicenseUrl</span> <span class="o">=</span> <span class="s">&quot;https://github.com/laedit/vika/blob/master/LICENSE&quot;</span>
+            <span class="id">BugTrackerUrl</span> <span class="o">=</span> <span class="s">&quot;https://github.com/laedit/vika/issues&quot;</span>
+            <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Parse analysis reports (InspectCode, ...) and send messages to build server or console.&quot;</span>
+            <span class="id">Tags</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;report&quot;</span><span class="pn">;</span> <span class="s">&quot;parsing&quot;</span><span class="pn">;</span> <span class="s">&quot;build&quot;</span><span class="pn">;</span> <span class="s">&quot;server&quot;</span><span class="pn">;</span> <span class="s">&quot;inspectcode&quot;</span><span class="pn">]</span>
+            <span class="id">ReleaseNotes</span> <span class="o">=</span> <span class="s">&quot;https://github.com/laedit/vika/releases&quot;</span>
+            <span class="id">PackageDownloadUrl</span> <span class="o">=</span> <span class="s">&quot;https://github.com/laedit/vika/releases/download/&quot;</span> <span class="o">+</span> <span class="id">tag</span> <span class="o">+</span> <span class="s">&quot;/NVika.&quot;</span> <span class="o">+</span> <span class="id">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span>
+            <span class="id">Checksum</span> <span class="o">=</span> <span class="id">Checksum</span><span class="pn">.</span><span class="id">CalculateFileHash</span> <span class="pn">(</span><span class="s">&quot;NVika.&quot;</span> <span class="o">+</span> <span class="id">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span><span class="pn">)</span>
+            <span class="id">ChecksumType</span> <span class="o">=</span> <span class="id">Choco</span><span class="pn">.</span><span class="id">ChocolateyChecksumType</span><span class="pn">.</span><span class="id">Sha256</span>
+        <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<h3>Nuspec</h3>
+<p>It adds Chocolatey specific fields:</p>
+<table>
+<thead>
+<tr class="header">
+<th><p>Placeholder</p></th>
+<th><p>replaced by (<code>ChocoPackParams</code> record field)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><code>@docsUrl@</code></p></td>
+<td><p><code>DocsUrl</code>: Url pointing to the location of the wiki or docs of the software.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@mailingListUrl@</code></p></td>
+<td><p><code>MailingListUrl</code>: Url pointing to the forum or email list group for the software.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@bugTrackerUrl@</code></p></td>
+<td><p><code>BugTrackerUrl</code>: Url pointing to the location where issues and tickets can be accessed.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@projectSourceUrl@</code></p></td>
+<td><p><code>ProjectSourceUrl</code>: Url pointing to the location of the underlying software source.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@packageSourceUrl@</code></p></td>
+<td><p><code>PackageSourceUrl</code>: Url to the chocolatey package repository, not the software (unless they are the same).</p></td>
+</tr>
+</tbody>
+</table>
+
+<h3>chocolateyInstall.ps1</h3>
+<p>To use a chocolateyInstall.ps1 template, a file with the same name must exists in a <code>tool</code> folder alongside the .nuspec template file.<br />
+If it doesn't exists but at least <code>Title</code> and <code>PackageDownloadUrl</code> are defined, the chocolateyInstall.ps1 will be created</p>
+<table>
+<thead>
+<tr class="header">
+<th><p>Placeholder</p></th>
+<th><p>replaced by (<code>ChocoPackParams</code> record field)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><code>@packageName@</code></p></td>
+<td><p><code>Title</code>: Title of the package.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@url@</code></p></td>
+<td><p><code>PackageDownloadUrl</code>: Url pointing to the installer (exe, msi, zip) of the package.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@url64@</code></p></td>
+<td><p><code>PackageDownload64Url</code>: Url pointing to the installer (exe, msi, zip) of the 64 bits version of the package.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@silentArgs@</code></p></td>
+<td><p><code>SilentArgs</code>: Silent args for the installer.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@unzipLocation@</code></p></td>
+<td><p><code>UnzipLocation</code>: Unzip location for zip package. Default: Chocolatey install folder.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@installerType@</code></p></td>
+<td><p><code>InstallerType</code>: Installer type. Default: Zip.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@checksum@</code></p></td>
+<td><p><code>Checksum</code>: The checksum hash value of the PackageDownloadUrl resource.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@checksumType@</code></p></td>
+<td><p><code>ChecksumType</code>: The type of checksum that the file is validated with. Default: Sha256.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@checksum64@</code></p></td>
+<td><p><code>Checksum64</code>: The checksum hash value of the PackageDownload64Url resource.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@checksum64Type@</code></p></td>
+<td><p><code>Checksum64Type</code>: The type of checksum that the file is validated with. Default: Sha256.</p></td>
+</tr>
+</tbody>
+</table>
+
+<h3>chocolateyUninstall.ps1</h3>
+<p>To use a chocolateyUninstall.ps1 template, a file with the same name must exists in a <code>tool</code> folder alongside the .nuspec template file.<br />
+If it doesn't exists but at least <code>Title</code> and <code>UninstallPath</code> are defined, the chocolateyUninstall.ps1 will be created</p>
+<table>
+<thead>
+<tr class="header">
+<th><p>Placeholder</p></th>
+<th><p>replaced by (<code>ChocoPackParams</code> record field)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><code>@packageName@</code></p></td>
+<td><p><code>Title</code>: Title of the package.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@silentArgs@</code></p></td>
+<td><p><code>SilentArgs</code>: Silent args for the installer.</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@installerType@</code></p></td>
+<td><p><code>InstallerType</code>: Installer type. Default: Zip.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>@uninstallPath@</code></p></td>
+<td><p><code>UnzipLocation</code>: For zip: the zip filename originally installed. For exe or msi: the full path to the native uninstaller to run</p></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Push</h2>
+<p>The <a href="apidocs/fake-choco.html"><code>Push</code></a> method allow to push a package (.nupkg) to Chocolatey.<br />
+If need the source could be modified to a private feed for example.<br />
+It is heavily recommended to indicate your Chocolatey api key, specifically for the build servers which don't have registered Chocolatey api key.
+In order to keep it secret you can encrypt it, for example with |AppVeyor](<a href="https://www.appveyor.com)">https://www.appveyor.com)</a> you can <a href="https://www.appveyor.com/docs/build-configuration#secure-variables">encrypt an environment variable</a> and use it in your FAKE script:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;ChocoPush&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="s">&quot;pretzel.0.5.0.nupkg&quot;</span> <span class="o">|&gt;</span> <span class="id">Choco</span><span class="pn">.</span><span class="id">Push</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">ApiKey</span> <span class="o">=</span> <span class="id">environVar</span> <span class="id">myChocolateyApiKey</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">val id : x:&#39;T -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.Operators.id</div>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="404.html">Quickstart</a></li>
+											<li><a href="404.html">Installation</a></li>
+											<li><a href="404.html">Modules</a></li>
+											<li><a href="404.html">FAKE Header</a></li>
+											<li><a href="404.html">Git</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="404.html">Paket</a></li>
+											<li><a href="404.html">FSharp Formatting</a></li>
+											<li><a href="404.html">F#</a></li>
+											<li><a href="404.html">Ionide</a></li>
+											<li><a href="404.html">Forge</a></li>
+											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links -->
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="404.html">Tutorial 1</a></li>
+											<li><a href="404.html">Tutorial 2</a></li>
+											<li><a href="404.html">Tutorial 3</a></li>
+											<li><a href="404.html">Tutorial 4</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
