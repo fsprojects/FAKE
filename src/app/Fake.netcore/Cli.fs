@@ -35,5 +35,5 @@ with
     member s.Usage =
       match s with
       | Version _ -> "Prints the version."
-      | Verbose _ -> "More verbose output."
+      | Verbose _ -> "More verbose output. Can be used more than once."
       | Run _ -> "Runs a build script."

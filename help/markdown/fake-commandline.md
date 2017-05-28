@@ -16,7 +16,7 @@ SUBCOMMANDS:
 OPTIONS:
 
     --version             Prints the version.
-    --verbose, -v         More verbose output.
+    --verbose, -v         More verbose output. Can be used more than once.
     --help                display this list of options.
 ```
 
@@ -25,6 +25,11 @@ For now fake only supports the `run` subcommand which is basically equivalent to
 ## `--verbose [-v]`
 
 Print details of FAKE's activity. Note that `-v` was used for `--version` in previous versions of Fake.
+Currently Fake supports 3 verbosity levels:
+
+ - None is warnings only and regular output from the script
+ - a single `--verbose` means verbose output from Fake
+ - two `--verbose --verbose` mean to set other projects (like paket) to verbose mode as well.
 
 ### `--version`
 
