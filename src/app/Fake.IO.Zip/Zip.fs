@@ -27,7 +27,7 @@ let private createZip fileName comment level (items: (string * string) seq) =
     let zipLevel = min (max 0 level) 9
     let buffer = Array.create 32768 0uy
     for item, itemSpec in items do
-        let fixedSpec = itemSpec.Replace(@"\", "/").TrimStart("/")
+        let fixedSpec = itemSpec.Replace(@"\", "/").TrimStart('/')
         let entry = stream.CreateEntryFromFile(item, fixedSpec)
         ()
 
