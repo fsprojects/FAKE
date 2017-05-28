@@ -243,6 +243,13 @@ Target "SetAssemblyInfo" (fun _ ->
         attributes |> CreateFSharpAssemblyInfo assemblyFile
 )
 
+Target "DownloadPaket" (fun _ ->
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- ".paket/paket.exe"
+                info.Arguments <- "--version") (System.TimeSpan.FromMinutes 5.0) then
+        failwith "paket failed to start"
+)
+
 Target "UnskipAssemblyInfo" (fun _ ->
     for assemblyFile, _ in assemblyInfos do
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
@@ -999,6 +1006,7 @@ Target "StartDnc" DoNothing
 
 // Dependencies
 "Clean"
+    ==> "DownloadPaket"
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"

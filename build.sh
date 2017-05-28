@@ -3,12 +3,10 @@
 # We use this to tell FAKE to not use the current latest version to build the netcore version, 
 # but instead use the current NON dotnetcore version
 export NO_DOTNETCORE_BOOTSTRAP=true
-export PAKET_VERSION=5.0.0-beta006
 if test "$OS" = "Windows_NT"
 then
   # use .Net
 
-  .paket/paket.bootstrapper.exe $PAKET_VERSION
   .paket/paket.exe restore
   exit_code=$?
   if [ $exit_code -ne 0 ]; then
@@ -21,7 +19,6 @@ then
 else
   # use mono
 
-  mono .paket/paket.bootstrapper.exe $PAKET_VERSION
   mono .paket/paket.exe restore
   exit_code=$?
   if [ $exit_code -ne 0 ]; then
