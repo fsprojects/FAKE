@@ -190,14 +190,20 @@
 <span class="id">OPTIONS</span><span class="pn">:</span>
 
     <span class="o">--</span><span class="id">version</span>             <span class="id">Prints</span> <span class="id">the</span> <span class="id">version</span><span class="pn">.</span>
-    <span class="o">--</span><span class="id">verbose</span><span class="pn">,</span> <span class="o">-</span><span class="id">v</span>         <span class="id">More</span> <span class="id">verbose</span> <span class="id">output</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">verbose</span><span class="pn">,</span> <span class="o">-</span><span class="id">v</span>         <span class="id">More</span> <span class="id">verbose</span> <span class="id">output</span><span class="pn">.</span> <span class="id">Can</span> <span class="id">be</span> <span class="id">used</span> <span class="id">more</span> <span class="id">than</span> <span class="id">once</span><span class="pn">.</span>
     <span class="o">--</span><span class="id">help</span>                <span class="id">display</span> <span class="id">this</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">list</span> <span class="k">of</span> <span class="id">options</span><span class="pn">.</span>
 </code></pre></td>
 </tr>
 </table>
 <p>For now fake only supports the <code>run</code> subcommand which is basically equivalent to the Fake as you know it, but more are planned in the future.</p>
 <h2><code>--verbose [-v]</code></h2>
-<p>Print details of FAKE's activity. Note that <code>-v</code> was used for <code>--version</code> in previous versions of Fake.</p>
+<p>Print details of FAKE's activity. Note that <code>-v</code> was used for <code>--version</code> in previous versions of Fake.
+Currently Fake supports 3 verbosity levels:</p>
+<ul>
+<li>None is warnings only and regular output from the script</li>
+<li>a single <code>--verbose</code> means verbose output from Fake</li>
+<li>two <code>--verbose --verbose</code> mean to set other projects (like paket) to verbose mode as well.</li>
+</ul>
 <h3><code>--version</code></h3>
 <p>Print FAKE version information.</p>
 <h3><code>--help</code></h3>
