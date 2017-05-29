@@ -1001,12 +1001,12 @@ Target "StartDnc" DoNothing
 "Clean"
     ==> "StartDnc"
     ==> "InstallDotnetCore"
+    ==> "DownloadPaket"
     ==> "DotnetRestore"
     ==> "DotnetPackage"
 
 // Dependencies
 "Clean"
-    ==> "DownloadPaket"
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
