@@ -100,7 +100,7 @@ module CoreTracing =
         | FinishedMessage -> ConsoleColor.White
         | _ -> ConsoleColor.Gray
     // If we write the stderr on those build servers the build will fail.
-    let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity
+    let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
     /// The default TraceListener for Console.
     let defaultConsoleTraceListener =
