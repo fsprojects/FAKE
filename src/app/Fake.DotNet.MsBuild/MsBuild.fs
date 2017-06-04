@@ -46,7 +46,8 @@ let private getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
 
 /// Versions of Mono prior to this one have faulty implementations of MSBuild
-let monoVersionToUseMSBuildOn = System.Version("5.0.0.0")
+/// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
+let monoVersionToUseMSBuildOn = System.Version("5.0")
 
 
 /// Tries to detect the right version of MSBuild.
