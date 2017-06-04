@@ -375,6 +375,7 @@ let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFi
 
 
 Target "GenerateDocs" (fun _ ->
+    CleanDir docsDir
     let source = "./help"
     let docsTemplate = "docpage.cshtml"
     let indexTemplate = "indexpage.cshtml"
