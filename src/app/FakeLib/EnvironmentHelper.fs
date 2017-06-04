@@ -155,9 +155,15 @@ let monoVersion =
         let displayName = displayNameMeth.Invoke(null, null).ToString()
         let pattern = new Regex("\d+(\.\d+)+")
         let m = pattern.Match(displayName)
+        // NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
+        let minimizeVersion (v:System.Version) =
+            match v.Minor = 0, v.Revision = 0 with
+            | true, true -> System.Version(v.Major, v.Minor)
+            | _, true -> System.Version(v.Major, v.Minor, v.Build)
+            | _ -> v
         let version =
             match System.Version.TryParse m.Value with
-            | true, v -> Some v
+            | true, v -> Some (minimizeVersion v)
             | _ -> None
         Some (displayName, version)
     else None
