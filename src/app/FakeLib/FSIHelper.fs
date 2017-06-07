@@ -420,6 +420,10 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
 /// deletes any existing caching for the given script.
 let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err =
     let options = FsiOptions.ofArgs fsiOptions
+#if DEBUG
+    let options = { options with Debug = Some DebugMode.Full }
+#endif
+
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
         matched.Groups.Item("script").Value, matched.Groups.Item("hash").Value
