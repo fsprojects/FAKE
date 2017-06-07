@@ -121,7 +121,7 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, useAnsiColorCodes
             | FinishedMessage -> ()
 
 // If we write the stderr on those build servers the build will fail.
-let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity
+let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
 // stdout is piped to the logger, so colours are lost. AppVeyor supports ANSI color codes.
 let useAnsiColors = buildServer = AppVeyor

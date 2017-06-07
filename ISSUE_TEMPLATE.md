@@ -29,6 +29,7 @@ Provide any related information
 * Branch
 * .NET Runtime, CoreCLR or Mono + version
 * Indications of severity
+* Version of FAKE (4.X, 5.X)
 
 
 

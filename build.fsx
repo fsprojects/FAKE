@@ -375,6 +375,7 @@ let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFi
 
 
 Target "GenerateDocs" (fun _ ->
+    CleanDir docsDir
     let source = "./help"
     let docsTemplate = "docpage.cshtml"
     let indexTemplate = "indexpage.cshtml"
@@ -1001,12 +1002,12 @@ Target "StartDnc" DoNothing
 "Clean"
     ==> "StartDnc"
     ==> "InstallDotnetCore"
+    ==> "DownloadPaket"
     ==> "DotnetRestore"
     ==> "DotnetPackage"
 
 // Dependencies
 "Clean"
-    ==> "DownloadPaket"
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
