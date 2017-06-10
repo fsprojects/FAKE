@@ -1,10 +1,13 @@
 /// Contains a task to run the msbuild runner of [Sonar Qube analyzer](http://sonarqube.org).
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 module Fake.SonarQubeHelper
 open TraceHelper
 
 /// The supported commands of Sonar Qube. It is called with Begin before compilation, and End after compilation.
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 type SonarQubeCall = Begin | End
 
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 /// Parameter type to configure the sonar qube runner.
 [<CLIMutable>]
 type SonarQubeParams =
@@ -22,6 +25,7 @@ type SonarQubeParams =
       Config : string option
     }
 
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 /// SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.
 let SonarQubeDefaults = 
     { ToolsPath = findToolInSubPath "MSBuild.SonarQube.Runner.exe" (currentDirectory @@ "tools" @@ "SonarQube")
@@ -31,6 +35,7 @@ let SonarQubeDefaults =
       Settings = []
       Config = None }
 
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 /// Execute the external msbuild runner of Sonar Qube. Parameters are fiven to the command line tool as required.
 let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
   let sonarPath = parameters.ToolsPath 
@@ -66,6 +71,7 @@ let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
 ///      Name = "MainTool"
 ///      Version = "1.0 })
 ///
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 let SonarQube (call: SonarQubeCall) setParams = 
     use __ = traceStartTaskUsing "SonarQube" (call.ToString())
     let parameters = setParams SonarQubeDefaults
@@ -77,5 +83,6 @@ let SonarQube (call: SonarQubeCall) setParams =
 
 ///   SonarQubeEnd
 ///
+[<System.Obsolete("Use Fake.Testing.SonarQube instead")>]
 let SonarQubeEnd() =
     SonarQube End (fun p -> { p with Settings = [] })

@@ -254,6 +254,9 @@
     <Compile Include="..\Fake.DotNet.Paket\PaketTemplate.fs">
       <Link>Fake.DotNet.Paket/PaketTemplate.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Testing.SonarQube\SonarQube.fs">
+      <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
