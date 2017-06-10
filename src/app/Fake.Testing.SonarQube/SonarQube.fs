@@ -7,11 +7,12 @@ module Fake.Testing.SonarQube
     open System.Text;
     open System.IO
     open System.Xml.Linq
-    open Fake.Core.Tracing
     open Fake.DotNet.NuGet.NuGet
     open Fake.Core
     open Fake.Core.Environment
+    open Fake.Core.Globbing
     open Fake.Core.String
+    open Fake.Core.Tracing
     open Fake.Core.Process
     open Fake.IO.FileSystem
     open Fake.IO.FileSystem.Operators
@@ -31,14 +32,14 @@ module Fake.Testing.SonarQube
         /// Version number of the project
         Version : string
         /// Individual global settings for SonarQube
-        Settings : List<string>
+        Settings : string list
         /// Read settings from configuration file
         Config : string option
     }
 
     /// SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.
     let SonarQubeDefaults = 
-        { ToolsPath = findToolInSubPath "MSBuild.SonarQube.Runner.exe" (currentDirectory @@ "tools" @@ "SonarQube")
+        { ToolsPath = Tools.findToolInSubPath "MSBuild.SonarQube.Runner.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "SonarQube")
           Key = null
           Name = null
           Version = "1.0"
@@ -81,7 +82,7 @@ module Fake.Testing.SonarQube
     ///      Version = "1.0 })
     ///
     let Begin setParams = 
-        use __ = Trace.traceStartTaskUsing "SonarQube Begin"
+        use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
         SonarQubeCall Begin parameters
 
@@ -97,7 +98,7 @@ module Fake.Testing.SonarQube
     ///      Settings = ["sonar.login=login", "sonar.password=password"] })
     ///
     let End setParams = 
-        use __ = Trace.traceStartTaskUsing "SonarQube End"
+        use __ = Trace.traceTask "SonarQube" "End"
         let parameters = setParams SonarQubeDefaults
         SonarQubeCall End parameters
 
