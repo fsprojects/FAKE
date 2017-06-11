@@ -94,6 +94,8 @@ to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](
 
 * Visual Studio users can also install the [CodeMaid](http://www.codemaid.net/) extension.
 
+* When working on FAKE 5 core stuff [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) help a lot!
+
 * Read the [F# component design guidelines](http://fsharp.org/specs/component-design-guidelines/).
 
 * Read the API-Design-Guidelines below.
