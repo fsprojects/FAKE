@@ -1,14 +1,14 @@
 # Running targets in "FAKE - F# Make"
 
-**Note:  This documentation is for FAKE 5. The old documentation can be found [here](legacy-core-targets.html)! **
-
-> NOTE: THIS SECTION IS WORK IN PROGRESS
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be [found here](core-targets.html) **
 
 ## Listing targets
+Before running any specific target it is useful to know all the targets that are available in a build script.
+FAKE can list all the avaiable targets including the dependencies by running the following command:
 
-Not jet available in FAKE 5
+* Fake.exe *YourBuildScript* -lt
 
-> Note: This feature still makes sense, but a good CLI has not been found jet, please propose one.
+The option *-lt* stands for "list targets". It is an abbreviation of the option *--listTargets*.
 
 ## Running specific targets
 
