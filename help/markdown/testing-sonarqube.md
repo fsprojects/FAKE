@@ -14,6 +14,8 @@ compilation has finished. The result is then collected and sent to the SonarQube
 
 ## Minimal working example
 
+    open Fake.Testing
+
     Target "BeginSonarQube" (fun _ ->
       SonarQube.Begin (fun p ->
         {p with
@@ -24,7 +26,7 @@ compilation has finished. The result is then collected and sent to the SonarQube
       )
 
     Target "EndSonarQube" (fun _ ->
-      SonarQube.End()
+      SonarQube.End None
     )
 
     Target "Default" DoNothing

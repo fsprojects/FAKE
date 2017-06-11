@@ -1,20 +1,10 @@
 /// Contains a task to run the msbuild runner of [SonarQube analyzer](http://sonarqube.org).
 module Fake.Testing.SonarQube
 
-    open System
-    open System.Collections.Generic
-    open System.Diagnostics
-    open System.Text;
     open System.IO
-    open System.Xml.Linq
-    open Fake.DotNet.NuGet.NuGet
     open Fake.Core
-    open Fake.Core.Environment
     open Fake.Core.Globbing
-    open Fake.Core.String
-    open Fake.Core.Tracing
     open Fake.Core.Process
-    open Fake.IO.FileSystem
     open Fake.IO.FileSystem.Operators
 
     /// [omit]
@@ -75,7 +65,9 @@ module Fake.Testing.SonarQube
     ///
     /// ## Sample
 
-    ///   Begin (fun p ->
+    ///   open Fake.Testing
+    ///
+    ///   SonarQube.Begin (fun p ->
     ///    {p with
     ///      Key = "MyProject"
     ///      Name = "MainTool"
@@ -92,21 +84,18 @@ module Fake.Testing.SonarQube
     ///  - `setParams` - Function used to overwrite the SonarQube default parameters.
     ///
     /// ## Sample
-
-    ///   End (fun p ->
+    
+    ///   open Fake.Testing
+    ///
+    ///   SonarQube.End None
+    ///
+    ///   SonarQube.End (fun p ->
     ///    {p with
     ///      Settings = ["sonar.login=login", "sonar.password=password"] })
     ///
     let End setParams = 
         use __ = Trace.traceTask "SonarQube" "End"
-        let parameters = setParams SonarQubeDefaults
+        let parameters = match setParams with
+                         | Some setParams -> setParams SonarQubeDefaults
+                         | None -> (fun p -> { p with Settings = [] }) SonarQubeDefaults
         SonarQubeCall End parameters
-
-    /// This task can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
-    ///
-    /// ## Sample
-
-    ///   End
-    ///
-    let End() =
-        End (fun p -> { p with Settings = [] })
