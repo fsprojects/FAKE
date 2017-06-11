@@ -24,3 +24,5 @@ There are various ways to install FAKE 5
 
 
 ## TBD.
+
+The best way is currently to use the [quick start guide](fake-dotnetcore.html)

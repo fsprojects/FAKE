@@ -97,14 +97,17 @@
     <Compile Include="..\Fake.Core.Tracing\Trace.fs">
       <Link>Fake.Core.Tracing/Trace.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Targets\Targets.fs">
-      <Link>Fake.Core.Targets/Targets.fs</Link>
+    <Compile Include="..\Fake.Core.Targets\Target.fs">
+      <Link>Fake.Core.Targets/Target.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Targets\AdditionalSyntax.fs">
-      <Link>Fake.Core.Targets/AdditionalSyntax.fs</Link>
+    <Compile Include="..\Fake.Core.Targets\TargetOperators.fs">
+      <Link>Fake.Core.Targets/TargetOperators.fs</Link>
     </Compile>
     <Compile Include="..\Fake.Core.Globbing\Globbing.fs">
-      <Link>Fake.Core.Targets/AdditionalSyntax.fs</Link>
+      <Link>Fake.Core.Globbing/Globbing.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Globbing\GlobbingFileSystem.fs">
+      <Link>Fake.Core.Globbing/GlobbingFileSystem.fs</Link>
     </Compile>
     <Compile Include="..\Fake.IO.FileSystem\Path.fs">
       <Link>Fake.IO.FileSystem/Path.fs</Link>
@@ -123,12 +126,6 @@
     </Compile>
     <Compile Include="..\Fake.Core.ReleaseNotes\ReleaseNotes.fs">
       <Link>Fake.Core.ReleaseNotes/ReleaseNotes.fs</Link>
-    </Compile>
-    <Compile Include="..\Fake.Core.Globbing\Globbing.fs">
-      <Link>Fake.Core.Globbing/Globbing.fs</Link>
-    </Compile>
-    <Compile Include="..\Fake.Core.Globbing\GlobbingFileSystem.fs">
-      <Link>Fake.Core.Globbing/GlobbingFileSystem.fs</Link>
     </Compile>
     <Compile Include="..\Fake.IO.Zip\Zip.fs">
       <Link>Fake.IO.Zip/Zip.fs</Link>

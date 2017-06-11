@@ -1,5 +1,6 @@
-#### 5.0.0-alpha010 - 27.05.2017
+#### 5.0.0-alpha010 - 11.06.2017
 * Fix Fake.IO.Zip creating invalid zip packages (empty folder at root level)
+* Change Targets API to be compatible with new API-Guidelines
 
 #### 5.0.0-alpha009 - 27.05.2017
 * Change fake group feature because of https://github.com/fsprojects/Paket/issues/2374

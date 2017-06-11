@@ -1,15 +1,7 @@
-(* -- Fake Dependencies paket.dependencies
-file ./paket.dependencies
-group NetcoreBuild
--- Fake Dependencies -- *)
-
 #if DOTNETCORE
 // We need to use this for now as "regular" Fake breaks when its caching logic cannot find "loadDependencies.fsx".
 // This is the reason why we need to checkin the "loadDependencies.fsx" file for now...
-#cd ".fake"
-#cd __SOURCE_FILE__
-#load "loadDependencies.fsx"
-#cd __SOURCE_DIRECTORY__
+#load ".fake/build.fsx/loadDependencies.fsx"
 
 open System
 open System.IO
