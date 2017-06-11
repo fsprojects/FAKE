@@ -1,7 +1,5 @@
 # Analyze your code with SonarQube
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
-
 From the [web page](http://sonarqube.org):
 "The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, from project portfolio down to the method level"
 
@@ -16,8 +14,10 @@ compilation has finished. The result is then collected and sent to the SonarQube
 
 ## Minimal working example
 
+    open Fake.Testing
+
     Target "BeginSonarQube" (fun _ ->
-      SonarQube Begin (fun p ->
+      SonarQube.Begin (fun p ->
         {p with
          Key = "MyProject"
          Name = "Main solution"
@@ -26,7 +26,7 @@ compilation has finished. The result is then collected and sent to the SonarQube
       )
 
     Target "EndSonarQube" (fun _ ->
-      SonarQubeEnd()
+      SonarQube.End None
     )
 
     Target "Default" DoNothing
@@ -49,7 +49,7 @@ By default, the SonarQube module looks for the MSBuild runner in the 'tools/Sona
 * You can send additional global settings  to the server with the '/d:' parameter.
 In the SonarQubeParams, this is the new field Settings:
 
-      SonarQube Begin (fun p ->
+      SonarQube.Begin (fun p ->
         {p with
          Key = "MyProject"
          Name = "Main solution"
@@ -60,7 +60,7 @@ In the SonarQubeParams, this is the new field Settings:
 * Configuration can also be read from a configuration file. This is the '/s:' parameter.
 This can be done with the new field Config:
 
-      SonarQube Begin (fun p ->
+      SonarQube.Begin (fun p ->
         {p with
          Key = "MyProject"
          Name = "Main solution"

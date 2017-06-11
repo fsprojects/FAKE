@@ -202,7 +202,8 @@ let dotnetAssemblyInfos =
       "Fake.Tools.Git", "Running git commands"
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Tracing.NAntXml", "NAntXml"
-      "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey" ]
+      "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
+      "Fake.Testing.SonarQube", "Analyzing your project with SonarQube" ]
     
 let assemblyInfos =
   [ "./src/app/FAKE/AssemblyInfo.fs",
