@@ -14,9 +14,11 @@ compilation has finished. The result is then collected and sent to the SonarQube
 
 ## Minimal working example
 
+    open Fake.Core
+    open Fake.Core.TargetOperators
     open Fake.Testing
 
-    Target "BeginSonarQube" (fun _ ->
+    Target.Create "BeginSonarQube" (fun _ ->
       SonarQube.Begin (fun p ->
         {p with
          Key = "MyProject"
@@ -25,11 +27,11 @@ compilation has finished. The result is then collected and sent to the SonarQube
         )
       )
 
-    Target "EndSonarQube" (fun _ ->
+    Target.Create "EndSonarQube" (fun _ ->
       SonarQube.End None
     )
 
-    Target "Default" DoNothing
+    Target.Create "Default" DoNothing
 
     "Clean"
       ==> "SetAssemblyInfo"
@@ -40,7 +42,7 @@ compilation has finished. The result is then collected and sent to the SonarQube
       ==> "Deploy"
       ==> "Default"
 
-    RunTargetOrDefault "Default"
+    Target.RunOrDefault "Default"
 
 By default, the SonarQube module looks for the MSBuild runner in the 'tools/SonarQube' directory. This can be overwritten using the ToolsPath property of the parameters.
 
