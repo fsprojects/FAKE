@@ -526,7 +526,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
                     info.Arguments <- sprintf "-v run %s --target %s" script target) timeout
             else
                 ExecProcess (fun info ->
-                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.exe"
+                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/fake.exe"
                     info.WorkingDirectory <- "."
                     info.Arguments <- sprintf "run %s --target %s" script target) timeout
 
@@ -782,7 +782,7 @@ Target "DotnetPackage" (fun _ ->
                 }) proj
             if File.Exists (outDir </> "dotnet") then
                 traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
-                File.Move(outDir </> "dotnet", outDir </> "Fake")
+                File.Move(outDir </> "dotnet", outDir </> "fake")
             //File.Copy(win32manifest, outDir + "/default.win32manifest")
         )
     )

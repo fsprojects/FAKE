@@ -1,6 +1,11 @@
 #### 5.0.0-alpha010 - 11.06.2017
-* Fix Fake.IO.Zip creating invalid zip packages (empty folder at root level)
-* Change Targets API to be compatible with new API-Guidelines
+* BREAKING CHANGE: Change Targets API to be compatible with new API-Guidelines
+* DOCS: Fix chocolatey docs and some links in footer https://github.com/fsharp/FAKE/pull/1584
+* DOCS: Spelling, grammar, and emphasis changes https://github.com/fsharp/FAKE/pull/1575
+* NEW MODULE: Sonarqube migration https://github.com/fsharp/FAKE/pull/1583
+* BUGFIX: Restore the output encoding https://github.com/fsharp/FAKE/pull/1580
+* BUGFIX: Fix Fake.IO.Zip creating invalid zip packages (empty folder at root level)
+* Fake.exe -> fake.exe (windows) and Fake -> fake (unix)
 
 #### 5.0.0-alpha009 - 27.05.2017
 * Change fake group feature because of https://github.com/fsprojects/Paket/issues/2374
