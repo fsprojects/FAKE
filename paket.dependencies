@@ -71,6 +71,7 @@ group NetcoreBuild
     source https://ci.appveyor.com/nuget/fake
 
     nuget System.AppContext prerelease
+    nuget Paket.Core prerelease
     nuget Fake.Core.Targets prerelease
     nuget Fake.Core.Globbing prerelease
     nuget Fake.Core.SemVer prerelease

@@ -51,6 +51,7 @@ let currentDirectory = Shell.pwd()
 //#if DESIGNTIME
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
+#r @"Paket.Core.dll"
 //#else
 //#r "src/app/FakeLib/bin/Debug/FakeLib.dll"
 //#endif
@@ -67,6 +68,7 @@ open Fake.AssemblyInfoFile
 open Fake.Testing.XUnit2
 open Fake.Testing.NUnit3
 #endif
+
 
 // properties
 let projectName = "FAKE"
@@ -105,13 +107,28 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
+let cleanForTests () =
+    // Clean NuGet cache (because it might contain appveyor stuff)
+    let cacheFolders = [ Paket.Constants.UserNuGetPackagesFolder; Paket.Constants.NuGetCacheFolder ]
+    for f in cacheFolders do
+        !! (f </> "Fake.*")
+        |> Seq.iter (Shell.rm_rf)
+
+    // Clean test directories
+    !! "integrationtests/*/temp"
+    |> CleanDirs
+
 // Targets
 Target "Clean" (fun _ ->
     !! "src/*/*/bin"
     ++ "src/*/*/obj"
     |> CleanDirs
 
-    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir])
+    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
+
+    // Clean Data for tests
+    cleanForTests()
+)
 
 Target "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
@@ -451,6 +468,8 @@ Target "Test" (fun _ ->
 )
 
 Target "TestDotnetCore" (fun _ ->
+    cleanForTests()
+    
     !! (testDir @@ "*.IntegrationTests.dll")
     |> NUnit3 id
 )
