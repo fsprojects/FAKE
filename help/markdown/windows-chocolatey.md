@@ -2,7 +2,7 @@
 
 ## Namespace
 
-To be used, the `Choco` module needs the `Fale.Windows` namespace:
+To be used, the `Choco` module needs the `Fake.Windows` namespace:
 
     open Fake.Windows
 
