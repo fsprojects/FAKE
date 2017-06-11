@@ -111,6 +111,7 @@ let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
     let cacheFolders = [ Paket.Constants.UserNuGetPackagesFolder; Paket.Constants.NuGetCacheFolder ]
     for f in cacheFolders do
+        printfn "Clearing FAKE-NuGet packages in %s" f
         !! (f </> "Fake.*")
         |> Seq.iter (Shell.rm_rf)
 
@@ -469,7 +470,7 @@ Target "Test" (fun _ ->
 
 Target "TestDotnetCore" (fun _ ->
     cleanForTests()
-    
+
     !! (testDir @@ "*.IntegrationTests.dll")
     |> NUnit3 id
 )
@@ -806,10 +807,12 @@ Target "DotnetPackage" (fun _ ->
                     Configuration = Release
                     OutputPath = Some outDir
                 }) proj
-            if File.Exists (outDir </> "dotnet") then
+            let source = outDir </> "dotnet"
+            if File.Exists source then
                 traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
-                File.Move(outDir </> "dotnet", outDir </> "fake")
-            //File.Copy(win32manifest, outDir + "/default.win32manifest")
+                let target = outDir </> "fake"
+                if File.Exists target then File.Delete target
+                File.Move(source, target)
         )
     )
 

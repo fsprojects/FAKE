@@ -17,7 +17,7 @@ module Target =
         { Name: string;
           Dependencies: string list;
           SoftDependencies: string list;
-          Description: TargetDescription;
+          Description: TargetDescription option;
           Function : TargetParameter -> unit}
 
     type private DependencyType =
@@ -198,18 +198,19 @@ module Target =
     /// Creates a target from template.
     /// [omit]
     let internal addTarget target name =
+        Trace.tracefn "Adding Target: %s -> %A" name target
         getTargetDict().Add(name, target)
-        //name <== template.Dependencies
+        name <== target.Dependencies
         removeLastDescription()
         
     /// add a target with dependencies
     /// [omit]
     let internal addTargetWithDependencies dependencies body name =
         let template =
-            { Name = String.Empty
+            { Name = name
               Dependencies = dependencies
               SoftDependencies = []
-              Description = match getLastDescription() with Some d -> d | None -> null
+              Description = getLastDescription()
               Function = body }
         addTarget template name
 
@@ -305,7 +306,7 @@ module Target =
     let Print() =
         Trace.log "The following targets are available:"
         for t in getTargetDict().Values do
-            Trace.logfn "   %s%s" t.Name (if String.isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
+            Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
 
 
     // Maps the specified dependency type into the list of targets
@@ -412,7 +413,7 @@ module Target =
         Trace.tracefn "Available targets:"
         getTargetDict().Values
           |> Seq.iter (fun target ->
-                Trace.tracefn "  - %s %s" target.Name (if not <| isNull target.Description then " - " + target.Description else "")
+                Trace.tracefn "  - %s %s" target.Name (match target.Description with Some d -> " - " + d | _ -> "")
                 Trace.tracefn "     Depends on: %A" target.Dependencies)
 
     // Instead of the target can be used the list dependencies graph parameter.
@@ -451,7 +452,7 @@ module Target =
     let internal runSingleTarget (target : Target) =
         try
             if List.isEmpty (GetErrors()) then
-                use t = Trace.traceTarget target.Name target.Description (dependencyString target)
+                use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
                 let watch = new System.Diagnostics.Stopwatch()
                 watch.Start()
                 target.Function { TargetInfo = target }
@@ -482,7 +483,7 @@ module Target =
     let internal run targetName =
         if doesTargetMeanListTargets targetName then listTargets() else
         match getLastDescription() with
-        | Some d -> failwithf "You set a task description (%A) but didn't specify a task." d
+        | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
         | None -> ()
 
         let rec runTargets (targets: Target array) =
