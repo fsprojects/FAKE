@@ -537,8 +537,8 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         if result = 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
 
     // Replace the include line to use the newly build FakeLib, otherwise things will be weird.
+    // TODO: We might need another way, because currently we reference the same paket group?
     File.ReadAllText buildScript
-    |> fun s -> s.Replace("source .fake/bin/core-v1.0-alpha-09/packages", "source nuget/dotnetcore")
     |> fun text -> File.WriteAllText(testScript, text)
 
     try
@@ -745,6 +745,13 @@ Target "DotnetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     setEnvironVar "Version" release.NugetVersion
+    setEnvironVar "Authors" (separated ";" authors)
+    setEnvironVar "Description" projectDescription
+    setEnvironVar "PackageReleaseNotes" (release.Notes |> toLines)
+    setEnvironVar "PackageTags" "build;fake;f#"
+    setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/fee4f05a2ee3c646979bf753f3b1f02d927bfde9/help/content/pics/logo.png"
+    setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
+    setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
     // dotnet pack
     DotnetPack (fun c ->
