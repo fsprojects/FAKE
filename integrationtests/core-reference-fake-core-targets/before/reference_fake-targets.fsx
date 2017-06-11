@@ -13,13 +13,12 @@ printfn "before load"
 printfn "test_before open"
 
 open Fake.Core
-open Fake.Core.Targets
 open Fake.Core.TargetOperators
 
 printfn "test_before targets"
-Target "Start" (fun _ -> ())
+Target.Create "Start" (fun _ -> ())
 
-Target "TestTarget" (fun _ ->
+Target.Create "TestTarget" (fun _ ->
     printfn "Starting Build."
     Trace.traceFAKE "Some Info from FAKE"
     printfn "Ending Build."
@@ -30,4 +29,4 @@ Target "TestTarget" (fun _ ->
 
 printfn "before run targets"
 
-RunTargetOrDefault "TestTarget"
+Target.RunOrDefault "TestTarget"
