@@ -180,6 +180,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
 [<EntryPoint>]
 let main (args:string[]) =
   let mutable exitCode = 0
+  let encoding = Console.OutputEncoding
   let parser = ArgumentParser.Create<Cli.FakeArgs>("fake")
   try
     let results = parser.Parse(args)
@@ -188,6 +189,7 @@ let main (args:string[]) =
   | :? ArguParseException as e ->
     printfn "%s" e.Message
     exitCode <- 1
+  Console.OutputEncoding <- encoding
 #if !NETSTANDARD1_6
   //if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
   if Environment.ExitCode <> 0 then exitCode <- Environment.ExitCode
