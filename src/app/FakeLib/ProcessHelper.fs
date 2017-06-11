@@ -23,8 +23,22 @@ type internal ConcurrentBag<'T> with
 let startedProcesses = ConcurrentBag()
 
 /// [omit]
+let mutable previousConsoleEncoding = None
+
+let private setPreviousEncoding encoding =
+    match previousConsoleEncoding with
+    | None -> previousConsoleEncoding <- Some encoding
+    | _ -> ()
+
+/// [omit]
+// See issue #1461.
+let restorePreviousConsoleEncoding () =
+    Option.iter (fun e -> Console.OutputEncoding <- e) previousConsoleEncoding
+
+/// [omit]
 let start (proc : Process) =
     try
+        setPreviousEncoding Console.OutputEncoding
         System.Console.OutputEncoding <- System.Text.Encoding.UTF8
     with exn ->
         logfn "Failed setting UTF8 console encoding, ignoring error... %s." exn.Message
