@@ -1,11 +1,13 @@
 ﻿/// Contains tasks to generate AssemblyInfo files for C# and F#.
 /// There is also a tutorial about the [AssemblyInfo tasks](../assemblyinfo.html) available.
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 module Fake.AssemblyInfoFile
 
 open System
 open System.IO
 open System.Text.RegularExpressions
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 // Helper active pattern for project types
 let (|Fsproj|Csproj|Vbproj|Shproj|) (projFileName:string) =
     match projFileName with
@@ -49,6 +51,7 @@ let private NormalizeVersion version =
     if m.Captures.Count > 0 then m.Captures.[0].Value
     else version
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Represents options for configuring the emission of AssemblyInfo
 type AssemblyInfoFileConfig
     ( // If true, a module (for F#) or static class (for C#), which contains the assembly version, will be generated
@@ -68,6 +71,7 @@ type AssemblyInfoFileConfig
             | None -> false
         static member Default = AssemblyInfoFileConfig(true)
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Represents AssemblyInfo attributes
 type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
     member this.Name = name
@@ -189,6 +193,7 @@ let private getSortedAndNumberedAttributes (attrs: seq<Attribute>) =
         (name, attr.StaticPropertyType, attr.StaticPropertyValue))
    
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a C# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -236,6 +241,7 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
     attributeLines @ sourceLines
     |> writeToFile outputFileName
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a F# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -266,6 +272,7 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
     sourceLines |> writeToFile outputFileName
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a VB AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -292,6 +299,7 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
     attributeLines @ sourceLines
     |> writeToFile outputFileName
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
 /// Does not generate an AssemblyVersionInformation class.
 let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -310,21 +318,25 @@ let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : Assem
     attributeLines
     |> writeToFile outputFileName
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a C# AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfo outputFileName attributes =
     CreateCSharpAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a F# AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateFSharpAssemblyInfo outputFileName attributes =
     CreateFSharpAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Creates a VB AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateVisualBasicAssemblyInfo outputFileName attributes =
     CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
 let CreateCppCliAssemblyInfo outputFileName attributes =
     CreateCppCliAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
@@ -335,6 +347,7 @@ let private removeAtEnd (textToRemove:string) (text:string) =
     else
         text
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Read attributes from an AssemblyInfo file and return as a sequence of Attribute.
 /// ## Parameters
 ///  - `assemblyInfoFile` - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.
@@ -361,6 +374,7 @@ let GetAttributes assemblyInfoFile =
                 Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute", v.Trim([|'"'|]), "", t)
             )
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Read a single attribute from an AssemblyInfo file.
 /// ## Parameters
 ///  - `attrName` - Name of the attribute without "Attribute" at the end.
@@ -368,6 +382,7 @@ let GetAttributes assemblyInfoFile =
 let GetAttribute attrName assemblyInfoFile =
     assemblyInfoFile |> GetAttributes |> Seq.tryFind (fun a -> a.Name = attrName)
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".
 /// ## Parameters
 ///  - `attrName` - Name of the attribute without "Attribute" at the end.
@@ -396,6 +411,7 @@ let private updateAttr regexFactory additionalRegexOptions text (attribute:Attri
     else
         failwithf "Attribute '%s' not found" attribute.Name
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.
 /// ## Parameters
 ///  - `assemblyInfoFile` - The file to update. Language C#, F#, VB or C++ is determined from the extension.
