@@ -213,7 +213,8 @@ let dotnetAssemblyInfos =
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
-      "Fake.Testing.SonarQube", "Analyzing your project with SonarQube" ]
+      "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
+      "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover" ]
     
 let assemblyInfos =
   [ "./src/app/FAKE/AssemblyInfo.fs",
