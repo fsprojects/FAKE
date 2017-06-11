@@ -7,7 +7,7 @@ It will analyze the code coverage during testing and generates an XML report whi
 
 ## Minimal working example
 
-    open Fake.Testing
+    open Fake.DotNet.Testing
 
     OpenCover.Run (fun p ->
         { p with
@@ -19,14 +19,14 @@ By default, the OpenCover module looks for the OpenCover Console in the OpenCove
 
 ## Version
 
-    open Fake.Testing
+    open Fake.DotNet.Testing
 
     OpenCover.Version None
 
 ## Full example
 
-    open Fake.Testing
-    open Fake.Testing.OpenCover
+    open Fake.DotNet.Testing
+    open Fake.DotNet.Testing.OpenCover
 
     Target "OpenCover" (fun _ ->
         OpenCover.Version (fun p -> { p with ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe" })

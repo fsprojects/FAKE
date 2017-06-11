@@ -63,7 +63,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.netcore", "app\Fake.ne
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Testing.SonarQube", "app\Fake.Testing.SonarQube\Fake.Testing.SonarQube.fsproj", "{2A985028-4410-40F7-992C-5397DC1ED116}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Testing.OpenCover", "app\Fake.Testing.OpenCover\Fake.Testing.OpenCover.fsproj", "{A9AF015B-43C9-405E-BF74-CE936B8418F9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.DotNet.Testing.OpenCover", "app\Fake.DotNet.Testing.OpenCover\Fake.DotNet.Testing.OpenCover.fsproj", "{A9AF015B-43C9-405E-BF74-CE936B8418F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

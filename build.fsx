@@ -204,7 +204,7 @@ let dotnetAssemblyInfos =
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
-      "Fake.Testing.OpenCover", "Code coverage with OpenCover" ]
+      "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover" ]
     
 let assemblyInfos =
   [ "./src/app/FAKE/AssemblyInfo.fs",

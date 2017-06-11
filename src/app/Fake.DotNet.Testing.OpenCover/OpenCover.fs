@@ -1,5 +1,5 @@
 /// Contains a task which can be used to run [OpenCover](https://github.com/sawilde/opencover) on .NET assemblies.
-module Fake.Testing.OpenCover
+module Fake.DotNet.Testing.OpenCover
 
     open System
     open System.IO
