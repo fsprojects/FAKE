@@ -1,0 +1,4 @@
+group netcore
+FSharp.NET.Sdk
+FSharp.Core
+NETStandard.Library
