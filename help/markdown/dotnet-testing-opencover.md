@@ -25,10 +25,11 @@ By default, the OpenCover module looks for the OpenCover Console in the OpenCove
 
 ## Full example
 
+    open Fake.Core
     open Fake.DotNet.Testing
     open Fake.DotNet.Testing.OpenCover
 
-    Target "OpenCover" (fun _ ->
+    Target.Create "OpenCover" (fun _ ->
         OpenCover.Version (fun p -> { p with ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe" })
 
         OpenCover.Run (fun p ->
