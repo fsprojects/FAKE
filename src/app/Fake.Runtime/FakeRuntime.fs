@@ -166,10 +166,6 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         installModel.GetRuntimeAssemblies graph rid targetProfile
         |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
         |> Seq.toList
-        //|> List.filter (fun (a:FileInfo) ->
-        //    // TODO: Bug, Use runtime assemblies instead (currently not implemented in Paket...)!
-        //    not (a.FullName.Contains("/ref/")))
-        //|> List.map (fun fi -> false, fi)
       runtimeAssemblies @ refAssemblies)
     |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
     |> Seq.choose (fun (isReferenceAssembly, fi) ->

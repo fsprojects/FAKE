@@ -1,17 +1,17 @@
 ﻿/// Contains a task which can be used to run [OpenCover](https://github.com/sawilde/opencover) on .NET assemblies.
-[<System.Obsolete("Use Fake.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
+[<System.Obsolete("Use Fake.DotNet.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
 module Fake.OpenCoverHelper
 
 open System
 open System.Text
 
-[<System.Obsolete("Use Fake.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
+[<System.Obsolete("Use Fake.DotNet.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
 type RegisterType = 
     | Manual
     | Register
     | RegisterUser
     
-[<System.Obsolete("Use Fake.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
+[<System.Obsolete("Use Fake.DotNet.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
 /// OpenCover parameters, for more details see: https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage.
 [<CLIMutable>]
 type OpenCoverParams = 
@@ -37,7 +37,7 @@ type OpenCoverParams =
       /// This options is used to add additional optional arguments, could be somthing like "-returntargetcode "
       OptionalArguments : string }
 
-[<System.Obsolete("Use Fake.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
+[<System.Obsolete("Use Fake.DotNet.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
 /// OpenCover default parameters
 let OpenCoverDefaults = 
     { ExePath = if isMono then String.Empty else environVar "LOCALAPPDATA" @@ "Apps" @@ "OpenCover" @@ "OpenCover.Console.exe"
@@ -50,7 +50,7 @@ let OpenCoverDefaults =
       MergeByHash = false
       OptionalArguments = String.Empty }
 
-[<System.Obsolete("Use Fake.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
+[<System.Obsolete("Use Fake.DotNet.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
 /// Builds the command line arguments from the given parameter record
 /// [omit]
 let buildOpenCoverArgs param targetArgs = 
@@ -80,7 +80,7 @@ let buildOpenCoverArgs param targetArgs =
 ///
 ///      OpenCover (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" }) 
 ///         "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
-[<System.Obsolete("Use Fake.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
+[<System.Obsolete("Use Fake.DotNet.Testing.OpenCover instead (open Fake.Testing and use 'OpenCover.')")>]
 let OpenCover setParams targetArgs = 
     let taskName = "OpenCover"
     let description = "Gathering coverage statistics"

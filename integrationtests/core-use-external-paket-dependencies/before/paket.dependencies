@@ -1,6 +1,6 @@
 source https://nuget.org/api/v2
 //source https://ci.appveyor.com/nuget/paket
-source https://ci.appveyor.com/nuget/fake
+source ../../../nuget/dotnetcore
 
 nuget Fake.Runtime prerelease
 nuget FSharp.Core prerelease

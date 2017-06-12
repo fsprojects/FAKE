@@ -1,4 +1,4 @@
-version 5.0.0-beta008
+version 5.0.0-rc005
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -68,9 +68,10 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://nuget.org/api/v2
-    source https://ci.appveyor.com/nuget/fake
+    //source https://ci.appveyor.com/nuget/fake
 
     nuget System.AppContext prerelease
+    nuget Paket.Core prerelease
     nuget Fake.Core.Targets prerelease
     nuget Fake.Core.Globbing prerelease
     nuget Fake.Core.SemVer prerelease

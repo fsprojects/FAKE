@@ -14,8 +14,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Targets.fs" />
-    <Compile Include="AdditionalSyntax.fs" />
+    <Compile Include="Target.fs" />
+    <Compile Include="TargetOperators.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />

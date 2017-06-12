@@ -1,15 +1,7 @@
-(* -- Fake Dependencies paket.dependencies
-file ./paket.dependencies
-group NetcoreBuild
--- Fake Dependencies -- *)
-
 #if DOTNETCORE
 // We need to use this for now as "regular" Fake breaks when its caching logic cannot find "loadDependencies.fsx".
 // This is the reason why we need to checkin the "loadDependencies.fsx" file for now...
-#cd ".fake"
-#cd __SOURCE_FILE__
-#load "loadDependencies.fsx"
-#cd __SOURCE_DIRECTORY__
+#load ".fake/build.fsx/loadDependencies.fsx"
 
 open System
 open System.IO
@@ -26,9 +18,9 @@ open Fake.Core.ReleaseNotes
 open Fake.Core.Process
 open Fake.Core.Globbing
 open Fake.Core.Globbing.Operators
-open Fake.IO.FileSystem
 open Fake.IO.FileSystem.FileFilter
 open Fake.IO.Zip
+open Fake.IO.FileSystem
 open Fake.IO.FileSystem.Directory
 open Fake.IO.FileSystem.File
 open Fake.IO.FileSystem.Operators
@@ -59,6 +51,7 @@ let currentDirectory = Shell.pwd()
 //#if DESIGNTIME
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
+#r @"Paket.Core.dll"
 //#else
 //#r "src/app/FakeLib/bin/Debug/FakeLib.dll"
 //#endif
@@ -75,6 +68,9 @@ open Fake.AssemblyInfoFile
 open Fake.Testing.XUnit2
 open Fake.Testing.NUnit3
 #endif
+
+open Fake.IO.FileSystem
+
 
 // properties
 let projectName = "FAKE"
@@ -113,13 +109,29 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
+let cleanForTests () =
+    // Clean NuGet cache (because it might contain appveyor stuff)
+    let cacheFolders = [ Paket.Constants.UserNuGetPackagesFolder; Paket.Constants.NuGetCacheFolder ]
+    for f in cacheFolders do
+        printfn "Clearing FAKE-NuGet packages in %s" f
+        !! (f </> "Fake.*")
+        |> Seq.iter (Shell.rm_rf)
+
+    // Clean test directories
+    !! "integrationtests/*/temp"
+    |> CleanDirs
+
 // Targets
 Target "Clean" (fun _ ->
     !! "src/*/*/bin"
     ++ "src/*/*/obj"
     |> CleanDirs
 
-    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir])
+    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
+
+    // Clean Data for tests
+    cleanForTests()
+)
 
 Target "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
@@ -460,6 +472,8 @@ Target "Test" (fun _ ->
 )
 
 Target "TestDotnetCore" (fun _ ->
+    cleanForTests()
+
     !! (testDir @@ "*.IntegrationTests.dll")
     |> NUnit3 id
 )
@@ -535,7 +549,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
                     info.Arguments <- sprintf "-v run %s --target %s" script target) timeout
             else
                 ExecProcess (fun info ->
-                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.exe"
+                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/fake.exe"
                     info.WorkingDirectory <- "."
                     info.Arguments <- sprintf "run %s --target %s" script target) timeout
 
@@ -546,8 +560,8 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         if result = 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
 
     // Replace the include line to use the newly build FakeLib, otherwise things will be weird.
+    // TODO: We might need another way, because currently we reference the same paket group?
     File.ReadAllText buildScript
-    |> fun s -> s.Replace("source .fake/bin/core-v1.0-alpha-09/packages", "source nuget/dotnetcore")
     |> fun text -> File.WriteAllText(testScript, text)
 
     try
@@ -754,6 +768,13 @@ Target "DotnetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     setEnvironVar "Version" release.NugetVersion
+    setEnvironVar "Authors" (separated ";" authors)
+    setEnvironVar "Description" projectDescription
+    setEnvironVar "PackageReleaseNotes" (release.Notes |> toLines)
+    setEnvironVar "PackageTags" "build;fake;f#"
+    setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/fee4f05a2ee3c646979bf753f3b1f02d927bfde9/help/content/pics/logo.png"
+    setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
+    setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
     // dotnet pack
     DotnetPack (fun c ->
@@ -789,10 +810,12 @@ Target "DotnetPackage" (fun _ ->
                     Configuration = Release
                     OutputPath = Some outDir
                 }) proj
-            if File.Exists (outDir </> "dotnet") then
+            let source = outDir </> "dotnet"
+            if File.Exists source then
                 traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
-                File.Move(outDir </> "dotnet", outDir </> "Fake")
-            //File.Copy(win32manifest, outDir + "/default.win32manifest")
+                let target = outDir </> "fake"
+                if File.Exists target then File.Delete target
+                File.Move(source, target)
         )
     )
 
@@ -959,7 +982,8 @@ Target "PublishNuget" (fun _ ->
 
 Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
-    cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
+    let url = environVarOrDefault "fake_git_url" "https://github.com/fsharp/FAKE.git"
+    cloneSingleBranch "" url "gh-pages" "gh-pages"
 
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"

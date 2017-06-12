@@ -47,20 +47,23 @@ If you are in the scripting area there is not even a need to save `paket.depende
 This section describes work that still need to be done to finally release FAKE 5.
 
  - Regulary updated issue with smaller (but blocking) work-items: https://github.com/fsharp/FAKE/issues/1523
- - Porting modules (See Modules -> Legacy), please read section below.
+ - Porting modules (See Modules -> Legacy), please read the migrate modules section in the [contribution guide](contributing.html).
  - Missing Obsolete Attributes in the old API (please help when you migrate and notice anything)
- - Bootstrapping via Script + System to update scripts automatically + lock FAKE version
+ - Bootstrapping via Script and System to update scripts automatically + lock FAKE version
  - Concept and work on how we want do document modules and module overviews (website is generated automatically)
  - Missing documentation
  - Update documentation
  - Fixing issues with the new website
  - Implement a special formatting for the obsolete warnings -> parse them -> suggest new API dependencies file.
 
-## API-Design
+## New API-Design
 
 The old API suffered from several issues:
 
  - AutoOpen polluted the "Fake" namespace.
+
+   One problem with this that some modules introduced generic function names which are perfectly valid for other modules as well. Now the second module needs to introduce a "quirk" name.
+
  - No visible structure and unified naming made it incredible hard to find an API.
 
 For example consider the old API `CreateDirectory` which is a globally available.
@@ -68,14 +71,4 @@ It needs to have its context "Directory" in the name, but this means longer meth
 Imagine `Directory.Create` it's not really that much longer - but the IDE can support me a lot more.
 This old API design lead to ambiguities and even user issues.
 
-Therefore in the new API design:
-
- - AutoOpen is no longer used
- - we replace `<verb><module>` functions with `<module>.<verb>`
- - We assume the caller is not opening the module but only the global namespaces `Fake.Core`, `Fake.IO`, ...
-   and make sure the code looks nice and structured on the caller side.
- - For compatibility reasons (migration from legacy). We assume the user doesn't open the global `Fake` namespace.
-   -> This means we don't add anything in there in the new API.
- - Old APIs are marked as Obsolete with a link (hint) to the new API location.
- - Operators are opened seperatly with a separate `Operators` module
- - We avoid the `Helpers` suffix (because we now expect users to write `<module>.<function>`)
+Therefore we propose a new [API design in the contributors guide](contributing.html)

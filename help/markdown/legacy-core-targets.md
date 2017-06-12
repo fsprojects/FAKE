@@ -1,33 +1,34 @@
 # Running targets in "FAKE - F# Make"
 
-**Note:  This documentation is for FAKE 5. The old documentation can be found [here](legacy-core-targets.html)! **
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be [found here](core-targets.html) **
 
 ## Listing targets
+Before running any specific target it is useful to know all the targets that are available in a build script.
+FAKE can list all the avaiable targets including the dependencies by running the following command:
 
-Not jet available in FAKE 5
+* Fake.exe *YourBuildScript* -lt
 
-> Note: This feature still makes sense, but a good CLI has not been found jet, please propose one.
-> For not you can run the target with name '--listTargets' or '-lt'. `fake run build.fsx -t '--list-Targets'`
+The option *-lt* stands for "list targets". It is an abbreviation of the option *--listTargets*.
 
 ## Running specific targets
 
-FAKE has a special param "target" which can be used to run specific targets in a build. We assume the following build script (`build.fsx`):
+FAKE has a special param "target" which can be used to run specific targets in a build. We assume the following build script:
 
-	// include Fake modules, see Fake modules section
-	
-	open Fake.Core
-	open Fake.Core.TargetOperators
+	// include Fake libs
+	#I @"tools\FAKE"
+	#r "FakeLib.dll"
+	open Fake 
 
 	// *** Define Targets ***
-	Target.Create "Clean" (fun _ -> 
+	Target "Clean" (fun () -> 
 		trace " --- Cleaning stuff --- "
 	)
 
-	Target.Create "Build" (fun _ -> 
+	Target "Build" (fun () -> 
 		trace " --- Building the app --- "
 	)
 
-	Target.Create "Deploy" (fun _ -> 
+	Target "Deploy" (fun () -> 
 		trace " --- Deploying app --- "
 	)
 
@@ -37,18 +38,15 @@ FAKE has a special param "target" which can be used to run specific targets in a
 	  ==> "Deploy"
 
 	// *** Start Build ***
-	Target.RunOrDefault "Deploy"
-
-> Warning: Previous versions of FAKE 5 used `(fun () -> ...)` instead of `(fun _ -> ...)`.
-> We decided to change the syntax here to introduce some parameters or other features at a later point.
-> Using the current parameter object is not supported jet.
+	RunTargetOrDefault "Deploy"
 
 Now we have the following options:
 
-* `fake run build.fsx -t "Build"` --> starts the *Build* target and runs the dependency *Clean*
-* `fake run build.fsx -t "Build"` --single-target --> starts only the *Build* target and runs no dependencies
-* `fake run build.fsx -st -t Build` --> starts only the *Build* target and runs no dependencies
-* `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
+* Fake.exe "target=Build" --> starts the *Build* target and runs the dependency *Clean*
+* Fake.exe Build --> starts the *Build* target and runs the dependency *Clean*
+* Fake.exe Build --single-target --> starts only the *Build* target and runs no dependencies
+* Fake.exe Build -st --> starts only the *Build* target and runs no dependencies
+* Fake.exe --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
 
 ## Final targets
 
@@ -76,9 +74,6 @@ These targets will be executed only after a build failure but have to be activat
 	ActivateBuildFailureTarget "ReportErrorViaMail"
 
 ## Visualising target dependencies
-
-> WARNING: This is not supported, feel free to contribute.
-
 FAKE can output the graph of target dependencies in the [DOT](http://www.graphviz.org/doc/info/lang.html)
 format, which can then be rendered to a PNG-file by [Graphviz](http://www.graphviz.org).
 
@@ -126,7 +121,7 @@ The number of threads used can be set using the environment variable ``parallel-
 This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
 setting environment variables:
 
-``fake *YourBuildScript* -e parallel-jobs 8``
+``FAKE.exe *YourBuildScript* "parallel-jobs=8"``
 
 Note that the dependency tree will be traversed as usual whenever setting ``parallel-jobs`` to a value ``<= 1`` or omiting it entirely.
 
@@ -165,6 +160,56 @@ For example this dependency tree:
 
 This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.
 
+
+# Writing custom C# tasks for FAKE
+
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+
+"FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks. 
+This tutorial shows how to create a (very simple) custom task in C#.
+
+## Creating a custom task
+
+Open Visual Studio and create a new C# class library called my MyCustomTask and create a class called RandomNumberTask:
+
+	[lang=csharp]
+	using System;
+
+	namespace MyCustomTask
+	{
+		public class RandomNumberTask
+		{
+			public static int RandomNumber(int min, int max)
+			{
+				var random = new Random();
+				return random.Next(min, max);
+			}
+		}
+	}
+
+## Using the custom task
+
+Compile the project and put the generated assembly into the *tools/FAKE* path of your project. Now you can use your CustomTask in the build script:
+
+
+	// include Fake libs
+	#I @"tools\FAKE"
+	#r "FakeLib.dll"
+
+	// include CustomTask
+	#r "MyCustomTask.dll"
+	open Fake 
+
+	// open CustomNamespace
+	open MyCustomTask
+
+	// use custom functionality
+	RandomNumberTask.RandomNumber(2,13)
+	  |> tracefn "RandomNumber: %d"
+
+If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference FakeLib.dll and [explore the FAKE namespace](apidocs/index.html).
+
+
 # Soft dependencies
 
 Typically you will define dependencies among your targets using the `==>` and `<==` operators, and these 
@@ -183,15 +228,15 @@ With this soft dependency, running B will not require that A be run first. Howev
 ## Example
 
 	// *** Define Targets ***
-	Target.Create "Clean" (fun () -> 
+	Target "Clean" (fun () -> 
 		trace " --- Cleaning stuff --- "
 	)
 
-	Target.Create "Build" (fun () -> 
+	Target "Build" (fun () -> 
 		trace " --- Building the app --- "
 	)
 
-	Target.Create "Rebuild" DoNothing
+	Target "Rebuild" DoNothing
 
 	// *** Define Dependencies ***
 	"Build" ==> "Rebuild"
