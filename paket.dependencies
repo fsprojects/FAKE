@@ -68,7 +68,7 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://nuget.org/api/v2
-    source https://ci.appveyor.com/nuget/fake
+    //source https://ci.appveyor.com/nuget/fake
 
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
