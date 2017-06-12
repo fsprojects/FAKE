@@ -20,6 +20,7 @@ open Fake.Core.Globbing
 open Fake.Core.Globbing.Operators
 open Fake.IO.FileSystem.FileFilter
 open Fake.IO.Zip
+open Fake.IO.FileSystem
 open Fake.IO.FileSystem.Directory
 open Fake.IO.FileSystem.File
 open Fake.IO.FileSystem.Operators
