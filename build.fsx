@@ -982,7 +982,8 @@ Target "PublishNuget" (fun _ ->
 
 Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
-    cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
+    let url = environVarOrDefault "fake_git_url" "https://github.com/fsharp/FAKE.git"
+    cloneSingleBranch "" url "gh-pages" "gh-pages"
 
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
