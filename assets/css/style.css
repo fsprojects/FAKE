@@ -112,8 +112,33 @@ hr {
   margin:0px 0px 20px 0px;
 }
 
+/* Style for articles (content) */
+
+#content h2 {
+  margin: 1em 0 .5em 0;
+}
+
+#content p, #content ul, #content ol, #content dl, #content table {
+  margin-bottom: 0.9em;
+}
+
+#content ul {
+  margin-left: 2em;
+}
+
 #content ul, #content ol {
   list-style: disc;
+}
+
+#content blockquote p {
+    margin: .3em 0 .3em 0;
+}
+
+#content blockquote {
+    border-left: solid 0.5em #ddd;
+    padding: 0.1em 0 0.1em 1em;
+    font-style: italic;
+    margin: 1em 0em 1em 0em;
 }
 
 /* Make table headings and td.title bold */

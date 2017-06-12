@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,9 +170,9 @@
 
 									<!-- Content -->
                       <article>
-<h1>Adding StyleCop to a FAKE build script</h1>
+<h1><a name="Adding-StyleCop-to-a-FAKE-build-script" class="anchor" href="#Adding-StyleCop-to-a-FAKE-build-script">Adding StyleCop to a FAKE build script</a></h1>
 <p>This article explains the basics of how your source code can by analyzed using <strong>StyleCop</strong>.</p>
-<h2>Setting up StyleCop</h2>
+<h2><a name="Setting-up-StyleCop" class="anchor" href="#Setting-up-StyleCop">Setting up StyleCop</a></h2>
 <p>The <strong>StyleCop</strong> functionality is written in the default <code>Fake</code> assembly, so writing a target for <strong>Code Inspection</strong> could look like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -186,8 +192,8 @@
 </table>
 <p>That's it!
 Now <strong>StyleCop</strong> will inspect all the source files in your solution.</p>
-<h2>Move Advanced Options</h2>
-<h3>Letting the Build Fail</h3>
+<h2><a name="Move-Advanced-Options" class="anchor" href="#Move-Advanced-Options">Move Advanced Options</a></h2>
+<h3><a name="Letting-the-Build-Fail" class="anchor" href="#Letting-the-Build-Fail">Letting the Build Fail</a></h3>
 <p>The <strong>StyleCop</strong> module has the functionality to let the build fail if any violations occur. This can be configured by setting the <code>ErrorLevel</code> value in the <code>StyleCopParams</code>:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -208,7 +214,7 @@ Now <strong>StyleCop</strong> will inspect all the source files in your solution
 </tr>
 </table>
 <p>Default this <code>ErrorLevel</code> is set to <code>Warning</code> but setting it to <code>Fail</code> will let the build fail.</p>
-<h3>Using StyleCop Settings File</h3>
+<h3><a name="Using-StyleCop-Settings-File" class="anchor" href="#Using-StyleCop-Settings-File">Using StyleCop Settings File</a></h3>
 <p>The <strong>StyleCop</strong> module has the functionality to use as custom settings file with your own rules of how <strong>StyleCop</strong> must analyze your source files:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -249,9 +255,8 @@ Now <strong>StyleCop</strong> will inspect all the source files in your solution
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -264,12 +269,12 @@ Now <strong>StyleCop</strong> will inspect all the source files in your solution
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -349,7 +354,7 @@ Now <strong>StyleCop</strong> will inspect all the source files in your solution
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

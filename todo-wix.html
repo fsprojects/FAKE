@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,10 +170,10 @@
 
 									<!-- Content -->
                       <article>
-<h1>Create WiX Setup</h1>
+<h1><a name="Create-WiX-Setup" class="anchor" href="#Create-WiX-Setup">Create WiX Setup</a></h1>
 <p>If you often ship software to customers, it might be comfortable for you to install it using setups rather than manually deploying.
 FAKE provides you with support for creating MSI setups using the WiX Toolset (<a href="http://wixtoolset.org/).">http://wixtoolset.org/).</a></p>
-<h2>Minimal working example</h2>
+<h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -314,14 +320,14 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
 </code></pre></td>
 </tr>
 </table>
-<h2>Further possibilities</h2>
+<h2><a name="Further-possibilities" class="anchor" href="#Further-possibilities">Further possibilities</a></h2>
 <p>Besides just plainly shipping those files as setup you can also use the custom action and custom action execution elements to execute various commands before or after certain events during the installation.
 This gives you the possibility to for example install, uninstall, start or stop certain services when you need to.
 If your software is for example running as a service at your customer's side, you would need to manually stop and start the services on upgrades.
 WiX knows the "ServiceControl" element for starting, stopping and removing services. You attach it to components.
 If a component's files change and it has a Service Control element, the service that is referred to will be started, stopped or uninstalled, just as you defined it.
 You can use the attachServiceToControlComponents function for attaching service controls to components. You would only have to slightly change the above example:</p>
-<h3>Example</h3>
+<h3><a name="Example" class="anchor" href="#Example">Example</a></h3>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -362,9 +368,9 @@ You can use the attachServiceToControlComponents function for attaching service 
 </code></pre></td>
 </tr>
 </table>
-<h2>Registry</h2>
+<h2><a name="Registry" class="anchor" href="#Registry">Registry</a></h2>
 <p>If you need your installer to modify the registry, you can achieve this by creating a component containing <code>RegistryKey</code> and <code>RegistryValue</code> elements. A <code>RegistryKey</code> can have further keys and values nested as children.</p>
-<h3>Example</h3>
+<h3><a name="Example-1" class="anchor" href="#Example-1">Example</a></h3>
 <p>First, define the desired registry layout and add it to a new component:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -526,9 +532,8 @@ You can use the attachServiceToControlComponents function for attaching service 
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -541,12 +546,12 @@ You can use the attachServiceToControlComponents function for attaching service 
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -626,7 +631,7 @@ You can use the attachServiceToControlComponents function for attaching service 
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,11 +170,11 @@
 
 									<!-- Content -->
                       <article>
-<h1>Running database migrations with FluentMigrator</h1>
+<h1><a name="Running-database-migrations-with-FluentMigrator" class="anchor" href="#Running-database-migrations-with-FluentMigrator">Running database migrations with FluentMigrator</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p><a href="https://github.com/schambers/fluentmigrator/">FluentMigrator</a> is a .NET library which helps to version database schema using incremental migrations which are described in C#.
 The basic idea of the FAKE helper is to run FluentMigrator over the existing database using compiled assembly with migrations.</p>
-<h2>Migrating your database to the latest version</h2>
+<h2><a name="Migrating-your-database-to-the-latest-version" class="anchor" href="#Migrating-your-database-to-the-latest-version">Migrating your database to the latest version</a></h2>
 <p>FAKE's support for FluentMigrator ships with a separate NuGet package called <a href="http://www.nuget.org/packages/FAKE.FluentMigrator">FAKE.FluentMigrator</a>.
 Usually your FAKE setup will look as follows:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -235,7 +241,7 @@ Usually your FAKE setup will look as follows:</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>ConnectionStrings</h2>
+<h2><a name="ConnectionStrings" class="anchor" href="#ConnectionStrings">ConnectionStrings</a></h2>
 <p>Specify connection string in build script:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -250,7 +256,7 @@ Usually your FAKE setup will look as follows:</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Providers / drivers / SQL dialects</h2>
+<h2><a name="Providers-drivers-SQL-dialects" class="anchor" href="#Providers-drivers-SQL-dialects">Providers / drivers / SQL dialects</a></h2>
 <p>The following drivers are supported:</p>
 <ul>
 <li>SqlServer (SqlServerVersion.Default, V2000, V2005, V2008, V2012, V2014)</li>
@@ -264,7 +270,7 @@ Usually your FAKE setup will look as follows:</p>
 <li>PostgreSQL</li>
 <li>SQLite</li>
 </ul>
-<h2>Available commands</h2>
+<h2><a name="Available-commands" class="anchor" href="#Available-commands">Available commands</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -303,7 +309,7 @@ Usually your FAKE setup will look as follows:</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Advanced usage</h2>
+<h2><a name="Advanced-usage" class="anchor" href="#Advanced-usage">Advanced usage</a></h2>
 <p>For advanced usage see the <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.FluentMigrator/FluentMigratorHelper.fs">source code</a>.</p>
 
 <div class="tip" id="fs1">val assembly : string<br /><br />Full name: todofluentmigrator.assembly</div>
@@ -328,9 +334,8 @@ Usually your FAKE setup will look as follows:</p>
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -343,12 +348,12 @@ Usually your FAKE setup will look as follows:</p>
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -428,7 +433,7 @@ Usually your FAKE setup will look as follows:</p>
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

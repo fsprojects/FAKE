@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,13 +170,13 @@
 
 									<!-- Content -->
                       <article>
-<h1>Compiling F# Sources</h1>
+<h1><a name="Compiling-F-Sources" class="anchor" href="#Compiling-F-Sources">Compiling F# Sources</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>The <a href="apidocs/fake-fschelper.html">Fsc task set</a> in FAKE can be used to build F# source files and output libraries, modules,
 and executables by using the bundled
 <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
 In this tutorial we will look at these compile tasks.</p>
-<h2>The Fsc task</h2>
+<h2><a name="The-Fsc-task" class="anchor" href="#The-Fsc-task">The Fsc task</a></h2>
 <p>The <code>Fsc</code> task can be used in standard FAKE targets:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -261,7 +267,7 @@ instead, it returns the exit status of the compile process.</p>
 <p>Having an exit status code returned can be useful when you're trying to
 integrate FAKE with other build management tools, e.g. your own CI
 server or a test runner.</p>
-<h2>FscHelper.compileFiles</h2>
+<h2><a name="FscHelper-compileFiles" class="anchor" href="#FscHelper-compileFiles">FscHelper.compileFiles</a></h2>
 <p>This task is lower level than the previous one. It takes a list of
 source files and a list of strings which contains the same arguments
 you'd pass in to the <code>fsc.exe</code> command-line tool. It too prints warnings
@@ -296,9 +302,8 @@ to split the string on whitespace, and pass the resulting list into
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -311,12 +316,12 @@ to split the string on whitespace, and pass the resulting list into
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -396,7 +401,7 @@ to split the string on whitespace, and pass the resulting list into
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

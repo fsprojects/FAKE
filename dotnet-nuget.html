@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,18 +170,18 @@
 
 									<!-- Content -->
                       <article>
-<h1>NuGet package restore</h1>
+<h1><a name="NuGet-package-restore" class="anchor" href="#NuGet-package-restore">NuGet package restore</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>If you are using a source control system like <a href="http://git-scm.com/">git</a> you probably don't want to store all binary dependencies in it.
 With FAKE you can use <a href="http://nuget.codeplex.com/">NuGet</a> to download all dependent packages during the build.</p>
-<h2>Setting the stage for NuGet</h2>
+<h2><a name="Setting-the-stage-for-NuGet" class="anchor" href="#Setting-the-stage-for-NuGet">Setting the stage for NuGet</a></h2>
 <p>In order to download the packages during the build we need to add NuGet.exe to our repository.
 You can download the "NuGet.exe Command Line Tool" from the <a href="https://github.com/NuGet/Home/releases">release page</a>.</p>
-<h2>Restore packages from the build script</h2>
+<h2><a name="Restore-packages-from-the-build-script" class="anchor" href="#Restore-packages-from-the-build-script">Restore packages from the build script</a></h2>
 <p>Modify your build script and add <strong>RestorePackages()</strong> near the beginning of the script.
 This will use the default parameters to retrieve all NuGet packages specified in <em>"./**/packages.config"</em> files.</p>
 <p>If you need to use different parameters please use the <a href="apidocs/fake-restorepackagehelper.html">RestorePackage</a> task directly.</p>
-<h2>Download latest version of FAKE via NuGet</h2>
+<h2><a name="Download-latest-version-of-FAKE-via-NuGet" class="anchor" href="#Download-latest-version-of-FAKE-via-NuGet">Download latest version of FAKE via NuGet</a></h2>
 <p>If you don't want to store FAKE.exe and its components in your repository, you can use a batch file which downloads it before the build:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -189,9 +195,9 @@ cls
 "tools\FAKE\tools\Fake.exe" build.fsx
 pause
 </code></pre></td></tr></table>
-<h1>Creating NuGet packages</h1>
+<h1><a name="Creating-NuGet-packages" class="anchor" href="#Creating-NuGet-packages">Creating NuGet packages</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
-<h2>Creating a .nuspec template</h2>
+<h2><a name="Creating-a-nuspec-template" class="anchor" href="#Creating-a-nuspec-template">Creating a .nuspec template</a></h2>
 <p>The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
 The following code shows such .nuspec file from the <a href="https://github.com/octokit/octokit.net">OctoKit</a> project.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -296,7 +302,7 @@ It also contains some specific information like the copyright which is not handl
 </tbody>
 </table>
 
-<h2>Setting up the build script</h2>
+<h2><a name="Setting-up-the-build-script" class="anchor" href="#Setting-up-the-build-script">Setting up the build script</a></h2>
 <p>In the build script you need to create a target which executes the <a href="apidocs/fake-nugethelper.html">NuGet task</a>:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -343,7 +349,7 @@ It also contains some specific information like the copyright which is not handl
 <li>created the NuGet package</li>
 <li>pushed it to <a href="http://www.nuget.org">nuget.org</a> using the given <code>myAccessKey</code>.</li>
 </ul>
-<h2>Handling package dependencies</h2>
+<h2><a name="Handling-package-dependencies" class="anchor" href="#Handling-package-dependencies">Handling package dependencies</a></h2>
 <p>If your project dependends on other projects it is possible to specify these dependencies in the .nuspec definition (see also <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above">Nuget docs</a>).
 Here is a small sample which sets up dependencies for different framework versions:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -390,7 +396,7 @@ Here is a small sample which sets up dependencies for different framework versio
 </code></pre></td>
 </tr>
 </table>
-<h2>Explicit assembly references</h2>
+<h2><a name="Explicit-assembly-references" class="anchor" href="#Explicit-assembly-references">Explicit assembly references</a></h2>
 <p>If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the <code>lib</code> directory and explicitly specify which of them should be referenced (see <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above">Nuget docs</a>) via the <code>References</code> and <code>ReferencesByFramework</code> fields.
 Here is a code snippet showing how to use these:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -419,7 +425,7 @@ Here is a code snippet showing how to use these:</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Explicit file specifications</h2>
+<h2><a name="Explicit-file-specifications" class="anchor" href="#Explicit-file-specifications">Explicit file specifications</a></h2>
 <p>If you want to specify exactly what files are packaged and where they are placed in the resulting NuGet package you can specify the Files property directly.  This is exactly like having the Files element of a nuspec filled out ahead of time.
 Here is a code snippet showing how to use this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -474,9 +480,8 @@ Here is a code snippet showing how to use this:</p>
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -489,12 +494,12 @@ Here is a code snippet showing how to use this:</p>
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -574,7 +579,7 @@ Here is a code snippet showing how to use this:</p>
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

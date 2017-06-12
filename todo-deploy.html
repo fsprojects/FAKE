@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,17 +170,17 @@
 
 									<!-- Content -->
                       <article>
-<h1>Deployment using FAKE</h1>
+<h1><a name="Deployment-using-FAKE" class="anchor" href="#Deployment-using-FAKE">Deployment using FAKE</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>This introduction assumes Fake.Deploy.exe is available in the current directory or path.</p>
-<h2>Introduction</h2>
+<h2><a name="Introduction" class="anchor" href="#Introduction">Introduction</a></h2>
 <p>The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows:</p>
 <ul>
 <li>Build an application -&gt; run tests -&gt; create artifacts and save on build server (Classical FAKE build workflow)</li>
 <li>Extract artifacts from build server and create a NuGet deployment package</li>
 <li>Push the NuGet package to the desired computer this will run the package's FAKE script on the remote machine</li>
 </ul>
-<h2>Installing Fake deployment services</h2>
+<h2><a name="Installing-Fake-deployment-services" class="anchor" href="#Installing-Fake-deployment-services">Installing Fake deployment services</a></h2>
 <p>In order to deploy application to a remote computer a deployment agent needs to be running on that server.</p>
 <p>The simplest way to install the agent on a remote server is to use the <a href="http://docs.nuget.org/consume/installing-nuget">Nuget command line tool</a> to download the FAKE nuget and extract the binaries into a <em>fake/tools</em> subfolder.  Once  <em>nuget.exe</em> is available on the path, use the following command in a command shell:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -207,14 +213,14 @@ and changing</p>
 <p>to the desired value. If you use the asterisk as port no. then Fake.Deploy will assign the first open port behind of 8080.</p>
 <p>To ensure the service is running you can navigate to <a href="http://{computer}:{port}/fake/">http://{computer}:{port}/fake/</a> and you should be presented with a page giving the
 status if the service</p>
-<h2>Uninstalling Fake deployment services</h2>
+<h2><a name="Uninstalling-Fake-deployment-services" class="anchor" href="#Uninstalling-Fake-deployment-services">Uninstalling Fake deployment services</a></h2>
 <p>To uninstall an agent</p>
 <ul>
 <li>Open a command prompt with Administrator Privilege</li>
 <li>Run Fake.Deploy /uninstall</li>
 </ul>
-<h2>Running a FAKE Deployment Package</h2>
-<h2>Getting help</h2>
+<h2><a name="Running-a-FAKE-Deployment-Package" class="anchor" href="#Running-a-FAKE-Deployment-Package">Running a FAKE Deployment Package</a></h2>
+<h2><a name="Getting-help" class="anchor" href="#Getting-help">Getting help</a></h2>
 <p>If you want to learn about Fake.Deploy's command line switches then run:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -222,10 +228,10 @@ status if the service</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Creating a Deployment package</h2>
+<h2><a name="Creating-a-Deployment-package" class="anchor" href="#Creating-a-Deployment-package">Creating a Deployment package</a></h2>
 <p>Since Fake.Deploy uses Nuget packages for deployment you only need to create one of those and include a .fsx file in the root folder of the package.</p>
 <p>Instructions for creating nuget packages can be found <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package">at the NuGet document page</a></p>
-<h2>Running deployment</h2>
+<h2><a name="Running-deployment" class="anchor" href="#Running-deployment">Running deployment</a></h2>
 <p>Fake deployment packages can be run manually on the current machine or they can be pushed to an agent on a remote machine.</p>
 <p>To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -244,7 +250,7 @@ status if the service</p>
 <p>It's also possible to just make a HTTP-POST with the package to <a href="http://integration-1:8080/fake">http://integration-1:8080/fake</a></p>
 <p>This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the
 listening agent (see. Installing Fake deployment service)</p>
-<h2>Getting information about the deployments</h2>
+<h2><a name="Getting-information-about-the-deployments" class="anchor" href="#Getting-information-about-the-deployments">Getting information about the deployments</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">The</span> <span class="id">following</span> <span class="id">assumes</span> <span class="id">you</span> <span class="id">have</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Deploy</span> <span class="id">running</span><span class="pn">.</span>
@@ -264,7 +270,7 @@ listening agent (see. Installing Fake deployment service)</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Rollback of releases</h2>
+<h2><a name="Rollback-of-releases" class="anchor" href="#Rollback-of-releases">Rollback of releases</a></h2>
 <p>If you want to perform a rollback of a release so do a HTTP-PUT to:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -274,7 +280,7 @@ listening agent (see. Installing Fake deployment service)</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Security</h2>
+<h2><a name="Security" class="anchor" href="#Security">Security</a></h2>
 <p>To turn on authentication in Fake.Deploy set the configuration value for 'Authorization' to 'On' (default is 'Off') in fake.deploy.config.
 When you set this value to 'On' you must also set the configuration key 'AuthorizedKeysFile' to point to a file that that contains the mapping between keys and usernames.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -287,7 +293,7 @@ When you set this value to 'On' you must also set the configuration key 'Authori
 </table>
 <p>If you deploy from a fake buildscript you need to make a call to <code>FakeDeployAgentHelper.authenticate</code> before you perfrom any other call to the agent.
 <code>authenticate</code> takes 4 parameters, <code>server</code>, <code>userId</code>, <code>pathToPrivateKey</code> and the <code>password</code> for the private key</p>
-<h3>AuthorizedKeysFile</h3>
+<h3><a name="AuthorizedKeysFile" class="anchor" href="#AuthorizedKeysFile">AuthorizedKeysFile</a></h3>
 <p>Is a rsa-pub key file where each line represents one user.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -306,7 +312,7 @@ When you set this value to 'On' you must also set the configuration key 'Authori
 </code></pre></td>
 </tr>
 </table>
-<h3>How to authorize against Fake.Deploy</h3>
+<h3><a name="How-to-authorize-against-Fake-Deploy" class="anchor" href="#How-to-authorize-against-Fake-Deploy">How to authorize against Fake.Deploy</a></h3>
 <p>First you must perform a HTTP-GET to:
 fake/login/yourUserId</p>
 <p>From the response from this request, you take the body and base64 decode it, then you sign that value with your private key.
@@ -320,7 +326,7 @@ There are 2 values you need to supply in the HTTP-POST.</p>
 <p>The body of the response from the HTTP-POST contains a guid, this guid should be passed in the header with the name <code>AuthToken</code>.
 To logout make a HTTP-GET to:
 fake/logout</p>
-<h3>How do I generate a key on Windows?</h3>
+<h3><a name="How-do-I-generate-a-key-on-Windows" class="anchor" href="#How-do-I-generate-a-key-on-Windows">How do I generate a key on Windows?</a></h3>
 <p>Get <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTYgen</a>.
 Run it.
 Make sure the key is 'SSH-2 RSA' and number of bits is (at least) 2048.
@@ -328,7 +334,7 @@ Click <code>Generate</code> and follow the instructions to genereate the key.
 When the key is generated, change <code>Key comment</code> to be your username and set a passphrase.
 Then save the public key, you need to put this into Fake.Deploy's authorized keys file.
 To save the private key, click <code>Conversions</code> menu option and then click <code>Export OpenSSH key</code></p>
-<h3>Linux</h3>
+<h3><a name="Linux" class="anchor" href="#Linux">Linux</a></h3>
 <p>ssh-keygen -t rsa -b 2048 -N password</p>
 
 
@@ -350,9 +356,8 @@ To save the private key, click <code>Conversions</code> menu option and then cli
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -365,12 +370,12 @@ To save the private key, click <code>Conversions</code> menu option and then cli
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -450,7 +455,7 @@ To save the private key, click <code>Conversions</code> menu option and then cli
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

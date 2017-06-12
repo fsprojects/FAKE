@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,7 +170,7 @@
 
 									<!-- Content -->
                       <article>
-<h1>Getting started with FAKE - F# Make</h1>
+<h1><a name="Getting-started-with-FAKE-F-Make" class="anchor" href="#Getting-started-with-FAKE-F-Make">Getting started with FAKE - F# Make</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found <a href="fake-gettingstarted.html">here</a></strong></p>
 <p>In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:</p>
 <ul>
@@ -174,9 +180,9 @@
 <li>how to automatically run NUnit tests on your projects</li>
 <li>how to zip the output to a deployment folder</li>
 </ul>
-<h2>Install the F# compiler</h2>
+<h2><a name="Install-the-F-compiler" class="anchor" href="#Install-the-F-compiler">Install the F# compiler</a></h2>
 <p>"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.</p>
-<h2>Download Calculator Sample</h2>
+<h2><a name="Download-Calculator-Sample" class="anchor" href="#Download-Calculator-Sample">Download Calculator Sample</a></h2>
 <p>Now download the latest <a href="http://fsharp.github.io/FAKE/FAKE-Calculator.zip">FAKE-Calculator.zip</a> from the <a href="https://github.com/fsharp/FAKE">FAKE project site</a>. This sample includes 3 tiny projects and has basically the following structure:</p>
 <ul>
 <li>
@@ -211,7 +217,7 @@ tools
 <li>completeBuild.fsx</li>
 <li>Calculator.sln</li>
 </ul>
-<h2>Getting "FAKE - F# Make" started</h2>
+<h2><a name="Getting-FAKE-F-Make-started" class="anchor" href="#Getting-FAKE-F-Make-started">Getting "FAKE - F# Make" started</a></h2>
 <p>In the root of the project you will find a build.bat file:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -239,7 +245,7 @@ pause
 </code></pre></td></tr></table>
 <p>If you run this batch file from the command line then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded from nuget.org</a> and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:</p>
 <p><img src="pics/gettingstarted/afterdownloadpaket.png" alt="alt text" title="Run the batch file" /></p>
-<h3>Specifying dependencies</h3>
+<h3><a name="Specifying-dependencies" class="anchor" href="#Specifying-dependencies">Specifying dependencies</a></h3>
 <p>Open the <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code> file</a> in your project's root and specify a dependency in it. Currently it looks like the following:
 The file might look like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -272,7 +278,7 @@ The file might look like this:</p>
 </code></pre></td>
 </tr>
 </table>
-<h3>The build script</h3>
+<h3><a name="The-build-script" class="anchor" href="#The-build-script">The build script</a></h3>
 <p>Now open the <em>build.fsx</em> in Visual Studio or any text editor. It should look like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -303,7 +309,7 @@ The file might look like this:</p>
 <p>As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.</p>
 <p>After this header the <em>Default</em> target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").</p>
 <p>The last line runs the "Default" target - which means it executes the defined action of the target.</p>
-<h2>Cleaning the last build output</h2>
+<h2><a name="Cleaning-the-last-build-output" class="anchor" href="#Cleaning-the-last-build-output">Cleaning the last build output</a></h2>
 <p>A typical first step in most build scenarios is to clean the output of the last build. We can achieve this by modifying the <em>build.fsx</em> to the following:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -357,7 +363,7 @@ The file might look like this:</p>
 <p>In the <em>Clean</em> target we use the CleanDir task to clean up this build directory. This simply deletes all files in the folder or creates the directory if necessary.</p>
 <p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will be run before the execution of <em>Default</em>:</p>
 <p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
-<h2>Compiling the application</h2>
+<h2><a name="Compiling-the-application" class="anchor" href="#Compiling-the-application">Compiling the application</a></h2>
 <p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -426,7 +432,7 @@ The file might look like this:</p>
 <p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
 <p>This means the execution order is: Clean ==&gt; BuildApp ==&gt; Default.</p>
 <p><img src="pics/gettingstarted/aftercompile.png" alt="alt text" title="We introduced a Build target" /></p>
-<h2>Compiling test projects</h2>
+<h2><a name="Compiling-test-projects" class="anchor" href="#Compiling-test-projects">Compiling test projects</a></h2>
 <p>Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -554,7 +560,7 @@ The file might look like this:</p>
 </tr>
 </table>
 <p>This will fetch nuget.exe from nuget.org and also download an early version of NUnit that contains the NUnit runner. The edit to <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code></a> does not replace the RestorePackages() step. The NUnit.Test.CalculatorLib test project references the NUnit version 2.6.2 library, so we need that version too.</p>
-<h2>Running the tests with NUnit</h2>
+<h2><a name="Running-the-tests-with-NUnit" class="anchor" href="#Running-the-tests-with-NUnit">Running the tests with NUnit</a></h2>
 <p>Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -678,7 +684,7 @@ The file might look like this:</p>
 </code></pre></td>
 </tr>
 </table>
-<h2>Deploying a zip file</h2>
+<h2><a name="Deploying-a-zip-file" class="anchor" href="#Deploying-a-zip-file">Deploying a zip file</a></h2>
 <p>Now we want to deploy a *.zip file containing our application:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -803,7 +809,7 @@ The file might look like this:</p>
 </tr>
 </table>
 <p>The new <em>Deploy</em> target scans the build directory for all files. The result will be zipped to <em>/deploy/Calculator.zip</em> via the Zip task.</p>
-<h2>What's next?</h2>
+<h2><a name="What-s-next" class="anchor" href="#What-s-next">What's next?</a></h2>
 <p>If you want you could now <a href="fxcop.html">add a FxCop target</a> to your build in order to check specific naming rules or framework guidelines.</p>
 
 
@@ -825,9 +831,8 @@ The file might look like this:</p>
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -840,12 +845,12 @@ The file might look like this:</p>
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -925,7 +930,7 @@ The file might look like this:</p>
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

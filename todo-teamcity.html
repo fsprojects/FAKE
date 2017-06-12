@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,29 +170,29 @@
 
 									<!-- Content -->
                       <article>
-<h1>Integrating a FAKE build script into TeamCity</h1>
+<h1><a name="Integrating-a-FAKE-build-script-into-TeamCity" class="anchor" href="#Integrating-a-FAKE-build-script-into-TeamCity">Integrating a FAKE build script into TeamCity</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>Easy <a href="http://www.jetbrains.com/teamcity/">TeamCity</a> integration was one of the major goals for the FAKE build system.</p>
 <p>In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the <a href="gettingstarted.html">getting started guide</a>.</p>
-<h2>Installing TeamCity</h2>
+<h2><a name="Installing-TeamCity" class="anchor" href="#Installing-TeamCity">Installing TeamCity</a></h2>
 <p>You can download the free professional edition of TeamCity from <a href="http://www.jetbrains.com/teamcity/"><a href="http://www.jetbrains.com/teamcity/">http://www.jetbrains.com/teamcity/</a></a>. After the installation process you should be ready to configure your first build.</p>
-<h2>Creating a FAKE project on TeamCity</h2>
+<h2><a name="Creating-a-FAKE-project-on-TeamCity" class="anchor" href="#Creating-a-FAKE-project-on-TeamCity">Creating a FAKE project on TeamCity</a></h2>
 <p>Now create a new project and add a build configuration:</p>
 <p><img src="pics/teamcity/createproject.png" alt="alt text" title="Creating a FAKE project on TeamCity" /></p>
 <p>You also need to set the artifacts paths:</p>
 <p><img src="pics/teamcity/generalsettings.png" alt="alt text" title="Set the settings" /></p>
-<h2>Attach a VCS root</h2>
+<h2><a name="Attach-a-VCS-root" class="anchor" href="#Attach-a-VCS-root">Attach a VCS root</a></h2>
 <p>The next step is to attach a VCS root. For this sample we will use the official FAKE repository at <a href="https://github.com/forki/FAKE/"><a href="https://github.com/forki/FAKE/">https://github.com/forki/FAKE/</a></a>.</p>
 <p><img src="pics/teamcity/vcsroot.png" alt="alt text" title="Set up the VCS root" />
 <img src="pics/teamcity/auth.png" alt="alt text" title="Set up the VCS root authentication" />
 <img src="pics/teamcity/checkoutrules.png" alt="alt text" title="Set up the VCS root checkout rules" /></p>
-<h2>Creating the build step</h2>
+<h2><a name="Creating-the-build-step" class="anchor" href="#Creating-the-build-step">Creating the build step</a></h2>
 <p>Now is the time to create two build steps. The first one downloads FAKE via Nuget and the second one runs the build script:</p>
 <p><img src="pics/teamcity/buildstep1.png" alt="alt text" title="Download FAKE" />
 <img src="pics/teamcity/buildstep2.png" alt="alt text" title="Run FAKE script" /></p>
 <p>If you want you could also add a build trigger to your build script:</p>
 <p><img src="pics/teamcity/trigger.png" alt="alt text" title="Set up the build trigger" /></p>
-<h2>Running the build</h2>
+<h2><a name="Running-the-build" class="anchor" href="#Running-the-build">Running the build</a></h2>
 <p>Now if everything is configured correctly, you can run your build and the output should look like:</p>
 <p><img src="pics/teamcity/output.png" alt="alt text" title="Build output" /></p>
 <p>You can also inspect the NUnit results:</p>
@@ -211,9 +217,8 @@
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -226,12 +231,12 @@
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -311,7 +316,7 @@
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

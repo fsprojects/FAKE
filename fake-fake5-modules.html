@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,9 +170,121 @@
 
 									<!-- Content -->
                       <article>
-<h1>FAKE 5 - Custom Modules</h1>
-<p>To be written.</p>
+<h1><a name="FAKE-5-Custom-Modules" class="anchor" href="#FAKE-5-Custom-Modules">FAKE 5 - Custom Modules</a></h1>
+<h2><a name="Requirements-to-modules" class="anchor" href="#Requirements-to-modules">Requirements to modules</a></h2>
+<p>You can use any NuGet packages which are compatible with <code>netcore10</code>, for example all packages targeting <code>netstandard16</code> or lower.</p>
+<h2><a name="Declaring-module-dependencies" class="anchor" href="#Declaring-module-dependencies">Declaring module dependencies</a></h2>
+<h3><a name="Reference-paket-group" class="anchor" href="#Reference-paket-group">Reference paket group</a></h3>
+<p>Create a new file <code>paket.dependencies</code> and add the following content</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// [ FAKE GROUP ]</span>
+<span class="id">group</span> <span class="id">NetcoreBuild</span>
+    <span class="id">source</span> <span class="id">https</span><span class="pn">:</span><span class="c">//nuget.org/api/v2</span>
 
+    <span class="id">nuget</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Targets</span> <span class="id">prerelease</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Now you can directly use <code>open Fake.Core.Targets</code> and use the <a href="core-targets.html">targets module</a>.</p>
+<p>For example create a new file <code>build.fsx</code> with</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Use this for IDE support. Not required by FAKE 5. Change &quot;build.fsx&quot; to the name of your script.</span>
+<span class="pp">#load</span> <span class="s">&quot;.fake/build.fsx/loadDependencies.fsx&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Targets</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;MyBuild&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">printfn</span> <span class="s">&quot;MyBuild&quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;MyBuild&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>and execute <code>fake run build.fsx</code>. This works for all FAKE 5 modules, just add other <code>nuget Fake.Other.Module prerelease</code> files to the <code>paket.dependencies</code> file.</p>
+<p>Please read introduction about <a href="https://fsprojects.github.io/Paket/">Paket</a> for more information about the <code>paket.dependencies</code> file.</p>
+<blockquote>
+<p>Note: This works because by default FAKE 5 searches for a group annotated with the <code>// [ FAKE GROUP ]</code> comment.</p>
+</blockquote>
+<h2><a name="Declaring-FAKE-5-Header" class="anchor" href="#Declaring-FAKE-5-Header">Declaring FAKE 5 Header</a></h2>
+<p>To get more control over this FAKE 5 behavior you can explicitely set a header to the build script.</p>
+<h3><a name="General-Fake-HEADER" class="anchor" href="#General-Fake-HEADER">General Fake HEADER</a></h3>
+<p>To tell Fake which dependencies are needed a script can start with a header as well:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies ***header***</span>
+<span class="c">*** Dependencies ***</span>
+<span class="c">-- Fake Dependencies -- *)</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>The last line <code>#load</code> is not requiredby FAKE 5, however
+this way the file can still be edited in editors (after restoring packages initially).
+Fake will write a <code>loadDependencies.fsx</code> file for you importing all required references.</p>
+<p>There are two headers known by Fake:</p>
+<h3><a name="Reference-paket-group-1" class="anchor" href="#Reference-paket-group-1">Reference paket group</a></h3>
+<p>To reference a FAKE group explicitely you can put the following at the top of your build script</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket.dependencies</span>
+<span class="c">file ./paket.dependencies</span>
+<span class="c">group netcorebuild</span>
+<span class="c">-- Fake Dependencies -- *)</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>This header will reference a <code>paket.dependencies</code> file and a group within.</p>
+<h3><a name="Inline-dependencies" class="anchor" href="#Inline-dependencies">Inline dependencies</a></h3>
+<p>To write your build dependencies in-line you can put the following at the top of your build script</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
+<span class="c">source https://nuget.org/api/v2</span>
+
+<span class="c">nuget Fake.Core.Targets prerelease</span>
+<span class="c">-- Fake Dependencies -- *)</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>This has the advantage that your build-script is now "standalone" and no separate <code>paket.dependencies</code> is required.
+We still recommend to add (<code>git add -f</code>, because usually you have <code>.fake</code> folder gitignored) the generated <code>paket.lock</code> (in <code>.fake/&lt;scriptName&gt;/</code>) to your repository to have reproducable script runs.</p>
+<h2><a name="Using-module-dependencies" class="anchor" href="#Using-module-dependencies">Using module dependencies</a></h2>
+<p>You use the modules as documented in their corresponding help section.</p>
+<p>But usually it's:
+- <code>open Fake.&lt;Namespace&gt;</code> for example <code>open Fake.Core</code>
+- Using the features</p>
+
+<div class="tip" id="fs1">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printfn</div>
 
                       </article>
 								</div>
@@ -186,9 +304,8 @@
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -201,12 +318,12 @@
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -286,7 +403,7 @@
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

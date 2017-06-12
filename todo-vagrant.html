@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,12 +170,12 @@
 
 									<!-- Content -->
                       <article>
-<h1>How to use Vagrant and quickly setup a reproducible development environment for FAKE</h1>
+<h1><a name="How-to-use-Vagrant-and-quickly-setup-a-reproducible-development-environment-for-FAKE" class="anchor" href="#How-to-use-Vagrant-and-quickly-setup-a-reproducible-development-environment-for-FAKE">How to use Vagrant and quickly setup a reproducible development environment for FAKE</a></h1>
 <p>Since <a href="https://github.com/fsharp/FAKE/pull/711">#711</a>, it is possible to deploy an fresh Ubuntu
 Linux virtual machine with one simple command thanks to <a href="https://www.vagrantup.com/">Vagrant</a>. Here
 is how to proceed...</p>
-<h1>Install the system-wide prerequisites</h1>
-<h2>VirtualBox and its Extension Pack</h2>
+<h1><a name="Install-the-system-wide-prerequisites" class="anchor" href="#Install-the-system-wide-prerequisites">Install the system-wide prerequisites</a></h1>
+<h2><a name="VirtualBox-and-its-Extension-Pack" class="anchor" href="#VirtualBox-and-its-Extension-Pack">VirtualBox and its Extension Pack</a></h2>
 <blockquote>
 <p>VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as
 home use. Not only is VirtualBox an extremely feature rich, high performance product for
@@ -178,7 +184,7 @@ Source Software under the terms of the GNU General Public License (GPL) version 
 </blockquote>
 <p>You can install VirtualBox and the VirtualBox Extension Pack from <a href="https://www.virtualbox.org/wiki/Downloads">www.virtualbox.org/wiki/Downloads</a>
 or with your package manager.</p>
-<h2>Vagrant</h2>
+<h2><a name="Vagrant" class="anchor" href="#Vagrant">Vagrant</a></h2>
 <blockquote>
 <p>Vagrant is a tool for building complete development environments. With an easy-to-use workflow
 and focus on automation, Vagrant lowers development environment setup time, increases
@@ -186,7 +192,7 @@ development/production parity, and makes the "works on my machine" excuse a reli
 </blockquote>
 <p>You can install Vagrant from <a href="https://www.vagrantup.com/downloads.html">www.vagrantup.com/downloads.html</a>
 or with your package manager.</p>
-<h1>Start a new VM</h1>
+<h1><a name="Start-a-new-VM" class="anchor" href="#Start-a-new-VM">Start a new VM</a></h1>
 <p>Simply <code>cd</code> to the root directory of the FAKE source code and run <code>vagrant up</code>.</p>
 <p>The VM will be automatically downloaded, imported into VirtualBox, configured and started. The FAKE
 source directory is automatically shared with the VM under the <code>/vagrant</code> directory.</p>
@@ -203,7 +209,7 @@ As example, you can directly invoke the <code>build.sh</code> script with the
 <li>Re-run <code>vagrant up</code> to reload the VM.</li>
 </ul>
 <p>The full command line documentation is available at <a href="https://docs.vagrantup.com/">docs.vagrantup.com</a>.</p>
-<h1>Further information</h1>
+<h1><a name="Further-information" class="anchor" href="#Further-information">Further information</a></h1>
 <ul>
 <li><a href="https://docs.vagrantup.com/v2/">Vagrant Documentation</a></li>
 <li><a href="https://github.com/mitchellh/vagrant">Vagrant on GitHub</a></li>
@@ -230,9 +236,8 @@ As example, you can directly invoke the <code>build.sh</code> script with the
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -245,12 +250,12 @@ As example, you can directly invoke the <code>build.sh</code> script with the
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -330,7 +335,7 @@ As example, you can directly invoke the <code>build.sh</code> script with the
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

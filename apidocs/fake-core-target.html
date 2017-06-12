@@ -90,6 +90,7 @@
 																<li><a href="../404.html">Testing - NUnit</a></li>
 																<li><a href="../404.html">Testing - MSpec</a></li>
 																<li><a href="../404.html">Testing - XUnit2</a></li>
+																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
 																<li><a href="../404.html">Paket</a></li>
 															</ul>
@@ -107,6 +108,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../404.html">Testing</a>
+															<ul>
+																<li><a href="../testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -115,7 +122,6 @@
 																<li><a href="../todo-wix.html">Windows.WiX</a></li>
 																<li><a href="../todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="../todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="../todo-iis.html">?.?.IIS</a></li>
@@ -169,9 +175,469 @@
 
 <h1>Target</h1>
 <div class="xmldoc">
-<p>A Target can be run during the build</p>
-
 </div>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-target-builderror.html">BuildError</a>
+          </td>
+          <td class="xmldoc"><p>Represents build errors</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-target-targetparameter.html">TargetParameter</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1234', 1234)" onmouseover="showTip(event, '1234', 1234)">
+            ActivateBuildFailureTarget name
+          </code>
+          <div class="tip" id="1234">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L553-553" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Activates the BuildFailureTarget.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1235', 1235)" onmouseover="showTip(event, '1235', 1235)">
+            ActivateFinalTarget name
+          </code>
+          <div class="tip" id="1235">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L563-563" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Activates the FinalTarget.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1236', 1236)" onmouseover="showTip(event, '1236', 1236)">
+            BuildFailureTarget name body
+          </code>
+          <div class="tip" id="1236">
+            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L548-548" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Registers a BuildFailureTarget (not activated).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1237', 1237)" onmouseover="showTip(event, '1237', 1237)">
+            Create name body
+          </code>
+          <div class="tip" id="1237">
+            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L218-218" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a Target.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1238', 1238)" onmouseover="showTip(event, '1238', 1238)">
+            DoNothing ()
+          </code>
+          <div class="tip" id="1238">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L129-129" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1239', 1239)" onmouseover="showTip(event, '1239', 1239)">
+            FinalTarget name body
+          </code>
+          <div class="tip" id="1239">
+            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L558-558" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Registers a final target (not activated).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1240', 1240)" onmouseover="showTip(event, '1240', 1240)">
+            Get name
+          </code>
+          <div class="tip" id="1240">
+            <strong>Signature:</strong> name:string -&gt; Target<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L97-97" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets a target with the given name from the target dictionary.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1241', 1241)" onmouseover="showTip(event, '1241', 1241)">
+            Print ()
+          </code>
+          <div class="tip" id="1241">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L306-306" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Prints all targets.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1242', 1242)" onmouseover="showTip(event, '1242', 1242)">
+            PrintDependencyGraph verbose target
+          </code>
+          <div class="tip" id="1242">
+            <strong>Signature:</strong> verbose:bool -&gt; target:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L350-350" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes a dependency graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1243', 1243)" onmouseover="showTip(event, '1243', 1243)">
+            removeCurrentTargetOrder 
+          </code>
+          <div class="tip" id="1243">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L479-479" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1244', 1244)" onmouseover="showTip(event, '1244', 1244)">
+            removeErrors 
+          </code>
+          <div class="tip" id="1244">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L227-227" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1245', 1245)" onmouseover="showTip(event, '1245', 1245)">
+            removeLastDescription 
+          </code>
+          <div class="tip" id="1245">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L36-36" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1246', 1246)" onmouseover="showTip(event, '1246', 1246)">
+            Run ()
+          </code>
+          <div class="tip" id="1246">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L582-582" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the target given by the target parameter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1247', 1247)" onmouseover="showTip(event, '1247', 1247)">
+            RunOrDefault defaultTarget
+          </code>
+          <div class="tip" id="1247">
+            <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L574-574" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the target given by the target parameter or the given default target</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1248', 1248)" onmouseover="showTip(event, '1248', 1248)">
+            RunOrList ()
+          </code>
+          <div class="tip" id="1248">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L577-577" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the target given by the target parameter or lists the available targets</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1249', 1249)" onmouseover="showTip(event, '1249', 1249)">
+            RunSimple name
+          </code>
+          <div class="tip" id="1249">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L108-108" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1250', 1250)" onmouseover="showTip(event, '1250', 1250)">
+            RunTarget targetName
+          </code>
+          <div class="tip" id="1250">
+            <strong>Signature:</strong> targetName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L568-568" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs a Target and its dependencies</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1251', 1251)" onmouseover="showTip(event, '1251', 1251)">
+            setCurrentTargetOrder 
+          </code>
+          <div class="tip" id="1251">
+            <strong>Signature:</strong> string list list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L479-479" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1252', 1252)" onmouseover="showTip(event, '1252', 1252)">
+            setErrors 
+          </code>
+          <div class="tip" id="1252">
+            <strong>Signature:</strong> BuildError list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L227-227" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1253', 1253)" onmouseover="showTip(event, '1253', 1253)">
+            setLastDescription 
+          </code>
+          <div class="tip" id="1253">
+            <strong>Signature:</strong> string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L36-36" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1254', 1254)" onmouseover="showTip(event, '1254', 1254)">
+            setPrintStackTraceOnError 
+          </code>
+          <div class="tip" id="1254">
+            <strong>Signature:</strong> bool -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L30-30" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1255', 1255)" onmouseover="showTip(event, '1255', 1255)">
+            WriteTaskTimeSummary total
+          </code>
+          <div class="tip" id="1255">
+            <strong>Signature:</strong> total:&#39;?15285 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?15285          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L379-379" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes a build time report.</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
                       </article>
 								</div>
@@ -191,9 +657,8 @@
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="../404.html">Quickstart</a></li>
-											<li><a href="../404.html">Installation</a></li>
-											<li><a href="../404.html">Modules</a></li>
+											<li><a href="../fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="../fake-fake5-modules.html">Modules</a></li>
 											<li><a href="../404.html">FAKE Header</a></li>
 											<li><a href="../404.html">Git</a></li>
 										</ul>
@@ -206,12 +671,12 @@
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="../404.html">Paket</a></li>
-											<li><a href="../404.html">FSharp Formatting</a></li>
-											<li><a href="../404.html">F#</a></li>
-											<li><a href="../404.html">Ionide</a></li>
-											<li><a href="../404.html">Forge</a></li>
-											<li><a href="../404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -291,7 +756,7 @@
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="../assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="../assets/js/jquery.min.js"></script>
 			<script src="../assets/js/jquery.dropotron.min.js"></script>
 			<script src="../assets/js/skel.min.js"></script>

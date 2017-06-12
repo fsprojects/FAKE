@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,8 +170,99 @@
 
 									<!-- Content -->
                       <article>
-<h1>FAKE 5 - Custom Modules</h1>
-<p>To be written.</p>
+<h1><a name="FAKE-5-Custom-Modules" class="anchor" href="#FAKE-5-Custom-Modules">FAKE 5 - Custom Modules</a></h1>
+<p>"FAKE - F# Make" is intended to be an extensible build framework and therefore it should be as easy as possible to create custom tasks.
+This tutorial shows how to create a (very simple) custom task in C#. The same works for other .NET language like Visual Basic or F#.</p>
+<h2><a name="Creating-a-custom-task" class="anchor" href="#Creating-a-custom-task">Creating a custom task</a></h2>
+<p>Open Visual Studio and create a new C# class library called my MyCustomTask and create a class called RandomNumberTask:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="csharp"><span class="k">using</span> System;
+
+<span class="k">namespace</span> MyCustomTask
+{
+  <span class="k">public</span> <span class="k">class</span> RandomNumberTask
+  {
+    <span class="k">public</span> <span class="k">static</span> <span class="k">int</span> RandomNumber(<span class="k">int</span> min, <span class="k">int</span> max)
+    {
+      <span class="k">var</span> random <span class="o">=</span> <span class="k">new</span> Random();
+      <span class="k">return</span> random.Next(min, max);
+    }
+  }
+}
+</code></pre></td></tr></table>
+<p>Now you can build, package and upload your build task to a NuGet feed.
+There are no special requirements, you can add dependencies to your NuGet package and define the API however you like.</p>
+<blockquote>
+<p>Note: As FAKE 5 currently is a <code>netcore10</code> application you need to provide a binary in your NuGet package compatible with
+netcore. We suggest targetting <code>netstandard16</code> or lower.
+We will update FAKE 5 to target netcore20 as soon as netstandard20 is released, such that you can benefit from more APIs as soon as possible.</p>
+</blockquote>
+<p>If you want to use FAKE's standard functionality (like <a href="http://en.wikipedia.org/wiki/Glob_(programming)">globbing</a>) within your CustomTask project, just reference the corresponding NuGet package and <a href="apidocs/index.html">explore the FAKE namespace</a>.</p>
+<h2><a name="Using-the-custom-task" class="anchor" href="#Using-the-custom-task">Using the custom task</a></h2>
+<p>Assume you pushed your custom task as <code>MyTaskNuGetPackage</code> to NuGet.
+Now you can use your CustomTask in the build script, by adding the</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">nuget</span> <span class="id">MyTaskNuGetPackage</span>
+</code></pre></td>
+</tr>
+</table>
+<p>to your <a href="fake-fake5-modules.md">paket.dependencies</a>, see the relevant documentation for adding modules.
+This documentation now applies to your package too!
+One example would be:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
+<span class="c">source https://nuget.org/api/v2</span>
+
+<span class="c">nuget Fake.Core.Targets prerelease</span>
+<span class="c">nuget MyTaskNuGetPackage</span>
+<span class="c">-- Fake Dependencies -- *)</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">MyCustomTask</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;GenerateNumber&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="c">// use custom functionality</span>
+    <span class="id">RandomNumberTask</span><span class="pn">.</span><span class="id">RandomNumber</span><span class="pn">(</span><span class="n">2</span><span class="pn">,</span><span class="n">13</span><span class="pn">)</span>
+      <span class="o">|&gt;</span> <span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;GenerateNumber&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 
 
                       </article>
@@ -186,9 +283,8 @@
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -201,12 +297,12 @@
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -286,7 +382,7 @@
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

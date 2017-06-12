@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,7 +170,7 @@
 
 									<!-- Content -->
                       <article>
-<h1>FAKE 5 - Learn more</h1>
+<h1><a name="FAKE-5-Learn-more" class="anchor" href="#FAKE-5-Learn-more">FAKE 5 - Learn more</a></h1>
 <blockquote>
 <p>This is especially about the FAKE 5 update, <a href="fake-what-is-fake.html">here you can learn about FAKE</a></p>
 </blockquote>
@@ -179,7 +185,7 @@ I think we now have a good foundation to finish the remaining work.
 Therefore I decided to make the finish line of FAKE 5 a community effort.
 If your favorite module is missing, please port it and send a PR (see Open Work section below).</p>
 </blockquote>
-<h2>How stable is it? What is alpha? Should I use it?</h2>
+<h2><a name="How-stable-is-it-What-is-alpha-Should-I-use-it" class="anchor" href="#How-stable-is-it-What-is-alpha-Should-I-use-it">How stable is it? What is alpha? Should I use it?</a></h2>
 <p>First let me say that there are two distributions of FAKE 5.</p>
 <ul>
 <li>
@@ -201,51 +207,39 @@ But please use it: In the alpha phase we wan't to learn how we can handle breaki
 <p>Fake 5 and this website are already released with Fake 5, so it might be more stable than you think. It's just that
 Some APIs are still missing and others might be renamed within the alpha phase.</p>
 </blockquote>
-<h2>Modules? Packages? Paket?</h2>
+<h2><a name="Modules-Packages-Paket" class="anchor" href="#Modules-Packages-Paket">Modules? Packages? Paket?</a></h2>
 <p>In the past it was cumbersome and hard to extend your own builds with customized logic or share logic across builds easily.
 Paket loading scripts helped a lot in that issue space, but now you have quite a lot infrastructor for simply running a build script.
 So in a sense it made sense to combine all good parts of paket, dotnet-core and the huge fake library to go to the next level. The result is a standalone, dependency free version of Fake which is modular and extendible. On top of that you can now use all the Fake 5 modules in your "regular" F# projects!</p>
 <p>You only need to know the simple <a href="http://fsprojects.github.io/Paket/dependencies-file.html">paket.dependencies</a> syntax (basically a list of nuget packages) and are able to add custom logic to your script.
 If you are in the scripting area there is not even a need to save <code>paket.dependencies</code> as a separate file. Just put it on top of the script. Fake will take care of the rest.</p>
-<h2>Open Work / Help wanted</h2>
+<h2><a name="Open-Work-Help-wanted" class="anchor" href="#Open-Work-Help-wanted">Open Work / Help wanted</a></h2>
 <p>This section describes work that still need to be done to finally release FAKE 5.</p>
 <ul>
 <li>Regulary updated issue with smaller (but blocking) work-items: <a href="https://github.com/fsharp/FAKE/issues/1523">https://github.com/fsharp/FAKE/issues/1523</a></li>
-<li>Porting modules (See Modules -&gt; Legacy), please read section below.</li>
+<li>Porting modules (See Modules -&gt; Legacy), please read the migrate modules section in the <a href="contributing.html">contribution guide</a>.</li>
 <li>Missing Obsolete Attributes in the old API (please help when you migrate and notice anything)</li>
-<li>Bootstrapping via Script + System to update scripts automatically + lock FAKE version</li>
+<li>Bootstrapping via Script and System to update scripts automatically + lock FAKE version</li>
 <li>Concept and work on how we want do document modules and module overviews (website is generated automatically)</li>
 <li>Missing documentation</li>
 <li>Update documentation</li>
 <li>Fixing issues with the new website</li>
 <li>Implement a special formatting for the obsolete warnings -&gt; parse them -&gt; suggest new API dependencies file.</li>
 </ul>
-<h2>API-Design</h2>
+<h2><a name="New-API-Design" class="anchor" href="#New-API-Design">New API-Design</a></h2>
 <p>The old API suffered from several issues:</p>
 <ul>
-<li>AutoOpen polluted the "Fake" namespace.</li>
+<li>
+<p>AutoOpen polluted the "Fake" namespace.</p>
+<p>One problem with this that some modules introduced generic function names which are perfectly valid for other modules as well. Now the second module needs to introduce a "quirk" name.</p>
+</li>
 <li>No visible structure and unified naming made it incredible hard to find an API.</li>
 </ul>
 <p>For example consider the old API <code>CreateDirectory</code> which is a globally available.
 It needs to have its context "Directory" in the name, but this means longer method names.
 Imagine <code>Directory.Create</code> it's not really that much longer - but the IDE can support me a lot more.
 This old API design lead to ambiguities and even user issues.</p>
-<p>Therefore in the new API design:</p>
-<ul>
-<li>AutoOpen is no longer used</li>
-<li>we replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></li>
-<li>
-We assume the caller is not opening the module but only the global namespaces <code>Fake.Core</code>, <code>Fake.IO</code>, ...
-and make sure the code looks nice and structured on the caller side.
-</li>
-<li>
-For compatibility reasons (migration from legacy). We assume the user doesn't open the global <code>Fake</code> namespace.
--&gt; This means we don't add anything in there in the new API.
-</li>
-<li>Old APIs are marked as Obsolete with a link (hint) to the new API location.</li>
-<li>Operators are opened seperatly with a separate <code>Operators</code> module</li>
-<li>We avoid the <code>Helpers</code> suffix (because we now expect users to write <code>&lt;module&gt;.&lt;function&gt;</code>)</li>
-</ul>
+<p>Therefore we propose a new <a href="contributing.html">API design in the contributors guide</a></p>
 
 
                       </article>
@@ -266,9 +260,8 @@ For compatibility reasons (migration from legacy). We assume the user doesn't op
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -281,12 +274,12 @@ For compatibility reasons (migration from legacy). We assume the user doesn't op
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -366,7 +359,7 @@ For compatibility reasons (migration from legacy). We assume the user doesn't op
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>

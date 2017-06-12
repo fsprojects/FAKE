@@ -91,6 +91,7 @@
 																<li><a href="404.html">Testing - NUnit</a></li>
 																<li><a href="404.html">Testing - MSpec</a></li>
 																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="404.html">Paket</a></li>
 															</ul>
@@ -108,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="404.html">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -116,7 +123,6 @@
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
-																<li><a href="todo-sonarcube.html">Testing.SonarQube</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
@@ -164,42 +170,42 @@
 
 									<!-- Content -->
                       <article>
-<h1>FAKE Command Line</h1>
+<h1><a name="FAKE-Command-Line" class="anchor" href="#FAKE-Command-Line">FAKE Command Line</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found <a href="fake-commandline.html">here</a></strong></p>
 <p><strong>Note:  This documentation is for FAKE.exe version 2.18 or later.</strong></p>
 <p>The FAKE.exe command line interface (CLI) is defined as follows:</p>
 <p><code>fake.exe [&lt;buildScriptPath&gt;] [&lt;targetName&gt;] [options]</code></p>
-<h2>Basic Examples</h2>
+<h2><a name="Basic-Examples" class="anchor" href="#Basic-Examples">Basic Examples</a></h2>
 <p><strong>No arguments:</strong> <code>fake.exe</code> (FAKE will try and locate your build script).</p>
 <p><strong>Specify build script only:</strong> <code>fake.exe mybuildscript.fsx</code></p>
 <p><strong>Specify target name only:</strong> <code>fake.exe clean</code> (runs the <code>clean</code> target).</p>
 <p><strong>Specify build script and target:</strong> <code>fake.exe mybuildscript.fsx clean</code></p>
-<h2><code>buildScriptPath</code></h2>
+<h2><a name="header" class="anchor" href="#header"><code>buildScriptPath</code></a></h2>
 <p>Optional.  The path to your <code>.fsx</code> build file.  If not specified, FAKE will pick the first <code>.fsx</code> it finds in your working directory (and fail if none exist).</p>
-<h2><code>targetName</code></h2>
+<h2><a name="header-1" class="anchor" href="#header-1"><code>targetName</code></a></h2>
 <p>Optional.  The name of the build script target you wish to run.  This will any target you specified to run in the build script.</p>
-<h2>Options</h2>
+<h2><a name="Options" class="anchor" href="#Options">Options</a></h2>
 <p>Options begin with -- (long name) or - (short name).</p>
-<h3><code>--envvar [-ev] &lt;name:string&gt; &lt;value:string&gt;</code></h3>
+<h3><a name="header-2" class="anchor" href="#header-2"><code>--envvar [-ev] &lt;name:string&gt; &lt;value:string&gt;</code></a></h3>
 <p>Set environment variable name value pair. Supports multiple.</p>
-<h3><code>--envflag [-ef] &lt;name:string&gt;</code></h3>
+<h3><a name="header-3" class="anchor" href="#header-3"><code>--envflag [-ef] &lt;name:string&gt;</code></a></h3>
 <p>Set environment variable flag name to 'true'. Supports multiple.</p>
-<h3><code>--logfile [-lf] &lt;path:string&gt;</code></h3>
+<h3><a name="header-4" class="anchor" href="#header-4"><code>--logfile [-lf] &lt;path:string&gt;</code></a></h3>
 <p>Set the build output log file path.</p>
-<h3><code>--printdetails [-pd]</code></h3>
+<h3><a name="header-5" class="anchor" href="#header-5"><code>--printdetails [-pd]</code></a></h3>
 <p>Print details of FAKE's activity.</p>
-<h3><code>--version [-v]</code></h3>
+<h3><a name="header-6" class="anchor" href="#header-6"><code>--version [-v]</code></a></h3>
 <p>Print FAKE version information.</p>
-<h3><code>--fsiargs [-fa] &lt;string&gt;</code></h3>
+<h3><a name="header-7" class="anchor" href="#header-7"><code>--fsiargs [-fa] &lt;string&gt;</code></a></h3>
 <p>Pass args after this switch to FSI when running the build script.  This consumes all arguments after it.  See <a href="http://msdn.microsoft.com/en-us/library/dd233172.aspx">F# Interactive Options</a> for the fsi CLI details.</p>
 <p>Important:  If you use this option, you must include your build script path as one of the fsi args.  For example:</p>
 <p><code>--fsiargs --debug+ buildscript.fsx someArg1 anotherArg2</code></p>
 <p>The entire argument string <em>following</em> the build script path is set as the value of an environment variable named <code>fsiargs-buildscriptargs</code>.  This means you can access this specific set of arguments from within your build script.</p>
-<h3><code>--boot [-b] &lt;string&gt;</code></h3>
+<h3><a name="header-8" class="anchor" href="#header-8"><code>--boot [-b] &lt;string&gt;</code></a></h3>
 <p>Bootstrap your FAKE script.  A bootstrapping <code>build.fsx</code> script executes twice (in two stages), allowing you to download dependencies with NuGet and do other preparatory work in the first stage, and have these dependencies available in the second stage.</p>
-<h3><code>--help [-h|/h|/help|/?]</code></h3>
+<h3><a name="header-9" class="anchor" href="#header-9"><code>--help [-h|/h|/help|/?]</code></a></h3>
 <p>Display CLI help.</p>
-<h1>Running FAKE targets from the command line</h1>
+<h1><a name="Running-FAKE-targets-from-the-command-line" class="anchor" href="#Running-FAKE-targets-from-the-command-line">Running FAKE targets from the command line</a></h1>
 <p>For this short sample we assume you have the latest version of FAKE in <em>./tools/</em>. Now consider the following small FAKE script:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -273,9 +279,8 @@ mono ./tools/FAKE.exe "$@"
 									<section>
 										<h2>Important Links</h2>
 										<ul class="divided">
-											<li><a href="404.html">Quickstart</a></li>
-											<li><a href="404.html">Installation</a></li>
-											<li><a href="404.html">Modules</a></li>
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
 											<li><a href="404.html">FAKE Header</a></li>
 											<li><a href="404.html">Git</a></li>
 										</ul>
@@ -288,12 +293,12 @@ mono ./tools/FAKE.exe "$@"
 									<section>
 										<h2>Further projects</h2>
 										<ul class="divided">
-											<li><a href="404.html">Paket</a></li>
-											<li><a href="404.html">FSharp Formatting</a></li>
-											<li><a href="404.html">F#</a></li>
-											<li><a href="404.html">Ionide</a></li>
-											<li><a href="404.html">Forge</a></li>
-											<li><a href="404.html">FSharp.Compiler.Service</a></li>
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
 										</ul>
 									</section>
 
@@ -373,7 +378,7 @@ mono ./tools/FAKE.exe "$@"
 			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
 			<script src="assets/js/tips.js" type="text/javascript"></script>
 			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
