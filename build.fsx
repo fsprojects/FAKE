@@ -18,7 +18,6 @@ open Fake.Core.ReleaseNotes
 open Fake.Core.Process
 open Fake.Core.Globbing
 open Fake.Core.Globbing.Operators
-open Fake.IO.FileSystem
 open Fake.IO.FileSystem.FileFilter
 open Fake.IO.Zip
 open Fake.IO.FileSystem.Directory
@@ -68,6 +67,8 @@ open Fake.AssemblyInfoFile
 open Fake.Testing.XUnit2
 open Fake.Testing.NUnit3
 #endif
+
+open Fake.IO.FileSystem
 
 
 // properties
