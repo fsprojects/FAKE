@@ -8,7 +8,7 @@ nuget FSharp.Core prerelease
 
 printfn "before load"
 
-#load ".fake/reference_fake-targets.fsx/loadDependencies.fsx"
+#load ".fake/reference_fake-targets.fsx/intellisense.fsx"
 
 printfn "test_before open"
 
