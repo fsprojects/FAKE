@@ -45,11 +45,11 @@ One example would be:
 	[lang=fsharp]
     (* -- Fake Dependencies paket-inline
     source https://nuget.org/api/v2
-    
+
     nuget Fake.Core.Targets prerelease
     nuget MyTaskNuGetPackage
     -- Fake Dependencies -- *)
-    #load "./.fake/build.fsx/loadDependencies.fsx"
+    #load "./.fake/build.fsx/intellisense.fsx"
 
     open Fake.Core
     open MyCustomTask

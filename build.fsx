@@ -1,7 +1,7 @@
 #if DOTNETCORE
-// We need to use this for now as "regular" Fake breaks when its caching logic cannot find "loadDependencies.fsx".
-// This is the reason why we need to checkin the "loadDependencies.fsx" file for now...
-#load ".fake/build.fsx/loadDependencies.fsx"
+// We need to use this for now as "regular" Fake breaks when its caching logic cannot find "intellisense.fsx".
+// This is the reason why we need to checkin the "intellisense.fsx" file for now...
+#load ".fake/build.fsx/intellisense.fsx"
 
 open System
 open System.IO
