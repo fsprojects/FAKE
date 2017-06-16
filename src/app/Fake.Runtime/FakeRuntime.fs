@@ -115,10 +115,13 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     let lockGroup = lockFile.GetGroup groupName
 
     // Write loadDependencies file (basically only for editor support)
-    let loadFile = Path.Combine (cacheDir, "loadDependencies.fsx")
-    if printDetails then Trace.log <| sprintf "Writing '%s'" loadFile
+    let intellisenseFile = Path.Combine (cacheDir, "intellisense.fsx")
+    if printDetails then Trace.log <| sprintf "Writing '%s'" intellisenseFile
     // TODO: Make sure to create #if !FAKE block, because we don't actually need it.
-    File.WriteAllText (loadFile, """printfn "loading dependencies... " """)
+    let intellisenseContents =
+      [| "// This file is needed for IDE support"
+         "printfn \"loading dependencies ...\"" |]
+    File.WriteAllLines (intellisenseFile, intellisenseContents)
 
     let rid =
 #if DOTNETCORE

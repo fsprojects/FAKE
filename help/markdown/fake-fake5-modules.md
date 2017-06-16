@@ -24,7 +24,7 @@ For example create a new file `build.fsx` with
 
 ```fsharp
 // Use this for IDE support. Not required by FAKE 5. Change "build.fsx" to the name of your script.
-#load ".fake/build.fsx/loadDependencies.fsx"
+#load ".fake/build.fsx/intellisense.fsx"
 
 open Fake.Core.Targets
 
@@ -55,12 +55,13 @@ To tell Fake which dependencies are needed a script can start with a header as w
 (* -- Fake Dependencies ***header***
 *** Dependencies ***
 -- Fake Dependencies -- *)
-#load "./.fake/build.fsx/loadDependencies.fsx"
+#load "./.fake/build.fsx/intellisense.fsx"
 ```
 
 The last line `#load` is not requiredby FAKE 5, however
 this way the file can still be edited in editors (after restoring packages initially).
-Fake will write a `loadDependencies.fsx` file for you importing all required references.
+Fake will write an `intellisense.fsx` file for you importing all required references.
+Please note that as of right now, Fake doesn't write anything useful into this file, yet.
 
 There are two headers known by Fake:
 
@@ -73,7 +74,7 @@ To reference a FAKE group explicitely you can put the following at the top of yo
     file ./paket.dependencies
     group netcorebuild
     -- Fake Dependencies -- *)
-    #load "./.fake/build.fsx/loadDependencies.fsx"
+    #load "./.fake/build.fsx/intellisense.fsx"
 
 This header will reference a `paket.dependencies` file and a group within.
 
@@ -87,7 +88,7 @@ To write your build dependencies in-line you can put the following at the top of
 
     nuget Fake.Core.Targets prerelease
     -- Fake Dependencies -- *)
-    #load "./.fake/build.fsx/loadDependencies.fsx"
+    #load "./.fake/build.fsx/intellisense.fsx"
 
 This has the advantage that your build-script is now "standalone" and no separate `paket.dependencies` is required.
 We still recommend to add (`git add -f`, because usually you have `.fake` folder gitignored) the generated `paket.lock` (in `.fake/<scriptName>/`) to your repository to have reproducable script runs.

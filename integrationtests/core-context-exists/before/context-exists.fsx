@@ -5,7 +5,7 @@ source ../../../nuget/dotnetcore
 
 nuget Fake.Core.Context prerelease
 -- Fake Dependencies -- *)
-#load ".fake/context-exists.fsx/loadDependencies.fsx"
+#load ".fake/context-exists.fsx/intellisense.fsx"
 
 printfn "loading context"
 let context = Fake.Core.Context.forceFakeContext()
