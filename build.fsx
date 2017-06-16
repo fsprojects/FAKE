@@ -993,6 +993,9 @@ Target "ReleaseDocs" (fun _ ->
     Branches.push "gh-pages"
 )
 
+#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
+open Octokit
+
 Target "Release" (fun _ ->
     StageAll ""
     Commit "" (sprintf "Bump version to %s" release.NugetVersion)

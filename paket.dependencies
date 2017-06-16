@@ -1,4 +1,4 @@
-version 5.0.0-rc005
+version 5.0.0
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -64,6 +64,8 @@ group Build
     nuget FSharp.Formatting.CommandTool prerelease
     nuget SourceLink.Fake
     nuget ILRepack
+
+    github fsharp/FAKE modules/Octokit/Octokit.fsx
 
 // [ FAKE GROUP ]
 group NetcoreBuild
