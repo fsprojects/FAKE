@@ -79,6 +79,12 @@ let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. 
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
+let gitOwner = "fsprojects"
+let gitHome = "https://github.com/" + gitOwner
+
+// The name of the project on GitHub
+let gitName = "Paket"
+
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
 let packages =
@@ -993,8 +999,7 @@ Target "ReleaseDocs" (fun _ ->
     Branches.push "gh-pages"
 )
 
-#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
-open Octokit
+//#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 
 Target "Release" (fun _ ->
     StageAll ""
@@ -1003,7 +1008,26 @@ Target "Release" (fun _ ->
 
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
+
+    //let token =
+    //    match getBuildParam "github_token" with
+    //    | s when not (System.String.IsNullOrWhiteSpace s) -> s
+    //    | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    //
+    //let draft =
+    //    Octokit.createClientWithToken token
+    //    |> Octokit.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    //let draftWithFiles =
+    //    runtimes @ [ "portable"; "packages" ]
+    //    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    //    |> List.fold (fun state item ->
+    //        state
+    //        |> Octokit.uploadFile item) draft
+    //draftWithFiles
+    //|> Octokit.releaseDraft
+    //|> Async.RunSynchronously
 )
+
 open System
 Target "PrintColors" (fun s ->
   let color (color: ConsoleColor) (code : unit -> _) =
