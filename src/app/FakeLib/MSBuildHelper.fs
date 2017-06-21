@@ -45,6 +45,25 @@ let toDict items =
 let getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
 
+let rec directoryCopy srcPath dstPath copySubDirs =
+    if not <| Directory.Exists(srcPath) then
+        let msg = String.Format("Source directory does not exist or could not be found: {0}", srcPath)
+        raise (DirectoryNotFoundException(msg))
+
+    if not <| Directory.Exists(dstPath) then
+        Directory.CreateDirectory(dstPath) |> ignore
+
+    let srcDir = new DirectoryInfo(srcPath)
+
+    for file in srcDir.GetFiles() do
+        let temppath = Path.Combine(dstPath, file.Name)
+        file.CopyTo(temppath, true) |> ignore
+
+    if copySubDirs then
+        for subdir in srcDir.GetDirectories() do
+            let dstSubDir = Path.Combine(dstPath, subdir.Name)
+            directoryCopy subdir.FullName dstSubDir copySubDirs
+
 /// Versions of Mono prior to this one have faulty implementations of MSBuild
 /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
 let monoVersionToUseMSBuildOn = System.Version("5.0")
@@ -52,7 +71,7 @@ let monoVersionToUseMSBuildOn = System.Version("5.0")
 /// Tries to detect the right version of MSBuild.
 ///   - On all OS's, we check a `MSBuild` environment variable which is either
 ///     * a direct path to a file to use, or
-///     * a directory that contains a file called 
+///     * a directory that contains a file called
 ///         * `msbuild` on non-Windows systems with mono >= 5.0.0.0, or
 ///         * `xbuild` on non-Windows systems with mono < 5.0.0.0,
 ///         * `MSBuild.exe` on Windows systems, or
@@ -79,7 +98,7 @@ let msBuildExe =
 
     let foundExe =
         match isUnix, EnvironmentHelper.monoVersion with
-        | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
+        | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
                 msbuildEnvironVar |> Option.bind which
@@ -87,7 +106,7 @@ let msBuildExe =
                 which "xbuild"
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
-        | true, _ -> 
+        | true, _ ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
                 msbuildEnvironVar |> Option.bind which
@@ -95,8 +114,8 @@ let msBuildExe =
                 which "msbuild"
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
-        | false, _ -> 
-    
+        | false, _ ->
+
             let configIgnoreMSBuild =
                 if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
                 then Some ""
@@ -106,9 +125,9 @@ let msBuildExe =
                 let vsVersionPaths =
                     defaultArg (EnvironmentHelper.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
                     |> List.map ((@@) ProgramFilesX86)
-    
+
                 ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
-    
+
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
                 msbuildEnvironVar |> Option.bind which
@@ -116,7 +135,7 @@ let msBuildExe =
                 findOnVSPathsThenSystemPath
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "MSBuild.exe"
-    
+
     if foundExe.Contains @"\BuildTools\" then
         traceFAKE "If you encounter msbuild errors make sure you have copied the required SDKs, see https://github.com/Microsoft/msbuild/issues/1697"
     elif foundExe.Contains @"\2017\" then
@@ -471,7 +490,7 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
             |> Set.unionMany
 
     let setBuildParam project projectParams =
-        { projectParams with 
+        { projectParams with
             Targets = targets |> split ';' |> List.filter ((<>) "")
             Properties = projectParams.Properties @ properties project }
 
@@ -548,7 +567,10 @@ let BuildWebsiteConfig outputPath configuration projectFile  =
           "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
-    !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
+
+    let builtBin = projectDir + "/bin"
+    let srcBin = outputPath + projectName + "/bin"
+    directoryCopy builtBin srcBin true
 
 /// Builds the given web project file with debug configuration and copies it to the given outputPath.
 /// ## Parameters
