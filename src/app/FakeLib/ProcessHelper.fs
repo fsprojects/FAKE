@@ -36,7 +36,7 @@ let start (proc : Process) =
         try
             System.Console.OutputEncoding <- ProcessEncoding
         with exn ->
-            logfn "Failed setting UTF8 console encoding, ignoring error... %s." exn.Message
+            logfn "Failed setting console encoding, ignoring error... %s." exn.Message
 
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
         proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
