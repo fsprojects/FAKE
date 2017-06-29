@@ -377,7 +377,7 @@ Target "Default" DoNothing
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
     =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
-    =?> ("ReleaseDocs", isLocalBuild && not isLinux)
+    // =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "PublishNuget"
     ==> "Release"
 
