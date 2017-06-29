@@ -1,4 +1,4 @@
-#### 4.62.0 - 29.06.2017
+#### 4.62.1 - 29.06.2017
 * Allow to set process encoding and fix issues with node tools - https://github.com/fsharp/FAKE/pull/1606
 
 #### 4.61.3 - 26.05.2017
