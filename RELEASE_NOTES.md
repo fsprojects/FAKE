@@ -28,6 +28,9 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
+#### 4.62.1 - 29.06.2017
+* Allow to set process encoding and fix issues with node tools - https://github.com/fsharp/FAKE/pull/1606
+
 #### 4.61.3 - 26.05.2017
 * Fix msbuild 15 resolution - fixes https://github.com/fsprojects/Paket/issues/2345
 * Upgrade assembly binding redirect for FluentMigrator - https://github.com/fsharp/FAKE/pull/1558

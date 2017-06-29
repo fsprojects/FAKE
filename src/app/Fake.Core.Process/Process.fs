@@ -88,6 +88,15 @@ let private addStartedProcess (id:int, startTime:System.DateTime) =
 //        psi.Arguments <- getMonoArguments() + " \"" + psi.FileName + "\" " + psi.Arguments
 //        psi.FileName <- Environment.monoPath
 
+
+/// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
+/// If set to false (default) only mono processes will be changed.
+let mutable AlwaysSetProcessEncoding = false
+ 
+// The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
+/// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
+let mutable ProcessEncoding = Encoding.UTF8
+
 /// [omit]
 let start (proc : Process) = 
     //platformInfoAction proc.StartInfo
@@ -158,9 +167,9 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
     if silent then 
         proc.StartInfo.RedirectStandardOutput <- true
         proc.StartInfo.RedirectStandardError <- true
-        if Environment.isMono then
-            proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
-            proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
+        if Environment.isMono || AlwaysSetProcessEncoding then
+            proc.StartInfo.StandardOutputEncoding <- ProcessEncoding
+            proc.StartInfo.StandardErrorEncoding  <- ProcessEncoding
         proc.ErrorDataReceived.Add(fun d -> 
             if isNull d.Data |> not then errorF d.Data)
         proc.OutputDataReceived.Add(fun d -> 
