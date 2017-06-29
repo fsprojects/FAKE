@@ -34,7 +34,7 @@ let startedProcesses = ConcurrentBag()
 let start (proc : Process) =
     if isMono || AlwaysSetProcessEncoding then
         try
-            System.Console.OutputEncoding <- System.Text.Encoding.UTF8
+            System.Console.OutputEncoding <- ProcessEncoding
         with exn ->
             logfn "Failed setting UTF8 console encoding, ignoring error... %s." exn.Message
 
