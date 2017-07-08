@@ -1,3 +1,11 @@
+#### vNext - 08.07.2017
+* Fake 5 - Update Paket
+* Restore console encoding on .NET Framework https://github.com/fsharp/FAKE/pull/1587
+* loadDependencies.fsx -> intellisense.fsx https://github.com/fsharp/FAKE/pull/1594
+* Copy missing changes from legacy NuGet helpers https://github.com/fsharp/FAKE/pull/1596
+* DOCS Update comment https://github.com/fsharp/FAKE/pull/1602
+* Added SkipNonTestAssemblies to NUnit3Params https://github.com/fsharp/FAKE/pull/1608
+
 #### 5.0.0-alpha010 - 11.06.2017
 * BREAKING CHANGE: Change Targets API to be compatible with new API-Guidelines
 * DOCS: Fix chocolatey docs and some links in footer https://github.com/fsharp/FAKE/pull/1584
