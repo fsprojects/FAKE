@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #### UNRELEASED 5.0.0-alpha011
 * BUGFIX: Restore console encoding on .NET Framework (https://github.com/fsharp/FAKE/pull/1587)
 * FAKE5: Copy missing changes from legacy NuGet helpers (https://github.com/fsharp/FAKE/pull/1596)
