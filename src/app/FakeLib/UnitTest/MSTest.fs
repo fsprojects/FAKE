@@ -27,7 +27,7 @@ type MSTestParams =
       Category : string
       /// Test results directory (optional)
       ResultsDir : string
-      /// Path to the Test Metadata file (.vdmdi)  (optional)
+      /// Path to the Test Metadata file (.vsmdi)  (optional)
       TestMetadataPath : string
       /// Path to the Test Settings file (.testsettings)  (optional)
       TestSettingsPath : string
