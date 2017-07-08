@@ -206,6 +206,9 @@ type NUnit3Params =
       /// Controls the trace logs NUnit3 will output, defaults to Off
       TraceLevel : NUnit3TraceLevel
 
+      /// Skips assemblies that do not contain tests or assemblies that contain the NUnit.Framework.NonTestAssemblyAttribute without raising an error
+      SkipNonTestAssemblies : bool
+
       /// A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons
       Params : string
     }
@@ -234,6 +237,7 @@ type NUnit3Params =
 /// - `TeamCity` - `false`
 /// - `ErrorLevel` - `Error`
 /// - `TraceLevel` - `Default` (By default NUnit3 sets this to off internally)
+/// - `SkipNonTestAssemblies` - `false`
 /// - `Params` - `""`
 /// ## Defaults
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
@@ -262,6 +266,7 @@ let NUnit3Defaults =
       Labels = LabelsLevel.Default
       ErrorLevel = NUnit3ErrorLevel.Error
       TraceLevel= NUnit3TraceLevel.Default
+      SkipNonTestAssemblies = false
       Params = ""
     }
 
@@ -305,6 +310,7 @@ let buildNUnit3Args parameters assemblies =
     |> appendResultString parameters.ResultSpecs
     |> appendIfTrue parameters.ShadowCopy "--shadowcopy"
     |> appendIfTrue parameters.TeamCity "--teamcity"
+    |> appendIfTrue parameters.SkipNonTestAssemblies "--skipnontestassemblies"
     |> appendIfNotNullOrEmpty parameters.Params "--params="
     |> appendFileNamesIfNotNull assemblies
     |> toText
