@@ -50,7 +50,7 @@ content: none
 source http://nuget.org/api/v2
 
 nuget Nuget.CommandLine
-nuget FAKE prerelease
+nuget FAKE
 nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool
 nuget SourceLink.Fake

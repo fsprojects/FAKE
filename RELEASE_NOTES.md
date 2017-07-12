@@ -1,3 +1,6 @@
+#### 4.62.2 - 12.07.2017
+* Allow to download SDK from release page
+
 #### 4.62.1 - 29.06.2017
 * Allow to set process encoding and fix issues with node tools - https://github.com/fsharp/FAKE/pull/1606
 
