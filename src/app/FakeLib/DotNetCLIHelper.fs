@@ -524,7 +524,7 @@ let InstallDotNetSDK sdkVersion =
                     else
                         sprintf "dotnet-sdk-osx-x64.%s.tar.gz" sdkVersion        
                 
-                let downloadPath = sprintf "https://download.microsoft.com/download/F/A/A/FAAE9280-F410-458E-8819-279C5A68EDCF/%s" archiveFileName
+                let downloadPath = sprintf "https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
                 downloadSDK downloadPath archiveFileName
 
         if isWindows then
