@@ -688,6 +688,30 @@ Target "CreateNuGet" (fun _ ->
         NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
+Target "CreateChocolateyPackage" (fun _ ->
+    let nugetToolsDir = nugetLegacyDir @@ "tools"
+    CleanDir nugetToolsDir
+    !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
+
+    ensureDirectory "nuget/legacy/chocolatey"
+    Choco.PackFromTemplate (fun p ->
+        { p with
+            PackageId = "fake"
+            ReleaseNotes = release.Notes |> toLines
+            InstallerType = Choco.ChocolateyInstallerType.SelfContained
+            Version = release.NugetVersion
+            Files = [ (System.IO.Path.GetFullPath @"nuget\legacy\tools") + @"\**", Some "tools", None ]
+            OutputDir = "nuget/legacy/chocolatey" }) "src/Fake-choco-template.nuspec"
+    ()
+)
+Target "PushChocolateyPackage" (fun _ ->
+    let path = sprintf "nuget/legacy/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
+    path |> Choco.Push (fun p ->
+        { p with
+            Source = "https://push.chocolatey.org/"
+            ApiKey = environVarOrFail "CHOCOLATEY_API_KEY" })
+)
+
 #if !DOTNETCORE
 #load "src/app/Fake.DotNet.Cli/Dotnet.fs"
 open Fake.DotNet.Cli
@@ -852,27 +876,6 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
         !! (sprintf "%s/**" runtimeDir)
         |> Zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
     )
-)
-
-Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
-    // !! ""
-    ensureDirectory "nuget/dotnetcore/chocolatey"
-    Choco.PackFromTemplate (fun p ->
-        { p with
-            PackageId = "fake"
-            ReleaseNotes = release.Notes |> toLines
-            InstallerType = Choco.ChocolateyInstallerType.SelfContained
-            Version = release.NugetVersion
-            Files = [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None ]
-            OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
-    ()
-)
-Target "DotnetCorePushChocolateyPackage" (fun _ ->
-    let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    path |> Choco.Push (fun p ->
-        { p with
-            Source = "https://push.chocolatey.org/"
-            ApiKey = environVarOrFail "CHOCOLATEY_API_KEY" })
 )
 
 let executeFPM args =
@@ -1047,11 +1050,11 @@ Target "StartDnc" DoNothing
     =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
     ==> "CopyLicense"
-    =?> ("DotnetCoreCreateChocolateyPackage", not isLinux)
+    =?> ("CreateChocolateyPackage", not isLinux)
     ==> "Default"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
     ==> "EnsureTestsRun"
-    =?> ("DotnetCorePushChocolateyPackage", not isLinux)
+    =?> ("PushChocolateyPackage", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "DotnetCorePushNuGet"
     ==> "PublishNuget"

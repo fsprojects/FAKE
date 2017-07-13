@@ -26,5 +26,5 @@ If you need more than the default functionality you can either write F# or simpl
     @dependencies@
   </metadata>
   @files@
-    <!--<file src="..\nuget\dotnetcore\Fake.netcore\win7-x86\**" target="bin" />-->
+    <!--<file src="..\nuget\legacy\tools\**" target="tools" />-->
 </package>
