@@ -518,14 +518,18 @@ let InstallDotNetSDK sdkVersion =
             | _ -> 
                 let archiveFileName = 
                     if isWindows then
-                        sprintf "dotnet-sdk-%s-win-x64.exe" sdkVersion
+                        sprintf "dotnet-sdk-%s-win-x64.zip" sdkVersion
                     elif isLinux then
                         sprintf "dotnet-sdk-linux-x64.%s.tar.gz" sdkVersion
                     else
                         sprintf "dotnet-sdk-osx-x64.%s.tar.gz" sdkVersion        
-                
-                let downloadPath = sprintf "https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
-                downloadSDK downloadPath archiveFileName
+                try                
+                    let downloadPath = sprintf "https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
+                    downloadSDK downloadPath archiveFileName
+                with
+                | _ ->
+                    let downloadPath = sprintf "https://download.microsoft.com/download/F/A/A/FAAE9280-F410-458E-8819-279C5A68EDCF/%s" archiveFileName
+                    downloadSDK downloadPath archiveFileName
 
         if isWindows then
             Unzip DotnetSDKPath localPath
