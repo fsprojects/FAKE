@@ -33,6 +33,8 @@ type MSTestParams =
       TestSettingsPath : string
       /// Working directory (optional)
       WorkingDir : string
+      /// List of tests be run (optional)
+      Tests : string list
       /// A timeout for the test runner (optional)
       TimeOut : TimeSpan
       /// Path to MSTest.exe 
@@ -49,6 +51,7 @@ let MSTestDefaults =
       TestMetadataPath = null
       TestSettingsPath = null
       WorkingDir = null
+      Tests = []
       TimeOut = TimeSpan.FromMinutes 5.
       ToolPath = 
           match tryFindFile mstestPaths mstestexe with
@@ -64,14 +67,20 @@ let buildMSTestArgs parameters assembly =
         if parameters.ResultsDir <> null then 
             sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
         else null
-    new StringBuilder()
-    |> appendIfNotNull assembly "/testcontainer:"
-    |> appendIfNotNull parameters.Category "/category:"
-    |> appendIfNotNull parameters.TestMetadataPath "/testmetadata:"
-    |> appendIfNotNull parameters.TestSettingsPath "/testsettings:"
-    |> appendIfNotNull testResultsFile "/resultsfile:"
-    |> appendIfTrue parameters.NoIsolation "/noisolation"
-    |> toText
+
+    let builder =
+        new StringBuilder()
+        |> appendIfNotNull assembly "/testcontainer:"
+        |> appendIfNotNull parameters.Category "/category:"
+        |> appendIfNotNull parameters.TestMetadataPath "/testmetadata:"
+        |> appendIfNotNull parameters.TestSettingsPath "/testsettings:"
+        |> appendIfNotNull testResultsFile "/resultsfile:"
+        |> appendIfTrue parameters.NoIsolation "/noisolation"
+
+    parameters.Tests
+    |> List.iter (fun t -> builder |> appendIfNotNullOrEmpty t "/test:" |> ignore)
+
+    builder |> toText
 
 /// Runs MSTest command line tool on a group of assemblies.
 /// ## Parameters

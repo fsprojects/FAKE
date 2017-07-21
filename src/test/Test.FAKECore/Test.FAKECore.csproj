@@ -135,6 +135,7 @@
     <Compile Include="XUnitSpecs.cs" />
     <Compile Include="XUnit2Specs.cs" />
     <Compile Include="FileHandling\CopyRecursiveSpecs.cs" />
+    <Compile Include="MSTestSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
