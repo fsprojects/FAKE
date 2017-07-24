@@ -27,7 +27,7 @@ mono:
   - latest
 
 script: 
-  - Fake run build.fsx
+  - fake run build.fsx
 #  - ./build.sh
 
 branches:
