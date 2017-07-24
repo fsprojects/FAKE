@@ -1,9 +1,11 @@
-#### UNRELEASED 5.0.0-alpha011
+#### 5.0.0-alpha011 - 24.07.2017
 * BUGFIX: Restore console encoding on .NET Framework (https://github.com/fsharp/FAKE/pull/1587)
 * FAKE5: Copy missing changes from legacy NuGet helpers (https://github.com/fsharp/FAKE/pull/1596)
 * ENHANCEMENT: Rename intellisense script (https://github.com/fsharp/FAKE/pull/1594)
 * NEW MODULE: Opencover migration (https://github.com/fsharp/FAKE/pull/1586)
-* Fake 5 - Update Paket
+* PERFORMANCE: Fake 5 - Update Paket
+* PERFORMANCE: Use Paket cache to increase warm start (with existing cache)
+* PERFORMANCE: Remove runtime dependency resolution be default.
 * DOCS Update comment https://github.com/fsharp/FAKE/pull/1602
 * Added SkipNonTestAssemblies to NUnit3Params https://github.com/fsharp/FAKE/pull/1608
 
