@@ -10,7 +10,7 @@ open Fake.Core
 open Fake.Core.BuildServer
 open Fake.Core.Environment
 open Fake.Core.Trace
-open Fake.Core.Targets
+open Fake.Core.Target
 open Fake.Core.TargetOperators
 open Fake.Core.String
 open Fake.Core.SemVer
@@ -45,6 +45,9 @@ open Fake.Tools.Git.Staging
 open Fake.Tools.Git.Commit
 
 let currentDirectory = Shell.pwd()
+let Target = Fake.Core.Target.Create
+let RunTargetOrDefault = Fake.Core.Target.RunOrDefault
+
 #else
 // Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
 #r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
@@ -126,7 +129,7 @@ let cleanForTests () =
     let run workingDir fileName args =
         printfn "CWD: %s" workingDir
         let fileName, args =
-            if EnvironmentHelper.isUnix
+            if isUnix
             then fileName, args else "cmd", ("/C " + fileName + " " + args)
         let ok =
             execProcess (fun info ->
@@ -136,8 +139,8 @@ let cleanForTests () =
         if not ok then failwith (sprintf "'%s> %s %s' task failed" workingDir fileName args)
 
     let rmdir dir =
-        if EnvironmentHelper.isUnix
-        then FileUtils.rm_rf dir
+        if isUnix
+        then Shell.rm_rf dir
         // Use this in Windows to prevent conflicts with paths too long
         else run "." "cmd" ("/C rmdir /s /q " + Path.GetFullPath dir)
     // Clean test directories
@@ -1066,8 +1069,9 @@ Target "EnsureTestsRun" (fun _ ->
 #endif
   ()
 )
-Target "Default" DoNothing
-Target "StartDnc" DoNothing
+Target "Default" ignore
+Target "StartDnc" ignore
+Target "FastRelease" ignore
 
 "Clean"
     ==> "StartDnc"
@@ -1092,14 +1096,22 @@ Target "StartDnc" DoNothing
     =?> ("CreateNuGet", not isLinux)
     ==> "CopyLicense"
     =?> ("DotnetCoreCreateChocolateyPackage", not isLinux)
-    ==> "Default"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    ==> "EnsureTestsRun"
+    ==> "Default"
+    
+"EnsureTestsRun"
     =?> ("DotnetCorePushChocolateyPackage", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "DotnetCorePushNuGet"
     ==> "PublishNuget"
+    ==> "FastRelease"
+
+"Default"
     ==> "Release"
+"FastRelease"
+    ==> "Release"
+"Default"
+    ?=> "EnsureTestsRun"
 
 // start build
 RunTargetOrDefault "Default"

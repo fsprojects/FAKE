@@ -198,7 +198,6 @@ module Target =
     /// Creates a target from template.
     /// [omit]
     let internal addTarget target name =
-        Trace.tracefn "Adding Target: %s -> %A" name target
         getTargetDict().Add(name, target)
         name <== target.Dependencies
         removeLastDescription()
