@@ -1077,9 +1077,8 @@ GITHUB
 GROUP Build
 CONTENT: NONE
 NUGET
-  remote: https://ci.appveyor.com/nuget/fake
-    FAKE (8.7.2017)
   remote: http://www.nuget.org/api/v2
+    FAKE (5.0.0-alpha010)
     FSharp.Compiler.Service (12.0.8)
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
       Microsoft.DiaSymReader (>= 1.1) - restriction: >= netstandard1.6
@@ -1792,7 +1791,7 @@ NUGET
     FSharp.Formatting.CommandTool (3.0.0-beta06)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (9b496581e49c116cff9911570df871eb0258ac83)
+    modules/Octokit/Octokit.fsx (c60110e0cc9ea6cadc6218f8020a84e36ab6755f)
       Octokit (>= 0.20)
 GROUP netcore
 RESTRICTION: || (== netstandard1.6) (== netcore1.0)
