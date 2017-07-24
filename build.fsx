@@ -1021,7 +1021,7 @@ Target "ReleaseDocs" (fun _ ->
 
 //#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 
-Target "Release" (fun _ ->
+Target "FastRelease" (fun _ ->
     StageAll ""
     Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     Branches.push ""
@@ -1071,7 +1071,7 @@ Target "EnsureTestsRun" (fun _ ->
 )
 Target "Default" ignore
 Target "StartDnc" ignore
-Target "FastRelease" ignore
+Target "Release" ignore
 
 "Clean"
     ==> "StartDnc"
