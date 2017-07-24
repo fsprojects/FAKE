@@ -123,9 +123,26 @@ let cleanForTests () =
         !! (f </> "Fake.*")
         |> Seq.iter (Shell.rm_rf)
 
+    let run workingDir fileName args =
+        printfn "CWD: %s" workingDir
+        let fileName, args =
+            if EnvironmentHelper.isUnix
+            then fileName, args else "cmd", ("/C " + fileName + " " + args)
+        let ok =
+            execProcess (fun info ->
+                info.FileName <- fileName
+                info.WorkingDirectory <- workingDir
+                info.Arguments <- args) System.TimeSpan.MaxValue
+        if not ok then failwith (sprintf "'%s> %s %s' task failed" workingDir fileName args)
+
+    let rmdir dir =
+        if EnvironmentHelper.isUnix
+        then FileUtils.rm_rf dir
+        // Use this in Windows to prevent conflicts with paths too long
+        else run "." "cmd" ("/C rmdir /s /q " + Path.GetFullPath dir)
     // Clean test directories
     !! "integrationtests/*/temp"
-    |> CleanDirs
+    |> Seq.iter rmdir
 
 // Targets
 Target "Clean" (fun _ ->
