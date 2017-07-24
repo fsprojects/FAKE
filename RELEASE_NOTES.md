@@ -1,4 +1,4 @@
-#### vNext - 08.07.2017
+#### 5.0.0-alpha011 (vNext) - 08.07.2017
 * Fake 5 - Update Paket
 * Restore console encoding on .NET Framework https://github.com/fsharp/FAKE/pull/1587
 * loadDependencies.fsx -> intellisense.fsx https://github.com/fsharp/FAKE/pull/1594
