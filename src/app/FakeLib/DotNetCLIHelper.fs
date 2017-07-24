@@ -491,22 +491,41 @@ let InstallDotNetSDK sdkVersion =
         dotnetExePath <- buildLocalPath
     else
         CleanDir DotnetSDKPath
-        let archiveFileName = 
-            if isWindows then
-                sprintf "dotnet-dev-win-x64.%s.zip" sdkVersion
-            elif isLinux then
-                sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" sdkVersion
-            else
-                sprintf "dotnet-dev-osx-x64.%s.tar.gz" sdkVersion
-        let downloadPath = sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
-        let localPath = Path.Combine(DotnetSDKPath, archiveFileName)
 
-        tracefn "Installing '%s' to '%s'" downloadPath localPath
-        
-        let proxy = Net.WebRequest.DefaultWebProxy
-        proxy.Credentials <- Net.CredentialCache.DefaultCredentials
-        use webclient = new Net.WebClient(Proxy = proxy)
-        webclient.DownloadFile(downloadPath, localPath)
+        let downloadSDK downloadPath archiveFileName =
+            let localPath = Path.Combine(DotnetSDKPath, archiveFileName) |> FullName
+            tracefn "Installing '%s' to '%s'" downloadPath localPath
+            
+            let proxy = Net.WebRequest.DefaultWebProxy
+            proxy.Credentials <- Net.CredentialCache.DefaultCredentials
+            use webclient = new Net.WebClient(Proxy = proxy)
+            webclient.DownloadFile(downloadPath, localPath)
+            localPath
+
+        let localPath =
+            try
+                let archiveFileName = 
+                    if isWindows then
+                        sprintf "dotnet-dev-win-x64.%s.zip" sdkVersion
+                    elif isLinux then
+                        sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" sdkVersion
+                    else
+                        sprintf "dotnet-dev-osx-x64.%s.tar.gz" sdkVersion
+
+                let downloadPath = sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
+                downloadSDK downloadPath archiveFileName
+            with
+            | _ -> 
+                let archiveFileName = 
+                    if isWindows then
+                        sprintf "dotnet-sdk-%s-win-x64.exe" sdkVersion
+                    elif isLinux then
+                        sprintf "dotnet-sdk-linux-x64.%s.tar.gz" sdkVersion
+                    else
+                        sprintf "dotnet-sdk-osx-x64.%s.tar.gz" sdkVersion        
+                
+                let downloadPath = sprintf "https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
+                downloadSDK downloadPath archiveFileName
 
         if isWindows then
             Unzip DotnetSDKPath localPath
