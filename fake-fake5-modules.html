@@ -204,7 +204,7 @@
 <span class="l">10: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Use this for IDE support. Not required by FAKE 5. Change &quot;build.fsx&quot; to the name of your script.</span>
-<span class="pp">#load</span> <span class="s">&quot;.fake/build.fsx/loadDependencies.fsx&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;.fake/build.fsx/intellisense.fsx&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Targets</span>
 
@@ -233,13 +233,14 @@
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies ***header***</span>
 <span class="c">*** Dependencies ***</span>
 <span class="c">-- Fake Dependencies -- *)</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <p>The last line <code>#load</code> is not requiredby FAKE 5, however
 this way the file can still be edited in editors (after restoring packages initially).
-Fake will write a <code>loadDependencies.fsx</code> file for you importing all required references.</p>
+Fake will write an <code>intellisense.fsx</code> file for you importing all required references.
+Please note that as of right now, Fake doesn't write anything useful into this file, yet.</p>
 <p>There are two headers known by Fake:</p>
 <h3><a name="Reference-paket-group-1" class="anchor" href="#Reference-paket-group-1">Reference paket group</a></h3>
 <p>To reference a FAKE group explicitely you can put the following at the top of your build script</p>
@@ -253,7 +254,7 @@ Fake will write a <code>loadDependencies.fsx</code> file for you importing all r
 <span class="c">file ./paket.dependencies</span>
 <span class="c">group netcorebuild</span>
 <span class="c">-- Fake Dependencies -- *)</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -272,7 +273,7 @@ Fake will write a <code>loadDependencies.fsx</code> file for you importing all r
 
 <span class="c">nuget Fake.Core.Targets prerelease</span>
 <span class="c">-- Fake Dependencies -- *)</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/loadDependencies.fsx&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 </code></pre></td>
 </tr>
 </table>
