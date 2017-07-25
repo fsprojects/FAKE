@@ -57,7 +57,7 @@ group Build
     source http://nuget.org/api/v2
     source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
-    
+
     nuget FSharp.Core ~> 4.1.0
     nuget Nuget.CommandLine
     nuget FAKE prerelease

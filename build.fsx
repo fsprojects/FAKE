@@ -972,17 +972,19 @@ Target "DotnetCoreCreateDebianPackage" (fun _ ->
 
 )
 
-Target "DotnetCorePushNuGet" (fun _ ->
-    let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
-    let apikey = environVarOrDefault "nugetkey" ""
-    let nugetsource = environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-    let nugetPush nugetpackage =
-        if not <| System.String.IsNullOrEmpty apikey then
-            ExecProcess (fun info ->
-                info.FileName <- nuget_exe
-                info.Arguments <- sprintf "push %s %s -Source %s" (toParam nugetpackage) (toParam apikey) (toParam nugetsource)) (System.TimeSpan.FromMinutes 5.)
-            |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
+let apikey = environVarOrDefault "nugetkey" ""
+let nugetsource = environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let nugetPush nugetpackage =
+    if not <| System.String.IsNullOrEmpty apikey then
+        ExecProcess (fun info ->
+            info.FileName <- nuget_exe
+            info.Arguments <- sprintf "push %s %s -Source %s" (toParam nugetpackage) (toParam apikey) (toParam nugetsource))
+            (System.TimeSpan.FromMinutes 10.)
+        |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+    else traceFAKE "could not push '%s', because api key was not set" nugetpackage
 
+Target "DotnetCorePushNuGet" (fun _ ->
     // dotnet pack
     netCoreProjs
     -- "src/app/Fake.netcore/*.fsproj"
@@ -995,15 +997,13 @@ Target "DotnetCorePushNuGet" (fun _ ->
 
 Target "PublishNuget" (fun _ ->
     // uses NugetKey environment variable.
-    Paket.Push(fun p ->
-        { p with
-            DegreeOfParallelism = 2
-            WorkingDir = nugetLegacyDir })
-    // We have some nugets in there we don't want to push
+    // Timeout atm
     //Paket.Push(fun p ->
     //    { p with
     //        DegreeOfParallelism = 2
-    //        WorkingDir = nugetDncDir })
+    //        WorkingDir = nugetLegacyDir })
+    !! (nugetLegacyDir </> "**/*.nupkg")
+    |> Seq.iter nugetPush
 )
 
 Target "ReleaseDocs" (fun _ ->
