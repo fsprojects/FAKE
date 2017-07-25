@@ -3,7 +3,7 @@ sudo: required
 dist: trusty # Ubuntu 14.04
 
 env:
- - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis PAKET_BOOTSTRAPPER_TRACE=true
+ - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
 addons:
   apt:
