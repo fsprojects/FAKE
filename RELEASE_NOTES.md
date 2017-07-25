@@ -1,3 +1,6 @@
+#### 5.0.0-alpha012 - 25.07.2017
+* ENHANCEMENT: (NETCORE) Prefer msbuild over xbuild when we detect a mono installation > 5
+
 #### 5.0.0-alpha011 - 24.07.2017
 * BUGFIX: Restore console encoding on .NET Framework (https://github.com/fsharp/FAKE/pull/1587)
 * FAKE5: Copy missing changes from legacy NuGet helpers (https://github.com/fsharp/FAKE/pull/1596)
