@@ -206,17 +206,11 @@ module Environment =
     #else
         false
     #endif
-    
-    /// required sometimes to workaround mono crashes
-    /// http://stackoverflow.com/a/8414517/1269722
-    let monoVersion =
-        let t = Type.GetType("Mono.Runtime")
-        if (not (isNull t)) then
-#if NETSTANDARD1_6
-            let t = t.GetTypeInfo()
-#endif
-            let displayNameMeth = t.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic ||| System.Reflection.BindingFlags.Static)
-            let displayName = displayNameMeth.Invoke(null, null).ToString()
+
+    module Internal =
+        /// Internal, do not use.
+        /// We use this internally for parsing the output of mono --version
+        let parseMonoDisplayName displayName =
             let pattern = Regex("\d+(\.\d+)+")
             let m = pattern.Match(displayName)
             // NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
@@ -225,11 +219,27 @@ module Environment =
                 | true, true -> System.Version(v.Major, v.Minor)
                 | _, true -> System.Version(v.Major, v.Minor, v.Build)
                 | _ -> v
-            let version =
-                match System.Version.TryParse m.Value with
-                | true, v -> Some (minimizeVersion v)
-                | _ -> None
-            Some (displayName, version)
+
+            match System.Version.TryParse m.Value with
+            | true, v -> Some (minimizeVersion v)
+            | _ -> None
+
+    /// required sometimes to workaround mono crashes
+    /// http://stackoverflow.com/a/8414517/1269722
+    /// Note: Only given when we are running on mono,
+    /// represents the version of the mono runtime we
+    /// are currently running on.
+    /// In netcore world you can retrieve the mono version in the
+    /// environment (PATH) via Fake.Core.Process.Mono.monoVersion
+    let monoVersion =
+        let t = Type.GetType("Mono.Runtime")
+        if (not (isNull t)) then
+#if NETSTANDARD1_6
+            let t = t.GetTypeInfo()
+#endif
+            let displayNameMeth = t.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic ||| System.Reflection.BindingFlags.Static)
+            let displayName = displayNameMeth.Invoke(null, null).ToString()
+            Some (displayName, Internal.parseMonoDisplayName displayName)
         else None
 
 

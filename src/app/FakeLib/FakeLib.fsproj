@@ -136,6 +136,9 @@
     <Compile Include="..\Fake.Core.Process\Process.fs">
       <Link>Fake.Core.Process/Process.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Core.Process\Mono.fs">
+      <Link>Fake.Core.Process/Mono.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.DotNet.MsBuild\MsBuildLogger.fs">
       <Link>Fake.DotNet.MsBuild/MsBuildLogger.fs</Link>
     </Compile>
