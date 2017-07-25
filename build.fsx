@@ -568,16 +568,14 @@ Target "BootstrapTestDotnetCore" (fun _ ->
 
         let executeTarget target =
             if clearCache then clear ()
-            if isUnix then
-                ExecProcess (fun info ->
-                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake"
-                    info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "-v run %s --target %s" script target) timeout
-            else
-                ExecProcess (fun info ->
-                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/fake.exe"
-                    info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "run %s --target %s" script target) timeout
+            let fileName =
+                if isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
+                else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
+            ExecProcess (fun info ->
+                info.FileName <- fileName
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "run %s --target %s" script target) timeout
+
 
         let result = executeTarget "PrintColors"
         if result <> 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
@@ -1098,7 +1096,7 @@ Target "Release" ignore
     =?> ("DotnetCoreCreateChocolateyPackage", not isLinux)
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
     ==> "Default"
-    
+
 "EnsureTestsRun"
     =?> ("DotnetCorePushChocolateyPackage", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
