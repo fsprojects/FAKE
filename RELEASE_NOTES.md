@@ -42,6 +42,12 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
+#### 4.62.6 - 26.07.2017
+* Support for Microsoft Dynamics NAV 2017
+
+#### 4.62.5 - 15.07.2017
+* Allow to download SDK from release page
+
 #### 4.62.1 - 29.06.2017
 * Allow to set process encoding and fix issues with node tools - https://github.com/fsharp/FAKE/pull/1606
 
