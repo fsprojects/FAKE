@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>AssemblyInfoFileConfig - FAKE - F# Make</title>
+		<title>Attribute - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,21 +31,28 @@
 									<!-- Nav -->
 										<nav id="nav">
 											<ul>
-												<li ><a href="../index.html">Home</a></li>
 												<li >
-													<a href="../fake-what-is-fake.html">Tutorials</a>
+													<a href="../legacy-index.html">FAKE 4</a>
 													<ul>
-														<li><a href="../fake-gettingstarted.html">Getting Started Tutorial</a></li>
-														<li><a href="../fake-cache.html">Build script caching</a></li>
-														<li><a href="../fake-commandline.html">Running FAKE from command line</a></li>
-														<li><a href="../fake-dotnetcore.html">FAKE 5 quickstart</a></li>
-														<li><a href="../fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+														<li><a href="../legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="../help-docs.html">Where is XYZ???</a></li>
+														<li><a href="../legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="../legacy-core-targets.html">Targets</a></li>
 													</ul>
 												</li>
+                                                <li >
+                                                    <a href="../fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="../fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="../fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="../fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="../fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="../fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                    </ul>
+                                                </li>
 												<li >
 													<a href="../fake-what-is-fake.html">Project</a>
 													<ul>
-														<li><a href="../legacy-index.html">Fake 4 start page</a></li>
 														<li><a href="../help-users.html">Who is using FAKE?</a></li>
 														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
 														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
@@ -173,9 +180,9 @@
 
 
 
-<h1>AssemblyInfoFileConfig</h1>
+<h1>Attribute</h1>
 <div class="xmldoc">
-<p>Represents options for configuring the emission of AssemblyInfo</p>
+<p>Represents AssemblyInfo attributes</p>
 
 </div>
   <h3>Constructors</h3>
@@ -187,15 +194,33 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4047', 4047)" onmouseover="showTip(event, '4047', 4047)">
+          <code onmouseout="hideTip(event, '3875', 3875)" onmouseover="showTip(event, '3875', 3875)">
             new(...)
           </code>
-          <div class="tip" id="4047">
-            <strong>Signature:</strong> (generateClass:bool * emitResharperSupressions:bool option * useNamespace:string option) -&gt; AssemblyInfoFileConfig<br />
+          <div class="tip" id="3875">
+            <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropType:string) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L47-47" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L75-75" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3876', 3876)" onmouseover="showTip(event, '3876', 3876)">
+            new(...)
+          </code>
+          <div class="tip" id="3876">
+            <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropName:string * staticPropType:string * staticPropValue:string) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L67-67" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -213,77 +238,105 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4048', 4048)" onmouseover="showTip(event, '4048', 4048)">
-            EmitResharperSuppressions
+          <code onmouseout="hideTip(event, '3877', 3877)" onmouseover="showTip(event, '3877', 3877)">
+            Name
           </code>
-          <div class="tip" id="4048">
-            <strong>Signature:</strong> bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L59-59" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4049', 4049)" onmouseover="showTip(event, '4049', 4049)">
-            GenerateClass
-          </code>
-          <div class="tip" id="4049">
-            <strong>Signature:</strong> bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L54-54" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4050', 4050)" onmouseover="showTip(event, '4050', 4050)">
-            UseNamespace
-          </code>
-          <div class="tip" id="4050">
+          <div class="tip" id="3877">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L55-55" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L68-68" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
           
         </td>
       </tr>
-    </tbody>
-  </table>
-  <h3>Static members</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4051', 4051)" onmouseover="showTip(event, '4051', 4051)">
-            Default
+          <code onmouseout="hideTip(event, '3878', 3878)" onmouseover="showTip(event, '3878', 3878)">
+            Namespace
           </code>
-          <div class="tip" id="4051">
-            <strong>Signature:</strong> AssemblyInfoFileConfig<br />
+          <div class="tip" id="3878">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L63-63" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L70-70" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3879', 3879)" onmouseover="showTip(event, '3879', 3879)">
+            StaticPropertyName
+          </code>
+          <div class="tip" id="3879">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L71-71" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3880', 3880)" onmouseover="showTip(event, '3880', 3880)">
+            StaticPropertyType
+          </code>
+          <div class="tip" id="3880">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L72-72" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3881', 3881)" onmouseover="showTip(event, '3881', 3881)">
+            StaticPropertyValue
+          </code>
+          <div class="tip" id="3881">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L73-73" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3882', 3882)" onmouseover="showTip(event, '3882', 3882)">
+            Value
+          </code>
+          <div class="tip" id="3882">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L69-69" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>

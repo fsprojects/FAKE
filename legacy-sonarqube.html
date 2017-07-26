@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Analyze your code with SonarQube
+</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="help-docs.html">Where is XYZ???</a></li>
+														<li><a href="legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+													<a href="fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="404.html">Core</a>
+															<ul>
+																<li><a href="core-targets.html">Targets</a></li>
+																<li><a href="404.html">Globbing</a></li>
+																<li><a href="404.html">Environment</a></li>
+																<li><a href="404.html">Process</a></li>
+																<li><a href="404.html">String</a></li>
+																<li><a href="404.html">BuildServer</a></li>
+																<li><a href="404.html">Tracing</a></li>
+																<li><a href="404.html">Context</a></li>
+																<li><a href="404.html">Xml</a></li>
+																<li><a href="404.html">Tasks</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">IO</a>
+															<ul>
+																<li><a href="404.html">FileSystem</a></li>
+																<li><a href="404.html">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">DotNet</a>
+															<ul>
+																<li><a href="404.html">Cli</a></li>
+																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="404.html">MsBuild</a></li>
+																<li><a href="404.html">Testing - NUnit</a></li>
+																<li><a href="404.html">Testing - MSpec</a></li>
+																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="dotnet-nuget.html">NuGet</a></li>
+																<li><a href="404.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Tools</a>
+															<ul>
+																<li><a href="404.html">Git</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Windows</a>
+															<ul>
+																<li><a href="windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Testing</a>
+															<ul>
+																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
+																<li><a href="todo-wix.html">Windows.WiX</a></li>
+																<li><a href="todo-slacknotification.html">API.Slack</a></li>
+																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="todo-iis.html">?.?.IIS</a></li>
+																<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
+																<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="404.html">Legacy / Not Migrated (2)</a>
+															<ul>
+																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
+																<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
+																<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
+																<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
+																<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li ><a href="apidocs/index.html">API Reference</a></li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+
+									<!-- Content -->
+                      <article>
+<h1><a name="Analyze-your-code-with-SonarQube" class="anchor" href="#Analyze-your-code-with-SonarQube">Analyze your code with SonarQube</a></h1>
+<p>From the <a href="http://sonarqube.org">web page</a>:
+"The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, from project portfolio down to the method level"</p>
+<p>It can analyze a lot of different programming languages, from PHP, Erlang, CSS to Cobol. C# can be installed
+with an additional plugin. This must be done on the SonarQube server.
+To support the analysis process on a build server, an additional command line tool called "MSBuild.SonarQube.Runner.exe"
+must be used. The SonarQube module in FAKE provides a function 'SonarQube' to call this tool with the needed parameters.</p>
+<p>This function must be called twice, once at the beginning of the compilation process and once after
+compilation has finished. The result is then collected and sent to the SonarQube server.</p>
+<h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;BeginSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">SonarQube</span> <span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+     <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+     <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+     <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> <span class="pn">}</span>
+    <span class="pn">)</span>
+  <span class="pn">)</span>
+
+<span class="id">Target</span> <span class="s">&quot;EndSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">SonarQubeEnd</span><span class="pn">(</span><span class="pn">)</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span> <span class="s">&quot;Default&quot;</span> <span class="id">DoNothing</span>
+
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;SetAssemblyInfo&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BeginSonarQube&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span> <span class="o">&lt;=&gt;</span> <span class="s">&quot;BuildTests&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;EndSonarQube&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;RunTests&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+
+<span class="id">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>By default, the SonarQube module looks for the MSBuild runner in the 'tools/SonarQube' directory. This can be overwritten using the ToolsPath property of the parameters.</p>
+<h2><a name="Additional-options-for-SonarQube" class="anchor" href="#Additional-options-for-SonarQube">Additional options for SonarQube</a></h2>
+<ul>
+<li>
+<p>You can send additional global settings  to the server with the '/d:' parameter.
+In the SonarQubeParams, this is the new field Settings:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span> <span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+   <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+   <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+   <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
+   <span class="id">Settings</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;sonar.debug&quot;</span><span class="pn">;</span> <span class="s">&quot;sonar.newversion&quot;</span><span class="pn">]</span> <span class="pn">}</span>
+  <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+</li>
+<li>
+<p>Configuration can also be read from a configuration file. This is the '/s:' parameter.
+This can be done with the new field Config:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span> <span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+   <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+   <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+   <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
+   <span class="id">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Some</span><span class="pn">(</span><span class="s">&quot;myconfig.cfg&quot;</span><span class="pn">)</span> <span class="pn">}</span>
+  <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+</li>
+</ul>
+
+<div class="tip" id="fs1">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="fake-fake5-modules.html">Modules</a></li>
+											<li><a href="404.html">FAKE Header</a></li>
+											<li><a href="404.html">Git</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links -->
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="404.html">Tutorial 1</a></li>
+											<li><a href="404.html">Tutorial 2</a></li>
+											<li><a href="404.html">Tutorial 3</a></li>
+											<li><a href="404.html">Tutorial 4</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
