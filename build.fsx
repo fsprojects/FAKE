@@ -332,6 +332,13 @@ Target "GenerateDocs" (fun _ ->
             LayoutRoots = layoutroots })
     CreateDocs (fun s ->
         { s with
+            Source = source @@ "redirects"
+            OutputDirectory = docsDir
+            Template = docsTemplate
+            ProjectParameters = ("CurrentPage", "FAKE-4") :: projInfo
+            LayoutRoots = layoutroots })
+    CreateDocs (fun s ->
+        { s with
             Source = source @@ "startpage"
             OutputDirectory = docsDir
             Template = indexTemplate
