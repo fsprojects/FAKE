@@ -882,12 +882,12 @@ Target "DotnetCorePushNuGet" (fun _ ->
 Target "PublishNuget" (fun _ ->
     // uses NugetKey environment variable.
     // Timeout atm
-    //Paket.Push(fun p ->
-    //    { p with
-    //        DegreeOfParallelism = 2
-    //        WorkingDir = nugetLegacyDir })
-    !! (nugetLegacyDir </> "**/*.nupkg")
-    |> Seq.iter nugetPush
+    Paket.Push(fun p ->
+        { p with
+            DegreeOfParallelism = 2
+            WorkingDir = nugetLegacyDir })
+    //!! (nugetLegacyDir </> "**/*.nupkg")
+    //|> Seq.iter nugetPush
 )
 
 Target "ReleaseDocs" (fun _ ->
