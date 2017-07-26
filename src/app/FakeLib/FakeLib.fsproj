@@ -264,6 +264,7 @@
     </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
+    <Compile Include="CommandLineHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
