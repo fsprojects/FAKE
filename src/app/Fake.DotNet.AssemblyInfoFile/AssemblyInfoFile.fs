@@ -1,7 +1,6 @@
 ﻿/// Contains tasks to generate AssemblyInfo files for C# and F#.
 /// There is also a tutorial about the [AssemblyInfo tasks](../assemblyinfo.html) available.
-namespace Fake.DotNet.AssemblyInfoFile
-
+namespace Fake.DotNet
 
 open System
 open System.IO
@@ -62,97 +61,102 @@ type AssemblyInfoFileConfig
             | None -> false
         static member Default = AssemblyInfoFileConfig(true)
 
-/// Represents AssemblyInfo attributes
-type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
-    member this.Name = name
-    member this.Value = value
-    member this.Namespace = inNamespace
-    member this.StaticPropertyName = staticPropName
-    member this.StaticPropertyType = staticPropType
-    member this.StaticPropertyValue = staticPropValue
+module AssemblyInfo =
 
-    new(name, value, inNamespace, staticPropType) =
-        Attribute(name, value, inNamespace, name, staticPropType, value)
+    /// Represents AssemblyInfo attributes
+    type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
+        member this.Name = name
+        member this.Value = value
+        member this.Namespace = inNamespace
+        member this.StaticPropertyName = staticPropName
+        member this.StaticPropertyType = staticPropType
+        member this.StaticPropertyValue = staticPropValue
 
-    /// Creates a simple attribute with string values. Used as base for other attributes
-    static member StringAttribute(name, value, inNamespace, ?staticName, ?staticValue) =
-        let quotedValue = sprintf "\"%s\"" value
-        Attribute(name, quotedValue, inNamespace, defaultArg staticName name, typeof<string>.FullName, defaultArg staticValue quotedValue)
+        new(name, value, inNamespace, staticPropType) =
+            Attribute(name, value, inNamespace, name, staticPropType, value)
+                /// Creates a simple attribute with string values. Used as base for other attributes
+    let private quote value = sprintf "\"%s\"" value
+    let StringAttributeEx(name, value, inNamespace, staticName, staticValue) =
+        Attribute(name, quote value, inNamespace, staticName, typeof<string>.FullName, staticValue)
+
+    let StringAttribute(name, value, inNamespace) =
+        let quotedValue = quote value
+        StringAttributeEx(name, value, inNamespace, name, quotedValue)
 
     /// Creates a simple attribute with boolean values. Used as base for other attributes
-    static member BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace, typeof<bool>.FullName)
+    let BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace, typeof<bool>.FullName)
 
     /// Creates an attribute which holds the company information
-    static member Company(value) = Attribute.StringAttribute("AssemblyCompany", value, "System.Reflection")
+    let Company(value) = StringAttribute("AssemblyCompany", value, "System.Reflection")
 
     /// Creates an attribute which holds the product name
-    static member Product(value) = Attribute.StringAttribute("AssemblyProduct", value, "System.Reflection")
+    let Product(value) = StringAttribute("AssemblyProduct", value, "System.Reflection")
 
     /// Creates an attribute which holds the copyright information
-    static member Copyright(value) = Attribute.StringAttribute("AssemblyCopyright", value, "System.Reflection")
+    let Copyright(value) = StringAttribute("AssemblyCopyright", value, "System.Reflection")
 
     /// Creates an attribute which holds the product title
-    static member Title(value) = Attribute.StringAttribute("AssemblyTitle", value, "System.Reflection")
+    let Title(value) = StringAttribute("AssemblyTitle", value, "System.Reflection")
 
     /// Creates an attribute which holds the product description
-    static member Description(value) = Attribute.StringAttribute("AssemblyDescription", value, "System.Reflection")
+    let Description(value) = StringAttribute("AssemblyDescription", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly culture information
-    static member Culture(value) = Attribute.StringAttribute("AssemblyCulture", value, "System.Reflection")
+    let Culture(value) = StringAttribute("AssemblyCulture", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly configuration
-    static member Configuration(value) = Attribute.StringAttribute("AssemblyConfiguration", value, "System.Reflection")
+    let Configuration(value) = StringAttribute("AssemblyConfiguration", value, "System.Reflection")
 
     /// Creates an attribute which holds the trademark
-    static member Trademark(value) = Attribute.StringAttribute("AssemblyTrademark", value, "System.Reflection")
+    let Trademark(value) = StringAttribute("AssemblyTrademark", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly version
-    static member Version(value) =
-        Attribute.StringAttribute("AssemblyVersion", Helper.NormalizeVersion value, "System.Reflection")
+    let Version(value) =
+        StringAttribute("AssemblyVersion", Helper.NormalizeVersion value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly key file
-    static member KeyFile(value) = Attribute.StringAttribute("AssemblyKeyFile", value, "System.Reflection")
+    let KeyFile(value) = StringAttribute("AssemblyKeyFile", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly key name
-    static member KeyName(value) = Attribute.StringAttribute("AssemblyKeyName", value, "System.Reflection")
+    let KeyName(value) = StringAttribute("AssemblyKeyName", value, "System.Reflection")
 
     /// Creates an attribute which holds the "InternalVisibleTo" data
-    static member InternalsVisibleTo(value) =
-        Attribute.StringAttribute("InternalsVisibleTo", value, "System.Runtime.CompilerServices")
+    let InternalsVisibleTo(value) =
+        StringAttribute("InternalsVisibleTo", value, "System.Runtime.CompilerServices")
 
     /// Creates an attribute which holds the assembly file version
-    static member FileVersion(value) =
-        Attribute.StringAttribute("AssemblyFileVersion", Helper.NormalizeVersion value, "System.Reflection")
+    let FileVersion(value) =
+        StringAttribute("AssemblyFileVersion", Helper.NormalizeVersion value, "System.Reflection")
 
     /// Creates an attribute which holds an assembly information version
-    static member InformationalVersion(value) =
-        Attribute.StringAttribute("AssemblyInformationalVersion", value, "System.Reflection")
+    let InformationalVersion(value) =
+        StringAttribute("AssemblyInformationalVersion", value, "System.Reflection")
 
     /// Creates an attribute which holds the Guid
-    static member Guid(value) = Attribute.StringAttribute("Guid", value, "System.Runtime.InteropServices")
+    let Guid(value) = StringAttribute("Guid", value, "System.Runtime.InteropServices")
 
     /// Creates an attribute which specifies if the assembly is visible via COM
-    static member ComVisible(?value) =
-        Attribute.BoolAttribute("ComVisible", defaultArg value false, "System.Runtime.InteropServices")
+    let ComVisible(value) =
+        BoolAttribute("ComVisible", value, "System.Runtime.InteropServices")
 
     /// Creates an attribute which specifies if the assembly is CLS compliant
-    static member CLSCompliant(?value) = Attribute.BoolAttribute("CLSCompliant", defaultArg value false, "System")
+    let CLSCompliant(value) = BoolAttribute("CLSCompliant", value, "System")
 
     /// Creates an attribute which specifies if the assembly uses delayed signing
-    static member DelaySign(value) =
-        Attribute.BoolAttribute("AssemblyDelaySign", defaultArg value false, "System.Reflection")
+    let DelaySign(value) =
+        BoolAttribute("AssemblyDelaySign", value, "System.Reflection")
 
     /// Create an attribute which specifies metadata about the assembly
-    static member Metadata(name,value) =
-        Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")), sprintf "\"%s\"" value)
+    let Metadata(name,value) =
+        StringAttributeEx("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")), sprintf "\"%s\"" value)
 
-
-module AssemblyInfo =
+module AssemblyInfoFile =
     open Helper
     open Fake.Core
+    open AssemblyInfo
     open Fake.IO.FileSystem
-    
-    let private writeToFile outputFileName (lines : seq<string>) = 
+
+    let private writeToFile outputFileName (lines : seq<string>) =
         let fi = FileInfo.ofPath outputFileName
         if fi.Exists then fi.Delete()
         let dirName = System.IO.Path.GetDirectoryName(outputFileName)
@@ -188,19 +192,18 @@ module AssemblyInfo =
         |> Seq.map (fun (id,(_,attr)) ->
             let name = if id = 0 then attr.StaticPropertyName else sprintf "%s_%d" attr.StaticPropertyName id
             (name, attr.StaticPropertyType, attr.StaticPropertyValue))
-   
 
     /// Creates a C# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let CreateCSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace, emitResharperSupressions = config.GenerateClass, config.UseNamespace, config.EmitResharperSuppressions
 
         let  dependencies =
-            if emitResharperSupressions 
-            then 
-                [ "System.Diagnostics.CodeAnalysis" ] @ (getDependencies attributes) 
-                |> Set.ofSeq 
+            if emitResharperSupressions
+            then
+                [ "System.Diagnostics.CodeAnalysis" ] @ (getDependencies attributes)
+                |> Set.ofSeq
                 |> Seq.toList
             else getDependencies attributes
 
@@ -210,27 +213,26 @@ module AssemblyInfo =
               @ (attributes
                  |> Seq.toList
                  |> List.map (fun (attr : Attribute) -> sprintf "[assembly: %sAttribute(%s)]" attr.Name attr.Value))
-    
 
         let sourceLines =
             if generateClass then
                 let consts =
                     attributes
-                    |> getSortedAndNumberedAttributes 
+                    |> getSortedAndNumberedAttributes
                     |> Seq.map (fun (name, attrtype, value) ->
                         sprintf "        internal const %s %s = %s;" attrtype name value)
                     |> Seq.toList
-            
-                let resharperSuppressions = 
+
+                let resharperSuppressions =
                     if emitResharperSupressions then
                         [ "RedundantNameQualifier"; "UnusedMember.Global"; "BuiltInTypeReferenceStyle" ]
                         |> List.map (fun line -> sprintf "    [SuppressMessage(\"ReSharper\", \"%s\")]" line)
                     else []
-            
-                (sprintf "namespace %s {" useNamespace) 
+
+                (sprintf "namespace %s {" useNamespace)
                 :: resharperSuppressions
                 @ [ "    internal static class AssemblyVersionInformation {" ]
-                @ consts 
+                @ consts
                 @ [ "    }";  "}" ]
             else []
 
@@ -239,7 +241,7 @@ module AssemblyInfo =
 
     /// Creates a F# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let CreateFSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
 
@@ -252,7 +254,7 @@ module AssemblyInfo =
                 yield!
                     attributes
                     |> Seq.map (fun (attr : Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)
-                  
+
                 yield "do ()"; yield ""
 
                 if generateClass then
@@ -260,8 +262,8 @@ module AssemblyInfo =
                     yield!
                         // it might be that a specific assembly has multiple attributes of the same name
                         // if more than one occurences appear, append numerical suffixes to avoid compile errors
-                        attributes 
-                        |> getSortedAndNumberedAttributes 
+                        attributes
+                        |> getSortedAndNumberedAttributes
                         |> Seq.map (fun (name, _, value) -> sprintf "    let [<Literal>] %s = %s" name value) 
             ]
 
@@ -269,7 +271,7 @@ module AssemblyInfo =
 
     /// Creates a VB AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let CreateVisualBasicWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
 
@@ -284,7 +286,7 @@ module AssemblyInfo =
             if generateClass then
                 let consts =
                     attributes
-                    |> getSortedAndNumberedAttributes 
+                    |> getSortedAndNumberedAttributes
                     |> Seq.map(fun (name, attrtype, value) -> sprintf "    Friend Const %s As %s = %s" name attrtype value)
                     |> Seq.toList
                 "Friend NotInheritable Class AssemblyVersionInformation"::consts @ [ "End Class" ]
@@ -295,7 +297,7 @@ module AssemblyInfo =
 
     /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
     /// Does not generate an AssemblyVersionInformation class.
-    let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let CreateCppCliWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
         //C++/CLI namespaces cannot be fully qualified; you must
@@ -313,22 +315,22 @@ module AssemblyInfo =
 
     /// Creates a C# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateCSharpAssemblyInfo outputFileName attributes =
-        CreateCSharpAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let CreateCSharp outputFileName attributes =
+        CreateCSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a F# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateFSharpAssemblyInfo outputFileName attributes =
-        CreateFSharpAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let CreateFSharp outputFileName attributes =
+        CreateFSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a VB AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateVisualBasicAssemblyInfo outputFileName attributes =
-        CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let CreateVisualBasic outputFileName attributes =
+        CreateVisualBasicWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
-    let CreateCppCliAssemblyInfo outputFileName attributes =
-        CreateCppCliAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let CreateCppCli outputFileName attributes =
+        CreateCppCliWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     let private removeAtEnd (textToRemove:string) (text:string) =
         if text.EndsWith(textToRemove) then
