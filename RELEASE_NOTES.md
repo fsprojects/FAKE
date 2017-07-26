@@ -1,3 +1,6 @@
+#### 4.62.6 - 26.07.2017
+* Support for Microsoft Dynamics NAV 2017
+
 #### 4.62.5 - 15.07.2017
 * Allow to download SDK from release page
 
