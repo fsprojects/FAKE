@@ -732,20 +732,14 @@ Target "DotnetPackage" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
     let oldContent = File.ReadAllText netcoreFsproj
-    try
-        // File.WriteAllText(netcoreJson, newContent)
-        let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-        DotnetPublish (fun c ->
-            { c with
-                Framework = Some "netcoreapp1.0"
-                OutputPath = Some outDir
-            }) netcoreFsproj
 
-        //File.Copy(win32manifest, outDir + "/default.win32manifest")
-    with e ->
-        printfn "failed to publish portable!"
-        // File.WriteAllText(netcoreJson, oldContent)
-        ()
+    // File.WriteAllText(netcoreJson, newContent)
+    let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
+    DotnetPublish (fun c ->
+        { c with
+            Framework = Some "netcoreapp1.0"
+            OutputPath = Some outDir
+        }) netcoreFsproj
 )
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->

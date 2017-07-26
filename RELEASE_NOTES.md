@@ -1,3 +1,6 @@
+#### 5.0.0-alpha013 - 26.07.2017
+* ENHANCEMENT: Support for Microsoft Dynamics NAV 2017
+
 #### 5.0.0-alpha012 - 25.07.2017
 * ENHANCEMENT: (NETCORE) Prefer msbuild over xbuild when we detect a mono installation > 5
 
