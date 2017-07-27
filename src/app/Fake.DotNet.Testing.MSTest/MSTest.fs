@@ -1,11 +1,14 @@
 ﻿/// Contains tasks to run [MSTest](http://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework/) unit tests.
-module Fake.MSTest
+module Fake.DotNet.Testing.MSTest
 
 open System
 open System.Text
+open Fake.Core.String
+open Fake.Core.Process
+open Fake.Core
+open Fake.Testing.Common
 
 /// [omit]
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 let mstestPaths = 
     [| @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE"; 
        @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE";
@@ -13,18 +16,15 @@ let mstestPaths =
        @"[ProgramFilesX86]\Microsoft Visual Studio 10.0\Common7\IDE" |]
 
 /// [omit]
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
-let mstestexe = 
-    if isMono then failwith "MSTest is not supported on mono platform"
+let mstestexe =
+    if Environment.isMono then failwith "MSTest is not supported on mono platform"
     else "mstest.exe"
 
 // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 /// Option which allow to specify if a MSTest error should break the build.
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure the MSTest.exe.
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 [<CLIMutable>]
 type MSTestParams = 
     { /// Test category filter  (optional). The test category filter consists of one or more test category names separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be used together to create a test category filter.
@@ -49,7 +49,6 @@ type MSTestParams =
       NoIsolation : bool }
 
 /// MSTest default parameters.
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 let MSTestDefaults = 
     { Category = null
       ResultsDir = null
@@ -67,7 +66,6 @@ let MSTestDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 let buildMSTestArgs parameters assembly = 
     let testResultsFile = 
         if parameters.ResultsDir <> null then 
@@ -100,17 +98,16 @@ let buildMSTestArgs parameters assembly =
 ///         !! (testDir + @"\*.Tests.dll") 
 ///           |> MSTest (fun p -> { p with Category = "group1" })
 ///     )
-[<System.Obsolete("use Fake.DotNet.Testing.MSTest instead")>]
 let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
-    use __ = traceStartTaskUsing "MSTest" details
+    use __ = Trace.traceTask "MSTest" details
     let parameters = MSTestDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "MSTest: cannot run tests (the assembly list is empty)."
     let failIfError assembly exitCode = 
         if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
             let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
-            traceError message
+            Trace.traceError message
             failwith message
     for assembly in assemblies do
         let args = buildMSTestArgs parameters assembly

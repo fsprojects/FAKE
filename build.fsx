@@ -34,6 +34,7 @@ open Fake.DotNet.Cli
 open Fake.Testing.Common
 open Fake.DotNet.Testing.MSpec
 open Fake.DotNet.Testing.XUnit2
+open Fake.DotNet.Testing.MSTest
 open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
@@ -69,6 +70,7 @@ open SourceLink
 open Fake.ReleaseNotesHelper
 open Fake.AssemblyInfoFile
 open Fake.Testing.XUnit2
+open Fake.MSTest
 open Fake.Testing.NUnit3
 #endif
 
@@ -233,6 +235,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
+      "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.IO.FileSystem", "Core Filesystem utilities"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.netcore", "Command line tool"
