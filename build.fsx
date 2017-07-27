@@ -290,9 +290,12 @@ Target "DownloadPaket" (fun _ ->
         failwith "paket failed to start"
 )
 
-Target "UnskipAssemblyInfo" (fun _ ->
+Target "UnskipAndRevertAssemblyInfo" (fun _ ->
     for assemblyFile, _ in assemblyInfos do
+        // While the files are skipped in can be hard to switch between branches
+        // Therefore we unskip and revert here.
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
+        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
 )
 
 Target "BuildSolution" (fun _ ->
@@ -971,6 +974,7 @@ Target "Release" ignore
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
     ==> "DotnetPackage"
+    ==> "UnskipAndRevertAssemblyInfo"
     ==> "DotnetCoreCreateZipPackages"
     =?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
     ////==> "ILRepack"
