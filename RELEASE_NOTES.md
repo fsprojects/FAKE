@@ -1,3 +1,6 @@
+#### UNRELEASED 5.0.0-alpha014
+* Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
+
 #### 5.0.0-alpha013 - 26.07.2017
 * ENHANCEMENT: Support for Microsoft Dynamics NAV 2017
 
@@ -44,6 +47,9 @@
 * Chocolatey Helper now supports Self-Contained packages
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
+
+#### 4.63.0 - 27.07.2017
+* Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
 
 #### 4.62.6 - 26.07.2017
 * Support for Microsoft Dynamics NAV 2017
