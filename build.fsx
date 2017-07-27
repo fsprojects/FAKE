@@ -374,7 +374,7 @@ Target "Default" DoNothing
     ==> "Bootstrap"
     ==> "Default"
     ==> "CopyLicense"
-    =?> ("GenerateDocs", isLocalBuild && not isLinux)
+    //=?> ("GenerateDocs", isLocalBuild && not isLinux)
     =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
     // =?> ("ReleaseDocs", isLocalBuild && not isLinux)
