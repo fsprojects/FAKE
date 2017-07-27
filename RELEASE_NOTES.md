@@ -1,3 +1,6 @@
+#### 4.63.0 - 27.07.2017
+* Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
+
 #### 4.62.6 - 26.07.2017
 * Support for Microsoft Dynamics NAV 2017
 
