@@ -16,7 +16,6 @@ exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + "\r\n" + (separated "\r\n" x.Data1)
 
-
 type MsBuildEntry = {
     Version: string;
     Paths: string list;
@@ -52,7 +51,7 @@ let monoVersionToUseMSBuildOn = System.Version("5.0")
 /// Tries to detect the right version of MSBuild.
 ///   - On all OS's, we check a `MSBuild` environment variable which is either
 ///     * a direct path to a file to use, or
-///     * a directory that contains a file called 
+///     * a directory that contains a file called
 ///         * `msbuild` on non-Windows systems with mono >= 5.0.0.0, or
 ///         * `xbuild` on non-Windows systems with mono < 5.0.0.0,
 ///         * `MSBuild.exe` on Windows systems, or
@@ -79,7 +78,7 @@ let msBuildExe =
 
     let foundExe =
         match isUnix, EnvironmentHelper.monoVersion with
-        | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
+        | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
                 msbuildEnvironVar |> Option.bind which
@@ -87,7 +86,7 @@ let msBuildExe =
                 which "xbuild"
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
-        | true, _ -> 
+        | true, _ ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
                 msbuildEnvironVar |> Option.bind which
@@ -95,8 +94,8 @@ let msBuildExe =
                 which "msbuild"
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
-        | false, _ -> 
-    
+        | false, _ ->
+
             let configIgnoreMSBuild =
                 if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
                 then Some ""
@@ -106,9 +105,9 @@ let msBuildExe =
                 let vsVersionPaths =
                     defaultArg (EnvironmentHelper.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
                     |> List.map ((@@) ProgramFilesX86)
-    
+
                 ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
-    
+
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
                 msbuildEnvironVar |> Option.bind which
@@ -116,7 +115,7 @@ let msBuildExe =
                 findOnVSPathsThenSystemPath
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "MSBuild.exe"
-    
+
     if foundExe.Contains @"\BuildTools\" then
         traceFAKE "If you encounter msbuild errors make sure you have copied the required SDKs, see https://github.com/Microsoft/msbuild/issues/1697"
     elif foundExe.Contains @"\2017\" then
@@ -236,7 +235,7 @@ let mutable MSBuildDefaults =
       Properties = []
       MaxCpuCount = Some None
       NoLogo = false
-      NodeReuse = not (buildServer = TeamCity || buildServer = TeamFoundation || buildServer = Jenkins)
+      NodeReuse = false
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
@@ -267,8 +266,6 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Normal -> "n"
         | Detailed -> "d"
         | Diagnostic -> "diag"
-
-
 
     let targets =
         match p.Targets with
@@ -471,7 +468,7 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
             |> Set.unionMany
 
     let setBuildParam project projectParams =
-        { projectParams with 
+        { projectParams with
             Targets = targets |> split ';' |> List.filter ((<>) "")
             Properties = projectParams.Properties @ properties project }
 
