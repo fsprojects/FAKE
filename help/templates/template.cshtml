@@ -35,21 +35,28 @@
 									<!-- Nav -->
 										<nav id="nav">
 											<ul>
-												<li @Raw(Properties["CurrentPage"] == "Home" ? "class=\"current_page_item\"" : "")><a href="@(prefix)index.html">Home</a></li>
-												<li @Raw(Properties["CurrentPage"] == "Tutorials" ? "class=\"current_page_item\"" : "")>
-													<a href="@(prefix)fake-what-is-fake.html">Tutorials</a>
+												<li @Raw(Properties["CurrentPage"] == "FAKE-4" ? "class=\"current_page_item\"" : "")>
+													<a href="@(prefix)legacy-index.html">FAKE 4</a>
 													<ul>
-														<li><a href="@(prefix)fake-gettingstarted.html">Getting Started Tutorial</a></li>
-														<li><a href="@(prefix)fake-cache.html">Build script caching</a></li>
-														<li><a href="@(prefix)fake-commandline.html">Running FAKE from command line</a></li>
-														<li><a href="@(prefix)fake-dotnetcore.html">FAKE 5 quickstart</a></li>
-														<li><a href="@(prefix)fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+														<li><a href="@(prefix)legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="@(prefix)help-docs.html">Where is XYZ???</a></li>
+														<li><a href="@(prefix)legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="@(prefix)legacy-core-targets.html">Targets</a></li>
 													</ul>
 												</li>
+                                                <li @Raw(Properties["CurrentPage"] == "Tutorials" ? "class=\" current_page_item\"" : "" )>
+                                                    <a href="@(prefix)fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="@(prefix)fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="@(prefix)fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="@(prefix)fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="@(prefix)fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="@(prefix)fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                    </ul>
+                                                </li>
 												<li @Raw(Properties["CurrentPage"] == "Project" ? "class=\"current_page_item\"" : "")>
 													<a href="@(prefix)fake-what-is-fake.html">Project</a>
 													<ul>
-														<li><a href="@(prefix)legacy-index.html">Fake 4 start page</a></li>
 														<li><a href="@(prefix)help-users.html">Who is using FAKE?</a></li>
 														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
 														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>

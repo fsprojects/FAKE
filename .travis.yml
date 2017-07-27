@@ -3,7 +3,7 @@ sudo: required
 dist: trusty # Ubuntu 14.04
 
 env:
- - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis PAKET_BOOTSTRAPPER_TRACE=true
+ - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
 addons:
   apt:
@@ -11,11 +11,11 @@ addons:
       - libunwind8
 
 before_script:
-  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-alpha009/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-alpha011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
   - mkdir fake-dotnetcore
   - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
   - export PATH=$PATH:$PWD/fake-dotnetcore/
-  - chmod +x $PWD/fake-dotnetcore/Fake
+  - chmod +x $PWD/fake-dotnetcore/fake
 #  - export FAKE="$PWD/fake-dotnetcore/Fake"
   
 before install:
@@ -27,7 +27,7 @@ mono:
   - latest
 
 script: 
-  - Fake run build.fsx
+  - fake run build.fsx
 #  - ./build.sh
 
 branches:

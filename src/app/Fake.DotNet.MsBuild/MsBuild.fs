@@ -78,9 +78,21 @@ let msBuildExe =
     let which tool = Process.tryFindFileOnPath tool
     let msbuildEnvironVar = Environment.environVarOrNone "MSBuild"
 
+    let preferMsBuildOnNetCore =
+        if not Environment.isUnix || Environment.isMono then false
+        else
+            match Mono.monoVersion with
+            | Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> true
+            | _ -> false
+
+    let preferMsBuildOnMono =
+        match Environment.monoVersion with
+        | Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> true
+        | _ -> false
+
     let foundExe =
-        match Environment.isUnix, Environment.monoVersion with
-        | true, Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> 
+        match Environment.isUnix, preferMsBuildOnNetCore || preferMsBuildOnMono with
+        | true, true ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
                 msbuildEnvironVar |> Option.bind which
@@ -88,7 +100,7 @@ let msBuildExe =
                 which "xbuild"
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "msbuild"
-        | true, _ -> 
+        | true, _ ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "xbuild")
                 msbuildEnvironVar |> Option.bind which

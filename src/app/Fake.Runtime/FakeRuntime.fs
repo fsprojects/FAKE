@@ -111,9 +111,13 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
     |> ignore
-    let lockFile = paketDependencies.GetLockFile()
-    let lockGroup = lockFile.GetGroup groupName
 
+    let lockFile = paketDependencies.GetLockFile()
+    let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
+    if printDetails then Trace.log "Setup DependencyCache..."
+    cache.SetupGroup groupName
+
+    let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
     // Write loadDependencies file (basically only for editor support)
     let intellisenseFile = Path.Combine (cacheDir, "intellisense.fsx")
     if printDetails then Trace.log <| sprintf "Writing '%s'" intellisenseFile
@@ -134,32 +138,26 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     // get runtime graph
     if printDetails then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
-        lockGroup.Resolution
-        |> Seq.map (fun kv -> kv.Value)
+        orderedGroup
         |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p)
         |> RuntimeGraph.mergeSeq
 
     // Retrieve assemblies
     if printDetails then Trace.log <| sprintf "Retrieving the assemblies..."
-    lockGroup.Resolution
-    |> Seq.map (fun kv ->
-      let packageName = kv.Key
-      let package = kv.Value
-      package)
+    orderedGroup
     |> Seq.filter (fun p ->
       if p.Name.ToString() = "Microsoft.FSharp.Core.netcore" then
         eprintfn "Ignoring 'Microsoft.FSharp.Core.netcore' please tell the package authors to fix their package and reference 'FSharp.Core' instead."
         false
       else true)
-    |> Seq.toList
-    //|> Paket.LoadingScripts.PackageAndAssemblyResolution.getPackageOrderResolvedPackage
     |> Seq.collect (fun p ->
+      match cache.InstallModel groupName p.Name with
+      | None -> failwith "InstallModel not cached?"
+      | Some installModelRaw ->
       let installModel =
-        paketDependencies.GetInstalledPackageModel(group, p.Name.ToString())
+        installModelRaw
           .ApplyFrameworkRestrictions(Paket.Requirements.getExplicitRestriction p.Settings.FrameworkRestrictions)
       let targetProfile = Paket.TargetProfile.SinglePlatform framework
-      //let assemblies =
-      //  Paket.LoadingScripts.PackageAndAssemblyResolution.getDllsWithinPackage framework installModel
 
       let refAssemblies =
         installModel.GetCompileReferences targetProfile

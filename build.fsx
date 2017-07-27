@@ -10,7 +10,7 @@ open Fake.Core
 open Fake.Core.BuildServer
 open Fake.Core.Environment
 open Fake.Core.Trace
-open Fake.Core.Targets
+open Fake.Core.Target
 open Fake.Core.TargetOperators
 open Fake.Core.String
 open Fake.Core.SemVer
@@ -45,6 +45,9 @@ open Fake.Tools.Git.Staging
 open Fake.Tools.Git.Commit
 
 let currentDirectory = Shell.pwd()
+let Target = Fake.Core.Target.Create
+let RunTargetOrDefault = Fake.Core.Target.RunOrDefault
+
 #else
 // Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
 #r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
@@ -60,7 +63,7 @@ let currentDirectory = Shell.pwd()
 
 open Fake
 open Fake.Git
-open Fake.FSharpFormatting
+open Fake.DotNet.FSFormatting
 open System.IO
 open SourceLink
 open Fake.ReleaseNotesHelper
@@ -78,6 +81,12 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
+
+let gitOwner = "fsprojects"
+let gitHome = "https://github.com/" + gitOwner
+
+// The name of the project on GitHub
+let gitName = "Paket"
 
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
@@ -117,9 +126,26 @@ let cleanForTests () =
         !! (f </> "Fake.*")
         |> Seq.iter (Shell.rm_rf)
 
+    let run workingDir fileName args =
+        printfn "CWD: %s" workingDir
+        let fileName, args =
+            if isUnix
+            then fileName, args else "cmd", ("/C " + fileName + " " + args)
+        let ok =
+            execProcess (fun info ->
+                info.FileName <- fileName
+                info.WorkingDirectory <- workingDir
+                info.Arguments <- args) System.TimeSpan.MaxValue
+        if not ok then failwith (sprintf "'%s> %s %s' task failed" workingDir fileName args)
+
+    let rmdir dir =
+        if isUnix
+        then Shell.rm_rf dir
+        // Use this in Windows to prevent conflicts with paths too long
+        else run "." "cmd" ("/C rmdir /s /q " + Path.GetFullPath dir)
     // Clean test directories
     !! "integrationtests/*/temp"
-    |> CleanDirs
+    |> Seq.iter rmdir
 
 // Targets
 Target "Clean" (fun _ ->
@@ -274,120 +300,6 @@ Target "BuildSolution" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
-// START _________________ MOVE TO Fake.DotNet.FSFormatting
-// START _________________ MOVE TO Fake.DotNet.FSFormatting
-// START _________________ MOVE TO Fake.DotNet.FSFormatting
-// START _________________ MOVE TO Fake.DotNet.FSFormatting
-// START _________________ MOVE TO Fake.DotNet.FSFormatting
-// START _________________ MOVE TO Fake.DotNet.FSFormatting
-
-/// Specifies the fsformatting executable
-let mutable toolPath =
-    findToolInSubPath "fsformatting.exe" (Directory.GetCurrentDirectory() @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
-
-/// Runs fsformatting.exe with the given command in the given repository directory.
-let private run toolPath command = 
-    if 0 <> ExecProcess (fun info -> 
-                info.FileName <- toolPath
-                info.Arguments <- command) System.TimeSpan.MaxValue
-    then failwithf "FSharp.Formatting %s failed." command
-
-type LiterateArguments =
-    { ToolPath : string
-      Source : string
-      OutputDirectory : string 
-      Template : string
-      ProjectParameters : (string * string) list
-      LayoutRoots : string list }
-
-let defaultLiterateArguments =
-    { ToolPath = toolPath
-      Source = ""
-      OutputDirectory = ""
-      Template = ""
-      ProjectParameters = []
-      LayoutRoots = [] }
-
-let CreateDocs p =
-    let arguments = (p:LiterateArguments->LiterateArguments) defaultLiterateArguments
-    let layoutroots =
-        if arguments.LayoutRoots.IsEmpty then []
-        else [ "--layoutRoots" ] @ arguments.LayoutRoots
-    let source = arguments.Source
-    let template = arguments.Template
-    let outputDir = arguments.OutputDirectory
-
-    let command = 
-        arguments.ProjectParameters
-        |> Seq.map (fun (k, v) -> [ k; v ])
-        |> Seq.concat
-        |> Seq.append 
-               (["literate"; "--processdirectory" ] @ layoutroots @ [ "--inputdirectory"; source; "--templatefile"; template; 
-                  "--outputDirectory"; outputDir; "--replacements" ])
-        |> Seq.map (fun s -> 
-               if s.StartsWith "\"" then s
-               else sprintf "\"%s\"" s)
-        |> separated " "
-    run arguments.ToolPath command
-    printfn "Successfully generated docs for %s" source
-
-type MetadataFormatArguments =
-    { ToolPath : string
-      Source : string
-      SourceRepository : string
-      OutputDirectory : string 
-      Template : string
-      ProjectParameters : (string * string) list
-      LayoutRoots : string list
-      LibDirs : string list }
-
-let defaultMetadataFormatArguments =
-    { ToolPath = toolPath
-      Source = Directory.GetCurrentDirectory()
-      SourceRepository = ""
-      OutputDirectory = ""
-      Template = ""
-      ProjectParameters = []
-      LayoutRoots = []
-      LibDirs = [] }
-
-let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
-    let arguments = p defaultMetadataFormatArguments
-    let outputDir = arguments.OutputDirectory
-    let projectParameters = arguments.ProjectParameters
-    let sourceRepo = arguments.SourceRepository
-    let libdirs = 
-        if arguments.LibDirs.IsEmpty then []
-        else [ "--libDirs" ] @ arguments.LibDirs
-
-    let layoutroots =
-        if arguments.LayoutRoots.IsEmpty then []
-        else [ "--layoutRoots" ] @ arguments.LayoutRoots
-
-    for file in dllFiles do
-        projectParameters
-        |> Seq.map (fun (k, v) -> [ k; v ])
-        |> Seq.concat
-        |> Seq.append 
-                ([ "metadataformat"; "--generate"; "--outdir"; outputDir] @ layoutroots @ libdirs @ [ "--sourceRepo"; sourceRepo;
-                   "--sourceFolder"; arguments.Source; "--parameters" ])
-        |> Seq.map (fun s -> 
-                if s.StartsWith "\"" then s
-                else sprintf "\"%s\"" s)
-        |> separated " "
-        |> fun prefix -> sprintf "%s --dllfiles \"%s\"" prefix file
-        |> run arguments.ToolPath
-
-        printfn "Successfully generated docs for DLL %s" file
-
-// END _________________ MOVE TO Fake.DotNet.FSFormatting
-// END _________________ MOVE TO Fake.DotNet.FSFormatting
-// END _________________ MOVE TO Fake.DotNet.FSFormatting
-// END _________________ MOVE TO Fake.DotNet.FSFormatting
-// END _________________ MOVE TO Fake.DotNet.FSFormatting
-// END _________________ MOVE TO Fake.DotNet.FSFormatting
-
-
 Target "GenerateDocs" (fun _ ->
     CleanDir docsDir
     let source = "./help"
@@ -417,6 +329,13 @@ Target "GenerateDocs" (fun _ ->
             OutputDirectory = docsDir
             Template = docsTemplate
             ProjectParameters = ("CurrentPage", "Modules") :: projInfo
+            LayoutRoots = layoutroots })
+    CreateDocs (fun s ->
+        { s with
+            Source = source @@ "redirects"
+            OutputDirectory = docsDir
+            Template = docsTemplate
+            ProjectParameters = ("CurrentPage", "FAKE-4") :: projInfo
             LayoutRoots = layoutroots })
     CreateDocs (fun s ->
         { s with
@@ -542,16 +461,14 @@ Target "BootstrapTestDotnetCore" (fun _ ->
 
         let executeTarget target =
             if clearCache then clear ()
-            if isUnix then
-                ExecProcess (fun info ->
-                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake"
-                    info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "-v run %s --target %s" script target) timeout
-            else
-                ExecProcess (fun info ->
-                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/fake.exe"
-                    info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "run %s --target %s" script target) timeout
+            let fileName =
+                if isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
+                else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
+            ExecProcess (fun info ->
+                info.FileName <- fileName
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "run %s --target %s" script target) timeout
+
 
         let result = executeTarget "PrintColors"
         if result <> 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
@@ -822,20 +739,14 @@ Target "DotnetPackage" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
     let oldContent = File.ReadAllText netcoreFsproj
-    try
-        // File.WriteAllText(netcoreJson, newContent)
-        let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-        DotnetPublish (fun c ->
-            { c with
-                Framework = Some "netcoreapp1.0"
-                OutputPath = Some outDir
-            }) netcoreFsproj
 
-        //File.Copy(win32manifest, outDir + "/default.win32manifest")
-    with e ->
-        printfn "failed to publish portable!"
-        // File.WriteAllText(netcoreJson, oldContent)
-        ()
+    // File.WriteAllText(netcoreJson, newContent)
+    let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
+    DotnetPublish (fun c ->
+        { c with
+            Framework = Some "netcoreapp1.0"
+            OutputPath = Some outDir
+        }) netcoreFsproj
 )
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->
@@ -946,17 +857,19 @@ Target "DotnetCoreCreateDebianPackage" (fun _ ->
 
 )
 
-Target "DotnetCorePushNuGet" (fun _ ->
-    let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
-    let apikey = environVarOrDefault "nugetkey" ""
-    let nugetsource = environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-    let nugetPush nugetpackage =
-        if not <| System.String.IsNullOrEmpty apikey then
-            ExecProcess (fun info ->
-                info.FileName <- nuget_exe
-                info.Arguments <- sprintf "push %s %s -Source %s" (toParam nugetpackage) (toParam apikey) (toParam nugetsource)) (System.TimeSpan.FromMinutes 5.)
-            |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
+let apikey = environVarOrDefault "nugetkey" ""
+let nugetsource = environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let nugetPush nugetpackage =
+    if not <| System.String.IsNullOrEmpty apikey then
+        ExecProcess (fun info ->
+            info.FileName <- nuget_exe
+            info.Arguments <- sprintf "push %s %s -Source %s" (toParam nugetpackage) (toParam apikey) (toParam nugetsource))
+            (System.TimeSpan.FromMinutes 10.)
+        |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+    else traceFAKE "could not push '%s', because api key was not set" nugetpackage
 
+Target "DotnetCorePushNuGet" (fun _ ->
     // dotnet pack
     netCoreProjs
     -- "src/app/Fake.netcore/*.fsproj"
@@ -969,15 +882,13 @@ Target "DotnetCorePushNuGet" (fun _ ->
 
 Target "PublishNuget" (fun _ ->
     // uses NugetKey environment variable.
+    // Timeout atm
     Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
             WorkingDir = nugetLegacyDir })
-    // We have some nugets in there we don't want to push
-    //Paket.Push(fun p ->
-    //    { p with
-    //        DegreeOfParallelism = 2
-    //        WorkingDir = nugetDncDir })
+    //!! (nugetLegacyDir </> "**/*.nupkg")
+    //|> Seq.iter nugetPush
 )
 
 Target "ReleaseDocs" (fun _ ->
@@ -993,14 +904,35 @@ Target "ReleaseDocs" (fun _ ->
     Branches.push "gh-pages"
 )
 
-Target "Release" (fun _ ->
+//#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
+
+Target "FastRelease" (fun _ ->
     StageAll ""
     Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     Branches.push ""
 
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
+
+    //let token =
+    //    match getBuildParam "github_token" with
+    //    | s when not (System.String.IsNullOrWhiteSpace s) -> s
+    //    | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    //
+    //let draft =
+    //    Octokit.createClientWithToken token
+    //    |> Octokit.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    //let draftWithFiles =
+    //    runtimes @ [ "portable"; "packages" ]
+    //    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    //    |> List.fold (fun state item ->
+    //        state
+    //        |> Octokit.uploadFile item) draft
+    //draftWithFiles
+    //|> Octokit.releaseDraft
+    //|> Async.RunSynchronously
 )
+
 open System
 Target "PrintColors" (fun s ->
   let color (color: ConsoleColor) (code : unit -> _) =
@@ -1022,8 +954,9 @@ Target "EnsureTestsRun" (fun _ ->
 #endif
   ()
 )
-Target "Default" DoNothing
-Target "StartDnc" DoNothing
+Target "Default" ignore
+Target "StartDnc" ignore
+Target "Release" ignore
 
 "Clean"
     ==> "StartDnc"
@@ -1048,14 +981,22 @@ Target "StartDnc" DoNothing
     =?> ("CreateNuGet", not isLinux)
     ==> "CopyLicense"
     =?> ("DotnetCoreCreateChocolateyPackage", not isLinux)
-    ==> "Default"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    ==> "EnsureTestsRun"
+    ==> "Default"
+
+"EnsureTestsRun"
     =?> ("DotnetCorePushChocolateyPackage", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "DotnetCorePushNuGet"
     ==> "PublishNuget"
+    ==> "FastRelease"
+
+"Default"
     ==> "Release"
+"FastRelease"
+    ==> "Release"
+"Default"
+    ?=> "EnsureTestsRun"
 
 // start build
 RunTargetOrDefault "Default"

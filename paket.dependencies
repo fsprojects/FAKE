@@ -1,10 +1,10 @@
-version 5.0.0-rc005
+version 5.81.2
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
 source http://nuget.org/api/v2
 
-nuget FSharp.Core redirects: force
+nuget FSharp.Core ~> 4.1.0 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
 nuget Paket.Core prerelease
@@ -57,7 +57,8 @@ group Build
     source http://nuget.org/api/v2
     source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
-    
+
+    nuget FSharp.Core ~> 4.1.0
     nuget Nuget.CommandLine
     nuget FAKE prerelease
     nuget FSharp.Formatting prerelease
@@ -65,11 +66,14 @@ group Build
     nuget SourceLink.Fake
     nuget ILRepack
 
+    github fsharp/FAKE modules/Octokit/Octokit.fsx
+
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://nuget.org/api/v2
     //source https://ci.appveyor.com/nuget/fake
 
+    nuget FSharp.Core ~> 4.1.0
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
     nuget Fake.Core.Targets prerelease

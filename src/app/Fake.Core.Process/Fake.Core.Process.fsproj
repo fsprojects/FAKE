@@ -19,6 +19,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="Process.fs" />
+    <Compile Include="Mono.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />

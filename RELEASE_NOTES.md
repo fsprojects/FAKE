@@ -1,8 +1,17 @@
-#### vNext - 08.07.2017
-* Fake 5 - Update Paket
-* Restore console encoding on .NET Framework https://github.com/fsharp/FAKE/pull/1587
-* loadDependencies.fsx -> intellisense.fsx https://github.com/fsharp/FAKE/pull/1594
-* Copy missing changes from legacy NuGet helpers https://github.com/fsharp/FAKE/pull/1596
+#### 5.0.0-alpha013 - 26.07.2017
+* ENHANCEMENT: Support for Microsoft Dynamics NAV 2017
+
+#### 5.0.0-alpha012 - 25.07.2017
+* ENHANCEMENT: (NETCORE) Prefer msbuild over xbuild when we detect a mono installation > 5
+
+#### 5.0.0-alpha011 - 24.07.2017
+* BUGFIX: Restore console encoding on .NET Framework (https://github.com/fsharp/FAKE/pull/1587)
+* FAKE5: Copy missing changes from legacy NuGet helpers (https://github.com/fsharp/FAKE/pull/1596)
+* ENHANCEMENT: Rename intellisense script (https://github.com/fsharp/FAKE/pull/1594)
+* NEW MODULE: Opencover migration (https://github.com/fsharp/FAKE/pull/1586)
+* PERFORMANCE: Fake 5 - Update Paket
+* PERFORMANCE: Use Paket cache to increase warm start (with existing cache)
+* PERFORMANCE: Remove runtime dependency resolution be default.
 * DOCS Update comment https://github.com/fsharp/FAKE/pull/1602
 * Added SkipNonTestAssemblies to NUnit3Params https://github.com/fsharp/FAKE/pull/1608
 
@@ -35,6 +44,12 @@
 * Chocolatey Helper now supports Self-Contained packages
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
+
+#### 4.62.6 - 26.07.2017
+* Support for Microsoft Dynamics NAV 2017
+
+#### 4.62.5 - 15.07.2017
+* Allow to download SDK from release page
 
 #### 4.62.1 - 29.06.2017
 * Allow to set process encoding and fix issues with node tools - https://github.com/fsharp/FAKE/pull/1606

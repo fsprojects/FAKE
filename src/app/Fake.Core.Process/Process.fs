@@ -389,7 +389,13 @@ let tryFindFileOnPath (file : string) : string option =
     Environment.pathDirectories
     |> Seq.filter Path.isValidPath
     |> Seq.append [ "." ]
-    |> fun path -> tryFindFile path file
+    |> fun path ->
+        // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
+        if Environment.isWindows then
+            Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
+            |> String.split ';'
+            |> Seq.tryPick (fun postFix -> tryFindFile path (file + postFix))
+        else tryFindFile path file
 
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]
@@ -407,6 +413,12 @@ let appSettings (key : string) (fallbackValue : string) =
         if not (String.isNullOrWhiteSpace setting) then setting
         else fallbackValue
     value.Split([| ';' |], StringSplitOptions.RemoveEmptyEntries)
+
+/// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.
+let tryFindTool envVar tool =
+    match Environment.environVarOrNone envVar with
+    | Some path -> Some path
+    | None -> tryFindFileOnPath tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]

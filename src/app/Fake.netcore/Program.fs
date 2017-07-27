@@ -179,6 +179,10 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
 
 [<EntryPoint>]
 let main (args:string[]) =
+  let resolution = Environment.GetEnvironmentVariable ("PAKET_DISABLE_RUNTIME_RESOLUTION")
+  if System.String.IsNullOrEmpty resolution then
+    Environment.SetEnvironmentVariable ("PAKET_DISABLE_RUNTIME_RESOLUTION", "true")
+
   let mutable exitCode = 0
   let encoding = Console.OutputEncoding
   let parser = ArgumentParser.Create<Cli.FakeArgs>("fake")
