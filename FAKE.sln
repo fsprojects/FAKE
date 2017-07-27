@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{06A2CB89-4DFC-4436-AB46-B3E81AFDE294}"
 	ProjectSection(SolutionItems) = preProject
@@ -79,6 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9
 		help\markdown\fake-migrate-to-fake-5.md = help\markdown\fake-migrate-to-fake-5.md
 		help\markdown\fake-what-is-fake.md = help\markdown\fake-what-is-fake.md
 		help\markdown\help-users.md = help\markdown\help-users.md
+		help\markdown\legacy-assemblyinfo.md = help\markdown\legacy-assemblyinfo.md
 		help\markdown\legacy-commandline.md = help\markdown\legacy-commandline.md
 		help\markdown\legacy-core-targets.md = help\markdown\legacy-core-targets.md
 		help\markdown\legacy-gettingstarted.md = help\markdown\legacy-gettingstarted.md
@@ -122,6 +123,42 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "reference", "reference", "{
 		help\templates\reference\part-members.cshtml = help\templates\reference\part-members.cshtml
 		help\templates\reference\part-nested.cshtml = help\templates\reference\part-nested.cshtml
 		help\templates\reference\type.cshtml = help\templates\reference\type.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redirects", "redirects", "{7E947549-B069-4884-B4C5-D572D46E6D58}"
+	ProjectSection(SolutionItems) = preProject
+		help\redirects\androidpublisher.md = help\redirects\androidpublisher.md
+		help\redirects\assemblyinfo.md = help\redirects\assemblyinfo.md
+		help\redirects\azurecloudservices.md = help\redirects\azurecloudservices.md
+		help\redirects\azurewebjobs.md = help\redirects\azurewebjobs.md
+		help\redirects\cache.md = help\redirects\cache.md
+		help\redirects\canopy.md = help\redirects\canopy.md
+		help\redirects\chocolatey.md = help\redirects\chocolatey.md
+		help\redirects\commandline.md = help\redirects\commandline.md
+		help\redirects\create-nuget-package.md = help\redirects\create-nuget-package.md
+		help\redirects\customtasks.md = help\redirects\customtasks.md
+		help\redirects\dacpac.md = help\redirects\dacpac.md
+		help\redirects\deploy.md = help\redirects\deploy.md
+		help\redirects\fluentmigrator.md = help\redirects\fluentmigrator.md
+		help\redirects\fsc.md = help\redirects\fsc.md
+		help\redirects\fxcop.md = help\redirects\fxcop.md
+		help\redirects\iis.md = help\redirects\iis.md
+		help\redirects\msteamsnotification.md = help\redirects\msteamsnotification.md
+		help\redirects\nuget.md = help\redirects\nuget.md
+		help\redirects\octopusdeploy.md = help\redirects\octopusdeploy.md
+		help\redirects\parallel-build.md = help\redirects\parallel-build.md
+		help\redirects\slacknotification.md = help\redirects\slacknotification.md
+		help\redirects\soft-dependencies.md = help\redirects\soft-dependencies.md
+		help\redirects\sonarcube.md = help\redirects\sonarcube.md
+		help\redirects\specifictargets.md = help\redirects\specifictargets.md
+		help\redirects\stylecop.md = help\redirects\stylecop.md
+		help\redirects\teamcity.md = help\redirects\teamcity.md
+		help\redirects\teamcityadvanced.md = help\redirects\teamcityadvanced.md
+		help\redirects\typescript.md = help\redirects\typescript.md
+		help\redirects\users.md = help\redirects\users.md
+		help\redirects\vagrant.md = help\redirects\vagrant.md
+		help\redirects\watch.md = help\redirects\watch.md
+		help\redirects\wix.md = help\redirects\wix.md
 	EndProjectSection
 EndProject
 Global
@@ -298,5 +335,6 @@ Global
 		{B9222464-CAAC-4E5F-81A0-408C7BEFDBF3} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 		{7D2A5639-80A5-4F01-9527-69FEBEB65344} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 		{791E2077-80ED-430A-A16F-1705E79214B2} = {7D2A5639-80A5-4F01-9527-69FEBEB65344}
+		{7E947549-B069-4884-B4C5-D572D46E6D58} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 	EndGlobalSection
 EndGlobal
