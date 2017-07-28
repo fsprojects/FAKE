@@ -69,6 +69,7 @@ open SourceLink
 open Fake.ReleaseNotesHelper
 open Fake.AssemblyInfoFile
 open Fake.Testing.XUnit2
+open Fake.MSTest
 open Fake.Testing.NUnit3
 #endif
 
@@ -233,6 +234,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
+      "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.IO.FileSystem", "Core Filesystem utilities"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.netcore", "Command line tool"
@@ -382,7 +384,7 @@ Target "Test" (fun _ ->
     |> MSpec (fun p ->
             {p with
                 ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
-                ExcludeTags = ["HTTP"]
+                ExcludeTags = if isWindows then ["HTTP"] else ["HTTP"; "WindowsOnly"]
                 TimeOut = System.TimeSpan.FromMinutes 5.
                 HtmlOutputDir = reportDir})
     try
