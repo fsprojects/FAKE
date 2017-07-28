@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>AssemblyInfo - FAKE - F# Make</title>
+		<title>Attribute - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,49 +180,189 @@
 
 
 
-<h1>AssemblyInfo</h1>
+<h1>Attribute</h1>
 <div class="xmldoc">
+<p>Represents AssemblyInfo attributes</p>
+
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-dotnet-assemblyinfo-attribute.html">Attribute</a>
-          </td>
-          <td class="xmldoc"><p>Represents AssemblyInfo attributes</p>
-
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h3>Functions and values</h3>
+  <h3>Constructors</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Constructor</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1347', 1347)" onmouseover="showTip(event, '1347', 1347)">
-            BoolAttribute (name, value, inNamespace)
+          <code onmouseout="hideTip(event, '4055', 4055)" onmouseover="showTip(event, '4055', 4055)">
+            new(...)
           </code>
-          <div class="tip" id="1347">
+          <div class="tip" id="4055">
+            <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropType:string) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L74-74" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4056', 4056)" onmouseover="showTip(event, '4056', 4056)">
+            new(...)
+          </code>
+          <div class="tip" id="4056">
+            <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropName:string * staticPropType:string * staticPropValue:string) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L66-66" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4057', 4057)" onmouseover="showTip(event, '4057', 4057)">
+            Name
+          </code>
+          <div class="tip" id="4057">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L67-67" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4058', 4058)" onmouseover="showTip(event, '4058', 4058)">
+            Namespace
+          </code>
+          <div class="tip" id="4058">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L69-69" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4059', 4059)" onmouseover="showTip(event, '4059', 4059)">
+            StaticPropertyName
+          </code>
+          <div class="tip" id="4059">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L70-70" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4060', 4060)" onmouseover="showTip(event, '4060', 4060)">
+            StaticPropertyType
+          </code>
+          <div class="tip" id="4060">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L71-71" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4061', 4061)" onmouseover="showTip(event, '4061', 4061)">
+            StaticPropertyValue
+          </code>
+          <div class="tip" id="4061">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L72-72" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4062', 4062)" onmouseover="showTip(event, '4062', 4062)">
+            Value
+          </code>
+          <div class="tip" id="4062">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L68-68" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4063', 4063)" onmouseover="showTip(event, '4063', 4063)">
+            BoolAttribute(name, value, inNamespace)
+          </code>
+          <div class="tip" id="4063">
             <strong>Signature:</strong> (name:string * value:bool * inNamespace:string) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L87-87" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L83-83" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -234,15 +374,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1348', 1348)" onmouseover="showTip(event, '1348', 1348)">
-            CLSCompliant value
+          <code onmouseout="hideTip(event, '4064', 4064)" onmouseover="showTip(event, '4064', 4064)">
+            CLSCompliant(value)
           </code>
-          <div class="tip" id="1348">
-            <strong>Signature:</strong> value:bool -&gt; Attribute<br />
+          <div class="tip" id="4064">
+            <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L143-143" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L139-139" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -254,15 +394,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1349', 1349)" onmouseover="showTip(event, '1349', 1349)">
-            Company value
+          <code onmouseout="hideTip(event, '4065', 4065)" onmouseover="showTip(event, '4065', 4065)">
+            Company(value)
           </code>
-          <div class="tip" id="1349">
+          <div class="tip" id="4065">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L90-90" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L86-86" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -274,15 +414,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1350', 1350)" onmouseover="showTip(event, '1350', 1350)">
-            ComVisible value
+          <code onmouseout="hideTip(event, '4066', 4066)" onmouseover="showTip(event, '4066', 4066)">
+            ComVisible(value)
           </code>
-          <div class="tip" id="1350">
-            <strong>Signature:</strong> value:bool -&gt; Attribute<br />
+          <div class="tip" id="4066">
+            <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L139-139" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L135-135" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -294,15 +434,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1351', 1351)" onmouseover="showTip(event, '1351', 1351)">
-            Configuration value
+          <code onmouseout="hideTip(event, '4067', 4067)" onmouseover="showTip(event, '4067', 4067)">
+            Configuration(value)
           </code>
-          <div class="tip" id="1351">
+          <div class="tip" id="4067">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L108-108" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L104-104" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -314,15 +454,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1352', 1352)" onmouseover="showTip(event, '1352', 1352)">
-            Copyright value
+          <code onmouseout="hideTip(event, '4068', 4068)" onmouseover="showTip(event, '4068', 4068)">
+            Copyright(value)
           </code>
-          <div class="tip" id="1352">
+          <div class="tip" id="4068">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L96-96" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L92-92" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -334,15 +474,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1353', 1353)" onmouseover="showTip(event, '1353', 1353)">
-            Culture value
+          <code onmouseout="hideTip(event, '4069', 4069)" onmouseover="showTip(event, '4069', 4069)">
+            Culture(value)
           </code>
-          <div class="tip" id="1353">
+          <div class="tip" id="4069">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L105-105" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L101-101" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -354,15 +494,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1354', 1354)" onmouseover="showTip(event, '1354', 1354)">
-            DelaySign value
+          <code onmouseout="hideTip(event, '4070', 4070)" onmouseover="showTip(event, '4070', 4070)">
+            DelaySign(value)
           </code>
-          <div class="tip" id="1354">
-            <strong>Signature:</strong> value:bool -&gt; Attribute<br />
+          <div class="tip" id="4070">
+            <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L146-146" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L142-142" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -374,15 +514,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1355', 1355)" onmouseover="showTip(event, '1355', 1355)">
-            Description value
+          <code onmouseout="hideTip(event, '4071', 4071)" onmouseover="showTip(event, '4071', 4071)">
+            Description(value)
           </code>
-          <div class="tip" id="1355">
+          <div class="tip" id="4071">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L102-102" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L98-98" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -394,15 +534,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1356', 1356)" onmouseover="showTip(event, '1356', 1356)">
-            FileVersion value
+          <code onmouseout="hideTip(event, '4072', 4072)" onmouseover="showTip(event, '4072', 4072)">
+            FileVersion(value)
           </code>
-          <div class="tip" id="1356">
+          <div class="tip" id="4072">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L128-128" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L124-124" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -414,15 +554,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1357', 1357)" onmouseover="showTip(event, '1357', 1357)">
-            Guid value
+          <code onmouseout="hideTip(event, '4073', 4073)" onmouseover="showTip(event, '4073', 4073)">
+            Guid(value)
           </code>
-          <div class="tip" id="1357">
+          <div class="tip" id="4073">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L136-136" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L132-132" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -434,15 +574,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1358', 1358)" onmouseover="showTip(event, '1358', 1358)">
-            InformationalVersion value
+          <code onmouseout="hideTip(event, '4074', 4074)" onmouseover="showTip(event, '4074', 4074)">
+            InformationalVersion(value)
           </code>
-          <div class="tip" id="1358">
+          <div class="tip" id="4074">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L132-132" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L128-128" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -454,15 +594,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1359', 1359)" onmouseover="showTip(event, '1359', 1359)">
-            InternalsVisibleTo value
+          <code onmouseout="hideTip(event, '4075', 4075)" onmouseover="showTip(event, '4075', 4075)">
+            InternalsVisibleTo(value)
           </code>
-          <div class="tip" id="1359">
+          <div class="tip" id="4075">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L124-124" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L120-120" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -474,15 +614,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1360', 1360)" onmouseover="showTip(event, '1360', 1360)">
-            KeyFile value
+          <code onmouseout="hideTip(event, '4076', 4076)" onmouseover="showTip(event, '4076', 4076)">
+            KeyFile(value)
           </code>
-          <div class="tip" id="1360">
+          <div class="tip" id="4076">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L118-118" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L114-114" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -494,15 +634,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1361', 1361)" onmouseover="showTip(event, '1361', 1361)">
-            KeyName value
+          <code onmouseout="hideTip(event, '4077', 4077)" onmouseover="showTip(event, '4077', 4077)">
+            KeyName(value)
           </code>
-          <div class="tip" id="1361">
+          <div class="tip" id="4077">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L121-121" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L117-117" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -514,15 +654,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1362', 1362)" onmouseover="showTip(event, '1362', 1362)">
-            Metadata (name, value)
+          <code onmouseout="hideTip(event, '4078', 4078)" onmouseover="showTip(event, '4078', 4078)">
+            Metadata(name, value)
           </code>
-          <div class="tip" id="1362">
+          <div class="tip" id="4078">
             <strong>Signature:</strong> (name:string * value:string) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L150-150" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L146-146" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -534,15 +674,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1363', 1363)" onmouseover="showTip(event, '1363', 1363)">
-            Product value
+          <code onmouseout="hideTip(event, '4079', 4079)" onmouseover="showTip(event, '4079', 4079)">
+            Product(value)
           </code>
-          <div class="tip" id="1363">
+          <div class="tip" id="4079">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L93-93" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L89-89" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -554,51 +694,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1364', 1364)" onmouseover="showTip(event, '1364', 1364)">
-            StringAttribute (...)
+          <code onmouseout="hideTip(event, '4080', 4080)" onmouseover="showTip(event, '4080', 4080)">
+            StringAttribute(...)
           </code>
-          <div class="tip" id="1364">
-            <strong>Signature:</strong> (name:string * value:string * inNamespace:string) -&gt; Attribute<br />
+          <div class="tip" id="4080">
+            <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticName:string option * staticValue:string option) -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L82-82" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L78-78" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a simple attribute with string values. Used as base for other attributes</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1365', 1365)" onmouseover="showTip(event, '1365', 1365)">
-            StringAttributeEx (...)
+          <code onmouseout="hideTip(event, '4081', 4081)" onmouseover="showTip(event, '4081', 4081)">
+            Title(value)
           </code>
-          <div class="tip" id="1365">
-            <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticName:string * staticValue:string) -&gt; Attribute<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L79-79" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1366', 1366)" onmouseover="showTip(event, '1366', 1366)">
-            Title value
-          </code>
-          <div class="tip" id="1366">
+          <div class="tip" id="4081">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L99-99" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L95-95" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -610,15 +734,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1367', 1367)" onmouseover="showTip(event, '1367', 1367)">
-            Trademark value
+          <code onmouseout="hideTip(event, '4082', 4082)" onmouseover="showTip(event, '4082', 4082)">
+            Trademark(value)
           </code>
-          <div class="tip" id="1367">
+          <div class="tip" id="4082">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L111-111" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L107-107" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -630,15 +754,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1368', 1368)" onmouseover="showTip(event, '1368', 1368)">
-            Version value
+          <code onmouseout="hideTip(event, '4083', 4083)" onmouseover="showTip(event, '4083', 4083)">
+            Version(value)
           </code>
-          <div class="tip" id="1368">
+          <div class="tip" id="4083">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L114-114" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L110-110" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
