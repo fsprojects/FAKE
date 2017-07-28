@@ -178,6 +178,9 @@
     <Compile Include="..\Fake.DotNet.Testing.NUnit\NUnit3.fs">
       <Link>Fake.DotNet.Testing.NUnit/NUnit3.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.MSTest\MSTest.fs">
+      <Link>Fake.DotNet.Testing.MSTest/MSTest.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.Core.Xml\Xml.fs">
       <Link>Fake.Core.Xml/Xml.fs</Link>
     </Compile>
@@ -306,9 +309,6 @@
     <Compile Include="UnitTest\MSTest.fs" />
     <Compile Include="UnitTest\ProcessTestRunner.fs" />
     <Compile Include="UnitTest\VSTest.fs" />
-    <Compile Include="..\Fake.DotNet.Testing.MSTest\MSTest.fs">
-      <Link>Fake.DotNet.Testing.MSTest/MSTest.fs</Link>
-    </Compile>
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="FXCopHelper.fs" />

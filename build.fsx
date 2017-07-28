@@ -34,7 +34,6 @@ open Fake.DotNet.Cli
 open Fake.Testing.Common
 open Fake.DotNet.Testing.MSpec
 open Fake.DotNet.Testing.XUnit2
-open Fake.DotNet.Testing.MSTest
 open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
