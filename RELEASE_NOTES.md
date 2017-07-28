@@ -1,5 +1,6 @@
-#### UNRELEASED 5.0.0-alpha014
+#### 5.0.0-alpha014 - 28.07.2017
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
+* MSTest: add Tests parameter to specify list of tests - https://github.com/fsharp/FAKE/pull/1615
 
 #### 5.0.0-alpha013 - 26.07.2017
 * ENHANCEMENT: Support for Microsoft Dynamics NAV 2017
