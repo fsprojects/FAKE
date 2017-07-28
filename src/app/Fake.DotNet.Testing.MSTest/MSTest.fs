@@ -17,8 +17,8 @@ let mstestPaths =
 
 /// [omit]
 let mstestexe =
-    if Environment.isMono then failwith "MSTest is not supported on mono platform"
-    else "mstest.exe"
+    if Environment.isWindows then "mstest.exe"
+    else failwith "MSTest is only supported on Windows platform"
 
 // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 /// Option which allow to specify if a MSTest error should break the build.

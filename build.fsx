@@ -381,7 +381,7 @@ Target "Test" (fun _ ->
     |> MSpec (fun p ->
             {p with
                 ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
-                ExcludeTags = ["HTTP"]
+                ExcludeTags = if isWindows then ["HTTP"] else ["HTTP"; "WindowsOnly"]
                 TimeOut = System.TimeSpan.FromMinutes 5.
                 HtmlOutputDir = reportDir})
     try

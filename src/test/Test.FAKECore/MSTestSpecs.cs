@@ -25,6 +25,7 @@ namespace Test.FAKECore.Testing.MSTestSpecs
         protected static string Arguments;
     }
 
+    [Tags("WindowsOnly")]
     internal class When_using_the_default_parameters
         : BuildArgumentsSpecsBase
     {
@@ -50,6 +51,7 @@ namespace Test.FAKECore.Testing.MSTestSpecs
             () => Arguments.ShouldNotContain("/test:");
     }
 
+    [Tags("WindowsOnly")]
     internal class When_using_Category_parameter
         : BuildArgumentsSpecsBase
     {
@@ -60,6 +62,7 @@ namespace Test.FAKECore.Testing.MSTestSpecs
             () => Arguments.ShouldContain("/category:SampleCategory");
     }
 
+    [Tags("WindowsOnly")]
     internal class When_using_Tests_parameter
         : BuildArgumentsSpecsBase
     {
