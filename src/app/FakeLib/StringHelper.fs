@@ -117,7 +117,7 @@ let inline appendIfNotNullOrEmpty value s = appendIfTrue (isNotNullOrEmpty value
 let inline appendFileNamesIfNotNull fileNames (builder : StringBuilder) = 
     fileNames |> Seq.fold (fun builder file -> appendIfTrue (isNullOrEmpty file |> not) file builder) builder
 
-/// Applies action on builder for each element if list.
+/// Applies action on builder for each element of list.
 let inline forEach items action text (builder: StringBuilder) =
     items
     |> List.iter (fun t -> builder |> (action t text) |> ignore)
