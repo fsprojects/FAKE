@@ -99,18 +99,18 @@ let Pack setParams =
         if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
 
-    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + toParam parameters.Version
-    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
-    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
-    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " buildplatform " + toParam parameters.BuildPlatform
-    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
-    let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
-    let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
-    let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
-    let symbols = if parameters.Symbols then " symbols" else ""
-    let includeReferencedProjects = if parameters.IncludeReferencedProjects then " include-referenced-projects" else ""
-    let minimumFromLockFile = if parameters.MinimumFromLockFile then " minimum-from-lock-file" else ""
-    let pinProjectReferences = if parameters.PinProjectReferences then " pin-project-references" else ""
+    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " --version " + toParam parameters.Version
+    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " --release-notes " + toParam (xmlEncode parameters.ReleaseNotes)
+    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " --build-config " + toParam parameters.BuildConfig
+    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " --build-platform " + toParam parameters.BuildPlatform
+    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " --template " + toParam parameters.TemplateFile
+    let lockDependencies = if parameters.LockDependencies then " --lock-dependencies" else ""
+    let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " --exclude " + t) |> String.concat " "
+    let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " --specific-version %s %s" id v) |> String.concat " "
+    let symbols = if parameters.Symbols then " --symbols" else ""
+    let includeReferencedProjects = if parameters.IncludeReferencedProjects then " --include-referenced-projects" else ""
+    let minimumFromLockFile = if parameters.MinimumFromLockFile then " --minimum-from-lock-file" else ""
+    let pinProjectReferences = if parameters.PinProjectReferences then " --pin-project-references" else ""
 
     let packResult =
         let cmdArgs = sprintf "%s%s%s%s%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates symbols includeReferencedProjects minimumFromLockFile pinProjectReferences
@@ -130,9 +130,9 @@ let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
-    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + toParam parameters.PublishUrl
-    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + toParam parameters.EndPoint
-    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
+    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " --url " + toParam parameters.PublishUrl
+    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " --endpoint " + toParam parameters.EndPoint
+    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " --api-key " + toParam parameters.ApiKey
 
     use __ = traceStartTaskUsing "PaketPush" (separated ", " packages)
 
