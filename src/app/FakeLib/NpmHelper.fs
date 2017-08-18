@@ -15,7 +15,7 @@ let private npmFileName =
         |> Seq.tryFind (sprintf @"%s\npm.cmd" >> File.Exists)
         |> function
             | Some npm -> (sprintf @"%s\npm.cmd" npm)
-            | None -> "Unable to find npm.cmd. Make sure you have the folder that holds npm.cmd in your PATH environment variable. Optionally you can set the NpmFilePath input parameter."
+            | None -> failwith "Unable to find npm.cmd. Make sure you have the folder that holds npm.cmd in your PATH environment variable. Optionally you can set the NpmFilePath input parameter."
     | _ -> 
         let info = new ProcessStartInfo("which","npm")
         info.StandardOutputEncoding <- System.Text.Encoding.UTF8
