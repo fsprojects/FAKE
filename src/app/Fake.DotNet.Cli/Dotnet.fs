@@ -219,6 +219,26 @@ let RC4_004973ToolingOptions options =
         Version = Version "1.0.3-rc4-004973"
     }
 
+let Release_1_0_4 options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "release/2.0.0"
+            })
+        Channel = None
+        Version = Version "1.0.4"
+    }
+
+let Release_2_0_0 options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "release/2.0.0"
+            })
+        Channel = None
+        Version = Version "2.0.0"
+    }
+
 /// [omit]
 let private optionToParam option paramFormat =
     match option with
