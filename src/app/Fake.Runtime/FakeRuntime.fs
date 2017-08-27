@@ -139,7 +139,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     if printDetails then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
         orderedGroup
-        |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p)
+        |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p.Resolved)
         |> RuntimeGraph.mergeSeq
 
     // Retrieve assemblies

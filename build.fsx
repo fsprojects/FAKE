@@ -151,8 +151,15 @@ let cleanForTests () =
 // Targets
 Target "Clean" (fun _ ->
     !! "src/*/*/bin"
-    ++ "src/*/*/obj"
+    //++ "src/*/*/obj"
     |> CleanDirs
+
+    !! "src/*/*/obj/*.nuspec"
+    //-- "src/*/*/obj/*.references"
+    //-- "src/*/*/obj/*.props"
+    //-- "src/*/*/obj/*.paket.references.cached"
+    //-- "src/*/*/obj/*.NuGet.Config"
+    |> DeleteFiles
 
     CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -621,7 +628,7 @@ let LatestTooling options =
                 Branch = "release/2.0.0"
             })
         Channel = None
-        Version = Version "1.0.4"
+        Version = Version "2.0.0"
     }
 Target "InstallDotnetCore" (fun _ ->
      DotnetCliInstall LatestTooling
@@ -983,7 +990,7 @@ Target "Release" ignore
     =?> ("Test", not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
-    =?> ("SourceLink", isLocalBuild && not isLinux)
+    //=?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
     ==> "CopyLicense"
     =?> ("DotnetCoreCreateChocolateyPackage", not isLinux)
