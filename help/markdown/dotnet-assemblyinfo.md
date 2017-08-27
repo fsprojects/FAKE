@@ -6,7 +6,7 @@ In this article the AssemblyInfo task is used in order to set specific version i
 
 If you succeeded with the [Getting Started tutorial](gettingstarted.html), then you just have to modify your *BuildApp* target to the following:
 
-    open Fake.Core
+    open Fake.DotNet
 
 	Target.Create "BuildApp" (fun _ ->
 		AssemblyInfoFile.CreateCSharp "./src/app/Calculator/Properties/AssemblyInfo.cs"
@@ -17,7 +17,7 @@ If you succeeded with the [Getting Started tutorial](gettingstarted.html), then 
 			 AssemblyInfo.Version version
 			 AssemblyInfo.FileVersion version]
 
-		AssemblyInfoFile.CreateCSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.cs"
+		AssemblyInfoFile.CreateFSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.fs"
 			[AssemblyInfo.Title "Calculator library"
 			 AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
 			 AssemblyInfo.Guid "EE5621DB-B86B-44eb-987F-9C94BCC98441"
