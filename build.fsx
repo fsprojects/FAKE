@@ -731,7 +731,7 @@ Target "DotnetPackage" (fun _ ->
                 | Some r -> r, r
                 | None -> "current", info.RID
 
-            DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
+            //DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
             let outDir = nugetDir @@ projName @@ runtimeName
             DotnetPublish (fun c ->
                 { c with
@@ -974,7 +974,7 @@ Target "Release" ignore
     ==> "StartDnc"
     ==> "InstallDotnetCore"
     ==> "DownloadPaket"
-    ==> "DotnetRestore"
+    //==> "DotnetRestore"
     ==> "DotnetPackage"
 
 // Dependencies

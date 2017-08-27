@@ -1,4 +1,5 @@
 (* -- Fake Dependencies paket-inline
+storage: none
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 //source https://ci.appveyor.com/nuget/paket

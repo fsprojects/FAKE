@@ -1,3 +1,6 @@
+#### 5.0.0-alpha015 - 27.08.2017
+* Update Paket.core
+
 #### 5.0.0-alpha014 - 28.07.2017
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
 * MSTest: add Tests parameter to specify list of tests - https://github.com/fsharp/FAKE/pull/1615
