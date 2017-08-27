@@ -93,8 +93,6 @@ NUGET
       System.Threading.ThreadPool (>= 4.0.10) - restriction: >= netstandard1.6
       System.Threading.Timer (>= 4.0.1) - restriction: >= netstandard1.6
       System.ValueTuple (>= 4.3) - restriction: < netstandard1.6
-    FSharp.NET.Sdk (1.0.5) - restriction: >= netstandard1.6
-      FSharp.Compiler.Tools (>= 4.1.17) - restriction: || (>= net40) (>= netstandard1.3)
     HashLib (2.0.1)
     jQuery (3.1.1)
     Knockout (0.0.1)
@@ -293,7 +291,6 @@ NUGET
       Chessie (>= 0.6)
       FSharp.Compiler.Tools (4.1.17) - restriction: < netstandard1.6
       FSharp.Core (4.1.17) - restriction: < netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       Mono.Cecil (>= 0.10.0-beta6)
       Newtonsoft.Json  - restriction: < netstandard1.6
       Newtonsoft.Json (>= 10.0.3) - restriction: >= netstandard1.6
@@ -1866,8 +1863,6 @@ NUGET
       System.Threading.Thread (>= 4.0)
       System.Threading.ThreadPool (>= 4.0.10)
       System.Threading.Timer (>= 4.0.1)
-    FSharp.NET.Sdk (1.0.5)
-      FSharp.Compiler.Tools (>= 4.1.17)
     Libuv (1.9.2) - restriction: || (&& (== netstandard1.6) (== netcore1.0)) (&& (== netstandard1.6) (>= netcore1.0)) (== netcore1.0)
       Microsoft.NETCore.Platforms (>= 1.0.1)
     Microsoft.CodeAnalysis.Analyzers (1.1) - restriction: || (&& (== netstandard1.6) (== netcore1.0)) (&& (== netstandard1.6) (>= netcore1.0)) (== netcore1.0)
@@ -2111,7 +2106,6 @@ NUGET
       System.Xml.XmlDocument (>= 4.3)
     Paket.Core (5.92.0-alpha001)
       Chessie (>= 0.6)
-      FSharp.NET.Sdk (>= 1.0.5)
       Mono.Cecil (>= 0.10.0-beta6)
       Newtonsoft.Json (>= 10.0.3)
       System.Diagnostics.FileVersionInfo (>= 4.3)
@@ -3017,19 +3011,15 @@ NUGET
       Fake.Core.Environment (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Context (5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Environment (5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Globbing (5.0.0-alpha012)
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Process (5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3039,23 +3029,19 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.Diagnostics.Process (>= 4.3) - restriction: >= netstandard1.6
     Fake.Core.ReleaseNotes (5.0.0-alpha012)
       Fake.Core.SemVer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.SemVer (5.0.0-alpha012)
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.String (5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Targets (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3064,7 +3050,6 @@ NUGET
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Tasks (5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3075,14 +3060,12 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Tracing (5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.Environment (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Core.Xml (5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3093,7 +3076,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.Xml.ReaderWriter (>= 4.3) - restriction: >= netstandard1.6
       System.Xml.XDocument (>= 4.3) - restriction: >= netstandard1.6
@@ -3107,7 +3089,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.DotNet.Cli (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3118,7 +3099,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.DotNet.FSFormatting (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3130,7 +3110,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.DotNet.MsBuild (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3142,7 +3121,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.DotNet.NuGet (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3157,7 +3135,6 @@ NUGET
       Fake.Core.Xml (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       Newtonsoft.Json (>= 10.0.3) - restriction: >= netstandard1.6
       System.Net.Http (>= 4.3.2) - restriction: >= netstandard1.6
@@ -3171,7 +3148,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.DotNet.Testing.MSpec (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3184,7 +3160,6 @@ NUGET
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Testing.Common (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.DotNet.Testing.NUnit (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3197,7 +3172,6 @@ NUGET
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Testing.Common (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.Linq.Parallel (>= 4.3) - restriction: >= netstandard1.6
       System.Xml.XDocument (>= 4.3) - restriction: >= netstandard1.6
@@ -3212,13 +3186,11 @@ NUGET
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Testing.Common (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.IO.FileSystem (5.0.0-alpha012)
       Fake.Core.Globbing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.Diagnostics.FileVersionInfo (>= 4.3) - restriction: >= netstandard1.6
     Fake.IO.Zip (5.0.0-alpha012)
@@ -3226,7 +3198,6 @@ NUGET
       Fake.Core.String (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.IO.Compression (>= 4.3) - restriction: >= netstandard1.6
       System.IO.Compression.ZipFile (>= 4.3) - restriction: >= netstandard1.6
@@ -3240,7 +3211,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Tools.Git (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3253,7 +3223,6 @@ NUGET
       Fake.Core.Tracing (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     Fake.Windows.Chocolatey (5.0.0-alpha012)
       Fake.Core.BuildServer (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
@@ -3266,7 +3235,6 @@ NUGET
       Fake.DotNet.NuGet (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       Fake.IO.FileSystem (>= 5.0.0-alpha012) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
     FSharp.Compiler.Tools (4.1.17)
     FSharp.Core (4.1.17)
@@ -3294,8 +3262,6 @@ NUGET
       System.Threading.ThreadPool (>= 4.0.10) - restriction: >= netstandard1.6
       System.Threading.Timer (>= 4.0.1) - restriction: >= netstandard1.6
       System.ValueTuple (>= 4.3) - restriction: < netstandard1.6
-    FSharp.NET.Sdk (1.0.5) - restriction: >= netstandard1.6
-      FSharp.Compiler.Tools (>= 4.1.17) - restriction: || (>= net40) (>= netstandard1.3)
     Microsoft.CSharp (4.3) - restriction: || (&& (< net20) (>= netstandard1.0) (< netstandard1.3)) (&& (< net20) (>= netstandard1.3)) (>= netstandard1.6)
       System.Collections (>= 4.3) - restriction: || (&& (< net45) (>= netstandard1.3) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac) (< win8) (< wpa81)) (>= dnxcore50)
       System.Diagnostics.Debug (>= 4.3) - restriction: || (&& (< net45) (>= netstandard1.3) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac) (< win8) (< wpa81)) (>= dnxcore50)
@@ -3393,7 +3359,6 @@ NUGET
       Chessie (>= 0.6)
       FSharp.Compiler.Tools (4.1.17) - restriction: < netstandard1.6
       FSharp.Core (4.1.17) - restriction: < netstandard1.6
-      FSharp.NET.Sdk (>= 1.0.5) - restriction: >= netstandard1.6
       Mono.Cecil (>= 0.10.0-beta6)
       Newtonsoft.Json  - restriction: < netstandard1.6
       Newtonsoft.Json (>= 10.0.3) - restriction: >= netstandard1.6

@@ -1,5 +1,5 @@
 group netcore
-FSharp.NET.Sdk
+
 FSharp.Core
 NETStandard.Library
 System.Xml.XDocument

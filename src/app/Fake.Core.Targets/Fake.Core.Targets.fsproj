@@ -1,4 +1,4 @@
-<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
     <!--<TargetFrameworks>net46;netstandard1.6</TargetFrameworks>-->
@@ -35,10 +35,5 @@
       <FromP2P>true</FromP2P>
     </Reference>
   </ItemGroup>-->
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-compile-fsc">
-      <Version>1.0.0-preview2-020000</Version>
-    </DotNetCliToolReference>
-  </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -1,4 +1,4 @@
 group netcore
-FSharp.NET.Sdk framework:net46, netcore10
+
 FSharp.Core
 NETStandard.Library framework: netcore10

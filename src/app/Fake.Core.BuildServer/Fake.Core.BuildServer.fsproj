@@ -1,4 +1,4 @@
-<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
     <!--<TargetFrameworks>net46;netstandard1.6</TargetFrameworks>-->

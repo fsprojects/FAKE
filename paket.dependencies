@@ -71,6 +71,7 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://nuget.org/api/v2
+    storage: none
     //source https://ci.appveyor.com/nuget/fake
 
     nuget FSharp.Core ~> 4.1.0
@@ -98,12 +99,12 @@ group NetcoreBuild
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
+    storage: none
     framework: netstandard1.6, netcoreapp1.0
 
     nuget FSharp.Compiler.Service content: none
     nuget Microsoft.DotNet.PlatformAbstractions
     nuget FSharp.Core ~> 4.1.2
-    nuget FSharp.NET.Sdk ~> 1.0
     nuget Microsoft.NETCore.App ~> 1.0
     nuget NETStandard.Library ~> 1.0
     nuget Argu
