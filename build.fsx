@@ -589,7 +589,12 @@ Target "CreateNuGet" (fun _ ->
             deleteFCS nugetToolsDir
         | p when p = "FAKE.Lib" ->
             CleanDir nugetLib451Dir
-            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
+            {
+                BaseDirectory = buildDir
+                Includes = [ "FakeLib.dll"; "FakeLib.XML" ]
+                Excludes = []
+            }
+            |> Copy nugetLib451Dir
             deleteFCS nugetLib451Dir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
