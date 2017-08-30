@@ -29,14 +29,12 @@ let private addEntry prepareEntry afterEntry (outStream : #Stream) { InputFile =
     use inStream = inFile.OpenRead()
     let entryName = prepareEntry inFile entryPath
     copyFileBuffered DefaultBufferSize outStream inStream
-    logfn "Compressed %s => %s" inFile.FullName entryName
     afterEntry outStream
 
 let private extractEntry (inStream : #Stream) entry =
     entry.OutputFile.Directory |> ensureDirExists
     use outStream = entry.OutputFile.Create()
     copyStreamBuffered DefaultBufferSize outStream inStream entry.EntrySize
-    logfn "Extracted %s => %s" entry.ArchiveEntryPath entry.OutputFile.FullName
 
 let private createArchiveStream (streamCreator : Stream -> #Stream) (archiveFile : FileInfo) =
     archiveFile.Create() :> Stream
