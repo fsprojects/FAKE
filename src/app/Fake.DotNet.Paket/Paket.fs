@@ -25,6 +25,7 @@ type PaketPackParams =
       ExcludedTemplates : string list
       WorkingDir : string
       OutputPath : string 
+      ProjectUrl : string 
       Symbols : bool
       IncludeReferencedProjects : bool
       MinimumFromLockFile : bool
@@ -41,6 +42,7 @@ let PaketPackDefaults() : PaketPackParams =
       BuildConfig = null
       BuildPlatform = null
       TemplateFile = null
+      ProjectUrl = null
       ExcludedTemplates = []
       WorkingDir = "."
       OutputPath = "./temp" 
@@ -101,21 +103,25 @@ let Pack setParams =
         if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
 
-    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + Process.toParam parameters.Version
-    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + Process.toParam (xmlEncode parameters.ReleaseNotes)
-    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + Process.toParam parameters.BuildConfig
-    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " buildplatform " + Process.toParam parameters.BuildPlatform
-    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + Process.toParam parameters.TemplateFile
-    let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
-    let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
-    let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
-    let symbols = if parameters.Symbols then " symbols" else ""
-    let includeReferencedProjects = if parameters.IncludeReferencedProjects then " include-referenced-projects" else ""
-    let minimumFromLockFile = if parameters.MinimumFromLockFile then " minimum-from-lock-file" else ""
-    let pinProjectReferences = if parameters.PinProjectReferences then " pin-project-references" else ""
+    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " --version " + Process.toParam parameters.Version
+    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " --build-config " + Process.toParam parameters.BuildConfig
+    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " --build-platform " + Process.toParam parameters.BuildPlatform
+    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " --template " + Process.toParam parameters.TemplateFile
+    let lockDependencies = if parameters.LockDependencies then " --lock-dependencies" else ""
+    let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " --exclude " + t) |> String.concat " "
+    let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " --specific-version %s %s" id v) |> String.concat " "
+    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " --release-notes " + Process.toParam (xmlEncode parameters.ReleaseNotes)
+    let minimumFromLockFile = if parameters.MinimumFromLockFile then " --minimum-from-lock-file" else ""
+    let pinProjectReferences = if parameters.PinProjectReferences then " --pin-project-references" else ""
+    let symbols = if parameters.Symbols then " --symbols" else ""
+    let includeReferencedProjects = if parameters.IncludeReferencedProjects then " --include-referenced-projects" else ""
+    let projectUrl = if String.IsNullOrWhiteSpace parameters.ProjectUrl then "" else " --project-url " + Process.toParam parameters.ProjectUrl
 
     let packResult =
-        let cmdArgs = sprintf "%s%s%s%s%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates symbols includeReferencedProjects minimumFromLockFile pinProjectReferences
+        let cmdArgs = 
+            sprintf "%s%s%s%s%s%s%s%s%s%s%s%s%s" 
+                version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates 
+                symbols includeReferencedProjects minimumFromLockFile pinProjectReferences projectUrl
         Process.ExecProcess
             (fun info ->
                 info.FileName <- parameters.ToolPath
