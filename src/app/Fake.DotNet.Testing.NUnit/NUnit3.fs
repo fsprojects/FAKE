@@ -5,17 +5,11 @@ open Fake.Testing.Common
 open Fake.IO.FileSystem
 open Fake.IO.FileSystem.Operators
 open Fake.Core.String
-open Fake.Core.BuildServer
 open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
 open System.Text
-open System
-open System.IO
-open System.Linq
-open System.Text
-open Fake
 open Fake.DotNet.Testing.NUnit.Common
 
 /// Process model for NUnit 3 to use.
@@ -219,7 +213,7 @@ type NUnit3Params =
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
 ///
-/// - `ToolPath` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
+/// - `ToolPath` - The `nunit-console.exe` path if it exists in `tools/Nunit/`.
 /// - `Testlist` - `""`
 /// - `Where` - `""`
 /// - `Config` - `""`

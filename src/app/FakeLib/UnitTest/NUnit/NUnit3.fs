@@ -215,7 +215,7 @@ type NUnit3Params =
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
 ///
-/// - `ToolPath` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
+/// - `ToolPath` - The `nunit-console.exe` path if it exists in `tools/Nunit/`.
 /// - `Testlist` - `""`
 /// - `Where` - `""`
 /// - `Config` - `""`

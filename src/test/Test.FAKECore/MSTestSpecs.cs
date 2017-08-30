@@ -49,6 +49,9 @@ namespace Test.FAKECore.Testing.MSTestSpecs
 
         It should_not_contain_test_argument =
             () => Arguments.ShouldNotContain("/test:");
+
+        It should_not_contain_detail_argument =
+            () => Arguments.ShouldNotContain("/detail:");
     }
 
     [Tags("WindowsOnly")]
@@ -71,5 +74,16 @@ namespace Test.FAKECore.Testing.MSTestSpecs
 
         It should_include_the_expected_test_arguments =
             () => Arguments.ShouldContain("\"/test:test1\" \"/test:testproject32\\generic\"");
+    }
+
+    [Tags("WindowsOnly")]
+    internal class When_using_Details_parameter
+        : BuildArgumentsSpecsBase
+    {
+        Establish context =
+            () => Parameters = Parameters.With(p => p.Details, (new[] { "adapter", "computername", "id" }).ToFSharpList());
+
+        It should_include_the_expected_detail_arguments =
+            () => Arguments.ShouldContain("\"/detail:adapter\" \"/detail:computername\" \"/detail:id\"");
     }
 }
