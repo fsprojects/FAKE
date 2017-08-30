@@ -204,6 +204,7 @@ let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]
 type private CacheInfo =
   {
     ScriptFileName : string
+    ScriptFilePath : string
     ScriptHash : string
     AssemblyPath : string
     AssemblyWarningsPath : string
@@ -279,6 +280,7 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
         else
             false
     { ScriptFileName = scriptFileName
+      ScriptFilePath = scriptPath
       ScriptHash = scriptHash
       AssemblyPath = assemblyPath
       AssemblyWarningsPath = assemblyWarningsPath
@@ -312,6 +314,8 @@ let private runScriptCached printDetails cacheInfo out err =
     if printDetails then trace "Using cache"
     let exampleName, fullName, parseName = nameParser cacheInfo.ScriptFileName
     try
+        use execContext = Fake.Core.Context.FakeExecutionContext.Create true cacheInfo.ScriptFilePath []
+        Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
         Yaaf.FSharp.Scripting.Helper.consoleCapture out err (fun () ->
             let ass = Reflection.Assembly.LoadFrom(cacheInfo.AssemblyPath)
             match ass.GetTypes()
@@ -362,9 +366,9 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
             reader.AddSearchDirectory (Path.GetDirectoryName TraceHelper.fakePath)
             reader.AddSearchDirectory (Path.GetDirectoryName typeof<string option>.Assembly.Location)
             let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
-            let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
-            asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
-            asem.Write(wishName + ".dll")
+            ( use asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
+              asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
+              asem.Write(wishName + ".dll"))
             File.Move(wishName + ".dll", cacheInfo.AssemblyPath)
         with exn ->
             // If cecil fails we might want to trigger a warning, but you know what?
@@ -418,12 +422,16 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
 
 /// Run a given script unchacked, saves the cache if useCache is set to true.
 /// deletes any existing caching for the given script.
-let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err =
+let private runScriptUncached (useCache, fsiOptions) printDetails (cacheInfo:CacheInfo) out err =
     let options = FsiOptions.ofArgs fsiOptions
+#if DEBUG
+    let options = { options with Debug = Some DebugMode.Full }
+#endif
+
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
         matched.Groups.Item("script").Value, matched.Groups.Item("hash").Value
-    let cacheDir = DirectoryInfo(Path.Combine(Path.GetDirectoryName(scriptPath),".fake"))
+    let cacheDir = DirectoryInfo(Path.Combine(Path.GetDirectoryName(cacheInfo.ScriptFilePath),".fake"))
     if useCache then
         // If we are here that proably means that
         // when trying to load the cached version something went wrong...
@@ -456,10 +464,47 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             if printDetails then trace "Cache doesn't exist"
 
     // Contains warnings and errors about the build script.
+    let doTrace = environVar "FAKE_TRACE" = "true"
+    if printDetails && doTrace then
+        // "Debug" is for FCS debugging, use a debug build to get more output...
+        Debug.AutoFlush <- true
+        let logToConsole = true
+        let logToFile = true
+        try
+          let allTraceOptions =
+            TraceOptions.Callstack ||| TraceOptions.DateTime ||| TraceOptions.LogicalOperationStack |||
+            TraceOptions.ProcessId ||| TraceOptions.ThreadId ||| TraceOptions.Timestamp
+          let noTraceOptions = TraceOptions.None
+          let svclogFile = "FAKE.svclog"
+          System.Diagnostics.Trace.AutoFlush <- true
+
+          let setupListener traceOptions levels (listener:TraceListener) =
+            [ Yaaf.FSharp.Scripting.Log.source ]
+            |> Seq.iter (fun source ->
+                source.Switch.Level <- System.Diagnostics.SourceLevels.All
+                source.Listeners.Add listener |> ignore)
+            listener.Filter <- new EventTypeFilter(levels)
+            listener.TraceOutputOptions <- traceOptions
+            Debug.Listeners.Add(listener) |> ignore
+
+          if logToConsole then
+            new ConsoleTraceListener()
+            |> setupListener noTraceOptions System.Diagnostics.SourceLevels.Verbose
+
+          if logToFile then
+            if System.IO.File.Exists svclogFile then System.IO.File.Delete svclogFile
+            new XmlWriterTraceListener(svclogFile)
+            |> setupListener allTraceOptions System.Diagnostics.SourceLevels.All
+
+          // Test that everything works
+          Yaaf.FSharp.Scripting.Log.infof "Yaaf.FSharp.Scripting Logging setup!"
+        with e ->
+          printfn "Yaaf.FSharp.Scripting Logging setup failed: %A" e
     let fsiErrorOutput = new System.Text.StringBuilder()
     let session =
       try ScriptHost.Create
             (options, preventStdOut = true,
+              reportGlobal = doTrace,
               fsiErrWriter = ScriptHost.CreateForwardWriter
                 ((fun s ->
                     if String.IsNullOrWhiteSpace s |> not then
@@ -474,7 +519,9 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
 
     try
         try
-            session.EvalScript scriptPath
+            use execContext = Fake.Core.Context.FakeExecutionContext.Create false cacheInfo.ScriptFilePath []
+            Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
+            session.EvalScript cacheInfo.ScriptFilePath
             true
         with :? FsiEvaluationException as eval ->
             traceFAKE "%O" eval
@@ -546,9 +593,9 @@ please open a issue on FAKE and /cc @matthid ONLY IF this happens reproducibly)
 
 Error: %O""" ex
             // Invalidates the cache
-            runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err
+            runScriptUncached (useCache, fsiOptions) printDetails cacheInfo out err
     else
-        runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err
+        runScriptUncached (useCache, fsiOptions) printDetails cacheInfo out err
 
 let internal onMessage isError =
     let printer = if isError && TraceListener.importantMessagesToStdErr then eprintf else printf

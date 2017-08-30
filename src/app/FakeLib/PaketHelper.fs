@@ -1,12 +1,15 @@
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages with [Paket](http://fsprojects.github.io/Paket/index.html).
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 module Fake.Paket
 
+#nowarn "44"
 open System
 open System.IO
 open System.Xml.Linq
 open System.Text.RegularExpressions
 
 /// Paket pack parameter type
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 [<CLIMutable>]
 type PaketPackParams =
     { ToolPath : string
@@ -28,6 +31,7 @@ type PaketPackParams =
       PinProjectReferences : bool }
 
 /// Paket pack default parameters
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PaketPackDefaults() : PaketPackParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
@@ -48,6 +52,7 @@ let PaketPackDefaults() : PaketPackParams =
       PinProjectReferences = false }
 
 /// Paket push parameter type
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 [<CLIMutable>]
 type PaketPushParams =
     { ToolPath : string
@@ -59,6 +64,7 @@ type PaketPushParams =
       ApiKey : string }
 
 /// Paket push default parameters
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PaketPushDefaults() : PaketPushParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
@@ -69,6 +75,7 @@ let PaketPushDefaults() : PaketPushParams =
       ApiKey = null }
 
 /// Paket restore packages type
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 [<CLIMutable>]
 type PaketRestoreParams =
     { ToolPath : string
@@ -80,6 +87,7 @@ type PaketRestoreParams =
       ReferenceFiles: string list }
 
 /// Paket restore default parameters
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PaketRestoreDefaults() : PaketRestoreParams = 
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
@@ -93,6 +101,7 @@ let PaketRestoreDefaults() : PaketRestoreParams =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let Pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
     use __ = traceStartTaskUsing "PaketPack" parameters.WorkingDir
@@ -131,6 +140,7 @@ let Pack setParams =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
@@ -179,6 +189,7 @@ let Push setParams =
             if pushResult <> 0 then failwithf "Error during pushing %s." package
 
 /// Returns the dependencies from specified paket.references file
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let GetDependenciesForReferencesFile (referencesFile:string) =
     let getReferenceFilePackages =
         let isSingleFile (line: string) = line.StartsWith "File:"
@@ -218,6 +229,7 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let Restore setParams = 
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
     let forceRestore = if parameters.ForceDownloadOfPackages then " --force " else ""

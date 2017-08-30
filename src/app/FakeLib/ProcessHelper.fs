@@ -11,6 +11,7 @@ open System.Text
 open System.Collections.Generic
 open System.Collections.Concurrent
 open System.ServiceProcess
+open Fake.Core.GuardedAwaitObservable
 
 
 /// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.

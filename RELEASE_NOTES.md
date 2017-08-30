@@ -1,5 +1,68 @@
-#### (Unreleased) 4.63.1 - unreleased
-* Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
+#### 5.0.0-alpha016 - 30.08.2017
+* BREAKING-CHANGE: Renew AssemblyInfo API - https://github.com/fsharp/FAKE/pull/1619
+* ENHANCEMENT: Add XML to FakeLib - https://github.com/fsharp/FAKE/pull/1641
+* ENHANCEMENT: Move Paket.Paket() over to use flag arguments - https://github.com/fsharp/FAKE/pull/1627
+* ENHANCEMENT: MSTest detail switch - https://github.com/fsharp/FAKE/pull/1625
+* API: StringBuilder functionality moved into a StringBuilder module
+* ENHANCEMENT: Remove logfn from Compress and Extract - https://github.com/fsharp/FAKE/pull/1624
+* BUGFIX: Correctly determine the 64-bit "Program Files" folder - https://github.com/fsharp/FAKE/pull/1623
+* ENHANCEMENT: Bitbucket Environment variables - https://github.com/fsharp/FAKE/pull/1563
+* ENHANCEMENT: AppVeyor Environment variables - https://github.com/fsharp/FAKE/pull/1560
+* ENHANCEMENT: Change how npm.cmd is located in NpmHelper - https://github.com/fsharp/FAKE/pull/1629
+
+#### 5.0.0-alpha015 - 27.08.2017
+* Update Paket.core
+
+#### 5.0.0-alpha014 - 28.07.2017
+* Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
+* MSTest: add Tests parameter to specify list of tests - https://github.com/fsharp/FAKE/pull/1615
+
+#### 5.0.0-alpha013 - 26.07.2017
+* ENHANCEMENT: Support for Microsoft Dynamics NAV 2017
+
+#### 5.0.0-alpha012 - 25.07.2017
+* ENHANCEMENT: (NETCORE) Prefer msbuild over xbuild when we detect a mono installation > 5
+
+#### 5.0.0-alpha011 - 24.07.2017
+* BUGFIX: Restore console encoding on .NET Framework (https://github.com/fsharp/FAKE/pull/1587)
+* FAKE5: Copy missing changes from legacy NuGet helpers (https://github.com/fsharp/FAKE/pull/1596)
+* ENHANCEMENT: Rename intellisense script (https://github.com/fsharp/FAKE/pull/1594)
+* NEW MODULE: Opencover migration (https://github.com/fsharp/FAKE/pull/1586)
+* PERFORMANCE: Fake 5 - Update Paket
+* PERFORMANCE: Use Paket cache to increase warm start (with existing cache)
+* PERFORMANCE: Remove runtime dependency resolution be default.
+* DOCS Update comment https://github.com/fsharp/FAKE/pull/1602
+* Added SkipNonTestAssemblies to NUnit3Params https://github.com/fsharp/FAKE/pull/1608
+
+#### 5.0.0-alpha010 - 11.06.2017
+* BREAKING CHANGE: Change Targets API to be compatible with new API-Guidelines
+* DOCS: Fix chocolatey docs and some links in footer https://github.com/fsharp/FAKE/pull/1584
+* DOCS: Spelling, grammar, and emphasis changes https://github.com/fsharp/FAKE/pull/1575
+* NEW MODULE: Sonarqube migration https://github.com/fsharp/FAKE/pull/1583
+* BUGFIX: Restore the output encoding https://github.com/fsharp/FAKE/pull/1580
+* BUGFIX: Fix Fake.IO.Zip creating invalid zip packages (empty folder at root level)
+* Fake.exe -> fake.exe (windows) and Fake -> fake (unix)
+
+#### 5.0.0-alpha009 - 27.05.2017
+* Change fake group feature because of https://github.com/fsprojects/Paket/issues/2374
+
+#### 5.0.0-alpha008 - 27.05.2017
+* Add Fake.DotNet.FSFormatting module
+* Add Fake.DotNet.Paket module
+
+#### 5.0.0-alpha007 - 26.05.2017
+* CopyDir https://github.com/matthid/FAKE/pull/4
+* Allow to annotate paket groups (no header needed) https://github.com/matthid/FAKE/pull/7
+
+#### 5.0.0-alpha006 - 25.05.2017
+* DotnetCore Support, version 6 will only have the netcore version the old way of using FAKE is obsolete, but supported for now
+  Migration guide is available in the documentation.
+* Cleanup API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6
+* New CLI interface - The netcore version has a new cleaned-up CLI interface
+* No more 'build.sh' and 'build.cmd' files required (though you still can use them of you want a 'zero' dependency build)
+* Chocolatey Helper now supports Self-Contained packages
+* Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
+* Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
 #### 4.63.0 - 27.07.2017
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600

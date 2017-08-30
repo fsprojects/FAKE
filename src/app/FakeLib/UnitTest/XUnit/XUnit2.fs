@@ -1,7 +1,9 @@
 [<AutoOpen>]
 /// Contains tasks to run [xUnit](https://github.com/xunit/xunit) v2 unit tests.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 module Fake.Testing.XUnit2
 
+#nowarn "44"
 open System
 open System.IO
 open System.Linq
@@ -63,6 +65,7 @@ Result formats: (optional, choose one or more)
 *)
 
 /// The parallelization mode of the xUnit2 runner.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 type ParallelMode =
     /// Turn off all parallelization.
     | NoParallelization
@@ -79,6 +82,7 @@ type ParallelMode =
         | All -> "all"
 
 /// The collection concurrency mode used by the xUnit2 runner.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 type CollectionConcurrencyMode =
     /// Uses the default concurrency mode for collections.
     | Default
@@ -92,6 +96,7 @@ type CollectionConcurrencyMode =
         | MaxThreads count -> Some count
 
 /// The xUnit2 parameter type.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 [<CLIMutable>]
 type XUnit2Params =
     { /// The path to the xUnit console runner: `xunit.console.exe`
@@ -162,6 +167,7 @@ type XUnit2Params =
 /// - `Namespace` - `None`
 /// - `Class` - `None`
 /// - `Method` - `None`
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 let XUnit2Defaults =
     { NoAppDomain = false
       Parallel = NoParallelization
@@ -185,6 +191,7 @@ let XUnit2Defaults =
       Class = None
       Method = None }
 
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 let buildXUnit2Args assemblies parameters =
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
@@ -217,6 +224,7 @@ let buildXUnit2Args assemblies parameters =
 /// Helper method to detect if the xunit console runner supports the -noappdomain flag.
 /// If the xunit console runner does not support this flag, it will change the value to false
 /// so it does not interfere with older versions.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 let internal discoverNoAppDomainExists parameters =
     let helpText =
         ExecProcessAndReturnMessages (fun info ->
@@ -224,6 +232,7 @@ let internal discoverNoAppDomainExists parameters =
     let canSetNoAppDomain = helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
     {parameters with NoAppDomain = canSetNoAppDomain}
 
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 module internal ResultHandling =
     let (|OK|Failure|) = function
         | 0 -> OK
@@ -259,6 +268,7 @@ module internal ResultHandling =
 ///         !! (testDir @@ "xUnit.Test.*.dll")
 ///         |> xUnit2 (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
 ///     )
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead")>]
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
     use __ = traceStartTaskUsing "xUnit2" details

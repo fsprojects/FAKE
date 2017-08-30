@@ -1,8 +1,13 @@
+version 5.92.0
 content: none
+// just in case we need some special nuget feature again...
+//source https://ci.appveyor.com/nuget/paket
 source http://nuget.org/api/v2
 
-nuget FSharp.Core redirects:force
+nuget FSharp.Core ~> 4.1.0 redirects: force
 nuget Knockout
+nuget NuGet.CommandLine
+nuget Paket.Core prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu 3.3.0
@@ -25,11 +30,12 @@ nuget Mono.Cecil
 nuget Nuget.Core
 nuget bootstrap
 nuget Knockout.Mapping
-nuget log4net
+nuget log4net 2.0.5
 nuget System.Web.Razor.Unofficial
 nuget toastr
 nuget RavenDB.Client < 3
-nuget Machine.Specifications.Should
+nuget Machine.Specifications.Should 0.8
+nuget Machine.Specifications 0.9.3
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
 nuget xunit.runner.console
@@ -39,19 +45,75 @@ nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
-nuget FSharp.Compiler.Service
+nuget FSharp.Compiler.Service content: none
 nuget Octokit
 nuget Microsoft.Net.Http
+nuget Microsoft.DotNet.PlatformAbstractions
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
 group Build
-content: none
-source http://nuget.org/api/v2
+    content: none
+    source http://nuget.org/api/v2
+    source https://ci.appveyor.com/nuget/fake
+    source https://ci.appveyor.com/nuget/fsharp-formatting
 
-nuget Nuget.CommandLine
-nuget FAKE
-nuget FSharp.Formatting
-nuget FSharp.Formatting.CommandTool
-nuget SourceLink.Fake
-nuget ILRepack
+    nuget FSharp.Core ~> 4.1.0
+    nuget Nuget.CommandLine
+    nuget FAKE prerelease
+    nuget FSharp.Formatting prerelease
+    nuget FSharp.Formatting.CommandTool prerelease
+    nuget SourceLink.Fake
+    nuget ILRepack
+
+    github fsharp/FAKE modules/Octokit/Octokit.fsx
+
+// [ FAKE GROUP ]
+group NetcoreBuild
+    source https://nuget.org/api/v2
+    storage: none
+    //source https://ci.appveyor.com/nuget/fake
+
+    nuget FSharp.Core ~> 4.1.0
+    nuget System.AppContext prerelease
+    nuget Paket.Core prerelease
+    nuget Fake.Core.Targets prerelease
+    nuget Fake.Core.Globbing prerelease
+    nuget Fake.Core.SemVer prerelease
+    nuget Fake.IO.FileSystem prerelease
+    nuget Fake.IO.Zip prerelease
+    nuget Fake.Core.ReleaseNotes prerelease
+    nuget Fake.DotNet.AssemblyInfoFile prerelease
+    nuget Fake.DotNet.MsBuild prerelease
+    nuget Fake.DotNet.Cli prerelease
+    nuget Fake.DotNet.NuGet prerelease
+    nuget Fake.DotNet.Paket prerelease
+    nuget Fake.DotNet.FSFormatting prerelease
+    nuget Fake.DotNet.Testing.MSpec prerelease
+    nuget Fake.DotNet.Testing.XUnit2 prerelease
+    nuget Fake.DotNet.Testing.NUnit prerelease
+    nuget Fake.Windows.Chocolatey prerelease
+    nuget Fake.Tools.Git prerelease
+    nuget Mono.Cecil ~> 0.10.0 prerelease
+
+group netcore
+    //source https://ci.appveyor.com/nuget/paket
+    source http://nuget.org/api/v2
+    storage: none
+    framework: netstandard1.6, netcoreapp1.0
+
+    nuget FSharp.Compiler.Service content: none
+    nuget Microsoft.DotNet.PlatformAbstractions
+    nuget FSharp.Core ~> 4.1.2
+    nuget Microsoft.NETCore.App ~> 1.0
+    nuget NETStandard.Library ~> 1.0
+    nuget Argu
+    nuget Paket.Core prerelease
+    nuget Mono.Cecil ~> 0.10.0 prerelease
+
+    nuget System.Linq.Parallel
+    nuget System.Diagnostics.FileVersionInfo
+    nuget System.Diagnostics.Process
+    nuget System.IO.Compression
+    nuget System.IO.Compression.ZipFile
+    nuget System.Runtime.Loader

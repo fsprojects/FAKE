@@ -1,0 +1,114 @@
+﻿@{
+  Layout = "template";
+  Title = Properties["page-title"];
+  //Description = Properties["project-summary"];
+  
+  // Properties["current-page"] = "APIReference";
+  ViewBag.CurrentPage = "Home";
+  ViewBag.HasBanner = true;
+}
+
+@section Banner {
+							<div id="banner">
+								<h2><strong>F# Make 5</strong> - A DSL for build tasks and more
+								<br />
+								The power of F# - anywhere - anytime</h2>
+								<p>While FAKE 5 is already usable, a lot of work still has to be done ... PLEASE HELP
+                                </p>
+								<a href="fake-fake5-learn-more.html" class="button big icon fa-check-circle">Learn more</a>
+							</div>
+}
+
+
+					<div class="wrapper style1">
+						<div class="inner">
+
+							<!-- Feature 1 -->
+								<section class="container box feature1">
+									<div class="row">
+										<div class="12u">
+											<header class="first major">
+												<h2>What's new in FAKE 5?</h2>
+												<p>FAKE 5 was built on several key <strong>design principles</strong> ...</p>
+											</header>
+										</div>
+									</div>
+									<div class="row">
+										<div class="4u 12u(mobile)">
+											<section>
+                                                <!-- from https://iconmonstr.com/cube-18/?font with help from https://css-tricks.com/examples/IconFont/ -->
+												<a href="fake-fake5-modules.html" class="image featured"><i style="font-size: 190px; color: #404248; text-shadow: 0px 1px 8px black;" class="im im-cubes" ></i><!--<img src="images/modularization.svg" alt="" />--></a>
+												<header class="second icon fa-user">
+													<h3>Modularization</h3>
+													<p>Only pay for what you need</p>
+												</header>
+											</section>
+										</div>
+										<div class="4u 12u(mobile)">
+											<section>
+												<a href="fake-fake5-custom-modules.html" class="image featured"><i style="font-size: 190px; color: #404248; text-shadow: 0px 1px 8px black;" class="im im-code"></i></a>
+												<header class="second icon fa-cog">
+													<h3>Extensibility</h3>
+													<p>Integrate your own modules</p>
+												</header>
+											</section>
+										</div>
+										<div class="4u 12u(mobile)">
+											<section>
+												<a href="fake-gettingstarted.html" class="image featured"><i style="font-size: 190px; color: #404248; text-shadow: 0px 1px 8px black;" class="im im-timer"></i></a>
+												<header class="second icon fa-bar-chart-o">
+													<h3>Quickstart</h3>
+													<p>Get started as fast as possible</p>
+												</header>
+											</section>
+										</div>
+									</div>
+									<div class="row">
+										<div class="12u">
+											<p>All these principles lead to a new level of usability in FAKE 5. 
+                                            This will open up a lot of opportunities for FAKE to go where it has never gone before.</p>
+										</div>
+									</div>
+								</section>
+
+						</div>
+					</div>
+					<div class="wrapper style2">
+						<div class="inner">
+
+							<!-- Feature 2 -->
+								<section class="container box feature2">
+									<div class="row">
+										<div class="6u 12u(mobile)">
+											<section>
+												<header class="major">
+													<h2>Migration</h2>
+													<p>There is a clear migration path to FAKE 5</p>
+												</header>
+												<p>No, your current build scripts will not break, but the development
+                                                of new features for FAKE 4 and the old way of using FAKE are no longer supported.</p>
+												<footer>
+													<a href="fake-migrate-to-fake-5.html" class="button medium icon fa-arrow-circle-right">Start Migrating</a>
+												</footer>
+											</section>
+										</div>
+										<div class="6u 12u(mobile)">
+											<section>
+												<header class="major">
+													<h2>Bootstrapping</h2>
+													<p>FAKE 5 now supports a lot more bootstrapping options</p>
+												</header>
+												<p>Every project has different needs. Therefore, FAKE 5 supports 
+                                                several ways to bootstrap the build process.
+                                                From an assumed installation - for example via chocolatey - to
+                                                automatically updated bootstrapping scripts.</p>
+												<footer>
+													<a href="fake-gettingstarted.html" class="button medium alt icon fa-info-circle">Read on</a>
+												</footer>
+											</section>
+										</div>
+									</div>
+								</section>
+
+							</div>
+					</div>

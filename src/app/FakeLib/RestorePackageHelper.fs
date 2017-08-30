@@ -1,10 +1,13 @@
 [<AutoOpen>]
 /// Contains tasks which allow to restore NuGet packages from a NuGet package feed like [nuget.org](http://www.nuget.org).
 /// There is also a tutorial about [nuget package restore](../nuget.html) available.
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 module Fake.RestorePackageHelper
 
 open System
+#nowarn "44"
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// Looks for NuGet.exe in [1] the specified defaultPath, [2] a list of standard tool folders, [3] any subfolder in the current directory, [4] the PATH - returns the first path where NuGet.exe was found.
 let findNuget defaultPath = 
     try
@@ -40,7 +43,8 @@ let findNuget defaultPath =
         defaultPath @@ "NuGet.exe"
     with
     | _ -> defaultPath @@ "NuGet.exe"
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// RestorePackages parameter path
 [<CLIMutable>]
 type RestorePackageParams =
@@ -50,7 +54,8 @@ type RestorePackageParams =
       /// Specifies how often nuget should try to restore the packages - default is 5
       Retries: int
       OutputPath: string}
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// RestorePackage defaults parameters
 let RestorePackageDefaults =
     { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
@@ -58,7 +63,8 @@ let RestorePackageDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
       OutputPath = "./packages" }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// RestorePackages parameter path for single packages
 [<CLIMutable>]
 type RestoreSinglePackageParams = 
@@ -71,7 +77,8 @@ type RestoreSinglePackageParams =
       /// Specifies how often nuget should try to restore the packages - default is 5
       Retries: int
       IncludePreRelease: bool }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// RestoreSinglePackageParams defaults parameters  
 let RestoreSinglePackageDefaults =
     { ToolPath = RestorePackageDefaults.ToolPath
@@ -82,7 +89,8 @@ let RestoreSinglePackageDefaults =
       ExcludeVersion = false
       Retries = 5
       IncludePreRelease = false }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// [omit]
 let runNuGet toolPath timeOut args failWith =
     if 0 <> ExecProcess (fun info ->  
@@ -90,18 +98,21 @@ let runNuGet toolPath timeOut args failWith =
         info.Arguments <- args) timeOut
     then
         failWith()
-
+        
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// [omit]
 let rec runNuGetTrial retries toolPath timeOut args failWith =
     let f() = runNuGet toolPath timeOut args failWith
     TaskRunnerHelper.runWithRetries f retries
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// [omit]
 let buildSources sources = 
     sources
     |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
     |> separated ""
         
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// [omit]
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams
@@ -141,6 +152,7 @@ let RestorePackageId setParams packageId =
 ///                  OutputPath = outputDir
 ///                  Retries = 4 })
 ///      )
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 let RestorePackage setParams packageFile = 
     use __ = traceStartTaskUsing "RestorePackage" packageFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
@@ -152,7 +164,8 @@ let RestorePackage setParams packageFile =
         " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 /// Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.
 let RestorePackages() = 
     !! "./**/packages.config"
@@ -174,6 +187,7 @@ let RestorePackages() =
 ///                  OutputPath = outputDir
 ///                  Retries = 4 })
 ///      )
+[<System.Obsolete("Use Fake.DotNet.NuGet.Restore instead")>]
 let RestoreMSSolutionPackages setParams solutionFile =
     use __ = traceStartTaskUsing "RestoreSolutionPackages" solutionFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams

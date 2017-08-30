@@ -1,9 +1,12 @@
 /// Contains tasks for updating NuGet packages including assembly hint paths in the project files using the [nuget.exe update command](http://docs.nuget.org/docs/reference/command-line-reference#Update_Command).
+[<System.Obsolete("Use Fake.DotNet.NuGet.Update instead")>]
 module Fake.NuGet.Update
 
+#nowarn "44"
 open System
 open Fake
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.Update instead")>]
 /// Nuget update parameters.
 [<CLIMutable>]
 type NugetUpdateParams =
@@ -32,7 +35,8 @@ type NugetUpdateParams =
       NonInteractive: bool
       /// NuGet configuration file. Default `None`.
       ConfigFile: string option }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Update instead")>]
 /// Parameter default values.
 let NugetUpdateDefaults =
     { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
@@ -47,7 +51,8 @@ let NugetUpdateDefaults =
       Prerelease = false
       NonInteractive = true
       ConfigFile = None }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Update instead")>]
 /// [omit]
 let buildArgs (param: NugetUpdateParams) =
     [   param.Sources |> argList "source"
@@ -60,7 +65,8 @@ let buildArgs (param: NugetUpdateParams) =
         (if param.Verbose then "-verbose" else "")
         param.ConfigFile |> Option.toList |> argList "configFile"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.Update instead")>]
 /// Update packages specified in the package file.
 ///
 /// Fails if packages are not installed; see [nuget bug](https://nuget.codeplex.com/workitem/3874).

@@ -1,14 +1,24 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{06A2CB89-4DFC-4436-AB46-B3E81AFDE294}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
 		build-web-bundles.cmd = build-web-bundles.cmd
 		build-web-bundles.fsx = build-web-bundles.fsx
-		build.cmd = build.cmd
 		build.fsx = build.fsx
+		fake.cmd = fake.cmd
 		fake.nuspec = fake.nuspec
+		fake.sh = fake.sh
+		script\obtain_fake.sh = script\obtain_fake.sh
+		paket.dependencies = paket.dependencies
 		README.markdown = README.markdown
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
@@ -34,90 +44,12 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "src\app\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
-	ProjectSection(SolutionItems) = preProject
-		help\androidpublisher.md = help\androidpublisher.md
-		help\assemblyinfo.md = help\assemblyinfo.md
-		help\cache.md = help\cache.md
-		help\chocolatey.md = help\chocolatey.md
-		help\commandline.md = help\commandline.md
-		help\contributing.md = help\contributing.md
-		help\create-nuget-package.md = help\create-nuget-package.md
-		help\customtasks.md = help\customtasks.md
-		help\deploy.md = help\deploy.md
-		help\fluentmigrator.md = help\fluentmigrator.md
-		help\fsc.md = help\fsc.md
-		help\fxcop.md = help\fxcop.md
-		help\gettingstarted.md = help\gettingstarted.md
-		help\index.md = help\index.md
-		help\nuget.md = help\nuget.md
-		help\octopusdeploy.md = help\octopusdeploy.md
-		help\slacknotification.md = help\slacknotification.md
-		help\sonarcube.md = help\sonarcube.md
-		help\specifictargets.md = help\specifictargets.md
-		help\teamcity.md = help\teamcity.md
-		help\templates\template-project.html = help\templates\template-project.html
-		help\typescript.md = help\typescript.md
-		help\users.md = help\users.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{75162148-B884-4575-8E14-5320DD137760}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gettingstarted", "gettingstarted", "{454066F7-42BF-435E-BDF7-2D11948D53B4}"
-	ProjectSection(SolutionItems) = preProject
-		help\pics\gettingstarted\afterclean.png = help\pics\gettingstarted\afterclean.png
-		help\pics\gettingstarted\aftercompile.png = help\pics\gettingstarted\aftercompile.png
-		help\pics\gettingstarted\afterdownload.png = help\pics\gettingstarted\afterdownload.png
-		help\pics\gettingstarted\compileerror.png = help\pics\gettingstarted\compileerror.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teamcity", "teamcity", "{853E4C7F-D5AA-4756-BAF3-13F25F460C4E}"
-	ProjectSection(SolutionItems) = preProject
-		help\pics\teamcity\auth.png = help\pics\teamcity\auth.png
-		help\pics\teamcity\buildstep1.png = help\pics\teamcity\buildstep1.png
-		help\pics\teamcity\buildstep2.png = help\pics\teamcity\buildstep2.png
-		help\pics\teamcity\checkoutrules.png = help\pics\teamcity\checkoutrules.png
-		help\pics\teamcity\createproject.png = help\pics\teamcity\createproject.png
-		help\pics\teamcity\generalsettings.png = help\pics\teamcity\generalsettings.png
-		help\pics\teamcity\nunit.png = help\pics\teamcity\nunit.png
-		help\pics\teamcity\output.png = help\pics\teamcity\output.png
-		help\pics\teamcity\trigger.png = help\pics\teamcity\trigger.png
-		help\pics\teamcity\vcsroot.png = help\pics\teamcity\vcsroot.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apidocs", "apidocs", "{E5A1C705-974C-4377-BAF3-55359A42BEF0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A338C9EA-391D-405D-B480-D1B67C0C9369}"
-	ProjectSection(SolutionItems) = preProject
-		help\templates\reference\default.cshtml = help\templates\reference\default.cshtml
-		help\templates\reference\members.cshtml = help\templates\reference\members.cshtml
-		help\templates\reference\module.cshtml = help\templates\reference\module.cshtml
-		help\templates\reference\namespaces.cshtml = help\templates\reference\namespaces.cshtml
-		help\templates\reference\type.cshtml = help\templates\reference\type.cshtml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commandline", "commandline", "{F4B81CF1-FF35-46E4-9C15-97C398A674F5}"
-	ProjectSection(SolutionItems) = preProject
-		help\pics\commandline\cmd.png = help\pics\commandline\cmd.png
-	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Lib", "src\app\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Fake.Deploy", "src\test\Test.Fake.Deploy\Test.Fake.Deploy.csproj", "{0203A0DD-836B-4F9E-A766-73396DDE8F34}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Experimental", "src\app\Fake.Experimental\Fake.Experimental.fsproj", "{437FC69D-3EB5-4139-B9CD-86198AFDFD93}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "octopusdeploy", "octopusdeploy", "{DC70438D-6050-435C-B365-ABF68CF8891D}"
-	ProjectSection(SolutionItems) = preProject
-		help\pics\octopusdeploy\apikey.png = help\pics\octopusdeploy\apikey.png
-		help\pics\octopusdeploy\myprofile.png = help\pics\octopusdeploy\myprofile.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblyinfo", "assemblyinfo", "{64547E3E-F74E-48C2-8091-795A6C04B99C}"
-	ProjectSection(SolutionItems) = preProject
-		help\pics\assemblyinfo\generated.png = help\pics\assemblyinfo\generated.png
-		help\pics\assemblyinfo\result.png = help\pics\assemblyinfo\result.png
-		help\pics\assemblyinfo\solutioninfo.png = help\pics\assemblyinfo\solutioninfo.png
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testscripts", "testscripts", "{16D0306A-E2D0-444B-87F8-22605A1EC57C}"
 	ProjectSection(SolutionItems) = preProject
@@ -128,9 +60,105 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck.Fake", "src\test\Fs
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.FluentMigrator", "src\app\Fake.FluentMigrator\Fake.FluentMigrator.fsproj", "{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "slacknotification", "slacknotification", "{F131A0F4-D7BC-4717-812A-CE937DB64BE9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.IntegrationTests", "src\test\Fake.Core.IntegrationTests\Fake.Core.IntegrationTests.fsproj", "{793ED18D-ED6B-4BD1-9617-C077C2B38589}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9222464-CAAC-4E5F-81A0-408C7BEFDBF3}"
 	ProjectSection(SolutionItems) = preProject
-		help\pics\slacknotification\slacknotification.png = help\pics\slacknotification\slacknotification.png
+		help\markdown\404.md = help\markdown\404.md
+		help\markdown\contributing.md = help\markdown\contributing.md
+		help\markdown\core-targets.md = help\markdown\core-targets.md
+		help\markdown\dotnet-assemblyinfo.md = help\markdown\dotnet-assemblyinfo.md
+		help\markdown\dotnet-nuget.md = help\markdown\dotnet-nuget.md
+		help\markdown\fake-cache.md = help\markdown\fake-cache.md
+		help\markdown\fake-commandline.md = help\markdown\fake-commandline.md
+		help\markdown\fake-dotnetcore.md = help\markdown\fake-dotnetcore.md
+		help\markdown\fake-fake5-custom-modules.md = help\markdown\fake-fake5-custom-modules.md
+		help\markdown\fake-fake5-learn-more.md = help\markdown\fake-fake5-learn-more.md
+		help\markdown\fake-fake5-modules.md = help\markdown\fake-fake5-modules.md
+		help\markdown\fake-gettingstarted.md = help\markdown\fake-gettingstarted.md
+		help\markdown\fake-migrate-to-fake-5.md = help\markdown\fake-migrate-to-fake-5.md
+		help\markdown\fake-what-is-fake.md = help\markdown\fake-what-is-fake.md
+		help\markdown\help-users.md = help\markdown\help-users.md
+		help\markdown\legacy-assemblyinfo.md = help\markdown\legacy-assemblyinfo.md
+		help\markdown\legacy-commandline.md = help\markdown\legacy-commandline.md
+		help\markdown\legacy-core-targets.md = help\markdown\legacy-core-targets.md
+		help\markdown\legacy-gettingstarted.md = help\markdown\legacy-gettingstarted.md
+		help\markdown\legacy-index.md = help\markdown\legacy-index.md
+		help\markdown\testing-sonarqube.md = help\markdown\testing-sonarqube.md
+		help\markdown\todo-androidpublisher.md = help\markdown\todo-androidpublisher.md
+		help\markdown\todo-azurecloudservices.md = help\markdown\todo-azurecloudservices.md
+		help\markdown\todo-azurewebjobs.md = help\markdown\todo-azurewebjobs.md
+		help\markdown\todo-canopy.md = help\markdown\todo-canopy.md
+		help\markdown\todo-dacpac.md = help\markdown\todo-dacpac.md
+		help\markdown\todo-deploy.md = help\markdown\todo-deploy.md
+		help\markdown\todo-fluentmigrator.md = help\markdown\todo-fluentmigrator.md
+		help\markdown\todo-fsc.md = help\markdown\todo-fsc.md
+		help\markdown\todo-fxcop.md = help\markdown\todo-fxcop.md
+		help\markdown\todo-iis.md = help\markdown\todo-iis.md
+		help\markdown\todo-msteamsnotification.md = help\markdown\todo-msteamsnotification.md
+		help\markdown\todo-octopusdeploy.md = help\markdown\todo-octopusdeploy.md
+		help\markdown\todo-slacknotification.md = help\markdown\todo-slacknotification.md
+		help\markdown\todo-stylecop.md = help\markdown\todo-stylecop.md
+		help\markdown\todo-teamcity.md = help\markdown\todo-teamcity.md
+		help\markdown\todo-teamcityadvanced.md = help\markdown\todo-teamcityadvanced.md
+		help\markdown\todo-typescript.md = help\markdown\todo-typescript.md
+		help\markdown\todo-vagrant.md = help\markdown\todo-vagrant.md
+		help\markdown\todo-watch.md = help\markdown\todo-watch.md
+		help\markdown\todo-wix.md = help\markdown\todo-wix.md
+		help\markdown\windows-chocolatey.md = help\markdown\windows-chocolatey.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{7D2A5639-80A5-4F01-9527-69FEBEB65344}"
+	ProjectSection(SolutionItems) = preProject
+		help\templates\apidocstemplate.cshtml = help\templates\apidocstemplate.cshtml
+		help\templates\docpage.cshtml = help\templates\docpage.cshtml
+		help\templates\indexpage.cshtml = help\templates\indexpage.cshtml
+		help\templates\template.cshtml = help\templates\template.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "reference", "reference", "{791E2077-80ED-430A-A16F-1705E79214B2}"
+	ProjectSection(SolutionItems) = preProject
+		help\templates\reference\module.cshtml = help\templates\reference\module.cshtml
+		help\templates\reference\namespaces.cshtml = help\templates\reference\namespaces.cshtml
+		help\templates\reference\part-members.cshtml = help\templates\reference\part-members.cshtml
+		help\templates\reference\part-nested.cshtml = help\templates\reference\part-nested.cshtml
+		help\templates\reference\type.cshtml = help\templates\reference\type.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redirects", "redirects", "{7E947549-B069-4884-B4C5-D572D46E6D58}"
+	ProjectSection(SolutionItems) = preProject
+		help\redirects\androidpublisher.md = help\redirects\androidpublisher.md
+		help\redirects\assemblyinfo.md = help\redirects\assemblyinfo.md
+		help\redirects\azurecloudservices.md = help\redirects\azurecloudservices.md
+		help\redirects\azurewebjobs.md = help\redirects\azurewebjobs.md
+		help\redirects\cache.md = help\redirects\cache.md
+		help\redirects\canopy.md = help\redirects\canopy.md
+		help\redirects\chocolatey.md = help\redirects\chocolatey.md
+		help\redirects\commandline.md = help\redirects\commandline.md
+		help\redirects\create-nuget-package.md = help\redirects\create-nuget-package.md
+		help\redirects\customtasks.md = help\redirects\customtasks.md
+		help\redirects\dacpac.md = help\redirects\dacpac.md
+		help\redirects\deploy.md = help\redirects\deploy.md
+		help\redirects\fluentmigrator.md = help\redirects\fluentmigrator.md
+		help\redirects\fsc.md = help\redirects\fsc.md
+		help\redirects\fxcop.md = help\redirects\fxcop.md
+		help\redirects\iis.md = help\redirects\iis.md
+		help\redirects\msteamsnotification.md = help\redirects\msteamsnotification.md
+		help\redirects\nuget.md = help\redirects\nuget.md
+		help\redirects\octopusdeploy.md = help\redirects\octopusdeploy.md
+		help\redirects\parallel-build.md = help\redirects\parallel-build.md
+		help\redirects\slacknotification.md = help\redirects\slacknotification.md
+		help\redirects\soft-dependencies.md = help\redirects\soft-dependencies.md
+		help\redirects\sonarcube.md = help\redirects\sonarcube.md
+		help\redirects\specifictargets.md = help\redirects\specifictargets.md
+		help\redirects\stylecop.md = help\redirects\stylecop.md
+		help\redirects\teamcity.md = help\redirects\teamcity.md
+		help\redirects\teamcityadvanced.md = help\redirects\teamcityadvanced.md
+		help\redirects\typescript.md = help\redirects\typescript.md
+		help\redirects\users.md = help\redirects\users.md
+		help\redirects\vagrant.md = help\redirects\vagrant.md
+		help\redirects\watch.md = help\redirects\watch.md
+		help\redirects\wix.md = help\redirects\wix.md
 	EndProjectSection
 EndProject
 Global
@@ -273,6 +301,18 @@ Global
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|x86.Build.0 = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|x86.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -286,19 +326,15 @@ Global
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{ED164049-BCFD-4837-96F4-9A5FA417931D} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{75162148-B884-4575-8E14-5320DD137760} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
-		{454066F7-42BF-435E-BDF7-2D11948D53B4} = {75162148-B884-4575-8E14-5320DD137760}
-		{853E4C7F-D5AA-4756-BAF3-13F25F460C4E} = {75162148-B884-4575-8E14-5320DD137760}
-		{E5A1C705-974C-4377-BAF3-55359A42BEF0} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
-		{A338C9EA-391D-405D-B480-D1B67C0C9369} = {E5A1C705-974C-4377-BAF3-55359A42BEF0}
-		{F4B81CF1-FF35-46E4-9C15-97C398A674F5} = {75162148-B884-4575-8E14-5320DD137760}
 		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{0203A0DD-836B-4F9E-A766-73396DDE8F34} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{DC70438D-6050-435C-B365-ABF68CF8891D} = {75162148-B884-4575-8E14-5320DD137760}
-		{64547E3E-F74E-48C2-8091-795A6C04B99C} = {75162148-B884-4575-8E14-5320DD137760}
 		{791651E4-4422-4A31-8DDE-6B1AD79B377A} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{F131A0F4-D7BC-4717-812A-CE937DB64BE9} = {75162148-B884-4575-8E14-5320DD137760}
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
+		{B9222464-CAAC-4E5F-81A0-408C7BEFDBF3} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
+		{7D2A5639-80A5-4F01-9527-69FEBEB65344} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
+		{791E2077-80ED-430A-A16F-1705E79214B2} = {7D2A5639-80A5-4F01-9527-69FEBEB65344}
+		{7E947549-B069-4884-B4C5-D572D46E6D58} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 	EndGlobalSection
 EndGlobal

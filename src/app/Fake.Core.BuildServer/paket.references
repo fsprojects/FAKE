@@ -1,0 +1,4 @@
+group netcore
+
+FSharp.Core
+NETStandard.Library framework: netstandard1.6

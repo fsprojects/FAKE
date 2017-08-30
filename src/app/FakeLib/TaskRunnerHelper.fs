@@ -1,6 +1,8 @@
 ﻿/// Contains a helper which can be used to implement timeouts and retries.
+[<System.Obsolete("Use Fake.Core.TaskRunner instead (open Fake.Core and use 'TaskRunner')")>]
 module Fake.TaskRunnerHelper
 
+#nowarn "44"
 /// Waits until the given function returns true or the timeout is reached.
 /// ## Parameters
 ///
@@ -8,6 +10,7 @@ module Fake.TaskRunnerHelper
 ///  - `timeout` - A System.TimeSpan representing the timeout.
 ///  - `testMS` - An interval at which FAKE checks if the function has succeeded.
 ///  - `timeoutF` - This function will be run if the timeout has been reached.
+[<System.Obsolete("Use Fake.Core.TaskRunner instead (open Fake.Core and use 'TaskRunner')")>]
 let waitFor f timeout (testMS : int) timeoutF = 
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()
@@ -21,6 +24,7 @@ let waitFor f timeout (testMS : int) timeoutF =
 ///
 ///  - `f` - This function will be started.
 ///  - `retries` - A retry limit.
+[<System.Obsolete("Use Fake.Core.TaskRunner instead (open Fake.Core and use 'TaskRunner')")>]
 let rec runWithRetries f retries = 
     if retries <= 0 then f()
     else 

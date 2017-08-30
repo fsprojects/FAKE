@@ -1,5 +1,19 @@
+image: Visual Studio 2017
+install:
+  - cinst fake -pre
 build_script:
-  - ps: .\build.cmd
+  - ps: Fake.exe -v run build.fsx
+#  - ps: .\build.cmd
+on_failure:
+  - appveyor PushArtifact FAKE.svclog
 test: off
+environment:
+  PAKET_BOOTSTRAPPER_TRACE: true
+
 artifacts:
-  - path: bin\*.nupkg
+  - path: 'nuget\dotnetcore\*.nupkg'
+    type: NuGetPackage
+  - path: 'nuget\legacy\*.nupkg'
+    type: NuGetPackage
+  - path: 'nuget\dotnetcore\Fake.netcore\*.zip'
+    type: Zip

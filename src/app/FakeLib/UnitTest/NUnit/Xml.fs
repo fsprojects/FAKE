@@ -1,7 +1,9 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 /// Contains types and functions for working with [NUnit](http://www.nunit.org/) unit tests result xml.
 module Fake.NUnitXml
 
+#nowarn "44"
 open System
 open System.IO
 open System.Text
@@ -18,6 +20,7 @@ let inline private attr attr value (elem : XElement) =
 let inline private elem name = XElement(imp name : XName)
 
 /// [omit]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let GetTestAssemblies(xDoc : XDocument) = 
     xDoc.Descendants()
     |> Seq.filter 
@@ -27,6 +30,7 @@ let GetTestAssemblies(xDoc : XDocument) =
     |> Seq.toList
 
 /// Returns whether all tests in the given test result have succeeded
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let AllSucceeded xDocs = 
     xDocs
     |> Seq.map GetTestAssemblies

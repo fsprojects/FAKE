@@ -1,7 +1,23 @@
 ﻿@{
   Layout = "template";
   Title = Properties["page-title"];
-  Description = Properties["project-summary"];
+  //Description = Properties["project-summary"];
+  
+  // Properties["current-page"] = "APIReference";
+  ViewBag.CurrentPage = "APIReference";
 }
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+
+									<!-- Content -->
+                      <article>
 @Properties["document"]
 @Properties["tooltips"]
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>

@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Generates an AssemblyInfo file
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 module Fake.AssemblyInfoHelper
 
 open System
@@ -10,11 +11,13 @@ open System.CodeDom
 open System.CodeDom.Compiler
 open System.IO
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 type CodeLanguage = 
     | CSharp
     | FSharp
     | VisualBasic
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 [<CLIMutable>]
 type AssemblyInfoParams = 
     { OutputFileName : string
@@ -38,6 +41,7 @@ type AssemblyInfoParams =
       AssemblyDelaySign : bool option
       GenerateClass : bool }
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// AssemblyInfo default params
 let AssemblyInfoDefaults = 
     { OutputFileName = String.Empty
@@ -61,6 +65,7 @@ let AssemblyInfoDefaults =
       AssemblyDelaySign = Some false
       GenerateClass = false }
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
 /// generates the assembly info file
 let generateFile param (attributes : Dictionary<string, string>) imports (writer : TextWriter) = 
     let provider, outputFileName = 
@@ -201,6 +206,7 @@ let AssemblyInfo setParams =
     writer.Close()
     tracefn "Created AssemblyInfo file \"%s\"." param.OutputFileName
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead, generating files is safer than replacing contents")>]
 type AssemblyInfoReplacementParams = 
     { OutputFileName : string
       AssemblyVersion : string
@@ -211,6 +217,7 @@ type AssemblyInfoReplacementParams =
       AssemblyConfiguration : string
       AssemblyMetadata : (string * string) list }
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead, generating files is safer than replacing contents")>]
 /// AssemblyInfoReplacement default params
 let AssemblyInfoReplacementDefaults = 
     { OutputFileName = null
@@ -222,6 +229,7 @@ let AssemblyInfoReplacementDefaults =
       AssemblyCopyright = null
       AssemblyMetadata = [] }
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead, generating files is safer than replacing contents")>]
 let ReplaceAssemblyInfoVersions param = 
     let (parameters : AssemblyInfoReplacementParams) = param AssemblyInfoReplacementDefaults
     
@@ -244,15 +252,17 @@ let ReplaceAssemblyInfoVersions param =
             |> replaceMetadataAttributes rest
         | _ -> line
 
-    let replaceLine line = 
-        line
-        |> replaceAttribute "AssemblyVersion" parameters.AssemblyVersion
-        |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
-        |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
-        |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
-        |> replaceAttribute "AssemblyCompany" parameters.AssemblyCompany
-        |> replaceAttribute "AssemblyCopyright" parameters.AssemblyCopyright
-        |> replaceMetadataAttributes parameters.AssemblyMetadata
+    let replaceLine (line : string) =
+        if line.TrimStart().StartsWith("//") then line
+        else
+            line
+            |> replaceAttribute "AssemblyVersion" parameters.AssemblyVersion
+            |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
+            |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
+            |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
+            |> replaceAttribute "AssemblyCompany" parameters.AssemblyCompany
+            |> replaceAttribute "AssemblyCopyright" parameters.AssemblyCopyright
+            |> replaceMetadataAttributes parameters.AssemblyMetadata
     
     let encoding = Text.Encoding.GetEncoding "UTF-8"
 
@@ -265,6 +275,7 @@ let ReplaceAssemblyInfoVersions param =
     |> Seq.toList // break laziness
     |> Seq.iter writer.WriteLine
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead, generating files is safer than replacing contents")>]
 /// Update all AssemblyInfo.[fs|cs|vb] files in the specified directory and its subdirectories
 /// ## Parameters
 ///
@@ -285,6 +296,7 @@ let BulkReplaceAssemblyInfoVersions (dir:string) (replacementParameters:Assembly
               ReplaceAssemblyInfoVersions ((fun p -> {p with OutputFileName = file }) >> replacementParameters))
     else logfn "%s does not exist." directory.FullName
 
+[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead, generating files is safer than replacing contents")>]
 /// Update all AssemblyInfos that were passed with given FileInclude
 /// ## Parameters
 ///

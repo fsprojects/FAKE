@@ -1,7 +1,9 @@
 ﻿[<AutoOpen>]
 /// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 module Fake.NUnitSequential
 
+#nowarn "44"
 /// Runs NUnit on a group of assemblies.
 /// ## Parameters
 /// 
@@ -14,6 +16,7 @@ module Fake.NUnitSequential
 ///         !! (testDir + @"\Test.*.dll") 
 ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "NUnit" details

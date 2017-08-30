@@ -1,28 +1,36 @@
 [<AutoOpen>]
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
 /// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 module Fake.NuGetHelper
 
+#nowarn "44"
 open System
 open System.IO
 open System.Xml.Linq
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 type NugetDependencies = (string * string) list
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 type NugetFrameworkDependencies = 
     { FrameworkVersion : string
       Dependencies : NugetDependencies }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 type NugetReferences = string list
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 type NugetFrameworkReferences = 
     { FrameworkVersion : string
       References : NugetReferences }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 type NugetFrameworkAssemblyReferences =
     { FrameworkVersions : string list
       AssemblyName : string }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 type NugetSymbolPackage =
     /// Do not build symbol packages
     | None = 0
@@ -30,7 +38,8 @@ type NugetSymbolPackage =
     | ProjectFile = 1
     /// Build a symbol package using the nuspec file
     | Nuspec = 2
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Nuget parameter type
 [<CLIMutable>]
 type NuGetParams = 
@@ -66,7 +75,8 @@ type NuGetParams =
       Properties : list<string * string>
       Files : list<string*string option*string option>
       Language : string}
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// NuGet default parameters  
 let NuGetDefaults() = 
     { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
@@ -103,13 +113,16 @@ let NuGetDefaults() =
       Properties = []
       Files = []
       Language = null }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Creates a string which tells NuGet that you require exactly this package version.
 let RequireExactly version = sprintf "[%s]" version
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Gets the version no. for a given package in the deployments folder
 let GetPackageVersion deploymentsDir package = 
     try
@@ -133,6 +146,7 @@ let GetPackageVersion deploymentsDir package =
     with
     | exn -> new Exception("Could not detect package version for " + package, exn) |> raise
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private replaceAccessKeys parameters (text:string) =
     let replaceKey key (str:string) =
         if isNullOrEmpty key then str
@@ -140,6 +154,7 @@ let private replaceAccessKeys parameters (text:string) =
 
     text |> (replaceKey parameters.AccessKey >> replaceKey parameters.SymbolAccessKey)
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let specFile = parameters.WorkingDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
                     |> FullName
@@ -241,14 +256,16 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     processTemplates replacements [ specFile ]
     tracefn "Created nuspec file %s" specFile
     specFile
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private createNuSpecFromTemplateIfNotProjFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
     match nuSpecOrProjFileInfo.Extension.ToLower().EndsWith("proj") with
     | true -> None
     | false -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
     
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private propertiesParam = function 
     | [] -> ""
     | lst -> 
@@ -256,6 +273,7 @@ let private propertiesParam = function
                           |> List.map (fun p -> (fst p) + "=\"" + (snd p) + "\"")
                           |> String.concat ";")
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
     let nuspecFile = FullName nuspecFile
@@ -294,7 +312,8 @@ let private pack parameters nuspecFile =
             parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
         |> execute
     
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// push package (and try again if something fails)
 let rec private publish parameters = 
     let tracing = enableProcessTracing
@@ -324,7 +343,8 @@ let rec private publish parameters =
     with exn -> 
         if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
         else raise exn
-
+        
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters = 
     let tracing = enableProcessTracing
@@ -345,7 +365,8 @@ let rec private publishSymbols parameters =
     with exn -> 
         if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
         else raise exn
-
+        
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Creates a new NuGet package based on the given .nuspec or project file.
 /// The .nuspec / projectfile is passed as-is (no templating is performed)
 /// ## Parameters
@@ -363,6 +384,7 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
         |> replaceAccessKeys parameters
         |> failwith
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Creates a new NuGet package based on the given .nuspec or project file.
 /// Template parameter substitution is performed when passing a .nuspec
 /// ## Parameters
@@ -384,6 +406,7 @@ let NuGetPack setParams nuspecOrProjectFile =
         |> replaceAccessKeys parameters
         |> failwith
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters
 /// 
@@ -394,11 +417,11 @@ let NuGetPublish setParams =
     try
         publish parameters
     with exn ->
-        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
-         else exn.Message)
+        if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message
         |> replaceAccessKeys parameters
         |> failwith
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Creates a new NuGet package, and optionally publishes it.
 /// Template parameter substitution is performed when passing a .nuspec
 /// ## Parameters
@@ -424,6 +447,7 @@ let NuGet setParams nuspecOrProjectFile =
         |> replaceAccessKeys parameters
         |> failwith
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// NuSpec metadata type
 type NuSpecPackage = 
     { Id : string
@@ -447,7 +471,8 @@ type NuSpecPackage =
     override x.ToString() = x.Name
     member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
     member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Parses nuspec metadata from a nuspec file.
 /// ## Parameters
 /// 
@@ -494,7 +519,8 @@ let getNuspecProperties (nuspec : string) =
       PackageHash = String.Empty
       PackageHashAlgorithm = String.Empty
     }
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Returns the NuGet meta data from the given package file name.
 /// ## Parameters
 /// 
@@ -503,21 +529,26 @@ let GetMetaDataFromPackageFile packageFileName =
     packageFileName
     |> ZipHelper.UnzipFirstMatchingFileInMemory(fun ze -> ze.Name.EndsWith ".nuspec")
     |> getNuspecProperties
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Default NuGet feed
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 let private webClient = new System.Net.WebClient()
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let discoverRepoUrl = 
     lazy (let resp = webClient.DownloadString(feedUrl)
           let doc = XMLDoc resp
           doc.["service"].GetAttribute("xml:base"))
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let getRepoUrl() = discoverRepoUrl.Force()
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let extractFeedPackageFromXml (entry : Xml.XmlNode) = 
     let properties = entry.["m:properties"]
@@ -545,25 +576,29 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
       Published = dateTimeProperty "Published"
       Url = entry.["content"].GetAttribute("src") }
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let getPackage (repoUrl:string) packageName version = 
     let url : string = repoUrl.TrimEnd('/') + "/Packages(Id='" + packageName + "',Version='" + version + "')"
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
     extractFeedPackageFromXml doc.["entry"]
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let getFeedPackagesFromUrl (url : string) = 
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
     [ for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry ]
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let getLatestPackage (repoUrl:string) packageName = 
     repoUrl.TrimEnd('/') + "/Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
     |> getFeedPackagesFromUrl
     |> Seq.head
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let downloadPackage targetDir (package : NuSpecPackage) = 
     ensureDirectory targetDir
@@ -572,14 +607,16 @@ let downloadPackage targetDir (package : NuSpecPackage) =
         targetFileName
     webClient.DownloadFile(package.Url, targetFileName)
     targetFileName
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// [omit]
 let argList name values =
     values
     |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
     |> String.concat " "
 
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.NuGet instead")>]
 /// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
     let xname = XName.op_Implicit

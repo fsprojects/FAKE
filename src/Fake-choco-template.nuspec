@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>@build.number@</version>
+    <authors>fsprojects</authors>
+    <projectUrl>http://fsharp.github.io/FAKE</projectUrl>
+    <projectSourceUrl>https://github.com/fsharp/FAKE</projectSourceUrl>
+    <docsUrl>http://fsharp.github.io/FAKE</docsUrl>
+    <bugTrackerUrl>https://github.com/fsharp/FAKE/issues</bugTrackerUrl>
+    <iconUrl>https://cdn.rawgit.com/fsharp/FAKE/515c78f15ea1829857dc757a5bcf48b3f85e0286/help/pics/logo.png</iconUrl>
+    <licenseUrl>https://github.com/fsharp/FAKE/blob/master/License.txt</licenseUrl>
+    <id>fake</id>
+    <title>FAKE - F# Make</title>
+    <owners>fsprojects</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+"FAKE - F# Make" is a build automation system with capabilities which are similar to make and rake.
+It is using an easy domain-specific language (DSL) so that you can start using it without learning F#.
+If you need more than the default functionality you can either write F# or simply reference .NET assemblies.
+    </description>
+    <summary>A DSL for build tasks</summary>
+    <tags>fake make dotnet csharp fsharp foss cross-platform</tags>
+    <releaseNotes>@releaseNotes@</releaseNotes>
+    <packageSourceUrl>https://github.com/fsharp/FAKE</packageSourceUrl>
+    @dependencies@
+  </metadata>
+  @files@
+    <!--<file src="..\nuget\dotnetcore\Fake.netcore\win7-x86\**" target="bin" />-->
+</package>

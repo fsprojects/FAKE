@@ -1,0 +1,9 @@
+group netcore
+
+FSharp.Core
+NETStandard.Library
+System.Xml.XDocument
+System.Xml.XPath
+System.Xml.XPath.XDocument
+System.Xml.XPath.XmlDocument
+System.Xml.ReaderWriter

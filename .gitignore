@@ -54,10 +54,14 @@ _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
 tools/SourceLink.Fake
+/testbuild.fsx
+/integrationtests/*/temp
+/temp
 
 release.cmd
+release.sh
 Samples/typescript/out/
-help/RELEASE_NOTES.md
+help/markdown/RELEASE_NOTES.md
 paket.exe
 paket-files/
 
@@ -69,5 +73,10 @@ paket-files/
 # Ignore JetBrains Rider folder
 .idea/
 
+mytemp
 Samples/WebNpmGrunt/node_modules
 .fake
+!/integrationtests/*/before/.fake
+project.lock.json
+
+#src/app/*/any

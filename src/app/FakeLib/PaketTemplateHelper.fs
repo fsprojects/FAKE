@@ -1,20 +1,25 @@
 /// Contains helper functions and task which allow it to generate a paket.template
 /// file for [Paket](http://fsprojects.github.io/Paket/index.html)
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 module Fake.PaketTemplate
 
+#nowarn "44"
 open System
 open System.Text
 
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketTemplateType =
     | File
     | Project
-
+    
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketFileInfo =
     /// Include a file and store it into a targed
     | Include of string * string
     /// Explicitely exclude a file
     | Exclude of string
-
+    
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketDependencyVersion =
     /// A specific version string
     | Version of string
@@ -22,7 +27,8 @@ type PaketDependencyVersion =
     | CURRENTVERSION
     /// Use the currently locked version as dependency
     | LOCKEDVERSION
-
+    
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketDependencyVersionInfo =
     /// For example ~> 2.0
     | GreaterOrEqualSafe of PaketDependencyVersion
@@ -32,10 +38,12 @@ type PaketDependencyVersionInfo =
 
     /// no explicit version
     | AnyVersion
-
+    
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 type PaketDependency = string * PaketDependencyVersionInfo
 
 /// Contains the different parameters to create a paket.template file
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 [<CLIMutable>]
 type PaketTemplateParams =
     { /// The file path to the `paket.template` file
@@ -124,6 +132,7 @@ type PaketTemplateParams =
 ///   - RequireLicenseAcceptance - `None`
 ///   - DevelopmentDependency - `None`
 ///   - IncludePDBs - `None`
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 let DefaultPaketTemplateParams =
     { TemplateFilePath = None
       TemplateType = Project
@@ -272,6 +281,7 @@ module internal Rendering =
 ///            }
 ///        )
 ///    )
+[<System.Obsolete "use Fake.DotNet.PaketTemplate instead">]
 let PaketTemplate setParams =
     use __ = traceStartTaskUsing "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams

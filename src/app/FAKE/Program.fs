@@ -37,6 +37,7 @@ let paramIsHelp param = containsParam param ["help"; "?"; "/?"; "-h"; "--help"; 
 
 let buildScripts = !! "*.fsx" |> Seq.toList
 
+let encodingToRestore = Console.OutputEncoding
 try
     try
         AutoCloseXmlWriter <- true
@@ -166,5 +167,6 @@ try
 
 finally
     traceEndBuild()
+    Console.OutputEncoding <- encodingToRestore
     if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
     if Environment.ExitCode <> 0 then exit Environment.ExitCode

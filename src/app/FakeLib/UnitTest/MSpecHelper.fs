@@ -1,15 +1,18 @@
 ﻿[<AutoOpen>]
 /// Contains a task to run [machine.specifications](https://github.com/machine/machine.specifications) tests.
+[<System.Obsolete("use Fake.DotNet.Testing.MSpec instead")>]
 module Fake.MSpecHelper
 
+#nowarn "44"
 open System
 open System.IO
 open System.Text
 
 /// Parameter type to configure the MSpec runner.
+[<System.Obsolete("use Fake.DotNet.Testing.MSpec instead")>]
 [<CLIMutable>]
 type MSpecParams = 
-    { /// FileName of the mspec runner exe. Use mspec-clr4.exe if you are on .NET 4.0 or above.
+    { /// The path to the mspec console runner. Use `mspec-clr4.exe` if you are on .NET 4.0 or above.
       ToolPath : string
       /// Output directory for html reports (optional).
       HtmlOutputDir : string
@@ -29,6 +32,7 @@ type MSpecParams =
       ErrorLevel : TestRunnerErrorLevel }
 
 /// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
+[<System.Obsolete("use Fake.DotNet.Testing.MSpec instead")>]
 let MSpecDefaults = 
     { ToolPath = findToolInSubPath "mspec-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
       HtmlOutputDir = null
@@ -42,6 +46,7 @@ let MSpecDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
+[<System.Obsolete("use Fake.DotNet.Testing.MSpec instead")>]
 let buildMSpecArgs parameters assemblies = 
     let html, htmlText = 
         if isNotNullOrEmpty parameters.HtmlOutputDir then 
@@ -81,6 +86,7 @@ let buildMSpecArgs parameters assemblies =
 /// ## Hint
 /// 
 /// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
+[<System.Obsolete("use Fake.DotNet.Testing.MSpec instead")>]
 let MSpec setParams assemblies = 
     let details = separated ", " assemblies
     use __ = traceStartTaskUsing "MSpec" details

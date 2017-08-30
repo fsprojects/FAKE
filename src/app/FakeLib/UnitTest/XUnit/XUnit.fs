@@ -1,13 +1,16 @@
 [<AutoOpen>]
 /// Contains tasks to run [xUnit](https://github.com/xunit/xunit) v1 unit tests.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 module Fake.Testing.XUnit
 
+#nowarn "44"
 open System
 open System.IO
 open System.Text
 open Fake
 
 /// The xUnit parameter type.
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 [<CLIMutable>]
 type XUnitParams =
     { /// The path to the xUnit console runner: `xunit.console.clr4.exe`
@@ -51,6 +54,7 @@ type XUnitParams =
 /// - `TimeOut` - 5 minutes
 /// - `ForceTeamCity` - `false`
 /// - `Silent` - `false`
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let XUnitDefaults =
     { HtmlOutputPath = None
       NUnitXmlOutputPath = None
@@ -64,7 +68,8 @@ let XUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       ForceTeamCity = false
       Silent = false }
-
+      
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let internal buildXUnitArgs assembly parameters =
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
@@ -83,7 +88,8 @@ let internal buildXUnitArgs assembly parameters =
     |> appendTraits parameters.IncludeTraits "/trait"
     |> appendTraits parameters.ExcludeTraits "/-trait"
     |> toText
-
+    
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 module internal ResultHandling =
     let (|OK|TestsFailed|FatalError|) = function
         | 0 -> OK
@@ -148,6 +154,7 @@ let internal runXUnitForOneAssembly parameters assembly =
 ///     Target "Test" (fun _ ->
 ///         xUnit (fun p -> {p with HtmlOutputPath = testDir @@ "xunit.html"}) "xUnit.Test.dll"
 ///     )
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let xUnitSingle setParams assembly =
     //failwithf "XUnit v1 is no longer supported, please update to XUnit v2. (Is almost 5 Years old now)"
     use __ = traceStartTaskUsing "xUnit" assembly
@@ -190,6 +197,7 @@ let internal overrideAssemblyReportParams assembly p =
 ///         !! (testDir @@ "xUnit.Test.*.dll")
 ///           |> xUnit (fun p -> {p with HtmlOutputPath = testDir @@ "html"})
 ///     )
+[<System.Obsolete("use Fake.DotNet.Testing.XUnit2 instead (yes please migrate to xunit2)")>]
 let xUnit setParams assemblies =
     //failwithf "XUnit v1 is no longer supported, please update to XUnit v2. (Is almost 5 Years old now)"
     let details = separated ", " assemblies
