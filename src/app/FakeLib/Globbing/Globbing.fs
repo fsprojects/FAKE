@@ -1,6 +1,8 @@
 /// This module contains a file pattern globbing implementation.
+[<System.Obsolete "Please use Fake.Core.Globbing.Glob instead">]
 module Fake.Globbing
 
+#nowarn "44"
 open System
 open System.Collections.Generic
 open System.IO
@@ -8,6 +10,7 @@ open System.Text.RegularExpressions
 
 
 // Normalizes path for different OS
+[<System.Obsolete "Please use Fake.Core.Globbing.Glob instead">]
 let inline normalizePath (path : string) = 
     path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
 
@@ -139,8 +142,10 @@ let internal compileGlobToRegex pattern =
 
     Regex(regexPattern)
 
+[<System.Obsolete "This is no longer supported, please open an issue if you had a need for it.">]
 let globRegexCache = System.Collections.Concurrent.ConcurrentDictionary<string, Regex>()
 
+[<System.Obsolete "Please use Fake.Core.Globbing.Glob instead">]
 let isMatch pattern path : bool = 
     let path = normalizePath path
 

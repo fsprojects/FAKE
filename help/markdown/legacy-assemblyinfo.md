@@ -1,31 +1,31 @@
 # Generating AssemblyInfo files
 
-**Note:  This documentation is for FAKE.exe after version 5. The documentation for previous version (<=4) can be found [here](legacy-assemblyinfo.html)! **
+**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found [here](dotnet-assemblyinfo.html)! **
 
 In this article the AssemblyInfo task is used in order to set specific version information to .NET assemblies.
 
 If you succeeded with the [Getting Started tutorial](gettingstarted.html), then you just have to modify your *BuildApp* target to the following:
 
-    open Fake.DotNet
+    open Fake.AssemblyInfoFile
 
-	Target.Create "BuildApp" (fun _ ->
-		AssemblyInfoFile.CreateCSharp "./src/app/Calculator/Properties/AssemblyInfo.cs"
-			[AssemblyInfo.Title "Calculator Command line tool"
-			 AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
-			 AssemblyInfo.Guid "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA"
-			 AssemblyInfo.Product "Calculator"
-			 AssemblyInfo.Version version
-			 AssemblyInfo.FileVersion version]
+	Target "BuildApp" (fun _ ->
+		CreateCSharpAssemblyInfo "./src/app/Calculator/Properties/AssemblyInfo.cs"
+			[Attribute.Title "Calculator Command line tool"
+			 Attribute.Description "Sample project for FAKE - F# MAKE"
+			 Attribute.Guid "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA"
+			 Attribute.Product "Calculator"
+			 Attribute.Version version
+			 Attribute.FileVersion version]
 
-		AssemblyInfoFile.CreateFSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.fs"
-			[AssemblyInfo.Title "Calculator library"
-			 AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
-			 AssemblyInfo.Guid "EE5621DB-B86B-44eb-987F-9C94BCC98441"
-			 AssemblyInfo.Product "Calculator"
-			 AssemblyInfo.Version version
-			 AssemblyInfo.FileVersion version]
+		CreateCSharpAssemblyInfo "./src/app/CalculatorLib/Properties/AssemblyInfo.cs"
+			[Attribute.Title "Calculator library"
+			 Attribute.Description "Sample project for FAKE - F# MAKE"
+			 Attribute.Guid "EE5621DB-B86B-44eb-987F-9C94BCC98441"
+			 Attribute.Product "Calculator"
+			 Attribute.Version version
+			 Attribute.FileVersion version]
 
-		MSBuild.MSBuildRelease buildDir "Build" appReferences
+		MSBuildRelease buildDir "Build" appReferences
 		  |> Log "AppBuild-Output: "
 	)
 
@@ -53,7 +53,7 @@ If your solution is inside a git repository you can get the git hash like this (
 	
 And set like this:
 
-	AssemblyInfo.Metadata("githash", commitHash)
+	Attribute.Metadata("githash", commitHash)
 
 One of the easiest ways to retrieve this hash is to load use a reflector program, like [ILSpy](https://github.com/icsharpcode/ILSpy):
 

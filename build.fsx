@@ -750,9 +750,6 @@ Target "DotnetPackage" (fun _ ->
 
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
-    let oldContent = File.ReadAllText netcoreFsproj
-
-    // File.WriteAllText(netcoreJson, newContent)
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
     DotnetPublish (fun c ->
         { c with
