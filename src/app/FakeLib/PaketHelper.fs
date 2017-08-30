@@ -109,19 +109,19 @@ let Pack setParams =
     let xmlEncode (notEncodedText : string) =
         if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
-    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " --version " + Process.toParam parameters.Version
-    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " --build-config " + Process.toParam parameters.BuildConfig
-    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " --build-platform " + Process.toParam parameters.BuildPlatform
-    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " --template " + Process.toParam parameters.TemplateFile
+    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " --version " + ProcessHelper.toParam parameters.Version
+    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " --build-config " + ProcessHelper.toParam parameters.BuildConfig
+    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " --build-platform " + ProcessHelper.toParam parameters.BuildPlatform
+    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " --template " + ProcessHelper.toParam parameters.TemplateFile
     let lockDependencies = if parameters.LockDependencies then " --lock-dependencies" else ""
     let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " --exclude " + t) |> String.concat " "
     let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " --specific-version %s %s" id v) |> String.concat " "
-    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " --release-notes " + Process.toParam (xmlEncode parameters.ReleaseNotes)
+    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " --release-notes " + ProcessHelper.toParam (xmlEncode parameters.ReleaseNotes)
     let minimumFromLockFile = if parameters.MinimumFromLockFile then " --minimum-from-lock-file" else ""
     let pinProjectReferences = if parameters.PinProjectReferences then " --pin-project-references" else ""
     let symbols = if parameters.Symbols then " --symbols" else ""
     let includeReferencedProjects = if parameters.IncludeReferencedProjects then " --include-referenced-projects" else ""
-    let projectUrl = if String.IsNullOrWhiteSpace parameters.ProjectUrl then "" else " --project-url " + Process.toParam parameters.ProjectUrl
+    let projectUrl = if String.IsNullOrWhiteSpace parameters.ProjectUrl then "" else " --project-url " + ProcessHelper.toParam parameters.ProjectUrl
 
     let packResult =
         let cmdArgs = 

@@ -25,6 +25,7 @@
     <DocumentationFile>bin\Debug\Fake.FluentMigrator.XML</DocumentationFile>
     <DocumentationFile>
     </DocumentationFile>
+    <NoWarn>44</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FAKE.IIS\Fake.FluentMigrator.XML</DocumentationFile>
+    <NoWarn>44</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

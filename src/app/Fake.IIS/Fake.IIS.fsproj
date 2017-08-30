@@ -26,6 +26,7 @@
     <DocumentationFile>bin\Debug\Fake.IIS.XML</DocumentationFile>
     <DocumentationFile>
     </DocumentationFile>
+    <NoWarn>44</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FAKE.IIS\Fake.IIS.XML</DocumentationFile>
+    <NoWarn>44</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
