@@ -26,7 +26,7 @@ nuget SSH.NET
 // Because of net45 support
 nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
-nuget Mono.Cecil
+nuget Mono.Cecil prerelease
 nuget Nuget.Core
 nuget bootstrap
 nuget Knockout.Mapping
