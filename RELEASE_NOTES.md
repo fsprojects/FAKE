@@ -3,8 +3,12 @@
 * ENHANCEMENT: Add XML to FakeLib - https://github.com/fsharp/FAKE/pull/1641
 * ENHANCEMENT: Move Paket.Paket() over to use flag arguments - https://github.com/fsharp/FAKE/pull/1627
 * ENHANCEMENT: MSTest detail switch - https://github.com/fsharp/FAKE/pull/1625
-
-
+* API: StringBuilder functionality moved into a StringBuilder module
+* ENHANCEMENT: Remove logfn from Compress and Extract - https://github.com/fsharp/FAKE/pull/1624
+* BUGFIX: Correctly determine the 64-bit "Program Files" folder - https://github.com/fsharp/FAKE/pull/1623
+* ENHANCEMENT: Bitbucket Environment variables - https://github.com/fsharp/FAKE/pull/1563
+* ENHANCEMENT: AppVeyor Environment variables - https://github.com/fsharp/FAKE/pull/1560
+* ENHANCEMENT: Change how npm.cmd is located in NpmHelper - https://github.com/fsharp/FAKE/pull/1629
 
 #### 5.0.0-alpha015 - 27.08.2017
 * Update Paket.core
