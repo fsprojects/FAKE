@@ -1,3 +1,11 @@
+#### 5.0.0-alpha016 - 30.08.2017
+* BREAKING-CHANGE: Renew AssemblyInfo API - https://github.com/fsharp/FAKE/pull/1619
+* ENHANCEMENT: Add XML to FakeLib - https://github.com/fsharp/FAKE/pull/1641
+* ENHANCEMENT: Move Paket.Paket() over to use flag arguments - https://github.com/fsharp/FAKE/pull/1627
+* ENHANCEMENT: MSTest detail switch - https://github.com/fsharp/FAKE/pull/1625
+
+
+
 #### 5.0.0-alpha015 - 27.08.2017
 * Update Paket.core
 

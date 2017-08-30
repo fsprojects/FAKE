@@ -10,6 +10,7 @@ module Fake.Windows.Choco
     open Fake.Core
     open Fake.Core.Environment
     open Fake.Core.String
+    open Fake.Core.StringBuilder
     open Fake.Core.Process
     open Fake.IO.FileSystem
     open Fake.IO.FileSystem.Operators
@@ -455,7 +456,7 @@ module Fake.Windows.Choco
 
         let xmlEncode (notEncodedText : string) =
             if String.IsNullOrWhiteSpace notEncodedText then null
-            else XText(notEncodedText).ToString().Replace("ß","&szlig;")
+            else XText(notEncodedText).ToString().Replace("ï¿½","&szlig;")
 
         let toSingleLine (text:string) =
             match text with

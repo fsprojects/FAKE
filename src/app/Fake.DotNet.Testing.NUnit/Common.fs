@@ -4,6 +4,7 @@ module Fake.DotNet.Testing.NUnit.Common
 open Fake.Testing.Common
 open Fake.IO.FileSystem.Operators
 open Fake.Core.String
+open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
 open Fake.Core.Process
 open Fake.Core

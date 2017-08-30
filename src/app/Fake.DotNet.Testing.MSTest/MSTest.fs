@@ -4,6 +4,7 @@ module Fake.DotNet.Testing.MSTest
 open System
 open System.Text
 open Fake.Core.String
+open Fake.Core.StringBuilder
 open Fake.Core.Process
 open Fake.Core
 open Fake.Testing.Common
