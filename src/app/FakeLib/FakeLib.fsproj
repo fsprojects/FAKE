@@ -269,6 +269,9 @@
     <Compile Include="..\Fake.DotNet.Testing.OpenCover\OpenCover.fs">
       <Link>Fake.DotNet.Testing.OpenCover/OpenCover.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Api.Slack\SlackNotification.fs">
+      <Link>Fake.Api.Slack/SlackNotification.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
