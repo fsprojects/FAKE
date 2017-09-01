@@ -11,7 +11,7 @@ open Newtonsoft.Json
 module Slack = 
     /// The Slack notification attachment field parameter type
     [<CLIMutable>]
-    type SlackNotificationAttachmentFieldParams = {
+    type NotificationAttachmentFieldParams = {
         /// (Required) The field title
         Title: string
         /// (Required) Text value of the field
@@ -22,7 +22,7 @@ module Slack =
     
     /// The Slack notification attachment parameter type
     [<CLIMutable>]
-    type SlackNotificationAttachmentParams = {
+    type NotificationAttachmentParams = {
         /// (Required) Text summary of the attachment that is shown by clients that understand attachments but choose not to show them
         Fallback: string
         /// The title of the attachment
@@ -36,12 +36,12 @@ module Slack =
         /// Color of the attachment text. Can be hex-value(e.g. "#AABBCC") or one of "'good', 'warning', 'danger'.
         Color: string
         /// Text to be displayed as a table below the message
-        Fields: SlackNotificationAttachmentFieldParams[]
+        Fields: NotificationAttachmentFieldParams[]
     }
     
     /// The Slack notification parameter type
     [<CLIMutable>]
-    type SlackNotificationParams = {
+    type NotificationParams = {
         /// (Required) The message body
         Text: string
         /// Name the message will appear to be sent from. Default value: Specified in your Slack Webhook configuration.
@@ -55,13 +55,13 @@ module Slack =
         /// Whether to force inline unfurling of attached links. Default value: false.
         Unfurl_Links: bool
         // Richly formatted message attachments for the notification
-        Attachments: SlackNotificationAttachmentParams[]
+        Attachments: NotificationAttachmentParams[]
         // Whether or not to link names of users or channels (beginning with @ or #), Default value : false
         Link_Names: bool
     }
     
     /// The default Slack notification parameters
-    let SlackNotificationDefaults = {
+    let NotificationDefaults = {
         Text = ""
         From = null
         Channel = null
@@ -73,7 +73,7 @@ module Slack =
     }
     
     /// The default parameters for Slack notification attachments
-    let SlackNotificationAttachmentDefaults = {
+    let NotificationAttachmentDefaults = {
         Fallback = ""
         Title = null
         Title_Link = null
@@ -84,7 +84,7 @@ module Slack =
     }
     
     /// The default parameters for Slack notification attachment fields
-    let SlackNotificationAttachmentFieldDefaults = {
+    let NotificationAttachmentFieldDefaults = {
         Title = ""
         Value = ""
         Short = false
@@ -97,13 +97,13 @@ module Slack =
     }
     
     /// [omit]
-    let private ValidateParams webhookURL (param : SlackNotificationParams) =
+    let private ValidateParams webhookURL (param : NotificationParams) =
         if webhookURL = "" then failwith "You must specify a webhook URL"
         if param.Text = "" && param.Attachments.Length = 0 then failwith "You must specify a message or include an attachment"
-        let validateField (field : SlackNotificationAttachmentFieldParams) =
+        let validateField (field : NotificationAttachmentFieldParams) =
             if field.Title = "" then failwith "Each field must have a title"
             if field.Value = "" then failwith "Each field must have a value"
-        let validateAttachment (attachment : SlackNotificationAttachmentParams) =
+        let validateAttachment (attachment : NotificationAttachmentParams) =
             if attachment.Fallback = "" then failwith "Each attachment must have a fallback"
             Array.iter(fun field -> validateField field) attachment.Fields
         Array.iter(fun attachment -> validateAttachment attachment) param.Attachments
@@ -118,7 +118,7 @@ module Slack =
     /// ## Parameters
     ///  - `webhookURL` - The Slack webhook URL
     ///  - `setParams` - Function used to override the default notification parameters
-    let SlackNotification (webhookURL : string) (setParams: SlackNotificationParams -> SlackNotificationParams) =
+    let SendNotification (webhookURL : string) (setParams: NotificationParams -> NotificationParams) =
         let sendNotification param =
             #if NETSTANDARD
             use client = (new HttpClient())
@@ -129,7 +129,7 @@ module Slack =
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json")
             client.UploadString(webhookURL, "POST", SerializeData param)
             #endif
-        SlackNotificationDefaults 
+        NotificationDefaults 
         |> setParams
         |> ValidateParams webhookURL
         |> sendNotification
