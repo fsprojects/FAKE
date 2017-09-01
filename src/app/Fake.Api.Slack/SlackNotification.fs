@@ -1,6 +1,10 @@
 ﻿namespace Fake.Api
 
+#if NETSTANDARD
+open System.Net.Http
+#else
 open System.Net
+#endif
 open Newtonsoft.Json
 
 /// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
@@ -116,10 +120,15 @@ module Slack =
     ///  - `setParams` - Function used to override the default notification parameters
     let SlackNotification (webhookURL : string) (setParams: SlackNotificationParams -> SlackNotificationParams) =
         let sendNotification param =
+            #if NETSTANDARD
+            use client = (new HttpClient())
+            let response = client.PostAsync(webhookURL, new StringContent(SerializeData param, System.Text.Encoding.UTF8, "application/json")).Result
+            response.Content.ReadAsStringAsync().Result
+            #else
             use client = (new WebClient())
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json")
             client.UploadString(webhookURL, "POST", SerializeData param)
-    
+            #endif
         SlackNotificationDefaults 
         |> setParams
         |> ValidateParams webhookURL

@@ -220,7 +220,8 @@ let common = [
 
 // New FAKE libraries
 let dotnetAssemblyInfos =
-    [ "Fake.Core.BuildServer", "Buildserver Support"
+    [ "Fake.Api.Slack", "Slack Integration Support"
+      "Fake.Core.BuildServer", "Buildserver Support"
       "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Globbing", "Filesystem Globbing Support and Operators"
