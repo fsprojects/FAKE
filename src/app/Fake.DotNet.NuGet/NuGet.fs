@@ -56,6 +56,7 @@ type NuGetParams =
       ReleaseNotes : string
       Copyright : string
       WorkingDir : string
+      BasePath : string option
       OutputPath : string
       PublishUrl : string
       AccessKey : string
@@ -99,6 +100,7 @@ let NuGetDefaults() =
       ReferencesByFramework = []
       FrameworkAssemblies = []
       IncludeReferencedProjects = false
+      BasePath = None
       OutputPath = "./NuGet"
       WorkingDir = "./NuGet"
       PublishUrl = "https://www.nuget.org/api/v2/package"
@@ -272,6 +274,7 @@ let private propertiesParam = function
 let private pack parameters nuspecFile =
     let nuspecFile = Path.getFullName nuspecFile
     let properties = propertiesParam parameters.Properties
+    let basePath = parameters.BasePath |> Option.map (sprintf "-BasePath \"%s\"") |> Option.defaultValue ""
     let outputPath = (Path.getFullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
     let defaultExcludes = if parameters.NoDefaultExcludes then "-NoDefaultExcludes" else ""
@@ -291,19 +294,19 @@ let private pack parameters nuspecFile =
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
         if not (isNullOrEmpty parameters.ProjectFile) then
-            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
-                parameters.Version outputPath (Path.getFullName parameters.ProjectFile) packageAnalysis defaultExcludes includeReferencedProjects properties
+            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s %s"
+                parameters.Version outputPath (Path.getFullName parameters.ProjectFile) packageAnalysis defaultExcludes includeReferencedProjects properties basePath
             |> execute
-        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
-            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties basePath
         |> execute
     | NugetSymbolPackage.Nuspec ->
-        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
-            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
+        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties basePath
         |> execute
     | _ ->
-        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
-            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties basePath
         |> execute
 
 /// push package (and try again if something fails)
