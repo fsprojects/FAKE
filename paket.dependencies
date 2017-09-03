@@ -1,4 +1,4 @@
-version 5.92.2
+version 5.92.3
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -102,7 +102,7 @@ group netcore
     storage: none
     framework: netstandard1.6, netcoreapp1.0
 
-    nuget FSharp.Compiler.Service content: none
+    nuget FSharp.Compiler.Service storage: packages, content: none
     nuget Microsoft.DotNet.PlatformAbstractions
     nuget FSharp.Core ~> 4.1.2
     nuget Microsoft.NETCore.App ~> 1.0
