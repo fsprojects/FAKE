@@ -45,7 +45,7 @@ nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
-nuget FSharp.Compiler.Service content: none
+nuget FSharp.Compiler.Service < 14 content: none
 nuget Octokit
 nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
@@ -103,7 +103,7 @@ group netcore
     framework: netstandard1.6, netcoreapp1.1
 
     nuget Microsoft.NETCore.App !~> 1.1
-    nuget FSharp.Compiler.Service storage: packages, content: none
+    nuget FSharp.Compiler.Service < 14 storage: packages, content: none
     nuget Microsoft.DotNet.PlatformAbstractions !~> 1
     // START _ REMOVE ME ONCE PAKET WORKS https://github.com/fsprojects/Paket/issues/2715
     nuget Microsoft.NETCore.DotNetHostPolicy !~> 1.1
@@ -111,6 +111,7 @@ group netcore
     nuget Microsoft.NETCore.DotNetHostResolver !~> 1.1
     nuget Microsoft.NETCore.Runtime.CoreCLR !~> 1.1
     nuget Microsoft.NETCore.Jit !~> 1.1
+    nuget Microsoft.NETCore.Targets !~> 1.1
     // END _ REMOVE ME ONCE PAKET WORKS
 
     nuget NETStandard.Library !~> 1.0

@@ -210,7 +210,8 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
 
     // These guys need to be handled carefully, they must only exist a single time in memory
     let wellKnownAssemblies =
-      [ getAssemblyFromType typeof<Fake.Core.Context.FakeExecutionContext> ]
+      [ getAssemblyFromType typeof<Fake.Core.Context.FakeExecutionContext>
+        getAssemblyFromType typeof<Microsoft.FSharp.Core.AutoOpenAttribute> ]
 
     let isPerfectMatch, result =
       match wellKnownAssemblies |> List.tryFind (fun a -> a.GetName().Name = name.Name) with
