@@ -15,7 +15,6 @@ open System.Threading
 open System.Text.RegularExpressions
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
-open Microsoft.FSharp.Compiler.SimpleSourceCodeServices
 open Microsoft.FSharp.Compiler.SourceCodeServices
 open Microsoft.FSharp.Compiler
 
