@@ -287,7 +287,7 @@ NUGET
     NUnit.Extension.VSProjectLoader (3.5)
     Octokit (0.24)
       Microsoft.Net.Http  - restriction: && (< net45) (< win8) (< portable-win81+wpa81)
-    Paket.Core (5.92.0-alpha001)
+    Paket.Core (5.92.3)
       Chessie (>= 0.6)
       FSharp.Compiler.Tools (4.1.17) - restriction: < netstandard1.6
       FSharp.Core (4.1.17) - restriction: < netstandard1.6
@@ -2104,7 +2104,7 @@ NUGET
       System.Runtime.Serialization.Formatters (>= 4.3)
       System.Runtime.Serialization.Primitives (>= 4.3)
       System.Xml.XmlDocument (>= 4.3)
-    Paket.Core (5.92.0-alpha001)
+    Paket.Core (5.92.3)
       Chessie (>= 0.6)
       Mono.Cecil (>= 0.10.0-beta6)
       Newtonsoft.Json (>= 10.0.3)
@@ -3355,7 +3355,7 @@ NUGET
       System.Runtime.Serialization.Formatters (>= 4.3) - restriction: && (< net20) (>= netstandard1.3)
       System.Runtime.Serialization.Primitives (>= 4.3) - restriction: || (&& (< net20) (>= netstandard1.0) (< netstandard1.3)) (&& (< net20) (>= netstandard1.3))
       System.Xml.XmlDocument (>= 4.3) - restriction: && (< net20) (>= netstandard1.3)
-    Paket.Core (5.92.0-alpha001)
+    Paket.Core (5.92.3)
       Chessie (>= 0.6)
       FSharp.Compiler.Tools (4.1.17) - restriction: < netstandard1.6
       FSharp.Core (4.1.17) - restriction: < netstandard1.6
