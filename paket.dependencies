@@ -1,8 +1,8 @@
-version 5.92.3
+version 5.92.2
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
-source http://nuget.org/api/v2
+source https://api.nuget.org/v3/index.json
 
 nuget FSharp.Core ~> 4.1.0 redirects: force
 nuget Knockout
@@ -26,7 +26,7 @@ nuget SSH.NET
 // Because of net45 support
 nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
-nuget Mono.Cecil
+nuget Mono.Cecil prerelease
 nuget Nuget.Core
 nuget bootstrap
 nuget Knockout.Mapping
@@ -54,7 +54,7 @@ github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharp
 
 group Build
     content: none
-    source http://nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
     source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
 
@@ -70,7 +70,7 @@ group Build
 
 // [ FAKE GROUP ]
 group NetcoreBuild
-    source https://nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
@@ -98,7 +98,7 @@ group NetcoreBuild
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
-    source http://nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
     storage: none
     framework: netstandard1.6, netcoreapp1.0
 
