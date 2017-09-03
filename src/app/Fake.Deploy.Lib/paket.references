@@ -1,4 +1,4 @@
 FSharp.Core
 Newtonsoft.Json
 SSH.NET
-Microsoft.Net.Http
+System.Net.Http

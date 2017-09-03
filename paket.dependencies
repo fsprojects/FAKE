@@ -47,7 +47,7 @@ nuget FluentMigrator.Runner
 nuget HashLib
 nuget FSharp.Compiler.Service content: none
 nuget Octokit
-nuget Microsoft.Net.Http
+nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
@@ -94,7 +94,7 @@ group NetcoreBuild
     nuget Fake.DotNet.Testing.NUnit prerelease
     nuget Fake.Windows.Chocolatey prerelease
     nuget Fake.Tools.Git prerelease
-    nuget Mono.Cecil ~> 0.10.0 prerelease
+    nuget Mono.Cecil prerelease
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
@@ -109,7 +109,7 @@ group netcore
     nuget NETStandard.Library ~> 1.0
     nuget Argu
     nuget Paket.Core prerelease
-    nuget Mono.Cecil ~> 0.10.0 prerelease
+    nuget Mono.Cecil prerelease
 
     nuget System.Linq.Parallel
     nuget System.Diagnostics.FileVersionInfo
