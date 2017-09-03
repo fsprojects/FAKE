@@ -100,13 +100,21 @@ group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
     storage: none
-    framework: netstandard1.6, netcoreapp1.0
+    framework: netstandard1.6, netcoreapp1.1
 
+    nuget Microsoft.NETCore.App !~> 1.1
     nuget FSharp.Compiler.Service storage: packages, content: none
-    nuget Microsoft.DotNet.PlatformAbstractions
+    nuget Microsoft.DotNet.PlatformAbstractions !~> 1
+    // START _ REMOVE ME ONCE PAKET WORKS https://github.com/fsprojects/Paket/issues/2715
+    nuget Microsoft.NETCore.DotNetHostPolicy !~> 1.1
+    nuget Microsoft.NETCore.Platforms !~> 1.1
+    nuget Microsoft.NETCore.DotNetHostResolver !~> 1.1
+    nuget Microsoft.NETCore.Runtime.CoreCLR !~> 1.1
+    nuget Microsoft.NETCore.Jit !~> 1.1
+    // END _ REMOVE ME ONCE PAKET WORKS
+
+    nuget NETStandard.Library !~> 1.0
     nuget FSharp.Core ~> 4.1.2
-    nuget Microsoft.NETCore.App ~> 1.0
-    nuget NETStandard.Library ~> 1.0
     nuget Argu
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
