@@ -18,7 +18,7 @@ group NetcoreBuild
     nuget Fake.Core.Targets prerelease
 ```
 
-Now you can directly use `open Fake.Core` and use the [targets module](core-targets.html).
+Now you can directly use `open Fake.Core` and use the [Target module](core-targets.html).
 
 For example create a new file `build.fsx` with
 
