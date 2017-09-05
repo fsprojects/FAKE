@@ -322,6 +322,7 @@
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="NpmHelper.fs" />
+    <Compile Include="GruntHelper.fs" />
     <Compile Include="ArchiveHelper.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="StrongNamingHelper.fs" />
