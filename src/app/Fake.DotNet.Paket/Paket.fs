@@ -138,9 +138,9 @@ let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
-    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + Process.toParam parameters.PublishUrl
-    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + Process.toParam parameters.EndPoint
-    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + Process.toParam parameters.ApiKey
+    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " --url " + Process.toParam parameters.PublishUrl
+    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " --endpoint " + Process.toParam parameters.EndPoint
+    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " --apikey " + Process.toParam parameters.ApiKey
 
     use __ = Trace.traceTask "PaketPush" (String.separated ", " packages)
 
@@ -165,7 +165,7 @@ let Push setParams =
                         let pushResult =
                             Process.ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
-                                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (Process.toParam package)) parameters.TimeOut
+                                info.Arguments <- sprintf "push %s%s%s%s" url endpoint key (Process.toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
             Async.Parallel tasks
@@ -178,7 +178,7 @@ let Push setParams =
                 Process.ExecProcess (fun info ->
                     info.FileName <- parameters.ToolPath
                     info.WorkingDirectory <- parameters.WorkingDir
-                    info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (Process.toParam package)) parameters.TimeOut
+                    info.Arguments <- sprintf "push %s%s%s%s" url endpoint key (Process.toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
 
 /// Returns the dependencies from specified paket.references file
@@ -225,7 +225,7 @@ let Restore setParams =
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
     let forceRestore = if parameters.ForceDownloadOfPackages then " --force " else ""
     let onlyReferenced = if parameters.OnlyReferencedFiles then " --only-referenced " else ""
-    let groupArg = if parameters.Group <> "" then (sprintf " group %s " parameters.Group) else ""
+    let groupArg = if parameters.Group <> "" then (sprintf " --group %s " parameters.Group) else ""
     let referencedFiles = 
         if parameters.ReferenceFiles |> List.isEmpty |> not
         then (sprintf " --references-files %s " (System.String.Join(" ", parameters.ReferenceFiles)))
