@@ -1,5 +1,8 @@
-#### (Unreleased) 4.63.1 - unreleased
+#### 4.63.2 - 11.09.2017
 * Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
+
+#### 4.63.1 - 11.09.2017
+* Download .NET SDK to temp path
 
 #### 4.63.0 - 27.07.2017
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600

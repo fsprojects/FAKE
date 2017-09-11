@@ -491,9 +491,10 @@ let InstallDotNetSDK sdkVersion =
         dotnetExePath <- buildLocalPath
     else
         CleanDir DotnetSDKPath
+        let tempDir = Path.GetTempPath()
 
         let downloadSDK downloadPath archiveFileName =
-            let localPath = Path.Combine(DotnetSDKPath, archiveFileName) |> FullName
+            let localPath = Path.Combine(tempDir, archiveFileName) |> FullName
             tracefn "Installing '%s' to '%s'" downloadPath localPath
             
             let proxy = Net.WebRequest.DefaultWebProxy
