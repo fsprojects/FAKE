@@ -18,6 +18,7 @@ open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 open System.Reflection
 open Paket.ProjectFile
+open Mono.Cecil
 
 type ICachingProvider =
     abstract TryLoadCache : context:FakeContext -> FakeContext * CoreCacheInfo option
@@ -178,12 +179,12 @@ let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:Assem
                 with :? FileLoadException as e ->
                     if printDetails then
                         Trace.tracefn "Error while loading assembly: %O" e
-                    let assemblyName = new System.Reflection.AssemblyName(assemInfo.FullName)
-                    let asem = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName(assemblyName.Name))
+                    let assemblyName = System.Reflection.AssemblyName(assemInfo.FullName)
+                    let asem = System.Reflection.Assembly.Load(System.Reflection.AssemblyName(assemblyName.Name))
                     if printDetails then
                         Trace.traceFAKE "recovered and used already loaded assembly '%s' instead of '%s' ('%s')" asem.FullName assemInfo.FullName assemInfo.Location
                     None, asem
-            else None, loadContext.LoadFromAssemblyName(new AssemblyName(assemInfo.FullName))
+            else None, loadContext.LoadFromAssemblyName(AssemblyName(assemInfo.FullName))
         Some(assem)
     try
         //let location = assemInfo.Location.Replace("\\", "/")
@@ -298,7 +299,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let context, cache = cache.TryLoadCache context
 #if NETSTANDARD1_6
     // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
-    let fakeLoadContext = new FakeLoadContext(context.Config.PrintDetails, context.Config.CompileOptions.RuntimeDependencies)
+    let fakeLoadContext = FakeLoadContext(context.Config.PrintDetails, context.Config.CompileOptions.RuntimeDependencies)
 #else
     let fakeLoadContext = new AssemblyLoadContext()
 #endif
