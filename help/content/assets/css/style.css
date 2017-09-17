@@ -42,6 +42,9 @@ div.tip {
 	display:none;
   color:#d1d1d1;
 }
+div.tip strong {
+  color:#d1d1d1;
+}
 table.pre pre {
   padding:0px;
   margin:0px;
@@ -70,6 +73,7 @@ table.pre td {
   padding:0px;
   white-space:normal;
   margin:0px;
+  border:none;
 }
 table.pre td.lines {
   width:30px;
@@ -142,7 +146,7 @@ hr {
 }
 
 /* Make table headings and td.title bold */
-td.title, thead {
+td.title, thead tr td {
   font-weight:bold;
 }
 
@@ -203,6 +207,51 @@ td.title, thead {
 .github-link:hover .hover { display:block; }
 .github-link .normal { display: block; }
 .github-link:hover .normal { display: none; }
+
+.member-name code {
+  padding: 2px 4px;
+  color: #d14;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  font-family: Monaco,Menlo,Consolas,'Courier New', monospace;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+table {
+  max-width: 100%;
+  background-color: transparent;
+  border-spacing: 0;
+}
+
+.table-bordered {
+  border: 1px solid #dddddd;
+  border-collapse: separate;
+  border-left: 0;
+  border-radius: 4px;
+}
+
+.table caption+thead tr:first-child th,
+.table caption+thead tr:first-child td,
+.table colgroup+thead tr:first-child th,
+.table colgroup+thead tr:first-child td,
+.table thead:first-child tr:first-child th,
+.table thead:first-child tr:first-child td {
+  border-top: 0;
+}
+
+.table th, .table td {
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+
+.table-bordered th, .table-bordered td {
+  border-left: 1px solid #dddddd;
+}
+
 
 /*-------------------------------------------------------------------------- 
   Additional formatting for the homepage 
