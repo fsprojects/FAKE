@@ -88,8 +88,9 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
 
     let co = context.Config.CompileOptions
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
+    // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
-        [co.AdditionalArguments; [ "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
+        [co.AdditionalArguments; [ "--targetprofile:netcore"; "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
         |> List.concat
         |> FsiOptions.ofArgs
         |> fun f ->

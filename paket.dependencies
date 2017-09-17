@@ -1,4 +1,4 @@
-version 5.92.3
+version 5.96.2
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -10,7 +10,7 @@ nuget NuGet.CommandLine
 nuget Paket.Core prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
-nuget Argu 3.3.0
+nuget Argu >= 3.3.0
 nuget FsCheck
 nuget FsCheck.Xunit
 nuget Unquote
@@ -45,7 +45,7 @@ nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
-nuget FSharp.Compiler.Service < 14 content: none
+nuget FSharp.Compiler.Service content: none
 nuget Octokit
 nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
@@ -103,7 +103,7 @@ group netcore
     framework: netstandard1.6, netcoreapp1.1
 
     nuget Microsoft.NETCore.App !~> 1.1
-    nuget FSharp.Compiler.Service < 14 storage: packages, content: none
+    nuget FSharp.Compiler.Service storage: packages, content: none
     nuget Microsoft.DotNet.PlatformAbstractions !~> 1
     // START _ REMOVE ME ONCE PAKET WORKS https://github.com/fsprojects/Paket/issues/2715
     nuget Microsoft.NETCore.DotNetHostPolicy !~> 1.1
