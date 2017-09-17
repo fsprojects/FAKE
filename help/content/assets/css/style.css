@@ -208,7 +208,13 @@ td.title, thead tr td {
 .github-link .normal { display: block; }
 .github-link:hover .normal { display: none; }
 
-.member-name code {
+#content .member-list .xmldoc h2 {
+  margin-top: 0;
+  font-size: 1em;
+}
+
+.member-list td > code,
+.member-list li > code {
   padding: 2px 4px;
   color: #d14;
   background-color: #f7f7f9;
