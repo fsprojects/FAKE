@@ -104,7 +104,7 @@ to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](
 
 ## API-Design
 
-We [learned from our mistakes](fake-fake5-learn-more.html), so we use the following guidelines:
+We [learned from our mistakes](fake-fake5-learn-more.html), so we use the following guidelines, **please read them very carefully** (ask if you don't understand any rule):
 
  - AutoOpen is no longer used
  - we replace `<verb><module>` functions with `<module>.<verb>`
@@ -113,7 +113,10 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
  - For compatibility reasons (migration from legacy). We assume the user doesn't open the global `Fake` namespace.
    
    -> This means we don't add anything in there in the new API.
- - Old APIs are marked as Obsolete with a link (hint) to the new API location.
+ - Old APIs are marked as Obsolete with a link (hint) to the new API location. We use codes to make explicit 
+    - FAKE0001 for moving part from one Module to another
+    - FAKE0002 for removed API we don't know who is using it and how => please open an issue if you use it
+    - FAKE0003 for API that is no more accessible (basically became internal) => please open an issue if you use it
  - Operators are opened seperatly with a separate `Operators` module
  - We avoid the `Helpers` suffix (because we now expect users to write `<module>.<function>`)
 

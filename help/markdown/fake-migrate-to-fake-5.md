@@ -4,7 +4,7 @@
 
 In this tutorial you will learn how to migrate your existing build scripts to the new FAKE 5 dotnet-core version.
 
-First we want you to know that there are two version of FAKE 5. One is just an update to the regular FAKE 4, but contains the new netcore API.
+First we want you to know that there are two versions of FAKE 5. One is just an update to the regular FAKE 4, but also contains the new API.
 We will call this the "legacy FAKE version" it is just like the FAKE you are already used to. The second version is the "new/dotnetcore/standalone FAKE 5" or just "FAKE 5".
 This "new" version has several advantages:
 
@@ -13,7 +13,7 @@ This "new" version has several advantages:
 * Paket bootstrapper / build.cmd and build.sh are no longer required (you can still use them)
 * This will be the only Version available in FAKE 6
 
-Therefore you have the FAKE 5 timeframe to update your build scripts to the new version.
+Therefore you have the FAKE 5 timeframe to update your build scripts to the new version. If you have any issues in the migration process, please see [how to fill issues or discuss about your issues](/contributing.html) (don't be shy about contributing ;)).
 
 ## Migration Guide
 
@@ -32,7 +32,7 @@ Upgrading to FAKE 5 is a multi step process and has various manual steps in betw
     There are a variety of installing options available. (TODO: Link to 'installing FAKE' section)
   - Add a FAKE header (TODO: add Link), and tell FAKE which features/packages you want to use in the dependencies file or in-line.
     See the [Adding FAKE dependencies](#Adding-FAKE-dependencies) section below.
-  - Run the build with the new version of FAKE :). You might want to read the 'CLI migration' section
+  - Run the build with the new version of FAKE :). You might want to read the [CLI migration](#CLI-Migration) section
   
   If things break in the last step please let us know as well.
 
