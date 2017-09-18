@@ -4,7 +4,9 @@ This page should provide you with some basic information if you're thinking abou
 
  * This page can be edited by sending a pull request to the FAKE project on GitHub, so if you learn something when playing with FAKE please record your [findings here](https://github.com/fsharp/FAKE/blob/master/help/markdown/contributing.md)!
 
- * If you want to discuss a feature (a good idea!), or if you want to look at suggestions how you might contribute, check out the [Issue list](https://github.com/fsharp/FAKE/issues) on GitHub or send an email to the [FAKE mailing list](http://groups.google.com/group/fsharpMake).
+ * If you want to discuss a feature (a good idea!), or if you want to look at suggestions how you might contribute, check out:
+    - the [Issue list](https://github.com/fsharp/FAKE/issues) on GitHub,
+    - [Gitter room](https://gitter.im/fsharp/FAKE)
    
  * Unless you explicitly state otherwise, any contribution intentionally 
 submitted for inclusion in the Project shall be under the terms and 
