@@ -6,6 +6,7 @@ open Newtonsoft.Json
 
 /// The Slack notification attachment field parameter type
 [<CLIMutable>]
+[<System.Obsolete("Use Fake.Api.Slack.NotificationAttachmentFieldParams instead")>]
 type SlackNotificationAttachmentFieldParams = {
     /// (Required) The field title
     Title: string
@@ -17,6 +18,7 @@ type SlackNotificationAttachmentFieldParams = {
 
 /// The Slack notification attachment parameter type
 [<CLIMutable>]
+[<System.Obsolete("Use Fake.Api.Slack.NotificationAttachmentParams instead")>]
 type SlackNotificationAttachmentParams = {
     /// (Required) Text summary of the attachment that is shown by clients that understand attachments but choose not to show them
     Fallback: string
@@ -36,6 +38,7 @@ type SlackNotificationAttachmentParams = {
 
 /// The Slack notification parameter type
 [<CLIMutable>]
+[<System.Obsolete("Use Fake.Api.Slack.NotificationParams instead")>]
 type SlackNotificationParams = {
     /// (Required) The message body
     Text: string
@@ -56,6 +59,7 @@ type SlackNotificationParams = {
 }
 
 /// The default Slack notification parameters
+[<System.Obsolete("Use Fake.Api.Slack.NotificationDefaults instead")>]
 let SlackNotificationDefaults = {
     Text = ""
     From = null
@@ -68,6 +72,7 @@ let SlackNotificationDefaults = {
 }
 
 /// The default parameters for Slack notification attachments
+[<System.Obsolete("Use Fake.Api.Slack.NotificationAttachmentDefaults instead")>]
 let SlackNotificationAttachmentDefaults = {
     Fallback = ""
     Title = null
@@ -79,6 +84,7 @@ let SlackNotificationAttachmentDefaults = {
 }
 
 /// The default parameters for Slack notification attachment fields
+[<System.Obsolete("Use Fake.Api.Slack.NotificationAttachmentFieldDefaults instead")>]
 let SlackNotificationAttachmentFieldDefaults = {
     Title = ""
     Value = ""
@@ -113,6 +119,7 @@ let private SerializeData data =
 /// ## Parameters
 ///  - `webhookURL` - The Slack webhook URL
 ///  - `setParams` - Function used to override the default notification parameters
+[<System.Obsolete("Use Fake.Api.Slack.SendNotification instead")>]
 let SlackNotification (webhookURL : string) (setParams: SlackNotificationParams -> SlackNotificationParams) =
     let sendNotification param =
         use client = (new WebClient())
