@@ -141,6 +141,7 @@ let Pack setParams =
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `files` - The files to be pushed to the server.
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
 let PushFiles setParams files =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
