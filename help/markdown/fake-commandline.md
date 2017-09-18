@@ -112,7 +112,7 @@ For this short sample we assume you have the latest version of FAKE installed an
 	  ==> "Build"
 	  ==> "Deploy"
  
-	RunTargetOrDefault "Deploy"
+	Target.RunOrDefault "Deploy"
 
 If you are on windows then create this small redirect script:
 

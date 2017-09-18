@@ -710,7 +710,7 @@ let runTargets (targets: TargetTemplate<unit> array) =
             targets |> Array.iter runSingleTarget
 
 /// Runs a target and its dependencies.
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.RunTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Run)")>]
 let run targetName =
     if doesTargetMeanPrintDotGraph targetName then PrintDotDependencyGraph() else
     if doesTargetMeanListTargets targetName then listTargets() else
@@ -749,25 +749,25 @@ let run targetName =
         changeExitCodeIfErrorOccured()
 
 /// Registers a BuildFailureTarget (not activated).
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.BuildFailureTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateBuildFailure)")>]
 let BuildFailureTarget name body =
     Target name body
     BuildFailureTargets.Add(name,false)
 
 /// Activates the BuildFailureTarget.
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateBuildFailureTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateBuildFailure)")>]
 let ActivateBuildFailureTarget name =
     let t = getTarget name // test if target is defined
     BuildFailureTargets.[name] <- true
 
 /// Registers a final target (not activated).
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.FinalTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateFinal)")>]
 let FinalTarget name body =
     Target name body
     FinalTargets.Add(name,false)
 
 /// Activates the FinalTarget.
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateFinalTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateFinal)")>]
 let ActivateFinalTarget name =
     let t = getTarget name // test if target is defined
     FinalTargets.[name] <- true

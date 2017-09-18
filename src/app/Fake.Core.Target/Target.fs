@@ -348,7 +348,7 @@ module Target =
     /// <param name="target">The target for which the dependencies should be printed.</param>
     let PrintDependencyGraph verbose target =
         match getTargetDict().TryGetValue (target) with
-        | false,_ -> Print()
+        | false,_ -> ListAvailable()
         | true,target ->
             Trace.logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
 
@@ -472,7 +472,7 @@ module Target =
 
     /// Runs a target and its dependencies.
     let internal run targetName =
-        if doesTargetMeanListTargets targetName then listTargets() else
+        if doesTargetMeanListTargets targetName then ListAvailable() else
         match getLastDescription() with
         | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
         | None -> ()
@@ -535,40 +535,33 @@ module Target =
         | [] -> ()
         | errors -> failwithf "A target failed: %A" errors 
 
-    // TODO : rename to remove "target" suffix
-    /// Registers a BuildFailureTarget (not activated).
-    let BuildFailureTarget name body =
+    /// Creates a target in case of build failure (not activated).
+    let CreateBuildFailure name body =
         Create name body
         getBuildFailureTargets().Add(name,false)
 
-    /// Activates the BuildFailureTarget.
-    let ActivateBuildFailureTarget name =
+    /// Activates the build failure target.
+    let ActivateBuildFailure name =
         let t = Get name // test if target is defined
         getBuildFailureTargets().[name] <- true
 
-    /// Registers a final target (not activated).
-    let FinalTarget name body =
+    /// Creates a final target (not activated).
+    let CreateFinal name body =
         Create name body
         getFinalTargets().Add(name,false)
 
-    /// Activates the FinalTarget.
-    let ActivateFinalTarget name =
+    /// Activates the final target.
+    let ActivateFinal name =
         let t = Get name // test if target is defined
         getFinalTargets().[name] <- true
 
-    /// Runs a Target and its dependencies
-    let RunTarget targetName = run targetName
-
-    // Runs the target given by the build script parameter or the given default target
-    //let RunParameterTargetOrDefault parameterName defaultTarget = Environment.environVarOrDefault parameterName defaultTarget |> Run
+    /// Runs a target and its dependencies
+    let Run targetName = run targetName
 
     /// Runs the target given by the target parameter or the given default target
-    let RunOrDefault defaultTarget = Environment.environVarOrDefault "target" defaultTarget |> RunTarget
+    let RunOrDefault defaultTarget = Environment.environVarOrDefault "target" defaultTarget |> Run
 
     /// Runs the target given by the target parameter or lists the available targets
     let RunOrList() =
-        if Environment.hasEnvironVar "target" then Environment.environVar "target" |> RunTarget
-        else listTargets()
-
-    /// Runs the target given by the target parameter
-    let Run() = Environment.environVarOrDefault "target" "" |> RunTarget
+        if Environment.hasEnvironVar "target" then Environment.environVar "target" |> Run
+        else ListAvailable()

@@ -87,7 +87,7 @@ the dependency graph to the standard output *instead* of building anything. This
 the build script contains a call like this:
 
 ```
-RunTargetOrDefault "Default"
+Target.RunOrDefault "Default"
 ``` 
 
 ### Example
@@ -113,7 +113,7 @@ resulting in an image like this:
 ![graph](pics/specifictargets/graph.png "Dependency graph")
 
 
-# Using FAKE's parallel option
+## Using FAKE's parallel option
 
 Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
 number of threads used for traversing the dependency tree.
@@ -121,7 +121,7 @@ This option of course only affects independent targets whereas dependent targets
 still be exectued in order.
 
 
-## Setting the number of threads
+### Setting the number of threads
 The number of threads used can be set using the environment variable ``parallel-jobs``.
 This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
 setting environment variables:
