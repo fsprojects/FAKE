@@ -227,6 +227,7 @@ type MSBuildParams =
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
       FileLoggers : MSBuildFileLoggerConfig list option
+      BinaryLoggers : string list option
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
 
 /// Defines a default for MSBuild task parameters
@@ -241,12 +242,13 @@ let mutable MSBuildDefaults =
       NoConsoleLogger = false
       RestorePackagesFlag = false
       FileLoggers = None
+      BinaryLoggers = None
       DistributedLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
-    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
-    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
+let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers binaryLoggers distributedFileLoggers properties =
+    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -344,6 +346,13 @@ let serializeMSBuildParams (p : MSBuildParams) =
             fls
             |> List.map (fun fl -> Some ("flp" + (string fl.Number), serializeLogger fl) )
 
+    let binaryLoggers =
+        match p.BinaryLoggers with
+        | None -> []
+        | Some bls ->
+            bls
+            |> List.map (fun bl -> Some ("bl", bl) )
+
     let distributedFileLoggers =
         let serializeDLogger (dlogger : MSBuildDistributedLoggerConfig) =
             sprintf "%s%s%s"
@@ -367,7 +376,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
+    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers binaryLoggers distributedFileLoggers properties
     |> serializeArgs
 
 /// [omit]
