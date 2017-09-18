@@ -301,9 +301,8 @@ module Target =
                | exn -> targetError name exn)
 
 
-    /// Prints all targets.
-    // TODO: rename in ListAvailable ?
-    let Print() =
+    /// List all targets available.
+    let ListAvailable() =
         Trace.log "The following targets are available:"
         for t in getTargetDict().Values do
             Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
@@ -407,15 +406,6 @@ module Target =
 
     /// [omit]
     let internal isListMode = Environment.hasEnvironVar "list"
-
-    /// Prints all available targets.
-    // TODO : to remove => use Print
-    let internal listTargets() =
-        Trace.tracefn "Available targets:"
-        getTargetDict().Values
-          |> Seq.iter (fun target ->
-                Trace.tracefn "  - %s %s" target.Name (match target.Description with Some d -> " - " + d | _ -> "")
-                Trace.tracefn "     Depends on: %A" target.Dependencies)
 
     // Instead of the target can be used the list dependencies graph parameter.
     let internal doesTargetMeanListTargets target = target = "--listTargets"  || target = "-lt"

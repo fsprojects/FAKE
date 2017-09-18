@@ -388,7 +388,7 @@ let runBuildFailureTargets() =
 
 
 /// Prints all targets.
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Print)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)")>]
 let PrintTargets() =
     let sb = StringBuilder()
     let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
@@ -561,8 +561,8 @@ let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.Ex
 [<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let isListMode = hasBuildParam "list"
 
-/// Prints all available targets.
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Print)")>]
+/// List all available targets.
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)")>]
 let listTargets() =
     tracefn "Available targets:"
     TargetDict.Values
