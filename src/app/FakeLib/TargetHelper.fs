@@ -228,7 +228,7 @@ let AllTargetsDependOn target =
 
 /// Creates a target from template.
 /// [omit]
-[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let targetFromTemplate template name parameters =
     match TargetDict.ContainsKey name with
     | true -> 
@@ -285,7 +285,7 @@ let targetFromTemplate template name parameters =
 ///     "T1" ==> "T2" ==> "Test"
 ///
 
-[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let TargetTemplateWithDependencies dependencies body name parameters =
     let template =
         { Name = String.Empty
@@ -295,11 +295,11 @@ let TargetTemplateWithDependencies dependencies body name parameters =
           Function = body }
     targetFromTemplate template name parameters
 
-[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let TargetTemplateWithDependecies dependencies = TargetTemplateWithDependencies dependencies
 
 /// Creates a TargetTemplate.
-[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let TargetTemplate body = TargetTemplateWithDependencies [] body
 
 /// Creates a Target.
