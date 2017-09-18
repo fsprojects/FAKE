@@ -115,7 +115,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     let lockFile = paketDependencies.GetLockFile()
     let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
     if printDetails then Trace.log "Setup DependencyCache..."
-    cache.SetupGroup groupName
+    cache.SetupGroup groupName |> ignore
 
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
     // Write loadDependencies file (basically only for editor support)
@@ -143,7 +143,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         |> RuntimeGraph.mergeSeq
 
     // Retrieve assemblies
-    if printDetails then Trace.log <| sprintf "Retrieving the assemblies..."
+    if printDetails then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
     orderedGroup
     |> Seq.filter (fun p ->
       if p.Name.ToString() = "Microsoft.FSharp.Core.netcore" then

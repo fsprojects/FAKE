@@ -277,7 +277,7 @@ module internal CompilerServiceExtensions =
 
           let results = checker.ParseAndCheckProject(options) |> Async.RunSynchronously
           let mapError (err:FSharpErrorInfo) =
-            sprintf "**** %s: %s" (if err.Severity = Microsoft.FSharp.Compiler.FSharpErrorSeverity.Error then "error" else "warning") err.Message
+            sprintf "**** %s: %s" (if err.Severity = FSharpErrorSeverity.Error then "error" else "warning") err.Message
           if results.HasCriticalErrors then
               let errors = results.Errors |> Seq.map mapError
               let errorMsg = sprintf "Parsing and checking project failed: \n\t%s" (System.String.Join("\n\t", errors))
@@ -726,9 +726,31 @@ module internal Extensions =
           x.EvalInteraction (sprintf "open %s" ns)
       member x.Reference file =
           x.EvalInteraction (sprintf "#r @\"%s\"" file)
+      member x.Include dir =
+          x.EvalInteraction (sprintf "#I @\"%s\"" dir)
       member x.Load file =
           x.EvalInteraction (sprintf "#load @\"%s\" " file)
 
+      /// Change the current directory (so that relative paths within scripts work properly).
+      /// Returns a handle to change the current directory back to it's initial state
+      /// (Because this will change the current directory of the currently running code as well!).
+      member x.Cd dir =
+          let oldDir = System.IO.Directory.GetCurrentDirectory()
+          let cd dir =
+            x.EvalInteraction (sprintf "#cd @\"%s\"" dir)
+          cd dir
+          let isDisposed = ref false
+          { new System.IDisposable with
+              member __.Dispose() =
+                if not !isDisposed then
+                  cd oldDir
+                  isDisposed := true }
+
+      /// Same as Cd but takes a function for the scope.
+      member x.WithCd dir f =
+          use __ = x.ChangeCurrentDirectory dir
+          f ()
+          
       /// Change the current directory (so that relative paths within scripts work properly).
       /// Returns a handle to change the current directory back to it's initial state
       /// (Because this will change the current directory of the currently running code as well!).

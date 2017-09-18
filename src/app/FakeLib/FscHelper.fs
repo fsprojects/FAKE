@@ -4,7 +4,7 @@ module Fake.FscHelper
 
 open System
 open Microsoft.FSharp.Compiler
-open Microsoft.FSharp.Compiler.SimpleSourceCodeServices
+open Microsoft.FSharp.Compiler.SourceCodeServices
 
 // OBSOLETE
 
@@ -57,7 +57,7 @@ type FscParams =
 /// to behave the same way as would the command-line 'fsc.exe' tool.
 [<Obsolete "Use FscHelper.compileFiles instead">]
 let fscList (srcFiles : string list) (opts : string list) : int = 
-    let scs = SimpleSourceCodeServices()
+    let scs = FSharpChecker.Create()
     
     let optsArr = 
         // If output file name is specified, pass it on to fsc.
@@ -73,7 +73,7 @@ let fscList (srcFiles : string list) (opts : string list) : int =
     trace <| sprintf "FSC with args:%A" optsArr
     // Always prepend "fsc.exe" since fsc compiler skips the first argument
     let optsArr = Array.append [|"fsc.exe"|] optsArr
-    let errors, exitCode = scs.Compile(optsArr)
+    let errors, exitCode = scs.Compile(optsArr) |> Async.RunSynchronously
     // Better compile reporting thanks to:
     // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
     for e in errors do
@@ -450,7 +450,7 @@ type FscParam =
 /// given (i.e. the second argument is an empty list), by default tries
 /// to behave the same way as would the command-line 'fsc.exe' tool.
 let compileFiles (srcFiles : string list) (opts : string list) : int = 
-    let scs = SimpleSourceCodeServices()
+    let scs = FSharpChecker.Create()
     
     let optsArr = 
         // If output file name is specified, pass it on to fsc.
@@ -466,7 +466,7 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
     trace <| sprintf "FSC with args:%A" optsArr
     // Always prepend "fsc.exe" since fsc compiler skips the first argument
     let optsArr = Array.append [|"fsc.exe"|] optsArr
-    let errors, exitCode = scs.Compile optsArr
+    let errors, exitCode = scs.Compile optsArr |> Async.RunSynchronously
     // Better compile reporting thanks to:
     // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
     for e in errors do
