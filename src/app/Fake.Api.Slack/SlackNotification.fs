@@ -10,7 +10,6 @@ open Newtonsoft.Json
 /// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
 module Slack = 
     /// The Slack notification attachment field parameter type
-    [<CLIMutable>]
     type NotificationAttachmentFieldParams = {
         /// (Required) The field title
         Title: string
@@ -21,7 +20,6 @@ module Slack =
     }
     
     /// The Slack notification attachment parameter type
-    [<CLIMutable>]
     type NotificationAttachmentParams = {
         /// (Required) Text summary of the attachment that is shown by clients that understand attachments but choose not to show them
         Fallback: string
@@ -40,7 +38,6 @@ module Slack =
     }
     
     /// The Slack notification parameter type
-    [<CLIMutable>]
     type NotificationParams = {
         /// (Required) The message body
         Text: string
@@ -120,15 +117,15 @@ module Slack =
     ///  - `setParams` - Function used to override the default notification parameters
     let SendNotification (webhookURL : string) (setParams: NotificationParams -> NotificationParams) =
         let sendNotification param =
-            #if NETSTANDARD
+#if NETSTANDARD
             use client = (new HttpClient())
             let response = client.PostAsync(webhookURL, new StringContent(SerializeData param, System.Text.Encoding.UTF8, "application/json")).Result
             response.Content.ReadAsStringAsync().Result
-            #else
+#else
             use client = (new WebClient())
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json")
             client.UploadString(webhookURL, "POST", SerializeData param)
-            #endif
+#endif
         NotificationDefaults 
         |> setParams
         |> ValidateParams webhookURL
