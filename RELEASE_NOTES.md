@@ -9,6 +9,15 @@
 * ENHANCEMENT: Bitbucket Environment variables - https://github.com/fsharp/FAKE/pull/1563
 * ENHANCEMENT: AppVeyor Environment variables - https://github.com/fsharp/FAKE/pull/1560
 * ENHANCEMENT: Change how npm.cmd is located in NpmHelper - https://github.com/fsharp/FAKE/pull/1629
+* NEW MODULE: Fake.Api.Slack - https://github.com/fsharp/FAKE/pull/1648
+* ENHANCEMENT: Add MSBuild binary logger support -  https://github.com/fsharp/FAKE/pull/1649
+* ENHANCEMENT: Add BasePath support for NuGet pack - https://github.com/fsharp/FAKE/pull/1651
+* DOCS: fix code in FAKE5 modules doc - https://github.com/fsharp/FAKE/pull/1653/files
+* ENHANCEMENT: Paket 5.5.0+: GNU-compatible Paket commands - https://github.com/fsharp/FAKE/pull/1655
+* BUGFIX: Target: update DoNothing signature - https://github.com/fsharp/FAKE/pull/1658
+* DOCS: Review discussion channels in contributing page - https://github.com/fsharp/FAKE/pull/1661
+* DOCS: Fixed the tooltip position and improved the styling in the api reference pages - https://github.com/fsharp/FAKE/pull/1663
+
 
 #### 5.0.0-alpha015 - 27.08.2017
 * Update Paket.core
