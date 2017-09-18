@@ -1,4 +1,4 @@
-version 5.96.4
+version 5.97.0
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -117,6 +117,8 @@ group netcore
     nuget NETStandard.Library !~> 1.0
     nuget FSharp.Core ~> 4.1.2
     nuget Argu
+    nuget Octokit
+    nuget Newtonsoft.Json
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
 
