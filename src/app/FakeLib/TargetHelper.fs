@@ -462,8 +462,7 @@ let PrintDependencyGraph verbose target =
         sb.Length <- sb.Length - Environment.NewLine.Length
         log <| sb.ToString()
         
-// TODO : why removed?
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.PrintRunningOrder)")>]
+[<System.Obsolete("Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintRunningOrder to be created)")>]
 let PrintRunningOrder() = 
     let sb = StringBuilder()
     let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
@@ -477,9 +476,8 @@ let PrintRunningOrder() =
     sb.Length <- sb.Length - Environment.NewLine.Length
     log <| sb.ToString()
 
-// TODO : why removed?
 /// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDotDependencyGraph)")>]
+[<System.Obsolete("Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDotDependencyGraph to be created)")>]
 let PrintDotDependencyGraph () =
     let sb = StringBuilder()
     let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt

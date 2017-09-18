@@ -117,6 +117,7 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
     - FAKE0001 for moving part from one Module to another
     - FAKE0002 for removed API we don't know who is using it and how => please open an issue if you use it
     - FAKE0003 for API that is no more accessible (basically became internal) => please open an issue if you use it
+    - FAKE0004 for API not yet migrated, waiting for your contribution
  - Operators are opened seperatly with a separate `Operators` module
  - We avoid the `Helpers` suffix (because we now expect users to write `<module>.<function>`)
 
