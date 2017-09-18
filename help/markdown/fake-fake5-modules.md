@@ -18,7 +18,7 @@ group NetcoreBuild
     nuget Fake.Core.Targets prerelease
 ```
 
-Now you can directly use `open Fake.Core.Targets` and use the [targets module](core-targets.html).
+Now you can directly use `open Fake.Core` and use the [Target module](core-targets.html).
 
 For example create a new file `build.fsx` with
 
@@ -26,10 +26,10 @@ For example create a new file `build.fsx` with
 // Use this for IDE support. Not required by FAKE 5. Change "build.fsx" to the name of your script.
 #load ".fake/build.fsx/intellisense.fsx"
 
-open Fake.Core.Targets
+open Fake.Core
 
 Target.Create "MyBuild" (fun _ ->
-    printfn "MyBuild"
+    printfn "message from MyBuild target"
 )
 
 Target.RunOrDefault "MyBuild"
