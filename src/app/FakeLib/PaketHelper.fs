@@ -173,6 +173,7 @@ let PushFiles setParams files =
                         let pushResult =
                             ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
+                                info.WorkingDirectory <- parameters.WorkingDir
                                 info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
