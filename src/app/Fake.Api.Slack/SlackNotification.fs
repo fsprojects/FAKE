@@ -26,7 +26,7 @@ module Slack =
         /// The title of the attachment
         Title: string
         /// Content to which the title should link
-        Title_Link: string
+        TitleLink: string
         /// Text that should appear within the attachment
         Text: string
         /// Text that should appear above the formatted data
@@ -46,15 +46,15 @@ module Slack =
         /// Channel to which the message will be posted. Default value: Specified in your Slack Webhook configuration.
         Channel: string
         /// The icon to be displayed with the message. Default value: Specified in your slack Webhook configuration.
-        Icon_URL: string
+        IconURL: string
         /// The emoji to be displayed with the message. Default value: Specified in your slack Webhook configuration.
-        Icon_Emoji: string
+        IconEmoji: string
         /// Whether to force inline unfurling of attached links. Default value: false.
-        Unfurl_Links: bool
+        UnfurlLinks: bool
         // Richly formatted message attachments for the notification
         Attachments: NotificationAttachmentParams[]
         // Whether or not to link names of users or channels (beginning with @ or #), Default value : false
-        Link_Names: bool
+        LinkNames: bool
     }
     
     /// The default Slack notification parameters
@@ -62,18 +62,18 @@ module Slack =
         Text = ""
         From = null
         Channel = null
-        Icon_URL = null
-        Icon_Emoji = null
-        Unfurl_Links = false
+        IconURL = null
+        IconEmoji = null
+        UnfurlLinks = false
         Attachments = Array.empty
-        Link_Names = false
+        LinkNames = false
     }
     
     /// The default parameters for Slack notification attachments
     let NotificationAttachmentDefaults = {
         Fallback = ""
         Title = null
-        Title_Link = null
+        TitleLink = null
         Text = null
         Pretext = null
         Color = null
