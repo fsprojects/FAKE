@@ -15,10 +15,14 @@ Create a new file `paket.dependencies` and add the following content
 group NetcoreBuild
     source https://nuget.org/api/v2
 
-    nuget Fake.Core.Targets prerelease
+    nuget Fake.Core.Target prerelease
 ```
 
+<<<<<<< bbfefb5a02c3ab5a7a093799ae8174f1199c628a
 Now you can directly use `open Fake.Core` and use the [Target module](core-targets.html).
+=======
+Now you can directly use `open Fake.Core` and use the [targets module](core-targets.html).
+>>>>>>> Review Fake.Core.Target module naming + doc
 
 For example create a new file `build.fsx` with
 
@@ -86,7 +90,7 @@ To write your build dependencies in-line you can put the following at the top of
     (* -- Fake Dependencies paket-inline
     source https://nuget.org/api/v2
 
-    nuget Fake.Core.Targets prerelease
+    nuget Fake.Core.Target prerelease
     -- Fake Dependencies -- *)
     #load "./.fake/build.fsx/intellisense.fsx"
 

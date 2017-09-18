@@ -229,7 +229,7 @@ let dotnetAssemblyInfos =
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
       "Fake.Core.SemVer", "Parsing and working with SemVer"
       "Fake.Core.String", "Core String manipulations"
-      "Fake.Core.Targets", "Defining and running Targets"
+      "Fake.Core.Target", "Defining and running Targets"
       "Fake.Core.Tasks", "Repeating and managing Tasks"
       "Fake.Core.Tracing", "Core Logging functionality"
       "Fake.Core.Xml", "Core Xml functionality"

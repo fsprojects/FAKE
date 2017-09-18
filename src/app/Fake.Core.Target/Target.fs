@@ -302,6 +302,7 @@ module Target =
 
 
     /// Prints all targets.
+    // TODO: rename in ListAvailable ?
     let Print() =
         Trace.log "The following targets are available:"
         for t in getTargetDict().Values do
@@ -408,6 +409,7 @@ module Target =
     let internal isListMode = Environment.hasEnvironVar "list"
 
     /// Prints all available targets.
+    // TODO : to remove => use Print
     let internal listTargets() =
         Trace.tracefn "Available targets:"
         getTargetDict().Values
@@ -543,6 +545,7 @@ module Target =
         | [] -> ()
         | errors -> failwithf "A target failed: %A" errors 
 
+    // TODO : rename to remove "target" suffix
     /// Registers a BuildFailureTarget (not activated).
     let BuildFailureTarget name body =
         Create name body

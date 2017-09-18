@@ -23,7 +23,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.String", "app\Fak
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.Tracing", "app\Fake.Core.Tracing\Fake.Core.Tracing.fsproj", "{9430365D-C956-4290-A006-A87F9083DC4B}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.Targets", "app\Fake.Core.Targets\Fake.Core.Targets.fsproj", "{0C28F2FB-2B12-4893-AAA4-2C2548926847}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.Target", "app\Fake.Core.Target\Fake.Core.Target.fsproj", "{0C28F2FB-2B12-4893-AAA4-2C2548926847}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.Tasks", "app\Fake.Core.Tasks\Fake.Core.Tasks.fsproj", "{83860B89-4A95-49A5-B4D6-B8F3345498E9}"
 EndProject

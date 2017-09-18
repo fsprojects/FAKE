@@ -5,7 +5,7 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>Fake.Core.Targets</AssemblyName>
+    <AssemblyName>Fake.Core.Target</AssemblyName>
     <OutputType>Library</OutputType>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
   </PropertyGroup>
