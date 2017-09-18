@@ -4,6 +4,7 @@ Mono.Web.Xdt
 Mono.Cecil
 Nuget.Core
 Newtonsoft.Json
+System.Net.Http
 HashLib
 FSharp.Compiler.Service
   exclude FSharp.Compiler.Service.MSBuild.*.dll
