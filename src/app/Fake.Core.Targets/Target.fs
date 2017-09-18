@@ -125,8 +125,8 @@ module Target =
           |> String.separated ", "
           |> sprintf "(?=> %s)"
 
-    /// Do nothing - fun () -> () - Can be used to define empty targets.
-    let DoNothing = (fun () -> ())
+    /// Do nothing - Can be used to define empty targets.
+    let DoNothing = (fun (_:TargetParameter) -> ())
 
     /// Checks whether the dependency (soft or normal) can be added.
     /// [omit]
