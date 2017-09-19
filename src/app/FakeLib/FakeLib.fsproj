@@ -124,6 +124,9 @@
     <Compile Include="..\Fake.IO.FileSystem\FileSystem.fs">
       <Link>Fake.IO.FileSystem/FileSystem.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\Directory.fs">
+      <Link>Fake.IO.FileSystem/Directory.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.IO.FileSystem\FileSystemInfo.fs">
       <Link>Fake.IO.FileSystem/FileSystemInfo.fs</Link>
     </Compile>
