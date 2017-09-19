@@ -6,9 +6,6 @@ open Fake.Core
 open Fake.IO.FileSystem.Operators
 open Fake.IO.FileSystem.FileSystemInfo
 
-module FileFilter =
-    let allFiles f = true
-
 module Shell =
 
     /// Copies a single file to the target and overwrites the existing file.
@@ -404,30 +401,3 @@ module Shell =
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
     let mv src dest = MoveFile src dest
-
-/// NOTE: Maybe this should be an extra module?
-/// Contains basic templating functions. Used in other helpers.
-module Templates =
-
-    /// Loads all templates (lazy - line by line!)
-    let loadTemplates seq = Seq.map (fun fileName -> fileName, File.Read fileName) seq
-
-    /// Replaces a bunch of the keywords in all files (lazy - line by line!)
-    let replaceKeywords replacements =
-        Seq.map (fun (fileName, file) ->
-            fileName,
-            file |> Seq.map (fun (line : string) ->
-                        let mutable sb = new System.Text.StringBuilder(line)
-                        for (k : string, r : string) in replacements do
-                            sb <- sb.Replace(k, r)
-                        sb.ToString()))
-
-    /// Saves all files (lazy - file by file!)
-    let saveFiles = Seq.iter (fun (fileName, file) -> File.WriteToFile false fileName (Seq.toList file))
-
-    /// Replaces the templates with the given replacements
-    let processTemplates replacements files =
-        files
-        |> loadTemplates
-        |> replaceKeywords replacements
-        |> saveFiles

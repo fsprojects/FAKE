@@ -234,6 +234,7 @@ let CopyFiles target files = Copy target files
 let excludeSVNFiles (path : string) = not <| path.Contains ".svn"
 
 /// Includes all files
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
 let allFiles (path : string) = true
 
 /// Copies a directory recursivly. If the target directory does not exist, it will be created.
