@@ -16,7 +16,7 @@ module FileSystemInfo =
             else 
                 item
                 |> DirectoryInfo.ofPath
-                |> DirectoryInfo.setDirectoryReadOnly readOnly)
+                |> DirectoryInfo.setReadOnly readOnly)
 
     /// Active pattern which discriminates between files and directories.
     let (|File|Directory|) (fileSysInfo : FileSystemInfo) = 

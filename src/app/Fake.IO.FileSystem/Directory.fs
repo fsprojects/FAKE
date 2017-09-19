@@ -32,14 +32,14 @@ module Directory =
     let findFirstMatchingFile pattern dir = 
         match tryFindFirstMatchingFile pattern dir with
         | Some x -> x
-        | None -> new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir) |> raise
+        | None -> FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir) |> raise
         
     /// Deletes a directory if it exists (including all contained elements).
     let delete path = 
         let dir = DirectoryInfo.ofPath path
         if dir.Exists then 
             // set all files readonly = false
-            DirectoryInfo.setDirectoryReadOnly false dir
+            DirectoryInfo.setReadOnly false dir
             //!!"/**/*.*"
             //|> SetBaseDir dir.FullName
             //|> (SetReadOnly false)

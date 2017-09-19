@@ -270,8 +270,8 @@ module Shell =
 
 
     /// Copies the file structure recursively.
-    let CopyRecursive dir outputDir overWrite = DirectoryInfo.copyRecursiveTo overWrite (DirectoryInfo.ofPath outputDir) (DirectoryInfo.ofPath dir)
-    let CopyRecursiveTo overWrite outputDir dir  = DirectoryInfo.copyRecursiveTo overWrite (DirectoryInfo.ofPath outputDir) (DirectoryInfo.ofPath dir)
+    let CopyRecursive dir outputDir overWrite = DirectoryInfo.copyRecursiveTo overWrite outputDir dir
+    let CopyRecursiveTo overWrite outputDir dir  = DirectoryInfo.copyRecursiveTo overWrite outputDir dir
 
     type CopyRecursiveMethod =
     | Overwrite
@@ -291,16 +291,16 @@ module Shell =
     let CopyRecursive2 method dir outputDir =
         let dirInfo = DirectoryInfo.ofPath dir
         let outputDirInfo = DirectoryInfo.ofPath outputDir   
-        let cr2 = DirectoryInfo.copyRecursive2 dirInfo outputDirInfo false
+        let copyRecursiveWithFilter f = DirectoryInfo.copyRecursiveToWithFilter false f dirInfo outputDirInfo
         match method with
         | Overwrite -> DirectoryInfo.copyRecursiveTo true dirInfo outputDirInfo
         | NoOverwrite -> DirectoryInfo.copyRecursiveTo false dirInfo outputDirInfo
-        | Skip -> cr2 <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
+        | Skip -> copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
         | IncludePattern(pattern) ->
-            cr2 <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern)
+            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern)
         | ExcludePattern(pattern) ->
-            cr2 <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern) |> not
-        | Filter(f) -> cr2 f
+            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern) |> not
+        | Filter(f) -> copyRecursiveWithFilter f
 
     /// Moves a single file to the target and overwrites the existing file.
     /// ## Parameters

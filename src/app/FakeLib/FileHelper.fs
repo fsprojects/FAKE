@@ -7,6 +7,7 @@ open System.Text
 open System.Diagnostics
 
 /// Performs the given actions on all files and subdirectories
+[<System.Obsolete("Function is no more accessible (FAKE0003 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.DirectoryInfo.recursively). If you consider, it is still useful, please open an issue and explain your use case")>]
 let rec recursively dirF fileF (dir : DirectoryInfo) = 
     dir
     |> subDirectories
@@ -18,6 +19,7 @@ let rec recursively dirF fileF (dir : DirectoryInfo) =
     |> Seq.iter fileF
 
 /// Sets the directory readonly 
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.DirectoryInfo.setReadOnly)")>]
 let setDirectoryReadOnly readOnly (dir : DirectoryInfo) = 
     if dir.Exists then 
         let isReadOnly = dir.Attributes &&& FileAttributes.ReadOnly = FileAttributes.ReadOnly
@@ -25,6 +27,7 @@ let setDirectoryReadOnly readOnly (dir : DirectoryInfo) =
         if (not readOnly) && not isReadOnly then dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)
 
 /// Sets all files in the directory readonly.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.DirectoryInfo.setReadOnlyRecursive)")>]
 let SetDirReadOnly readOnly dir = 
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
 
@@ -382,6 +385,7 @@ let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
 
 /// Copies the file structure recursively.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.DirectoryInfo.copyRecursiveTo. NB: parameters order changed)")>]
 let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = 
     let files = 
         dir
@@ -400,6 +404,7 @@ let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrit
      |> Seq.toList) @ files
 
 /// Copies the file structure recursively.
+
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
 
 /// Moves a single file to the target and overwrites the existing file.
