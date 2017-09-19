@@ -13,7 +13,8 @@
     <Compile Include="Path.fs" />
     <Compile Include="FileInfo.fs" />
     <Compile Include="Operators.fs" />
-    <Compile Include="FileSystem.fs" />
+    <Compile Include="DirectoryInfo.fs" />
+    <Compile Include="File.fs" />
     <Compile Include="Directory.fs" />
     <Compile Include="FileSystemInfo.fs" />
     <Compile Include="Shell.fs" />
