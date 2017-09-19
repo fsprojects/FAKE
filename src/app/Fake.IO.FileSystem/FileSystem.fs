@@ -4,38 +4,8 @@ namespace Fake.IO.FileSystem
 open System.Text
 open System.IO
 open Fake.Core
-
-module Operators =
-    /// Combines two path strings using Path.Combine
-    let inline (@@) path1 path2 = Path.combineTrimEnd path1 path2
-    /// Combines two path strings using Path.Combine
-    let inline (</>) path1 path2 = Path.combine path1 path2
-
 open Operators
 
-module FileInfo =
-    /// Creates a FileInfo for the given path.
-    let inline ofPath path = new FileInfo(path)
-    
-    /// Active Pattern for determining file name.
-    let (|FileInfoFullName|) (f : FileInfo) = f.FullName
-
-    /// Active Pattern for determining FileInfoNameSections.
-    let (|FileInfoNameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
-    
-    /// Checks if the two files are byte-to-byte equal.
-    let contentIsEqualTo (first : FileInfo) (second : FileInfo) = 
-        if first.Length <> second.Length then false
-        else 
-            let BYTES_TO_READ = 32768
-            use fs1 = first.OpenRead()
-            use fs2 = second.OpenRead()
-            let one = Array.create BYTES_TO_READ (byte 0)
-            let two = Array.create BYTES_TO_READ (byte 0)
-            let mutable eq = true
-            while eq && fs1.Read(one, 0, BYTES_TO_READ) <> 0 && fs2.Read(two, 0, BYTES_TO_READ) <> 0 do
-                if one <> two then eq <- false
-            eq
 module DirectoryInfo =
     /// Creates a DirectoryInfo for the given path.
     let inline ofPath path = DirectoryInfo(path)
@@ -118,29 +88,6 @@ module DirectoryInfo =
     let copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = dir |> copyRecursiveTo overwrite outputDir
     /// Copies the file structure recursively.
     let copyRecursive2 (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite filter = dir |> copyRecursiveTo2 overwrite filter outputDir
-
-module FileSystemInfo =
-    /// Creates a FileInfo or a DirectoryInfo for the given path
-    let inline ofPath path : FileSystemInfo = 
-        if Directory.Exists path then upcast DirectoryInfo.ofPath path
-        else upcast FileInfo.ofPath path
-    
-    /// Sets all given files or directories readonly.
-    let SetReadOnly readOnly (items : string seq) = 
-        items |> Seq.iter (fun item ->
-            let fi = FileInfo.ofPath item
-            if fi.Exists then fi.IsReadOnly <- readOnly
-            else 
-                item
-                |> DirectoryInfo.ofPath
-                |> DirectoryInfo.setDirectoryReadOnly readOnly)
-
-    /// Active pattern which discriminates between files and directories.
-    let (|File|Directory|) (fileSysInfo : FileSystemInfo) = 
-        match fileSysInfo with
-        | :? FileInfo as file -> File(file)
-        | :? DirectoryInfo as dir -> Directory(dir, dir.EnumerateFileSystemInfos())
-        | _ -> failwith "No file or directory given."
 
 module File =
     /// Raises an exception if the file doesn't exist on disk.

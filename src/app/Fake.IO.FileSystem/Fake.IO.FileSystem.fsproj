@@ -11,6 +11,9 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Path.fs" />
+    <Compile Include="FileInfo.fs" />
+    <Compile Include="Operators.fs" />
+    <Compile Include="FileSystemInfo.fs" />
     <Compile Include="FileSystem.fs" />
     <Compile Include="Shell.fs" />
     <Compile Include="Templates.fs" />
