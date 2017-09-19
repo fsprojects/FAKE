@@ -191,7 +191,7 @@ let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     !! (parameters.WorkingDir @@ "/**/*.nupkg")
-    |> PushFiles setParams
+    |> PushFiles (fun _ -> parameters)
 
 /// Returns the dependencies from specified paket.references file
 let GetDependenciesForReferencesFile (referencesFile:string) =
