@@ -368,7 +368,7 @@ module Shell =
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
     let cp_r src dest =
-        if Directory.Exists src then CopyDir dest src FileFilter.allFiles
+        if Directory.Exists src then CopyDir dest src (fun _ -> true)
         else CopyFile dest src
 
     /// Like "cp" in a shell. Copies a single file.
