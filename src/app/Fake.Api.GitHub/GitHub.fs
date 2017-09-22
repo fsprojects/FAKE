@@ -9,7 +9,7 @@ open System.Reflection
 open System.IO
 
 /// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
-module Github =
+module GitHub =
 
     type Draft =
         { Client : GitHubClient
@@ -68,8 +68,8 @@ module Github =
     let createClient user password =
         async {
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
-            let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
-            let github = new GitHubClient(connection)
+            let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
+            let github = GitHubClient(connection)
             github.Credentials <- Credentials(user, password)
             return github
         }
@@ -77,8 +77,8 @@ module Github =
     let createClientWithToken token =
         async {
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
-            let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
-            let github = new GitHubClient(connection)
+            let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
+            let github = GitHubClient(connection)
             github.Credentials <- Credentials(token)
             return github
         }
@@ -87,8 +87,8 @@ module Github =
         async {
             let credentials = Credentials(user, password)
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
-            let connection = new Connection(new ProductHeaderValue("FAKE"), new Uri(url), new InMemoryCredentialStore(credentials), httpClient, new SimpleJsonSerializer())
-            let github = new GitHubClient(connection)
+            let connection = Connection(ProductHeaderValue("FAKE"), Uri(url), InMemoryCredentialStore(credentials), httpClient, SimpleJsonSerializer())
+            let github = GitHubClient(connection)
             github.Credentials <- credentials
             return github
         }
@@ -97,15 +97,15 @@ module Github =
         async {
             let credentials = Credentials(token)
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
-            let connection = new Connection(new ProductHeaderValue("FAKE"), new Uri(url), new InMemoryCredentialStore(credentials), httpClient, new SimpleJsonSerializer())
-            let github = new GitHubClient(connection)
+            let connection = Connection(ProductHeaderValue("FAKE"), Uri(url), InMemoryCredentialStore(credentials), httpClient, SimpleJsonSerializer())
+            let github = GitHubClient(connection)
             github.Credentials <- credentials
             return github
         }
 
     let private makeRelease draft owner project version prerelease (notes:seq<string>) (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
-            let data = new NewRelease(version)
+            let data = NewRelease(version)
             data.Name <- version
             data.Body <- String.Join(Environment.NewLine, notes)
             data.Draft <- draft
@@ -127,7 +127,7 @@ module Github =
         retryWithArg 5 draft <| fun draft' -> async {
             let fi = FileInfo(fileName)
             let archiveContents = File.OpenRead(fi.FullName)
-            let assetUpload = new ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
+            let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
             let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.UploadAsset(draft'.DraftRelease, assetUpload)
             printfn "Uploaded %s" asset.Name
             return draft'
@@ -187,7 +187,7 @@ module Github =
     let downloadAsset id destination (draft : Async<Draft>) =
         retryWithArg 5 draft <| fun draft' -> async {
             let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.GetAsset(draft'.Owner,draft'.Project,id)
-            let! resp = Async.AwaitTask <| draft'.Client.Connection.Get(new Uri(asset.Url), new System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
+            let! resp = Async.AwaitTask <| draft'.Client.Connection.Get(Uri(asset.Url), new System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
 
             let bytes = resp.HttpResponse.Body :?> byte[]
             let filename = Path.Combine(destination, asset.Name)

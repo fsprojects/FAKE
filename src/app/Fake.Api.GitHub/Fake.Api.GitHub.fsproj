@@ -5,7 +5,7 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>Fake.Api.Github</AssemblyName>
+    <AssemblyName>Fake.Api.GitHub</AssemblyName>
     <OutputType>Library</OutputType>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
   </PropertyGroup>
@@ -17,7 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Github.fs" />
+    <Compile Include="GitHub.fs" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
