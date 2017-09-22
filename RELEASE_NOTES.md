@@ -17,7 +17,7 @@
 * BUGFIX: Target: update DoNothing signature - https://github.com/fsharp/FAKE/pull/1658
 * DOCS: Review discussion channels in contributing page - https://github.com/fsharp/FAKE/pull/1661
 * DOCS: Fixed the tooltip position and improved the styling in the api reference pages - https://github.com/fsharp/FAKE/pull/1663
-
+* NEW MODULE: Fake.Api.GitHub previously known as Octokit.fsx - https://github.com/fsharp/FAKE/pull/1667
 
 #### 5.0.0-alpha015 - 27.08.2017
 * Update Paket.core
