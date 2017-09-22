@@ -107,7 +107,9 @@ to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](
 We [learned from our mistakes](fake-fake5-learn-more.html), so we use the following guidelines, **please read them very carefully** (ask if you don't understand any rule):
 
  - AutoOpen is no longer used
- - we replace `<verb><module>` functions with `<module>.<verb>`
+ - We replace `<verb><module>` functions with `<module>.<verb>`
+    - Use Verbs as much as possible for functions
+    - In order, to have a more consistent API we propose to always use camelCase naming for functions
  - We assume the caller is not opening the module but only the global namespaces `Fake.Core`, `Fake.IO`, ...
    and make sure the code looks nice and structured on the caller side.
  - For compatibility reasons (migration from legacy). We assume the user doesn't open the global `Fake` namespace.
