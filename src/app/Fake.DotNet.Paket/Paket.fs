@@ -24,8 +24,8 @@ type PaketPackParams =
       TemplateFile : string
       ExcludedTemplates : string list
       WorkingDir : string
-      OutputPath : string 
-      ProjectUrl : string 
+      OutputPath : string
+      ProjectUrl : string
       Symbols : bool
       IncludeReferencedProjects : bool
       MinimumFromLockFile : bool
@@ -45,7 +45,7 @@ let PaketPackDefaults() : PaketPackParams =
       ProjectUrl = null
       ExcludedTemplates = []
       WorkingDir = "."
-      OutputPath = "./temp" 
+      OutputPath = "./temp"
       Symbols = false
       IncludeReferencedProjects = false
       MinimumFromLockFile = false
@@ -82,7 +82,7 @@ type PaketRestoreParams =
       ReferenceFiles: string list }
 
 /// Paket restore default parameters
-let PaketRestoreDefaults() : PaketRestoreParams = 
+let PaketRestoreDefaults() : PaketRestoreParams =
     { ToolPath = (Tools.findToolFolderInSubPath "paket.exe" (Directory.GetCurrentDirectory() @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
       WorkingDir = "."
@@ -118,9 +118,9 @@ let Pack setParams =
     let projectUrl = if String.IsNullOrWhiteSpace parameters.ProjectUrl then "" else " --project-url " + Process.toParam parameters.ProjectUrl
 
     let packResult =
-        let cmdArgs = 
-            sprintf "%s%s%s%s%s%s%s%s%s%s%s%s%s" 
-                version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates 
+        let cmdArgs =
+            sprintf "%s%s%s%s%s%s%s%s%s%s%s%s%s"
+                version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates
                 symbols includeReferencedProjects minimumFromLockFile pinProjectReferences projectUrl
         Process.ExecProcess
             (fun info ->
@@ -130,14 +130,15 @@ let Pack setParams =
 
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
 
-/// Pushes all NuGet packages in the working dir to the server by using Paket push.
+/// Pushes the given NuGet packages to the server by using Paket push.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Push setParams =
+///  - `files` - The files to be pushed to the server.
+let PushFiles setParams files =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
-    let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
+    let packages = Seq.toList files
     let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " --url " + Process.toParam parameters.PublishUrl
     let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " --endpoint " + Process.toParam parameters.EndPoint
     let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " --apikey " + Process.toParam parameters.ApiKey
@@ -165,6 +166,7 @@ let Push setParams =
                         let pushResult =
                             Process.ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
+                                info.WorkingDirectory <- parameters.WorkingDir
                                 info.Arguments <- sprintf "push %s%s%s%s" url endpoint key (Process.toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
@@ -180,6 +182,16 @@ let Push setParams =
                     info.WorkingDirectory <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s%s" url endpoint key (Process.toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
+
+/// Pushes all NuGet packages in the working dir to the server by using Paket push.
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default parameters.
+let Push setParams =
+    let parameters : PaketPushParams = PaketPushDefaults() |> setParams
+
+    !! (parameters.WorkingDir @@ "/**/*.nupkg")
+    |> PushFiles (fun _ -> parameters)
 
 /// Returns the dependencies from specified paket.references file
 let GetDependenciesForReferencesFile (referencesFile:string) =
@@ -203,7 +215,7 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
                 let fi = FileInfo(dir </> "paket.lock")
                 if fi.Exists then fi.FullName else find fi.Directory.Parent.FullName
             find <| FileInfo(referencesFile).Directory.FullName
-        
+
         let breakInParts (line : string) = match Regex.Match(line,"^[ ]{4}([^ ].+) \((.+)\)") with
                                            | m when m.Success && m.Groups.Count = 3 -> Some (m.Groups.[1].Value, m.Groups.[2].Value)
                                            | _ -> None
@@ -221,19 +233,19 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Restore setParams = 
+let Restore setParams =
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
     let forceRestore = if parameters.ForceDownloadOfPackages then " --force " else ""
     let onlyReferenced = if parameters.OnlyReferencedFiles then " --only-referenced " else ""
     let groupArg = if parameters.Group <> "" then (sprintf " --group %s " parameters.Group) else ""
-    let referencedFiles = 
+    let referencedFiles =
         if parameters.ReferenceFiles |> List.isEmpty |> not
         then (sprintf " --references-files %s " (System.String.Join(" ", parameters.ReferenceFiles)))
         else ""
-    
-    use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir 
 
-    let restoreResult = 
+    use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir
+
+    let restoreResult =
         Process.ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir

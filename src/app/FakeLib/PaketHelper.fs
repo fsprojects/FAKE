@@ -136,15 +136,16 @@ let Pack setParams =
 
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
 
-/// Pushes all NuGet packages in the working dir to the server by using Paket push.
+/// Pushes the given NuGet packages to the server by using Paket push.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
+///  - `files` - The files to be pushed to the server.
 [<System.Obsolete "use Fake.DotNet.Paket instead">]
-let Push setParams =
+let PushFiles setParams files =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
-    let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
+    let packages = Seq.toList files
     let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + toParam parameters.PublishUrl
     let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + toParam parameters.EndPoint
     let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
@@ -172,6 +173,7 @@ let Push setParams =
                         let pushResult =
                             ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
+                                info.WorkingDirectory <- parameters.WorkingDir
                                 info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
@@ -187,6 +189,17 @@ let Push setParams =
                     info.WorkingDirectory <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
+
+/// Pushes all NuGet packages in the working dir to the server by using Paket push.
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default parameters.
+[<System.Obsolete "use Fake.DotNet.Paket instead">]
+let Push setParams =
+    let parameters : PaketPushParams = PaketPushDefaults() |> setParams
+
+    !! (parameters.WorkingDir @@ "/**/*.nupkg")
+    |> PushFiles (fun _ -> parameters)
 
 /// Returns the dependencies from specified paket.references file
 [<System.Obsolete "use Fake.DotNet.Paket instead">]
