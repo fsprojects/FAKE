@@ -215,8 +215,8 @@ Target "RenameFSharpCompilerService" (fun _ ->
 let common = [
     Attribute.Product "FAKE - F# Make"
     Attribute.Version release.AssemblyVersion
-    Attribute.InformationalVersion release.AssemblyVersion
-    Attribute.FileVersion release.AssemblyVersion]
+    Attribute.InformationalVersion release.NugetVersion
+    Attribute.FileVersion release.NugetVersion]
 
 // New FAKE libraries
 let dotnetAssemblyInfos =

@@ -67,7 +67,10 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
           try mainMethod.Invoke(null, [||])
               |> ignore
               None
-          with ex ->
+          with
+          | :? TargetInvocationException as targetInvocation when not (isNull targetInvocation.InnerException) ->
+              Some targetInvocation.InnerException
+          | ex ->
               Some ex
         | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 

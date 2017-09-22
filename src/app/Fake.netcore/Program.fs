@@ -11,12 +11,15 @@ open System.IO
 open Argu
 
 let printVersion() =
-    traceFAKE "FakePath: %s" fakePath
     traceFAKE "%s" fakeVersionStr
+
+let printFakePath() =
+    traceFAKE "FakePath: %s" fakePath
 
 
 let printEnvironment cmdArgs args =
     printVersion()
+    printFakePath()
 
     if cmdArgs |> Array.length > 1 then
         traceFAKE "FAKE Arguments:"
@@ -72,6 +75,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
   if results.Contains <@ Cli.FakeArgs.Version @> then
     didSomething <- true
     printVersion()
+    printFakePath()
   results.IterResult (<@ Cli.FakeArgs.Run @>, fun runArgs ->
     didSomething <- true
     if runArgs.Contains <@ Cli.RunArgs.Debug @> then
