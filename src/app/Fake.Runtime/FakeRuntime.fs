@@ -105,8 +105,14 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     // Update
     if not <| File.Exists lockFilePath.FullName then
       if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
-      paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
-      |> ignore
+      try
+        paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
+        |> ignore
+      with e when e.Message.Contains "Did you restore groups" ->
+        // See https://github.com/fsharp/FAKE/issues/1672
+        // and https://github.com/fsprojects/Paket/issues/2785
+        // We do a restore anyway.
+        ()
 
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
