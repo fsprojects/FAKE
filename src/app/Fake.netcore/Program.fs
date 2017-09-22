@@ -154,18 +154,10 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
       else if printDetails then log "Ready."
     with
     | exn ->
-        if printDetails then
-            sprintf "Build failed.\nError:\n%O" exn
-            |> traceError
-        else
-            if not (isNull exn.InnerException) then
-                sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
-                |> traceError
-                //printUsage()
-            else
-                sprintf "Build failed.\nError:\n%s" exn.Message
-                |> traceError
-                //printUsage()
+        traceError "Script failed with"
+        if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
+            Paket.Logging.printErrorExt true true false exn
+        else Paket.Logging.printErrorExt printDetails printDetails false exn
 
         //let isKnownException = exn :? FAKEException
         //if not isKnownException then
