@@ -6,10 +6,10 @@ open System
 open System.IO
 
 /// Gets the FAKE version no.
-let fakeVersion = AssemblyVersionInformation.AssemblyVersion
+let fakeVersion = AssemblyVersionInformation.AssemblyInformationalVersion
 
 /// Gets the FAKE Version string
-let fakeVersionStr = sprintf "FAKE - F# Make %A" fakeVersion
+let fakeVersionStr = sprintf "FAKE 5 - F# Make (%s)" fakeVersion
 
 /// Retrieves the environment variable with the given name
 let environVar name = System.Environment.GetEnvironmentVariable name

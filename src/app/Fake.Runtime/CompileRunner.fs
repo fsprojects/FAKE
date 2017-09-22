@@ -23,16 +23,8 @@ open Microsoft.FSharp.Compiler
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
 /// therefore might eat other exceptions. And a caching error is not critical.
 let private handleCoreCaching (context:FakeContext) (compiledAssembly:string) (errors:string) =
-    //try
-        { MaybeCompiledAssembly = Some compiledAssembly
-          Warnings = errors }
-    //with ex ->
-    //    // Caching errors are not critical, and we shouldn't throw in a finally clause.
-    //    traceFAKE "CACHING ERROR - please open a issue on FAKE and /cc @matthid\n\nError: %O" ex
-    //
-    //    { MaybeCompiledAssembly = None
-    //      Warnings = errors }
-
+   { MaybeCompiledAssembly = Some compiledAssembly
+     Warnings = errors }
 
 /// public, because it is used by test code
 let nameParser cachedAssemblyFileName scriptFileName =
@@ -58,7 +50,17 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
     Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
         let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
         let ass = context.AssemblyContext.LoadFromAssemblyPath fullPath
-        match ass.GetTypes()
+        let types =
+            try ass.GetTypes()
+            with :? ReflectionTypeLoadException as ref ->
+                traceFAKE "Could not load types of compiled script:"
+                for err in ref.LoaderExceptions do
+                    if context.Config.PrintDetails then
+                        traceFAKE " - %O" err
+                    else
+                        traceFAKE " - %s" err.Message
+                ref.Types
+        match types
               |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
               |> Seq.map (fun t -> t.GetMethod("main@", BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static))
               |> Seq.filter (isNull >> not)
@@ -67,7 +69,10 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
           try mainMethod.Invoke(null, [||])
               |> ignore
               None
-          with ex ->
+          with
+          | :? TargetInvocationException as targetInvocation when not (isNull targetInvocation.InnerException) ->
+              Some targetInvocation.InnerException
+          | ex ->
               Some ex
         | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 
