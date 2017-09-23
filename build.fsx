@@ -6,12 +6,9 @@
 open System
 open System.IO
 open System.Reflection
-open Fake.Core
 open Fake.Core.BuildServer
 open Fake.Core.Environment
 open Fake.Core.Trace
-open Fake.Core.Target
-open Fake.Core.TargetOperators
 open Fake.Core.String
 open Fake.Core.SemVer
 open Fake.Core.ReleaseNotes
@@ -30,7 +27,6 @@ open Fake.DotNet.FSFormatting
 open Fake.DotNet.AssemblyInfoFile
 open Fake.DotNet.AssemblyInfoFile.AssemblyInfo
 open Fake.DotNet.MsBuild
-open Fake.DotNet.Cli
 open Fake.Testing.Common
 open Fake.DotNet.Testing.MSpec
 open Fake.DotNet.Testing.XUnit2
@@ -45,8 +41,6 @@ open Fake.Tools.Git.Staging
 open Fake.Tools.Git.Commit
 
 let currentDirectory = Shell.pwd()
-let Target = Fake.Core.Target.Create
-let RunTargetOrDefault = Fake.Core.Target.RunOrDefault
 
 #else
 // Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
@@ -73,7 +67,9 @@ open Fake.MSTest
 open Fake.Testing.NUnit3
 #endif
 
+open Fake.Core
 open Fake.IO.FileSystem
+open Fake.DotNet
 
 
 // properties
@@ -149,7 +145,7 @@ let cleanForTests () =
     |> Seq.iter rmdir
 
 // Targets
-Target "Clean" (fun _ ->
+Target.Create "Clean" (fun _ ->
     !! "src/*/*/bin"
     //++ "src/*/*/obj"
     |> CleanDirs
@@ -167,7 +163,7 @@ Target "Clean" (fun _ ->
     cleanForTests()
 )
 
-Target "RenameFSharpCompilerService" (fun _ ->
+Target.Create "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
     // for framework in ["net40"; "net45"] do
     for framework in ["netstandard1.6"; "net45"] do
@@ -284,7 +280,7 @@ let assemblyInfos =
     |> List.map (fun (project, description) ->
         sprintf "./src/app/%s/AssemblyInfo.fs" project, [Attribute.Title (sprintf "FAKE - F# Make %s" description) ] @ common))
 
-Target "SetAssemblyInfo" (fun _ ->
+Target.Create "SetAssemblyInfo" (fun _ ->
     for assemblyFile, attributes in assemblyInfos do
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
@@ -293,14 +289,14 @@ Target "SetAssemblyInfo" (fun _ ->
         attributes |> CreateFSharpAssemblyInfo assemblyFile
 )
 
-Target "DownloadPaket" (fun _ ->
+Target.Create "DownloadPaket" (fun _ ->
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- ".paket/paket.exe"
                 info.Arguments <- "--version") (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
 )
 
-Target "UnskipAndRevertAssemblyInfo" (fun _ ->
+Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
     for assemblyFile, _ in assemblyInfos do
         // While the files are skipped in can be hard to switch between branches
         // Therefore we unskip and revert here.
@@ -308,12 +304,12 @@ Target "UnskipAndRevertAssemblyInfo" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
 )
 
-Target "BuildSolution" (fun _ ->
+Target.Create "BuildSolution" (fun _ ->
     MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
     |> Log "AppBuild-Output: "
 )
 
-Target "GenerateDocs" (fun _ ->
+Target.Create "GenerateDocs" (fun _ ->
     CleanDir docsDir
     let source = "./help"
     let docsTemplate = "docpage.cshtml"
@@ -382,11 +378,11 @@ Target "GenerateDocs" (fun _ ->
 
 )
 
-Target "CopyLicense" (fun _ ->
+Target.Create "CopyLicense" (fun _ ->
     CopyTo buildDir additionalFiles
 )
 
-Target "Test" (fun _ ->
+Target.Create "Test" (fun _ ->
     !! (testDir @@ "Test.*.dll")
     |> Seq.filter (fun fileName -> if isMono then fileName.ToLower().Contains "deploy" |> not else true)
     |> MSpec (fun p ->
@@ -403,14 +399,14 @@ Target "Test" (fun _ ->
         traceFAKE "Ignoring xUnit timeout for now, there seems to be something funny going on ..."
 )
 
-Target "TestDotnetCore" (fun _ ->
+Target.Create "TestDotnetCore" (fun _ ->
     cleanForTests()
 
     !! (testDir @@ "*.IntegrationTests.dll")
     |> NUnit3 id
 )
 
-Target "BootstrapTest" (fun _ ->
+Target.Create "BootstrapTest" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
@@ -456,7 +452,7 @@ Target "BootstrapTest" (fun _ ->
 )
 
 
-Target "BootstrapTestDotnetCore" (fun _ ->
+Target.Create "BootstrapTestDotnetCore" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
@@ -502,7 +498,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
     finally File.Delete(testScript)
 )
 
-Target "SourceLink" (fun _ ->
+Target.Create "SourceLink" (fun _ ->
 #if !DOTNETCORE
     !! "src/app/**/*.fsproj"
     |> Seq.iter (fun f ->
@@ -517,7 +513,7 @@ Target "SourceLink" (fun _ ->
 #endif
 )
 
-Target "ILRepack" (fun _ ->
+Target.Create "ILRepack" (fun _ ->
     CreateDir buildMergedDir
 
     let internalizeIn filename =
@@ -544,7 +540,7 @@ Target "ILRepack" (fun _ ->
     DeleteDir buildMergedDir
 )
 
-Target "CreateNuGet" (fun _ ->
+Target.Create "CreateNuGet" (fun _ ->
     let set64BitCorFlags files =
         files
         |> Seq.iter (fun file ->
@@ -623,21 +619,18 @@ Target "CreateNuGet" (fun _ ->
         NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
-#if !DOTNETCORE
-#load "src/app/Fake.DotNet.Cli/Dotnet.fs"
-open Fake.DotNet.Cli
-#endif
+(*
 let LatestTooling options =
     { options with
-        InstallerOptions = (fun io ->
+        Cli.InstallerOptions = (fun io ->
             { io with
                 Branch = "release/2.0.0"
             })
-        Channel = None
-        Version = Version "2.0.0"
-    }
-Target "InstallDotnetCore" (fun _ ->
-     DotnetCliInstall LatestTooling
+        Cli.Channel = None
+        Cli.Version = Cli.Version "2.0.0"
+    }*)
+Target.Create "InstallDotnetCore" (fun _ ->
+     Cli.DotnetCliInstall Cli.Release_2_0_0
 )
 
 let root = __SOURCE_DIRECTORY__
@@ -655,20 +648,20 @@ let netCoreProjs =
     ++ "src/app/Fake.Testing.*/*.fsproj"
     ++ "src/app/Fake.Runtime/*.fsproj"
 
-Target "DotnetRestore" (fun _ ->
+Target.Create "DotnetRestore" (fun _ ->
 
     setEnvironVar "Version" release.NugetVersion
 
     //dotnet root "--info"
-    Dotnet { DotnetOptions.Default with WorkingDirectory = root } "--info"
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "--info"
 
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
     ensureDirectory t
-    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
-    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "restore"
-    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "build"
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore"
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "build"
     Directory.Delete(t, true)
 
     // Copy nupkgs to nuget/dotnetcore
@@ -679,7 +672,7 @@ Target "DotnetRestore" (fun _ ->
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
     let netcoreFsprojs = netCoreProjs |> Seq.toList
-    let result = Dotnet { DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
+    let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
     let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
     let missingNetCoreProj =
         netCoreProjs
@@ -693,13 +686,13 @@ Target "DotnetRestore" (fun _ ->
         |> Seq.exists id
     if missingNetCoreProj then failwith "At least one netcore project seems to be missing from the src/Fake-netcore.sln solution!"
     // dotnet restore
-    DotnetRestore id "src/Fake-netcore.sln"
+    Cli.DotnetRestore id "src/Fake-netcore.sln"
 )
 
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
-Target "DotnetPackage" (fun _ ->
+Target.Create "DotnetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     setEnvironVar "Version" release.NugetVersion
@@ -712,13 +705,13 @@ Target "DotnetPackage" (fun _ ->
     setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
     // dotnet pack
-    DotnetPack (fun c ->
+    Cli.DotnetPack (fun c ->
         { c with
-            Configuration = Release
+            Configuration = Cli.Release
             OutputPath = Some nugetDir
         }) "src/Fake-netcore.sln"
 
-    let info = DotnetInfo id
+    let info = Cli.DotnetInfo id
 
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     let win32manifest = "packages/netcore/FSharp.Compiler.Tools/build/netcoreapp1.0/default.win32manifest"
@@ -739,10 +732,10 @@ Target "DotnetPackage" (fun _ ->
 
             //DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
             let outDir = nugetDir @@ projName @@ runtimeName
-            DotnetPublish (fun c ->
+            Cli.DotnetPublish (fun c ->
                 { c with
                     Runtime = Some runtime
-                    Configuration = Release
+                    Configuration = Cli.Release
                     OutputPath = Some outDir
                 }) proj
             let source = outDir </> "dotnet"
@@ -757,14 +750,14 @@ Target "DotnetPackage" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-    DotnetPublish (fun c ->
+    Cli.DotnetPublish (fun c ->
         { c with
             Framework = Some "netcoreapp1.1"
             OutputPath = Some outDir
         }) netcoreFsproj
 )
 
-Target "DotnetCoreCreateZipPackages" (fun _ ->
+Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
     setEnvironVar "Version" release.NugetVersion
 
     // build zip packages
@@ -780,7 +773,7 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
     )
 )
 
-Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
+Target.Create "DotnetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
     ensureDirectory "nuget/dotnetcore/chocolatey"
     Choco.PackFromTemplate (fun p ->
@@ -793,7 +786,7 @@ Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
             OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
     ()
 )
-Target "DotnetCorePushChocolateyPackage" (fun _ ->
+Target.Create "DotnetCorePushChocolateyPackage" (fun _ ->
     let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
     path |> Choco.Push (fun p ->
         { p with
@@ -845,7 +838,7 @@ setting permissions also, its just a shell script
 might also want a prerm and postrm if you want to play nice on cleanup
 *)
 
-Target "DotnetCoreCreateDebianPackage" (fun _ ->
+Target.Create "DotnetCoreCreateDebianPackage" (fun _ ->
     let createDebianPackage (manifest : DebPackageManifest) =
         let argsList = ResizeArray<string>()
         argsList.Add <| match manifest.SourceType with
@@ -884,7 +877,7 @@ let nugetPush nugetpackage =
         |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
     else traceFAKE "could not push '%s', because api key was not set" nugetpackage
 
-Target "DotnetCorePushNuGet" (fun _ ->
+Target.Create "DotnetCorePushNuGet" (fun _ ->
     // dotnet pack
     netCoreProjs
     -- "src/app/Fake.netcore/*.fsproj"
@@ -895,7 +888,7 @@ Target "DotnetCorePushNuGet" (fun _ ->
         |> Seq.iter nugetPush)
 )
 
-Target "PublishNuget" (fun _ ->
+Target.Create "PublishNuget" (fun _ ->
     // uses NugetKey environment variable.
     // Timeout atm
     Paket.Push(fun p ->
@@ -906,7 +899,7 @@ Target "PublishNuget" (fun _ ->
     //|> Seq.iter nugetPush
 )
 
-Target "ReleaseDocs" (fun _ ->
+Target.Create "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
     let url = environVarOrDefault "fake_git_url" "https://github.com/fsharp/FAKE.git"
     cloneSingleBranch "" url "gh-pages" "gh-pages"
@@ -919,9 +912,11 @@ Target "ReleaseDocs" (fun _ ->
     Branches.push "gh-pages"
 )
 
-//#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
+// Remove '#load' once released
+#load "src/app/Fake.Api.GitHub/GitHub.fs"
+open Fake.Api
 
-Target "FastRelease" (fun _ ->
+Target.Create "FastRelease" (fun _ ->
     StageAll ""
     Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     Branches.push ""
@@ -929,27 +924,27 @@ Target "FastRelease" (fun _ ->
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
 
-    //let token =
-    //    match getBuildParam "github_token" with
-    //    | s when not (System.String.IsNullOrWhiteSpace s) -> s
-    //    | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
-    //
-    //let draft =
-    //    Octokit.createClientWithToken token
-    //    |> Octokit.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    //let draftWithFiles =
-    //    runtimes @ [ "portable"; "packages" ]
-    //    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-    //    |> List.fold (fun state item ->
-    //        state
-    //        |> Octokit.uploadFile item) draft
-    //draftWithFiles
-    //|> Octokit.releaseDraft
-    //|> Async.RunSynchronously
+    let token =
+        match getBuildParam "github_token" with
+        | s when not (System.String.IsNullOrWhiteSpace s) -> s
+        | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    
+    let draft =
+        GitHub.createClientWithToken token
+        |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    let draftWithFiles =
+        runtimes @ [ "portable"; "packages" ]
+        |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+        |> List.fold (fun state item ->
+            state
+            |> GitHub.uploadFile item) draft
+    draftWithFiles
+    |> GitHub.releaseDraft
+    |> Async.RunSynchronously
 )
 
 open System
-Target "PrintColors" (fun s ->
+Target.Create "PrintColors" (fun s ->
   let color (color: ConsoleColor) (code : unit -> _) =
       let before = Console.ForegroundColor
       try
@@ -959,8 +954,8 @@ Target "PrintColors" (fun s ->
         Console.ForegroundColor <- before
   color ConsoleColor.Magenta (fun _ -> printfn "TestMagenta")
 )
-Target "FailFast" (fun _ -> failwith "fail fast")
-Target "EnsureTestsRun" (fun _ ->
+Target.Create "FailFast" (fun _ -> failwith "fail fast")
+Target.Create "EnsureTestsRun" (fun _ ->
 #if !DOTNETCORE
   if hasBuildParam "SkipIntegrationTests" || hasBuildParam "SkipTests" then
       let res = getUserInput "Are you really sure to continue without running tests (yes/no)?"
@@ -969,9 +964,11 @@ Target "EnsureTestsRun" (fun _ ->
 #endif
   ()
 )
-Target "Default" ignore
-Target "StartDnc" ignore
-Target "Release" ignore
+Target.Create "Default" ignore
+Target.Create "StartDnc" ignore
+Target.Create "Release" ignore
+
+open Fake.Core.TargetOperators
 
 "Clean"
     ==> "StartDnc"
@@ -1015,4 +1012,4 @@ Target "Release" ignore
     ?=> "EnsureTestsRun"
 
 // start build
-RunTargetOrDefault "Default"
+Target.RunOrDefault "Default"
