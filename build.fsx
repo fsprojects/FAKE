@@ -885,7 +885,8 @@ open Fake.Api
 Target.Create "FastRelease" (fun _ ->
     Git.Staging.StageAll ""
     Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    Git.Branches.push ""
+    let branch = Git.Information.getBranchName ""
+    Git.Branches.pushBranch "" "origin" branch
 
     Git.Branches.tag "" release.NugetVersion
     Git.Branches.pushTag "" "origin" release.NugetVersion
