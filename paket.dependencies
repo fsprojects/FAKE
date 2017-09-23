@@ -95,6 +95,7 @@ group NetcoreBuild
     nuget Fake.Windows.Chocolatey prerelease
     nuget Fake.Tools.Git prerelease
     nuget Mono.Cecil prerelease
+    nuget Octokit
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
