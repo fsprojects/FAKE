@@ -96,6 +96,8 @@ group NetcoreBuild
     nuget Fake.Tools.Git prerelease
     nuget Mono.Cecil prerelease
     nuget Octokit
+    // Something strange is going on.
+    nuget System.Reflection.TypeExtensions 4.3.0
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket

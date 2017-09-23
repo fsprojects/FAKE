@@ -44,11 +44,11 @@ let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. 
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
 let gitRaw = Environment.environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
-let gitOwner = "fsprojects"
+let gitOwner = "fsharp"
 let gitHome = "https://github.com/" + gitOwner
 
 // The name of the project on GitHub
-let gitName = "Paket"
+let gitName = "FAKE"
 
 let release = ReleaseNotes.LoadReleaseNotes "RELEASE_NOTES.md"
 
@@ -883,14 +883,6 @@ Target.Create "ReleaseDocs" (fun _ ->
 open Fake.Api
 
 Target.Create "FastRelease" (fun _ ->
-    Git.Staging.StageAll ""
-    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    let branch = Git.Information.getBranchName ""
-    Git.Branches.pushBranch "" "origin" branch
-
-    Git.Branches.tag "" release.NugetVersion
-    Git.Branches.pushTag "" "origin" release.NugetVersion
-
     let token =
         match Environment.environVarOrDefault "github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
@@ -908,6 +900,14 @@ Target.Create "FastRelease" (fun _ ->
     draftWithFiles
     |> GitHub.releaseDraft
     |> Async.RunSynchronously
+    
+    Git.Staging.StageAll ""
+    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
+    let branch = Git.Information.getBranchName ""
+    Git.Branches.pushBranch "" "origin" branch
+
+    Git.Branches.tag "" release.NugetVersion
+    Git.Branches.pushTag "" "origin" release.NugetVersion
 )
 
 open System

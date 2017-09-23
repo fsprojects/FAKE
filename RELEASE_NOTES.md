@@ -1,4 +1,7 @@
-#### 5.0.0-alpha016 - 30.08.2017
+#### 5.0.0-alpha017 - 23.09.2017
+* BUGFIX: try to fallback to load framework assemblies from the default AssemblyLoadContext.
+
+#### 5.0.0-alpha016 - 23.09.2017
 * BREAKING-CHANGE: Renew AssemblyInfo API - https://github.com/fsharp/FAKE/pull/1619
 * ENHANCEMENT: Add XML to FakeLib - https://github.com/fsharp/FAKE/pull/1641
 * ENHANCEMENT: Move Paket.Paket() over to use flag arguments - https://github.com/fsharp/FAKE/pull/1627

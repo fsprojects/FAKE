@@ -234,7 +234,19 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                 // Then the version matches and the public token is null we still accept this as perfect match
                 (isNull token && otherName.Version = name.Version), loadAssembly loadContext printDetails info
             | _ ->
-                false, None
+#if NETSTANDARD1_6
+                // One last option is to try and load from the default app-context...
+                try let assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(name)
+                    let location =
+                        try Some assembly.Location 
+                        with e -> 
+                            if printDetails then tracefn "Could not get Location from '%s': %O" strName e
+                            None
+                    true, Some (location, assembly)
+                with e ->
+                    if printDetails then tracefn "Could not find assembly in the default load-context: %s" strName
+#endif
+                    false, None
     match result with
     | Some (location, a) ->
         if isPerfectMatch then
