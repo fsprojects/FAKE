@@ -11,6 +11,7 @@ open System.IO
 /// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
 module GitHub =
 
+    [<NoComparison>]
     type Draft =
         { Client : GitHubClient
           Owner : string

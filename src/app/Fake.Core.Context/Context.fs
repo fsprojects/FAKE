@@ -23,6 +23,7 @@ type FakeExecutionContext =
 
 type RuntimeContext =
   | Fake of FakeExecutionContext
+  | UnknownObj of obj
   | Unknown
 
 [<RequireQualifiedAccess>]
@@ -65,12 +66,13 @@ let getExecutionContext () =
   match getContext fake_ExecutionType with
   | null -> RuntimeContext.Unknown
   | :? RuntimeContextWrapper as e -> e.Type
-  | _ -> RuntimeContext.Unknown
+  | o -> RuntimeContext.UnknownObj o
 
 let setExecutionContext (e:RuntimeContext) = setContext fake_ExecutionType (new RuntimeContextWrapper(e))
 
 let getFakeExecutionContext (e:RuntimeContext) =
   match e with
+  | RuntimeContext.UnknownObj _
   | RuntimeContext.Unknown -> None
   | RuntimeContext.Fake e -> Some e
 
@@ -91,10 +93,13 @@ let isFakeContext () =
   |> Option.isSome
 
 let forceFakeContext () =
-  match getExecutionContext()
-        |> getFakeExecutionContext with
-  | None -> invalidOp "no Fake Execution context was found. You can initialize one via Fake.Core.Context.setExecutionContext"
-  | Some e -> e
+  match getExecutionContext() with
+  | RuntimeContext.UnknownObj o ->
+    sprintf "Invalid Fake Execution context was found: Expected '%s' but was '%s'" (typeof<RuntimeContextWrapper>.FullName) (o.GetType().FullName)
+    |> invalidOp
+  | RuntimeContext.Unknown ->
+    invalidOp "no Fake Execution context was found. You can initialize one via Fake.Core.Context.setExecutionContext"
+  | RuntimeContext.Fake e -> e
 
 let getFakeVar name =
   forceFakeContext()

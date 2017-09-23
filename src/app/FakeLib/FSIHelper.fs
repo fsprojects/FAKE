@@ -233,14 +233,24 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
             File.Exists(assemblyWarningsPath) &&
             cacheConfig.Value.Assemblies |> Seq.length > 0
         if cacheFilesExistAndAreValid then
+            let currentlyLoaded =
+                AppDomain.CurrentDomain.GetAssemblies()
+                |> Seq.map (fun a -> let n = a.GetName() in n.Name, a)
+                |> Seq.groupBy fst
+                |> Seq.map (fun (name, group) -> name, group |> Seq.sortByDescending (fun (_, a) -> a.GetName().Version) |> Seq.head |> snd)
+                |> dict
             let loadedAssemblies =
                 cacheConfig.Value.Assemblies
                 |> Seq.choose (fun assemInfo ->
-                    try let assem =
-                            if assemInfo.Location <> "" then
-                                Reflection.Assembly.LoadFrom(assemInfo.Location)
-                            else Reflection.Assembly.Load(assemInfo.FullName)
-                        Some(assemInfo, assem)
+                    try let name = AssemblyName(assemInfo.FullName)
+                        match currentlyLoaded.TryGetValue name.Name with
+                        | true, assem -> Some (assemInfo, assem)
+                        | _ ->
+                            let assem =
+                                if assemInfo.Location <> "" then
+                                    Reflection.Assembly.LoadFrom(assemInfo.Location)
+                                else Reflection.Assembly.Load(assemInfo.FullName)
+                            Some(assemInfo, assem)
                     with ex -> if printDetails then tracef "Unable to find assembly %A" assemInfo
                                None)
                 |> Seq.toList
