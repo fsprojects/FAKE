@@ -406,7 +406,7 @@ Target.Create "BootstrapTest" (fun _ ->
 
     // Replace the include line to use the newly build FakeLib, otherwise things will be weird.
     File.ReadAllText buildScript
-    |> fun s -> s.Replace("#I @\"packages/build/FAKE/tools/\"", "#I @\"build/\"")
+    |> fun s -> s.Replace("#I \"packages/build/FAKE/tools/\"", "#I \"build/\"")
     |> fun text -> File.WriteAllText(testScript, text)
 
     try
