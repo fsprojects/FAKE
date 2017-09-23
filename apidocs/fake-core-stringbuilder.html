@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>AssemblyInfo - FAKE - F# Make</title>
+		<title>StringBuilder - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,11 +180,34 @@
 
 
 
-<h1>AssemblyInfo</h1>
+<h1>StringBuilder</h1>
 <div class="xmldoc">
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-stringbuilder-string.html">String</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-stringbuilder-stringbuilder.html">StringBuilder</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -195,19 +218,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1394', 1394)" onmouseover="showTip(event, '1394', 1394)">
-            CreateCppCliAssemblyInfo (...)
+          <code onmouseout="hideTip(event, '1234', 1234)" onmouseover="showTip(event, '1234', 1234)">
+            append text builder
           </code>
-          <div class="tip" id="1394">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
+          <div class="tip" id="1234">
+            <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L330-330" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L13-13" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a C++/CLI AssemblyInfo file with the given attributes.</p>
+          <p>Appends a text to a StringBuilder.</p>
 
 
         </td>
@@ -215,20 +238,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1395', 1395)" onmouseover="showTip(event, '1395', 1395)">
-            CreateCppCliAssemblyInfoWithConfig (...)
+          <code onmouseout="hideTip(event, '1235', 1235)" onmouseover="showTip(event, '1235', 1235)">
+            appendFileNamesIfNotNull (...)
           </code>
-          <div class="tip" id="1395">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
+          <div class="tip" id="1235">
+            <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L298-298" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L70-70" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
-Does not generate an AssemblyVersionInformation class.</p>
+          <p>Appends all notnull fileNames.</p>
 
 
         </td>
@@ -236,20 +258,19 @@ Does not generate an AssemblyVersionInformation class.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1396', 1396)" onmouseover="showTip(event, '1396', 1396)">
-            CreateCSharpAssemblyInfo (...)
+          <code onmouseout="hideTip(event, '1236', 1236)" onmouseover="showTip(event, '1236', 1236)">
+            appendIfFalse p
           </code>
-          <div class="tip" id="1396">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
+          <div class="tip" id="1236">
+            <strong>Signature:</strong> p:bool -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L316-316" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L34-34" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a C# AssemblyInfo file with the given attributes.
-The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+          <p>Appends a text if the predicate is false.</p>
 
 
         </td>
@@ -257,20 +278,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1397', 1397)" onmouseover="showTip(event, '1397', 1397)">
-            CreateCSharpAssemblyInfoWithConfig (...)
+          <code onmouseout="hideTip(event, '1237', 1237)" onmouseover="showTip(event, '1237', 1237)">
+            appendIfNotNull value s
           </code>
-          <div class="tip" id="1397">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
+          <div class="tip" id="1237">
+            <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L195-195" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L45-45" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a C# AssemblyInfo file with the given attributes and configuration.
-The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+          <p>Appends a text if the value is not null.</p>
 
 
         </td>
@@ -278,20 +298,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1398', 1398)" onmouseover="showTip(event, '1398', 1398)">
-            CreateFSharpAssemblyInfo (...)
+          <code onmouseout="hideTip(event, '1238', 1238)" onmouseover="showTip(event, '1238', 1238)">
+            appendIfNotNullOrEmpty value s
           </code>
-          <div class="tip" id="1398">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
+          <div class="tip" id="1238">
+            <strong>Signature:</strong> value:string -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L321-321" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L67-67" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a F# AssemblyInfo file with the given attributes.
-The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+          <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
@@ -299,20 +318,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1399', 1399)" onmouseover="showTip(event, '1399', 1399)">
-            CreateFSharpAssemblyInfoWithConfig (...)
+          <code onmouseout="hideTip(event, '1239', 1239)" onmouseover="showTip(event, '1239', 1239)">
+            appendIfSome o f builder
           </code>
-          <div class="tip" id="1399">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
-                      </div>
+          <div class="tip" id="1239">
+            <strong>Signature:</strong> o:&#39;a option -&gt; f:(&#39;a -&gt; string) -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L242-242" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L19-19" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a F# AssemblyInfo file with the given attributes and configuration.
-The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+          <p>Appends string of function value if option has some value</p>
 
 
         </td>
@@ -320,20 +338,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1400', 1400)" onmouseover="showTip(event, '1400', 1400)">
-            CreateVisualBasicAssemblyInfo (...)
+          <code onmouseout="hideTip(event, '1240', 1240)" onmouseover="showTip(event, '1240', 1240)">
+            appendIfTrue p s builder
           </code>
-          <div class="tip" id="1400">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
+          <div class="tip" id="1240">
+            <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L326-326" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L25-25" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a VB AssemblyInfo file with the given attributes.
-The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+          <p>Appends a text if the predicate is true.</p>
 
 
         </td>
@@ -341,20 +358,37 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1401', 1401)" onmouseover="showTip(event, '1401', 1401)">
-            CreateVisualBasicAssemblyInfoWithConfig (...)
+          <code onmouseout="hideTip(event, '1241', 1241)" onmouseover="showTip(event, '1241', 1241)">
+            appendIfTrueWithoutQuotes p s builder
           </code>
-          <div class="tip" id="1401">
-            <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
+          <div class="tip" id="1241">
+            <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L272-272" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L29-29" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a VB AssemblyInfo file with the given attributes and configuration.
-The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1242', 1242)" onmouseover="showTip(event, '1242', 1242)">
+            appendQuotedIfNotNull value s builder
+          </code>
+          <div class="tip" id="1242">
+            <strong>Signature:</strong> value:Object -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L53-53" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Appends a quoted text if the value is not null.</p>
 
 
         </td>
@@ -362,24 +396,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1402', 1402)" onmouseover="showTip(event, '1402', 1402)">
-            GetAttribute attrName assemblyInfoFile
+          <code onmouseout="hideTip(event, '1243', 1243)" onmouseover="showTip(event, '1243', 1243)">
+            appendStringIfValueIsNotNull value
           </code>
-          <div class="tip" id="1402">
-            <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; Attribute option<br />
-                      </div>
+          <div class="tip" id="1243">
+            <strong>Signature:</strong> value:&#39;?15509 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> '?15509          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L369-369" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L61-61" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Read a single attribute from an AssemblyInfo file.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
-<li><code>assemblyInfoFile</code> - The file to read from. Language C#, F#, VB or C++ is determined from the extension.</li>
-</ul>
+          <p>Appends a text if the value is not null.</p>
 
 
         </td>
@@ -387,23 +416,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1403', 1403)" onmouseover="showTip(event, '1403', 1403)">
-            GetAttributes assemblyInfoFile
+          <code onmouseout="hideTip(event, '1244', 1244)" onmouseover="showTip(event, '1244', 1244)">
+            appendStringIfValueIsNotNullOrEmpty (...)
           </code>
-          <div class="tip" id="1403">
-            <strong>Signature:</strong> assemblyInfoFile:string -&gt; seq&lt;Attribute&gt;<br />
+          <div class="tip" id="1244">
+            <strong>Signature:</strong> value:string -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L342-342" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L64-64" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Read attributes from an AssemblyInfo file and return as a sequence of Attribute.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>assemblyInfoFile</code> - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.</li>
-</ul>
+          <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
@@ -411,24 +436,19 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1404', 1404)" onmouseover="showTip(event, '1404', 1404)">
-            GetAttributeValue (...)
+          <code onmouseout="hideTip(event, '1245', 1245)" onmouseover="showTip(event, '1245', 1245)">
+            appendWithoutQuotes text builder
           </code>
-          <div class="tip" id="1404">
-            <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; string option<br />
+          <div class="tip" id="1245">
+            <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L376-376" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L16-16" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
-<li><code>assemblyInfoFile</code> - The file to read from. Language C#, F#, VB or C++ is determined from the extension.</li>
-</ul>
+          <p>Appends a text to a StringBuilder without surrounding quotes.</p>
 
 
         </td>
@@ -436,24 +456,59 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1405', 1405)" onmouseover="showTip(event, '1405', 1405)">
-            UpdateAttributes (...)
+          <code onmouseout="hideTip(event, '1246', 1246)" onmouseover="showTip(event, '1246', 1246)">
+            appendWithoutQuotesIfNotNull value s
           </code>
-          <div class="tip" id="1405">
-            <strong>Signature:</strong> assemblyInfoFile:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
+          <div class="tip" id="1246">
+            <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L404-404" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L37-37" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>assemblyInfoFile</code> - The file to update. Language C#, F#, VB or C++ is determined from the extension.</li>
-<li><code>attributes</code> - The Attributes that should be updated matched on Name (Namespace is not used).</li>
-</ul>
+          <p>Appends a text without quoting if the value is not null.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1247', 1247)" onmouseover="showTip(event, '1247', 1247)">
+            forEach items action text builder
+          </code>
+          <div class="tip" id="1247">
+            <strong>Signature:</strong> items:&#39;b list -&gt; action:(&#39;b -&gt; &#39;c -&gt; StringBuilder -&gt; &#39;d) -&gt; text:&#39;c -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> 'b, 'c, 'd          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L74-74" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Applies action on builder for each element of list.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1248', 1248)" onmouseover="showTip(event, '1248', 1248)">
+            toText builder
+          </code>
+          <div class="tip" id="1248">
+            <strong>Signature:</strong> builder:StringBuilder -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L81-81" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns the text from the StringBuilder</p>
 
 
         </td>

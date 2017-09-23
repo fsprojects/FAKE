@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>AssemblyInfoFileConfig - FAKE - F# Make</title>
+		<title>Slack - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,121 +180,138 @@
 
 
 
-<h1>AssemblyInfoFileConfig</h1>
+<h1>Slack</h1>
 <div class="xmldoc">
-<p>Represents options for configuring the emission of AssemblyInfo</p>
+<p>Contains a task to send notification messages to a <a href="https://slack.com/">Slack</a> webhook</p>
 
 </div>
-  <h3>Constructors</h3>
-  <table class="table table-bordered member-list">
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
     <thead>
-      <tr><td>Constructor</td><td>Description</td></tr>
+      <tr><td>Type</td><td>Description</td></tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="member-name">
+        <tr>
+          <td class="type-name">
+            <a href="fake-api-slack-notificationattachmentfieldparams.html">NotificationAttachmentFieldParams</a>
+          </td>
+          <td class="xmldoc"><p>The Slack notification attachment field parameter type</p>
 
-          <code onmouseout="hideTip(event, '4052', 4052)" onmouseover="showTip(event, '4052', 4052)">
-            new(...)
-          </code>
-          <div class="tip" id="4052">
-            <strong>Signature:</strong> (generateClass:bool * emitResharperSupressions:bool option * useNamespace:string option) -&gt; AssemblyInfoFileConfig<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L47-47" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-api-slack-notificationattachmentparams.html">NotificationAttachmentParams</a>
+          </td>
+          <td class="xmldoc"><p>The Slack notification attachment parameter type</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-api-slack-notificationparams.html">NotificationParams</a>
+          </td>
+          <td class="xmldoc"><p>The Slack notification parameter type</p>
+
+</td>
+        </tr>
     </tbody>
   </table>
-  <h3>Instance members</h3>
+
+  </div>
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4053', 4053)" onmouseover="showTip(event, '4053', 4053)">
-            EmitResharperSuppressions
+          <code onmouseout="hideTip(event, '1067', 1067)" onmouseover="showTip(event, '1067', 1067)">
+            NotificationAttachmentDefaults 
           </code>
-          <div class="tip" id="4053">
-            <strong>Signature:</strong> bool<br />
+          <div class="tip" id="1067">
+            <strong>Signature:</strong> NotificationAttachmentParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L59-59" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.Slack/SlackNotification.fs#L73-73" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The default parameters for Slack notification attachments</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4054', 4054)" onmouseover="showTip(event, '4054', 4054)">
-            GenerateClass
+          <code onmouseout="hideTip(event, '1068', 1068)" onmouseover="showTip(event, '1068', 1068)">
+            NotificationAttachmentFieldDefaults 
           </code>
-          <div class="tip" id="4054">
-            <strong>Signature:</strong> bool<br />
+          <div class="tip" id="1068">
+            <strong>Signature:</strong> NotificationAttachmentFieldParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L54-54" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.Slack/SlackNotification.fs#L84-84" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The default parameters for Slack notification attachment fields</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4055', 4055)" onmouseover="showTip(event, '4055', 4055)">
-            UseNamespace
+          <code onmouseout="hideTip(event, '1069', 1069)" onmouseover="showTip(event, '1069', 1069)">
+            NotificationDefaults 
           </code>
-          <div class="tip" id="4055">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="1069">
+            <strong>Signature:</strong> NotificationParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L55-55" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.Slack/SlackNotification.fs#L61-61" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The default Slack notification parameters</p>
+
+
         </td>
       </tr>
-    </tbody>
-  </table>
-  <h3>Static members</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4056', 4056)" onmouseover="showTip(event, '4056', 4056)">
-            Default
+          <code onmouseout="hideTip(event, '1070', 1070)" onmouseover="showTip(event, '1070', 1070)">
+            SendNotification webhookURL setParams
           </code>
-          <div class="tip" id="4056">
-            <strong>Signature:</strong> AssemblyInfoFileConfig<br />
+          <div class="tip" id="1070">
+            <strong>Signature:</strong> webhookURL:string -&gt; setParams:(NotificationParams -&gt; NotificationParams) -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs#L63-63" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.Slack/SlackNotification.fs#L118-118" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Sends a notification to a Slack Channel</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>webhookURL</code> - The Slack webhook URL</li>
+<li><code>setParams</code> - Function used to override the default notification parameters</li>
+</ul>
+
+
         </td>
       </tr>
     </tbody>

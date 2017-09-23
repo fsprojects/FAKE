@@ -1186,6 +1186,9 @@
 					font-weight: 700;
 					font-size: 0.95em;
 					letter-spacing: 0.075em;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 
 					&:first-child {
 						border-top: 0;
