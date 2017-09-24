@@ -96,24 +96,23 @@ For this short sample we assume you have the latest version of FAKE installed an
     source https://nuget.org/api/v2
     source ../../../nuget/dotnetcore
 
-    nuget Fake.Core.Targets prerelease
+    nuget Fake.Core.Target prerelease
     nuget FSharp.Core prerelease
     -- Fake Dependencies -- *)
 	open Fake.Core
-	open Fake.Core.Targets
  
-	Target "Clean" (fun () ->  trace " --- Cleaning stuff --- ")
+	Target.Create "Clean" (fun () ->  trace " --- Cleaning stuff --- ")
  
-	Target "Build" (fun () ->  trace " --- Building the app --- ")
+	Target.Create "Build" (fun () ->  trace " --- Building the app --- ")
  
-	Target "Deploy" (fun () -> trace " --- Deploying app --- ")
+	Target.Create "Deploy" (fun () -> trace " --- Deploying app --- ")
  
  
 	"Clean"
 	  ==> "Build"
 	  ==> "Deploy"
  
-	RunTargetOrDefault "Deploy"
+	Target.RunOrDefault "Deploy"
 
 If you are on windows then create this small redirect script:
 

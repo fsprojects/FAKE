@@ -4,7 +4,7 @@
 
 In this tutorial you will learn how to migrate your existing build scripts to the new FAKE 5 dotnet-core version.
 
-First we want you to know that there are two version of FAKE 5. One is just an update to the regular FAKE 4, but contains the new netcore API.
+First we want you to know that there are two versions of FAKE 5. One is just an update to the regular FAKE 4, but also contains the new API.
 We will call this the "legacy FAKE version" it is just like the FAKE you are already used to. The second version is the "new/dotnetcore/standalone FAKE 5" or just "FAKE 5".
 This "new" version has several advantages:
 
@@ -13,29 +13,34 @@ This "new" version has several advantages:
 * Paket bootstrapper / build.cmd and build.sh are no longer required (you can still use them)
 * This will be the only Version available in FAKE 6
 
-Therefore you have the FAKE 5 timeframe to update your build scripts to the new version.
+Therefore you have the FAKE 5 timeframe to update your build scripts to the new version. If you have any issues in the migration process, please see [how to fill issues or discuss about your issues](/contributing.html) (don't be shy about contributing ;)).
 
 ## Migration Guide
 
-Upgrading to FAKE 5 is a multi step process and has various manual steps in between. Here are the steps:
+Upgrading to FAKE 5 is a multi step process and has various manual steps in between. **If you do these steps out of order it will be a lot harder for you to migrate the script successfully**. Here are the steps:
 
-- Regular update to FAKE 5. This should not be breaking. If it breaks you please open an issue.
-- Fix all the (obsolete) warnings in your build-script to use the new API (see the 'Use the new FAKE-API' section).
+- Update to legacy FAKE 5. This should not be breaking. If it breaks you please open an issue.
+
+  - With Paket: add `prerelease` after `nuget FAKE` in paket.dependencies file then `.paket/paket.exe update FAKE`, check that paket.lock references FAKE version 5 
+
+- Fix all the (obsolete) warnings in your build-script to use the new API (see the [Use the new FAKE-API](#Use-the-new-FAKE-API) section).
   This should still not break your build. If things break here or you have difficulties after reading the 'Use the new FAKE-API' section
   please open an issue.
+  - Becareful if you update only some warning, it could break. For example, if you use `Target.Create`, but continue to use old operators definition, you will probably experiment some errors like "Target [...] is not defined".  
 - Change to the new version of FAKE 5.
   
   - This is for example done by installing FAKE as dependency on your build infrastructure.
     There are a variety of installing options available. (TODO: Link to 'installing FAKE' section)
   - Add a FAKE header (TODO: add Link), and tell FAKE which features/packages you want to use in the dependencies file or in-line.
-    See the 'Adding FAKE dependencies' section below.
-  - Run the build with the new version of FAKE :). You might want to read the 'CLI migration' section
+    See the [Adding FAKE dependencies](#Adding-FAKE-dependencies) section below.
+  - Run the build with the new version of FAKE :). You might want to read the [CLI migration](#CLI-Migration) section
   
   If things break in the last step please let us know as well.
 
-If you do these steps out of order it will be a lot harder for you to migrate the script successfully.
-
 ### Use the new FAKE-API
+
+After upgrading to legacy FAKE 5 the warnings should tell you exactly what you do. If there is stuff missing or a warning message should be improved let us know.
+Some warnings indicate how we want the new FAKE version to be used.
 
 The most important part to know is that basically every feature/function changes its location and sometimes they were even grouped in different modules
 as the old API was growing several years now and we never could do breaking changes.
@@ -49,14 +54,6 @@ as the old API was growing several years now and we never could do breaking chan
   So please try it out and if stuff breaks let us know :).
   The good thing is you can always "lock" the versions of the FAKE modules until you are ready to upgrade.
 
-After upgrading to legacy FAKE 5 the warnings should tell you exactly what you do. If there is stuff missing or a warning message should be improved let us know.
-Some warnings indicate how we want the new FAKE version to be used.
-
-The "open Fake" and AutoOpen modules are completely obsolete. 
-We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
-This removes a lot of automatically opened stuff and if your build fails you ar probably stuff where we forgot to add the obsolete warning (let us know) or that 
-stuff you are using was not migrated yet (let us know or send a PR, TODO: Add link to guideline).
-
 In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
 "ReadFile argument" (the module probably even opened via `[<AutoOpen>]`), which is considered bad style now.
 In the new world we would open the `Fake.IO.FileSystem` namespace to indicate that we are using the file-system.
@@ -64,6 +61,10 @@ At the same time we would write `File.Read argument`, which is only a bit longer
 
 > If you still find places where we use the "bad" style in the new API, let us know (open an issue).
 
+The "open Fake" and AutoOpen modules are completely obsolete. 
+We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
+This removes a lot of automatically opened stuff and if your build fails you have probably stuff where we forgot to add the obsolete warning (let us know) or that 
+stuff you are using was not migrated yet (let us know or send a PR, TODO: Add link to guideline).
 
 ### Add FAKE dependencies
 

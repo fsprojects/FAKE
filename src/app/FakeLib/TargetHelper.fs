@@ -1,6 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains infrastructure code and helper functions for FAKE's target feature.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - module: Fake.Core.Targets)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - module: Fake.Core.Target)")>]
 module Fake.TargetHelper
 
 #nowarn "44"
@@ -10,11 +10,11 @@ open System.Collections.Generic
 open System.Linq
 
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - type: Fake.Core.TargetDescription)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - type: Fake.Core.Target.TargetDescription)")>]
 type TargetDescription = string
 
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - type: Fake.Core.TargetTemplate)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - type: Fake.Core.Target.TargetTemplate)")>]
 type 'a TargetTemplate =
     { Name: string;
       Dependencies: string list;
@@ -23,7 +23,7 @@ type 'a TargetTemplate =
       Function : 'a -> unit}
 
 /// A Target can be run during the build
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - type: Fake.Core.Target)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - type: Fake.Core.Target.Target)")>]
 type Target = unit TargetTemplate
 
 type private DependencyType =
@@ -37,16 +37,16 @@ type private DependencyLevel =
     }
 
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.setPrintStackTraceOnError)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let mutable PrintStackTraceOnError = false
 
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.setLastDescription)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let mutable LastDescription = null
 
 /// Sets the Description for the next target.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.Description)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let Description text =
     if LastDescription <> null then
         failwithf "You can't set the description for a target twice. There is already a description: %A" LastDescription
@@ -54,29 +54,29 @@ let Description text =
 
 /// TargetDictionary
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.TargetDict)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let TargetDict = new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
 
 /// Final Targets - stores final targets and if they are activated.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.FinalTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let FinalTargets = new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
 
 /// BuildFailureTargets - stores build failure targets and if they are activated.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.BuildFailureTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let BuildFailureTargets = new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
 
 /// The executed targets.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.ExecutedTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let ExecutedTargets = new HashSet<_>(StringComparer.OrdinalIgnoreCase)
 
 /// The executed target time.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.ExecutedTargetTimes)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let ExecutedTargetTimes = new List<_>()
 
 /// Resets the state so that a deployment can be invoked multiple times
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.reset)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let reset() =
     TargetDict.Clear()
     ExecutedTargets.Clear()
@@ -84,17 +84,17 @@ let reset() =
     ExecutedTargetTimes.Clear()
     FinalTargets.Clear()
 
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.setCurrentTargetOrder)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let mutable CurrentTargetOrder = []
-[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - package: Fake.Core.Target - no longer supported)")>]
 let mutable CurrentTarget = ""
 
 /// Returns a list with all target names.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.getAllTargetsNames)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
 
 /// Gets a target with the given name from the target dictionary.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.getTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Get)")>]
 let getTarget name =
     match TargetDict.TryGetValue (name) with
     | true, target -> target
@@ -105,7 +105,7 @@ let getTarget name =
         failwithf "Target \"%s\" is not defined." name
 
 /// Returns the DependencyString for the given target.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.dependencyString)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let dependencyString target =
     if target.Dependencies.IsEmpty then String.Empty else
     target.Dependencies
@@ -114,7 +114,7 @@ let dependencyString target =
       |> sprintf "(==> %s)"
 
 /// Returns the soft  DependencyString for the given target.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.softDependencyString)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let softDependencyString target =
     if target.SoftDependencies.IsEmpty then String.Empty else
     target.SoftDependencies
@@ -123,12 +123,12 @@ let softDependencyString target =
       |> sprintf "(?=> %s)"
 
 /// Do nothing - fun () -> () - Can be used to define empty targets.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.DoNothing)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.DoNothing)")>]
 let DoNothing = (fun () -> ())
 
 /// Checks whether the dependency (soft or normal) can be added.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.checkIfDependencyCanBeAddedCore)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let checkIfDependencyCanBeAddedCore fGetDependencies targetName dependentTargetName =
     let target = getTarget targetName
     let dependentTarget = getTarget dependentTargetName
@@ -145,19 +145,19 @@ let checkIfDependencyCanBeAddedCore fGetDependencies targetName dependentTargetN
 
 /// Checks whether the dependency can be added.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.checkIfDependencyCanBeAdded)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let checkIfDependencyCanBeAdded targetName dependentTargetName =
    checkIfDependencyCanBeAddedCore (fun target -> target.Dependencies) targetName dependentTargetName
 
 /// Checks whether the soft dependency can be added.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.checkIfSoftDependencyCanBeAdded)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let checkIfSoftDependencyCanBeAdded targetName dependentTargetName =
    checkIfDependencyCanBeAddedCore (fun target -> target.SoftDependencies) targetName dependentTargetName
 
 /// Adds the dependency to the front of the list of dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.dependencyAtFront)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let dependencyAtFront targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
 
@@ -165,7 +165,7 @@ let dependencyAtFront targetName dependentTargetName =
 
 /// Appends the dependency to the list of dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.dependencyAtEnd)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let dependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
 
@@ -174,7 +174,7 @@ let dependencyAtEnd targetName dependentTargetName =
 
 /// Appends the dependency to the list of soft dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.softDependencyAtEnd)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let softDependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
 
@@ -182,26 +182,26 @@ let softDependencyAtEnd targetName dependentTargetName =
 
 /// Adds the dependency to the list of dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.dependency)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let dependency targetName dependentTargetName = dependencyAtEnd targetName dependentTargetName
 
 /// Adds the dependency to the list of soft dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.softDependency)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let softDependency targetName dependentTargetName = softDependencyAtEnd targetName dependentTargetName
 
 /// Adds the dependencies to the list of dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.Dependencies)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let Dependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (dependency targetName)
 
 /// Adds the dependencies to the list of soft dependencies.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.SoftDependencies)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let SoftDependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (softDependency targetName)
 
 /// Backwards dependencies operator - x is dependent on ys.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.(<==))")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - open Fake.Core.TargetOperators)")>]
 let inline (<==) x ys = Dependencies x ys
 
 /// Set a dependency for all given targets.
@@ -228,7 +228,7 @@ let AllTargetsDependOn target =
 
 /// Creates a target from template.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.targetFromTemplate)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let targetFromTemplate template name parameters =
     match TargetDict.ContainsKey name with
     | true -> 
@@ -284,7 +284,8 @@ let targetFromTemplate template name parameters =
 ///     // hook targets to normal build pipeline
 ///     "T1" ==> "T2" ==> "Test"
 ///
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.TargetTemplateWithDependencies)")>]
+
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let TargetTemplateWithDependencies dependencies body name parameters =
     let template =
         { Name = String.Empty
@@ -294,19 +295,19 @@ let TargetTemplateWithDependencies dependencies body name parameters =
           Function = body }
     targetFromTemplate template name parameters
 
-[<Obsolete("Use TargetTemplateWithDependencies")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let TargetTemplateWithDependecies dependencies = TargetTemplateWithDependencies dependencies
 
 /// Creates a TargetTemplate.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.TargetTemplate)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.")>]
 let TargetTemplate body = TargetTemplateWithDependencies [] body
 
 /// Creates a Target.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.Target)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Create)")>]
 let Target name body = TargetTemplate body name ()
 
 /// Represents build errors
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.BuildError)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.BuildError)")>]
 type BuildError = {
     Target : string
     Message : string }
@@ -314,11 +315,11 @@ type BuildError = {
 let mutable private errors = []
 
 /// Get Errors - Returns the errors that occured during execution
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.GetErrors)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let GetErrors() = errors
 
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.targetError)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let targetError targetName (exn:System.Exception) =
     closeAllOpenTags()
     errors <-
@@ -344,7 +345,7 @@ let targetError targetName (exn:System.Exception) =
     if not isFailedTestsException  then
         sendTeamCityError <| error exn
 
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.addExecutedTarget)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let addExecutedTarget target time =
     lock ExecutedTargets (fun () ->
         ExecutedTargets.Add (target) |> ignore
@@ -353,7 +354,7 @@ let addExecutedTarget target time =
 
 /// Runs all activated final targets (in alphabetically order).
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.runFinalTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let runFinalTargets() =
     FinalTargets
       |> Seq.filter (fun kv -> kv.Value)     // only if activated
@@ -370,7 +371,7 @@ let runFinalTargets() =
 
 /// Runs all build failure targets.
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.runBuildFailureTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let runBuildFailureTargets() =
     BuildFailureTargets
       |> Seq.filter (fun kv -> kv.Value)     // only if activated
@@ -387,7 +388,7 @@ let runBuildFailureTargets() =
 
 
 /// Prints all targets.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.PrintTargets)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)")>]
 let PrintTargets() =
     let sb = StringBuilder()
     let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
@@ -438,7 +439,7 @@ let private visitDependencies fVisit targetName =
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.PrintDependencyGraph)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDependencyGraph)")>]
 let PrintDependencyGraph verbose target =
     match TargetDict.TryGetValue (target) with
     | false,_ -> PrintTargets()
@@ -461,7 +462,7 @@ let PrintDependencyGraph verbose target =
         sb.Length <- sb.Length - Environment.NewLine.Length
         log <| sb.ToString()
         
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.PrintRunningOrder)")>]
+[<System.Obsolete("Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintRunningOrder to be created)")>]
 let PrintRunningOrder() = 
     let sb = StringBuilder()
     let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
@@ -476,7 +477,7 @@ let PrintRunningOrder() =
     log <| sb.ToString()
 
 /// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.PrintDotDependencyGraph)")>]
+[<System.Obsolete("Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDotDependencyGraph to be created)")>]
 let PrintDotDependencyGraph () =
     let sb = StringBuilder()
     let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
@@ -496,7 +497,7 @@ let PrintDotDependencyGraph () =
     log <| sb.ToString()
 
 /// Writes a summary of errors reported during build.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.WriteErrors)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let WriteErrors () =
     traceLine()
     errors
@@ -505,7 +506,7 @@ let WriteErrors () =
 
 /// <summary>Writes a build time report.</summary>
 /// <param name="total">The total runtime.</param>
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.WriteTaskTimeSummary)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.WriteTaskTimeSummary)")>]
 let WriteTaskTimeSummary total =
     traceHeader "Build Time Report"
 
@@ -555,11 +556,11 @@ module ExitCode =
 let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- ExitCode.Value; ExitCode.exitCode := ExitCode.Value
 
 /// [omit]
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.isListMode)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let isListMode = hasBuildParam "list"
 
-/// Prints all available targets.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.listTargets)")>]
+/// List all available targets.
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)")>]
 let listTargets() =
     tracefn "Available targets:"
     TargetDict.Values
@@ -568,7 +569,7 @@ let listTargets() =
             tracefn "     Depends on: %A" target.Dependencies)
 
 // Instead of the target can be used the list dependencies graph parameter.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.doesTargetMeanListTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-lt"
 
 /// <summary>
@@ -578,7 +579,7 @@ let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-l
 let private doesTargetMeanPrintDotGraph target = target = "--dotGraph"  || target = "-dg"
 
 /// Determines a parallel build order for the given set of targets
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.determineBuildOrder)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.determineBuildOrder)")>]
 let determineBuildOrder (target : string) (parallelJobs : int) =
 
     let t = getTarget target
@@ -671,7 +672,7 @@ let determineBuildOrder (target : string) (parallelJobs : int) =
         |> Seq.toList
 
 /// Runs a single target without its dependencies
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.runSingleTarget)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let runSingleTarget (target : TargetTemplate<unit>) =
     try
         if errors = [] then
@@ -687,7 +688,7 @@ let runSingleTarget (target : TargetTemplate<unit>) =
         targetError target.Name exn
 
 /// Runs the given array of targets in parallel using count tasks
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.runTargetsParallel)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let runTargetsParallel (count : int) (targets : Target[]) =
     targets.AsParallel()
         .WithDegreeOfParallelism(count)
@@ -695,7 +696,7 @@ let runTargetsParallel (count : int) (targets : Target[]) =
         .ToArray()
     |> ignore
     
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.runTargets)")>]
+[<System.Obsolete("Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case")>]
 let runTargets (targets: TargetTemplate<unit> array) =
     let lastTarget = targets |> Array.last
     if errors = [] && ExecutedTargets.Contains (lastTarget.Name) |> not then
@@ -707,7 +708,7 @@ let runTargets (targets: TargetTemplate<unit> array) =
             targets |> Array.iter runSingleTarget
 
 /// Runs a target and its dependencies.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.run)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Run)")>]
 let run targetName =
     if doesTargetMeanPrintDotGraph targetName then PrintDotDependencyGraph() else
     if doesTargetMeanListTargets targetName then listTargets() else
@@ -746,25 +747,25 @@ let run targetName =
         changeExitCodeIfErrorOccured()
 
 /// Registers a BuildFailureTarget (not activated).
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.BuildFailureTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateBuildFailure)")>]
 let BuildFailureTarget name body =
     Target name body
     BuildFailureTargets.Add(name,false)
 
 /// Activates the BuildFailureTarget.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.ActivateBuildFailureTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateBuildFailure)")>]
 let ActivateBuildFailureTarget name =
     let t = getTarget name // test if target is defined
     BuildFailureTargets.[name] <- true
 
 /// Registers a final target (not activated).
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.FinalTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateFinal)")>]
 let FinalTarget name body =
     Target name body
     FinalTargets.Add(name,false)
 
 /// Activates the FinalTarget.
-[<System.Obsolete("Use Fake.Core.Targets instead (FAKE0001 - package: Fake.Core.Targets - member: Fake.Core.Targets.ActivateFinalTarget)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateFinal)")>]
 let ActivateFinalTarget name =
     let t = getTarget name // test if target is defined
     FinalTargets.[name] <- true
