@@ -537,7 +537,10 @@ module Target =
             let targets = errors |> Seq.map (fun e -> e.Target) |> Seq.distinct
             let targetStr = String.Join(", ", targets)
             AggregateException(
-                sprintf "Targets '%s' failed." targetStr,
+                (if errors.Length = 1 then
+                    sprintf "Target '%s' failed." targetStr
+                 else
+                    sprintf "Targets '%s' failed." targetStr),
                 errors |> Seq.map (fun e -> e.Error))
             |> raise
 
