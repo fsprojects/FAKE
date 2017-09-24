@@ -101,7 +101,7 @@ group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
     storage: none
-    framework: netstandard1.6, netcoreapp1.1
+    framework: netstandard1.6, netstandard2.0, netcoreapp1.1
 
     nuget Microsoft.NETCore.App !~> 1.1
     nuget FSharp.Compiler.Service storage: packages, content: none
