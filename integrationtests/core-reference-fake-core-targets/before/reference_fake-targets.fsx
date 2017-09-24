@@ -3,7 +3,7 @@ storage: none
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 
-nuget Fake.Core.Targets prerelease
+nuget Fake.Core.Target prerelease
 nuget FSharp.Core prerelease
 -- Fake Dependencies -- *)
 

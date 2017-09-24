@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Test.Fake.Deploy.Web.File</RootNamespace>
     <AssemblyName>Test.Fake.Deploy.Web.File</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <Name>Test.Fake.Deploy.Web.File</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

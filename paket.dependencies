@@ -1,4 +1,4 @@
-version 5.97.0
+version 5.100.2
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -57,6 +57,7 @@ group Build
     source https://api.nuget.org/v3/index.json
     source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
+    source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1.0
     nuget Nuget.CommandLine
@@ -65,6 +66,7 @@ group Build
     nuget FSharp.Formatting.CommandTool prerelease
     nuget SourceLink.Fake
     nuget ILRepack
+    nuget RoslynTools.ReferenceAssemblies
 
     github fsharp/FAKE modules/Octokit/Octokit.fsx
 
@@ -77,7 +79,7 @@ group NetcoreBuild
     nuget FSharp.Core ~> 4.1.0
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
-    nuget Fake.Core.Targets prerelease
+    nuget Fake.Core.Target prerelease
     nuget Fake.Core.Globbing prerelease
     nuget Fake.Core.SemVer prerelease
     nuget Fake.IO.FileSystem prerelease
@@ -96,28 +98,18 @@ group NetcoreBuild
     nuget Fake.Tools.Git prerelease
     nuget Mono.Cecil prerelease
     nuget Octokit
-    // Something strange is going on.
-    nuget System.Reflection.TypeExtensions 4.3.0
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
     storage: none
-    framework: netstandard1.6, netcoreapp1.1
+    framework: net46, netstandard1.6, netstandard2.0, netcoreapp2.0
 
-    nuget Microsoft.NETCore.App !~> 1.1
+    nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget FSharp.Compiler.Service storage: packages, content: none
-    nuget Microsoft.DotNet.PlatformAbstractions !~> 1
-    // START _ REMOVE ME ONCE PAKET WORKS https://github.com/fsprojects/Paket/issues/2715
-    nuget Microsoft.NETCore.DotNetHostPolicy !~> 1.1
-    nuget Microsoft.NETCore.Platforms !~> 1.1
-    nuget Microsoft.NETCore.DotNetHostResolver !~> 1.1
-    nuget Microsoft.NETCore.Runtime.CoreCLR !~> 1.1
-    nuget Microsoft.NETCore.Jit !~> 1.1
-    nuget Microsoft.NETCore.Targets !~> 1.1
-    // END _ REMOVE ME ONCE PAKET WORKS
+    nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
-    nuget NETStandard.Library !~> 1.0
+    nuget NETStandard.Library ~> 2.0
     nuget FSharp.Core ~> 4.1.2
     nuget Argu
     nuget Octokit

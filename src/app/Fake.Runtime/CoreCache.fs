@@ -260,10 +260,11 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                     false, None
     match result with
     | Some (location, a) ->
-        if isPerfectMatch then
-            if printDetails then tracefn "Redirect assembly load to known assembly: %s (%A)" strName location
-        else
-            traceFAKE "Redirect assembly from '%s' to '%s' (%A)" strName a.FullName location
+        if printDetails then 
+            if isPerfectMatch then
+                tracefn "Redirect assembly load to known assembly: %s (%A)" strName location
+            else
+                traceFAKE "Redirect assembly from '%s' to '%s' (%A)" strName a.FullName location
         a
     | _ ->
         if not (strName.StartsWith("FSharp.Compiler.Service.resources"))
@@ -281,10 +282,11 @@ let findAndLoadInRuntimeDepsCached =
         if not wasCalled then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
-            if not isPerfectMatch then
-                traceFAKE "Redirect assembly from '%A' to previous loaded assembly '%A'" name loadedName
-            else
-                if printDetails then tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
+            if printDetails then 
+                if not isPerfectMatch then
+                    traceFAKE "Redirect assembly from '%A' to previous loaded assembly '%A'" name loadedName
+                else
+                    tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
         result
 
 #if NETSTANDARD1_6
@@ -368,7 +370,10 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     match result with
     | Some err ->
-        traceFAKE "%O" err
+        let printDetails = config.PrintDetails
+        if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
+            Paket.Logging.printErrorExt true true false err
+        else Paket.Logging.printErrorExt printDetails printDetails false err
     | _ -> ()
 
     if resultCache.Warnings <> "" then

@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Test.Fake.Deploy.Web</RootNamespace>
     <AssemblyName>Test.Fake.Deploy.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <Name>Test.Fake.Deploy.Web</Name>
     <TargetFrameworkProfile />
   </PropertyGroup>

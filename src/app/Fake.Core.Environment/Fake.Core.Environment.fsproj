@@ -1,16 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
-    <!--<TargetFrameworks>net46;netstandard1.6</TargetFrameworks>-->
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Fake.Core.Environment</AssemblyName>
     <OutputType>Library</OutputType>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+  <PropertyGroup>
     <DefineConstants>$(DefineConstants);DOTNETCORE;NETSTANDARD1_6</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -20,16 +18,5 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Environment.fs" />
   </ItemGroup>
-  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Core" />
-  </ItemGroup>-->
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

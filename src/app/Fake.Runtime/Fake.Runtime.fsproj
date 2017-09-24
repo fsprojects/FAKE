@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>netstandard1.6;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD</DefineConstants>
     <AssemblyName>Fake.Runtime</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+  <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD1_6;NETSTANDARD1_5</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -28,31 +28,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
   </ItemGroup>
-  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="mscorlib">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System.Configuration">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System.Runtime.Caching">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System.ServiceProcess">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System.Xml">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <FromP2P>true</FromP2P>
-    </Reference>
-    <Reference Include="System.Core">
-      <FromP2P>true</FromP2P>
-    </Reference>
-  </ItemGroup>-->
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

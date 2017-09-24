@@ -48,7 +48,7 @@ One example would be:
     (* -- Fake Dependencies paket-inline
     source https://nuget.org/api/v2
 
-    nuget Fake.Core.Targets prerelease
+    nuget Fake.Core.Target prerelease
     nuget MyTaskNuGetPackage
     -- Fake Dependencies -- *)
     #load "./.fake/build.fsx/intellisense.fsx"
