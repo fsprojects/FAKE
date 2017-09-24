@@ -370,7 +370,10 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     match result with
     | Some err ->
-        traceFAKE "%O" err
+        let printDetails = config.PrintDetails
+        if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
+            Paket.Logging.printErrorExt true true false err
+        else Paket.Logging.printErrorExt printDetails printDetails false err
     | _ -> ()
 
     if resultCache.Warnings <> "" then
