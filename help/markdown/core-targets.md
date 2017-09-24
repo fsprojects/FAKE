@@ -53,7 +53,7 @@ Now we have the following options:
 ## Final targets
 
 Final targets can be used for TearDown functionality. 
-These targets will be executed even if the build fails but have to be activated via ActivateFinal().
+These targets will be executed even if the build fails but have to be activated via Target.ActivateFinal().
 
 	Target.CreateFinal "CloseSomePrograms" (fun _ ->
 		// close stuff and release resources
@@ -68,12 +68,12 @@ These targets will be executed even if the build fails but have to be activated 
 Build failure targets can be used to execute tasks after a build failure.
 These targets will be executed only after a build failure but have to be activated via ActivateBuildFailure().
 
-	CreateBuildFailure "ReportErrorViaMail" (fun _ ->
+	Target.CreateBuildFailure "ReportErrorViaMail" (fun _ ->
 		// send mail about the failure
 	)
 
 	// Activate Build Failure Target somewhere during build
-	ActivateBuildFailure "ReportErrorViaMail"
+	Target.ActivateBuildFailure "ReportErrorViaMail"
 
 ## Visualising target dependencies
 
