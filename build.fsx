@@ -444,7 +444,7 @@ Target.Create "BootstrapTestDotnetCore" (fun _ ->
                     info.WorkingDirectory <- "."
                     info.Arguments <- sprintf "run %s --target %s" script target)
                 timeout
-                (Process.getRedirectOutputToTrace()) (Trace.traceFAKE "%s") Trace.trace
+                true (Trace.traceFAKE "%s") Trace.trace
 
 
         let result = executeTarget "PrintColors"
