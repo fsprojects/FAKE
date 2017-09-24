@@ -717,7 +717,7 @@ Target.Create "DotnetPackage" (fun _ ->
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
     Cli.DotnetPublish (fun c ->
         { c with
-            Framework = Some "netcoreapp1.1"
+            Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
         }) netcoreFsproj
 )
