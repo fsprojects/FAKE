@@ -57,6 +57,7 @@ group Build
     source https://api.nuget.org/v3/index.json
     source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
+    source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1.0
     nuget Nuget.CommandLine
@@ -65,6 +66,7 @@ group Build
     nuget FSharp.Formatting.CommandTool prerelease
     nuget SourceLink.Fake
     nuget ILRepack
+    nuget RoslynTools.ReferenceAssemblies
 
     github fsharp/FAKE modules/Octokit/Octokit.fsx
 
