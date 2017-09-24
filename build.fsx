@@ -439,10 +439,12 @@ Target.Create "BootstrapTestDotnetCore" (fun _ ->
             let fileName =
                 if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
                 else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
-            Process.ExecProcess (fun info ->
-                info.FileName <- fileName
-                info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "run %s --target %s" script target) timeout
+            Process.ExecProcessWithLambdas (fun info ->
+                    info.FileName <- fileName
+                    info.WorkingDirectory <- "."
+                    info.Arguments <- sprintf "run %s --target %s" script target)
+                timeout
+                (Process.getRedirectOutputToTrace()) (Trace.traceFAKE "%s") Trace.trace
 
 
         let result = executeTarget "PrintColors"
