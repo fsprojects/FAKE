@@ -11,7 +11,7 @@
     <AssemblyName>FakeLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWarn>44</NoWarn>
   </PropertyGroup>

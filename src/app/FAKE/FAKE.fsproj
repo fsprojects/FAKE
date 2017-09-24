@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>FAKE</RootNamespace>
     <AssemblyName>FAKE</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Name>FAKE</Name>
     <TargetFrameworkProfile />
