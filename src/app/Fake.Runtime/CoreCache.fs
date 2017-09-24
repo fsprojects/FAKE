@@ -199,6 +199,7 @@ let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:Assem
         if printDetails then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
 
+
 let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) =
     let strName = name.FullName
     if printDetails then tracefn "Trying to resolve: %s" strName
@@ -219,33 +220,43 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
       | Some a ->
         a.FullName = strName, (Some (None, a))
       | None ->
-        match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
-        | Some a ->
-            true, loadAssembly loadContext printDetails a
-        | _ ->
-            let token = name.GetPublicKeyToken()
-            match runtimeDependencies
-                  |> Seq.map (fun r -> AssemblyName(r.FullName), r)
-                  |> Seq.tryFind (fun (n, _) ->
-                      n.Name = name.Name &&
-                      (isNull token || // When null accept what we have.
-                          n.GetPublicKeyToken() = token)) with
-            | Some (otherName, info) ->
-                // Then the version matches and the public token is null we still accept this as perfect match
-                (isNull token && otherName.Version = name.Version), loadAssembly loadContext printDetails info
-            | _ ->
 #if NETSTANDARD1_6
-                // One last option is to try and load from the default app-context...
-                try let assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(name)
+        // Check if we can resolve to a framework assembly.
+        let result =
+            try let assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(name)
+                let isFramework =
+                    assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
+                    |> Seq.exists (fun m -> m.Key = ".NETFrameworkAssembly")
+                if not isFramework then
+                    None
+                else                                
                     let location =
                         try Some assembly.Location 
                         with e -> 
                             if printDetails then tracefn "Could not get Location from '%s': %O" strName e
                             None
-                    true, Some (location, assembly)
-                with e ->
-                    if printDetails then tracefn "Could not find assembly in the default load-context: %s" strName
+                    Some (location, assembly)
+            with e -> None
+        match result with
+        | Some r -> true, Some r
+        | None ->                
 #endif
+            if printDetails then tracefn "Could not find assembly in the default load-context: %s" strName
+            match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
+            | Some a ->
+                true, loadAssembly loadContext printDetails a
+            | _ ->
+                let token = name.GetPublicKeyToken()
+                match runtimeDependencies
+                      |> Seq.map (fun r -> AssemblyName(r.FullName), r)
+                      |> Seq.tryFind (fun (n, _) ->
+                          n.Name = name.Name &&
+                          (isNull token || // When null accept what we have.
+                              n.GetPublicKeyToken() = token)) with
+                | Some (otherName, info) ->
+                    // Then the version matches and the public token is null we still accept this as perfect match
+                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext printDetails info
+                | _ ->
                     false, None
     match result with
     | Some (location, a) ->
@@ -260,22 +271,29 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
             if printDetails then tracefn "Could not resolve: %s" strName
         null
 
+let findAndLoadInRuntimeDepsCached =
+    let assemblyCache = System.Collections.Concurrent.ConcurrentDictionary<_,Assembly>()
+    fun (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) ->
+        let mutable wasCalled = false
+        let result = assemblyCache.GetOrAdd(name.Name, (fun _ ->
+            wasCalled <- true
+            findAndLoadInRuntimeDeps loadContext name printDetails runtimeDependencies))
+        if not wasCalled then
+            let loadedName = result.GetName()
+            let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
+            if not isPerfectMatch then
+                traceFAKE "Redirect assembly from '%A' to previous loaded assembly '%A'" name loadedName
+            else
+                if printDetails then tracefn "Redirect assembly load to previously loaded assembly: %A" loadedName         
+        result
+
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
 type FakeLoadContext (printDetails:bool, dependencies:AssemblyInfo list) =
   inherit AssemblyLoadContext()
-  //let basePath = System.AppContext.BaseDirectory
-  //let references =
-  //    System.IO.Directory.GetFiles(basePath, "*.dll")
-  //    |> Seq.filter (fun r -> not (System.IO.Path.GetFileName(r).ToLowerInvariant().StartsWith("api-ms")))
-  //    |> Seq.choose (fun r ->
-  //        try Some (AssemblyInfo.ofLocation r)
-  //        with e -> None)
-  //    |> Seq.toList
-  //let allReferences = references @ dependencies
   let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
-       findAndLoadInRuntimeDeps x assem printDetails allReferences
+       findAndLoadInRuntimeDepsCached x assem printDetails allReferences
 #endif
 
 let fakeDirectoryName = ".fake"

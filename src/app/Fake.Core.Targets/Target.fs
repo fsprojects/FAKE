@@ -219,7 +219,7 @@ module Target =
     /// Represents build errors
     type BuildError = {
         Target : string
-        Message : string }
+        Error : exn }
 
     //let mutable private errors = []
     let private errorsVar = "Fake.Core.Targets.errors"
@@ -240,7 +240,7 @@ module Target =
                 //| BuildException(msg, errs) ->
                 //    let errMsgs = errs |> List.map(fun e -> { Target = targetName; Message = e })
                 //    { Target = targetName; Message = msg } :: (errMsgs @ errors)
-                | _ -> { Target = targetName; Message = exn.ToString() } :: GetErrors())
+                | _ -> { Target = targetName; Error = exn } :: GetErrors())
         let error e =
             match e with
             //| BuildException(msg, errs) -> msg + (if PrintStackTraceOnError then Environment.NewLine + e.StackTrace.ToString() else "")
@@ -291,7 +291,7 @@ module Target =
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.iter (fun name ->
                try
-                   let watch = new System.Diagnostics.Stopwatch()
+                   let watch = System.Diagnostics.Stopwatch()
                    watch.Start()
                    Trace.tracefn "Starting BuildFailureTarget: %s" name
                    let target = Get name
@@ -370,7 +370,7 @@ module Target =
     let internal WriteErrors () =
         Trace.traceLine()
         GetErrors()
-        |> Seq.mapi(fun i e -> sprintf "%3d) %s" (i + 1) e.Message)
+        |> Seq.mapi(fun i e -> sprintf "%3d) %s" (i + 1) e.Error.Message)
         |> Seq.iter Trace.traceError
 
     /// <summary>Writes a build time report.</summary>
@@ -541,8 +541,13 @@ module Target =
         
         match GetErrors() with
         | [] -> ()
-        | errors -> failwithf "A target failed: %A" errors 
-
+        | errors ->
+            let targets = errors |> Seq.map (fun e -> e.Target) |> Seq.distinct
+            let targetStr = String.Join(", ", targets)
+            AggregateException(
+                sprintf "Targets '%s' failed." targetStr,
+                errors |> Seq.map (fun e -> e.Error))
+            |> raise
     /// Registers a BuildFailureTarget (not activated).
     let BuildFailureTarget name body =
         Create name body

@@ -1,3 +1,6 @@
+#### 5.0.0-alpha018 - 24.09.2017
+* BUGFIX: Cache loaded assemblies and redirect later calls.
+
 #### 5.0.0-alpha017 - 23.09.2017
 * BUGFIX: try to fallback to load framework assemblies from the default AssemblyLoadContext.
 

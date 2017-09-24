@@ -883,6 +883,15 @@ Target.Create "ReleaseDocs" (fun _ ->
 open Fake.Api
 
 Target.Create "FastRelease" (fun _ ->
+    
+    Git.Staging.StageAll ""
+    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
+    let branch = Git.Information.getBranchName ""
+    Git.Branches.pushBranch "" "origin" branch
+
+    Git.Branches.tag "" release.NugetVersion
+    Git.Branches.pushTag "" "origin" release.NugetVersion
+    
     let token =
         match Environment.environVarOrDefault "github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
@@ -900,14 +909,6 @@ Target.Create "FastRelease" (fun _ ->
     draftWithFiles
     |> GitHub.releaseDraft
     |> Async.RunSynchronously
-    
-    Git.Staging.StageAll ""
-    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    let branch = Git.Information.getBranchName ""
-    Git.Branches.pushBranch "" "origin" branch
-
-    Git.Branches.tag "" release.NugetVersion
-    Git.Branches.pushTag "" "origin" release.NugetVersion
 )
 
 open System
