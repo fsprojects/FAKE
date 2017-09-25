@@ -97,7 +97,7 @@ module Environment =
         | _ ->  defaultValue
 
     /// Retrieves the environment variable with the given name or returns the false if no value was set
-    let environVarVarAsBool varName = environVarAsBoolOrDefault varName false
+    let environVarAsBool varName = environVarAsBoolOrDefault varName false
 
     /// Retrieves the environment variable or None
     let environVarOrNone name = 
