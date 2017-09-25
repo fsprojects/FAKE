@@ -93,8 +93,7 @@ Display CLI help.
 For this short sample we assume you have the latest version of FAKE installed and available in PATH (see [the getting started guide](gettingstarted.html)). Now consider the following small FAKE script:
 
     (* -- Fake Dependencies paket-inline
-    source https://nuget.org/api/v2
-    source ../../../nuget/dotnetcore
+    source https://api.nuget.org/v3/index.json
 
     nuget Fake.Core.Target prerelease
     nuget FSharp.Core prerelease
