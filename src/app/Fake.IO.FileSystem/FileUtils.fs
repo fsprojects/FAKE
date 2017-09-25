@@ -389,7 +389,7 @@ module Shell =
     let pwd = Directory.GetCurrentDirectory
 
     /// The stack of directories operated on by pushd and popd
-    let dirStack = new System.Collections.Generic.Stack<string>()
+    let private dirStack = new System.Collections.Generic.Stack<string>()
 
     /// Store the current directory in the directory stack before changing to a new one
     let pushd path =
