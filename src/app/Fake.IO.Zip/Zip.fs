@@ -115,14 +115,14 @@ let Unzip target (fileName : string) =
     use zipFile = new ZipArchive(stream)
     for zipEntry in zipFile.Entries do
         let unzipPath = Path.Combine(target, zipEntry.Name)
-        let directoryPath = Path.GetDirectoryName(unzipPath)
-        // create directory if needed
-        if directoryPath.Length > 0 then Directory.CreateDirectory(directoryPath) |> ignore
-        // unzip the file
-        let zipStream = zipEntry.Open()
-        if unzipPath.EndsWith "/" |> not then 
-            use unzippedFileStream = File.Create(unzipPath)
-            zipStream.CopyTo(unzippedFileStream)
+        if unzipPath.EndsWith "/" then
+            Directory.CreateDirectory(unzipPath) |> ignore
+        else
+            // unzip the file
+            let zipStream = zipEntry.Open()
+            if unzipPath.EndsWith "/" |> not then 
+                use unzippedFileStream = File.Create(unzipPath)
+                zipStream.CopyTo(unzippedFileStream)
 
 #else
     use zipFile = new ZipFile(fileName)

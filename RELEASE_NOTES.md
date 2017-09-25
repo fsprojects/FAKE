@@ -1,3 +1,8 @@
+#### 5.0.0-beta002 - 25.09.2017
+* BREAKING-CHANGE: Rework Fake.Core.Target package - https://github.com/fsharp/FAKE/pull/1664
+* ENHANCEMENT: Update fake 5 to netcoreapp20 - https://github.com/fsharp/FAKE/pull/1678
+* BUGFIX: Fix Zip.Unzip
+
 #### 5.0.0-beta001 - 24.09.2017
 * BREAKING-CHANGE: Rework Fake.Core.Target package - https://github.com/fsharp/FAKE/pull/1664
 * ENHANCEMENT: Update fake 5 to netcoreapp20 - https://github.com/fsharp/FAKE/pull/1678
