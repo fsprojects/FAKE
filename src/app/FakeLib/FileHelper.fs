@@ -42,6 +42,7 @@ let SetReadOnly readOnly (files : string seq) =
                      |> setDirectoryReadOnly readOnly)
 
 /// Deletes a directory if it exists.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.Directory.delete)")>]
 let DeleteDir path = 
     let dir = directoryInfo path
     if dir.Exists then 
@@ -54,6 +55,7 @@ let DeleteDir path =
     else logfn "%s does not exist." dir.FullName
 
 /// Creates a directory if it does not exist.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.Directory.create)")>]
 let CreateDir path = 
     let dir = directoryInfo path
     if not dir.Exists then 

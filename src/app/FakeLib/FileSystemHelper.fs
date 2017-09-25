@@ -50,6 +50,7 @@ let filesInDirMatchingRecursive pattern (dir : DirectoryInfo) =
     else [||]    
 
 /// Gets the first file in the directory matching the search pattern as an option value.
+[<Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.DirectoryInfo.tryFindFirstMatchingFile)")>]
 let TryFindFirstMatchingFile pattern dir = 
     dir
     |> directoryInfo
@@ -59,6 +60,7 @@ let TryFindFirstMatchingFile pattern dir =
         else (Seq.head files).FullName |> Some
 
 /// Gets the first file in the directory matching the search pattern or throws an error if nothing was found.
+[<Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.DirectoryInfo.findFirstMatchingFile)")>]
 let FindFirstMatchingFile pattern dir = 
     match TryFindFirstMatchingFile pattern dir with
     | Some x -> x
@@ -106,6 +108,7 @@ let inline ensureDirExists (dir : DirectoryInfo) =
     if not dir.Exists then dir.Create()
 
 /// Checks if the given directory exists. If not then this functions creates the directory.
+[<Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.Directory.ensure)")>]
 let inline ensureDirectory dir = directoryInfo dir |> ensureDirExists
 
 /// Detects whether the given path is a directory.

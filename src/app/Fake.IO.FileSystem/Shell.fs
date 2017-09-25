@@ -182,9 +182,6 @@ module Shell =
     /// Deletes multiple directories
     let DeleteDirs dirs = Seq.iter Directory.delete dirs
 
-    /// Compat
-    let ensureDirectory dir = Directory.ensure dir
-
     /// Appends all given files to one file.
     /// ## Parameters
     ///
@@ -360,7 +357,7 @@ module Shell =
         else File.Delete f
 
     /// Creates a directory if it doesn't exist.
-    let mkdir path = Directory.CreateDir path
+    let mkdir path = Directory.create path
 
     /// <summary>
     /// Like "cp -r" in a shell. Copies a file or directory recursively.

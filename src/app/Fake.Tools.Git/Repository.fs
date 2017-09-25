@@ -67,7 +67,7 @@ let fullclean repositoryDir =
         Directory.GetDirectories repositoryDir
           |> Seq.iter deleteDirs
     else
-        Directory.CreateDir repositoryDir
+        Directory.create repositoryDir
 
     // set writeable
     File.SetAttributes(repositoryDir,FileAttributes.Normal)

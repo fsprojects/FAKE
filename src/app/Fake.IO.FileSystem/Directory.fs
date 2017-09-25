@@ -4,20 +4,13 @@ open System.IO
 
 module Directory =
 
-    /// Creates a directory if it does not exist.
-    let CreateDir path = 
-        let dir = DirectoryInfo.ofPath path
-        if not dir.Exists then 
-            // TODO: logfn "Creating %s" dir.FullName
-            dir.Create()
-        else () //TODO: logfn "%s already exists." dir.FullName
-
     /// Checks if the given directory exists. If not then this functions creates the directory.
     let inline ensure dir =
-        if not (Directory.Exists dir) then
-            Directory.CreateDirectory dir |> ignore
-            
-    let isDirectory path = Path.isDirectory path
+        dir |> DirectoryInfo.ofPath |> DirectoryInfo.ensure
+
+    /// Creates a directory if it does not exist.
+    [<System.Obsolete("Use Directory.ensure instead")>]
+    let create = ensure
 
     /// Gets the first file in the directory matching the search pattern as an option value.
     let tryFindFirstMatchingFile pattern dir = 
@@ -38,12 +31,5 @@ module Directory =
     let delete path = 
         let dir = DirectoryInfo.ofPath path
         if dir.Exists then 
-            // set all files readonly = false
-            DirectoryInfo.setReadOnly false dir
-            //!!"/**/*.*"
-            //|> SetBaseDir dir.FullName
-            //|> (SetReadOnly false)
-            //logfn "Deleting %s" dir.FullName
+            DirectoryInfo.setReadOnlyRecursive false dir
             dir.Delete true
-        else () //TODO: logfn "%s does not exist." dir.FullName
-

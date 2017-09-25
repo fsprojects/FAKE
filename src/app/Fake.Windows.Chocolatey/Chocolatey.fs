@@ -372,7 +372,7 @@ module Fake.Windows.Choco
 
         tempFolder.Create()
 
-        Directory.CreateDir (tempFolder.FullName @@ "tools")
+        Directory.create (tempFolder.FullName @@ "tools")
 
         tempFolder.FullName
 
