@@ -1,13 +1,13 @@
 ﻿/// Contains tasks to generate AssemblyInfo files for C# and F#.
 /// There is also a tutorial about the [AssemblyInfo tasks](../assemblyinfo.html) available.
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use Fake.DotNet.AssemblyInfoFile instead")>]
 module Fake.AssemblyInfoFile
 
 open System
 open System.IO
 open System.Text.RegularExpressions
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use Fake.DotNet.AssemblyInfoFile instead")>]
 // Helper active pattern for project types
 let (|Fsproj|Csproj|Vbproj|Shproj|) (projFileName:string) =
     match projFileName with
@@ -51,7 +51,7 @@ let private NormalizeVersion version =
     if m.Captures.Count > 0 then m.Captures.[0].Value
     else version
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use Fake.DotNet.AssemblyInfoFileConfig instead")>]
 /// Represents options for configuring the emission of AssemblyInfo
 type AssemblyInfoFileConfig
     ( // If true, a module (for F#) or static class (for C#), which contains the assembly version, will be generated
@@ -71,7 +71,7 @@ type AssemblyInfoFileConfig
             | None -> false
         static member Default = AssemblyInfoFileConfig(true)
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.___' instead")>]
 /// Represents AssemblyInfo attributes
 type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
     member this.Name = name
@@ -93,66 +93,84 @@ type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticP
     static member BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace, typeof<bool>.FullName)
 
     /// Creates an attribute which holds the company information
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Company' instead")>]
     static member Company(value) = Attribute.StringAttribute("AssemblyCompany", value, "System.Reflection")
 
     /// Creates an attribute which holds the product name
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Product' instead")>]
     static member Product(value) = Attribute.StringAttribute("AssemblyProduct", value, "System.Reflection")
 
     /// Creates an attribute which holds the copyright information
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Copyright' instead")>]
     static member Copyright(value) = Attribute.StringAttribute("AssemblyCopyright", value, "System.Reflection")
 
     /// Creates an attribute which holds the product title
     static member Title(value) = Attribute.StringAttribute("AssemblyTitle", value, "System.Reflection")
 
     /// Creates an attribute which holds the product description
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Description' instead")>]
     static member Description(value) = Attribute.StringAttribute("AssemblyDescription", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly culture information
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Culture' instead")>]
     static member Culture(value) = Attribute.StringAttribute("AssemblyCulture", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly configuration
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Configuration' instead")>]
     static member Configuration(value) = Attribute.StringAttribute("AssemblyConfiguration", value, "System.Reflection")
 
     /// Creates an attribute which holds the trademark
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Trademark' instead")>]
     static member Trademark(value) = Attribute.StringAttribute("AssemblyTrademark", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly version
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Version' instead")>]
     static member Version(value) =
         Attribute.StringAttribute("AssemblyVersion", NormalizeVersion value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly key file
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.KeyFile' instead")>]
     static member KeyFile(value) = Attribute.StringAttribute("AssemblyKeyFile", value, "System.Reflection")
 
     /// Creates an attribute which holds the assembly key name
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.KeyName' instead")>]
     static member KeyName(value) = Attribute.StringAttribute("AssemblyKeyName", value, "System.Reflection")
 
     /// Creates an attribute which holds the "InternalVisibleTo" data
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.InternalsVisibleTo' instead")>]
     static member InternalsVisibleTo(value) =
         Attribute.StringAttribute("InternalsVisibleTo", value, "System.Runtime.CompilerServices")
 
     /// Creates an attribute which holds the assembly file version
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.FileVersion' instead")>]
     static member FileVersion(value) =
         Attribute.StringAttribute("AssemblyFileVersion", NormalizeVersion value, "System.Reflection")
 
     /// Creates an attribute which holds an assembly information version
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.InformationalVersion' instead")>]
     static member InformationalVersion(value) =
         Attribute.StringAttribute("AssemblyInformationalVersion", value, "System.Reflection")
 
     /// Creates an attribute which holds the Guid
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Guid' instead")>]
     static member Guid(value) = Attribute.StringAttribute("Guid", value, "System.Runtime.InteropServices")
 
     /// Creates an attribute which specifies if the assembly is visible via COM
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.ComVisible' instead")>]
     static member ComVisible(?value) =
         Attribute.BoolAttribute("ComVisible", defaultArg value false, "System.Runtime.InteropServices")
 
     /// Creates an attribute which specifies if the assembly is CLS compliant
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.CLSCompliant' instead")>]
     static member CLSCompliant(?value) = Attribute.BoolAttribute("CLSCompliant", defaultArg value false, "System")
 
     /// Creates an attribute which specifies if the assembly uses delayed signing
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.DelaySign' instead")>]
     static member DelaySign(value) =
         Attribute.BoolAttribute("AssemblyDelaySign", defaultArg value false, "System.Reflection")
 
     /// Create an attribute which specifies metadata about the assembly
+    [<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfo.Metadata' instead")>]
     static member Metadata(name,value) =
         Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")), sprintf "\"%s\"" value)
 
@@ -193,7 +211,7 @@ let private getSortedAndNumberedAttributes (attrs: seq<Attribute>) =
         (name, attr.StaticPropertyType, attr.StaticPropertyValue))
    
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateCSharpWithConfig' instead")>]
 /// Creates a C# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -241,7 +259,7 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
     attributeLines @ sourceLines
     |> writeToFile outputFileName
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateFSharpWithConfig' instead")>]
 /// Creates a F# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -272,7 +290,7 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
     sourceLines |> writeToFile outputFileName
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateVisualBasicWithConfig' instead")>]
 /// Creates a VB AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -299,7 +317,7 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
     attributeLines @ sourceLines
     |> writeToFile outputFileName
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateCppCliWithConfig' instead")>]
 /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
 /// Does not generate an AssemblyVersionInformation class.
 let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -318,25 +336,25 @@ let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : Assem
     attributeLines
     |> writeToFile outputFileName
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateCSharp' instead")>]
 /// Creates a C# AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfo outputFileName attributes =
     CreateCSharpAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateFSharp' instead")>]
 /// Creates a F# AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateFSharpAssemblyInfo outputFileName attributes =
     CreateFSharpAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateVisualBasic' instead")>]
 /// Creates a VB AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateVisualBasicAssemblyInfo outputFileName attributes =
     CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.CreateCppCli' instead")>]
 ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
 let CreateCppCliAssemblyInfo outputFileName attributes =
     CreateCppCliAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
@@ -347,7 +365,7 @@ let private removeAtEnd (textToRemove:string) (text:string) =
     else
         text
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.GetAttributes' instead")>]
 /// Read attributes from an AssemblyInfo file and return as a sequence of Attribute.
 /// ## Parameters
 ///  - `assemblyInfoFile` - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.
@@ -374,7 +392,7 @@ let GetAttributes assemblyInfoFile =
                 Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute", v.Trim([|'"'|]), "", t)
             )
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.GetAttribute' instead")>]
 /// Read a single attribute from an AssemblyInfo file.
 /// ## Parameters
 ///  - `attrName` - Name of the attribute without "Attribute" at the end.
@@ -382,7 +400,7 @@ let GetAttributes assemblyInfoFile =
 let GetAttribute attrName assemblyInfoFile =
     assemblyInfoFile |> GetAttributes |> Seq.tryFind (fun a -> a.Name = attrName)
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.GetAttributeValue' instead")>]
 /// Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".
 /// ## Parameters
 ///  - `attrName` - Name of the attribute without "Attribute" at the end.
@@ -411,7 +429,7 @@ let private updateAttr regexFactory additionalRegexOptions text (attribute:Attri
     else
         failwithf "Attribute '%s' not found" attribute.Name
 
-[<System.Obsolete("Use Fake.DotNet.AssemblyInfoFile instead")>]
+[<System.Obsolete("FAKE0001 Use 'open Fake.DotNet' and 'AssemblyInfoFile.UpdateAttributes' instead")>]
 /// Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.
 /// ## Parameters
 ///  - `assemblyInfoFile` - The file to update. Language C#, F#, VB or C++ is determined from the extension.
