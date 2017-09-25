@@ -295,7 +295,7 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 <li>Read the API-Design-Guidelines below.</li>
 </ul>
 <h2><a name="API-Design" class="anchor" href="#API-Design">API-Design</a></h2>
-<p>We <a href="fake-fake5-learn-more.html">learned from our mistakes</a>, so we use the following guidelines:</p>
+<p>We <a href="fake-fake5-learn-more.html">learned from our mistakes</a>, so we use the following guidelines, <strong>please read them very carefully</strong> (ask if you don't understand any rule):</p>
 <ul>
 <li>AutoOpen is no longer used</li>
 <li><p>we replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></p></li>
@@ -307,7 +307,15 @@ and make sure the code looks nice and structured on the caller side.</p>
 <p>For compatibility reasons (migration from legacy). We assume the user doesn't open the global <code>Fake</code> namespace.</p>
 <p>-&gt; This means we don't add anything in there in the new API.</p>
 </li>
-<li>Old APIs are marked as Obsolete with a link (hint) to the new API location.</li>
+<li>
+<p>Old APIs are marked as Obsolete with a link (hint) to the new API location. We use codes to make explicit</p>
+<ul>
+<li>FAKE0001 for moving part from one Module to another</li>
+<li>FAKE0002 for removed API we don't know who is using it and how =&gt; please open an issue if you use it</li>
+<li>FAKE0003 for API that is no more accessible (basically became internal) =&gt; please open an issue if you use it</li>
+<li>FAKE0004 for API not yet migrated, waiting for your contribution</li>
+</ul>
+</li>
 <li><p>Operators are opened seperatly with a separate <code>Operators</code> module</p></li>
 <li><p>We avoid the <code>Helpers</code> suffix (because we now expect users to write <code>&lt;module&gt;.&lt;function&gt;</code>)</p></li>
 </ul>

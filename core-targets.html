@@ -255,7 +255,7 @@ Using the current parameter object is not supported jet.</p>
 </ul>
 <h2><a name="Final-targets" class="anchor" href="#Final-targets">Final targets</a></h2>
 <p>Final targets can be used for TearDown functionality.
-These targets will be executed even if the build fails but have to be activated via ActivateFinalTarget().</p>
+These targets will be executed even if the build fails but have to be activated via Target.ActivateFinal().</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -263,18 +263,18 @@ These targets will be executed even if the build fails but have to be activated 
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">FinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">CreateFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 	<span class="c">// close stuff and release resources</span>
 <span class="pn">)</span>
 
-<span class="c">// Activate FinalTarget somewhere during build</span>
-<span class="id">ActivateFinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span>
+<span class="c">// Activate Final target somewhere during build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">ActivateFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <h2><a name="Build-failure-targets" class="anchor" href="#Build-failure-targets">Build failure targets</a></h2>
 <p>Build failure targets can be used to execute tasks after a build failure.
-These targets will be executed only after a build failure but have to be activated via ActivateBuildFailureTarget().</p>
+These targets will be executed only after a build failure but have to be activated via ActivateBuildFailure().</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -282,12 +282,12 @@ These targets will be executed only after a build failure but have to be activat
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">BuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">CreateBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 	<span class="c">// send mail about the failure</span>
 <span class="pn">)</span>
 
-<span class="c">// Activate BuildFailureTarget somewhere during build</span>
-<span class="id">ActivateBuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span>
+<span class="c">// Activate Build Failure Target somewhere during build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">ActivateBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -302,7 +302,7 @@ the dependency graph to the standard output <em>instead</em> of building anythin
 the build script contains a call like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -331,12 +331,12 @@ the build script contains a call like this:</p>
 </table>
 <p>resulting in an image like this:</p>
 <p><img src="pics/specifictargets/graph.png" alt="graph" title="Dependency graph" /></p>
-<h1><a name="Using-FAKE-s-parallel-option" class="anchor" href="#Using-FAKE-s-parallel-option">Using FAKE's parallel option</a></h1>
+<h2><a name="Using-FAKE-s-parallel-option" class="anchor" href="#Using-FAKE-s-parallel-option">Using FAKE's parallel option</a></h2>
 <p>Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
 number of threads used for traversing the dependency tree.
 This option of course only affects independent targets whereas dependent targets will
 still be exectued in order.</p>
-<h2><a name="Setting-the-number-of-threads" class="anchor" href="#Setting-the-number-of-threads">Setting the number of threads</a></h2>
+<h3><a name="Setting-the-number-of-threads" class="anchor" href="#Setting-the-number-of-threads">Setting the number of threads</a></h3>
 <p>The number of threads used can be set using the environment variable <code>parallel-jobs</code>.
 This can be achieved in various ways where the easiest one is to use FAKE's built-in support for
 setting environment variables:</p>

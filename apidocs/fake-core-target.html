@@ -221,18 +221,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1249', 1249)" onmouseover="showTip(event, '1249', 1249)">
-            ActivateBuildFailureTarget name
+            ActivateBuildFailure name
           </code>
           <div class="tip" id="1249">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L557-557" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L553-553" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Activates the BuildFailureTarget.</p>
+          <p>Activates the build failure target.</p>
 
 
         </td>
@@ -241,18 +241,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1250', 1250)" onmouseover="showTip(event, '1250', 1250)">
-            ActivateFinalTarget name
+            ActivateFinal name
           </code>
           <div class="tip" id="1250">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L567-567" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L563-563" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Activates the FinalTarget.</p>
+          <p>Activates the final target.</p>
 
 
         </td>
@@ -261,34 +261,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1251', 1251)" onmouseover="showTip(event, '1251', 1251)">
-            BuildFailureTarget name body
+            Create name body
           </code>
           <div class="tip" id="1251">
             <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L552-552" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Registers a BuildFailureTarget (not activated).</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1252', 1252)" onmouseover="showTip(event, '1252', 1252)">
-            Create name body
-          </code>
-          <div class="tip" id="1252">
-            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L217-217" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L217-217" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -300,19 +280,39 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1253', 1253)" onmouseover="showTip(event, '1253', 1253)">
-            DoNothing _arg1
+          <code onmouseout="hideTip(event, '1252', 1252)" onmouseover="showTip(event, '1252', 1252)">
+            CreateBuildFailure name body
           </code>
-          <div class="tip" id="1253">
-            <strong>Signature:</strong> _arg1:TargetParameter -&gt; unit<br />
+          <div class="tip" id="1252">
+            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L129-129" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L548-548" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Do nothing - Can be used to define empty targets.</p>
+          <p>Creates a target in case of build failure (not activated).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1253', 1253)" onmouseover="showTip(event, '1253', 1253)">
+            CreateFinal name body
+          </code>
+          <div class="tip" id="1253">
+            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L558-558" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a final target (not activated).</p>
 
 
         </td>
@@ -321,18 +321,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1254', 1254)" onmouseover="showTip(event, '1254', 1254)">
-            FinalTarget name body
+            DoNothing _arg1
           </code>
           <div class="tip" id="1254">
-            <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
+            <strong>Signature:</strong> _arg1:TargetParameter -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L562-562" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L129-129" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Registers a final target (not activated).</p>
+          <p>Do nothing - Can be used to define empty targets.</p>
 
 
         </td>
@@ -348,7 +348,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L97-97" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L97-97" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -361,18 +361,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1256', 1256)" onmouseover="showTip(event, '1256', 1256)">
-            Print ()
+            ListAvailable ()
           </code>
           <div class="tip" id="1256">
             <strong>Signature:</strong> unit -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L305-305" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L305-305" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Prints all targets.</p>
+          <p>List all targets available.</p>
 
 
         </td>
@@ -388,7 +388,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L349-349" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L349-349" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -408,7 +408,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L478-478" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L470-470" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -426,7 +426,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L226-226" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L226-226" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -444,7 +444,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L36-36" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L36-36" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -455,18 +455,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1261', 1261)" onmouseover="showTip(event, '1261', 1261)">
-            Run ()
+            Run targetName
           </code>
           <div class="tip" id="1261">
-            <strong>Signature:</strong> unit -&gt; unit<br />
+            <strong>Signature:</strong> targetName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L586-586" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L568-568" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Runs the target given by the target parameter</p>
+          <p>Runs a target and its dependencies</p>
 
 
         </td>
@@ -482,7 +482,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L578-578" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L571-571" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -502,7 +502,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L581-581" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L574-574" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -522,7 +522,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L108-108" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L108-108" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -535,34 +535,32 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1265', 1265)" onmouseover="showTip(event, '1265', 1265)">
-            RunTarget targetName
+            setCurrentTargetOrder 
           </code>
           <div class="tip" id="1265">
-            <strong>Signature:</strong> targetName:string -&gt; unit<br />
+            <strong>Signature:</strong> string list list -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L572-572" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L470-470" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Runs a Target and its dependencies</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1266', 1266)" onmouseover="showTip(event, '1266', 1266)">
-            setCurrentTargetOrder 
+            setErrors 
           </code>
           <div class="tip" id="1266">
-            <strong>Signature:</strong> string list list -&gt; unit<br />
+            <strong>Signature:</strong> BuildError list -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L478-478" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L226-226" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -573,14 +571,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
-            setErrors 
+            setLastDescription 
           </code>
           <div class="tip" id="1267">
-            <strong>Signature:</strong> BuildError list -&gt; unit<br />
+            <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L226-226" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L36-36" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -591,14 +589,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
-            setLastDescription 
+            setPrintStackTraceOnError 
           </code>
           <div class="tip" id="1268">
-            <strong>Signature:</strong> string -&gt; unit<br />
+            <strong>Signature:</strong> bool -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L36-36" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L30-30" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -609,32 +607,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1269', 1269)" onmouseover="showTip(event, '1269', 1269)">
-            setPrintStackTraceOnError 
-          </code>
-          <div class="tip" id="1269">
-            <strong>Signature:</strong> bool -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L30-30" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
             WriteTaskTimeSummary total
           </code>
-          <div class="tip" id="1270">
-            <strong>Signature:</strong> total:&#39;?15369 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?15369          </div>
+          <div class="tip" id="1269">
+            <strong>Signature:</strong> total:&#39;?15428 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?15428          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/Target.fs#L378-378" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/Target.fs#L378-378" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>

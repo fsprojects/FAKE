@@ -197,15 +197,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
+          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
             ( ? ) f s
           </code>
-          <div class="tip" id="1271">
-            <strong>Signature:</strong> f:(&#39;?15294 -&gt; &#39;?15295) -&gt; s:&#39;?15294 -&gt; &#39;?15295<br />
-                          <strong>Type parameters:</strong> '?15294, '?15295          </div>
+          <div class="tip" id="1270">
+            <strong>Signature:</strong> f:(&#39;?15353 -&gt; &#39;?15354) -&gt; s:&#39;?15353 -&gt; &#39;?15354<br />
+                          <strong>Type parameters:</strong> '?15353, '?15354          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L9-9" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L9-9" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -217,15 +217,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
+          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
             ( ?&lt;- ) f str action
           </code>
-          <div class="tip" id="1272">
-            <strong>Signature:</strong> f:(&#39;?15297 -&gt; &#39;?15298 -&gt; &#39;?15299) -&gt; str:&#39;?15297 -&gt; action:&#39;?15298 -&gt; &#39;?15299<br />
-                          <strong>Type parameters:</strong> '?15297, '?15298, '?15299          </div>
+          <div class="tip" id="1271">
+            <strong>Signature:</strong> f:(&#39;?15356 -&gt; &#39;?15357 -&gt; &#39;?15358) -&gt; str:&#39;?15356 -&gt; action:&#39;?15357 -&gt; &#39;?15358<br />
+                          <strong>Type parameters:</strong> '?15356, '?15357, '?15358          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L12-12" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L12-12" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -237,15 +237,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
+          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
             ( ?=&gt; ) x y
           </code>
-          <div class="tip" id="1273">
+          <div class="tip" id="1272">
             <strong>Signature:</strong> x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L65-65" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L65-65" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
+            ( &lt;=? ) y x
+          </code>
+          <div class="tip" id="1273">
+            <strong>Signature:</strong> y:string -&gt; x:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L71-71" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -258,34 +278,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
-            ( &lt;=? ) y x
-          </code>
-          <div class="tip" id="1274">
-            <strong>Signature:</strong> y:string -&gt; x:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L71-71" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
             ( &lt;== ) x y
           </code>
-          <div class="tip" id="1275">
+          <div class="tip" id="1274">
             <strong>Signature:</strong> x:string -&gt; y:string list -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L14-14" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L14-14" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -295,15 +295,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
+          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
             ( &lt;=&gt; ) x y
           </code>
-          <div class="tip" id="1276">
+          <div class="tip" id="1275">
             <strong>Signature:</strong> x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L75-75" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L75-75" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -315,15 +315,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
             ( =?&gt; ) x (y, condition)
           </code>
-          <div class="tip" id="1277">
+          <div class="tip" id="1276">
             <strong>Signature:</strong> x:string -&gt; (y:string * condition:bool) -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L82-82" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L82-82" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -335,15 +335,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
             ( ==&gt; ) x y
           </code>
-          <div class="tip" id="1278">
+          <div class="tip" id="1277">
             <strong>Signature:</strong> x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Targets/TargetOperators.fs#L58-58" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Target/TargetOperators.fs#L58-58" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>

@@ -289,30 +289,28 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <span class="l">19: </span>
 <span class="l">20: </span>
 <span class="l">21: </span>
-<span class="l">22: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
 <span class="c">source https://nuget.org/api/v2</span>
 <span class="c">source ../../../nuget/dotnetcore</span>
 
-<span class="c">nuget Fake.Core.Targets prerelease</span>
+<span class="c">nuget Fake.Core.Target prerelease</span>
 <span class="c">nuget FSharp.Core prerelease</span>
 <span class="c">-- Fake Dependencies -- *)</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Targets</span>
 
-<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  <span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span><span class="pn">)</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  <span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span><span class="pn">)</span>
 
-<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  <span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span><span class="pn">)</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  <span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span><span class="pn">)</span>
 
-<span class="id">Target</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> <span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span><span class="pn">)</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> <span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span><span class="pn">)</span>
 
 
 <span class="s">&quot;Clean&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
-<span class="id">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
 </code></pre></td>
 </tr>
 </table>
