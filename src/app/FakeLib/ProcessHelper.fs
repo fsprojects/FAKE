@@ -560,6 +560,7 @@ let ensureProcessesHaveStopped name timeout =
 let shellExec args = args |> asyncShellExec |> Async.RunSynchronously
 
 /// Allows to exec shell operations synchronously and asynchronously.
+[<System.Obsolete("FAKE0001 Use `open Fake.Core` and `Process.Shell`")>]
 type Shell() =
 
     static member private GetParams(cmd, ?args, ?dir) =
@@ -576,6 +577,7 @@ type Shell() =
     ///  - `cmd` - The command which should be run in elavated context.
     ///  - `args` - The process arguments (optional).
     ///  - `directory` - The working directory (optional).
+    [<System.Obsolete("FAKE0001 Use `open Fake.Core` and `Process.Shell.Exec`")>]
     static member Exec(cmd, ?args, ?dir) = shellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))
 
     /// Runs the given process asynchronously.
@@ -584,4 +586,5 @@ type Shell() =
     ///  - `cmd` - The command which should be run in elavated context.
     ///  - `args` - The process arguments (optional).
     ///  - `directory` - The working directory (optional).
+    [<System.Obsolete("FAKE0001 Use `open Fake.Core` and `Process.Shell.AsyncExec`")>]
     static member AsyncExec(cmd, ?args, ?dir) = asyncShellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))

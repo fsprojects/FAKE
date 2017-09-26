@@ -836,14 +836,18 @@ Target.Create "DotnetCoreCreateDebianPackage" (fun _ ->
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 let apikey = Environment.environVarOrDefault "nugetkey" ""
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-let nugetPush nugetpackage =
-    if not <| System.String.IsNullOrEmpty apikey then
-        Process.ExecProcess (fun info ->
-            info.FileName <- nuget_exe
-            info.Arguments <- sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource))
-            (System.TimeSpan.FromMinutes 10.)
-        |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
-    else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
+let rec nugetPush tries nugetpackage =
+    try
+        if not <| System.String.IsNullOrEmpty apikey then
+            Process.ExecProcess (fun info ->
+                info.FileName <- nuget_exe
+                info.Arguments <- sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource))
+                (System.TimeSpan.FromMinutes 10.)
+            |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+        else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
+    with exn when tries > 1 ->
+        Trace.traceFAKE "Error while pushing NuGet package: %s" exn.Message
+        nugetPush (tries - 1) nugetpackage
 
 Target.Create "DotnetCorePushNuGet" (fun _ ->
     // dotnet pack
@@ -853,7 +857,7 @@ Target.Create "DotnetCorePushNuGet" (fun _ ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
         !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
         -- (sprintf "nuget/dotnetcore/%s.*.symbols.nupkg" projName)
-        |> Seq.iter nugetPush)
+        |> Seq.iter (nugetPush 4))
 )
 
 Target.Create "PublishNuget" (fun _ ->

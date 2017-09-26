@@ -13,7 +13,7 @@ Create a new file `paket.dependencies` and add the following content
 ```
 // [ FAKE GROUP ]
 group NetcoreBuild
-    source https://nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
 
     nuget Fake.Core.Target prerelease
 ```
@@ -84,7 +84,7 @@ To write your build dependencies in-line you can put the following at the top of
 
 	[lang=fsharp]
     (* -- Fake Dependencies paket-inline
-    source https://nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
 
     nuget Fake.Core.Target prerelease
     -- Fake Dependencies -- *)

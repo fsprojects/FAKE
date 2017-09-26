@@ -46,7 +46,7 @@ One example would be:
 
 	[lang=fsharp]
     (* -- Fake Dependencies paket-inline
-    source https://nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
 
     nuget Fake.Core.Target prerelease
     nuget MyTaskNuGetPackage

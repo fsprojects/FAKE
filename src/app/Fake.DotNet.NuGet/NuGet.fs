@@ -335,9 +335,8 @@ let rec private publish parameters =
                     info.Arguments <- args) parameters.TimeOut
             finally setEnableProcessTracing tracing
         if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
-    with exn ->
-        if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
-        else raise exn
+    with exn when parameters.PublishTrials > 0 ->
+        publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
 
 /// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters =
@@ -358,9 +357,8 @@ let rec private publishSymbols parameters =
                         info.Arguments <- args) parameters.TimeOut
             finally setEnableProcessTracing tracing
         if result <> 0 then failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args
-    with exn ->
-        if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
-        else raise exn
+    with exn when parameters.PublishTrials > 0->
+        publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
 
 /// Creates a new NuGet package based on the given .nuspec or project file.
 /// The .nuspec / projectfile is passed as-is (no templating is performed)
