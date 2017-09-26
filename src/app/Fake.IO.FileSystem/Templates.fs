@@ -3,7 +3,7 @@
 module Fake.IO.FileSystem.Templates
 
 /// Loads all templates (lazy - line by line!)
-let loadTemplates seq = Seq.map (fun fileName -> fileName, File.Read fileName) seq
+let loadTemplates seq = Seq.map (fun fileName -> fileName, File.read fileName) seq
 
 /// Replaces a bunch of the keywords in all files (lazy - line by line!)
 let replaceKeywords replacements =
@@ -16,7 +16,7 @@ let replaceKeywords replacements =
                     sb.ToString()))
 
 /// Saves all files (lazy - file by file!)
-let saveFiles = Seq.iter (fun (fileName, file) -> File.WriteToFile false fileName (Seq.toList file))
+let saveFiles = Seq.iter (fun (fileName, file) -> File.write false fileName (Seq.toList file))
 
 /// Replaces the templates with the given replacements
 let processTemplates replacements files =

@@ -234,7 +234,7 @@ let liftString x =
     else Some x
 
 /// Reads a file line by line
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.Read` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.read`/`File.readWithEncoding` instead (encoding parameter added, default to UTF8)">]
 let ReadFile(file : string) = 
     seq { 
         use textReader = new StreamReader(file, encoding)
@@ -243,13 +243,13 @@ let ReadFile(file : string) =
     }
 
 /// Reads the first line of a file. This can be helpful to read a password from file.
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.ReadLine` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.readLine`/`File.readLineWithEncoding` instead (encoding parameter added, default to UTF8)">]
 let ReadLine(file : string) = 
     use sr = new StreamReader(file, Encoding.Default)
     sr.ReadLine()
 
 /// Writes a file line by line
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.WriteToFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.write`/`File.writeWithEncoding` instead (encoding parameter added, default to UTF8)">]
 let WriteToFile append fileName (lines : seq<string>) = 
     let fi = fileInfo fileName
     use writer = new StreamWriter(fileName, append && fi.Exists, encoding)
@@ -269,18 +269,18 @@ let rec NormalizeVersion(version : string) =
     else version
 
 /// Writes a byte array to a file
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.WriteBytesToFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.writeBytes` instead">]
 let WriteBytesToFile file bytes = File.WriteAllBytes(file, bytes)
 
 /// Writes a string to a file
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.WriteStringToFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.writeString`/`File.writeStringWithEncoding` instead (encoding parameter added, default to UTF8)">]
 let WriteStringToFile append fileName (text : string) = 
     let fi = fileInfo fileName
     use writer = new StreamWriter(fileName, append && fi.Exists, encoding)
     writer.Write text
 
 /// Replaces the file with the given string
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.ReplaceFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.replaceContent` instead">]
 let ReplaceFile fileName text = 
     let fi = fileInfo fileName
     if fi.Exists then 
@@ -292,19 +292,19 @@ let ReplaceFile fileName text =
 let Colon = ','
 
 /// Writes a file line by line
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.WriteFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.writeNew` instead">]
 let WriteFile file lines = WriteToFile false file lines
 
 /// Appends all lines to a file line by line
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.AppendToFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.append` instead">]
 let AppendToFile file lines = WriteToFile true file lines
 
 /// Reads a file as one text
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.ReadFileAsString` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.readAsString`/`File.readAsStringWithEncoding` instead">]
 let inline ReadFileAsString file = File.ReadAllText(file, encoding)
 
 /// Reads a file as one array of bytes
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.ReadFileAsBytes` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.readAsBytes` instead">]
 let ReadFileAsBytes file = File.ReadAllBytes file
 
 /// Replaces any occurence of the currentDirectory with .
@@ -316,7 +316,7 @@ let inline shortenCurrentDirectory value = replace currentDirectory "." value
 let inline (<*) prefix text = startsWith prefix text
 
 /// Replaces the text in the given file
-[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.ReplaceInFile` instead">]
+[<System.Obsolete "FAKE0001 use `open Fake.IO.FileSystem` and `File.applyReplace` instead">]
 let ReplaceInFile replaceF fileName = 
     fileName
     |> ReadFileAsString

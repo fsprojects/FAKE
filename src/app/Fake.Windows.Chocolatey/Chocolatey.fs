@@ -570,7 +570,7 @@ module Fake.Windows.Choco
                             |> appendWithoutQuotes "</package>"
                             |> toText
 
-        File.WriteStringToFile false specFile nuspecContent
+        File.writeString false specFile nuspecContent
         Trace.tracefn "Created nuspec file %s" specFile
         specFile
 
@@ -617,7 +617,7 @@ module Fake.Windows.Choco
                             |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum64) ("-Checksum64Type " + checksumTypeToString parameters.Checksum64Type)
                             |> toText
 
-        File.WriteStringToFile false outputPath installContent
+        File.writeString false outputPath installContent
 
         Trace.tracefn "Created chocolateyInstall.ps1 at %s" outputPath
 
@@ -663,7 +663,7 @@ module Fake.Windows.Choco
                                     | _ -> appendWithoutQuotes "Uninstall-ChocolateyPackage $packageName $installerType $silentArgs $file"
                                 |> toText
 
-            File.WriteStringToFile false outputPath uninstallContent
+            File.writeString false outputPath uninstallContent
 
             Trace.tracefn "Created chocolateyUninstall.ps1 at %s" outputPath
 

@@ -19,7 +19,7 @@ let getCommitMessageFileInfos repositoryDir =
 /// Gets the commit message
 let getCommitMessage repositoryDir =
     match getCommitMessageFileInfos repositoryDir |> List.filter (fun fi -> fi.Exists) with
-    | fi::_ -> File.ReadFileAsString fi.FullName
+    | fi::_ -> File.readAsString fi.FullName
     | _ -> ""
 
 /// Sets the commit message

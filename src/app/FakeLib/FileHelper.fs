@@ -64,6 +64,7 @@ let CreateDir path =
     else logfn "%s already exists." dir.FullName
 
 /// Creates a file if it does not exist.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.create)")>]
 let CreateFile fileName = 
     let file = fileInfo fileName
     if not file.Exists then 
@@ -73,6 +74,7 @@ let CreateFile fileName =
     else logfn "%s already exists." file.FullName
 
 /// Deletes a file if it exists.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.delete)")>]
 let DeleteFile fileName = 
     let file = fileInfo fileName
     if file.Exists then 
@@ -81,6 +83,7 @@ let DeleteFile fileName =
     else logfn "%s does not exist." file.FullName
 
 /// Deletes the given files.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.deleteAll)")>]
 let DeleteFiles files = Seq.iter DeleteFile files
 
 /// Active pattern which discriminates between files and directories.
@@ -91,6 +94,7 @@ let (|File|Directory|) (fileSysInfo : FileSystemInfo) =
     | _ -> failwith "No file or directory given."
 
 /// Active Pattern for determining file extension.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.(|EndsWith|_|))")>]
 let (|EndsWith|_|) extension (file : string) = 
     if file.EndsWith extension then Some()
     else None
@@ -468,6 +472,7 @@ let RegexReplaceInFilesWithEncoding pattern (replacement:string) encoding files 
 /// ## Parameters
 ///
 ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.getVersion)")>]
 let FileVersion(fileName : string) = 
     FullName fileName
     |> FileVersionInfo.GetVersionInfo

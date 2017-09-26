@@ -73,13 +73,16 @@ let currentDirectory = Path.GetFullPath "."
 let fullAssemblyPath = System.Reflection.Assembly.GetAssembly(typeof<RegistryBaseKey>).Location
 
 /// Checks if the file exists on disk.
+[<Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.exists)")>]
 let fileExists fileName = File.Exists fileName
 
 /// Raises an exception if the file doesn't exist on disk.
+[<Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.checkExists)")>]
 let checkFileExists fileName = 
     if not <| fileExists fileName then new FileNotFoundException(sprintf "File %s does not exist." fileName) |> raise
 
 /// Checks if all given files exist.
+[<Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystem.File.allExist)")>]
 let allFilesExist files = Seq.forall fileExists files
 
 /// Normalizes a filename.

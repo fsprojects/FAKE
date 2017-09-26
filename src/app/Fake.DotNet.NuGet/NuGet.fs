@@ -390,7 +390,7 @@ let NuGetPack setParams nuspecOrProjectFile =
         match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
         | Some nuspecTemplateFile ->
             pack parameters nuspecTemplateFile
-            File.DeleteFile nuspecTemplateFile
+            File.delete nuspecTemplateFile
         | None -> pack parameters nuspecOrProjectFile
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
@@ -425,7 +425,7 @@ let NuGet setParams nuspecOrProjectFile =
         match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
         | Some nuspecTemplateFile ->
             pack parameters nuspecTemplateFile
-            File.DeleteFile nuspecTemplateFile
+            File.delete nuspecTemplateFile
         | None -> pack parameters nuspecOrProjectFile
 
         if parameters.Publish then

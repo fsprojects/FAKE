@@ -192,7 +192,7 @@ module Shell =
         if fi.Exists then failwithf "File %s already exists." (fi.FullName)
         use file = fi.Open(FileMode.Create)
         use writer = new StreamWriter(file, encoding)
-        files |> Seq.iter (File.Read >> Seq.iter writer.WriteLine)
+        files |> Seq.iter (File.read >> Seq.iter writer.WriteLine)
                      //() //TODO: logVerbosefn "Appending %s to %s" file fi.FullName
                      //)
 
@@ -349,12 +349,12 @@ module Shell =
 
 
     /// Deletes a file if it exists
-    let rm fileName = File.DeleteFile fileName
+    let rm fileName = File.delete fileName
 
     /// Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files
     let rm_rf f =
         if Directory.Exists f then Directory.delete f
-        else File.Delete f
+        else File.delete f
 
     /// Creates a directory if it doesn't exist.
     let mkdir path = Directory.create path

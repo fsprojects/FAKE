@@ -7,15 +7,17 @@ open Fake.Core
 open Operators
 
 module File =
+    /// Checks if the file exists on disk.
+    let exists fileName = File.Exists fileName
+
     /// Raises an exception if the file doesn't exist on disk.
-    let checkFileExists fileName = 
-        if not <| File.Exists fileName then new FileNotFoundException(sprintf "File %s does not exist." fileName) |> raise
+    let checkExists fileName = 
+        if not <| exists fileName then 
+            FileNotFoundException(sprintf "File %s does not exist." fileName) |> raise
 
     /// Checks if all given files exist.
-    let allFilesExist files = Seq.forall File.Exists files
+    let allExist files = Seq.forall File.Exists files
 
-    let isFile path = Path.isFile path
-    
     /// Get the version a file.
     /// ## Parameters
     ///
@@ -26,24 +28,19 @@ module File =
         |> fun x -> x.FileVersion.ToString()
 
     /// Creates a file if it does not exist.
-    let CreateFile fileName = 
+    let create fileName = 
         let file = FileInfo.ofPath fileName
         if not file.Exists then 
-            //TODO: logfn "Creating %s" file.FullName
-            use newFile = file.Create()
-            ()
-        else () //TODO: logfn "%s already exists." file.FullName
+            file.Create() |> ignore
 
     /// Deletes a file if it exists.
-    let DeleteFile fileName = 
+    let delete fileName = 
         let file = FileInfo.ofPath fileName
         if file.Exists then 
-            //TODO: logfn "Deleting %s" file.FullName
             file.Delete()
-        else () // TODO: logfn "%s does not exist." file.FullName
 
     /// Deletes the given files.
-    let DeleteFiles files = Seq.iter DeleteFile files
+    let deleteAll files = Seq.iter delete files
 
     /// Active Pattern for determining file extension.
     let (|EndsWith|_|) extension (file : string) = 
@@ -51,73 +48,70 @@ module File =
         else None
         
     /// Reads a file line by line
-    let ReadWithEncoding (encoding : Encoding) (file : string) = 
+    let readWithEncoding (encoding : Encoding) (file : string) = 
         seq {
             use stream = File.OpenRead(file)
             use textReader = new StreamReader(stream, encoding)
             while not textReader.EndOfStream do
                 yield textReader.ReadLine()
         }
-    let Read (file : string) = ReadWithEncoding (Encoding.UTF8) file
+    let read (file : string) = readWithEncoding (Encoding.UTF8) file
     
     /// Reads the first line of a file. This can be helpful to read a password from file.
-    let ReadLineWithEncoding (encoding:Encoding) (file : string) =
+    let readLineWithEncoding (encoding:Encoding) (file : string) =
         use stream = File.OpenRead file
         use sr = new StreamReader(stream, encoding)
         sr.ReadLine()
 
     /// Reads the first line of a file. This can be helpful to read a password from file.
-    let ReadLine(file : string) = ReadLineWithEncoding Encoding.UTF8 file
+    let readLine(file : string) = readLineWithEncoding Encoding.UTF8 file
 
     /// Writes a file line by line
-    let WriteToFileWithEncoding (encoding:Encoding) append fileName (lines : seq<string>) =
+    let writeWithEncoding (encoding:Encoding) append fileName (lines : seq<string>) =
         let fi = FileInfo.ofPath fileName
         use file = fi.Open(if append then FileMode.Append else FileMode.Create)
         use writer = new StreamWriter(file, encoding)
         lines |> Seq.iter writer.WriteLine
 
-    let WriteToFile append fileName (lines : seq<string>) =  WriteToFileWithEncoding Encoding.UTF8 append fileName lines
-
-    let Write file lines = WriteToFile false file lines
-    let Append file lines = WriteToFile true file lines
-
+    let write append fileName (lines : seq<string>) = writeWithEncoding Encoding.UTF8 append fileName lines
+        
     /// Writes a byte array to a file
-    let WriteBytesToFile file bytes = File.WriteAllBytes(file, bytes)
+    let writeBytes file bytes = File.WriteAllBytes(file, bytes)
 
     /// Writes a string to a file
-    let WriteStringToFileWithEncoding (encoding:Encoding) append fileName (text : string) = 
+    let writeStringWithEncoding (encoding:Encoding) append fileName (text : string) = 
         let fi = FileInfo.ofPath fileName
         use file = fi.Open(if append then FileMode.Append else FileMode.Create)
         use writer = new StreamWriter(file, encoding)
         writer.Write text
 
-    let WriteStringToFile append fileName (text : string) = WriteStringToFileWithEncoding Encoding.UTF8 append fileName text
+    let writeString append fileName (text : string) = writeStringWithEncoding Encoding.UTF8 append fileName text
 
     /// Replaces the file with the given string
-    let ReplaceFile fileName text = 
+    let replaceContent fileName text = 
         let fi = FileInfo.ofPath fileName
         if fi.Exists then 
             fi.IsReadOnly <- false
             fi.Delete()
-        WriteStringToFile false fileName text
+        writeString false fileName text
 
     /// Writes a file line by line
-    let WriteFile file lines = WriteToFile false file lines
+    let writeNew file lines = write false file lines
 
     /// Appends all lines to a file line by line
-    let AppendToFile file lines = WriteToFile true file lines
+    let append file lines = write true file lines
 
     /// Reads a file as one text
-    let inline ReadFileAsStringWithEncoding encoding file = File.ReadAllText(file, encoding)
-    let inline ReadFileAsString file = File.ReadAllText(file, Encoding.UTF8)
+    let inline readAsStringWithEncoding encoding file = File.ReadAllText(file, encoding)
+    let inline readAsString file = File.ReadAllText(file, Encoding.UTF8)
 
     /// Reads a file as one array of bytes
-    let ReadFileAsBytes file = File.ReadAllBytes file
+    let readAsBytes file = File.ReadAllBytes file
 
     /// Replaces the text in the given file
-    let ReplaceInFile replaceF fileName = 
+    let applyReplace replaceF fileName = 
         fileName
-        |> ReadFileAsString
+        |> readAsString
         |> replaceF
-        |> ReplaceFile fileName
+        |> replaceContent fileName
 
