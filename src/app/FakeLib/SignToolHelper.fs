@@ -6,6 +6,7 @@
 /// source control system, but the sign step should be usable on developer machines. Because of this, you can
 /// specify a dev certificate that can safely included in your source control system. Whenever the real certificate
 /// can not be found, the dev certificate will be used.
+[<System.Obsolete "Use SignTool instead">]
 module Fake.SignToolHelper
 
 open System
@@ -32,6 +33,7 @@ type SignParams = {
 
 /// Signs assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
+[<Obsolete "Use SignTool.signFiles instead">]
 let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
     use __ = traceStartTaskUsing "SignTool" "Trying to sign the specified assemblies"
   
@@ -64,6 +66,7 @@ let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<strin
 
 /// Appends a SHA 256 signature to assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
+[<Obsolete "Use SignTool.signFiles instead">]
 let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
     use __ = traceStartTaskUsing "SignTool" "Trying to dual sign the specified assemblies"
       

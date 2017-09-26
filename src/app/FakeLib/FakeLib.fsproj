@@ -14,7 +14,7 @@
     <Name>FakeLib</Name>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-    <NoWarn>44</NoWarn>  
+    <NoWarn>44</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -368,6 +368,7 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
+    <Compile Include="SignTool.fs" />
     <Compile Include="SignToolHelper.fs" />
     <Compile Include="MageHelper.fs" />
     <Compile Include="SemVerHelper.fs" />
