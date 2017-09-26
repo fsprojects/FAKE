@@ -288,11 +288,9 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <span class="l">18: </span>
 <span class="l">19: </span>
 <span class="l">20: </span>
-<span class="l">21: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
-<span class="c">source https://nuget.org/api/v2</span>
-<span class="c">source ../../../nuget/dotnetcore</span>
+<span class="c">source https://api.nuget.org/v3/index.json</span>
 
 <span class="c">nuget Fake.Core.Target prerelease</span>
 <span class="c">nuget FSharp.Core prerelease</span>
