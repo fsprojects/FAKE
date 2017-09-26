@@ -25,6 +25,11 @@ open System.Reflection
 
 #endif
 
+// TODO Remove '#load' once released
+#load "src/app/Fake.IO.FileSystem/File.fs"
+#load "src/app/Fake.IO.FileSystem/DirectoryInfo.fs"
+#load "src/app/Fake.IO.FileSystem/Directory.fs"
+
 open System.IO
 open Fake.Core
 open Fake.Tools
@@ -120,7 +125,7 @@ Target.Create "Clean" (fun _ ->
     //-- "src/*/*/obj/*.props"
     //-- "src/*/*/obj/*.paket.references.cached"
     //-- "src/*/*/obj/*.NuGet.Config"
-    |> File.DeleteFiles
+    |> File.deleteAll
 
     Shell.CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -134,7 +139,7 @@ Target.Create "RenameFSharpCompilerService" (fun _ ->
     for framework in ["netstandard1.6"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
-      File.DeleteFile targetFile
+      File.Delete targetFile
 
 #if DOTNETCORE
       let reader =
