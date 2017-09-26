@@ -288,7 +288,7 @@ module Shell =
     let CopyRecursive2 method dir outputDir =
         let dirInfo = DirectoryInfo.ofPath dir
         let outputDirInfo = DirectoryInfo.ofPath outputDir   
-        let copyRecursiveWithFilter f = DirectoryInfo.copyRecursiveToWithFilter false f dirInfo outputDirInfo
+        let copyRecursiveWithFilter f = DirectoryInfo.copyRecursiveToWithFilter false f outputDirInfo dirInfo
         match method with
         | Overwrite -> DirectoryInfo.copyRecursiveTo true dirInfo outputDirInfo
         | NoOverwrite -> DirectoryInfo.copyRecursiveTo false dirInfo outputDirInfo
