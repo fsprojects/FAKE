@@ -267,8 +267,8 @@ module Shell =
 
 
     /// Copies the file structure recursively.
-    let CopyRecursive dir outputDir overWrite = DirectoryInfo.copyRecursiveTo overWrite outputDir dir
-    let CopyRecursiveTo overWrite outputDir dir  = DirectoryInfo.copyRecursiveTo overWrite outputDir dir
+    let CopyRecursive dir outputDir overWrite = DirectoryInfo.copyRecursiveTo overWrite (DirectoryInfo.ofPath outputDir) (DirectoryInfo.ofPath dir)
+    let inline CopyRecursiveTo overWrite outputDir dir  = CopyRecursive dir outputDir overWrite
 
     type CopyRecursiveMethod =
     | Overwrite

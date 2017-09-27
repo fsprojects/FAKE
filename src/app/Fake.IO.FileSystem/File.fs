@@ -6,6 +6,9 @@ open System.IO
 open Fake.Core
 open Operators
 
+module FileFilter =
+    let allFiles file = true
+
 module File =
     /// Checks if the file exists on disk.
     let exists fileName = File.Exists fileName
