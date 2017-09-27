@@ -10,7 +10,7 @@ open Fake
 
 /// Perform the "sign" operation with Signtool.exe on one or more files.
 /// ## Parameters
-///  - `toolPath` - Path for folder containing Signtool.exe. Example: @"C:\Program Files (x86)\Windows Kits\8.1\bin\x64"
+///  - `toolPath` - Path for folder containing Signtool.exe. Example: @"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\Signtool.exe"
 ///  - `options` - A string that contains the command line options for Signtool.exe. Do not include "sign". You can build
 /// this string in a typed manner by creating a SignOption list and passing it to SignTool.toCommandLineOptions.
 ///  - `files` - Sequence of files to sign
@@ -18,7 +18,6 @@ let signFiles (toolPath: string) (options: string) (files: seq<string>) =
     use __ = traceStartTaskUsing "Sign" "Trying to execute Signtool.exe"
 
     let doubleQuote = sprintf "\"%s\""
-    let exePath = toolPath @@ "Signtool.exe"
 
     files
     |> Seq.map doubleQuote
@@ -26,7 +25,7 @@ let signFiles (toolPath: string) (options: string) (files: seq<string>) =
     |> Seq.iter (fun arguments ->  
         let result =
             ExecProcess (fun info ->
-                info.FileName <- exePath
+                info.FileName <- toolPath
                 info.Arguments <- arguments) TimeSpan.MaxValue
         if result <> 0 then 
             failwithf "Error during Signtool call ")
