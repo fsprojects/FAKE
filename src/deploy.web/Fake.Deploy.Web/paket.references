@@ -9,3 +9,4 @@ Newtonsoft.Json
 System.Web.Razor.Unofficial
 FSharp.Core
 toastr
+FSharp.Compiler.Tools
