@@ -4,3 +4,4 @@ Nancy.Hosting.Self
 Nancy.Serialization.JsonNet
 SSH.NET
 Serilog.Sinks.NLog
+FSharp.Compiler.Tools

@@ -2,3 +2,4 @@ FSharp.Core
 Newtonsoft.Json
 SSH.NET
 System.Net.Http
+FSharp.Compiler.Tools
