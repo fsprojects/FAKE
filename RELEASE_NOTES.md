@@ -1,3 +1,7 @@
+#### 5.0.0-beta004 - 30.09.2017
+* BUILD: Remove hardcoded paths to FSharpTargets, replace with FSharp.Compiler.Tools - https://github.com/fsharp/FAKE/pull/1693
+
+
 #### 5.0.0-beta003 - 26.09.2017
 * ENHANCEMENT: Fix some migration warnings, Docs and bugs - https://github.com/fsharp/FAKE/pull/1686
 
