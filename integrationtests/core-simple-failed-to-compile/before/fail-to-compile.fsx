@@ -6,6 +6,7 @@ source ../../../nuget/dotnetcore
 
 nuget Fake.Runtime prerelease
 nuget FSharp.Core prerelease
+nuget Microsoft.NETCore.App
 -- Fake Dependencies -- *)
 open klajsdhgfasjkhd
 

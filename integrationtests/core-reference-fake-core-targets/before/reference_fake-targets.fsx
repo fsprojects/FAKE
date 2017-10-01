@@ -5,6 +5,7 @@ source ../../../nuget/dotnetcore
 
 nuget Fake.Core.Target prerelease
 nuget FSharp.Core prerelease
+nuget Microsoft.NETCore.App
 -- Fake Dependencies -- *)
 
 printfn "before load"

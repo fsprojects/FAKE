@@ -270,7 +270,7 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
 )
 
-Target.Create "BuildSolution" (fun _ ->
+Target.Create "BuildSolution_" (fun _ ->
     MsBuild.MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
     |> Trace.Log "AppBuild-Output: "
 )
@@ -722,6 +722,7 @@ Target.Create "DotnetPackage" (fun _ ->
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
         }) netcoreFsproj
+    
 )
 
 Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
@@ -941,36 +942,55 @@ Target.Create "EnsureTestsRun" (fun _ ->
 Target.Create "Default" ignore
 Target.Create "StartDnc" ignore
 Target.Create "Release" ignore
+Target.Create "BuildSolution" ignore
+Target.Create "AfterBuild" ignore
 
 open Fake.Core.TargetOperators
 
+
+// DotNet Core Build
 "Clean"
-    ==> "StartDnc"
+    ?=> "StartDnc"
     ==> "InstallDotnetCore"
     ==> "DownloadPaket"
-    //==> "DotnetRestore"
     ==> "DotnetPackage"
 
-// Dependencies
+// Full framework build
 "Clean"
-    ==> "RenameFSharpCompilerService"
+    ?=> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
-    ==> "BuildSolution"
-    ==> "DotnetPackage"
+    ==> "BuildSolution_"
     ==> "UnskipAndRevertAssemblyInfo"
-    ==> "DotnetCoreCreateZipPackages"
-    =?> ("TestDotnetCore", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
-    ////==> "ILRepack"
-    =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTest",not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTestDotnetCore",not <| Environment.hasEnvironVar "SkipTests")
-    //=?> ("SourceLink", isLocalBuild && not isLinux)
+    ==> "BuildSolution"
+
+// AfterBuild -> Both Builds completed
+"BuildSolution"
+    ==> "AfterBuild"
+"DotnetPackage"
+    ==> "AfterBuild"
+
+// Create artifacts when build is finished
+"AfterBuild"
     =?> ("CreateNuGet", not Environment.isLinux)
     ==> "CopyLicense"
     =?> ("DotnetCoreCreateChocolateyPackage", not Environment.isLinux)
     =?> ("GenerateDocs", BuildServer.isLocalBuild && not Environment.isLinux)
     ==> "Default"
 
+// Test the full framework build
+"BuildSolution"
+    =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTest",not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+// Test the dotnetcore build
+"DotnetPackage"
+    ==> "DotnetCoreCreateZipPackages"
+    =?> ("TestDotnetCore", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTestDotnetCore",not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+// Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
     =?> ("DotnetCorePushChocolateyPackage", not Environment.isLinux)
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && not Environment.isLinux)
@@ -978,12 +998,20 @@ open Fake.Core.TargetOperators
     ==> "PublishNuget"
     ==> "FastRelease"
 
-"Default"
-    ==> "Release"
-"FastRelease"
-    ==> "Release"
+// If 'Default' happens it needs to happen before 'EnsureTestsRun'
 "Default"
     ?=> "EnsureTestsRun"
+
+// A 'Default' includes a 'Clean'
+"Clean"
+    ==> "Default"
+
+// A 'Release' includes a 'Default'
+"Default"
+    ==> "Release"
+// A 'Release' includes a 'FastRelease'
+"FastRelease"
+    ==> "Release"
 
 // start build
 Target.RunOrDefault "Default"

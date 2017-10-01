@@ -89,7 +89,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
-  let framework = Paket.FrameworkIdentifier.DotNetStandard (Paket.DotNetStandardVersion.V2_0)
+  let framework = Paket.FrameworkIdentifier.DotNetCoreApp (Paket.DotNetCoreAppVersion.V2_0)
 #else
   let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
 #endif
@@ -184,6 +184,9 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
                 Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
                 Runners.AssemblyInfo.Location = fullName } } |> Some
       with e -> (if printDetails then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
+    // If we have multiple select one
+    |> Seq.groupBy (fun ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name)
+    |> Seq.map (fun (_, group) -> group |> Seq.maxBy(fun ass -> ass.Info.Version))
     |> Seq.toList
     //|> List.partition (fun c -> c.IsReferenceAssembly)
   // Restore or update immediatly, because or everything might be OK -> cached path.

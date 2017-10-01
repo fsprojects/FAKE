@@ -5,6 +5,7 @@ source ../../../nuget/dotnetcore
 //source https://ci.appveyor.com/nuget/paket
 
 nuget Fake.Core.Context prerelease
+nuget Microsoft.NETCore.App
 -- Fake Dependencies -- *)
 #load ".fake/context-exists.fsx/intellisense.fsx"
 
