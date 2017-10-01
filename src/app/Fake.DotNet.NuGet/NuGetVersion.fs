@@ -1,6 +1,6 @@
 module Fake.DotNet.NuGet.Version
 
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.String
 open Fake.Core.BuildServer

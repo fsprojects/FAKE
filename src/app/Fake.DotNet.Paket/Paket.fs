@@ -7,8 +7,8 @@ open System.Xml.Linq
 open System.Text.RegularExpressions
 open Fake.Core.Globbing
 open Fake.Core
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.Globbing.Operators
 
 /// Paket pack parameter type

@@ -14,7 +14,7 @@ open ICSharpCode.SharpZipLib.Core
 #endif
 open System
 open Fake.Core
-open Fake.IO.FileSystem
+open Fake.IO
 
 /// The default zip level
 let DefaultZipLevel = 7

@@ -3,8 +3,8 @@
 /// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
 module Fake.DotNet.NuGet.NuGet
 
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.BuildServer
 open Fake.Core.Process

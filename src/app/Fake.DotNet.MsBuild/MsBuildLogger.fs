@@ -1,7 +1,7 @@
 ﻿/// Contains Logger implementations for MsBuild.
 module Fake.DotNet.MsBuildLogger
 
-open Fake.IO.FileSystem
+open Fake.IO
 #if !NO_MSBUILD_AVAILABLE
 open Microsoft.Build
 open Microsoft.Build.Framework

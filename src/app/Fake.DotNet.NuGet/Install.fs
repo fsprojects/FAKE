@@ -1,8 +1,8 @@
 /// Contains tasks for installing NuGet packages using the [nuget.exe install command](http://docs.nuget.org/docs/reference/command-line-reference#Install_Command).
 module Fake.DotNet.NuGet.Install
 
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.BuildServer
 open Fake.Core.Process

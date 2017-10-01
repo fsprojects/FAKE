@@ -8,8 +8,8 @@ open Fake.Core
 open Fake.Core.String
 open Fake.Core.Globbing
 open Fake.Core.Process
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 
 /// Specifies the fsformatting executable
 let mutable toolPath =

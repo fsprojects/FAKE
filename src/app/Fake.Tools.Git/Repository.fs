@@ -5,7 +5,7 @@ module Fake.Tools.Git.Repository
 open Fake.Core
 open Fake.Tools.Git.CommandHelper
 open System.IO
-open Fake.IO.FileSystem
+open Fake.IO
 
 /// Clones a git repository.
 /// ## Parameters

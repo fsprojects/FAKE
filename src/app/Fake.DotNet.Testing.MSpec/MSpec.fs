@@ -2,7 +2,7 @@
 module Fake.DotNet.Testing.MSpec
 
 open Fake.Testing.Common
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
@@ -36,7 +36,7 @@ type MSpecParams =
 
 /// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
 let MSpecDefaults =
-    { ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "mspec-clr4.exe" (Fake.IO.FileSystem.Shell.pwd() @@ "tools" @@ "MSpec")
+    { ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "mspec-clr4.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "MSpec")
       HtmlOutputDir = null
       XmlOutputPath = null
       WorkingDir = null

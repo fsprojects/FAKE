@@ -1,4 +1,4 @@
-namespace Fake.IO.FileSystem
+namespace Fake.IO
 
 open System.IO
 

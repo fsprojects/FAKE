@@ -1,7 +1,7 @@
-namespace Fake.IO.FileSystem
+namespace Fake.IO
 
 open System.IO
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 
 module DirectoryInfo =
     /// Creates a DirectoryInfo for the given path.

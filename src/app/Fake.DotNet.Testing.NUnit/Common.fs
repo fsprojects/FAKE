@@ -2,7 +2,7 @@
 module Fake.DotNet.Testing.NUnit.Common
 
 open Fake.Testing.Common
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
@@ -136,11 +136,11 @@ let NUnitDefaults =
     let toolname = "nunit-console.exe"
     { IncludeCategory = ""
       ExcludeCategory = ""
-      ToolPath = Fake.Core.Globbing.Tools.findToolFolderInSubPath toolname (Fake.IO.FileSystem.Shell.pwd() @@ "tools" @@ "Nunit")
+      ToolPath = Fake.Core.Globbing.Tools.findToolFolderInSubPath toolname (Fake.IO.Shell.pwd() @@ "tools" @@ "Nunit")
       ToolName = toolname
       DontTestInNewThread = false
       StopOnError = false
-      OutputFile = Fake.IO.FileSystem.Shell.pwd() @@ "TestResult.xml"
+      OutputFile = Fake.IO.Shell.pwd() @@ "TestResult.xml"
       Out = ""
       ErrorOutputFile = ""
       WorkingDir = ""

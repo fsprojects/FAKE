@@ -5,8 +5,8 @@ open System
 open System.IO
 open System.Xml.Linq
 open Fake.Core
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.Globbing.Operators
 
 /// A type to represent MSBuild project files.

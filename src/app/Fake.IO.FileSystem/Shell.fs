@@ -1,10 +1,10 @@
 ﻿/// Shell-like functions. Similar to [Ruby's FileUtils](http://www.ruby-doc.org/stdlib-2.0.0/libdoc/rake/rdoc/FileUtils.html).
-namespace Fake.IO.FileSystem
+namespace Fake.IO
 
 open System.IO
 open Fake.Core
-open Fake.IO.FileSystem.Operators
-open Fake.IO.FileSystem.FileSystemInfo
+open Fake.IO.FileSystemOperators
+open Fake.IO.FileSystemInfo
 
 module Shell =
 

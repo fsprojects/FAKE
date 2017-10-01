@@ -9,8 +9,8 @@ module Fake.DotNet.Cli
 // Currently we #load this file in build.fsx
 #if NO_DOTNETCORE_BOOTSTRAP
 open Fake.Core
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 #else
 open Fake
 // Workaround until we have a release with the "new" API.

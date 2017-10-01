@@ -1,4 +1,4 @@
-namespace Fake.IO.FileSystem
+namespace Fake.IO
 
 open System.IO
 
@@ -7,10 +7,10 @@ module FileInfo =
     let inline ofPath path = new FileInfo(path)
     
     /// Active Pattern for determining file name.
-    let (|FileInfoFullName|) (f : FileInfo) = f.FullName
+    let (|FullName|) (f : FileInfo) = f.FullName
 
     /// Active Pattern for determining FileInfoNameSections.
-    let (|FileInfoNameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
+    let (|NameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
     
     /// Checks if the two files are byte-to-byte equal.
     let contentIsEqualTo (first : FileInfo) (second : FileInfo) = 

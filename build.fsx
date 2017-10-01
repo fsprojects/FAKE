@@ -26,16 +26,20 @@ open System.Reflection
 #endif
 
 // TODO Remove '#load' once released
-#load "src/app/Fake.IO.FileSystem/File.fs"
+#load "src/app/Fake.IO.FileSystem/Path.fs"
+#load "src/app/Fake.IO.FileSystem/FileInfo.fs"
+#load "src/app/Fake.IO.FileSystem/FileSystemOperators.fs"
 #load "src/app/Fake.IO.FileSystem/DirectoryInfo.fs"
+#load "src/app/Fake.IO.FileSystem/File.fs"
 #load "src/app/Fake.IO.FileSystem/Directory.fs"
+#load "src/app/Fake.IO.FileSystem/FileSystemInfo.fs"
+#load "src/app/Fake.IO.FileSystem/Shell.fs"
 
 open System.IO
 open Fake.Core
 open Fake.Tools
 open Fake.IO
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 open Fake.Core.Globbing.Operators
 open Fake.Windows
 open Fake.DotNet
@@ -139,7 +143,7 @@ Target.Create "RenameFSharpCompilerService" (fun _ ->
     for framework in ["netstandard1.6"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
-      File.Delete targetFile
+      File.delete targetFile
 
 #if DOTNETCORE
       let reader =

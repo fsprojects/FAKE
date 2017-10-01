@@ -1,6 +1,6 @@
 /// NOTE: Maybe this should be an extra module?
 /// Contains basic templating functions. Used in other helpers.
-module Fake.IO.FileSystem.Templates
+module Fake.IO.Templates
 
 /// Loads all templates (lazy - line by line!)
 let loadTemplates seq = Seq.map (fun fileName -> fileName, File.read fileName) seq

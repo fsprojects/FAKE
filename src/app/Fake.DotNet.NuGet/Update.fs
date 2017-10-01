@@ -1,8 +1,8 @@
 /// Contains tasks for updating NuGet packages including assembly hint paths in the project files using the [nuget.exe update command](http://docs.nuget.org/docs/reference/command-line-reference#Update_Command).
 module Fake.DotNet.NuGet.Update
 
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.BuildServer
 open Fake.Core.Process

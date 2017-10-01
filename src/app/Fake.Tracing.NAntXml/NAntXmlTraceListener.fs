@@ -1,7 +1,7 @@
 ﻿/// This module contains function which allow to trace build output
 module Fake.Tracing.NAntXml
 open Fake.Core
-open Fake.IO.FileSystem
+open Fake.IO
 open Fake.Core.BuildServer
 
 open System

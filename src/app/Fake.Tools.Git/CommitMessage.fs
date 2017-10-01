@@ -2,8 +2,8 @@
 module Fake.Tools.Git.CommitMessage
 
 open Fake.Tools.Git.CommandHelper
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open System
 open System.Text

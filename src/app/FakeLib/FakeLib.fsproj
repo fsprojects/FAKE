@@ -118,7 +118,7 @@
     <Compile Include="..\Fake.IO.FileSystem\FileInfo.fs">
       <Link>Fake.IO.FileSystem/FileInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Operators.fs">
+    <Compile Include="..\Fake.IO.FileSystem\FileSystemOperators.fs">
       <Link>Fake.IO.FileSystem/Operators.fs</Link>
     </Compile>
     <Compile Include="..\Fake.IO.FileSystem\DirectoryInfo.fs">
