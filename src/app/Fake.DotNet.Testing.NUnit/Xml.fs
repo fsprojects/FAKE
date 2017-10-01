@@ -217,4 +217,4 @@ module internal NUnitMerge =
         getXDocs directory filter
         |> mergeXDocs
         |> sprintf "%O"
-        |> File.WriteStringToFile false outfile
+        |> File.writeString false outfile

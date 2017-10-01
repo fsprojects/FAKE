@@ -115,11 +115,29 @@
     <Compile Include="..\Fake.IO.FileSystem\Path.fs">
       <Link>Fake.IO.FileSystem/Path.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\FileSystem.fs">
-      <Link>Fake.IO.FileSystem/FileSystem.fs</Link>
+    <Compile Include="..\Fake.IO.FileSystem\FileInfo.fs">
+      <Link>Fake.IO.FileSystem/FileInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\FileUtils.fs">
-      <Link>Fake.IO.FileSystem/FileUtils.fs</Link>
+    <Compile Include="..\Fake.IO.FileSystem\Operators.fs">
+      <Link>Fake.IO.FileSystem/Operators.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\DirectoryInfo.fs">
+      <Link>Fake.IO.FileSystem/DirectoryInfo.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\File.fs">
+      <Link>Fake.IO.FileSystem/File.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\Directory.fs">
+      <Link>Fake.IO.FileSystem/Directory.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\FileSystemInfo.fs">
+      <Link>Fake.IO.FileSystem/FileSystemInfo.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\Shell.fs">
+      <Link>Fake.IO.FileSystem/Shell.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\Templates.fs">
+      <Link>Fake.IO.FileSystem/Templates.fs</Link>
     </Compile>
     <Compile Include="..\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
       <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>

@@ -280,4 +280,4 @@ let PaketTemplate setParams =
                    | Some v -> v
                    | _ -> "paket.template"
 
-    File.WriteStringToFile false filePath (Rendering.createLines parameters)
+    File.writeString false filePath (Rendering.createLines parameters)

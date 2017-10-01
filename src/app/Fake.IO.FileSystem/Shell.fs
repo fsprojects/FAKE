@@ -6,9 +6,6 @@ open Fake.Core
 open Fake.IO.FileSystem.Operators
 open Fake.IO.FileSystem.FileSystemInfo
 
-module FileFilter =
-    let allFiles f = true
-
 module Shell =
 
     /// Copies a single file to the target and overwrites the existing file.
@@ -185,9 +182,6 @@ module Shell =
     /// Deletes multiple directories
     let DeleteDirs dirs = Seq.iter Directory.delete dirs
 
-    /// Compat
-    let ensureDirectory dir = Directory.ensure dir
-
     /// Appends all given files to one file.
     /// ## Parameters
     ///
@@ -198,7 +192,7 @@ module Shell =
         if fi.Exists then failwithf "File %s already exists." (fi.FullName)
         use file = fi.Open(FileMode.Create)
         use writer = new StreamWriter(file, encoding)
-        files |> Seq.iter (File.Read >> Seq.iter writer.WriteLine)
+        files |> Seq.iter (File.read >> Seq.iter writer.WriteLine)
                      //() //TODO: logVerbosefn "Appending %s to %s" file fi.FullName
                      //)
 
@@ -274,7 +268,7 @@ module Shell =
 
     /// Copies the file structure recursively.
     let CopyRecursive dir outputDir overWrite = DirectoryInfo.copyRecursiveTo overWrite (DirectoryInfo.ofPath outputDir) (DirectoryInfo.ofPath dir)
-    let CopyRecursiveTo overWrite outputDir dir  = DirectoryInfo.copyRecursiveTo overWrite (DirectoryInfo.ofPath outputDir) (DirectoryInfo.ofPath dir)
+    let inline CopyRecursiveTo overWrite outputDir dir  = CopyRecursive dir outputDir overWrite
 
     type CopyRecursiveMethod =
     | Overwrite
@@ -294,16 +288,16 @@ module Shell =
     let CopyRecursive2 method dir outputDir =
         let dirInfo = DirectoryInfo.ofPath dir
         let outputDirInfo = DirectoryInfo.ofPath outputDir   
-        let cr2 = DirectoryInfo.copyRecursive2 dirInfo outputDirInfo false
+        let copyRecursiveWithFilter f = DirectoryInfo.copyRecursiveToWithFilter false f outputDirInfo dirInfo
         match method with
         | Overwrite -> DirectoryInfo.copyRecursiveTo true dirInfo outputDirInfo
         | NoOverwrite -> DirectoryInfo.copyRecursiveTo false dirInfo outputDirInfo
-        | Skip -> cr2 <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
+        | Skip -> copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
         | IncludePattern(pattern) ->
-            cr2 <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern)
+            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern)
         | ExcludePattern(pattern) ->
-            cr2 <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern) |> not
-        | Filter(f) -> cr2 f
+            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern) |> not
+        | Filter(f) -> copyRecursiveWithFilter f
 
     /// Moves a single file to the target and overwrites the existing file.
     /// ## Parameters
@@ -355,15 +349,15 @@ module Shell =
 
 
     /// Deletes a file if it exists
-    let rm fileName = File.DeleteFile fileName
+    let rm fileName = File.delete fileName
 
     /// Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files
     let rm_rf f =
         if Directory.Exists f then Directory.delete f
-        else File.Delete f
+        else File.delete f
 
     /// Creates a directory if it doesn't exist.
-    let mkdir path = Directory.CreateDir path
+    let mkdir path = Directory.create path
 
     /// <summary>
     /// Like "cp -r" in a shell. Copies a file or directory recursively.
@@ -371,7 +365,7 @@ module Shell =
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
     let cp_r src dest =
-        if Directory.Exists src then CopyDir dest src FileFilter.allFiles
+        if Directory.Exists src then CopyDir dest src (fun _ -> true)
         else CopyFile dest src
 
     /// Like "cp" in a shell. Copies a single file.
@@ -404,30 +398,3 @@ module Shell =
     /// <param name="src">The source</param>
     /// <param name="dest">The destination</param>
     let mv src dest = MoveFile src dest
-
-/// NOTE: Maybe this should be an extra module?
-/// Contains basic templating functions. Used in other helpers.
-module Templates =
-
-    /// Loads all templates (lazy - line by line!)
-    let loadTemplates seq = Seq.map (fun fileName -> fileName, File.Read fileName) seq
-
-    /// Replaces a bunch of the keywords in all files (lazy - line by line!)
-    let replaceKeywords replacements =
-        Seq.map (fun (fileName, file) ->
-            fileName,
-            file |> Seq.map (fun (line : string) ->
-                        let mutable sb = new System.Text.StringBuilder(line)
-                        for (k : string, r : string) in replacements do
-                            sb <- sb.Replace(k, r)
-                        sb.ToString()))
-
-    /// Saves all files (lazy - file by file!)
-    let saveFiles = Seq.iter (fun (fileName, file) -> File.WriteToFile false fileName (Seq.toList file))
-
-    /// Replaces the templates with the given replacements
-    let processTemplates replacements files =
-        files
-        |> loadTemplates
-        |> replaceKeywords replacements
-        |> saveFiles

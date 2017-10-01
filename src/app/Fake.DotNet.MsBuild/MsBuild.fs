@@ -71,7 +71,7 @@ let msBuildExe =
     ///     * just a directory
     /// if just a directory we can make it the path to a file by Path-Combining the tool name to the directory.
     let exactPathOrBinaryOnPath tool input =
-        if Directory.isDirectory input && Directory.Exists input
+        if Path.isDirectory input && Directory.Exists input
         then input </> tool
         else input
 

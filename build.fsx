@@ -25,6 +25,11 @@ open System.Reflection
 
 #endif
 
+// TODO Remove '#load' once released
+#load "src/app/Fake.IO.FileSystem/File.fs"
+#load "src/app/Fake.IO.FileSystem/DirectoryInfo.fs"
+#load "src/app/Fake.IO.FileSystem/Directory.fs"
+
 open System.IO
 open Fake.Core
 open Fake.Tools
@@ -120,7 +125,7 @@ Target.Create "Clean" (fun _ ->
     //-- "src/*/*/obj/*.props"
     //-- "src/*/*/obj/*.paket.references.cached"
     //-- "src/*/*/obj/*.NuGet.Config"
-    |> File.DeleteFiles
+    |> File.deleteAll
 
     Shell.CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -134,7 +139,7 @@ Target.Create "RenameFSharpCompilerService" (fun _ ->
     for framework in ["netstandard1.6"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
-      File.DeleteFile targetFile
+      File.Delete targetFile
 
 #if DOTNETCORE
       let reader =
@@ -293,8 +298,8 @@ Target.Create "GenerateDocs" (fun _ ->
     let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
     Shell.CopyDir (docsDir) "help/content" FileFilter.allFiles
-    File.WriteStringToFile false "./docs/.nojekyll" ""
-    File.WriteStringToFile false "./docs/CNAME" "fake.build"
+    File.writeString false "./docs/.nojekyll" ""
+    File.writeString false "./docs/CNAME" "fake.build"
     //CopyDir (docsDir @@ "pics") "help/pics" FileFilter.allFiles
 
     Shell.Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
@@ -331,7 +336,7 @@ Target.Create "GenerateDocs" (fun _ ->
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
-    Shell.ensureDirectory apidocsDir
+    Directory.ensure apidocsDir
     dllFiles
     |> FSFormatting.CreateDocsForDlls (fun s -> 
         { s with 
@@ -482,7 +487,7 @@ Target.Create "SourceLink" (fun _ ->
 )
 
 Target.Create "ILRepack" (fun _ ->
-    Directory.CreateDir buildMergedDir
+    Directory.ensure buildMergedDir
 
     let internalizeIn filename =
         let toPack =
@@ -503,7 +508,7 @@ Target.Create "ILRepack" (fun _ ->
     internalizeIn "FAKE.exe"
 
     !! (buildDir </> "FSharp.Compiler.Service.**")
-    |> Seq.iter File.DeleteFile
+    |> Seq.iter File.delete
 
     Shell.DeleteDir buildMergedDir
 )
@@ -536,7 +541,7 @@ Target.Create "CreateNuGet" (fun _ ->
         Shell.CleanDir nugetLibDir
         Shell.DeleteDir nugetLibDir
 
-        File.DeleteFile "./build/FAKE.Gallio/Gallio.dll"
+        File.delete "./build/FAKE.Gallio/Gallio.dll"
 
         let deleteFCS _ =
           //!! (dir </> "FSharp.Compiler.Service.**")
@@ -564,7 +569,7 @@ Target.Create "CreateNuGet" (fun _ ->
         | _ ->
             Shell.CopyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
             Shell.CopyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.srcsv") |> File.DeleteFiles
+        !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
 
         let setParams (p:NuGet.NuGet.NuGetParams) =
             {p with
@@ -627,7 +632,7 @@ Target.Create "DotnetRestore" (fun _ ->
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
-    Shell.ensureDirectory t
+    Directory.ensure t
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
         |> ignore
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore"
@@ -640,7 +645,7 @@ Target.Create "DotnetRestore" (fun _ ->
     !! "lib/nupgks/**/*.nupkg"
     |> Seq.iter (fun file ->
         let dir = nugetDncDir //@@ "dotnetcore"
-        Shell.ensureDirectory dir
+        Directory.ensure dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
     let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
@@ -743,7 +748,7 @@ Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
 
 Target.Create "DotnetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
-    Shell.ensureDirectory "nuget/dotnetcore/chocolatey"
+    Directory.ensure "nuget/dotnetcore/chocolatey"
     Choco.PackFromTemplate (fun p ->
         { p with
             PackageId = "fake"
