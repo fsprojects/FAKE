@@ -1,6 +1,5 @@
 using System;
 using Fake;
-using Fake.IO.FileSystem;
 using Machine.Specifications;
 using Test.FAKECore.FileHandling;
 using IOPath = System.IO.Path;

@@ -5,9 +5,6 @@
 
 open System.Reflection
 
-// Remove '#load' once released
-#load "src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs"
-
 #else
 // Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
 #r "packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
