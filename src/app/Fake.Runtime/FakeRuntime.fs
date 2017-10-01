@@ -88,10 +88,10 @@ type AssemblyData =
 let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
- #if DOTNETCORE
-  let framework = Paket.FrameworkIdentifier.DotNetStandard (Paket.DotNetStandardVersion.V1_6)
+#if DOTNETCORE
+  let framework = Paket.FrameworkIdentifier.DotNetStandard (Paket.DotNetStandardVersion.V2_0)
 #else
-  let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_5)
+  let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
 #endif
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
   let parent s = Path.GetDirectoryName s

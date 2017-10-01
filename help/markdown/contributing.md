@@ -52,7 +52,7 @@ to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](
 
 > Note: The vagrant file might be outdated at this time, please help updating it and removing this banner.
 
-* Windows Subsystem for Linux / Ubuntu:
+* Ubuntu / Windows Subsystem for Linux:
   - Install Mono, as of today 2017-09-30 you need at least alpha to have the msbuild package (http://www.mono-project.com/download/beta/#download-lin)
   - `apt-get install msbuild mono-complete`
   - `apt-cache search libunwind`

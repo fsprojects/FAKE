@@ -85,7 +85,7 @@ let CDataElement elementName data (writer : XmlWriter) =
 /// Gets the attribute with the given name from the given XmlNode
 let getAttribute (name : string) (node : #XmlNode) =
     let attribute = node.Attributes.[name]
-    if attribute <> null then attribute.Value else null
+    if not (isNull attribute) then attribute.Value else null
 
 /// Gets a sequence of all child nodes for the given XmlNode
 let getChilds (node : #XmlNode) =
@@ -129,7 +129,7 @@ let XPathReplace xpath value (doc : XmlDocument) =
 /// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
 let XPathReplaceInnerText xpath innerTextValue (doc : XmlDocument) =
     let node = doc.SelectSingleNode xpath
-    if node = null then failwithf "XML node '%s' not found" xpath
+    if isNull node then failwithf "XML node '%s' not found" xpath
     else
         node.InnerText <- innerTextValue
         doc

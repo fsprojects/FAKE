@@ -69,6 +69,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
   let printDetails = verbLevel > 0
   if verbLevel > 1 then
     Paket.Logging.verbose <- true
+    Paket.Logging.verboseWarnings <- true
   Paket.Utils.autoAnswer <- Some true
   use consoleTrace = Paket.Logging.event.Publish |> Observable.subscribe Paket.Logging.traceToConsole
 
