@@ -60,6 +60,7 @@ tools/SourceLink.Fake
 
 release.cmd
 release.sh
+*.pfx
 Samples/typescript/out/
 help/markdown/RELEASE_NOTES.md
 paket.exe

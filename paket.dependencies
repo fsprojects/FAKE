@@ -1,4 +1,4 @@
-version 5.100.2
+version 5.101.0
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
