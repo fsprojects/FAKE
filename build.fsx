@@ -382,7 +382,7 @@ Target.Create "BootstrapTest" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
-    let test clearCache script =
+    let test clearCache (script:string) =
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
@@ -614,6 +614,7 @@ let appDir = srcDir</>"app"
 
 let netCoreProjs =
     !! "src/app/Fake.Core.*/*.fsproj"
+    ++ "src/app/Fake.Api.*/*.fsproj"
     ++ "src/app/Fake.DotNet.*/*.fsproj"
     ++ "src/app/Fake.Windows.*/*.fsproj"
     ++ "src/app/Fake.IO.*/*.fsproj"

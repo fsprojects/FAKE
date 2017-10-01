@@ -3,13 +3,13 @@
   Title = "Namespaces - " + Properties["project-name"];
 }
 
-<h1>@Model.Name</h1>
+<a name="@Model.Name" class="anchor" href="#@Model.Name"><h1>@Model.Name</h1></a>
 
 @foreach (var ns in Model.Namespaces)
 {
   if (ns.Types.Length + ns.Modules.Length > 0)
   {
-    <h2>@ns.Name Namespace</h2>
+    <a name="@ns.Name" class="anchor" href="#@ns.Name"><h2>@ns.Name Namespace</h2></a>
     <div>
       @RenderPart("part-nested", new {
          Types = ns.Types,

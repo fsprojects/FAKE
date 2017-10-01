@@ -2,7 +2,7 @@
 
 ## Requirements to modules
 
-You can use any NuGet packages which are compatible with `netcore10`, for example all packages targeting `netstandard16` or lower.
+You can use any NuGet packages which are compatible with `netcoreapp20`, for example all packages targeting `netstandard20` or lower.
  
 ## Declaring module dependencies
 

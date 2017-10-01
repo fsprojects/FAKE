@@ -270,6 +270,7 @@ module Shell =
     let CopyRecursive dir outputDir overWrite = DirectoryInfo.copyRecursiveTo overWrite (DirectoryInfo.ofPath outputDir) (DirectoryInfo.ofPath dir)
     let inline CopyRecursiveTo overWrite outputDir dir  = CopyRecursive dir outputDir overWrite
 
+    [<NoComparison; NoEquality>]
     type CopyRecursiveMethod =
     | Overwrite
     | NoOverwrite

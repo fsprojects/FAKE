@@ -21,9 +21,13 @@ let isDirectory path =
 let isFile path = isDirectory path |> not
 
 /// Normalizes a filename.
-let normalizeFileName (fileName : string) = 
-    fileName.Replace("\\", Path.DirectorySeparatorChar.ToString()).Replace("/", Path.DirectorySeparatorChar.ToString())
-            .TrimEnd(Path.DirectorySeparatorChar).ToLower()
+let normalizeFileName (fileName : string) =
+    let dirsep = Path.DirectorySeparatorChar.ToString()
+    fileName
+        .Replace("\\", dirsep)
+        .Replace("/", dirsep)
+        .TrimEnd(Path.DirectorySeparatorChar)
+        .ToLower()
 
 
 /// Detects whether the given path does not contains invalid characters.

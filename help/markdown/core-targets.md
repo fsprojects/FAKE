@@ -2,9 +2,11 @@
 
 **Note:  This documentation is for FAKE 5. The old documentation can be found [here](legacy-core-targets.html)! **
 
+[API-Reference](apidocs/fake-core-target.html), [Operators](apidocs/fake-core-targetoperators.html)
+
 ## Listing targets
 
-Not jet available in FAKE 5
+Not yet available in FAKE 5
 
 > Note: This feature still makes sense, but a good CLI has not been found jet, please propose one.
 > For not you can run the target with name '--listTargets' or '-lt'. `fake run build.fsx -t '--list-Targets'`
@@ -16,7 +18,6 @@ FAKE has a special param "target" which can be used to run specific targets in a
 	// include Fake modules, see Fake modules section
 	
 	open Fake.Core
-	open Fake.Core.TargetOperators
 
 	// *** Define Targets ***
 	Target.Create "Clean" (fun _ -> 
@@ -30,6 +31,8 @@ FAKE has a special param "target" which can be used to run specific targets in a
 	Target.Create "Deploy" (fun _ -> 
 		trace " --- Deploying app --- "
 	)
+
+	open Fake.Core.TargetOperators
 
 	// *** Define Dependencies ***
 	"Clean"

@@ -31,7 +31,7 @@
   var nestTypes = (IEnumerable<FSharp.MetadataFormat.Type>)Model.Module.NestedTypes;
 }
 
-<h1>@Model.Module.Name</h1>
+<a name="@Model.Module.Name" class="anchor" href="#@Model.Module.Name"><h1>@Model.Module.Name</h1></a>
 <div class="xmldoc">
   @foreach (var sec in comment.Sections) {
     // XML comment for the type has multiple sections that can be labelled

@@ -46,7 +46,7 @@ module File =
     let deleteAll files = Seq.iter delete files
 
     /// Active Pattern for determining file extension.
-    let (|EndsWith|_|) extension (file : string) = 
+    let (|EndsWith|_|) (extension : string) (file : string) = 
         if file.EndsWith extension then Some()
         else None
         
