@@ -2,6 +2,7 @@ FSharp.Core
 Paket.Core
 Mono.Web.Xdt
 Mono.Cecil
+Octokit
 Nuget.Core
 Newtonsoft.Json
 System.Net.Http
