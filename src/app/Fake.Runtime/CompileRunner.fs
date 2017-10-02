@@ -95,7 +95,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
-        [co.AdditionalArguments; [ "--fullpaths"; "--simpleresolution"; "--targetprofile:netcore"; "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
+        [co.AdditionalArguments; [ "--fullpaths"; "--simpleresolution"; "--targetprofile:netstandard"; "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
         |> List.concat
         |> FsiOptions.ofArgs
         |> fun f ->
