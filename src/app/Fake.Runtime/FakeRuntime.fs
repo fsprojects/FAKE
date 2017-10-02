@@ -120,7 +120,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     let source =
       match versions.TryGetValue(version) with
       | true, v when v.Length > 0 -> v |> Seq.head
-      | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but paket needs this package for compilation" packageName version groupName    
+      | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
     
     let _, extractedFolder =
       Paket.NuGet.DownloadAndExtractPackage
