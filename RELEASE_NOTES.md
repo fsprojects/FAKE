@@ -2,6 +2,8 @@
 * BUILD: Remove hardcoded paths to FSharpTargets, replace with FSharp.Compiler.Tools - https://github.com/fsharp/FAKE/pull/1693
 * ENHANCEMENT: Fake.IO.FileSystem Rework, functionality moved from `Fake.IO.FileSystem` to `Fake.IO` and APIs have been adapted to the new design guideline - https://github.com/fsharp/FAKE/pull/1670
 * PERFORMANCE: Fake should be a lot faster now - https://github.com/fsharp/FAKE/pull/1694
+* ENHANCEMENT: Scripts are now compiled agains netstandard20 which allows a lot more APIs to be used - https://github.com/fsharp/FAKE/pull/1694
+* DOCS: A lot of 404 pages have been filled in the fake.build website - https://github.com/fsharp/FAKE/pull/1694
 
 #### 5.0.0-beta003 - 26.09.2017
 * ENHANCEMENT: Fix some migration warnings, Docs and bugs - https://github.com/fsharp/FAKE/pull/1686
