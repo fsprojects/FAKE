@@ -11,7 +11,7 @@ addons:
       - libunwind8
 
 before_script:
-  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-alpha018/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta004/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
   - mkdir fake-dotnetcore
   - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
   - export PATH=$PATH:$PWD/fake-dotnetcore/
