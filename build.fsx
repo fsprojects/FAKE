@@ -22,17 +22,8 @@ open System.Reflection
 
 #endif
 
-// TODO Remove '#load' once released
-#load "src/app/Fake.IO.FileSystem/Path.fs"
-#load "src/app/Fake.IO.FileSystem/FileInfo.fs"
-#load "src/app/Fake.IO.FileSystem/FileSystemOperators.fs"
-#load "src/app/Fake.IO.FileSystem/DirectoryInfo.fs"
-#load "src/app/Fake.IO.FileSystem/File.fs"
-#load "src/app/Fake.IO.FileSystem/Directory.fs"
-#load "src/app/Fake.IO.FileSystem/FileSystemInfo.fs"
-#load "src/app/Fake.IO.FileSystem/Shell.fs"
-
 open System.IO
+open Fake.Api
 open Fake.Core
 open Fake.Tools
 open Fake.IO
@@ -891,10 +882,6 @@ Target.Create "ReleaseDocs" (fun _ ->
     Git.Commit.Commit "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
     Git.Branches.push "gh-pages"
 )
-
-// Remove '#load' once released
-#load "src/app/Fake.Api.GitHub/GitHub.fs"
-open Fake.Api
 
 Target.Create "FastRelease" (fun _ ->
     
