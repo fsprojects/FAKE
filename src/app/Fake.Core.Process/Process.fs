@@ -17,7 +17,7 @@ let kill (proc : Process) =
     Trace.tracefn "Trying to kill process %s (Id = %d)" proc.ProcessName proc.Id
     try 
         proc.Kill()
-    with exn -> ()
+    with ex -> Trace.logfn "Killing %s failed with %s" proc.ProcessName ex.Message
 
 let private killCreatedProcessesVar = "Fake.Core.Process.killCreatedProcesses"
 let private getKillCreatedProcesses, _, public setKillCreatedProcesses = 
@@ -49,7 +49,7 @@ type ProcessList() =
 
                         Trace.logfn "Trying to kill %s" proc.ProcessName
                         kill proc
-                    with exn -> Trace.logfn "Killing %s failed with %s" proc.ProcessName exn.Message                              
+                    with exn -> Trace.logfn "Killing %s failed with %s" proc.ProcessName exn.Message
             with exn -> ()
         startedProcesses.Clear()
     member x.KillAll() = killProcesses()
@@ -178,7 +178,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
         if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
             Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
         start proc
-    with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
+    with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
     if silent then 
         proc.BeginErrorReadLine()
         proc.BeginOutputReadLine()
@@ -283,7 +283,7 @@ let fireAndForget configProcessStartInfoF =
     configProcessStartInfoF proc.StartInfo
     try 
         start proc
-    with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
+    with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
 
 /// Runs the given process, waits for its completion and returns if it succeeded.
 let directExec configProcessStartInfoF = 
@@ -292,7 +292,7 @@ let directExec configProcessStartInfoF =
     configProcessStartInfoF proc.StartInfo
     try 
         start proc
-    with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
+    with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
     proc.WaitForExit()
     proc.ExitCode = 0
 

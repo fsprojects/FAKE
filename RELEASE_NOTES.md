@@ -1,3 +1,8 @@
+#### 5.0.0-beta005 - 2017-10-02
+* ENHANCEMENT: Improve error messages of Fake.Core.Process - https://github.com/fsharp/FAKE/pull/1696
+* BUGFIX: `fake --version` was printing the wrong version - https://github.com/fsharp/FAKE/pull/1696
+* BUGFIX: `Fake.Api.GitHub` was not part of FakeLib - https://github.com/fsharp/FAKE/pull/1696
+
 #### 5.0.0-beta004 - 2017-10-02
 * BUILD: Remove hardcoded paths to FSharpTargets, replace with FSharp.Compiler.Tools - https://github.com/fsharp/FAKE/pull/1693
 * ENHANCEMENT: Fake.IO.FileSystem Rework, functionality moved from `Fake.IO.FileSystem` to `Fake.IO` and APIs have been adapted to the new design guideline - https://github.com/fsharp/FAKE/pull/1670

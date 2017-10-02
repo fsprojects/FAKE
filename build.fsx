@@ -22,17 +22,8 @@ open System.Reflection
 
 #endif
 
-// TODO Remove '#load' once released
-#load "src/app/Fake.IO.FileSystem/Path.fs"
-#load "src/app/Fake.IO.FileSystem/FileInfo.fs"
-#load "src/app/Fake.IO.FileSystem/FileSystemOperators.fs"
-#load "src/app/Fake.IO.FileSystem/DirectoryInfo.fs"
-#load "src/app/Fake.IO.FileSystem/File.fs"
-#load "src/app/Fake.IO.FileSystem/Directory.fs"
-#load "src/app/Fake.IO.FileSystem/FileSystemInfo.fs"
-#load "src/app/Fake.IO.FileSystem/Shell.fs"
-
 open System.IO
+open Fake.Api
 open Fake.Core
 open Fake.Tools
 open Fake.IO
@@ -670,7 +661,7 @@ Target.Create "DotnetRestore" (fun _ ->
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
-Target.Create "DotnetPackage" (fun _ ->
+Target.Create "DotnetPackage_" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     Environment.setEnvironVar "Version" release.NugetVersion
@@ -892,10 +883,6 @@ Target.Create "ReleaseDocs" (fun _ ->
     Git.Branches.push "gh-pages"
 )
 
-// Remove '#load' once released
-#load "src/app/Fake.Api.GitHub/GitHub.fs"
-open Fake.Api
-
 Target.Create "FastRelease" (fun _ ->
     
     Git.Staging.StageAll ""
@@ -950,6 +937,7 @@ Target.Create "Default" ignore
 Target.Create "StartDnc" ignore
 Target.Create "Release" ignore
 Target.Create "BuildSolution" ignore
+Target.Create "DotnetPackage" ignore
 Target.Create "AfterBuild" ignore
 
 open Fake.Core.TargetOperators
@@ -960,6 +948,9 @@ open Fake.Core.TargetOperators
     ?=> "StartDnc"
     ==> "InstallDotnetCore"
     ==> "DownloadPaket"
+    ==> "SetAssemblyInfo"
+    ==> "DotnetPackage_"
+    ==> "UnskipAndRevertAssemblyInfo"
     ==> "DotnetPackage"
 
 // Full framework build
