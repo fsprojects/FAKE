@@ -68,61 +68,61 @@
 													<a href="fake-fake5-modules.html">Modules</a>
 													<ul>
 														<li>
-															<a href="404.html">Core</a>
+															<a href="core.html">Core</a>
 															<ul>
 																<li><a href="core-targets.html">Targets</a></li>
-																<li><a href="404.html">Globbing</a></li>
-																<li><a href="404.html">Environment</a></li>
-																<li><a href="404.html">Process</a></li>
-																<li><a href="404.html">String</a></li>
-																<li><a href="404.html">BuildServer</a></li>
-																<li><a href="404.html">Tracing</a></li>
-																<li><a href="404.html">Context</a></li>
-																<li><a href="404.html">Xml</a></li>
-																<li><a href="404.html">Tasks</a></li>
+																<li><a href="apidocs/fake-core-globbing-operators.html">Globbing</a></li>
+																<li><a href="apidocs/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="apidocs/fake-core-process.html">Process</a></li>
+																<li><a href="apidocs/fake-core-string.html">String</a></li>
+																<li><a href="apidocs/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="apidocs/fake-core-trace.html">Tracing</a></li>
+																<li><a href="apidocs/fake-core-context.html">Context</a></li>
+																<li><a href="apidocs/fake-core-xml.html">Xml</a></li>
+																<li><a href="apidocs/fake-core-taskrunner.html">Tasks</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">IO</a>
+															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
-																<li><a href="404.html">FileSystem</a></li>
-																<li><a href="404.html">Zip</a></li>
+																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">DotNet</a>
+															<a href="apidocs/index.html#Fake.DotNet">DotNet</a>
 															<ul>
-																<li><a href="404.html">Cli</a></li>
+																<li><a href="apidocs/fake-dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="404.html">MsBuild</a></li>
-																<li><a href="404.html">Testing - NUnit</a></li>
-																<li><a href="404.html">Testing - MSpec</a></li>
-																<li><a href="404.html">Testing - XUnit2</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
-																<li><a href="404.html">Paket</a></li>
+																<li><a href="apidocs/fake-dotnet-paket.html">Paket</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">Tools</a>
+															<a href="apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
-																<li><a href="404.html">Git</a></li>
+																<li><a href="apidocs/index.html#Fake.Tools.Git">Git</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">Windows</a>
+															<a href="apidocs/index.html#Fake.Windows">Windows</a>
 															<ul>
 																<li><a href="windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">Testing</a>
+															<a href="apidocs/index.html#Fake.Testing">Testing</a>
 															<ul>
 																<li><a href="testing-sonarqube.html">SonarQube</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">Legacy / Not Migrated</a>
+															<a href="apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
@@ -138,7 +138,7 @@
 															</ul>
 														</li>
 														<li>
-															<a href="404.html">Legacy / Not Migrated (2)</a>
+															<a href="apidocs/index.html#Fake">Legacy / Not Migrated (2)</a>
 															<ul>
 																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
@@ -242,6 +242,20 @@ to automatically deploy a preconfigured virtual machine. See the <a href="vagran
 <blockquote>
 <p>Note: The vagrant file might be outdated at this time, please help updating it and removing this banner.</p>
 </blockquote>
+<ul>
+<li>
+Ubuntu / Windows Subsystem for Linux:
+<ul>
+<li>Install Mono, as of today 2017-09-30 you need at least alpha to have the msbuild package (<a href="http://www.mono-project.com/download/beta/#download-lin)">http://www.mono-project.com/download/beta/#download-lin)</a></li>
+<li><code>apt-get install msbuild mono-complete</code></li>
+<li><code>apt-cache search libunwind</code></li>
+<li><code># apt-get Install the libunwind runtime (one of the search results)</code></li>
+<li><code>apt-cache search libcurl # Install</code></li>
+<li><code># apt-get Install the libcurl library (one of the search results)</code></li>
+<li><code>./build.sh</code></li>
+</ul>
+</li>
+</ul>
 <h3><a name="Programming" class="anchor" href="#Programming">Programming</a></h3>
 <ul>
 <li><p>Checkout the <code>master</code> branch.</p></li>
@@ -298,7 +312,13 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 <p>We <a href="fake-fake5-learn-more.html">learned from our mistakes</a>, so we use the following guidelines, <strong>please read them very carefully</strong> (ask if you don't understand any rule):</p>
 <ul>
 <li>AutoOpen is no longer used</li>
-<li><p>we replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></p></li>
+<li>
+<p>We replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></p>
+<ul>
+<li>Use Verbs as much as possible for functions</li>
+<li>In order, to have a more consistent API we propose to always use camelCase naming for functions</li>
+</ul>
+</li>
 <li>
 <p>We assume the caller is not opening the module but only the global namespaces <code>Fake.Core</code>, <code>Fake.IO</code>, ...
 and make sure the code looks nice and structured on the caller side.</p>
@@ -360,8 +380,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 										<ul class="divided">
 											<li><a href="fake-gettingstarted.html">Getting started</a></li>
 											<li><a href="fake-fake5-modules.html">Modules</a></li>
-											<li><a href="404.html">FAKE Header</a></li>
-											<li><a href="404.html">Git</a></li>
+											<li><a href="fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
 										</ul>
 									</section>
 
@@ -381,7 +400,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 										</ul>
 									</section>
 
-								<!-- Links -->
+								<!-- Links 
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -390,7 +409,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 											<li><a href="404.html">Tutorial 3</a></li>
 											<li><a href="404.html">Tutorial 4</a></li>
 										</ul>
-									</section>
+									</section>-->
 
 							</div>
 							<div class="6u 12u(mobile)">

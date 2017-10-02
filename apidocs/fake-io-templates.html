@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>DirectoryInfo - FAKE - F# Make</title>
+		<title>Templates - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -67,61 +67,61 @@
 													<a href="../fake-fake5-modules.html">Modules</a>
 													<ul>
 														<li>
-															<a href="../404.html">Core</a>
+															<a href="../core.html">Core</a>
 															<ul>
 																<li><a href="../core-targets.html">Targets</a></li>
-																<li><a href="../404.html">Globbing</a></li>
-																<li><a href="../404.html">Environment</a></li>
-																<li><a href="../404.html">Process</a></li>
-																<li><a href="../404.html">String</a></li>
-																<li><a href="../404.html">BuildServer</a></li>
-																<li><a href="../404.html">Tracing</a></li>
-																<li><a href="../404.html">Context</a></li>
-																<li><a href="../404.html">Xml</a></li>
-																<li><a href="../404.html">Tasks</a></li>
+																<li><a href="../apidocs/fake-core-globbing-operators.html">Globbing</a></li>
+																<li><a href="../apidocs/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="../apidocs/fake-core-process.html">Process</a></li>
+																<li><a href="../apidocs/fake-core-string.html">String</a></li>
+																<li><a href="../apidocs/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="../apidocs/fake-core-trace.html">Tracing</a></li>
+																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
+																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
+																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">IO</a>
+															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
-																<li><a href="../404.html">FileSystem</a></li>
-																<li><a href="../404.html">Zip</a></li>
+																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">DotNet</a>
+															<a href="../apidocs/index.html#Fake.DotNet">DotNet</a>
 															<ul>
-																<li><a href="../404.html">Cli</a></li>
+																<li><a href="../apidocs/fake-dotnet-cli.html">Cli</a></li>
 																<li><a href="../dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="../404.html">MsBuild</a></li>
-																<li><a href="../404.html">Testing - NUnit</a></li>
-																<li><a href="../404.html">Testing - MSpec</a></li>
-																<li><a href="../404.html">Testing - XUnit2</a></li>
+																<li><a href="../apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
-																<li><a href="../404.html">Paket</a></li>
+																<li><a href="../apidocs/fake-dotnet-paket.html">Paket</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">Tools</a>
+															<a href="../apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
-																<li><a href="../404.html">Git</a></li>
+																<li><a href="../apidocs/index.html#Fake.Tools.Git">Git</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">Windows</a>
+															<a href="../apidocs/index.html#Fake.Windows">Windows</a>
 															<ul>
 																<li><a href="../windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">Testing</a>
+															<a href="../apidocs/index.html#Fake.Testing">Testing</a>
 															<ul>
 																<li><a href="../testing-sonarqube.html">SonarQube</a></li>
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">Legacy / Not Migrated</a>
+															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
@@ -137,7 +137,7 @@
 															</ul>
 														</li>
 														<li>
-															<a href="../404.html">Legacy / Not Migrated (2)</a>
+															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated (2)</a>
 															<ul>
 																<li><a href="../todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="../todo-fsc.html">DotNet.Fsc</a></li>
@@ -180,13 +180,16 @@
 
 
 
-<h1>DirectoryInfo</h1>
+<a name="Templates" class="anchor" href="#Templates"><h1>Templates</h1></a>
 <div class="xmldoc">
+<p>NOTE: Maybe this should be an extra module?
+Contains basic templating functions. Used in other helpers.</p>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
 
-  <h3>Functions and values</h3>
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
   <table class="table table-bordered member-list">
     <thead>
       <tr><td>Function or value</td><td>Description</td></tr>
@@ -195,19 +198,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1586', 1586)" onmouseover="showTip(event, '1586', 1586)">
-            containsFile fileInfo dir
+          <code onmouseout="hideTip(event, '1677', 1677)" onmouseover="showTip(event, '1677', 1677)">
+            loadTemplates seq
           </code>
-          <div class="tip" id="1586">
-            <strong>Signature:</strong> fileInfo:FileInfo -&gt; dir:DirectoryInfo -&gt; bool<br />
+          <div class="tip" id="1677">
+            <strong>Signature:</strong> seq:seq&lt;string&gt; -&gt; seq&lt;string * seq&lt;string&gt;&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L61-61" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L6-6" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Checks if the file is in a subfolder of the dir.</p>
+          <p>Loads all templates (lazy - line by line!)</p>
 
 
         </td>
@@ -215,19 +218,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1587', 1587)" onmouseover="showTip(event, '1587', 1587)">
-            copyRecursive dir outputDir overwrite
+          <code onmouseout="hideTip(event, '1678', 1678)" onmouseover="showTip(event, '1678', 1678)">
+            processTemplates replacements files
           </code>
-          <div class="tip" id="1587">
-            <strong>Signature:</strong> dir:DirectoryInfo -&gt; outputDir:DirectoryInfo -&gt; overwrite:bool -&gt; string list<br />
+          <div class="tip" id="1678">
+            <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L118-118" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L22-22" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Copies the file structure recursively.</p>
+          <p>Replaces the templates with the given replacements</p>
 
 
         </td>
@@ -235,19 +238,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1588', 1588)" onmouseover="showTip(event, '1588', 1588)">
-            copyRecursive2 (...)
+          <code onmouseout="hideTip(event, '1679', 1679)" onmouseover="showTip(event, '1679', 1679)">
+            replaceKeywords replacements
           </code>
-          <div class="tip" id="1588">
-            <strong>Signature:</strong> dir:DirectoryInfo -&gt; outputDir:DirectoryInfo -&gt; overwrite:bool -&gt; filter:(DirectoryInfo -&gt; FileInfo -&gt; bool) -&gt; string list<br />
-                      </div>
+          <div class="tip" id="1679">
+            <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; seq&lt;&#39;?15734 * &#39;?15735&gt; -&gt; seq&lt;&#39;?15734 * seq&lt;string&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?15734, '?15735          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L120-120" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L9-9" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Copies the file structure recursively.</p>
+          <p>Replaces a bunch of the keywords in all files (lazy - line by line!)</p>
 
 
         </td>
@@ -255,239 +258,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1589', 1589)" onmouseover="showTip(event, '1589', 1589)">
-            copyRecursiveTo overwrite outputDir dir
+          <code onmouseout="hideTip(event, '1680', 1680)" onmouseover="showTip(event, '1680', 1680)">
+            saveFiles 
           </code>
-          <div class="tip" id="1589">
-            <strong>Signature:</strong> overwrite:bool -&gt; outputDir:DirectoryInfo -&gt; dir:DirectoryInfo -&gt; string list<br />
+          <div class="tip" id="1680">
+            <strong>Signature:</strong> seq&lt;string * seq&lt;string&gt;&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L116-116" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Templates.fs#L19-19" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Copies the file structure recursively.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1590', 1590)" onmouseover="showTip(event, '1590', 1590)">
-            copyRecursiveTo2 (...)
-          </code>
-          <div class="tip" id="1590">
-            <strong>Signature:</strong> overwrite:bool -&gt; filter:(DirectoryInfo -&gt; FileInfo -&gt; bool) -&gt; outputDir:DirectoryInfo -&gt; dir:DirectoryInfo -&gt; string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L95-95" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Copies the file structure recursively.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1591', 1591)" onmouseover="showTip(event, '1591', 1591)">
-            ensure dir
-          </code>
-          <div class="tip" id="1591">
-            <strong>Signature:</strong> dir:DirectoryInfo -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L68-68" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Ensure that directory chain exists. Create necessary directories if necessary.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1592', 1592)" onmouseover="showTip(event, '1592', 1592)">
-            exists dir
-          </code>
-          <div class="tip" id="1592">
-            <strong>Signature:</strong> dir:DirectoryInfo -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L64-64" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Checks if the directory exists on disk.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1593', 1593)" onmouseover="showTip(event, '1593', 1593)">
-            getDirectories dir
-          </code>
-          <div class="tip" id="1593">
-            <strong>Signature:</strong> dir:DirectoryInfo -&gt; DirectoryInfo []<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L44-44" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Gets all subdirectories of a given directory.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1594', 1594)" onmouseover="showTip(event, '1594', 1594)">
-            getFiles dir
-          </code>
-          <div class="tip" id="1594">
-            <strong>Signature:</strong> dir:DirectoryInfo -&gt; FileInfo []<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L47-47" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Gets all files in the directory.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1595', 1595)" onmouseover="showTip(event, '1595', 1595)">
-            getMatchingFiles pattern dir
-          </code>
-          <div class="tip" id="1595">
-            <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L50-50" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Finds all the files in the directory matching the search pattern.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1596', 1596)" onmouseover="showTip(event, '1596', 1596)">
-            isSubfolderOf dir2 dir1
-          </code>
-          <div class="tip" id="1596">
-            <strong>Signature:</strong> dir2:DirectoryInfo -&gt; dir1:DirectoryInfo -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L55-55" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1597', 1597)" onmouseover="showTip(event, '1597', 1597)">
-            ofPath path
-          </code>
-          <div class="tip" id="1597">
-            <strong>Signature:</strong> path:string -&gt; DirectoryInfo<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L41-41" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Creates a DirectoryInfo for the given path.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1598', 1598)" onmouseover="showTip(event, '1598', 1598)">
-            recursively dirF fileF dir
-          </code>
-          <div class="tip" id="1598">
-            <strong>Signature:</strong> dirF:(DirectoryInfo -&gt; unit) -&gt; fileF:(FileInfo -&gt; unit) -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L73-73" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Performs the given actions on all files and subdirectories</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1599', 1599)" onmouseover="showTip(event, '1599', 1599)">
-            setDirectoryReadOnly readOnly dir
-          </code>
-          <div class="tip" id="1599">
-            <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L84-84" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Sets the directory readonly</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1600', 1600)" onmouseover="showTip(event, '1600', 1600)">
-            SetDirReadOnly readOnly dir
-          </code>
-          <div class="tip" id="1600">
-            <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/FileSystem.fs#L91-91" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Sets all files in the directory readonly.</p>
+          <p>Saves all files (lazy - file by file!)</p>
 
 
         </td>
@@ -515,8 +298,7 @@
 										<ul class="divided">
 											<li><a href="../fake-gettingstarted.html">Getting started</a></li>
 											<li><a href="../fake-fake5-modules.html">Modules</a></li>
-											<li><a href="../404.html">FAKE Header</a></li>
-											<li><a href="../404.html">Git</a></li>
+											<li><a href="../fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
 										</ul>
 									</section>
 
@@ -536,7 +318,7 @@
 										</ul>
 									</section>
 
-								<!-- Links -->
+								<!-- Links 
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -545,7 +327,7 @@
 											<li><a href="../404.html">Tutorial 3</a></li>
 											<li><a href="../404.html">Tutorial 4</a></li>
 										</ul>
-									</section>
+									</section>-->
 
 							</div>
 							<div class="6u 12u(mobile)">
