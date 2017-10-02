@@ -2,8 +2,8 @@
 /// There is also a tutorial about [nuget package restore](../nuget.html) available.
 module Fake.DotNet.NuGet.Restore
 
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.Globbing.Operators
 open Fake.Core.BuildServer

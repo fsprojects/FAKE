@@ -2,8 +2,8 @@
 module Fake.Core.IntegrationTests.TestHelpers
 
 open Fake.Core
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open System
 open NUnit.Framework
 open System

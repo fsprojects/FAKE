@@ -2,8 +2,8 @@
 module Fake.Tools.Git.CommitMessage
 
 open Fake.Tools.Git.CommandHelper
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open System
 open System.Text
@@ -19,7 +19,7 @@ let getCommitMessageFileInfos repositoryDir =
 /// Gets the commit message
 let getCommitMessage repositoryDir =
     match getCommitMessageFileInfos repositoryDir |> List.filter (fun fi -> fi.Exists) with
-    | fi::_ -> File.ReadFileAsString fi.FullName
+    | fi::_ -> File.readAsString fi.FullName
     | _ -> ""
 
 /// Sets the commit message

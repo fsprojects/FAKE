@@ -5,7 +5,7 @@ module Fake.DotNet.PaketTemplate
 open System
 open System.Text
 open Fake.Core
-open Fake.IO.FileSystem
+open Fake.IO
 
 type PaketTemplateType =
     | File
@@ -280,4 +280,4 @@ let PaketTemplate setParams =
                    | Some v -> v
                    | _ -> "paket.template"
 
-    File.WriteStringToFile false filePath (Rendering.createLines parameters)
+    File.writeString false filePath (Rendering.createLines parameters)

@@ -6,17 +6,17 @@ module Fake.FileUtils
 open System.IO
 
 /// Deletes a file if it exists
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.rm`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.rm`")>]
 let rm fileName = DeleteFile fileName
 
 /// Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.rm_rf`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.rm_rf`")>]
 let rm_rf f = 
     if Directory.Exists f then DeleteDir f
     else DeleteFile f
 
 /// Creates a directory if it doesn't exist.
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.mkdir`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.mkdir`")>]
 let mkdir path = CreateDir path
 
 /// <summary>
@@ -24,7 +24,7 @@ let mkdir path = CreateDir path
 /// </summary>
 /// <param name="src">The source</param>
 /// <param name="dest">The destination</param>
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.cp_r`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.cp_r`")>]
 let cp_r src dest = 
     if Directory.Exists src then CopyDir dest src allFiles
     else CopyFile dest src
@@ -32,19 +32,19 @@ let cp_r src dest =
 /// Like "cp" in a shell. Copies a single file.
 /// <param name="src">The source</param>
 /// <param name="dest">The destination</param>
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.cp`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.cp`")>]
 let cp src dest = CopyFile dest src
 
 /// Changes working directory
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.chdir`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.chdir`")>]
 let chdir path = Directory.SetCurrentDirectory path
 
 /// Changes working directory
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.cd`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.cd`")>]
 let cd path = chdir path
 
 /// Gets working directory
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.pwd`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.pwd`")>]
 let pwd = Directory.GetCurrentDirectory
 
 /// The stack of directories operated on by pushd and popd
@@ -52,18 +52,18 @@ let pwd = Directory.GetCurrentDirectory
 let dirStack = new System.Collections.Generic.Stack<string>()
 
 /// Store the current directory in the directory stack before changing to a new one
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.pushd`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.pushd`")>]
 let pushd path = 
     dirStack.Push(pwd())
     cd path
 
 /// Restore the previous directory stored in the stack
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.popd`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.popd`")>]
 let popd () = 
     cd <| dirStack.Pop()
 
 /// Like "mv" in a shell. Moves/renames a file
 /// <param name="src">The source</param>
 /// <param name="dest">The destination</param>
-[<System.Obsolete("FAKE0001 Use `open Fake.IO.FileSystem` and `Shell.mv`")>]
+[<System.Obsolete("FAKE0001 Use `open Fake.IO` and `Shell.mv`")>]
 let mv src dest = MoveFile src dest

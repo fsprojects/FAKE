@@ -95,7 +95,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
-        [co.AdditionalArguments; [ "--targetprofile:netcore"; "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
+        [co.AdditionalArguments; [ "--fullpaths"; "--simpleresolution"; "--targetprofile:netstandard"; "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
         |> List.concat
         |> FsiOptions.ofArgs
         |> fun f ->
@@ -109,7 +109,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let formatErrors errors =
         System.String.Join("\n", errors |> Seq.map formatError)
     if context.Config.PrintDetails then
-      Trace.tracefn "FSC Args: %A" (args)
+      Trace.tracefn "FSC Args: [%s]" (String.Join("\";\n\"", args))
 
     let fsc = FSharpChecker.Create()
     let errors, returnCode = fsc.Compile (args |> List.toArray) |> Async.RunSynchronously

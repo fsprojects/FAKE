@@ -7,6 +7,7 @@ open System.Text
 open System.Diagnostics
 
 /// Performs the given actions on all files and subdirectories
+[<System.Obsolete("Function is no more accessible (FAKE0003 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.recursively). If you consider, it is still useful, please open an issue and explain your use case")>]
 let rec recursively dirF fileF (dir : DirectoryInfo) = 
     dir
     |> subDirectories
@@ -18,6 +19,7 @@ let rec recursively dirF fileF (dir : DirectoryInfo) =
     |> Seq.iter fileF
 
 /// Sets the directory readonly 
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.setReadOnly)")>]
 let setDirectoryReadOnly readOnly (dir : DirectoryInfo) = 
     if dir.Exists then 
         let isReadOnly = dir.Attributes &&& FileAttributes.ReadOnly = FileAttributes.ReadOnly
@@ -25,6 +27,7 @@ let setDirectoryReadOnly readOnly (dir : DirectoryInfo) =
         if (not readOnly) && not isReadOnly then dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)
 
 /// Sets all files in the directory readonly.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.setReadOnlyRecursive)")>]
 let SetDirReadOnly readOnly dir = 
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
 
@@ -39,6 +42,7 @@ let SetReadOnly readOnly (files : string seq) =
                      |> setDirectoryReadOnly readOnly)
 
 /// Deletes a directory if it exists.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.delete)")>]
 let DeleteDir path = 
     let dir = directoryInfo path
     if dir.Exists then 
@@ -51,6 +55,7 @@ let DeleteDir path =
     else logfn "%s does not exist." dir.FullName
 
 /// Creates a directory if it does not exist.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.create)")>]
 let CreateDir path = 
     let dir = directoryInfo path
     if not dir.Exists then 
@@ -59,6 +64,7 @@ let CreateDir path =
     else logfn "%s already exists." dir.FullName
 
 /// Creates a file if it does not exist.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.create)")>]
 let CreateFile fileName = 
     let file = fileInfo fileName
     if not file.Exists then 
@@ -68,6 +74,7 @@ let CreateFile fileName =
     else logfn "%s already exists." file.FullName
 
 /// Deletes a file if it exists.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.delete)")>]
 let DeleteFile fileName = 
     let file = fileInfo fileName
     if file.Exists then 
@@ -76,6 +83,7 @@ let DeleteFile fileName =
     else logfn "%s does not exist." file.FullName
 
 /// Deletes the given files.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.deleteAll)")>]
 let DeleteFiles files = Seq.iter DeleteFile files
 
 /// Active pattern which discriminates between files and directories.
@@ -86,14 +94,17 @@ let (|File|Directory|) (fileSysInfo : FileSystemInfo) =
     | _ -> failwith "No file or directory given."
 
 /// Active Pattern for determining file extension.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.(|EndsWith|_|))")>]
 let (|EndsWith|_|) extension (file : string) = 
     if file.EndsWith extension then Some()
     else None
 
 /// Active Pattern for determining file name.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|FullName|))")>]
 let (|FileInfoFullName|) (f : FileInfo) = f.FullName
 
 /// Active Pattern for determining FileInfoNameSections.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|NameSections|))")>]
 let (|FileInfoNameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
 
 /// Copies a single file to the target and overwrites the existing file.
@@ -101,6 +112,7 @@ let (|FileInfoNameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
 /// 
 ///  - `target` - The target directory or file.
 ///  - `fileName` - The FileName.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFile)")>]
 let CopyFile target fileName = 
     let fi = fileSystemInfo fileName
     match fi with
@@ -234,6 +246,7 @@ let CopyFiles target files = Copy target files
 let excludeSVNFiles (path : string) = not <| path.Contains ".svn"
 
 /// Includes all files
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
 let allFiles (path : string) = true
 
 /// Copies a directory recursivly. If the target directory does not exist, it will be created.
@@ -381,6 +394,7 @@ let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
 
 /// Copies the file structure recursively.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.copyRecursiveTo. NB: parameters order changed)")>]
 let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = 
     let files = 
         dir
@@ -399,6 +413,7 @@ let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrit
      |> Seq.toList) @ files
 
 /// Copies the file structure recursively.
+
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
 
 /// Moves a single file to the target and overwrites the existing file.
@@ -460,6 +475,7 @@ let RegexReplaceInFilesWithEncoding pattern (replacement:string) encoding files 
 /// ## Parameters
 ///
 ///  - 'fileName' - Name of file from which the version is retrieved. The path can be relative.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.getVersion)")>]
 let FileVersion(fileName : string) = 
     FullName fileName
     |> FileVersionInfo.GetVersionInfo

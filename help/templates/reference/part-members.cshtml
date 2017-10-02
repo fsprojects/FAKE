@@ -1,5 +1,5 @@
 @if (Enumerable.Count(Model.Members) > 0) {
-  <h3>@Model.Header</h3>
+  <a name="@Model.Header" class="anchor" href="#@Model.Header"><h3>@Model.Header</h3></a>
   <table class="table table-bordered member-list">
     <thead>
       <tr><td>@Model.TableHeader</td><td>Description</td></tr>

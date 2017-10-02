@@ -8,8 +8,8 @@ open System.IO
 open System.Threading
 open System.Text
 open System.Collections.Generic
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.GuardedAwaitObservable
 
 /// Kills the given process

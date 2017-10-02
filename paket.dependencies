@@ -79,6 +79,7 @@ group NetcoreBuild
     nuget FSharp.Core ~> 4.1.0
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
+    //nuget Fake.Api.GitHub prerelease
     nuget Fake.Core.Target prerelease
     nuget Fake.Core.Globbing prerelease
     nuget Fake.Core.SemVer prerelease

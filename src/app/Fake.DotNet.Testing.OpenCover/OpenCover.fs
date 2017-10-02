@@ -8,8 +8,8 @@ module Fake.DotNet.Testing.OpenCover
     open Fake.Core.Process
     open Fake.Core.String
     open Fake.Core.StringBuilder
-    open Fake.IO.FileSystem
-    open Fake.IO.FileSystem.Operators
+    open Fake.IO
+    open Fake.IO.FileSystemOperators
 
     type RegisterType = 
         | Manual

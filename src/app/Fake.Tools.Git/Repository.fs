@@ -5,7 +5,7 @@ module Fake.Tools.Git.Repository
 open Fake.Core
 open Fake.Tools.Git.CommandHelper
 open System.IO
-open Fake.IO.FileSystem
+open Fake.IO
 
 /// Clones a git repository.
 /// ## Parameters
@@ -67,7 +67,7 @@ let fullclean repositoryDir =
         Directory.GetDirectories repositoryDir
           |> Seq.iter deleteDirs
     else
-        Directory.CreateDir repositoryDir
+        Directory.create repositoryDir
 
     // set writeable
     File.SetAttributes(repositoryDir,FileAttributes.Normal)

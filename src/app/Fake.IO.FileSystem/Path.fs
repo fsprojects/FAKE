@@ -1,5 +1,5 @@
 ﻿/// Contains helper function which allow to deal with files and directories.
-module Fake.IO.FileSystem.Path
+module Fake.IO.Path
 
 open Fake.Core
 open Fake.Core.String.Operators
@@ -21,9 +21,14 @@ let isDirectory path =
 let isFile path = isDirectory path |> not
 
 /// Normalizes a filename.
-let normalizeFileName (fileName : string) = 
-    fileName.Replace("\\", Path.DirectorySeparatorChar.ToString()).Replace("/", Path.DirectorySeparatorChar.ToString())
-            .TrimEnd(Path.DirectorySeparatorChar).ToLower()
+let normalizeFileName (fileName : string) =
+    let dirsepChar = Path.DirectorySeparatorChar
+    let dirsep = dirsepChar.ToString()
+    fileName
+        .Replace("\\", dirsep)
+        .Replace("/", dirsep)
+        .TrimEnd(dirsepChar)
+        .ToLower()
 
 
 /// Detects whether the given path does not contains invalid characters.
@@ -53,7 +58,9 @@ let hasExtension extension fileName = System.String.Equals(Path.GetExtension fil
 let getDirectory path = Path.GetDirectoryName path
 
 /// The directory separator string. On most systems / or \
-let directorySeparator = Path.DirectorySeparatorChar.ToString()
+let directorySeparator =
+    let dirsepChar = Path.DirectorySeparatorChar
+    dirsepChar.ToString()
 
 let getFullName p = Path.GetFullPath p
 

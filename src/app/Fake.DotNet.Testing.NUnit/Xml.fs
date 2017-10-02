@@ -2,8 +2,8 @@
 module Fake.DotNet.Testing.NUnit.Xml
 
 open Fake.Testing.Common
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.BuildServer
 open Fake.Core.Process
@@ -217,4 +217,4 @@ module internal NUnitMerge =
         getXDocs directory filter
         |> mergeXDocs
         |> sprintf "%O"
-        |> File.WriteStringToFile false outfile
+        |> File.writeString false outfile

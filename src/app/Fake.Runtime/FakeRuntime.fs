@@ -89,6 +89,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
+  //let framework = Paket.FrameworkIdentifier.DotNetCoreApp (Paket.DotNetCoreAppVersion.V2_0)
   let framework = Paket.FrameworkIdentifier.DotNetStandard (Paket.DotNetStandardVersion.V2_0)
 #else
   let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
@@ -96,9 +97,44 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
-  //let paketDependenciesHashFile = cacheDir |> comb "paket.depedencies.sha1"
-  //let saveDependenciesHash () =
-  //  File.WriteAllText (paketDependenciesHashFile, HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile))
+
+#if DOTNETCORE
+  let getCurrentSDKReferenceFiles() =
+    // We need use "real" reference assemblies as using the currently running runtime assemlies doesn't work:
+    // see https://github.com/fsharp/FAKE/pull/1695
+
+    // Therefore we download the reference assemblies (the NETStandard.Library package)
+    // and add them in addition to what we have resolved, 
+    // we use the sources in the paket.dependencies to give the user a chance to overwrite.
+
+    // Note: This package/version needs to updated together with our "framework" variable below and needs to 
+    // be compatible with the runtime we are currently running on.
+    let rootDir = Directory.GetCurrentDirectory()
+    let sources = paketDependencies.GetSources().[groupName]
+    let packageName = Domain.PackageName("NETStandard.Library")
+    let version = SemVer.Parse("2.0.0")
+    let versions =
+      Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
+      |> Async.RunSynchronously
+      |> dict
+    let source =
+      match versions.TryGetValue(version) with
+      | true, v when v.Length > 0 -> v |> Seq.head
+      | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
+    
+    let _, extractedFolder =
+      Paket.NuGet.DownloadAndExtractPackage
+        (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
+         source, [], Paket.Constants.MainDependencyGroup,
+         packageName, version, false, false, false, false)
+      |> Async.RunSynchronously
+    //let netstandard = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyName(System.Reflection.AssemblyName("netstandard"))
+    let sdkDir = Path.Combine(extractedFolder, "build", "netstandard2.0", "ref")
+    Directory.GetFiles(sdkDir, "*.dll")
+    |> Seq.toList
+#endif
+
+
   let restoreOrUpdate () =
     if printDetails then Trace.log "Restoring with paket..."
 
@@ -175,7 +211,12 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         |> Seq.toList
       runtimeAssemblies @ refAssemblies)
     |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
-    |> Seq.choose (fun (isReferenceAssembly, fi) ->
+    |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
+#if DOTNETCORE
+    // Append sdk files as references in order to properly compile, for runtime we can default to the default-load-context.
+    |> Seq.append (getCurrentSDKReferenceFiles() |> Seq.map (fun file -> true, true, FileInfo file))
+#endif  
+    |> Seq.choose (fun (isSdk, isReferenceAssembly, fi) ->
       let fullName = fi.FullName
       try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
           { IsReferenceAssembly = isReferenceAssembly
@@ -184,8 +225,11 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
                 Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
                 Runners.AssemblyInfo.Location = fullName } } |> Some
       with e -> (if printDetails then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
+    // If we have multiple select one
+    |> Seq.groupBy (fun ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name)
+    |> Seq.map (fun (_, group) -> group |> Seq.maxBy(fun ass -> ass.Info.Version))
     |> Seq.toList
-    //|> List.partition (fun c -> c.IsReferenceAssembly)
+
   // Restore or update immediatly, because or everything might be OK -> cached path.
   let knownAssemblies = restoreOrUpdate()
   if printDetails then

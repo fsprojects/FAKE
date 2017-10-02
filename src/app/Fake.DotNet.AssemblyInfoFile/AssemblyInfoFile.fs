@@ -154,7 +154,7 @@ module AssemblyInfoFile =
     open Helper
     open Fake.Core
     open AssemblyInfo
-    open Fake.IO.FileSystem
+    open Fake.IO
 
     let private writeToFile outputFileName (lines : seq<string>) =
         let fi = FileInfo.ofPath outputFileName

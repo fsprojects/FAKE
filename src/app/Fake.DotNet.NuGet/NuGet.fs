@@ -3,8 +3,8 @@
 /// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
 module Fake.DotNet.NuGet.NuGet
 
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.BuildServer
 open Fake.Core.Process
@@ -390,7 +390,7 @@ let NuGetPack setParams nuspecOrProjectFile =
         match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
         | Some nuspecTemplateFile ->
             pack parameters nuspecTemplateFile
-            File.DeleteFile nuspecTemplateFile
+            File.delete nuspecTemplateFile
         | None -> pack parameters nuspecOrProjectFile
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
@@ -425,7 +425,7 @@ let NuGet setParams nuspecOrProjectFile =
         match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
         | Some nuspecTemplateFile ->
             pack parameters nuspecTemplateFile
-            File.DeleteFile nuspecTemplateFile
+            File.delete nuspecTemplateFile
         | None -> pack parameters nuspecOrProjectFile
 
         if parameters.Publish then

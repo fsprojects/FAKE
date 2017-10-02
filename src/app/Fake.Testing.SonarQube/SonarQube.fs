@@ -5,7 +5,7 @@ module Fake.Testing.SonarQube
     open Fake.Core
     open Fake.Core.Globbing
     open Fake.Core.Process
-    open Fake.IO.FileSystem.Operators
+    open Fake.IO.FileSystemOperators
 
     /// [omit]
     /// The supported commands of SonarQube. It is called with Begin before compilation, and End after compilation.

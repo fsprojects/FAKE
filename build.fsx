@@ -5,9 +5,6 @@
 
 open System.Reflection
 
-// Remove '#load' once released
-#load "src/app/Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs"
-
 #else
 // Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
 #r "packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
@@ -25,12 +22,21 @@ open System.Reflection
 
 #endif
 
+// TODO Remove '#load' once released
+#load "src/app/Fake.IO.FileSystem/Path.fs"
+#load "src/app/Fake.IO.FileSystem/FileInfo.fs"
+#load "src/app/Fake.IO.FileSystem/FileSystemOperators.fs"
+#load "src/app/Fake.IO.FileSystem/DirectoryInfo.fs"
+#load "src/app/Fake.IO.FileSystem/File.fs"
+#load "src/app/Fake.IO.FileSystem/Directory.fs"
+#load "src/app/Fake.IO.FileSystem/FileSystemInfo.fs"
+#load "src/app/Fake.IO.FileSystem/Shell.fs"
+
 open System.IO
 open Fake.Core
 open Fake.Tools
 open Fake.IO
-open Fake.IO.FileSystem
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 open Fake.Core.Globbing.Operators
 open Fake.Windows
 open Fake.DotNet
@@ -120,7 +126,7 @@ Target.Create "Clean" (fun _ ->
     //-- "src/*/*/obj/*.props"
     //-- "src/*/*/obj/*.paket.references.cached"
     //-- "src/*/*/obj/*.NuGet.Config"
-    |> File.DeleteFiles
+    |> File.deleteAll
 
     Shell.CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -134,7 +140,7 @@ Target.Create "RenameFSharpCompilerService" (fun _ ->
     for framework in ["netstandard1.6"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
-      File.DeleteFile targetFile
+      File.delete targetFile
 
 #if DOTNETCORE
       let reader =
@@ -270,7 +276,7 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
 )
 
-Target.Create "BuildSolution" (fun _ ->
+Target.Create "BuildSolution_" (fun _ ->
     MsBuild.MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
     |> Trace.Log "AppBuild-Output: "
 )
@@ -293,8 +299,8 @@ Target.Create "GenerateDocs" (fun _ ->
     let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
     Shell.CopyDir (docsDir) "help/content" FileFilter.allFiles
-    File.WriteStringToFile false "./docs/.nojekyll" ""
-    File.WriteStringToFile false "./docs/CNAME" "fake.build"
+    File.writeString false "./docs/.nojekyll" ""
+    File.writeString false "./docs/CNAME" "fake.build"
     //CopyDir (docsDir @@ "pics") "help/pics" FileFilter.allFiles
 
     Shell.Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
@@ -331,7 +337,7 @@ Target.Create "GenerateDocs" (fun _ ->
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
-    Shell.ensureDirectory apidocsDir
+    Directory.ensure apidocsDir
     dllFiles
     |> FSFormatting.CreateDocsForDlls (fun s -> 
         { s with 
@@ -376,7 +382,7 @@ Target.Create "BootstrapTest" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
-    let test clearCache script =
+    let test clearCache (script:string) =
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
@@ -482,7 +488,7 @@ Target.Create "SourceLink" (fun _ ->
 )
 
 Target.Create "ILRepack" (fun _ ->
-    Directory.CreateDir buildMergedDir
+    Directory.ensure buildMergedDir
 
     let internalizeIn filename =
         let toPack =
@@ -503,7 +509,7 @@ Target.Create "ILRepack" (fun _ ->
     internalizeIn "FAKE.exe"
 
     !! (buildDir </> "FSharp.Compiler.Service.**")
-    |> Seq.iter File.DeleteFile
+    |> Seq.iter File.delete
 
     Shell.DeleteDir buildMergedDir
 )
@@ -536,7 +542,7 @@ Target.Create "CreateNuGet" (fun _ ->
         Shell.CleanDir nugetLibDir
         Shell.DeleteDir nugetLibDir
 
-        File.DeleteFile "./build/FAKE.Gallio/Gallio.dll"
+        File.delete "./build/FAKE.Gallio/Gallio.dll"
 
         let deleteFCS _ =
           //!! (dir </> "FSharp.Compiler.Service.**")
@@ -564,7 +570,7 @@ Target.Create "CreateNuGet" (fun _ ->
         | _ ->
             Shell.CopyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
             Shell.CopyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.srcsv") |> File.DeleteFiles
+        !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
 
         let setParams (p:NuGet.NuGet.NuGetParams) =
             {p with
@@ -608,6 +614,7 @@ let appDir = srcDir</>"app"
 
 let netCoreProjs =
     !! "src/app/Fake.Core.*/*.fsproj"
+    ++ "src/app/Fake.Api.*/*.fsproj"
     ++ "src/app/Fake.DotNet.*/*.fsproj"
     ++ "src/app/Fake.Windows.*/*.fsproj"
     ++ "src/app/Fake.IO.*/*.fsproj"
@@ -627,7 +634,7 @@ Target.Create "DotnetRestore" (fun _ ->
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
-    Shell.ensureDirectory t
+    Directory.ensure t
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
         |> ignore
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore"
@@ -640,7 +647,7 @@ Target.Create "DotnetRestore" (fun _ ->
     !! "lib/nupgks/**/*.nupkg"
     |> Seq.iter (fun file ->
         let dir = nugetDncDir //@@ "dotnetcore"
-        Shell.ensureDirectory dir
+        Directory.ensure dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
     let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
@@ -722,6 +729,7 @@ Target.Create "DotnetPackage" (fun _ ->
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
         }) netcoreFsproj
+    
 )
 
 Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
@@ -742,7 +750,7 @@ Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
 
 Target.Create "DotnetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
-    Shell.ensureDirectory "nuget/dotnetcore/chocolatey"
+    Directory.ensure "nuget/dotnetcore/chocolatey"
     Choco.PackFromTemplate (fun p ->
         { p with
             PackageId = "fake"
@@ -941,36 +949,55 @@ Target.Create "EnsureTestsRun" (fun _ ->
 Target.Create "Default" ignore
 Target.Create "StartDnc" ignore
 Target.Create "Release" ignore
+Target.Create "BuildSolution" ignore
+Target.Create "AfterBuild" ignore
 
 open Fake.Core.TargetOperators
 
+
+// DotNet Core Build
 "Clean"
-    ==> "StartDnc"
+    ?=> "StartDnc"
     ==> "InstallDotnetCore"
     ==> "DownloadPaket"
-    //==> "DotnetRestore"
     ==> "DotnetPackage"
 
-// Dependencies
+// Full framework build
 "Clean"
-    ==> "RenameFSharpCompilerService"
+    ?=> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
-    ==> "BuildSolution"
-    ==> "DotnetPackage"
+    ==> "BuildSolution_"
     ==> "UnskipAndRevertAssemblyInfo"
-    ==> "DotnetCoreCreateZipPackages"
-    =?> ("TestDotnetCore", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
-    ////==> "ILRepack"
-    =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTest",not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTestDotnetCore",not <| Environment.hasEnvironVar "SkipTests")
-    //=?> ("SourceLink", isLocalBuild && not isLinux)
+    ==> "BuildSolution"
+
+// AfterBuild -> Both Builds completed
+"BuildSolution"
+    ==> "AfterBuild"
+"DotnetPackage"
+    ==> "AfterBuild"
+
+// Create artifacts when build is finished
+"AfterBuild"
     =?> ("CreateNuGet", not Environment.isLinux)
     ==> "CopyLicense"
     =?> ("DotnetCoreCreateChocolateyPackage", not Environment.isLinux)
     =?> ("GenerateDocs", BuildServer.isLocalBuild && not Environment.isLinux)
     ==> "Default"
 
+// Test the full framework build
+"BuildSolution"
+    =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTest",not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+// Test the dotnetcore build
+"DotnetPackage"
+    ==> "DotnetCoreCreateZipPackages"
+    =?> ("TestDotnetCore", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTestDotnetCore",not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+// Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
     =?> ("DotnetCorePushChocolateyPackage", not Environment.isLinux)
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && not Environment.isLinux)
@@ -978,12 +1005,20 @@ open Fake.Core.TargetOperators
     ==> "PublishNuget"
     ==> "FastRelease"
 
-"Default"
-    ==> "Release"
-"FastRelease"
-    ==> "Release"
+// If 'Default' happens it needs to happen before 'EnsureTestsRun'
 "Default"
     ?=> "EnsureTestsRun"
+
+// A 'Default' includes a 'Clean'
+"Clean"
+    ==> "Default"
+
+// A 'Release' includes a 'Default'
+"Default"
+    ==> "Release"
+// A 'Release' includes a 'FastRelease'
+"FastRelease"
+    ==> "Release"
 
 // start build
 Target.RunOrDefault "Default"

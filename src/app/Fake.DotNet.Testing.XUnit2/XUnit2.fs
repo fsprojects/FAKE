@@ -2,7 +2,7 @@
 module Fake.DotNet.Testing.XUnit2
 
 open Fake.Testing.Common
-open Fake.IO.FileSystem.Operators
+open Fake.IO.FileSystemOperators
 open Fake.Core.String
 open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
@@ -183,7 +183,7 @@ let XUnit2Defaults =
       ExcludeTraits = []
       ShadowCopy = true
       ErrorLevel = Error
-      ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "xunit.console.exe" (Fake.IO.FileSystem.Shell.pwd() @@ "tools" @@ "xunit.runner.console")
+      ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "xunit.console.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "xunit.runner.console")
       WorkingDir = None
       TimeOut = TimeSpan.FromMinutes 5.
       ForceTeamCity = false

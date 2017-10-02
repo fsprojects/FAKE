@@ -12,8 +12,8 @@ open Fake.Core.Environment
 open Fake.Core.String
 open Fake.Core.String.Operators
 open Fake.Core.Process
-open Fake.IO.FileSystem.Path
-open Fake.IO.FileSystem
+open Fake.IO.Path
+open Fake.IO
 
 
 /// Specifies a global timeout for git.exe - default is *no timeout*
