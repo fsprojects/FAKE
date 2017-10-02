@@ -96,9 +96,16 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
-  //let paketDependenciesHashFile = cacheDir |> comb "paket.depedencies.sha1"
-  //let saveDependenciesHash () =
-  //  File.WriteAllText (paketDependenciesHashFile, HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile))
+
+#if DOTNETCORE
+  let getCurrentSDKReferenceFiles() =
+    let netstandard = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyName(System.Reflection.AssemblyName("netstandard"))
+    let sdkDir = Path.GetDirectoryName netstandard.Location
+    Directory.GetFiles(sdkDir, "*.dll")
+    |> Seq.toList
+#endif
+
+
   let restoreOrUpdate () =
     if printDetails then Trace.log "Restoring with paket..."
 
@@ -175,9 +182,34 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         |> Seq.toList
       runtimeAssemblies @ refAssemblies)
     |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
-    |> Seq.choose (fun (isReferenceAssembly, fi) ->
+    |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
+#if DOTNETCORE
+    // Append sdk files as references in order to properly compile, for runtime we can default to the default-load-context.
+    |> Seq.append (getCurrentSDKReferenceFiles() |> Seq.map (fun file -> true, true, FileInfo file))
+#endif  
+    |> Seq.choose (fun (isSdk, isReferenceAssembly, fi) ->
       let fullName = fi.FullName
       try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
+          let takeAssembly =
+            if not isSdk then true
+            else
+                let isFramework =
+                    assembly.CustomAttributes |> Seq.exists (fun attr ->
+                      if attr.AttributeType.Name = "AssemblyMetadataAttribute" then
+                        let arg1 = attr.ConstructorArguments.[0]
+                        let value1 = arg1.Value.ToString()
+                        let arg2 = attr.ConstructorArguments.[1]
+                        let value2 = arg2.Value.ToString()
+                        value1 = ".NETFrameworkAssembly" ||
+                        (value1 = "Serviceable" && value2 = "True")
+                        
+                      else false)
+                isFramework
+          if not takeAssembly then
+            if printDetails then Trace.log <| sprintf "Not taking '%s'" fullName
+            None
+          else
+
           { IsReferenceAssembly = isReferenceAssembly
             Info =
               { Runners.AssemblyInfo.FullName = assembly.Name.FullName

@@ -79,7 +79,6 @@ group NetcoreBuild
     nuget FSharp.Core ~> 4.1.0
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
-    nuget Microsoft.NETCore.App ~> 2.0
     //nuget Fake.Api.GitHub prerelease
     nuget Fake.Core.Target prerelease
     nuget Fake.Core.Globbing prerelease

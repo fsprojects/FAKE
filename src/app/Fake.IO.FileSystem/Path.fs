@@ -22,11 +22,12 @@ let isFile path = isDirectory path |> not
 
 /// Normalizes a filename.
 let normalizeFileName (fileName : string) =
-    let dirsep = Path.DirectorySeparatorChar.ToString()
+    let dirsepChar = Path.DirectorySeparatorChar
+    let dirsep = dirsepChar.ToString()
     fileName
         .Replace("\\", dirsep)
         .Replace("/", dirsep)
-        .TrimEnd(Path.DirectorySeparatorChar)
+        .TrimEnd(dirsepChar)
         .ToLower()
 
 
@@ -57,7 +58,9 @@ let hasExtension extension fileName = System.String.Equals(Path.GetExtension fil
 let getDirectory path = Path.GetDirectoryName path
 
 /// The directory separator string. On most systems / or \
-let directorySeparator = Path.DirectorySeparatorChar.ToString()
+let directorySeparator =
+    let dirsepChar = Path.DirectorySeparatorChar
+    dirsepChar.ToString()
 
 let getFullName p = Path.GetFullPath p
 

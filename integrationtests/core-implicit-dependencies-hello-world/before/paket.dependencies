@@ -7,4 +7,3 @@ source https://ci.appveyor.com/nuget/fake
 
 nuget Fake.Runtime prerelease
 nuget FSharp.Core prerelease
-nuget Microsoft.NETCore.App

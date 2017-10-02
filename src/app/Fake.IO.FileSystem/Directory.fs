@@ -9,7 +9,6 @@ module Directory =
         dir |> DirectoryInfo.ofPath |> DirectoryInfo.ensure
 
     /// Creates a directory if it does not exist.
-    [<System.Obsolete("Use Directory.ensure instead")>]
     let create = ensure
 
     /// Gets the first file in the directory matching the search pattern as an option value.

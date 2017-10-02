@@ -247,7 +247,7 @@ module Shell =
     ///  - `patchDir` - The target directory.
     ///  - `srcFiles` - The source files.
     let GeneratePatch lastReleaseDir patchDir srcFiles =
-        GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
+        GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun _ b -> b)
 
     /// Checks if the directory exists
     let TestDir path =

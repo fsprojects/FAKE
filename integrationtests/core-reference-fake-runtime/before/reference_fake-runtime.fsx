@@ -6,7 +6,6 @@ source ../../../nuget/dotnetcore
 
 nuget Fake.Runtime prerelease
 nuget FSharp.Core prerelease
-nuget Microsoft.NETCore.App
 -- Fake Dependencies -- *)
 #load ".fake/reference_fake-runtime.fsx/intellisense.fsx"
 

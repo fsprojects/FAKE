@@ -7,7 +7,7 @@ open Fake.Core
 open Operators
 
 module FileFilter =
-    let allFiles file = true
+    let allFiles _ = true
 
 module File =
     /// Checks if the file exists on disk.
