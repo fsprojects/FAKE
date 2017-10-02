@@ -661,7 +661,7 @@ Target.Create "DotnetRestore" (fun _ ->
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
-Target.Create "DotnetPackage" (fun _ ->
+Target.Create "DotnetPackage_" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     Environment.setEnvironVar "Version" release.NugetVersion
@@ -937,6 +937,7 @@ Target.Create "Default" ignore
 Target.Create "StartDnc" ignore
 Target.Create "Release" ignore
 Target.Create "BuildSolution" ignore
+Target.Create "DotnetPackage" ignore
 Target.Create "AfterBuild" ignore
 
 open Fake.Core.TargetOperators
@@ -947,6 +948,9 @@ open Fake.Core.TargetOperators
     ?=> "StartDnc"
     ==> "InstallDotnetCore"
     ==> "DownloadPaket"
+    ==> "SetAssemblyInfo"
+    ==> "DotnetPackage_"
+    ==> "UnskipAndRevertAssemblyInfo"
     ==> "DotnetPackage"
 
 // Full framework build
