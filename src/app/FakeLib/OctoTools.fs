@@ -52,6 +52,9 @@ type DeployReleaseOptions = {
     /// Environment to deploy to
     DeployTo                    : string
 
+    /// Tenant to deploy to 
+    Tenant                      : string
+
     /// Version number of the release to deploy; Specify "latest" for
     /// the latest release
     Version                     : string
@@ -131,7 +134,7 @@ let releaseOptions = {
 
 /// Default options for 'DeployRelease'
 let deployOptions = {
-    Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
+    Project = ""; DeployTo = ""; Tenant = ""; Version = ""; Force = false; WaitForDeployment = false; 
     DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
     NoRawLog = false; Progress = false }
 
@@ -189,6 +192,7 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
 let deployCommandLine (opts:DeployReleaseOptions) = 
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "deployto" (liftString opts.DeployTo))
+      (optionalStringParam "tenant" (liftString opts.Tenant))
       (optionalStringParam "version" (liftString opts.Version))
       (flag "force" opts.Force)
       (flag "waitfordeployment" opts.WaitForDeployment)
