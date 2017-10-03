@@ -2,6 +2,7 @@
 /// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII).
 /// Assumes direct network connectivity to destination FTP server (not via a proxy).
 /// Does not support FTPS and SFTP.
+[<System.Obsolete("Obsolete; use Ftp module instead.")>]
 module Fake.FtpHelper
 
 open System

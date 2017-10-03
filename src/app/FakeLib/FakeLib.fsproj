@@ -406,6 +406,7 @@
     <Compile Include="PaketHelper.fs" />
     <Compile Include="PaketTemplateHelper.fs" />
     <Compile Include="AzureHelper.fs" />
+    <Compile Include="Ftp.fs" />
     <Compile Include="FtpHelper.fs" />
     <Compile Include="TypeScript.fs" />
     <Compile Include="OpenCoverHelper.fs" />
