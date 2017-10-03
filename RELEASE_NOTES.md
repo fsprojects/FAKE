@@ -1,3 +1,6 @@
+#### 4.63.3 - 03.10.2017
+* Update OctoTools, new deploy parameter
+
 #### 4.63.2 - 11.09.2017
 * Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
 
