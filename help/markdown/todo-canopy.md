@@ -6,7 +6,7 @@ In this tutorial we are looking at [Canopy](http://lefthandedgoat.github.io/cano
 ![alt text](pics/canopy/logo.jpg "Running canopy tests from FAKE")
 
 ## Setup your canopy project
-Consider a simple canopy program.fs file:
+Consider a simple canopy `program.fs` file:
 
 	#r "canopy.dll"
 
@@ -37,11 +37,11 @@ Although [Selenium](http://docs.seleniumhq.org/) (which is the framework behind 
 
 	install-package PhantomJS
 
-Normally canopy loads PhantomJS.exe from C:\ but in our case we want to use the installed one so we have to override the path in our test script and set the current path as location of PhantomJS.exe.
+Normally canopy loads `PhantomJS.exe` from `C:\` but in our case we want to use the installed one so we have to override the path in our test script and set the current path as location of `PhantomJS.exe`.
 
 
 ## Run canopy tests in FAKE
-The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config. 
+The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IIS Express requires a configuration template (`"iisexpress-template.config"`) which can be copied from `%ProgramFiles%\IIS Express\AppServer\applicationhost.config`. 
 
 This sample target will require the [`FAKE.IIS package`](http://fsharp.github.io/FAKE/iis.html) to be installed and referenced in your script, though the package isn't required to run Canopy tests.
 
@@ -63,4 +63,4 @@ This sample target will require the [`FAKE.IIS package`](http://fsharp.github.io
 	    if result <> 0 then failwith "Failed result from canopy tests"
 	)
 
-Please note that HostWebsite starts the IISExpress process asynchronous and does NOT wait until the IISExpress successfully started. [Issue #403](https://github.com/fsharp/FAKE/issues/403)
+Please note that HostWebsite starts the IIS Express process asynchronous and does NOT wait until the IIS Express successfully started. [Issue #403](https://github.com/fsharp/FAKE/issues/403)
