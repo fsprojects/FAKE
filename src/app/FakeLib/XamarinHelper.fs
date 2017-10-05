@@ -134,26 +134,28 @@ let iOSBuild setParams =
         param
 
     let applyiOSBuildParamsToMSBuildParams iOSBuildParams buildParams =
-        let msBuildParams = { buildParams with
-            Targets = [ iOSBuildParams.Target ]
-            Properties = [ "Configuration", iOSBuildParams.Configuration; "Platform", iOSBuildParams.Platform; "BuildIpa", iOSBuildParams.BuildIpa.ToString() ] @ iOSBuildParams.Properties
-            MaxCpuCount = iOSBuildParams.MaxCpuCount
-            NoLogo = iOSBuildParams.NoLogo
-            NodeReuse = iOSBuildParams.NodeReuse
-            ToolsVersion = iOSBuildParams.ToolsVersion
-            Verbosity = iOSBuildParams.Verbosity
-            NoConsoleLogger = iOSBuildParams.NoConsoleLogger
-            RestorePackagesFlag = iOSBuildParams.RestorePackagesFlag
-            FileLoggers = iOSBuildParams.FileLoggers
-            BinaryLoggers = iOSBuildParams.BinaryLoggers
-            DistributedLoggers = iOSBuildParams.DistributedLoggers
-        }
+        let msBuildParams =
+            { buildParams with
+                Targets = [ iOSBuildParams.Target ]
+                Properties = [ "Configuration", iOSBuildParams.Configuration; "Platform", iOSBuildParams.Platform; "BuildIpa", iOSBuildParams.BuildIpa.ToString() ] @ iOSBuildParams.Properties
+                MaxCpuCount = iOSBuildParams.MaxCpuCount
+                NoLogo = iOSBuildParams.NoLogo
+                NodeReuse = iOSBuildParams.NodeReuse
+                ToolsVersion = iOSBuildParams.ToolsVersion
+                Verbosity = iOSBuildParams.Verbosity
+                NoConsoleLogger = iOSBuildParams.NoConsoleLogger
+                RestorePackagesFlag = iOSBuildParams.RestorePackagesFlag
+                FileLoggers = iOSBuildParams.FileLoggers
+                BinaryLoggers = iOSBuildParams.BinaryLoggers
+                DistributedLoggers = iOSBuildParams.DistributedLoggers
+            }
 
         let msBuildParams =
             if isNullOrEmpty iOSBuildParams.OutputPath then msBuildParams
-            else { msBuildParams with
-                Properties = [ "OutputPath", FullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
-            }
+            else
+                { msBuildParams with
+                    Properties = [ "OutputPath", FullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
+                }
 
         msBuildParams
 
@@ -225,26 +227,28 @@ let AndroidBuildPackages setParams =
         param
 
     let applyAndroidBuildParamsToMSBuildParams androidBuildParams buildParams =
-        let msBuildParams = { buildParams with
-            Targets = [ "PackageForAndroid" ]
-            Properties = [ "Configuration", androidBuildParams.Configuration ] @ androidBuildParams.Properties
-            MaxCpuCount = androidBuildParams.MaxCpuCount
-            NoLogo = androidBuildParams.NoLogo
-            NodeReuse = androidBuildParams.NodeReuse
-            ToolsVersion = androidBuildParams.ToolsVersion
-            Verbosity = androidBuildParams.Verbosity
-            NoConsoleLogger = androidBuildParams.NoConsoleLogger
-            RestorePackagesFlag = androidBuildParams.RestorePackagesFlag
-            FileLoggers = androidBuildParams.FileLoggers
-            BinaryLoggers = androidBuildParams.BinaryLoggers
-            DistributedLoggers = androidBuildParams.DistributedLoggers
-        }
+        let msBuildParams =
+            { buildParams with
+                Targets = [ "PackageForAndroid" ]
+                Properties = [ "Configuration", androidBuildParams.Configuration ] @ androidBuildParams.Properties
+                MaxCpuCount = androidBuildParams.MaxCpuCount
+                NoLogo = androidBuildParams.NoLogo
+                NodeReuse = androidBuildParams.NodeReuse
+                ToolsVersion = androidBuildParams.ToolsVersion
+                Verbosity = androidBuildParams.Verbosity
+                NoConsoleLogger = androidBuildParams.NoConsoleLogger
+                RestorePackagesFlag = androidBuildParams.RestorePackagesFlag
+                FileLoggers = androidBuildParams.FileLoggers
+                BinaryLoggers = androidBuildParams.BinaryLoggers
+                DistributedLoggers = androidBuildParams.DistributedLoggers
+            }
 
         let msBuildParams =
             if isNullOrEmpty androidBuildParams.OutputPath then msBuildParams
-            else { msBuildParams with
-                Properties = [ "OutputPath", FullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
-            }
+            else
+                { msBuildParams with
+                    Properties = [ "OutputPath", FullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
+                }
 
         msBuildParams
 
@@ -252,15 +256,16 @@ let AndroidBuildPackages setParams =
         let applyBuildParams msbuildParam =
             let result = applyAndroidBuildParamsToMSBuildParams param msbuildParam
 
-            result = { result with
-                Properties =
-                    match (abi, manifestFile) with
-                    | Some a, Some m -> let manifest = @"Properties" @@ System.IO.Path.GetFileName(m)
-                                        [ "AndroidSupportedAbis", a
-                                          "AndroidManifest", manifest ] @ result.Properties
-                    | Some a, None   -> [ "AndroidSupportedAbis", a ] @ result.Properties
-                    | _, _           -> result.Properties
-            }
+            let result =
+                { result with
+                    Properties =
+                        match (abi, manifestFile) with
+                        | Some a, Some m -> let manifest = @"Properties" @@ System.IO.Path.GetFileName(m)
+                                            [ "AndroidSupportedAbis", a
+                                              "AndroidManifest", manifest ] @ result.Properties
+                        | Some a, None   -> [ "AndroidSupportedAbis", a ] @ result.Properties
+                        | _, _           -> result.Properties
+                }
 
             result
 
