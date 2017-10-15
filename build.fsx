@@ -202,6 +202,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
+      "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.IO.FileSystem", "Core Filesystem utilities"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.netcore", "Command line tool"
@@ -212,7 +213,7 @@ let dotnetAssemblyInfos =
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover" ]
-    
+
 let assemblyInfos =
   [ "./src/app/FAKE/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Command line tool"
@@ -253,7 +254,7 @@ Target.Create "SetAssemblyInfo" (fun _ ->
 )
 
 Target.Create "DownloadPaket" (fun _ ->
-    if 0 <> Process.ExecProcess (fun info -> 
+    if 0 <> Process.ExecProcess (fun info ->
                 info.FileName <- ".paket/paket.exe"
                 info.Arguments <- "--version") (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
@@ -330,14 +331,14 @@ Target.Create "GenerateDocs" (fun _ ->
 
     Directory.ensure apidocsDir
     dllFiles
-    |> FSFormatting.CreateDocsForDlls (fun s -> 
-        { s with 
+    |> FSFormatting.CreateDocsForDlls (fun s ->
+        { s with
             OutputDirectory = apidocsDir
-            LayoutRoots = layoutroots 
+            LayoutRoots = layoutroots
             LibDirs = [ "./build" ]
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
-            SourceRepository = githubLink + "/blob/master" }) 
+            SourceRepository = githubLink + "/blob/master" })
 
 )
 
@@ -720,7 +721,7 @@ Target.Create "DotnetPackage_" (fun _ ->
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
         }) netcoreFsproj
-    
+
 )
 
 Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
@@ -884,7 +885,7 @@ Target.Create "ReleaseDocs" (fun _ ->
 )
 
 Target.Create "FastRelease" (fun _ ->
-    
+
     Git.Staging.StageAll ""
     Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     let branch = Git.Information.getBranchName ""
@@ -892,12 +893,12 @@ Target.Create "FastRelease" (fun _ ->
 
     Git.Branches.tag "" release.NugetVersion
     Git.Branches.pushTag "" "origin" release.NugetVersion
-    
+
     let token =
         match Environment.environVarOrDefault "github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
-    
+
     let draft =
         GitHub.createClientWithToken token
         |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes

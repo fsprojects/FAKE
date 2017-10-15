@@ -414,7 +414,9 @@
     <Compile Include="FscHelper.fs" />
     <Compile Include="CscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
-    <Compile Include="XamarinHelper.fs" />
+    <Compile Include="..\Fake.DotNet.Xamarin\Xamarin.fs">
+      <Link>Fake.DotNet.Xamarin/Xamarin.fs</Link>
+    </Compile>
     <Compile Include="XDTHelper.fs" />
     <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
