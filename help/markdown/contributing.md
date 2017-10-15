@@ -45,7 +45,7 @@ to find out the required tools.
 
 * Install FAKE
   * For example on windows run `choco install fake -pre`
-  * On unix we don't have fake properly packaged jet (please HELP!). You can use the steps outlined in [`.travis.yml`](https://github.com/fsharp/FAKE/blob/master/.travis.yml#L14-L18)
+  * On unix we don't have fake properly packaged yet (please HELP!). You can use the steps outlined in [`.travis.yml`](https://github.com/fsharp/FAKE/blob/master/.travis.yml#L14-L18)
 
 * Alternately, you can use [Vagrant](https://www.vagrantup.com/) in-pair with [VirtualBox](https://www.virtualbox.org/)
 to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](vagrant.html) to get in touch with the tool.
