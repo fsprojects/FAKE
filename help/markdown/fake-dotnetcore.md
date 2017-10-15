@@ -26,8 +26,8 @@ See [Fake command line](fake-commandline.html)
 
 ## Buildserver support
 
-AppVeyor: https://github.com/fsharp/FAKE/blob/master/appveyor.yml
-Travis: https://github.com/fsharp/FAKE/blob/master/.travis.yml
+AppVeyor: [https://github.com/fsharp/FAKE/blob/master/appveyor.yml](https://github.com/fsharp/FAKE/blob/master/appveyor.yml)
+Travis: [https://github.com/fsharp/FAKE/blob/master/.travis.yml](https://github.com/fsharp/FAKE/blob/master/.travis.yml)
 
 ## Why?
 
@@ -65,7 +65,7 @@ The disadvantage is that you need to have a dotnet sdk installed.
 
 ## Examples
 
-- See https://github.com/fsharp/FAKE/blob/master/build.fsx
+- See [https://github.com/fsharp/FAKE/blob/master/build.fsx](https://github.com/fsharp/FAKE/blob/master/build.fsx)
   Note that with the "new" API you should call the modules directly instead of opening them. 
   Therefore this example is actually pretty bad because it just opened everything (for minimal diff to the "normal" build.fsx)
 
