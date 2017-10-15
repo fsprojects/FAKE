@@ -228,8 +228,8 @@ let buildXUnit2Args assemblies parameters =
 /// so it does not interfere with older versions.
 let internal discoverNoAppDomainExists parameters =
     let helpText =
-        ExecProcessAndReturnMessages (fun info ->
-            info.FileName <- parameters.ToolPath ) (TimeSpan.FromMinutes 1.)
+        ExecProcessAndReturnMessages ((fun info ->
+            { info with FileName = parameters.ToolPath}) >> Process.withFramework) (TimeSpan.FromMinutes 1.)
     let canSetNoAppDomain = helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
     {parameters with NoAppDomain = canSetNoAppDomain}
 
@@ -279,9 +279,10 @@ let xUnit2 setParams assemblies =
         else parametersFirst
 
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
-            info.Arguments <- parameters |> buildXUnit2Args assemblies) parameters.TimeOut
+        ExecProcess ((fun info ->
+        { info with
+            FileName = parameters.ToolPath
+            WorkingDirectory = defaultArg parameters.WorkingDir "."
+            Arguments = parameters |> buildXUnit2Args assemblies}) >> Process.withFramework) parameters.TimeOut
 
     ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result

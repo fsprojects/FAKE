@@ -93,10 +93,11 @@ let MSpec setParams assemblies =
     let parameters = setParams MSpecDefaults
     let args = buildMSpecArgs parameters assemblies
     Trace.trace (parameters.ToolPath + " " + args)
-    if 0 <> ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
+    if 0 <> ExecProcess ((fun info -> 
+            { info with
+                FileName = parameters.ToolPath
+                WorkingDirectory = parameters.WorkingDir
+                Arguments = args}) >> Process.withFramework) parameters.TimeOut
     then
         sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
                                                         | Error | FailOnFirstError -> failwith

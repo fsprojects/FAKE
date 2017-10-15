@@ -285,10 +285,11 @@ let private pack parameters nuspecFile =
 
     let execute args =
         let result =
-            ExecProcessAndReturnMessages (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- Path.getFullName parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
+            ExecProcessAndReturnMessages ((fun info ->
+            { info with
+                FileName = parameters.ToolPath
+                WorkingDirectory = Path.getFullName parameters.WorkingDir
+                Arguments = args }) >> Process.withFramework) parameters.TimeOut
         if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
 
     match parameters.SymbolPackage with
@@ -329,10 +330,11 @@ let rec private publish parameters =
             let tracing = shouldEnableProcessTracing()
             try
                 setEnableProcessTracing false
-                ExecProcess (fun info ->
-                    info.FileName <- parameters.ToolPath
-                    info.WorkingDirectory <- FullName parameters.WorkingDir
-                    info.Arguments <- args) parameters.TimeOut
+                ExecProcess ((fun info ->
+                { info with
+                    FileName = parameters.ToolPath
+                    WorkingDirectory = FullName parameters.WorkingDir
+                    Arguments = args }) >> Process.withFramework) parameters.TimeOut
             finally setEnableProcessTracing tracing
         if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
     with exn when parameters.PublishTrials > 0 ->
@@ -351,10 +353,11 @@ let rec private publishSymbols parameters =
             let tracing = shouldEnableProcessTracing()
             try
                 setEnableProcessTracing false
-                ExecProcess (fun info ->
-                        info.FileName <- parameters.ToolPath
-                        info.WorkingDirectory <- FullName parameters.WorkingDir
-                        info.Arguments <- args) parameters.TimeOut
+                ExecProcess ((fun info ->
+                    { info with
+                        FileName = parameters.ToolPath
+                        WorkingDirectory = FullName parameters.WorkingDir
+                        Arguments = args }) >> Process.withFramework) parameters.TimeOut
             finally setEnableProcessTracing tracing
         if result <> 0 then failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args
     with exn when parameters.PublishTrials > 0->

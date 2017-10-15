@@ -454,8 +454,9 @@ let build setParams project =
     Trace.tracefn "Building project: %s\n  %s %s" project msBuildExe args
     let exitCode =
         Process.ExecProcess (fun info ->
-            info.FileName <- msBuildExe
-            info.Arguments <- args) TimeSpan.MaxValue
+        { info with
+            FileName = msBuildExe
+            Arguments = args}) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write

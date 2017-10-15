@@ -112,8 +112,9 @@ let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) 
             failwith message
     for assembly in assemblies do
         let args = buildMSTestArgs parameters assembly
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
+        ExecProcess ((fun info ->
+        { info with
+            FileName = parameters.ToolPath
+            WorkingDirectory = parameters.WorkingDir
+            Arguments = args }) >> Process.withFramework) parameters.TimeOut
         |> failIfError assembly

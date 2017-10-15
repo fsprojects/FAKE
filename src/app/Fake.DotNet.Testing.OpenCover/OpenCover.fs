@@ -138,10 +138,12 @@ module Fake.DotNet.Testing.OpenCover
         let processArgs = buildOpenCoverArgs param targetArgs
         Trace.tracefn "OpenCover command\n%s %s" param.ExePath processArgs
         let ok = 
-            execProcess (fun info -> 
-                info.FileName <- param.ExePath
-                if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
-                info.Arguments <- processArgs) param.TimeOut
+            execProcess ((fun info ->
+            { info with
+                FileName = param.ExePath
+                WorkingDirectory =
+                    if param.WorkingDir <> String.Empty then param.WorkingDir else info.WorkingDirectory
+                Arguments = processArgs }) >> Process.withFramework) param.TimeOut
         if not ok then failwithf "OpenCover reported errors."
 
     /// Show version OpenCover
@@ -159,6 +161,7 @@ module Fake.DotNet.Testing.OpenCover
                     | Some setParams -> setParams OpenCoverDefaults
                     | None -> OpenCoverDefaults
 
-        ExecProcess (fun info ->
-            info.FileName <- param.ExePath
-            info.Arguments <- "-version") param.TimeOut |> ignore
+        ExecProcess ((fun info ->
+        { info with
+            FileName = param.ExePath
+            Arguments = "-version" }) >> Process.withFramework) param.TimeOut |> ignore

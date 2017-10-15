@@ -312,9 +312,10 @@ let DotnetCliInstall setParams =
                         (buildDotnetCliInstallArgs '\'' param)
                 args, "powershell"
         Process.ExecProcess (fun info ->
-            info.FileName <- fileName
-            info.WorkingDirectory <- Path.GetTempPath()
-            info.Arguments <- args
+        { info with
+            FileName = fileName
+            WorkingDirectory = Path.GetTempPath()
+            Arguments = args }
         ) TimeSpan.MaxValue
 
     if exitCode <> 0 then
@@ -368,24 +369,16 @@ let Dotnet (options: DotnetOptions) args =
 
     let result = 
         Process.ExecProcessWithLambdas (fun info ->
-            info.FileName <- options.DotnetCliPath
-            info.WorkingDirectory <- options.WorkingDirectory
-            info.Arguments <- cmdArgs
-            // Add dotnet to PATH...
-#if NO_DOTNETCORE_BOOTSTRAP
-#if NETSTANDARD
-            let envDict = info.Environment
-#else
-            let envDict = info.EnvironmentVariables
-#endif
-#else
-            let envDict = info.Environment
-#endif
-            let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
-            let oldPath = System.Environment.GetEnvironmentVariable "PATH"
-            let key, value = "PATH", sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
-            if envDict.ContainsKey key then envDict.[key] <- value
-            else envDict.Add(key, value)
+        { info with
+            FileName = options.DotnetCliPath
+            WorkingDirectory = options.WorkingDirectory
+            Arguments = cmdArgs
+            Environment =
+                let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
+                let oldPath = System.Environment.GetEnvironmentVariable "PATH"
+                [ "PATH", sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath ]
+                |> Map.ofSeq
+                |> Some }
         ) timeout true errorF messageF
 #if NO_DOTNETCORE_BOOTSTRAP
     Process.ProcessResult.New result messages errors

@@ -29,13 +29,16 @@ let gitPath =
         let ev = environVar "GIT"
         if not (isNullOrEmpty ev) then ev else findPath "GitPath" GitPath "git.exe"
 
+let inline private setInfo gitPath repositoryDir command info =
+    { info with
+        FileName = gitPath
+        WorkingDirectory = repositoryDir
+        Arguments = command }
+
 /// Runs git.exe with the given command in the given repository directory.
 let runGitCommand repositoryDir command =
     let processResult =
-        ExecProcessAndReturnMessages (fun info ->
-          info.FileName <- gitPath
-          info.WorkingDirectory <- repositoryDir
-          info.Arguments <- command) gitTimeOut
+        ExecProcessAndReturnMessages (setInfo gitPath repositoryDir command) gitTimeOut
 
     processResult.OK,processResult.Messages,toLines processResult.Errors
 
@@ -49,17 +52,11 @@ let getGitResult repositoryDir command =
 
 /// Fires the given git command ind the given repository directory and returns immediatly.
 let fireAndForgetGitCommand repositoryDir command =
-    fireAndForget (fun info ->
-      info.FileName <- gitPath
-      info.WorkingDirectory <- repositoryDir
-      info.Arguments <- command)
+    fireAndForget (setInfo gitPath repositoryDir command)
 
 /// Runs the given git command, waits for its completion and returns whether it succeeded.
 let directRunGitCommand repositoryDir command =
-    directExec (fun info ->
-      info.FileName <- gitPath
-      info.WorkingDirectory <- repositoryDir
-      info.Arguments <- command)
+    directExec (setInfo gitPath repositoryDir command)
 
 /// Runs the given git command, waits for its completion and fails when it didn't succeeded.
 let directRunGitCommandAndFail repositoryDir command =

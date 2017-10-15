@@ -157,9 +157,10 @@ let RunRemoteService command host serviceName =
         | _ -> host, @"\\" + host
     Trace.tracefn "%s %s on %s" command serviceName host
     if not <| Process.directExec (fun p ->
-        p.FileName <- "sc"
-        p.Arguments <- sprintf @"%s %s %s" address command serviceName
-        p.RedirectStandardOutput <- true
+        { p with
+            FileName = "sc"
+            Arguments = sprintf @"%s %s %s" address command serviceName
+            RedirectStandardOutput = true }
     ) then failwith "Failed to send command to service."
 
 /// Sends a command to a local windows service.

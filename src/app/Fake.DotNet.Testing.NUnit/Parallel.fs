@@ -59,10 +59,11 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
         let stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
         let result =
-            ExecProcessWithLambdas (fun info ->
-                info.FileName <- tool
-                info.WorkingDirectory <- getWorkingDir parameters
-                info.Arguments <- args) parameters.TimeOut true (fun e -> errout.Append(e) |> ignore)
+            ExecProcessWithLambdas ((fun info ->
+            { info with
+                FileName = tool
+                WorkingDirectory = getWorkingDir parameters
+                Arguments = args }) >> Process.withFramework) parameters.TimeOut true (fun e -> errout.Append(e) |> ignore)
                 (fun s -> stdout.Append(s) |> ignore)
         stopwatch.Stop()
         Trace.tracefn "NUnit tests from %s finished in %O with result code %d." name stopwatch.Elapsed result
