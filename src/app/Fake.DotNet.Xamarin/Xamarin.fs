@@ -4,9 +4,16 @@ module Fake.XamarinHelper
 open System
 open System.IO
 open System.Text.RegularExpressions
-open System.Xml.Linq
 open System.Xml
+open System.Xml.Linq
 open System.Text
+open Fake.Core
+open Fake.Core.Globbing
+open Fake.Core.Process
+open Fake.Core.String
+open Fake.IO
+open Fake.IO.FileSystemOperators
+open Fake.DotNet.MsBuild
 
 let private executeCommand command args =
     ExecProcessAndReturnMessages (fun p ->
@@ -15,7 +22,7 @@ let private executeCommand command args =
     ) TimeSpan.MaxValue
     |>  fun result ->
              let output = String.Join (Environment.NewLine, result.Messages)
-             tracefn "Process output: \r\n%A" output
+             Trace.logVerbosefn "Process output: \r\n%A" output
              if result.ExitCode <> 0 then failwithf "%s exited with error %d" command result.ExitCode
 
 /// The package restore paramater type
@@ -27,7 +34,7 @@ type XamarinComponentRestoreParams = {
 
 /// The default package restore parameters
 let XamarinComponentRestoreDefaults = {
-    ToolPath = findToolInSubPath "xamarin-component.exe" (currentDirectory @@ "tools" @@ "xpkg")
+    ToolPath = Tools.findToolInSubPath "xamarin-component.exe" ((Path.GetFullPath ".") @@ "tools" @@ "xpkg")
 }
 
 /// Restores NuGet packages and Xamarin Components for a project or solution
@@ -154,7 +161,7 @@ let iOSBuild setParams =
             if isNullOrEmpty iOSBuildParams.OutputPath then msBuildParams
             else
                 { msBuildParams with
-                    Properties = [ "OutputPath", FullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
+                    Properties = [ "OutputPath", Path.getFullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
                 }
 
         msBuildParams
@@ -247,7 +254,7 @@ let AndroidBuildPackages setParams =
             if isNullOrEmpty androidBuildParams.OutputPath then msBuildParams
             else
                 { msBuildParams with
-                    Properties = [ "OutputPath", FullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
+                    Properties = [ "OutputPath", Path.getFullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
                 }
 
         msBuildParams
@@ -282,8 +289,8 @@ let AndroidBuildPackages setParams =
         manifest.Save(wr)
 
     let mostRecentFileInDirMatching path =
-        directoryInfo path
-        |> filesInDirMatching "*.apk"
+        DirectoryInfo.ofPath path
+        |> DirectoryInfo.getMatchingFiles "*.apk"
         |> Seq.sortBy (fun file -> file.LastWriteTime)
         |> Seq.last
 
@@ -297,13 +304,13 @@ let AndroidBuildPackages setParams =
         rewriteManifestFile manifestFile specificManifest transformVersion target
         // workaround for xamarin bug: https://bugzilla.xamarin.com/show_bug.cgi?id=30571
         let backupFn = (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-original.xml")
-        CopyFile backupFn manifestFile
-        CopyFile manifestFile specificManifest
+        Shell.CopyFile backupFn manifestFile
+        Shell.CopyFile manifestFile specificManifest
         try
             //buildPackages param (Some name) (Some specificManifest) // to uncomment after xamarin fix there bug
             buildPackages param (Some name) None
         finally
-            CopyFile manifestFile backupFn
+            Shell.CopyFile manifestFile backupFn
 
     let translateAbi = function
                        | AndroidAbiTarget.X86 _ -> "x86"
@@ -401,7 +408,7 @@ let AndroidSignAndAlign setParams apkFile =
 
         param
 
-    let quotesSurround (s:string) = if EnvironmentHelper.isMono then sprintf "'%s'" s else sprintf "\"%s\"" s
+    let quotesSurround (s:string) = if Environment.isMono then sprintf "'%s'" s else sprintf "\"%s\"" s
 
     let signAndAlign (file:FileInfo) (param:AndroidSignAndAlignParams) =
         let fullSignedFilePath = Regex.Replace(file.FullName, ".apk$", "-Signed.apk")
@@ -414,7 +421,7 @@ let AndroidSignAndAlign setParams apkFile =
         let zipalignArgs = String.Format("-f -v 4 {0} {1}", quotesSurround(fullSignedFilePath), quotesSurround(fullAlignedFilePath))
         executeCommand param.ZipalignPath zipalignArgs
 
-        fileInfo fullAlignedFilePath
+        FileInfo.ofPath fullAlignedFilePath
 
     AndroidSignAndAlignDefaults
     |> setParams
