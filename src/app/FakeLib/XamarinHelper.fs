@@ -122,6 +122,7 @@ type IncrementerVersion = int32 -> AndroidAbiTarget -> int32
 /// Builds a project or solution using Xamarin's iOS build tools
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSBuild setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
@@ -217,6 +218,7 @@ let AndroidPackageDefaults = {
 /// Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidBuildPackages setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
@@ -356,6 +358,7 @@ let AndroidBuildPackages setParams =
 /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidPackage setParams =
     AndroidBuildPackages setParams |> Seq.exactlyOne
 
@@ -393,6 +396,7 @@ let AndroidSignAndAlignDefaults = {
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
 ///  - `apkFile` - FileInfo object for an unsigned APK file to sign and align
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidSignAndAlign setParams apkFile =
     let validateParams param =
         if param.KeystorePath = "" then failwith "You must specify a keystore to use"
@@ -425,6 +429,7 @@ let AndroidSignAndAlign setParams apkFile =
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
 ///  - `apkFiles` - FileInfo object for an unsigned APK file to sign and align
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidSignAndAlignPackages setParams apkFiles =
     apkFiles |> Seq.map (fun f -> AndroidSignAndAlign setParams f)
 
@@ -453,6 +458,7 @@ let iOSArchiveDefaults = {
 /// Archive a project using Xamarin's iOS archive tools
 /// ## Parameters
 ///  - `setParams` - Function used to override the default archive parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSArchive setParams =
     let archiveProject param =
         let projectNameArg = if param.ProjectName <> "" then String.Format("-p:{0} ", param.ProjectName) else ""

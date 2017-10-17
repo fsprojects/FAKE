@@ -1,5 +1,5 @@
 ﻿/// Contains tasks for building Xamarin.iOS and Xamarin.Android apps
-module Fake.XamarinHelper
+module Fake.DotNet.Xamarin
 
 open System
 open System.IO
