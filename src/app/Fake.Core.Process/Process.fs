@@ -147,17 +147,30 @@ type ProcessResult =
           Errors = errors }
 
 type ProcStartInfo =
-    { Arguments : string
+    { /// Gets or sets the set of command-line arguments to use when starting the application.
+      Arguments : string
+      /// Gets or sets a value indicating whether to start the process in a new window.
       CreateNoWindow : bool
+      /// Gets or sets a value that identifies the domain to use when starting the process. If this value is null, the UserName property must be specified in UPN format.
       Domain : string
+      /// Gets the environment variables that apply to this process and its child processes.
       Environment : Map<string, string> option
+      /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
       ErrorDialog : bool
+      /// Gets or sets the window handle to use when an error dialog box is shown for a process that cannot be started.
       ErrorDialogParentHandle  : IntPtr
+      /// Gets or sets the application or document to start.
       FileName : string
       /// true if the Windows user profile should be loaded; otherwise, false. The default is false.
       LoadUserProfile : bool
+      /// Gets or sets the user password in clear text to use when starting the process.
+      PasswordInClearText : string
+#if NETSTANDARD2_0
       /// The user password to use when starting the process.
       Password : System.Security.SecureString
+      /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
+      WindowStyle : ProcessWindowStyle
+#endif  
       /// true if error output should be written to Process.StandardError; otherwise, false. The default is false.
       RedirectStandardError : bool
       /// true if input should be read from Process.StandardInput; otherwise, false. The default is false.
@@ -174,8 +187,6 @@ type ProcStartInfo =
       UseShellExecute : bool
       /// The action to take with the file that the process opens. The default is an empty string (""), which signifies no action.
       Verb : string
-      /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
-      WindowStyle : ProcessWindowStyle
       /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
       WorkingDirectory : string
       } 
@@ -188,7 +199,11 @@ type ProcStartInfo =
         ErrorDialogParentHandle = IntPtr.Zero
         FileName = ""
         LoadUserProfile = false
+        PasswordInClearText = null
+#if NETSTANDARD2_0
         Password = null
+        WindowStyle = ProcessWindowStyle.Normal
+#endif
         RedirectStandardError = false
         RedirectStandardInput = false
         RedirectStandardOutput = false
@@ -197,7 +212,6 @@ type ProcStartInfo =
         UserName = null
         UseShellExecute = true
         Verb = ""
-        WindowStyle = ProcessWindowStyle.Normal
         WorkingDirectory = "" }
     member x.AsStartInfo =
         let p = new ProcessStartInfo(x.FileName, x.Arguments)
@@ -212,7 +226,11 @@ type ProcStartInfo =
         p.ErrorDialog <- x.ErrorDialog
         p.ErrorDialogParentHandle <- x.ErrorDialogParentHandle
         p.LoadUserProfile <- x.LoadUserProfile
+        p.PasswordInClearText <- x.PasswordInClearText
+#if NETSTANDARD2_0
         p.Password <- x.Password
+        p.WindowStyle <- x.WindowStyle
+#endif
         p.RedirectStandardError <- x.RedirectStandardError
         p.RedirectStandardInput <- x.RedirectStandardInput
         p.RedirectStandardOutput <- x.RedirectStandardOutput
@@ -221,7 +239,6 @@ type ProcStartInfo =
         p.UserName <- x.UserName
         p.UseShellExecute <- x.UseShellExecute
         p.Verb <- x.Verb
-        p.WindowStyle <- x.WindowStyle
         p.WorkingDirectory <- x.WorkingDirectory
         p
     
