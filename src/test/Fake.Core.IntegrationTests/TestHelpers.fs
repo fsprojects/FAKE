@@ -27,11 +27,12 @@ let prepare scenario =
 
 let directFakeInPath command scenarioPath target =
     let result =
-        Process.ExecProcessAndReturnMessages (fun (info:System.Diagnostics.ProcessStartInfo) ->
-          info.EnvironmentVariables.["target"] <- target
-          info.FileName <- fakeToolPath
-          info.WorkingDirectory <- scenarioPath
-          info.Arguments <- command) (System.TimeSpan.FromMinutes 15.)
+        Process.ExecProcessAndReturnMessages (fun (info:Process.ProcStartInfo) ->
+          { info with
+                FileName = fakeToolPath
+                WorkingDirectory = scenarioPath
+                Arguments = command }
+          |> Process.setEnvironmentVariable "target" target) (System.TimeSpan.FromMinutes 15.)
     if result.ExitCode <> 0 then 
         let errors = String.Join(Environment.NewLine,result.Errors)
         printfn "%s" <| String.Join(Environment.NewLine,result.Messages)

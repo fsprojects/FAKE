@@ -264,6 +264,76 @@ type ProcStartInfo =
         p.WorkingDirectory <- x.WorkingDirectory
         p
     
+/// Sets the environment Settings for the given startInfo.
+/// Existing values will be overriden.
+/// [omit]
+let setEnvironmentVariable envKey envVar (startInfo : ProcStartInfo) =
+    { startInfo with
+        Environment =
+            match startInfo.Environment with
+            | None -> [envKey, envVar] |> Map.ofSeq
+            | Some map -> map |> Map.add envKey envVar
+            |> Some }
+
+let setEnvironmentVariables vars (startInfo : ProcStartInfo) =
+    vars
+    |> Seq.fold (fun state (newKey, newVar) ->
+            setEnvironmentVariable newKey newVar state) startInfo
+
+type ProcStartInfo with
+    /// Gets or sets the set of command-line arguments to use when starting the application.
+    member x.WithArguments args = { x with Arguments = args }
+    /// Gets or sets a value indicating whether to start the process in a new window.
+    member x.WithCreateNoWindow noWindow = { x with CreateNoWindow = noWindow }
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithDomain domain = { x with Domain = domain }
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithoutEnvironment () = { x with Environment = None }
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithEnvironmentVariable(envKey, envVar) =
+        setEnvironmentVariable envKey envVar x
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithEnvironmentVariables vars =
+        setEnvironmentVariables vars x
+
+#if FX_ERROR_DIALOG
+    /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
+    member x.WithErrorDialog errorDialog = { x with ErrorDialog = errorDialog }
+    /// Gets or sets the window handle to use when an error dialog box is shown for a process that cannot be started.
+    member x.WithErrorDialogParentHandle handle = { x with ErrorDialogParentHandle = handle }
+#endif  
+    /// Gets or sets the application or document to start.
+    member x.WithFileName name = { x with FileName = name }
+    /// true if the Windows user profile should be loaded; otherwise, false. The default is false.
+    member x.WithLoadUserProfile userProfile = { x with LoadUserProfile = userProfile }
+    // Note: No SecureString as that one is obsolete anyway and to provide a uniform API across netstandard16.
+    /// Gets or sets the user password in clear text to use when starting the process.
+    member x.WithPassword password = { x with Password = password }
+#if FX_WINDOWSTLE
+    /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
+    member x.WithWindowStyle style = { x with WindowStyle = style }
+#endif  
+    /// true if error output should be written to Process.StandardError; otherwise, false. The default is false.
+    member x.WithRedirectStandardError redirectStdErr = { x with RedirectStandardError = redirectStdErr }
+    /// true if input should be read from Process.StandardInput; otherwise, false. The default is false.
+    member x.WithRedirectStandardInput redirectStdInput = { x with RedirectStandardInput = redirectStdInput }
+    /// true if output should be written to Process.StandardOutput; otherwise, false. The default is false.
+    member x.WithRedirectStandardOutput redirectStdOutput = { x with RedirectStandardOutput = redirectStdOutput }
+    /// An object that represents the preferred encoding for error output. The default is null.
+    member x.WithStandardErrorEncoding encoding = { x with StandardErrorEncoding = encoding }
+    /// An object that represents the preferred encoding for standard output. The default is null.
+    member x.WithStandardOutputEncoding encoding = { x with StandardOutputEncoding = encoding }
+    /// The user name to use when starting the process. If you use the UPN format, user@DNS_domain_name, the Domain property must be null.
+    member x.WithUserName name = { x with UserName = name }
+    /// true if the shell should be used when starting the process; false if the process should be created directly from the executable file. The default is true.
+    member x.WithUseShellExecute shellExec = { x with UseShellExecute = shellExec }
+#if FX_VERB
+    /// The action to take with the file that the process opens. The default is an empty string (""), which signifies no action.
+    member x.WithVerb name = { x with Verb = name }
+#endif
+    /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
+    member x.WithWorkingDirectory dir = { x with WorkingDirectory = dir }
+
 let inline getProc config =
     let startInfo : ProcStartInfo =
         config { ProcStartInfo.Empty with UseShellExecute = false }
@@ -384,21 +454,6 @@ let ExecProcessElevated cmd args timeOut =
     failwithf "Elevated processes not possible with netstandard16 build."        
 #endif
 
-/// Sets the environment Settings for the given startInfo.
-/// Existing values will be overriden.
-/// [omit]
-let setEnvironmentVariable envKey envVar (startInfo : ProcStartInfo) =
-    { startInfo with
-        Environment =
-            match startInfo.Environment with
-            | None -> [envKey, envVar] |> Map.ofSeq
-            | Some map -> map |> Map.add envKey envVar
-            |> Some }
-
-let setEnvironmentVariables vars (startInfo : ProcStartInfo) =
-    vars
-    |> Seq.fold (fun state (newKey, newVar) ->
-            setEnvironmentVariable newKey newVar state) startInfo
 
 /// Runs the given process and returns true if the exit code was 0.
 /// [omit]
