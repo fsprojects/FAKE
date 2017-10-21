@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET40;NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET40;NO_DOTNETCORE_BOOTSTRAP;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>
@@ -34,7 +34,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\build\</OutputPath>
-    <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
+    <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
