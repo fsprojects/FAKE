@@ -126,7 +126,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       Paket.NuGet.DownloadAndExtractPackage
         (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
          source, [], Paket.Constants.MainDependencyGroup,
-         packageName, version, false, false, false, false)
+         packageName, version, false, false, false, false, false)
       |> Async.RunSynchronously
     //let netstandard = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyName(System.Reflection.AssemblyName("netstandard"))
     let sdkDir = Path.Combine(extractedFolder, "build", "netstandard2.0", "ref")
@@ -155,10 +155,27 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     |> ignore
 
     let lockFile = paketDependencies.GetLockFile()
-    let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
+    //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
+    let (cache:DependencyCache) = DependencyCache(paketDependencies.DependenciesFile, lockFile)
     if printDetails then Trace.log "Setup DependencyCache..."
-    cache.SetupGroup groupName |> ignore
+    try
+      cache.SetupGroup groupName |> ignore
+    with e when e.Message.Contains "doesn't exist. Did you restore" ->
+      let idx = e.Message.IndexOf(" doesn't exist. Did you restore")
+      let folder = e.Message.Substring("Folder ".Length, idx - "Folder ".Length)
+      let rec printFolder f =
+        if not (System.IO.Directory.Exists f) then
+          printfn "Dir '%s' doesn't exist" f
+        else
+          printfn "Dir '%s':" f
+          System.IO.Directory.EnumerateDirectories(f)
+          |> Seq.iter (fun dir -> printfn " -> %s" dir)
+        let parent = System.IO.Path.GetDirectoryName(f)
+        if not (isNull parent) then
+          printFolder parent
 
+      printFolder folder
+      reraise()
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
     // Write loadDependencies file (basically only for editor support)
     let intellisenseFile = Path.Combine (cacheDir, "intellisense.fsx")

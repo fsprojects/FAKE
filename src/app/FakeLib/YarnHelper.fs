@@ -37,7 +37,7 @@ type InstallArgs =
 | Har
 | NoLockFile
 | Production
-| PureLockfile
+| PureLockFile
 
 /// The list of supported Yarn commands. The `Custom` alternative
 /// can be used for other commands not in the list until they are

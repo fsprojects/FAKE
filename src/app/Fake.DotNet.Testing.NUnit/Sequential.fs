@@ -39,10 +39,11 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let args = buildNUnitdArgs parameters assemblies
     Trace.trace (tool + " " + args)
     let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- tool
-            info.WorkingDirectory <- getWorkingDir parameters
-            info.Arguments <- args) parameters.TimeOut
+        ExecProcess ((fun info ->
+        { info with
+            FileName = tool
+            WorkingDirectory = getWorkingDir parameters
+            Arguments = args }) >> Process.withFramework) parameters.TimeOut
     //sendTeamCityNUnitImport parameters.OutputFile
     let errorDescription error = 
         match error with

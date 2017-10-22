@@ -99,11 +99,18 @@ try
                     //TODO check for presence of --fsiargs with no args?  Make attribute for UAP?
 
                     //Use --fsiargs approach.
-                    | x::xs, _, _ ->
+                    | x::xs, maybeScript, _ ->
                         match FsiArgs.parse (x::xs |> Array.ofList)  with
                         | Choice1Of2(fsiArgs) -> fsiArgs
-                        | Choice2Of2(msg) -> failwith (sprintf "Unable to parse --fsiargs.  %s." msg)
-
+                        | Choice2Of2(msg) ->
+                            match maybeScript with
+                            | Some script ->
+                                match FsiArgs.parse ((x::xs @ [script]) |> Array.ofList) with
+                                | Choice1Of2(fsiArgs) -> fsiArgs
+                                | Choice2Of2(msg) ->
+                                    failwith (sprintf "Unable to parse --fsiargs.  %s." msg)
+                            | None -> 
+                                    failwith (sprintf "Unable to parse --fsiargs.  %s." msg)
                     //Script path is specified.
                     | [], Some(script), _ -> FsiArgs([], script, [])
 

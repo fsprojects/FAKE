@@ -242,6 +242,7 @@ type MSBuildParams =
       ToolsVersion : string option
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
+      WarnAsError: string list option
       FileLoggers : MSBuildFileLoggerConfig list option
       BinaryLoggers : string list option
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
@@ -256,15 +257,16 @@ let mutable MSBuildDefaults =
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
+      WarnAsError = None
       RestorePackagesFlag = false
       FileLoggers = None
       BinaryLoggers = None
       DistributedLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers binaryLoggers distributedFileLoggers properties =
-    if Environment.isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
-    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
+let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
+    if Environment.isUnix then [ targets; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -324,6 +326,11 @@ let serializeMSBuildParams (p : MSBuildParams) =
     let noconsolelogger =
         if p.NoConsoleLogger then Some("noconlog", "")
         else None
+
+    let warnAsError =
+        match p.WarnAsError with
+        | None -> None
+        | Some w -> Some("warnaserror", w |> String.concat ";")
 
     let fileLoggers =
         let serializeLogger fl =
@@ -394,7 +401,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers binaryLoggers distributedFileLoggers properties
+    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties
     |> serializeArgs
 
 #if !NO_MSBUILD_AVAILABLE
@@ -454,8 +461,9 @@ let build setParams project =
     Trace.tracefn "Building project: %s\n  %s %s" project msBuildExe args
     let exitCode =
         Process.ExecProcess (fun info ->
-            info.FileName <- msBuildExe
-            info.Arguments <- args) TimeSpan.MaxValue
+        { info with
+            FileName = msBuildExe
+            Arguments = args}) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write

@@ -358,9 +358,10 @@ module Fake.Windows.Choco
             if found <> None then found.Value else failwith "Cannot find the choco executable."
 
         use __ = Trace.traceTask "choco" args
-        let setInfo (info:ProcessStartInfo) =
-            info.FileName <- chocoExe
-            info.Arguments <- args
+        let setInfo (info:ProcStartInfo) =
+            { info with
+                FileName = chocoExe
+                Arguments = args }
         let result = ExecProcess (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
 

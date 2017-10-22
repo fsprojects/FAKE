@@ -322,10 +322,11 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     Trace.trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- tool
-            info.WorkingDirectory <- getWorkingDir parameters
-            info.Arguments <- args) processTimeout
+        ExecProcess ((fun info ->
+        { info with
+            FileName = tool
+            WorkingDirectory = getWorkingDir parameters
+            Arguments = args }) >> Process.withFramework) processTimeout
     let errorDescription error =
         match error with
         | OK -> "OK"

@@ -53,9 +53,10 @@ module Fake.Testing.SonarQube
         | End -> "end " + setArgs + cfgArgs
 
       let result =
-        ExecProcess (fun info ->
-          info.FileName <- sonarPath
-          info.Arguments <- args) System.TimeSpan.MaxValue
+        ExecProcess ((fun info ->
+        { info with
+            FileName = sonarPath
+            Arguments = args }) >> Process.withFramework) System.TimeSpan.MaxValue
       if result <> 0 then failwithf "Error during sonar qube call %s" (call.ToString())
 
     /// This task to can be used to run the begin command of [Sonar Qube](http://sonarqube.org/) on a project.

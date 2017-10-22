@@ -92,9 +92,17 @@ let cleanForTests () =
             then fileName, args else "cmd", ("/C " + fileName + " " + args)
         let ok =
             Process.execProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = fileName
+                WorkingDirectory = workingDir
+                Arguments = args }
+#else
                 info.FileName <- fileName
                 info.WorkingDirectory <- workingDir
-                info.Arguments <- args) System.TimeSpan.MaxValue
+                info.Arguments <- args
+#endif
+            ) System.TimeSpan.MaxValue
         if not ok then failwith (sprintf "'%s> %s %s' task failed" workingDir fileName args)
 
     let rmdir dir =
@@ -202,6 +210,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
+      "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.IO.FileSystem", "Core Filesystem utilities"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.netcore", "Command line tool"
@@ -212,7 +221,7 @@ let dotnetAssemblyInfos =
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover" ]
-    
+
 let assemblyInfos =
   [ "./src/app/FAKE/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Command line tool"
@@ -253,9 +262,16 @@ Target.Create "SetAssemblyInfo" (fun _ ->
 )
 
 Target.Create "DownloadPaket" (fun _ ->
-    if 0 <> Process.ExecProcess (fun info -> 
+    if 0 <> Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = ".paket/paket.exe"
+                Arguments = "--version" }
+#else
                 info.FileName <- ".paket/paket.exe"
-                info.Arguments <- "--version") (System.TimeSpan.FromMinutes 5.0) then
+                info.Arguments <- "--version"
+#endif
+            ) (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
 )
 
@@ -330,14 +346,14 @@ Target.Create "GenerateDocs" (fun _ ->
 
     Directory.ensure apidocsDir
     dllFiles
-    |> FSFormatting.CreateDocsForDlls (fun s -> 
-        { s with 
+    |> FSFormatting.CreateDocsForDlls (fun s ->
+        { s with
             OutputDirectory = apidocsDir
-            LayoutRoots = layoutroots 
+            LayoutRoots = layoutroots
             LibDirs = [ "./build" ]
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
-            SourceRepository = githubLink + "/blob/master" }) 
+            SourceRepository = githubLink + "/blob/master" })
 
 )
 
@@ -372,6 +388,9 @@ Target.Create "TestDotnetCore" (fun _ ->
 Target.Create "BootstrapTest" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
+#if !BOOTSTRAP
+    Environment.setEnvironVar "FAKE_DETAILED_ERRORS" "true"
+#endif
     // Check if we can build ourself with the new binaries.
     let test clearCache (script:string) =
         let clear () =
@@ -386,14 +405,31 @@ Target.Create "BootstrapTest" (fun _ ->
             if Environment.isUnix then
                 let result =
                     Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+                    { info with
+                        FileName = "chmod"
+                        WorkingDirectory = "."
+                        Arguments = "+x build/FAKE.exe" }
+#else
                         info.FileName <- "chmod"
                         info.WorkingDirectory <- "."
-                        info.Arguments <- "+x build/FAKE.exe") span
+                        info.Arguments <- "+x build/FAKE.exe"
+#endif
+                    ) span
                 if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
             Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = "build/FAKE.exe"
+                WorkingDirectory = "."
+                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\" -pd" script target }
+            |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
+#else
                 info.FileName <- "build/FAKE.exe"
                 info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "%s %s -pd" script target) span
+                info.Arguments <- sprintf "%s %s -pd -fa --define:BOOTSTRAP " script target
+#endif
+                ) span
 
         let result = executeTarget (System.TimeSpan.FromMinutes 10.0) "PrintColors"
         if result <> 0 then failwith "Bootstrapping failed"
@@ -418,6 +454,9 @@ Target.Create "BootstrapTest" (fun _ ->
 Target.Create "BootstrapTestDotnetCore" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
+#if !BOOTSTRAP
+    Environment.setEnvironVar "FAKE_DETAILED_ERRORS" "true"
+#endif
     // Check if we can build ourself with the new binaries.
     let test timeout clearCache script =
         let clear () =
@@ -437,9 +476,18 @@ Target.Create "BootstrapTestDotnetCore" (fun _ ->
                 if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
                 else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
             Process.ExecProcessWithLambdas (fun info ->
+#if BOOTSTRAP
+                { info with
+                    FileName = fileName
+                    WorkingDirectory = "."
+                    Arguments = sprintf "run %s --fsiargs \"--define:BOOTSTRAP\" --target %s" script target }
+                |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
+#else
                     info.FileName <- fileName
                     info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "run %s --target %s" script target)
+                    info.Arguments <- sprintf "run %s --fsiargs \"--define:BOOTSTRAP\" --target %s" script target
+#endif
+                )
                 timeout
                 true (Trace.traceFAKE "%s") Trace.trace
 
@@ -490,8 +538,15 @@ Target.Create "ILRepack" (fun _ ->
 
         let result =
             Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
+                Arguments = sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack }
+#else
                 info.FileName <- Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
-                info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack) (System.TimeSpan.FromMinutes 5.)
+                info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack
+#endif
+            ) (System.TimeSpan.FromMinutes 5.)
 
         if result <> 0 then failwithf "Error during ILRepack execution."
 
@@ -511,7 +566,11 @@ Target.Create "CreateNuGet" (fun _ ->
         |> Seq.iter (fun file ->
             let args =
                 { Process.Program = "lib" @@ "corflags.exe"
+#if BOOTSTRAP
+                  Process.WorkingDir = Path.GetDirectoryName file
+#else
                   Process.WorkingDirectory = Path.GetDirectoryName file
+#endif
                   Process.CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
                   Process.Args = [] }
             printfn "%A" args
@@ -720,7 +779,7 @@ Target.Create "DotnetPackage_" (fun _ ->
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
         }) netcoreFsproj
-    
+
 )
 
 Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
@@ -839,8 +898,15 @@ let rec nugetPush tries nugetpackage =
     try
         if not <| System.String.IsNullOrEmpty apikey then
             Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = nuget_exe
+                Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource) }
+#else
                 info.FileName <- nuget_exe
-                info.Arguments <- sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource))
+                info.Arguments <- sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource)
+#endif
+            )
                 (System.TimeSpan.FromMinutes 10.)
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
         else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
@@ -884,7 +950,7 @@ Target.Create "ReleaseDocs" (fun _ ->
 )
 
 Target.Create "FastRelease" (fun _ ->
-    
+
     Git.Staging.StageAll ""
     Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     let branch = Git.Information.getBranchName ""
@@ -892,12 +958,12 @@ Target.Create "FastRelease" (fun _ ->
 
     Git.Branches.tag "" release.NugetVersion
     Git.Branches.pushTag "" "origin" release.NugetVersion
-    
+
     let token =
         match Environment.environVarOrDefault "github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
-    
+
     let draft =
         GitHub.createClientWithToken token
         |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes

@@ -80,6 +80,7 @@ type NUnit3Runtime =
         | Net35 -> "net-3.5"
         | Net40 -> "net-4.0"
         | Net45 -> "net-4.5"
+        | Mono -> "mono"
         | Mono20 -> "mono-2.0"
         | Mono30 -> "mono-3.0"
         | Mono35 -> "mono-3.5"

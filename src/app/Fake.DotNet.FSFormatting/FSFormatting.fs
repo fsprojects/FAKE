@@ -17,9 +17,10 @@ let mutable toolPath =
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
 let private run toolPath command = 
-    if 0 <> ExecProcess (fun info -> 
-                info.FileName <- toolPath
-                info.Arguments <- command) System.TimeSpan.MaxValue
+    if 0 <> ExecProcess ((fun info ->
+            { info with
+                FileName = toolPath
+                Arguments = command }) >> Process.withFramework) System.TimeSpan.MaxValue
     then failwithf "FSharp.Formatting %s failed." command
 
 type LiterateArguments =

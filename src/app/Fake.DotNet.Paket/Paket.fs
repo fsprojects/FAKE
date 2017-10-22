@@ -91,6 +91,14 @@ let PaketRestoreDefaults() : PaketRestoreParams =
       ReferenceFiles = []
       Group = "" }
 
+
+let inline private startPaket toolPath workDir (info:Process.ProcStartInfo) =
+    { info with 
+        FileName = toolPath
+        WorkingDirectory = workDir }
+let inline private withArgs args (info:Process.ProcStartInfo) =
+    { info with Arguments = args }
+
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
 /// ## Parameters
 ///
@@ -122,11 +130,11 @@ let Pack setParams =
             sprintf "%s%s%s%s%s%s%s%s%s%s%s%s%s"
                 version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates
                 symbols includeReferencedProjects minimumFromLockFile pinProjectReferences projectUrl
-        Process.ExecProcess
-            (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs) parameters.TimeOut
+        Process.ExecProcess 
+            (startPaket parameters.ToolPath parameters.WorkingDir
+                >> withArgs (sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs)
+                >> Process.withFramework)
+            parameters.TimeOut
 
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
 
@@ -164,10 +172,11 @@ let PushFiles setParams files =
                 |> Seq.toArray
                 |> Array.map (fun package -> async {
                         let pushResult =
-                            Process.ExecProcess (fun info ->
-                                info.FileName <- parameters.ToolPath
-                                info.WorkingDirectory <- parameters.WorkingDir
-                                info.Arguments <- sprintf "push %s%s%s%s" url endpoint key (Process.toParam package)) parameters.TimeOut
+                            Process.ExecProcess
+                                (startPaket parameters.ToolPath parameters.WorkingDir
+                                    >> withArgs (sprintf "push %s%s%s%s" url endpoint key (Process.toParam package))
+                                    >> Process.withFramework)
+                                parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
             Async.Parallel tasks
@@ -177,10 +186,11 @@ let PushFiles setParams files =
     else
         for package in packages do
             let pushResult =
-                Process.ExecProcess (fun info ->
-                    info.FileName <- parameters.ToolPath
-                    info.WorkingDirectory <- parameters.WorkingDir
-                    info.Arguments <- sprintf "push %s%s%s%s" url endpoint key (Process.toParam package)) parameters.TimeOut
+                Process.ExecProcess
+                    (startPaket parameters.ToolPath parameters.WorkingDir
+                        >> withArgs (sprintf "push %s%s%s%s" url endpoint key (Process.toParam package))
+                        >> Process.withFramework)
+                    parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
 
 /// Pushes all NuGet packages in the working dir to the server by using Paket push.
@@ -246,9 +256,10 @@ let Restore setParams =
     use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir
 
     let restoreResult =
-        Process.ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles) parameters.TimeOut
+        Process.ExecProcess
+            (startPaket parameters.ToolPath parameters.WorkingDir
+                >> withArgs (sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles)
+                >> Process.withFramework)
+            parameters.TimeOut
 
     if restoreResult <> 0 then failwithf "Error during restore %s." parameters.WorkingDir

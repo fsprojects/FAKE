@@ -146,7 +146,201 @@ type ProcessResult =
           Messages = messages
           Errors = errors }
 
+type ProcStartInfo =
+    { /// Gets or sets the set of command-line arguments to use when starting the application.
+      Arguments : string
+      /// Gets or sets a value indicating whether to start the process in a new window.
+      CreateNoWindow : bool
+      /// Gets or sets a value that identifies the domain to use when starting the process. If this value is null, the UserName property must be specified in UPN format.
+      Domain : string
+      /// Gets the environment variables that apply to this process and its child processes.
+      Environment : Map<string, string> option
+#if FX_ERROR_DIALOG
+      /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
+      ErrorDialog : bool
+      /// Gets or sets the window handle to use when an error dialog box is shown for a process that cannot be started.
+      ErrorDialogParentHandle  : IntPtr
+#endif  
+      /// Gets or sets the application or document to start.
+      FileName : string
+      /// true if the Windows user profile should be loaded; otherwise, false. The default is false.
+      LoadUserProfile : bool
+      // Note: No SecureString as that one is obsolete anyway and to provide a uniform API across netstandard16.
+      /// Gets or sets the user password in clear text to use when starting the process.
+      Password : string
+#if FX_WINDOWSTLE
+      /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
+      WindowStyle : ProcessWindowStyle
+#endif  
+      /// true if error output should be written to Process.StandardError; otherwise, false. The default is false.
+      RedirectStandardError : bool
+      /// true if input should be read from Process.StandardInput; otherwise, false. The default is false.
+      RedirectStandardInput : bool
+      /// true if output should be written to Process.StandardOutput; otherwise, false. The default is false.
+      RedirectStandardOutput : bool
+      /// An object that represents the preferred encoding for error output. The default is null.
+      StandardErrorEncoding : System.Text.Encoding
+      /// An object that represents the preferred encoding for standard output. The default is null.
+      StandardOutputEncoding : System.Text.Encoding
+      /// The user name to use when starting the process. If you use the UPN format, user@DNS_domain_name, the Domain property must be null.
+      UserName : string
+      /// true if the shell should be used when starting the process; false if the process should be created directly from the executable file. The default is true.
+      UseShellExecute : bool
+#if FX_VERB
+      /// The action to take with the file that the process opens. The default is an empty string (""), which signifies no action.
+      Verb : string
+#endif
+      /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
+      WorkingDirectory : string
+      } 
+    static member Empty =
+      { Arguments = null
+        CreateNoWindow = false
+        Domain = null
+        Environment = None
+#if FX_ERROR_DIALOG
+        ErrorDialog = false
+        ErrorDialogParentHandle = IntPtr.Zero
+#endif    
+        FileName = ""
+        LoadUserProfile = false
+        Password = null
+#if FX_WINDOWSTLE
+        WindowStyle = ProcessWindowStyle.Normal
+#endif
+        RedirectStandardError = false
+        RedirectStandardInput = false
+        RedirectStandardOutput = false
+        StandardErrorEncoding = null
+        StandardOutputEncoding = null
+        UserName = null
+        UseShellExecute = true
+#if FX_VERB
+        Verb = ""
+#endif
+        WorkingDirectory = "" }
+    member x.AsStartInfo =
+        let p = new ProcessStartInfo(x.FileName, x.Arguments)
+        p.CreateNoWindow <- x.CreateNoWindow
+        p.Domain <- x.Domain
+        match x.Environment with
+        | Some env ->
+            env |> Map.iter (fun var key ->
+                p.Environment.[var] <- key)
+            //p.Environment = None
+        | _ -> ()
+#if FX_ERROR_DIALOG
+        p.ErrorDialog <- x.ErrorDialog
+        p.ErrorDialogParentHandle <- x.ErrorDialogParentHandle
+#endif
+        p.LoadUserProfile <- x.LoadUserProfile
 
+        if not (isNull x.Password) then
+#if FX_PASSWORD_CLEAR_TEXT
+            p.PasswordInClearText <- x.Password
+#else
+#if FX_PASSWORD
+            p.Password <-
+               (let sec = new System.Security.SecureString()
+                x.Password |> Seq.iter (sec.AppendChar)
+                sec.MakeReadOnly()
+                sec)
+#else
+            failwithf "Password for starting a process was set but with this compiled binary neither ProcessStartInfo.Password nor ProcessStartInfo.PasswordInClearText was available."
+#endif
+#endif
+#if FX_WINDOWSTLE
+        p.WindowStyle <- x.WindowStyle
+#endif
+        p.RedirectStandardError <- x.RedirectStandardError
+        p.RedirectStandardInput <- x.RedirectStandardInput
+        p.RedirectStandardOutput <- x.RedirectStandardOutput
+        p.StandardErrorEncoding <- x.StandardErrorEncoding
+        p.StandardOutputEncoding <- x.StandardOutputEncoding
+        p.UserName <- x.UserName
+        p.UseShellExecute <- x.UseShellExecute
+#if FX_VERB
+        p.Verb <- x.Verb
+#endif    
+        p.WorkingDirectory <- x.WorkingDirectory
+        p
+    
+/// Sets the environment Settings for the given startInfo.
+/// Existing values will be overriden.
+/// [omit]
+let setEnvironmentVariable envKey envVar (startInfo : ProcStartInfo) =
+    { startInfo with
+        Environment =
+            match startInfo.Environment with
+            | None -> [envKey, envVar] |> Map.ofSeq
+            | Some map -> map |> Map.add envKey envVar
+            |> Some }
+
+let setEnvironmentVariables vars (startInfo : ProcStartInfo) =
+    vars
+    |> Seq.fold (fun state (newKey, newVar) ->
+            setEnvironmentVariable newKey newVar state) startInfo
+
+type ProcStartInfo with
+    /// Gets or sets the set of command-line arguments to use when starting the application.
+    member x.WithArguments args = { x with Arguments = args }
+    /// Gets or sets a value indicating whether to start the process in a new window.
+    member x.WithCreateNoWindow noWindow = { x with CreateNoWindow = noWindow }
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithDomain domain = { x with Domain = domain }
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithoutEnvironment () = { x with Environment = None }
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithEnvironmentVariable(envKey, envVar) =
+        setEnvironmentVariable envKey envVar x
+    /// Gets or sets a value that identifies the domain to use when starting the process.
+    member x.WithEnvironmentVariables vars =
+        setEnvironmentVariables vars x
+
+#if FX_ERROR_DIALOG
+    /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
+    member x.WithErrorDialog errorDialog = { x with ErrorDialog = errorDialog }
+    /// Gets or sets the window handle to use when an error dialog box is shown for a process that cannot be started.
+    member x.WithErrorDialogParentHandle handle = { x with ErrorDialogParentHandle = handle }
+#endif  
+    /// Gets or sets the application or document to start.
+    member x.WithFileName name = { x with FileName = name }
+    /// true if the Windows user profile should be loaded; otherwise, false. The default is false.
+    member x.WithLoadUserProfile userProfile = { x with LoadUserProfile = userProfile }
+    // Note: No SecureString as that one is obsolete anyway and to provide a uniform API across netstandard16.
+    /// Gets or sets the user password in clear text to use when starting the process.
+    member x.WithPassword password = { x with Password = password }
+#if FX_WINDOWSTLE
+    /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
+    member x.WithWindowStyle style = { x with WindowStyle = style }
+#endif  
+    /// true if error output should be written to Process.StandardError; otherwise, false. The default is false.
+    member x.WithRedirectStandardError redirectStdErr = { x with RedirectStandardError = redirectStdErr }
+    /// true if input should be read from Process.StandardInput; otherwise, false. The default is false.
+    member x.WithRedirectStandardInput redirectStdInput = { x with RedirectStandardInput = redirectStdInput }
+    /// true if output should be written to Process.StandardOutput; otherwise, false. The default is false.
+    member x.WithRedirectStandardOutput redirectStdOutput = { x with RedirectStandardOutput = redirectStdOutput }
+    /// An object that represents the preferred encoding for error output. The default is null.
+    member x.WithStandardErrorEncoding encoding = { x with StandardErrorEncoding = encoding }
+    /// An object that represents the preferred encoding for standard output. The default is null.
+    member x.WithStandardOutputEncoding encoding = { x with StandardOutputEncoding = encoding }
+    /// The user name to use when starting the process. If you use the UPN format, user@DNS_domain_name, the Domain property must be null.
+    member x.WithUserName name = { x with UserName = name }
+    /// true if the shell should be used when starting the process; false if the process should be created directly from the executable file. The default is true.
+    member x.WithUseShellExecute shellExec = { x with UseShellExecute = shellExec }
+#if FX_VERB
+    /// The action to take with the file that the process opens. The default is an empty string (""), which signifies no action.
+    member x.WithVerb name = { x with Verb = name }
+#endif
+    /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
+    member x.WithWorkingDirectory dir = { x with WorkingDirectory = dir }
+
+let inline getProc config =
+    let startInfo : ProcStartInfo =
+        config { ProcStartInfo.Empty with UseShellExecute = false }
+    let proc = new Process()
+    proc.StartInfo <- startInfo.AsStartInfo
+    proc
 /// Runs the given process and returns the exit code.
 /// ## Parameters
 ///
@@ -155,10 +349,9 @@ type ProcessResult =
 ///  - `silent` - If this flag is set then the process output is redirected to the given output functions `errorF` and `messageF`.
 ///  - `errorF` - A function which will be called with the error log.
 ///  - `messageF` - A function which will be called with the message log.
-let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF = 
-    use proc = new Process()
-    proc.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF proc.StartInfo
+let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
+    use proc = getProc configProcessStartInfoF
+    
     //platformInfoAction proc.StartInfo
     if String.isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
         if Directory.Exists proc.StartInfo.WorkingDirectory |> not then 
@@ -251,45 +444,32 @@ let ExecProcess configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 [<Obsolete("This is currently not possible in dotnetcore")>]
 let ExecProcessElevated cmd args timeOut = 
+#if FX_VERB
     ExecProcess (fun si ->
-#if !NETSTANDARD
-        si.Verb <- "runas"
-#endif
-        si.Arguments <- args
-        si.FileName <- cmd
-        si.UseShellExecute <- true) timeOut
-
-/// Sets the environment Settings for the given startInfo.
-/// Existing values will be overriden.
-/// [omit]
-let setEnvironmentVariables (startInfo : ProcessStartInfo) environmentSettings =
-#if NETSTANDARD
-    let envDict = startInfo.Environment
+        { si with
+            Verb = "runas"
+            Arguments = args
+            FileName = cmd
+            UseShellExecute = true }) timeOut
 #else
-    let envDict = startInfo.EnvironmentVariables
+    failwithf "Elevated processes not possible with netstandard16 build."        
 #endif
-    for key, value in environmentSettings do
-        if envDict.ContainsKey key then envDict.[key] <- value
-        else envDict.Add(key, value)
+
 
 /// Runs the given process and returns true if the exit code was 0.
 /// [omit]
 let execProcess configProcessStartInfoF timeOut = ExecProcess configProcessStartInfoF timeOut = 0
 
 /// Starts the given process and returns immediatly.
-let fireAndForget configProcessStartInfoF = 
-    use proc = new Process()
-    proc.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF proc.StartInfo
+let fireAndForget configProcessStartInfoF =
+    use proc = getProc configProcessStartInfoF
     try 
         start proc
     with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
 
 /// Runs the given process, waits for its completion and returns if it succeeded.
 let directExec configProcessStartInfoF = 
-    use proc = new Process()
-    proc.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF proc.StartInfo
+    use proc = getProc configProcessStartInfoF
     try 
         start proc
     with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
@@ -298,9 +478,7 @@ let directExec configProcessStartInfoF =
 
 /// Starts the given process and forgets about it.
 let StartProcess configProcessStartInfoF = 
-    use proc = new Process()
-    proc.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF proc.StartInfo
+    use proc = getProc configProcessStartInfoF
     start proc
 
 /// Adds quotes around the string
@@ -403,12 +581,12 @@ let tryFindFileOnPath (file : string) : string option =
 let appSettings (key : string) (fallbackValue : string) = 
     let value = 
         let setting =
-#if NETSTANDARD
-            null
-#else
-            try 
+#if FX_CONFIGURATION_MANAGER
+            try
                 System.Configuration.ConfigurationManager.AppSettings.[key]
             with exn -> ""
+#else
+            null
 #endif
         if not (String.isNullOrWhiteSpace setting) then setting
         else fallbackValue
@@ -440,7 +618,7 @@ type ExecParams =
     { /// The path to the executable, without arguments. 
       Program : string
       /// The working directory for the program. Defaults to "".
-      WorkingDirectory : string
+      WorkingDir : string
       /// Command-line parameters in a string.
       CommandLine : string
       /// Command-line argument pairs. The value will be quoted if it contains
@@ -448,13 +626,12 @@ type ExecParams =
       /// If the key ends in a letter or number, a space will be inserted between
       /// the key and the value.
       Args : (string * string) list }
-
-/// Default parameters for process execution.
-let defaultParams = 
-    { Program = ""
-      WorkingDirectory = ""
-      CommandLine = ""
-      Args = [] }
+    /// Default parameters for process execution.
+    static member Empty =
+        { Program = ""
+          WorkingDir = ""
+          CommandLine = ""
+          Args = [] }
 
 let private formatArgs args = 
     let delimit (str : string) = 
@@ -476,12 +653,12 @@ let asyncShellExec (args : ExecParams) =
             ProcessStartInfo
                 (args.Program, UseShellExecute = false, 
                  RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
-#if NETSTANDARD
-                 CreateNoWindow = true,
-#else
+#if FX_WINDOWSTLE
                  WindowStyle = ProcessWindowStyle.Hidden,
-#endif 
-                 WorkingDirectory = args.WorkingDirectory, 
+#else
+                 CreateNoWindow = true,
+#endif
+                 WorkingDirectory = args.WorkingDir, 
                  Arguments = commandLine)
         use proc = new Process(StartInfo = info)
         proc.ErrorDataReceived.Add(fun e -> 
@@ -554,7 +731,7 @@ type Shell() =
     static member private GetParams(cmd, ?args, ?dir) = 
         let args = defaultArg args ""
         let dir = defaultArg dir (Directory.GetCurrentDirectory())
-        { WorkingDirectory = dir
+        { WorkingDir = dir
           Program = cmd
           CommandLine = args
           Args = [] }
@@ -574,3 +751,42 @@ type Shell() =
     ///  - `args` - The process arguments (optional).
     ///  - `directory` - The working directory (optional).
     static member AsyncExec(cmd, ?args, ?dir) = asyncShellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))
+
+
+
+let internal monoPath, monoVersion =
+    match tryFindTool "MONO" "mono" with
+    | Some path ->
+        let success, messages =
+            try ExecProcessRedirected(fun proc ->
+                    { proc with
+                        FileName = path
+                        Arguments = "--version" }) (TimeSpan.FromMinutes 1.)
+            with e ->
+                false,
+                [{ ConsoleMessage.IsError = true; ConsoleMessage.Message = e.ToString(); ConsoleMessage.Timestamp = DateTimeOffset.Now }]
+                |> List.toSeq
+        let out =
+            let outStr = String.Join("\n", messages |> Seq.map (fun m -> m.Message))
+            sprintf "Success: %b, Out: %s" success outStr
+        let ver =
+            match success, messages |> Seq.tryHead with
+            | true, Some firstLine ->
+                Some (out, Environment.Internal.parseMonoDisplayName firstLine.Message)
+            | _ ->
+                Some (out, None)
+        Some path, ver
+    | None -> None, None
+
+/// Ensures the executable is run with the full framework. On non-windows platforms that means running the tool by invoking 'mono'.
+let withFramework (proc:ProcStartInfo) =
+    match Environment.isWindows, proc.FileName.ToLowerInvariant().EndsWith(".exe"), monoPath with
+    | false, true, Some monoPath ->
+        { proc with 
+            Arguments =  "--debug \"" + proc.FileName + "\" " + proc.Arguments
+            FileName = monoPath }
+    | false, true, _ ->
+        failwithf "trying to start a .NET process on a non-windows platform, but mono could not be found. Try to set the MONO environment variable or add mono to the PATH."
+    | _ -> proc
+
+

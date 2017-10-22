@@ -1,42 +1,45 @@
 ﻿/// Contains tasks for building Xamarin.iOS and Xamarin.Android apps
-[<System.Obsolete("Use Fake.DotNet.Xamarin")>]
-module Fake.XamarinHelper
+module Fake.DotNet.Xamarin
 
 open System
 open System.IO
 open System.Text.RegularExpressions
-open System.Xml.Linq
 open System.Xml
+open System.Xml.Linq
 open System.Text
+open Fake.Core
+open Fake.Core.Globbing
+open Fake.Core.Process
+open Fake.Core.String
+open Fake.IO
+open Fake.IO.FileSystemOperators
+open Fake.DotNet.MsBuild
 
 let private executeCommand command args =
     ExecProcessAndReturnMessages (fun p ->
-        p.FileName <- command
-        p.Arguments <- args
+    { p with
+         FileName = command
+         Arguments = args }
     ) TimeSpan.MaxValue
     |>  fun result ->
              let output = String.Join (Environment.NewLine, result.Messages)
-             tracefn "Process output: \r\n%A" output
+             Trace.logVerbosefn "Process output: \r\n%A" output
              if result.ExitCode <> 0 then failwithf "%s exited with error %d" command result.ExitCode
 
 /// The package restore paramater type
-[<CLIMutable>]
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type XamarinComponentRestoreParams = {
     /// Path to xamarin-component.exe, defaults to checking tools/xpkg
     ToolPath: string
 }
 
 /// The default package restore parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let XamarinComponentRestoreDefaults = {
-    ToolPath = findToolInSubPath "xamarin-component.exe" (currentDirectory @@ "tools" @@ "xpkg")
+    ToolPath = Tools.findToolInSubPath "xamarin-component.exe" ((Path.GetFullPath ".") @@ "tools" @@ "xpkg")
 }
 
 /// Restores NuGet packages and Xamarin Components for a project or solution
 /// ## Parameters
 ///  - `setParams` - Function used to override the default package restore parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let RestoreComponents setParams projectFile =
     let restoreComponents project param =
         executeCommand param.ToolPath ("restore " + project)
@@ -46,8 +49,6 @@ let RestoreComponents setParams projectFile =
     |> restoreComponents projectFile
 
 /// The iOS build paramater type
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
-[<CLIMutable>]
 type iOSBuildParams = {
     /// (Required) Path to solution or project file
     ProjectPath: string
@@ -76,7 +77,6 @@ type iOSBuildParams = {
 }
 
 /// The default iOS build parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSBuildDefaults = {
     ProjectPath = ""
     Target = "Build"
@@ -98,12 +98,10 @@ let iOSBuildDefaults = {
 }
 
 
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidAbiTargetConfig = {
     SuffixAndExtension: string
 }
 
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidAbiTarget =
     | X86 of AndroidAbiTargetConfig
     | ArmEabi of AndroidAbiTargetConfig
@@ -112,12 +110,10 @@ type AndroidAbiTarget =
     | X86And64 of AndroidAbiTargetConfig
     | AllAbi
 
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidPackageAbiParam =
     | OneApkForAll
     | SpecificAbis of AndroidAbiTarget list
 
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AllAndroidAbiTargets =
     AndroidPackageAbiParam.SpecificAbis
         ( [ AndroidAbiTarget.X86({ SuffixAndExtension="-x86.apk"; })
@@ -127,13 +123,11 @@ let AllAndroidAbiTargets =
             AndroidAbiTarget.X86And64({ SuffixAndExtension="-x86_64.apk"; })
           ] )
 
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type IncrementerVersion = int32 -> AndroidAbiTarget -> int32
 
 /// Builds a project or solution using Xamarin's iOS build tools
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSBuild setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
@@ -166,7 +160,7 @@ let iOSBuild setParams =
             if isNullOrEmpty iOSBuildParams.OutputPath then msBuildParams
             else
                 { msBuildParams with
-                    Properties = [ "OutputPath", FullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
+                    Properties = [ "OutputPath", Path.getFullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
                 }
 
         msBuildParams
@@ -180,7 +174,6 @@ let iOSBuild setParams =
     |> buildProject
 
 /// The Android packaging parameter type
-[<CLIMutable>]
 type AndroidPackageParams = {
     /// (Required) Path to the Android project file (not the solution file!)
     ProjectPath: string
@@ -229,7 +222,6 @@ let AndroidPackageDefaults = {
 /// Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidBuildPackages setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
@@ -260,7 +252,7 @@ let AndroidBuildPackages setParams =
             if isNullOrEmpty androidBuildParams.OutputPath then msBuildParams
             else
                 { msBuildParams with
-                    Properties = [ "OutputPath", FullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
+                    Properties = [ "OutputPath", Path.getFullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
                 }
 
         msBuildParams
@@ -295,8 +287,8 @@ let AndroidBuildPackages setParams =
         manifest.Save(wr)
 
     let mostRecentFileInDirMatching path =
-        directoryInfo path
-        |> filesInDirMatching "*.apk"
+        DirectoryInfo.ofPath path
+        |> DirectoryInfo.getMatchingFiles "*.apk"
         |> Seq.sortBy (fun file -> file.LastWriteTime)
         |> Seq.last
 
@@ -310,13 +302,13 @@ let AndroidBuildPackages setParams =
         rewriteManifestFile manifestFile specificManifest transformVersion target
         // workaround for xamarin bug: https://bugzilla.xamarin.com/show_bug.cgi?id=30571
         let backupFn = (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-original.xml")
-        CopyFile backupFn manifestFile
-        CopyFile manifestFile specificManifest
+        Shell.CopyFile backupFn manifestFile
+        Shell.CopyFile manifestFile specificManifest
         try
             //buildPackages param (Some name) (Some specificManifest) // to uncomment after xamarin fix there bug
             buildPackages param (Some name) None
         finally
-            CopyFile manifestFile backupFn
+            Shell.CopyFile manifestFile backupFn
 
     let translateAbi = function
                        | AndroidAbiTarget.X86 _ -> "x86"
@@ -369,12 +361,10 @@ let AndroidBuildPackages setParams =
 /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidPackage setParams =
     AndroidBuildPackages setParams |> Seq.exactlyOne
 
 // Parameters for signing and aligning an Android package
-[<CLIMutable>]
 type AndroidSignAndAlignParams = {
     /// (Required) Path to keystore used to sign the app
     KeystorePath: string
@@ -407,7 +397,6 @@ let AndroidSignAndAlignDefaults = {
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
 ///  - `apkFile` - FileInfo object for an unsigned APK file to sign and align
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidSignAndAlign setParams apkFile =
     let validateParams param =
         if param.KeystorePath = "" then failwith "You must specify a keystore to use"
@@ -416,7 +405,7 @@ let AndroidSignAndAlign setParams apkFile =
 
         param
 
-    let quotesSurround (s:string) = if EnvironmentHelper.isMono then sprintf "'%s'" s else sprintf "\"%s\"" s
+    let quotesSurround (s:string) = if Environment.isMono then sprintf "'%s'" s else sprintf "\"%s\"" s
 
     let signAndAlign (file:FileInfo) (param:AndroidSignAndAlignParams) =
         let fullSignedFilePath = Regex.Replace(file.FullName, ".apk$", "-Signed.apk")
@@ -429,7 +418,7 @@ let AndroidSignAndAlign setParams apkFile =
         let zipalignArgs = String.Format("-f -v 4 {0} {1}", quotesSurround(fullSignedFilePath), quotesSurround(fullAlignedFilePath))
         executeCommand param.ZipalignPath zipalignArgs
 
-        fileInfo fullAlignedFilePath
+        FileInfo.ofPath fullAlignedFilePath
 
     AndroidSignAndAlignDefaults
     |> setParams
@@ -440,12 +429,10 @@ let AndroidSignAndAlign setParams apkFile =
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
 ///  - `apkFiles` - FileInfo object for an unsigned APK file to sign and align
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AndroidSignAndAlignPackages setParams apkFiles =
     apkFiles |> Seq.map (fun f -> AndroidSignAndAlign setParams f)
 
 /// The iOS archive paramater type
-[<CLIMutable>]
 type iOSArchiveParams = {
     /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
     /// Although mdtool can take a project file, the archiving seems to fail to work without a solution.
@@ -469,7 +456,6 @@ let iOSArchiveDefaults = {
 /// Archive a project using Xamarin's iOS archive tools
 /// ## Parameters
 ///  - `setParams` - Function used to override the default archive parameters
-[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSArchive setParams =
     let archiveProject param =
         let projectNameArg = if param.ProjectName <> "" then String.Format("-p:{0} ", param.ProjectName) else ""
