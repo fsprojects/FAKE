@@ -8,6 +8,7 @@ build_script:
   - ps: |
       $pinfo = New-Object System.Diagnostics.ProcessStartInfo
       $pinfo.FileName = "fake.exe"
+      $pinfo.WorkingDirecory = $pwd
       $pinfo.RedirectStandardError = $true
       $pinfo.RedirectStandardOutput = $false
       $pinfo.UseShellExecute = $false
