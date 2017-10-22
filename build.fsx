@@ -388,6 +388,9 @@ Target.Create "TestDotnetCore" (fun _ ->
 Target.Create "BootstrapTest" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
+#if !BOOTSTRAP
+    Environment.setEnvironVar "FAKE_DETAILED_ERRORS" "true"
+#endif
     // Check if we can build ourself with the new binaries.
     let test clearCache (script:string) =
         let clear () =
@@ -451,6 +454,9 @@ Target.Create "BootstrapTest" (fun _ ->
 Target.Create "BootstrapTestDotnetCore" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
+#if !BOOTSTRAP
+    Environment.setEnvironVar "FAKE_DETAILED_ERRORS" "true"
+#endif
     // Check if we can build ourself with the new binaries.
     let test timeout clearCache script =
         let clear () =

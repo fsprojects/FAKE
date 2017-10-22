@@ -17,8 +17,9 @@ open Fake.DotNet.MsBuild
 
 let private executeCommand command args =
     ExecProcessAndReturnMessages (fun p ->
-        p.FileName <- command
-        p.Arguments <- args
+    { p with
+         FileName = command
+         Arguments = args }
     ) TimeSpan.MaxValue
     |>  fun result ->
              let output = String.Join (Environment.NewLine, result.Messages)
