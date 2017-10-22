@@ -27,7 +27,6 @@ let private executeCommand command args =
              if result.ExitCode <> 0 then failwithf "%s exited with error %d" command result.ExitCode
 
 /// The package restore paramater type
-[<CLIMutable>]
 type XamarinComponentRestoreParams = {
     /// Path to xamarin-component.exe, defaults to checking tools/xpkg
     ToolPath: string
@@ -50,7 +49,6 @@ let RestoreComponents setParams projectFile =
     |> restoreComponents projectFile
 
 /// The iOS build paramater type
-[<CLIMutable>]
 type iOSBuildParams = {
     /// (Required) Path to solution or project file
     ProjectPath: string
@@ -176,7 +174,6 @@ let iOSBuild setParams =
     |> buildProject
 
 /// The Android packaging parameter type
-[<CLIMutable>]
 type AndroidPackageParams = {
     /// (Required) Path to the Android project file (not the solution file!)
     ProjectPath: string
@@ -368,7 +365,6 @@ let AndroidPackage setParams =
     AndroidBuildPackages setParams |> Seq.exactlyOne
 
 // Parameters for signing and aligning an Android package
-[<CLIMutable>]
 type AndroidSignAndAlignParams = {
     /// (Required) Path to keystore used to sign the app
     KeystorePath: string
@@ -437,7 +433,6 @@ let AndroidSignAndAlignPackages setParams apkFiles =
     apkFiles |> Seq.map (fun f -> AndroidSignAndAlign setParams f)
 
 /// The iOS archive paramater type
-[<CLIMutable>]
 type iOSArchiveParams = {
     /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
     /// Although mdtool can take a project file, the archiving seems to fail to work without a solution.

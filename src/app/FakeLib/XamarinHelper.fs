@@ -1,4 +1,5 @@
 ﻿/// Contains tasks for building Xamarin.iOS and Xamarin.Android apps
+[<System.Obsolete("Use Fake.DotNet.Xamarin")>]
 module Fake.XamarinHelper
 
 open System
@@ -20,12 +21,14 @@ let private executeCommand command args =
 
 /// The package restore paramater type
 [<CLIMutable>]
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type XamarinComponentRestoreParams = {
     /// Path to xamarin-component.exe, defaults to checking tools/xpkg
     ToolPath: string
 }
 
 /// The default package restore parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let XamarinComponentRestoreDefaults = {
     ToolPath = findToolInSubPath "xamarin-component.exe" (currentDirectory @@ "tools" @@ "xpkg")
 }
@@ -33,6 +36,7 @@ let XamarinComponentRestoreDefaults = {
 /// Restores NuGet packages and Xamarin Components for a project or solution
 /// ## Parameters
 ///  - `setParams` - Function used to override the default package restore parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let RestoreComponents setParams projectFile =
     let restoreComponents project param =
         executeCommand param.ToolPath ("restore " + project)
@@ -42,6 +46,7 @@ let RestoreComponents setParams projectFile =
     |> restoreComponents projectFile
 
 /// The iOS build paramater type
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 [<CLIMutable>]
 type iOSBuildParams = {
     /// (Required) Path to solution or project file
@@ -71,6 +76,7 @@ type iOSBuildParams = {
 }
 
 /// The default iOS build parameters
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let iOSBuildDefaults = {
     ProjectPath = ""
     Target = "Build"
@@ -92,10 +98,12 @@ let iOSBuildDefaults = {
 }
 
 
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidAbiTargetConfig = {
     SuffixAndExtension: string
 }
 
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidAbiTarget =
     | X86 of AndroidAbiTargetConfig
     | ArmEabi of AndroidAbiTargetConfig
@@ -104,10 +112,12 @@ type AndroidAbiTarget =
     | X86And64 of AndroidAbiTargetConfig
     | AllAbi
 
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type AndroidPackageAbiParam =
     | OneApkForAll
     | SpecificAbis of AndroidAbiTarget list
 
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 let AllAndroidAbiTargets =
     AndroidPackageAbiParam.SpecificAbis
         ( [ AndroidAbiTarget.X86({ SuffixAndExtension="-x86.apk"; })
@@ -117,6 +127,7 @@ let AllAndroidAbiTargets =
             AndroidAbiTarget.X86And64({ SuffixAndExtension="-x86_64.apk"; })
           ] )
 
+[<Obsolete("Use Fake.DotNet.Xamarin")>]
 type IncrementerVersion = int32 -> AndroidAbiTarget -> int32
 
 /// Builds a project or solution using Xamarin's iOS build tools
