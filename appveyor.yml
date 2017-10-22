@@ -4,7 +4,7 @@ install:
 build_script:
 # See https://stackoverflow.com/a/12866669/1269722
   - ps: |
-      & fake.exe -v run build.fsx 2>&1 | %{ if ($_ -is [System.Management.Automation.ErrorRecord]) { write-host "$_" -foregroundcolor "red" } else { "$_" } }
+      & fake.exe -v run build.fsx 2>&1
       if ($LASTEXITCODE -ne 0) {
         throw "fake failed with $LASTEXITCODE" 
       } else {
