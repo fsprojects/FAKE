@@ -234,17 +234,18 @@ type ProcStartInfo =
         p.ErrorDialogParentHandle <- x.ErrorDialogParentHandle
 #endif
         p.LoadUserProfile <- x.LoadUserProfile
+
+        if not (isNull x.Password) then
 #if FX_PASSWORD_CLEAR_TEXT
-        p.PasswordInClearText <- x.Password
+            p.PasswordInClearText <- x.Password
 #else
 #if FX_PASSWORD
-        p.Password <-
-            let sec = new System.Security.SecureString()
-            x.Password |> Seq.iter (sec.AppendChar)
-            sec.MakeReadOnly()
-            sec
+            p.Password <-
+                let sec = new System.Security.SecureString()
+                x.Password |> Seq.iter (sec.AppendChar)
+                sec.MakeReadOnly()
+                sec
 #else
-        if not (isNull x.Password) then
             failwithf "Password for starting a process was set but with this compiled binary neither ProcessStartInfo.Password nor ProcessStartInfo.PasswordInClearText was available."
 #endif
 #endif
@@ -617,7 +618,7 @@ type ExecParams =
     { /// The path to the executable, without arguments. 
       Program : string
       /// The working directory for the program. Defaults to "".
-      WorkingDirectory : string
+      WorkingDir : string
       /// Command-line parameters in a string.
       CommandLine : string
       /// Command-line argument pairs. The value will be quoted if it contains
@@ -625,13 +626,12 @@ type ExecParams =
       /// If the key ends in a letter or number, a space will be inserted between
       /// the key and the value.
       Args : (string * string) list }
-
-/// Default parameters for process execution.
-let defaultParams = 
-    { Program = ""
-      WorkingDirectory = ""
-      CommandLine = ""
-      Args = [] }
+    /// Default parameters for process execution.
+    static member Empty =
+        { Program = ""
+          WorkingDir = ""
+          CommandLine = ""
+          Args = [] }
 
 let private formatArgs args = 
     let delimit (str : string) = 
@@ -658,7 +658,7 @@ let asyncShellExec (args : ExecParams) =
 #else
                  CreateNoWindow = true,
 #endif
-                 WorkingDirectory = args.WorkingDirectory, 
+                 WorkingDirectory = args.WorkingDir, 
                  Arguments = commandLine)
         use proc = new Process(StartInfo = info)
         proc.ErrorDataReceived.Add(fun e -> 
@@ -731,7 +731,7 @@ type Shell() =
     static member private GetParams(cmd, ?args, ?dir) = 
         let args = defaultArg args ""
         let dir = defaultArg dir (Directory.GetCurrentDirectory())
-        { WorkingDirectory = dir
+        { WorkingDir = dir
           Program = cmd
           CommandLine = args
           Args = [] }

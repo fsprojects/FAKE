@@ -92,9 +92,17 @@ let cleanForTests () =
             then fileName, args else "cmd", ("/C " + fileName + " " + args)
         let ok =
             Process.execProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = fileName
+                WorkingDirectory = workingDir
+                Arguments = args }
+#else
                 info.FileName <- fileName
                 info.WorkingDirectory <- workingDir
-                info.Arguments <- args) System.TimeSpan.MaxValue
+                info.Arguments <- args
+#endif
+            ) System.TimeSpan.MaxValue
         if not ok then failwith (sprintf "'%s> %s %s' task failed" workingDir fileName args)
 
     let rmdir dir =
@@ -253,9 +261,16 @@ Target.Create "SetAssemblyInfo" (fun _ ->
 )
 
 Target.Create "DownloadPaket" (fun _ ->
-    if 0 <> Process.ExecProcess (fun info -> 
+    if 0 <> Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = ".paket/paket.exe"
+                Arguments = "--version" }
+#else
                 info.FileName <- ".paket/paket.exe"
-                info.Arguments <- "--version") (System.TimeSpan.FromMinutes 5.0) then
+                info.Arguments <- "--version"
+#endif
+            ) (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
 )
 
@@ -386,14 +401,30 @@ Target.Create "BootstrapTest" (fun _ ->
             if Environment.isUnix then
                 let result =
                     Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+                    { info with
+                        FileName = "chmod"
+                        WorkingDirectory = "."
+                        Arguments = "+x build/FAKE.exe" }
+#else
                         info.FileName <- "chmod"
                         info.WorkingDirectory <- "."
-                        info.Arguments <- "+x build/FAKE.exe") span
+                        info.Arguments <- "+x build/FAKE.exe"
+#endif
+                    ) span
                 if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
             Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = "build/FAKE.exe"
+                WorkingDirectory = "."
+                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP_NEW_BUILD\" -pd" script target }
+#else
                 info.FileName <- "build/FAKE.exe"
                 info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "%s %s -pd" script target) span
+                info.Arguments <- sprintf "%s %s -pd -fa --define:BOOTSTRAP " script target
+#endif
+                ) span
 
         let result = executeTarget (System.TimeSpan.FromMinutes 10.0) "PrintColors"
         if result <> 0 then failwith "Bootstrapping failed"
@@ -437,9 +468,17 @@ Target.Create "BootstrapTestDotnetCore" (fun _ ->
                 if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
                 else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
             Process.ExecProcessWithLambdas (fun info ->
+#if BOOTSTRAP
+                { info with
+                    FileName = fileName
+                    WorkingDirectory = "."
+                    Arguments = sprintf "run %s --fsiargs \"--define:BOOTSTRAP\" --target %s" script target }
+#else
                     info.FileName <- fileName
                     info.WorkingDirectory <- "."
-                    info.Arguments <- sprintf "run %s --target %s" script target)
+                    info.Arguments <- sprintf "run %s --fsiargs \"--define:BOOTSTRAP\" --target %s" script target
+#endif
+                )
                 timeout
                 true (Trace.traceFAKE "%s") Trace.trace
 
@@ -490,8 +529,15 @@ Target.Create "ILRepack" (fun _ ->
 
         let result =
             Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
+                Arguments = sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack }
+#else
                 info.FileName <- Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
-                info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack) (System.TimeSpan.FromMinutes 5.)
+                info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack
+#endif
+            ) (System.TimeSpan.FromMinutes 5.)
 
         if result <> 0 then failwithf "Error during ILRepack execution."
 
@@ -511,7 +557,11 @@ Target.Create "CreateNuGet" (fun _ ->
         |> Seq.iter (fun file ->
             let args =
                 { Process.Program = "lib" @@ "corflags.exe"
+#if BOOTSTRAP
+                  Process.WorkingDir = Path.GetDirectoryName file
+#else
                   Process.WorkingDirectory = Path.GetDirectoryName file
+#endif
                   Process.CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
                   Process.Args = [] }
             printfn "%A" args
@@ -839,8 +889,15 @@ let rec nugetPush tries nugetpackage =
     try
         if not <| System.String.IsNullOrEmpty apikey then
             Process.ExecProcess (fun info ->
+#if BOOTSTRAP
+            { info with
+                FileName = nuget_exe
+                Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource) }
+#else
                 info.FileName <- nuget_exe
-                info.Arguments <- sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource))
+                info.Arguments <- sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource)
+#endif
+            )
                 (System.TimeSpan.FromMinutes 10.)
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
         else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
