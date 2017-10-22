@@ -6,30 +6,8 @@ build_script:
 # Problem is that colors are lost
 # Don't blame me but powershell is the bigest crap on earth
   - ps: |
-      $pinfo = New-Object System.Diagnostics.ProcessStartInfo
-      $pinfo.FileName = "fake.exe"
-      $pinfo.WorkingDirectory = $pwd
-      $pinfo.RedirectStandardError = $true
-      $pinfo.CreateNoWindow = $true
-      $pinfo.RedirectStandardOutput = $false
-      $pinfo.UseShellExecute = $false
-      $pinfo.Arguments = '-v run build.fsx'
-      $p = New-Object System.Diagnostics.Process
-      $p.StartInfo = $pinfo
-      Register-ObjectEvent -InputObject $p -EventName ErrorDataReceived -Action {
-        $Global:test = $Event
-        Write-Host $test.SourceEventArgs.Data -ForegroundColor red
-      } | Out-Null
-      $p.Start() | Out-Null
-      $p.BeginErrorReadLine()
-      $exited = $p.HasExited
-      while ($exited -eq $false) { $p.Refresh(); $exited = $p.HasExited; Start-Sleep -m 50 }
-      $p.WaitForExit()
-      if ($p.ExitCode -ne 0) {
-        throw "fake failed with $LASTEXITCODE" 
-      } else {
-        Write-Host "Fake build finished sucessfully"
-      }
+      cmd /c '(((fake.exe -v run build.fsx 1>&3) 2>&1) | @powershell -Command "$input | write-host -foregroundcolor red") 3>&1'
+
 #  - ps: .\build.cmd
 on_failure:
   - appveyor PushArtifact FAKE.svclog
