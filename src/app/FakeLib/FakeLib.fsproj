@@ -292,6 +292,9 @@
     <Compile Include="..\Fake.Api.Slack\SlackNotification.fs">
       <Link>Fake.Api.Slack/SlackNotification.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.DotNet.Xamarin\Xamarin.fs">
+      <Link>Fake.DotNet.Xamarin/Xamarin.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
@@ -414,7 +417,6 @@
     <Compile Include="FscHelper.fs" />
     <Compile Include="CscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
-    <Compile Include="XamarinHelper.fs" />
     <Compile Include="XDTHelper.fs" />
     <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
@@ -443,6 +445,7 @@
     <Compile Include="ChangeLogHelper.fs" />
     <Compile Include="Office365ConnectorHelper.fs" />
     <Compile Include="StyleCopHelper.fs" />
+    <Compile Include="XamarinHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
