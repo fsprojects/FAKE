@@ -1,3 +1,7 @@
+#### 5.0.0-beta006 - 2017-10-22
+* BUGFIX: Add `Process.withFramework` to indicate that a process might need to be started with mono and use it in kown wrappers like test-runners - https://github.com/fsharp/FAKE/pull/1697
+* DOCS: Typo (https://github.com/fsharp/FAKE/pull/1701), Canopy docs (https://github.com/fsharp/FAKE/pull/1704), some Urls (https://github.com/fsharp/FAKE/pull/1708)
+
 #### 5.0.0-beta005 - 2017-10-02
 * ENHANCEMENT: Improve error messages of Fake.Core.Process - https://github.com/fsharp/FAKE/pull/1696
 * BUGFIX: `fake --version` was printing the wrong version - https://github.com/fsharp/FAKE/pull/1696
