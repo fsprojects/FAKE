@@ -65,6 +65,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9222464-CAAC-4E5F-81A0-408C7BEFDBF3}"
 	ProjectSection(SolutionItems) = preProject
 		help\markdown\404.md = help\markdown\404.md
+		help\markdown\api-slack.md = help\markdown\api-slack.md
 		help\markdown\contributing.md = help\markdown\contributing.md
 		help\markdown\core-targets.md = help\markdown\core-targets.md
 		help\markdown\dotnet-assemblyinfo.md = help\markdown\dotnet-assemblyinfo.md
@@ -97,7 +98,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9
 		help\markdown\todo-iis.md = help\markdown\todo-iis.md
 		help\markdown\todo-msteamsnotification.md = help\markdown\todo-msteamsnotification.md
 		help\markdown\todo-octopusdeploy.md = help\markdown\todo-octopusdeploy.md
-		help\markdown\todo-slacknotification.md = help\markdown\todo-slacknotification.md
+		help\markdown\legacy-slacknotification.md = help\markdown\legacy-slacknotification.md
 		help\markdown\todo-stylecop.md = help\markdown\todo-stylecop.md
 		help\markdown\todo-teamcity.md = help\markdown\todo-teamcity.md
 		help\markdown\todo-teamcityadvanced.md = help\markdown\todo-teamcityadvanced.md
