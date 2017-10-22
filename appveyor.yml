@@ -2,7 +2,8 @@ image: Visual Studio 2017
 install:
   - cinst fake -pre
 build_script:
-  - ps: "& fake.exe -v run build.fsx 2>&1"
+  - ps: |
+      & fake.exe -v run build.fsx 2>&1 | %{ "$_" }
 #  - ps: .\build.cmd
 on_failure:
   - appveyor PushArtifact FAKE.svclog
