@@ -67,12 +67,18 @@
 													<a href="../fake-fake5-modules.html">Modules</a>
 													<ul>
 														<li>
+															<a href="../apidocs/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="../api-slack.html">Slack</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../core.html">Core</a>
 															<ul>
 																<li><a href="../core-targets.html">Targets</a></li>
 																<li><a href="../apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-core-environment.html.html">Environment</a></li>
-																<li><a href="../apidocs/fake-core-process.html">Process</a></li>
+																<li><a href="../core-process.html">Process</a></li>
 																<li><a href="../apidocs/fake-core-string.html">String</a></li>
 																<li><a href="../apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="../apidocs/fake-core-trace.html">Tracing</a></li>
@@ -127,7 +133,6 @@
 																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
 																<li><a href="../todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="../todo-wix.html">Windows.WiX</a></li>
-																<li><a href="../todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
@@ -216,25 +221,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1797', 1797)" onmouseover="showTip(event, '1797', 1797)">
+          <code onmouseout="hideTip(event, '1813', 1813)" onmouseover="showTip(event, '1813', 1813)">
             Begin setParams
           </code>
-          <div class="tip" id="1797">
+          <div class="tip" id="1813">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L76-76" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L77-77" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>This task to can be used to run the begin command of <a href="http://sonarqube.org/">Sonar Qube</a> on a project.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>setParams</code> - Function used to overwrite the SonarQube default parameters.</li>
-</ul>
-<h2>Sample</h2>
-<p>open Fake.Testing</p>
+          <p>open Fake.Testing</p>
 <p>SonarQube.Begin (fun p -&gt;
 {p with
 Key = "MyProject"
@@ -247,25 +246,19 @@ Version = "1.0 })</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1798', 1798)" onmouseover="showTip(event, '1798', 1798)">
+          <code onmouseout="hideTip(event, '1814', 1814)" onmouseover="showTip(event, '1814', 1814)">
             End setParams
           </code>
-          <div class="tip" id="1798">
+          <div class="tip" id="1814">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) option -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L96-96" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L97-97" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>This task to can be used to run the end command of <a href="http://sonarqube.org/">Sonar Qube</a> on a project.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>setParams</code> - Function used to overwrite the SonarQube default parameters.</li>
-</ul>
-<h2>Sample</h2>
-<p>open Fake.Testing</p>
+          <p>open Fake.Testing</p>
 <p>SonarQube.End None</p>
 <p>SonarQube.End (fun p -&gt;
 {p with
@@ -277,10 +270,10 @@ Settings = ["sonar.login=login", "sonar.password=password"] })</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1799', 1799)" onmouseover="showTip(event, '1799', 1799)">
+          <code onmouseout="hideTip(event, '1815', 1815)" onmouseover="showTip(event, '1815', 1815)">
             SonarQubeDefaults 
           </code>
-          <div class="tip" id="1799">
+          <div class="tip" id="1815">
             <strong>Signature:</strong> SonarQubeParams<br />
                       </div>
         </td>

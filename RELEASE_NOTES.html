@@ -67,12 +67,18 @@
 													<a href="fake-fake5-modules.html">Modules</a>
 													<ul>
 														<li>
+															<a href="apidocs/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="api-slack.html">Slack</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="core.html">Core</a>
 															<ul>
 																<li><a href="core-targets.html">Targets</a></li>
 																<li><a href="apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-core-environment.html.html">Environment</a></li>
-																<li><a href="apidocs/fake-core-process.html">Process</a></li>
+																<li><a href="core-process.html">Process</a></li>
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
 																<li><a href="apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="apidocs/fake-core-trace.html">Tracing</a></li>
@@ -127,7 +133,6 @@
 																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
 																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
-																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
@@ -176,6 +181,14 @@
 
 									<!-- Content -->
                       <article>
+<h4><a name="5-0-0-beta006-2017-10-22" class="anchor" href="#5-0-0-beta006-2017-10-22">5.0.0-beta006 - 2017-10-22</a></h4>
+<ul>
+<li>BUGFIX: Add <code>Process.withFramework</code> to indicate that a process might need to be started with mono and use it in kown wrappers like test-runners - <a href="https://github.com/fsharp/FAKE/pull/1697">https://github.com/fsharp/FAKE/pull/1697</a></li>
+<li>DOCS: Typo (<a href="https://github.com/fsharp/FAKE/pull/1701),">https://github.com/fsharp/FAKE/pull/1701),</a> Canopy docs (<a href="https://github.com/fsharp/FAKE/pull/1704),">https://github.com/fsharp/FAKE/pull/1704),</a> some Urls (<a href="https://github.com/fsharp/FAKE/pull/1708)">https://github.com/fsharp/FAKE/pull/1708)</a></li>
+<li>DOCS: Migrate Slack API documentation for FAKE 5 - (<a href="https://github.com/fsharp/FAKE/pull/1706)">https://github.com/fsharp/FAKE/pull/1706)</a></li>
+<li>ENHANCEMENT: Provide full fidelity of build options in Xamarin helpers - (<a href="https://github.com/fsharp/FAKE/pull/1702)">https://github.com/fsharp/FAKE/pull/1702)</a></li>
+<li>ENHANCEMENT: Added WarnAsError to MSBuild options - (<a href="https://github.com/fsharp/FAKE/pull/1691)">https://github.com/fsharp/FAKE/pull/1691)</a></li>
+</ul>
 <h4><a name="5-0-0-beta005-2017-10-02" class="anchor" href="#5-0-0-beta005-2017-10-02">5.0.0-beta005 - 2017-10-02</a></h4>
 <ul>
 <li>ENHANCEMENT: Improve error messages of Fake.Core.Process - <a href="https://github.com/fsharp/FAKE/pull/1696">https://github.com/fsharp/FAKE/pull/1696</a></li>

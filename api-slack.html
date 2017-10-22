@@ -68,12 +68,18 @@
 													<a href="fake-fake5-modules.html">Modules</a>
 													<ul>
 														<li>
+															<a href="apidocs/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="api-slack.html">Slack</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="core.html">Core</a>
 															<ul>
 																<li><a href="core-targets.html">Targets</a></li>
 																<li><a href="apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-core-environment.html.html">Environment</a></li>
-																<li><a href="apidocs/fake-core-process.html">Process</a></li>
+																<li><a href="core-process.html">Process</a></li>
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
 																<li><a href="apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="apidocs/fake-core-trace.html">Tracing</a></li>
@@ -128,7 +134,6 @@
 																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
 																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
-																<li><a href="todo-slacknotification.html">API.Slack</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
@@ -178,8 +183,9 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Sending-Notifications-to-a-Slack-Webhook" class="anchor" href="#Sending-Notifications-to-a-Slack-Webhook">Sending Notifications to a Slack Webhook</a></h1>
-<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>In this article you will learn how to create a <a href="https://slack.com">Slack</a> webhook integration and send a notification to it. This article assumes that you already have a Slack team setup.</p>
+<p><strong>Note:  This documentation is for FAKE 5. The old documentation can be found <a href="legacy-slacknotification.html">here</a>! </strong></p>
+<p><a href="apidocs/fake-api-slack.html">API-Reference</a></p>
 <h2><a name="Adding-a-Webhook-Integration-to-a-Channel" class="anchor" href="#Adding-a-Webhook-Integration-to-a-Channel">Adding a Webhook Integration to a Channel</a></h2>
 <p>Follow the <a href="https://my.slack.com/services/new/incoming-webhook/">instructions</a> for setting up an incoming webhook integration. When finished, you should have a Webhook URL that looks like "<a href="https://hooks.slack.com/services/some/random/text".">https://hooks.slack.com/services/some/random/text".</a></p>
 <h2><a name="Sending-a-Notification-to-the-Webhook" class="anchor" href="#Sending-a-Notification-to-the-Webhook">Sending a Notification to the Webhook</a></h2>
@@ -213,30 +219,34 @@
 <span class="l">28: </span>
 <span class="l">29: </span>
 <span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// The webhook URL from the integration you set up</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Api</span>
+
+<span class="c">// The webhook URL from the integration you set up</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">webhookUrl</span> <span class="o">=</span> <span class="s">&quot;https://hooks.slack.com/services/some/random/text&quot;</span>
 
-<span class="id">SlackNotification</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">webhookUrl</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+<span class="id">Slack</span><span class="pn">.</span><span class="id">SendNotification</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">webhookUrl</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
     <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
         <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;My Slack Notification!\n&lt;https://google.com|Click Here&gt;!&quot;</span>
         <span class="id">Channel</span> <span class="o">=</span> <span class="s">&quot;@SomeoneImportant&quot;</span>
-        <span class="id">Icon_Emoji</span> <span class="o">=</span> <span class="s">&quot;:ghost:&quot;</span>
+        <span class="id">IconEmoji</span> <span class="o">=</span> <span class="s">&quot;:ghost:&quot;</span>
         <span class="id">Attachments</span> <span class="o">=</span> <span class="pn">[|</span> 
-            <span class="pn">{</span><span class="id">SlackNotificationAttachmentDefaults</span> <span class="k">with</span>
+            <span class="pn">{</span><span class="id">Slack</span><span class="pn">.</span><span class="id">NotificationAttachmentDefaults</span> <span class="k">with</span>
                 <span class="id">Fallback</span> <span class="o">=</span> <span class="s">&quot;Attachment Plain&quot;</span>
                 <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;Attachment Rich&quot;</span>
                 <span class="id">Pretext</span> <span class="o">=</span> <span class="s">&quot;Attachment Pretext&quot;</span>
                 <span class="id">Color</span> <span class="o">=</span> <span class="s">&quot;danger&quot;</span>
                 <span class="id">Fields</span> <span class="o">=</span> <span class="pn">[|</span>
-                    <span class="pn">{</span><span class="id">SlackNotificationAttachmentFieldDefaults</span> <span class="k">with</span>
+                    <span class="pn">{</span><span class="id">Slack</span><span class="pn">.</span><span class="id">NotificationAttachmentFieldDefaults</span> <span class="k">with</span>
                         <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Field Title 1&quot;</span>
                         <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;Field Value 2&quot;</span><span class="pn">}</span>
-                    <span class="pn">{</span><span class="id">SlackNotificationAttachmentFieldDefaults</span> <span class="k">with</span>
+                    <span class="pn">{</span><span class="id">Slack</span><span class="pn">.</span><span class="id">NotificationAttachmentFieldDefaults</span> <span class="k">with</span>
                         <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Field Title 1&quot;</span>
                         <span class="id">Value</span> <span class="o">=</span> <span class="s">&quot;Field Value 2&quot;</span><span class="pn">}</span><span class="pn">|]</span>
             <span class="pn">}</span>
-            <span class="pn">{</span><span class="id">SlackNotificationAttachmentDefaults</span> <span class="k">with</span>
+            <span class="pn">{</span><span class="id">Slack</span><span class="pn">.</span><span class="id">NotificationAttachmentDefaults</span> <span class="k">with</span>
                 <span class="id">Fallback</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Plain&quot;</span>
                 <span class="id">Text</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Rich&quot;</span>
                 <span class="id">Pretext</span> <span class="o">=</span> <span class="s">&quot;Attachment 2 Pretext&quot;</span>
@@ -251,7 +261,7 @@
 <p><img src="pics/slacknotification/slacknotification.png" alt="alt text" title="Slack Notification Result" /></p>
 <p>For additional information on the parameters, check out Slack's <a href="https://api.slack.com/incoming-webhooks">Webhook Documentation</a></p>
 
-<div class="tip" id="fs1">val webhookUrl : string<br /><br />Full name: todoslacknotification.webhookUrl</div>
+<div class="tip" id="fs1">val webhookUrl : string<br /><br />Full name: apislack.webhookUrl</div>
 <div class="tip" id="fs2">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printfn</div>
 
                       </article>
