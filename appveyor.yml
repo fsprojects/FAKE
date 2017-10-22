@@ -10,6 +10,7 @@ build_script:
       $pinfo.FileName = "fake.exe"
       $pinfo.WorkingDirectory = $pwd
       $pinfo.RedirectStandardError = $true
+      $pinfo.CreateNoWindow = $true
       $pinfo.RedirectStandardOutput = $false
       $pinfo.UseShellExecute = $false
       $pinfo.Arguments = '-v run build.fsx'
@@ -22,7 +23,7 @@ build_script:
       $p.Start() | Out-Null
       $p.BeginErrorReadLine()
       $exited = $p.HasExited
-      while ($exited -eq $false) { $p.Refresh(); $exited = $p.HasExited; [System.Threading.Thread]::Sleep(50) }
+      while ($exited -eq $false) { $p.Refresh(); $exited = $p.HasExited; Start-Sleep -m 50 }
       $p.WaitForExit()
       if ($p.ExitCode -ne 0) {
         throw "fake failed with $LASTEXITCODE" 
