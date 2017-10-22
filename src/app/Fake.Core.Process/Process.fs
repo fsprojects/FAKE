@@ -222,7 +222,8 @@ type ProcStartInfo =
     member x.AsStartInfo =
         let p = new ProcessStartInfo(x.FileName, x.Arguments)
         p.CreateNoWindow <- x.CreateNoWindow
-        p.Domain <- x.Domain
+        if not (isNull x.Domain) then
+            p.Domain <- x.Domain
         match x.Environment with
         | Some env ->
             env |> Map.iter (fun var key ->
@@ -255,12 +256,16 @@ type ProcStartInfo =
         p.RedirectStandardError <- x.RedirectStandardError
         p.RedirectStandardInput <- x.RedirectStandardInput
         p.RedirectStandardOutput <- x.RedirectStandardOutput
-        p.StandardErrorEncoding <- x.StandardErrorEncoding
-        p.StandardOutputEncoding <- x.StandardOutputEncoding
-        p.UserName <- x.UserName
+        if not (isNull x.StandardErrorEncoding) then
+            p.StandardErrorEncoding <- x.StandardErrorEncoding
+        if not (isNull x.StandardOutputEncoding) then
+            p.StandardOutputEncoding <- x.StandardOutputEncoding
+        if not (isNull x.UserName) then
+            p.UserName <- x.UserName
         p.UseShellExecute <- x.UseShellExecute
 #if FX_VERB
-        p.Verb <- x.Verb
+        if "" <> x.Verb then
+            p.Verb <- x.Verb
 #endif    
         p.WorkingDirectory <- x.WorkingDirectory
         p
