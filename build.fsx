@@ -418,7 +418,8 @@ Target.Create "BootstrapTest" (fun _ ->
             { info with
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
-                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP_NEW_BUILD\" -pd" script target }
+                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\" -pd" script target }
+            |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
 #else
                 info.FileName <- "build/FAKE.exe"
                 info.WorkingDirectory <- "."
@@ -473,6 +474,7 @@ Target.Create "BootstrapTestDotnetCore" (fun _ ->
                     FileName = fileName
                     WorkingDirectory = "."
                     Arguments = sprintf "run %s --fsiargs \"--define:BOOTSTRAP\" --target %s" script target }
+                |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
 #else
                     info.FileName <- fileName
                     info.WorkingDirectory <- "."
