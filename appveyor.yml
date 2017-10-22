@@ -4,6 +4,11 @@ install:
 build_script:
   - ps: |
       & fake.exe -v run build.fsx 2>&1 | %{ "$_" }
+      if ($LASTEXITCODE -ne 0) {
+        throw "fake failed with $LASTEXITCODE" 
+      } else {
+        Write-Host "Fake build finished sucessfully"
+      }
 #  - ps: .\build.cmd
 on_failure:
   - appveyor PushArtifact FAKE.svclog
