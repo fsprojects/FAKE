@@ -21,6 +21,8 @@ build_script:
       } | Out-Null
       $p.Start() | Out-Null
       $p.BeginErrorReadLine()
+      $exited = $p.HasExited
+      while ($exited -eq $false) { $p.Refresh(); $exited = $p.HasExited; [System.Threading.Thread]::Sleep(50) }
       $p.WaitForExit()
       if ($p.ExitCode -ne 0) {
         throw "fake failed with $LASTEXITCODE" 
