@@ -16,6 +16,8 @@
   <ItemGroup>
     <Compile Include="Cli.fs" />
     <Compile Include="Program.fs" />
+    <!-- Note: This resource should be moved to Paket.Core... -->
+    <EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj">

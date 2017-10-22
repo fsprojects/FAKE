@@ -241,10 +241,10 @@ type ProcStartInfo =
 #else
 #if FX_PASSWORD
             p.Password <-
-                let sec = new System.Security.SecureString()
+               (let sec = new System.Security.SecureString()
                 x.Password |> Seq.iter (sec.AppendChar)
                 sec.MakeReadOnly()
-                sec
+                sec)
 #else
             failwithf "Password for starting a process was set but with this compiled binary neither ProcessStartInfo.Password nor ProcessStartInfo.PasswordInClearText was available."
 #endif
