@@ -1,3 +1,6 @@
+#### 5.0.0-beta008 - 2017-10-23
+* BUGFIX: Fix error on mono when starting processes
+
 #### 5.0.0-beta007 - 2017-10-23
 * BUGFIX: Fix error on mono when starting processes
 

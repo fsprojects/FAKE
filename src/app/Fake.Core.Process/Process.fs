@@ -231,10 +231,12 @@ type ProcStartInfo =
             //p.Environment = None
         | _ -> ()
 #if FX_ERROR_DIALOG
-        p.ErrorDialog <- x.ErrorDialog
-        p.ErrorDialogParentHandle <- x.ErrorDialogParentHandle
+        if p.ErrorDialog then
+            p.ErrorDialog <- x.ErrorDialog
+            p.ErrorDialogParentHandle <- x.ErrorDialogParentHandle
 #endif
-        p.LoadUserProfile <- x.LoadUserProfile
+        if x.LoadUserProfile then
+            p.LoadUserProfile <- x.LoadUserProfile
 
         if not (isNull x.Password) then
 #if FX_PASSWORD_CLEAR_TEXT
@@ -251,7 +253,8 @@ type ProcStartInfo =
 #endif
 #endif
 #if FX_WINDOWSTLE
-        p.WindowStyle <- x.WindowStyle
+        if ProcessWindowStyle.Normal <> x.WindowStyle then
+            p.WindowStyle <- x.WindowStyle
 #endif
         p.RedirectStandardError <- x.RedirectStandardError
         p.RedirectStandardInput <- x.RedirectStandardInput
