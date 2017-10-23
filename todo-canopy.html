@@ -187,7 +187,7 @@
 In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/canopy/">Canopy</a> support.</p>
 <p><img src="pics/canopy/logo.jpg" alt="alt text" title="Running canopy tests from FAKE" /></p>
 <h2><a name="Setup-your-canopy-project" class="anchor" href="#Setup-your-canopy-project">Setup your canopy project</a></h2>
-<p>Consider a simple canopy program.fs file:</p>
+<p>Consider a simple canopy <code>program.fs</code> file:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -247,9 +247,9 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 </code></pre></td>
 </tr>
 </table>
-<p>Normally canopy loads PhantomJS.exe from C:\ but in our case we want to use the installed one so we have to override the path in our test script and set the current path as location of PhantomJS.exe.</p>
+<p>Normally canopy loads <code>PhantomJS.exe</code> from <code>C:\</code> but in our case we want to use the installed one so we have to override the path in our test script and set the current path as location of <code>PhantomJS.exe</code>.</p>
 <h2><a name="Run-canopy-tests-in-FAKE" class="anchor" href="#Run-canopy-tests-in-FAKE">Run canopy tests in FAKE</a></h2>
-<p>The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config.</p>
+<p>The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IIS Express requires a configuration template (<code>"iisexpress-template.config"</code>) which can be copied from <code>%ProgramFiles%\IIS Express\AppServer\applicationhost.config</code>.</p>
 <p>This sample target will require the <a href="http://fsharp.github.io/FAKE/iis.html"><code>FAKE.IIS package</code></a> to be installed and referenced in your script, though the package isn't required to run Canopy tests.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -289,7 +289,7 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 </code></pre></td>
 </tr>
 </table>
-<p>Please note that HostWebsite starts the IISExpress process asynchronous and does NOT wait until the IISExpress successfully started. <a href="https://github.com/fsharp/FAKE/issues/403">Issue #403</a></p>
+<p>Please note that HostWebsite starts the IIS Express process asynchronous and does NOT wait until the IIS Express successfully started. <a href="https://github.com/fsharp/FAKE/issues/403">Issue #403</a></p>
 
 <div class="tip" id="fs1">namespace System</div>
 <div class="tip" id="fs2">val id : x:&#39;T -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.Operators.id</div>
