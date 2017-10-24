@@ -187,6 +187,14 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs env =
     Thread.Sleep 1000
     result = 0
 
+/// Run the given build script with fsi.exe and allows for extra arguments to FSI. Returns output.
+let executeFSIWithArgsAndReturnMessages workingDirectory script extraFsiArgs env =
+    let (result, messages) =
+        ExecProcessRedirected (fun startInfo ->
+            FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) env startInfo) TimeSpan.MaxValue
+    Thread.Sleep 1000
+    (result, messages)
+
 /// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     let (result, messages) =
