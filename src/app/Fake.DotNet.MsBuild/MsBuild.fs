@@ -233,8 +233,15 @@ type MSBuildDistributedLoggerConfig =
 
 /// A type for MSBuild task parameters
 type MSBuildParams =
-    { Targets : string list
+    {
+      /// Set the MSBuild executable to use. Defaults to the latest installed MSBuild.
+      ToolPath : string
+      Targets : string list
       Properties : (string * string) list
+      /// corresponds to the msbuild option '/m':
+      ///  - 'None' will omit the option.
+      ///  - 'Some None' will emit '/m'.
+      ///  - 'Some 2' will emit '/m:2'.
       MaxCpuCount : int option option
       NoLogo : bool
       NodeReuse : bool
@@ -243,13 +250,16 @@ type MSBuildParams =
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
       WarnAsError: string list option
+      /// corresponds to the msbuild option '/fl'
       FileLoggers : MSBuildFileLoggerConfig list option
+      /// corresponds to the msbuild option '/bl'
       BinaryLoggers : string list option
+      /// corresponds to the msbuild option '/dl'
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
-
 /// Defines a default for MSBuild task parameters
 let mutable MSBuildDefaults =
-    { Targets = []
+    { ToolPath = msBuildExe
+      Targets = []
       Properties = []
       MaxCpuCount = Some None
       NoLogo = false
@@ -447,22 +457,22 @@ match BuildServer.buildServer with
 ///           |> DoNothing
 let build setParams project =
     use t = Trace.traceTask "MSBuild" project
-    let args =
+    let msBuildParams =
         MSBuildDefaults
         |> setParams
-        |> serializeMSBuildParams
+    let argsString = msBuildParams |> serializeMSBuildParams
 
     let errorLoggerParam =
         MSBuildLoggers
         |> List.map (fun a -> Some ("logger", a))
         |> serializeArgs
 
-    let args = Process.toParam project + " " + args + " " + errorLoggerParam
-    Trace.tracefn "Building project: %s\n  %s %s" project msBuildExe args
+    let args = Process.toParam project + " " + argsString + " " + errorLoggerParam
+    Trace.tracefn "Building project: %s\n  %s %s" project msBuildParams.ToolPath args
     let exitCode =
         Process.ExecProcess (fun info ->
         { info with
-            FileName = msBuildExe
+            FileName = msBuildParams.ToolPath
             Arguments = args}) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
