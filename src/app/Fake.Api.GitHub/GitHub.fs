@@ -158,9 +158,9 @@ module GitHub =
     /// - `repoName` - the repository's name
     /// - `tagName` - the name of the tag to use for this release
     /// - `prerelease` - indicates whether the release will be created as a prerelease
-    /// - `notes` - collection of release notes that will be inserted into the Body of the release
+    /// - `notes` - collection of release notes that will be inserted into the body of the release
     /// - `client` - GitHub API v3 client
-    let CreateDraftWithNotes owner repoName tagName prerelease (notes : seq<string>) client =
+    let DraftNewRelease owner repoName tagName prerelease (notes : seq<string>) client =
         let setParams p = 
             { p with 
                 Body = String.Join(Environment.NewLine, notes) 
@@ -186,13 +186,13 @@ module GitHub =
         return release'
     }
 
-    /// Publishes the specified release by removing its Draft status
-    let ReleaseDraft (release : Async<Release>) =
+    /// Publishes the specified release by removing its draft status
+    let PublishDraft (release : Async<Release>) =
         retryWithArg 5 release <| fun release' -> async {
             let update = release'.Release.ToUpdate()
             update.Draft <- Nullable<bool>(false)
             let! released = Async.AwaitTask <| release'.Client.Repository.Release.Edit(release'.Owner, release'.RepoName, release'.Release.Id, update)
-            printfn "Released %d on GitHub" released.Id
+            printfn "Published release %d on GitHub" released.Id
         }
 
     /// Gets the latest release for the specified repository

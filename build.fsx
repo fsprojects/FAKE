@@ -921,9 +921,9 @@ Target.Create "FastRelease" (fun _ ->
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
     
     GitHub.CreateClientWithToken token
-    |> GitHub.CreateDraftWithNotes gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    |> GitHub.DraftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
     |> GitHub.UploadFiles files    
-    |> GitHub.ReleaseDraft
+    |> GitHub.PublishDraft
     |> Async.RunSynchronously
 #else
     let draft =
