@@ -8,15 +8,25 @@ open System.Net.Http
 open System.Reflection
 open System.IO
 
-/// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
+/// Contains tasks to interact with [GitHub](https://github.com/) releases
 module GitHub =
 
     [<NoComparison>]
-    type Draft =
+    type Release =
         { Client : GitHubClient
           Owner : string
-          Project : string
-          DraftRelease : Release }
+          RepoName : string
+          Release : Octokit.Release }
+
+    type CreateReleaseParams =
+        { /// The name of the release
+          Name : string 
+          /// The text describing the contents of the release
+          Body : string
+          /// Indicates whether the release will be created as a draft
+          Draft : bool 
+          /// Indicates whether the release will be created as a prerelease
+          Prerelease : bool }      
 
     // wrapper re-implementation of HttpClientAdapter which works around
     // known Octokit bug in which user-supplied timeouts are not passed to HttpClient object
@@ -66,7 +76,8 @@ module GitHub =
                 return captureAndReraise ex
         }
 
-    let createClient user password =
+    /// Creates a GitHub API v3 client using the specified credentials    
+    let CreateClient user password =
         async {
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
             let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
@@ -75,7 +86,8 @@ module GitHub =
             return github
         }
 
-    let createClientWithToken token =
+    /// Creates a GitHub API v3 client using the specified token
+    let CreateClientWithToken token =
         async {
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
             let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
@@ -84,7 +96,8 @@ module GitHub =
             return github
         }
 
-    let createGHEClient url user password =
+    /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials
+    let CreateGHEClient url user password =
         async {
             let credentials = Credentials(user, password)
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
@@ -94,7 +107,8 @@ module GitHub =
             return github
         }
 
-    let createGHEClientWithToken url token =
+    /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token
+    let CreateGHEClientWithToken url token =
         async {
             let credentials = Credentials(token)
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
@@ -104,91 +118,126 @@ module GitHub =
             return github
         }
 
-    let private makeRelease draft owner project version prerelease (notes:seq<string>) (client : Async<GitHubClient>) =
+    /// Creates a GitHub Release for the specified repository and tag name
+    /// ## Parameters
+    /// - `owner` - the repository's owner
+    /// - `repoName` - the repository's name
+    /// - `tagName` - the name of the tag to use for this release
+    /// - `setParams` - function used to override the default release parameters
+    /// - `client` - GitHub API v3 client
+    let CreateRelease owner repoName tagName setParams (client : Async<GitHubClient>) =    
         retryWithArg 5 client <| fun client' -> async {
-            let data = NewRelease(version)
-            data.Name <- version
-            data.Body <- String.Join(Environment.NewLine, notes)
-            data.Draft <- draft
-            data.Prerelease <- prerelease
-            let! draft = Async.AwaitTask <| client'.Repository.Release.Create(owner, project, data)
+            let p = 
+                { Name = tagName
+                  Body = ""
+                  Draft = true 
+                  Prerelease = false } |> setParams
+            
+            let data = NewRelease(tagName)
+            data.Name <- p.Name
+            data.Body <- p.Body
+            data.Draft <- p.Draft
+            data.Prerelease <- p.Prerelease
+
+            let! release = Async.AwaitTask <| client'.Repository.Release.Create(owner, repoName, data)
+
             let draftWord = if data.Draft then " draft" else ""
-            printfn "Created%s release id %d" draftWord draft.Id
+
+            printfn "Created%s release id %d" draftWord release.Id
+
             return {
                 Client = client'
                 Owner = owner
-                Project = project
-                DraftRelease = draft }
+                RepoName = repoName
+                Release = release }
         }
 
-    let createDraft owner project version prerelease notes client = makeRelease true owner project version prerelease notes client
-    let createRelease owner project version prerelease notes client = makeRelease false owner project version prerelease notes client
+    /// Creates a draft GitHub Release for the specified repository and tag name
+    /// ## Parameters
+    /// - `owner` - the repository's owner
+    /// - `repoName` - the repository's name
+    /// - `tagName` - the name of the tag to use for this release
+    /// - `prerelease` - indicates whether the release will be created as a prerelease
+    /// - `notes` - collection of release notes that will be inserted into the Body of the release
+    /// - `client` - GitHub API v3 client
+    let CreateDraftWithNotes owner repoName tagName prerelease (notes : seq<string>) client =
+        let setParams p = 
+            { p with 
+                Body = String.Join(Environment.NewLine, notes) 
+                Prerelease = prerelease }
+        CreateRelease owner repoName tagName setParams client
 
-    let uploadFile fileName (draft : Async<Draft>) =
-        retryWithArg 5 draft <| fun draft' -> async {
+    /// Uploads and attaches the specified file to the specified release
+    let UploadFile fileName (release : Async<Release>) =
+        retryWithArg 5 release <| fun release' -> async {
             let fi = FileInfo(fileName)
             let archiveContents = File.OpenRead(fi.FullName)
             let assetUpload = ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
-            let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.UploadAsset(draft'.DraftRelease, assetUpload)
+            let! asset = Async.AwaitTask <| release'.Client.Repository.Release.UploadAsset(release'.Release, assetUpload)
             printfn "Uploaded %s" asset.Name
-            return draft'
+            return release'
         }
 
-    let uploadFiles fileNames (draft : Async<Draft>) = async {
-        let! draft' = draft
-        let draftW = async { return draft' }
-        let! _ = Async.Parallel [for f in fileNames -> uploadFile f draftW ]
-        return draft'
+    /// Uploads and attaches the specified files to the specified release
+    let UploadFiles fileNames (release : Async<Release>) = async {
+        let! release' = release
+        let releaseW = async { return release' }
+        let! _ = Async.Parallel [for f in fileNames -> UploadFile f releaseW ]
+        return release'
     }
 
-    let releaseDraft (draft : Async<Draft>) =
-        retryWithArg 5 draft <| fun draft' -> async {
-            let update = draft'.DraftRelease.ToUpdate()
+    /// Publishes the specified release by removing its Draft status
+    let ReleaseDraft (release : Async<Release>) =
+        retryWithArg 5 release <| fun release' -> async {
+            let update = release'.Release.ToUpdate()
             update.Draft <- Nullable<bool>(false)
-            let! released = Async.AwaitTask <| draft'.Client.Repository.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
-            printfn "Released %d on github" released.Id
+            let! released = Async.AwaitTask <| release'.Client.Repository.Release.Edit(release'.Owner, release'.RepoName, release'.Release.Id, update)
+            printfn "Released %d on GitHub" released.Id
         }
 
-    let getLastRelease owner project (client : Async<GitHubClient>) =
+    /// Gets the latest release for the specified repository
+    let GetLastRelease owner repoName (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
-            let! draft = Async.AwaitTask <| client'.Repository.Release.GetLatest(owner, project)
+            let! release = Async.AwaitTask <| client'.Repository.Release.GetLatest(owner, repoName)
 
-            printfn "Latest release id: %d" draft.Id
-            printfn "Latest release tag: %s" draft.TagName
-            printfn "Latest release assets: %d" (Seq.length draft.Assets)
+            printfn "Latest release id: %d" release.Id
+            printfn "Latest release tag: %s" release.TagName
+            printfn "Latest release assets: %d" (Seq.length release.Assets)
 
             return {
                 Client = client'
                 Owner = owner
-                Project = project
-                DraftRelease = draft }
+                RepoName = repoName
+                Release = release }
         }
 
-    let getReleaseByTag (owner:string) (project:string) (tag:string) (client : Async<GitHubClient>) =
+    /// Gets release with the specified tag for the specified repository
+    let GetReleaseByTag (owner:string) repoName tagName (client : Async<GitHubClient>) =
         retryWithArg 5 client <| fun client' -> async {
-            let! drafts = client'.Repository.Release.GetAll(owner, project) |> Async.AwaitTask
-            let matches = drafts |> Seq.filter (fun (r: Release) -> r.TagName = tag)
+            let! releases = client'.Repository.Release.GetAll(owner, repoName) |> Async.AwaitTask
+            let matches = releases |> Seq.filter (fun (r: Octokit.Release) -> r.TagName = tagName)
 
             if Seq.isEmpty matches then
-                failwithf "Unable to locate tag %s" tag
+                failwithf "Unable to locate tag %s" tagName
 
-            let draft = matches |> Seq.head
+            let release = matches |> Seq.head
 
-            printfn "Release id: %d" draft.Id
-            printfn "Release tag: %s" draft.TagName
-            printfn "Release assets: %d" (Seq.length draft.Assets)
+            printfn "Release id: %d" release.Id
+            printfn "Release tag: %s" release.TagName
+            printfn "Release assets: %d" (Seq.length release.Assets)
 
             return {
                 Client = client'
                 Owner = owner
-                Project = project
-                DraftRelease = draft }
+                RepoName = repoName
+                Release = release }
         }
 
-    let downloadAsset id destination (draft : Async<Draft>) =
-        retryWithArg 5 draft <| fun draft' -> async {
-            let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.GetAsset(draft'.Owner,draft'.Project,id)
-            let! resp = Async.AwaitTask <| draft'.Client.Connection.Get(Uri(asset.Url), new System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
+    /// Downloads the asset with the specified id to the specified destination
+    let DownloadAsset id destination (release : Async<Release>) =
+        retryWithArg 5 release <| fun release' -> async {
+            let! asset = Async.AwaitTask <| release'.Client.Repository.Release.GetAsset(release'.Owner,release'.RepoName,id)
+            let! resp = Async.AwaitTask <| release'.Client.Connection.Get(Uri(asset.Url), new System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
 
             let bytes = resp.HttpResponse.Body :?> byte[]
             let filename = Path.Combine(destination, asset.Name)
@@ -198,11 +247,12 @@ module GitHub =
             printfn "Downloaded %s" filename
         }
 
-    let downloadAssets destination (draft : Async<Draft>) = async {
-        let! draft' = draft
-        let draftW = async { return draft' }
+    /// Downloads all assets for the specified release to the specified destination
+    let DownloadAssets destination (release : Async<Release>) = async {
+        let! release' = release
+        let releaseW = async { return release' }
 
-        let! _ = Async.Parallel [for f in draft'.DraftRelease.Assets -> downloadAsset f.Id destination draftW ]
+        let! _ = Async.Parallel [for f in release'.Release.Assets -> DownloadAsset f.Id destination releaseW ]
 
         ()
     }
