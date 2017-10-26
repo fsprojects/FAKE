@@ -401,7 +401,7 @@ Target.Create "BootstrapTest" (fun _ ->
             { info with
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
-                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\" -pd" script target }
+                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\"" script target }
             |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 ) span
 
