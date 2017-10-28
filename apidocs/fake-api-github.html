@@ -187,7 +187,7 @@
 
 <a name="GitHub" class="anchor" href="#GitHub"><h1>GitHub</h1></a>
 <div class="xmldoc">
-<p>Contains a task to send notification messages to a <a href="https://slack.com/">Slack</a> webhook</p>
+<p>Contains tasks to interact with <a href="https://github.com/">GitHub</a> releases</p>
 
 </div>
 
@@ -201,7 +201,13 @@
     <tbody>
         <tr>
           <td class="type-name">
-            <a href="fake-api-github-draft.html">Draft</a>
+            <a href="fake-api-github-createreleaseparams.html">CreateReleaseParams</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-api-github-release.html">Release</a>
           </td>
           <td class="xmldoc"></td>
         </tr>
@@ -220,234 +226,277 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1067', 1067)" onmouseover="showTip(event, '1067', 1067)">
-            createClient user password
+            CreateClient user password
           </code>
           <div class="tip" id="1067">
             <strong>Signature:</strong> user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L69-69" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L80-80" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a GitHub API v3 client using the specified credentials</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1068', 1068)" onmouseover="showTip(event, '1068', 1068)">
-            createClientWithToken token
+            CreateClientWithToken token
           </code>
           <div class="tip" id="1068">
             <strong>Signature:</strong> token:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L78-78" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L90-90" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a GitHub API v3 client using the specified token</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1069', 1069)" onmouseover="showTip(event, '1069', 1069)">
-            createDraft (...)
+            CreateGHEClient url user password
           </code>
           <div class="tip" id="1069">
-            <strong>Signature:</strong> owner:string -&gt; project:string -&gt; version:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Draft&gt;<br />
+            <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L124-124" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L100-100" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1070', 1070)" onmouseover="showTip(event, '1070', 1070)">
-            createGHEClient url user password
+            CreateGHEClientWithToken url token
           </code>
           <div class="tip" id="1070">
-            <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
+            <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L87-87" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L111-111" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1071', 1071)" onmouseover="showTip(event, '1071', 1071)">
-            createGHEClientWithToken url token
+            CreateRelease (...)
           </code>
           <div class="tip" id="1071">
-            <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;GitHubClient&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; setParams:(CreateReleaseParams -&gt; CreateReleaseParams) -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L97-97" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L128-128" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a GitHub Release for the specified repository and tag name</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>owner</code> - the repository's owner</li>
+<li><code>repoName</code> - the repository's name</li>
+<li><code>tagName</code> - the name of the tag to use for this release</li>
+<li><code>setParams</code> - function used to override the default release parameters</li>
+<li><code>client</code> - GitHub API v3 client</li>
+</ul>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1072', 1072)" onmouseover="showTip(event, '1072', 1072)">
-            createRelease (...)
+            DownloadAsset id destination release
           </code>
           <div class="tip" id="1072">
-            <strong>Signature:</strong> owner:string -&gt; project:string -&gt; version:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Draft&gt;<br />
+            <strong>Signature:</strong> id:int -&gt; destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L125-125" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L237-237" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Downloads the asset with the specified id to the specified destination</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1073', 1073)" onmouseover="showTip(event, '1073', 1073)">
-            downloadAsset id destination draft
+            DownloadAssets destination release
           </code>
           <div class="tip" id="1073">
-            <strong>Signature:</strong> id:int -&gt; destination:string -&gt; draft:Async&lt;Draft&gt; -&gt; Async&lt;unit&gt;<br />
+            <strong>Signature:</strong> destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L188-188" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L251-251" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Downloads all assets for the specified release to the specified destination</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
-            downloadAssets destination draft
+            DraftNewRelease (...)
           </code>
           <div class="tip" id="1074">
-            <strong>Signature:</strong> destination:string -&gt; draft:Async&lt;Draft&gt; -&gt; Async&lt;unit&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L201-201" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L163-163" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Creates a draft GitHub Release for the specified repository and tag name</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>owner</code> - the repository's owner</li>
+<li><code>repoName</code> - the repository's name</li>
+<li><code>tagName</code> - the name of the tag to use for this release</li>
+<li><code>prerelease</code> - indicates whether the release will be created as a prerelease</li>
+<li><code>notes</code> - collection of release notes that will be inserted into the body of the release</li>
+<li><code>client</code> - GitHub API v3 client</li>
+</ul>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
-            getLastRelease owner project client
+            GetLastRelease owner repoName client
           </code>
           <div class="tip" id="1075">
-            <strong>Signature:</strong> owner:string -&gt; project:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Draft&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L152-152" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L199-199" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Gets the latest release for the specified repository</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
-            getReleaseByTag owner project tag client
+            GetReleaseByTag (...)
           </code>
           <div class="tip" id="1076">
-            <strong>Signature:</strong> owner:string -&gt; project:string -&gt; tag:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Draft&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L167-167" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L215-215" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Gets release with the specified tag for the specified repository</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
-            releaseDraft draft
+            PublishDraft release
           </code>
           <div class="tip" id="1077">
-            <strong>Signature:</strong> draft:Async&lt;Draft&gt; -&gt; Async&lt;unit&gt;<br />
+            <strong>Signature:</strong> release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L144-144" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L190-190" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Publishes the specified release by removing its draft status</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
-            uploadFile fileName draft
+            UploadFile fileName release
           </code>
           <div class="tip" id="1078">
-            <strong>Signature:</strong> fileName:string -&gt; draft:Async&lt;Draft&gt; -&gt; Async&lt;Draft&gt;<br />
+            <strong>Signature:</strong> fileName:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L127-127" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L171-171" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Uploads and attaches the specified file to the specified release</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1079', 1079)" onmouseover="showTip(event, '1079', 1079)">
-            uploadFiles fileNames draft
+            UploadFiles fileNames release
           </code>
           <div class="tip" id="1079">
-            <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; draft:Async&lt;Draft&gt; -&gt; Async&lt;Draft&gt;<br />
+            <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L137-137" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L182-182" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Uploads and attaches the specified files to the specified release</p>
+
+
         </td>
       </tr>
     </tbody>
