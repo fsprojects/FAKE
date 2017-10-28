@@ -149,7 +149,7 @@ let PushFiles setParams files =
     let packages = Seq.toList files
     let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " --url " + Process.toParam parameters.PublishUrl
     let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " --endpoint " + Process.toParam parameters.EndPoint
-    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " --apikey " + Process.toParam parameters.ApiKey
+    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " --api-key " + Process.toParam parameters.ApiKey
 
     use __ = Trace.traceTask "PaketPush" (String.separated ", " packages)
 

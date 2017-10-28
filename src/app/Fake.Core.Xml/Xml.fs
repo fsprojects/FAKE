@@ -145,7 +145,7 @@ let private load (fileName:string) (doc:XmlDocument) =
     use fs = File.OpenRead(fileName)
     doc.Load fs
 let private save (fileName:string) (doc:XmlDocument) =
-    use fs = File.OpenWrite(fileName)
+    use fs = File.Open(fileName, FileMode.Truncate, FileAccess.Write)
     doc.Save fs
 
 /// Replaces text in a XML file at the location specified by a XPath expression.
