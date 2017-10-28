@@ -1,4 +1,4 @@
-#### 5.0.0-beta009 - 2017-10-29
+#### 5.0.0-beta010 - 2017-10-29
 * ENHANCEMENT: Refactor GitHub API - https://github.com/fsharp/FAKE/pull/1726
 * BUGFIX: Fix Overwrite in Fake.Core.Xml and arguments in Fake.DotNet.Paket - https://github.com/fsharp/FAKE/pull/1725
 * ENHANCEMENT: New property ToolPath in MsBuild - https://github.com/fsharp/FAKE/pull/1703
