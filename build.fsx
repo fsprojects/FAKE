@@ -401,7 +401,7 @@ Target.Create "BootstrapTest" (fun _ ->
             { info with
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
-                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\" -pd" script target }
+                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\"" script target }
             |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 ) span
 
@@ -915,6 +915,17 @@ Target.Create "FastRelease" (fun _ ->
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
 
+#if BOOTSTRAP
+    let files = 
+        runtimes @ [ "portable"; "packages" ]
+        |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    
+    GitHub.CreateClientWithToken token
+    |> GitHub.DraftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    |> GitHub.UploadFiles files    
+    |> GitHub.PublishDraft
+    |> Async.RunSynchronously
+#else
     let draft =
         GitHub.createClientWithToken token
         |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
@@ -927,6 +938,7 @@ Target.Create "FastRelease" (fun _ ->
     draftWithFiles
     |> GitHub.releaseDraft
     |> Async.RunSynchronously
+#endif
 )
 
 open System
