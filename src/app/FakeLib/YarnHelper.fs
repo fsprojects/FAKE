@@ -17,7 +17,11 @@ let private yarnFileName =
         |> fun res ->
             match res with
             | Some yarn when File.Exists (sprintf @"%s\yarn.cmd" yarn) -> (sprintf @"%s\yarn.cmd" yarn)
-            | _ -> "./packages/Yarnpkg.Yarn/content/bin/yarn.cmd"
+            | _ ->
+              new DirectoryInfo("packages/")
+              |> FileSystemHelper.filesInDirMatchingRecursive "yarn.cmd"
+              |> Seq.head
+              |> fun x -> x.FullName
     | _ ->
         let info = new ProcessStartInfo("which","yarn")
         info.StandardOutputEncoding <- System.Text.Encoding.UTF8
