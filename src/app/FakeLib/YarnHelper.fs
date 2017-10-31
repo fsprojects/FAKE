@@ -18,10 +18,12 @@ let private yarnFileName =
             match res with
             | Some yarn when File.Exists (sprintf @"%s\yarn.cmd" yarn) -> (sprintf @"%s\yarn.cmd" yarn)
             | _ ->
+              let pattrn = "yarn.cmd"
               new DirectoryInfo("packages/")
-              |> FileSystemHelper.filesInDirMatchingRecursive "yarn.cmd"
+              |> FileSystemHelper.filesInDirMatchingRecursive pattrn
+              |> Seq.filter (fun x -> x.Name.Equals(pattrn, StringComparison.InvariantCultureIgnoreCase))
+              |> Seq.map (fun x -> x.FullName)
               |> Seq.head
-              |> fun x -> x.FullName
     | _ ->
         let info = new ProcessStartInfo("which","yarn")
         info.StandardOutputEncoding <- System.Text.Encoding.UTF8
