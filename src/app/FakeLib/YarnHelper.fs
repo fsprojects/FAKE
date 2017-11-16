@@ -1,33 +1,26 @@
 /// Contains function to run yarn tasks
 module Fake.YarnHelper
 open Fake
+open Fake.ProcessHelper
 open System
 open System.IO
 open System.Diagnostics
 
 /// Default paths to Yarn
 let private yarnFileName =
-    match isWindows with
-    | true ->
-        System.Environment.GetEnvironmentVariable("PATH")
-        |> fun path -> path.Split ';'
-        |> Seq.tryFind (fun p -> p.IndexOf("yarn", StringComparison.OrdinalIgnoreCase) >= 0)
-        |> fun res ->
-            match res with
-            | Some yarn when File.Exists (sprintf @"%s\yarn.cmd" yarn) -> (sprintf @"%s\yarn.cmd" yarn)
-            | _ -> "./packages/Yarnpkg.js/tools/yarn.cmd"
-    | _ ->
-        let info = new ProcessStartInfo("which","yarn")
-        info.StandardOutputEncoding <- System.Text.Encoding.UTF8
-        info.RedirectStandardOutput <- true
-        info.UseShellExecute        <- false
-        info.CreateNoWindow         <- true
-        use proc = Process.Start info
-        proc.WaitForExit()
-        match proc.ExitCode with
-            | 0 when not proc.StandardOutput.EndOfStream ->
-              proc.StandardOutput.ReadLine()
-            | _ -> "/usr/bin/yarn"
+    let (filename, arguments, defaultValue) =
+        match isWindows with
+        | true -> "where", "yarn.cmd", "./packages/Yarnpkg.Yarn/content/bin/yarn.cmd"
+        | false -> "which", "yarn", "/usr/bin/yarn"
+
+    let result = ExecProcessAndReturnMessages (fun info ->
+                        info.FileName <- filename
+                        info.Arguments <- arguments) (TimeSpan.FromMinutes 5.0)
+        
+    match result.ExitCode with
+    | 0 -> result.Messages |> Seq.tryHead |> Option.defaultValue defaultValue
+    | _ -> defaultValue
+
 
 /// Arguments for the Yarn install command
 type InstallArgs =
