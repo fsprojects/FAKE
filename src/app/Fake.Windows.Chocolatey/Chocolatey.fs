@@ -218,6 +218,9 @@ module Fake.Windows.Choco
         /// Do not prompt for user input or confirmations. Default `true`.
         /// Equivalent to the `-y` option.
         NonInteractive: bool
+        ///  Force - force the behavior. Do not use force during normal operation - 
+        ///  it subverts some of the smart behavior for commands.
+        Force: bool
     }
 
      type private NuspecData = {
@@ -319,6 +322,7 @@ module Fake.Windows.Choco
         ApiKey = null
         ToolPath = null
         AdditionalArgs = null
+        Force = false
     }
 
     let private getPaths =
@@ -822,7 +826,8 @@ module Fake.Windows.Choco
                 |> appendWithoutQuotesIfNotNull parameters.Source "--source "
                 |> appendWithoutQuotesIfNotNull parameters.ApiKey "--apikey "
                 |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
-                |> appendWithoutQuotesIfNotNull parameters.AdditionalArgs parameters.AdditionalArgs
+                |> appendIfTrueWithoutQuotes parameters.Force "--force"
+                |> appendIfTrueWithoutQuotes (parameters.AdditionalArgs |> String.isNotNullOrEmpty) parameters.AdditionalArgs
                 |> toText
 
         callChoco parameters.ToolPath args parameters.Timeout
