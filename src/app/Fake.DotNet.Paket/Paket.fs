@@ -132,7 +132,7 @@ let Pack setParams =
                 symbols includeReferencedProjects minimumFromLockFile pinProjectReferences projectUrl
         Process.ExecProcess 
             (startPaket parameters.ToolPath parameters.WorkingDir
-                >> withArgs (sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs)
+                >> withArgs (sprintf "pack \"%s\" %s" parameters.OutputPath cmdArgs)
                 >> Process.withFramework)
             parameters.TimeOut
 
