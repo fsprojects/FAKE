@@ -90,9 +90,9 @@ module Fake.Testing.SonarQube
     ///
     ///   SonarQube.End None
     ///
-    ///   SonarQube.End (fun p ->
+    ///   SonarQube.End (Some (fun p ->
     ///    {p with
-    ///      Settings = ["sonar.login=login", "sonar.password=password"] })
+    ///      Settings = ["sonar.login=login"; "sonar.password=password"] }))
     ///
     let End setParams = 
         use __ = Trace.traceTask "SonarQube" "End"
