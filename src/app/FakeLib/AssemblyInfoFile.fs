@@ -17,7 +17,7 @@ let (|Fsproj|Csproj|Vbproj|Shproj|) (projFileName:string) =
     | f when f.EndsWith("shproj") -> Shproj
     | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
 
-let internal assemblyVersionRegex = getRegEx @"([0-9]+.)+[0-9]+"
+let internal assemblyVersionRegex = getRegEx @"([0-9]+\.)+[0-9]+"
 
 // matches [assembly: name(value)] and captures "name" and "value" as named captures. Variations for C#, F#, C++ and VB
 let private regexAttrNameValueCs = @"^\s*\[\s*assembly:\s*(?<name>\w+?)\s*\((?<value>.*)\)\s*\]\s*$"
