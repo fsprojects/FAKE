@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
+    <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <DebugType>pdbonly</DebugType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Fake.Net.Http</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);NETSTANDARD;USE_HTTPCLIENT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="ResultBuilder.fs" />
+    <Compile Include="FilePath.fs" />
+    <Compile Include="HttpLoader.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>
