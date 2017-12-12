@@ -1,11 +1,8 @@
-#### 4.63.3 - 12.12.2017
+#### 4.64.0 - 12.12.2017
 * New helper: GetDotNetSDKVersionFromGlobalJson
 * Do not download DotNet SDK when it's already in temp
-
-#### 4.63.2 - 11.09.2017
+* Use "dotnet --info" to determine DotNet SDK version
 * Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
-
-#### 4.63.1 - 11.09.2017
 * Download .NET SDK to temp path
 
 #### 4.63.0 - 27.07.2017
