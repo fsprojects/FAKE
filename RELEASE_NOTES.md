@@ -1,3 +1,6 @@
+#### 4.63.3 - 12.12.2017
+* Do not download DotNet SDK when it's already in temp
+
 #### 4.63.2 - 11.09.2017
 * Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
 

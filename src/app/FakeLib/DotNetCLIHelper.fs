@@ -495,12 +495,15 @@ let InstallDotNetSDK sdkVersion =
 
         let downloadSDK downloadPath archiveFileName =
             let localPath = Path.Combine(tempDir, archiveFileName) |> FullName
-            tracefn "Installing '%s' to '%s'" downloadPath localPath
+            if not (File.Exists localPath) then
+                tracefn "Downloading '%s' to '%s'" downloadPath localPath
             
-            let proxy = Net.WebRequest.DefaultWebProxy
-            proxy.Credentials <- Net.CredentialCache.DefaultCredentials
-            use webclient = new Net.WebClient(Proxy = proxy)
-            webclient.DownloadFile(downloadPath, localPath)
+                let proxy = Net.WebRequest.DefaultWebProxy
+                proxy.Credentials <- Net.CredentialCache.DefaultCredentials
+                use webclient = new Net.WebClient(Proxy = proxy)
+            
+                webclient.DownloadFile(downloadPath, localPath)
+
             localPath
 
         let localPath =
