@@ -3,6 +3,7 @@
 * Do not download DotNet SDK when it's already in temp
 * Use "dotnet --info" to determine DotNet SDK version
 * Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
+* Do not use "file" parameter for paket push
 * Download .NET SDK to temp path
 
 #### 4.63.0 - 27.07.2017

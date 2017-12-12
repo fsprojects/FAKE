@@ -162,7 +162,7 @@ let Push setParams =
                         let pushResult =
                             ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
-                                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                                info.Arguments <- sprintf "push %s%s%s %s" url endpoint key (toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
             Async.Parallel tasks
@@ -175,7 +175,7 @@ let Push setParams =
                 ExecProcess (fun info ->
                     info.FileName <- parameters.ToolPath
                     info.WorkingDirectory <- parameters.WorkingDir
-                    info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                    info.Arguments <- sprintf "push %s%s%s %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
 
 /// Returns the dependencies from specified paket.references file
