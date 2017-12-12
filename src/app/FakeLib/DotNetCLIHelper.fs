@@ -493,10 +493,21 @@ let InstallDotNetSDK sdkVersion =
                 ExecProcessAndReturnMessages (fun info ->  
                 info.FileName <- exe
                 info.WorkingDirectory <- Environment.CurrentDirectory
-                info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
-            processResult.Messages |> separated "" = sdkVersion
+                info.Arguments <- "--info") (TimeSpan.FromMinutes 30.)
+
+            processResult.Messages
+            |> Seq.exists (fun m -> m.Contains "Version" && m.Contains(": " + sdkVersion))
         with 
-        | _ -> false
+        | _ ->
+            try
+                let processResult = 
+                    ExecProcessAndReturnMessages (fun info ->  
+                    info.FileName <- exe
+                    info.WorkingDirectory <- Environment.CurrentDirectory
+                    info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
+                processResult.Messages |> separated "" = sdkVersion
+            with 
+            | _ -> false
 
     if correctVersionInstalled dotnetExePath then
         tracefn "dotnetcli %s already installed in PATH" sdkVersion
