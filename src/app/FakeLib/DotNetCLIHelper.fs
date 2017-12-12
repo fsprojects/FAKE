@@ -470,7 +470,7 @@ let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.Special
 
 
 /// Gets the DotNet SDK from the global.json
-let GetDotNetSDKVersionFromGlobalJson : string = 
+let GetDotNetSDKVersionFromGlobalJson() : string = 
     if not (File.Exists "global.json") then
         failwithf "global.json not found"
     try
