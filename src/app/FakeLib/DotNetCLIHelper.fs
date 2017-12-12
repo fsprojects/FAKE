@@ -469,6 +469,20 @@ let SetVersionInProjectJson (version:string) fileName =
 let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) </> "dotnetcore" |> FullName
 
 
+/// Gets the DotNet SDK from the global.json
+let GetDotNetSDKVersionFromGlobalJson : string = 
+    if not (File.Exists "global.json") then
+        failwithf "global.json not found"
+    try
+        let content = File.ReadAllText "global.json"
+        let json = Newtonsoft.Json.Linq.JObject.Parse content
+        let sdk = json.Item("sdk") :?> JObject
+        let version = sdk.Property("version").Value.ToString()
+        version
+    with
+    | exn -> failwithf "Could not parse global.json: %s" exn.Message
+
+
 /// Installs the DotNet SDK locally to the given path
 let InstallDotNetSDK sdkVersion =
     let buildLocalPath = DotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
