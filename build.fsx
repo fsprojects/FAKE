@@ -207,6 +207,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.IO.FileSystem", "Core Filesystem utilities"
       "Fake.IO.Zip", "Core Zip functionality"
+      "Fake.Net.Http", "HTTP Client"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
       "Fake.Tools.Git", "Running git commands"
