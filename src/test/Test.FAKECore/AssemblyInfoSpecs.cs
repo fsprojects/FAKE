@@ -13,6 +13,29 @@ namespace Test.FAKECore
             () => AssemblyInfoFile.getDependencies(new List<AssemblyInfoFile.Attribute>());
     }
 
+    public class when_using_version_attributes
+    {
+        private static string Input = "1.0.0+0e5da7a";
+
+        It normalizes_the_string_for_Version = () =>
+        {
+            var attribute = AssemblyInfoFile.Attribute.Version(Input);
+            attribute.Value.ShouldEqual("\"1.0.0\"");
+        };
+
+        It normalizes_the_string_for_FileVersion = () =>
+        {
+            var attribute = AssemblyInfoFile.Attribute.FileVersion(Input);
+            attribute.Value.ShouldEqual("\"1.0.0\"");
+        };
+
+        It leaves_string_as_is_for_InformationalVersion = () =>
+        {
+            var attribute = AssemblyInfoFile.Attribute.InformationalVersion(Input);
+            attribute.Value.ShouldEqual("\"1.0.0+0e5da7a\"");
+        };
+    }
+
     public class when_using_fsharp_task_with_default_config
     {
         It should_use_system_namespace_and_emit_a_version_module = () =>
