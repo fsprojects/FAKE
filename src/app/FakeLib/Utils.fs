@@ -1,6 +1,4 @@
-﻿[<AutoOpen>]
-
-module Fake.Utils
+﻿module Fake.Utils
 
 open System
 open System.Net
