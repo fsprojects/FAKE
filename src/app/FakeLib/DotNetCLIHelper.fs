@@ -496,7 +496,7 @@ let InstallDotNetSDK sdkVersion =
                 info.Arguments <- "--info") (TimeSpan.FromMinutes 30.)
 
             processResult.Messages
-            |> Seq.exists (fun m -> m.Contains "Version" && m.Contains(": " + sdkVersion))
+            |> Seq.exists (fun m -> m.Contains "Version" && m.Contains(sdkVersion)) // This checks sdk and cli version
         with 
         | _ ->
             try

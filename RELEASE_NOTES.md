@@ -1,4 +1,4 @@
-#### 4.64.2 - 12.12.2017
+#### 4.64.3 - 19.12.2017
 * New helper: GetDotNetSDKVersionFromGlobalJson
 * Do not download DotNet SDK when it's already in temp
 * Use "dotnet --info" to determine DotNet SDK version
