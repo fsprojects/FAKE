@@ -626,6 +626,7 @@ let netCoreProjs =
     ++ "src/app/Fake.Windows.*/*.fsproj"
     ++ "src/app/Fake.IO.*/*.fsproj"
     ++ "src/app/Fake.Tools.*/*.fsproj"
+    ++ "src/app/Fake.Net.*/*.fsproj"
     ++ "src/app/Fake.netcore/*.fsproj"
     ++ "src/app/Fake.Testing.*/*.fsproj"
     ++ "src/app/Fake.Runtime/*.fsproj"

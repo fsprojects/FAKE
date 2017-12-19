@@ -15,8 +15,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="ResultBuilder.fs" />
-    <Compile Include="FilePath.fs" />
+    <Compile Include="Async.fs" />
+    <Compile Include="Result.fs" />
+    <Compile Include="List.fs" />
     <Compile Include="HttpLoader.fs" />
   </ItemGroup>
   <ItemGroup>

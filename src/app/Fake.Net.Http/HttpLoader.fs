@@ -6,66 +6,133 @@ open System.Net.Http
 
 open Fake.Core
 
-open FilePath
-open ResultBuilder
+open Fake.Net.Async
+open Fake.Net.Result
+open Fake.Net.List
 
-/// Contains 
+/// HTTP Client for downloading files
 module Http = 
 
-    let result = ResultBuilder()
+    /// Input parameter type
+    type DownloadParameters = {
+        Uri: string
+        Path: string
+    }
 
-    let createUri (uriStr: string) = 
+    /// Type aliases for local file path and error messages
+    type private FilePath = string
+    type private Err = string
+
+    /// Contains validated Uri and FilePath info for further download
+    type private DownloadInfo = {
+        Uri: Uri
+        LocalFilePath: FilePath
+    }
+
+    /// [omit]
+    let private createFilePath (filePathStr: string): Result<FilePath, Err list>  = 
+        try
+            let fullPath = Path.GetFullPath(filePathStr)
+            Ok (fullPath)
+        with
+        | ex -> 
+            let err = sprintf "[%s] %s" filePathStr ex.Message
+            Error [err ]
+
+    /// [omit]
+    let private createUri (uriStr: string): Result<Uri, Err list> = 
         try
             Ok (Uri uriStr)
         with
         | ex -> 
-            let err = sprintf "[%s] %A" uriStr ex.Message
+            let err = sprintf "[%s] %s" uriStr ex.Message
             Error [err ]
 
-    let showDownloadResult (result: Result<FilePath, string list>) =
-        match result with
-        | Ok (FilePath(filePath)) -> 
-            Trace.log <| sprintf "Downloaded : [%s]" filePath
-        | Error errs -> 
-            Trace.traceError  <| sprintf "Failed: %A" errs
+    /// [omit]
+    let private createDownloadInfo (input: DownloadParameters): Result<DownloadInfo, Err list> = 
+        let (<!>) = Result.map
+        let (<*>) = Result.apply
 
-    let saveStreamToFile (filePath: FilePath) (stream: Stream) : Async<Result<FilePath,string list>>  = 
+        let createDownloadInfoRecord (filePath: FilePath) (uri:Uri)  = 
+            { Uri=uri;  LocalFilePath=filePath }
+
+        let filePathResult = createFilePath input.Path
+        let urlResult = createUri input.Uri
+        createDownloadInfoRecord <!> filePathResult <*> urlResult
+       
+    /// [omit]
+    let private printDownloadResults result =
+        match result with
+            | Ok result -> 
+                Trace.log <| sprintf "Downloaded : [%A]" result
+            | Error errs -> 
+                Trace.traceError <| sprintf "Failed: %A" errs
+        result
+
+    /// [omit]
+    let private saveStreamToFileAsync (filePath: FilePath) (stream: Stream) : Async<Result<FilePath, Err list>> =
         async {
-            let filePathStr = FilePath.value filePath
             try
-                use fileStream = new FileStream(filePathStr, FileMode.Create, FileAccess.Write, FileShare.None)
+                use fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None)
                 do! stream.CopyToAsync(fileStream) |> Async.AwaitTask
                 return (Ok filePath)
             with
             | ex -> 
-                let err = sprintf "[%s] %A" filePathStr ex.Message
+                let err = sprintf "[%s] %s" filePath ex.Message
                 return Error [err ]
         }
 
-    let downloadToFileStream (filePath: FilePath) (uri:Uri) : Async<Result<FilePath,string list>>  = 
+    /// [omit]
+    let private downloadStreamToFileAsync (info: DownloadInfo) : Async<Result<FilePath, Err list>>  =
         async {
             use client = new HttpClient()
             try
+                Trace.log <| sprintf "Downloading [%s] ..." info.Uri.OriginalString
                 // do not buffer the response
-                let! response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead) |> Async.AwaitTask
+                let! response = client.GetAsync(info.Uri, HttpCompletionOption.ResponseHeadersRead) |> Async.AwaitTask
                 response.EnsureSuccessStatusCode () |> ignore
-                use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask 
-                return! saveStreamToFile filePath stream  
+                use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
+                return! saveStreamToFileAsync info.LocalFilePath stream
             with
-            | ex -> 
-                let err = sprintf "[%s] %A" uri.Host ex.Message
+            | ex ->
+                let err = sprintf "[%s] %s" info.Uri.Host ex.Message
                 return Error [err ]
             }
 
-    /// Download file by the given file path and Url
+    /// [omit]     
+    let private downloadFileAsync (input: DownloadParameters): Async<Result<FilePath, Err list>> =
+        let valImp = createDownloadInfo input
+        match valImp with
+            | Ok x ->
+                downloadStreamToFileAsync x
+            | Error errs ->
+                Async.result (Error errs)
+        
+    /// Download file by the given file path and Uri
     /// string -> string -> Result<FilePath,string list>
-    let downloadFile (filePathStr: string) (url: string) : Result<FilePath,string list> =
+    /// ## Parameters
+    ///  - `localFilePath` - A local file path to download file
+    ///  - `uri` - A Uri to download from
+    /// ## Returns
+    ///  - `Result` type. Success branch contains a downloaded file path. Failure branch contains a list of errors
+    let downloadFile (localFilePath: string) (uri: string) : Result<string, string list> =
+        downloadFileAsync { Uri=uri;  Path=localFilePath }
+        |> Async.RunSynchronously
+        |> printDownloadResults
 
-        let downloadResult = result {
-            let! filePath = FilePath.create filePathStr
-            let! uri = createUri url
-            let! result =  downloadToFileStream filePath uri |> Async.RunSynchronously
-            return result
-        }
-        do showDownloadResult downloadResult
-        downloadResult
+    /// Download list of Uri's in parallel
+    /// DownloadParameters -> Result<FilePath, Err list>
+    /// ## Parameters
+    ///  - `input` - List of Http.DownloadParameters. Each Http.DownloadParameters record type contains Uri and file path
+    /// ## Returns
+    ///  - `Result` type. Success branch contains a list of downloaded file paths. Failure branch contains a list of errors
+    let downloadFiles (input: DownloadParameters list) : Result<string list, string list> =
+        input
+        // DownloadParameters -> "Async<Result<FilePath, Err list>> list"
+        |> List.map downloadFileAsync
+        // "Async<Result<FilePath, Err list>> list" -> "Async<Result<FilePath, Err list> list>"
+        |> List.sequenceAsyncA
+        // "Async<Result<FilePath, Err list> list>" -> "Async<Result<FilePath list, Err list>>"
+        |> Async.map List.sequenceResultA
+        |> Async.RunSynchronously
+        |> printDownloadResults
