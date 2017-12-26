@@ -84,7 +84,27 @@ module private MsBuildExe =
     items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
 
   let private getAllKnownPaths =
-    (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
+    let getVSPathFromVSWhere ver =
+        try
+            Process.execWithResult (fun proc ->
+                { proc with
+                    FileName = Fake.Core.Environment.VSWhere
+                    Arguments = sprintf "-version %s -property installationPath" ver })
+                TimeSpan.MaxValue
+            |> fun processResult ->
+                if processResult.OK then
+                    processResult.Messages |> List.tryHead 
+                    |> Option.map(fun vsRoot -> sprintf @"%s\MSBuild\%s\Bin" vsRoot ver) 
+                else Option.None
+        with _ -> Option.None
+
+    let paths =
+      (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
+    
+    let version = Environment.environVarOrNone "VisualStudioVersion"
+    Option.bind getVSPathFromVSWhere version
+    |> Option.fold(fun paths path -> path :: paths) paths
+
 
   /// Versions of Mono prior to this one have faulty implementations of MSBuild
   /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
