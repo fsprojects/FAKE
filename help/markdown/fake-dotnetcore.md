@@ -69,7 +69,47 @@ The disadvantage is that you need to have a dotnet sdk installed.
   Note that with the "new" API you should call the modules directly instead of opening them. 
   Therefore this example is actually pretty bad because it just opened everything (for minimal diff to the "normal" build.fsx)
 
-TBD.
+### Minimal example
+
+Create a file named build.fsx with the following contents:
+```
+(* -- Fake Dependencies paket-inline
+source https://api.nuget.org/v3/index.json
+
+nuget Fake.Core.Target
+-- Fake Dependencies -- *)
+// include Fake modules, see Fake modules section
+
+open Fake.Core
+
+// *** Define Targets ***
+Target.Create "Clean" (fun _ ->
+  Trace.log " --- Cleaning stuff --- "
+)
+
+Target.Create "Build" (fun _ ->
+  Trace.log " --- Building the app --- "
+)
+
+Target.Create "Deploy" (fun _ ->
+  Trace.log " --- Deploying app --- "
+)
+
+open Fake.Core.TargetOperators
+
+// *** Define Dependencies ***
+"Clean"
+  ==> "Build"
+  ==> "Deploy"
+
+// *** Start Build ***
+Target.RunOrDefault "Deploy"
+```
+
+Run this file by executing
+```
+fake run build.fsx
+```
 
 ## Downloads
 
