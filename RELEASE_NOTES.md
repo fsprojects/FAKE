@@ -1,3 +1,12 @@
+#### 5.0.0-beta011 - 2017-12-17
+* BUGFIX: Fix version normalization - https://github.com/fsharp/FAKE/pull/1742
+* DOCS: Fix documentation of SonarCube.End - https://github.com/fsharp/FAKE/pull/1743
+* BUGFIX: Paket.Pack uses outdated syntax - https://github.com/fsharp/FAKE/pull/1737
+* ENHANCEMENT: New Fake.Net.Http API to download files - https://github.com/fsharp/FAKE/pull/1746
+* DOCS: Add simple Hello-World example - https://github.com/fsharp/FAKE/pull/1748
+* FAKE4: fix custom proxy credentials in DotNetCLIHelper - https://github.com/fsharp/FAKE/pull/1741
+* FAKE4: added executeFSIWithArgsAndReturnMessages  https://github.com/fsharp/FAKE/pull/1719
+
 #### 5.0.0-beta010 - 2017-10-29
 * ENHANCEMENT: Refactor GitHub API - https://github.com/fsharp/FAKE/pull/1726
 * BUGFIX: Fix Overwrite in Fake.Core.Xml and arguments in Fake.DotNet.Paket - https://github.com/fsharp/FAKE/pull/1725
