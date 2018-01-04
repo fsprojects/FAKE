@@ -43,7 +43,7 @@ Please read https://github.com/fsharp/FAKE/issues/1232
 
 ## What is the migration path?
 
-See [Fake 5 Migration Guide](migrate-to-fake5.html)
+See [Fake 5 Migration Guide](fake-migrate-to-fake-5.html)
 
 ## How to specify dependencies?
 
