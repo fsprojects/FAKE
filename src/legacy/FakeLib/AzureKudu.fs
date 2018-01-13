@@ -56,3 +56,43 @@ let kuduSync() =
             (TimeSpan.FromMinutes 5.)
     output |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
     if not succeeded then failwith "Error occurred during Kudu Sync deployment."
+
+/// Kudu ZipDeploy parameters
+type ZipDeployParams =
+  { /// The url of the website, usually in the format of https://<yourwebsite>.scm.azurewebsites.net
+    Url : Uri
+    /// The WebDeploy or Git username, usually the $username from the site's publish profile
+    UserName : string
+    /// The WebDeploy or Git Password
+    Password : string
+    /// The path to the zip archive to upload
+    PackageLocation: string }
+
+/// Synchronizes contents of the zip package with the target web app using Kudu ZipDeploy.
+/// See https://blogs.msdn.microsoft.com/appserviceteam/2017/10/16/zip-push-deployment-for-web-apps-functions-and-webjobs/
+let zipDeploy { Url = uri; UserName = username; Password = password; PackageLocation = zipFile } =
+    // Create the web request.
+    let request =
+        Net.HttpWebRequest.Create(uri.AbsoluteUri + "api/zipdeploy",
+                                  Method = "POST",
+                                  ContentType = "multipart/form-data",
+                                  Timeout = 300000) :?> Net.HttpWebRequest
+
+    // Set the authorization header.
+    let authToken =
+        Convert.ToBase64String(Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" username password))
+    request.Headers.Add("Authorization", sprintf "Basic %s" authToken)
+
+    // Write the zip file to the request stream, then flush and close it to send.
+    do  use fileStream = new FileStream(zipFile, FileMode.Open)
+        use inFile = request.GetRequestStream()
+        fileStream.CopyTo(inFile)
+        inFile.Flush()
+        inFile.Close()
+
+    // Get the response. If 200 OK, then the deploy succeeded. Otherwise, the deploy failed.
+    use response = request.GetResponse() :?> Net.HttpWebResponse
+    if response.StatusCode = Net.HttpStatusCode.OK then
+        logfn "Deployed %s" uri.AbsoluteUri
+    else
+        failwithf "Failed to deploy package with status code %A" response.StatusCode
