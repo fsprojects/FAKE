@@ -1,3 +1,6 @@
+#### 4.64.4 - 17.01.2018
+* Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
+
 #### 4.64.3 - 19.12.2017
 * New helper: GetDotNetSDKVersionFromGlobalJson
 * Do not download DotNet SDK when it's already in temp
