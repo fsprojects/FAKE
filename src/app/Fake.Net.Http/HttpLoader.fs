@@ -15,7 +15,9 @@ module Http =
 
     /// Input parameter type
     type DownloadParameters = {
+        /// The URI from which to download data
         Uri: string
+        /// The name of the local file that is to receive the data
         Path: string
     }
 
@@ -114,6 +116,7 @@ module Http =
     /// ## Parameters
     ///  - `localFilePath` - A local file path to download file
     ///  - `uri` - A Uri to download from
+    ///
     /// ## Returns
     ///  - `string` type. Contains a downloaded file path
     let downloadFile (localFilePath: string) (uri: string) : string =
@@ -125,6 +128,7 @@ module Http =
     /// DownloadParameters -> string list
     /// ## Parameters
     ///  - `input` - List of Http.DownloadParameters. Each Http.DownloadParameters record type contains Uri and file path
+    ///
     /// ## Returns
     ///  - `string list` type. Contains a list of downloaded file paths
     let downloadFiles (input: DownloadParameters list) : string list =

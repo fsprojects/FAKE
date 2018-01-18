@@ -85,6 +85,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "markdown", "markdown", "{B9
 		help\markdown\legacy-core-targets.md = help\markdown\legacy-core-targets.md
 		help\markdown\legacy-gettingstarted.md = help\markdown\legacy-gettingstarted.md
 		help\markdown\legacy-index.md = help\markdown\legacy-index.md
+		help\markdown\net-http.md = help\markdown\net-http.md
 		help\markdown\testing-sonarqube.md = help\markdown\testing-sonarqube.md
 		help\markdown\todo-androidpublisher.md = help\markdown\todo-androidpublisher.md
 		help\markdown\todo-azurecloudservices.md = help\markdown\todo-azurecloudservices.md
