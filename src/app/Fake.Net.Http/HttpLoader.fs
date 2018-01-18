@@ -60,14 +60,15 @@ module Http =
         let urlResult = createUri input.Uri
         createDownloadInfoRecord <!> filePathResult <*> urlResult
        
+    /// Unwraps the Result type and throws an exception if download process failed  
     /// [omit]
-    let private printDownloadResults result =
+    let private processResults result =
         match result with
             | Ok result -> 
-                Trace.log <| sprintf "Downloaded : [%A]" result
+                Trace.log "Download succeeded"
+                result
             | Error errs -> 
-                Trace.traceError <| sprintf "Failed: %A" errs
-        result
+                failwith <| sprintf "Download failed : [%A]" errs
 
     /// [omit]
     let private saveStreamToFileAsync (filePath: FilePath) (stream: Stream) : Async<Result<FilePath, Err list>> =
@@ -95,7 +96,7 @@ module Http =
                 return! saveStreamToFileAsync info.LocalFilePath stream
             with
             | ex ->
-                let err = sprintf "[%s] %s" info.Uri.Host ex.Message
+                let err = sprintf "[%s] %s" info.Uri.OriginalString ex.Message
                 return Error [err ]
             }
 
@@ -109,24 +110,24 @@ module Http =
                 Async.result (Error errs)
         
     /// Download file by the given file path and Uri
-    /// string -> string -> Result<FilePath,string list>
+    /// string -> string -> string
     /// ## Parameters
     ///  - `localFilePath` - A local file path to download file
     ///  - `uri` - A Uri to download from
     /// ## Returns
-    ///  - `Result` type. Success branch contains a downloaded file path. Failure branch contains a list of errors
-    let downloadFile (localFilePath: string) (uri: string) : Result<string, string list> =
+    ///  - `string` type. Contains a downloaded file path
+    let downloadFile (localFilePath: string) (uri: string) : string =
         downloadFileAsync { Uri=uri;  Path=localFilePath }
         |> Async.RunSynchronously
-        |> printDownloadResults
+        |> processResults
 
     /// Download list of Uri's in parallel
-    /// DownloadParameters -> Result<FilePath, Err list>
+    /// DownloadParameters -> string list
     /// ## Parameters
     ///  - `input` - List of Http.DownloadParameters. Each Http.DownloadParameters record type contains Uri and file path
     /// ## Returns
-    ///  - `Result` type. Success branch contains a list of downloaded file paths. Failure branch contains a list of errors
-    let downloadFiles (input: DownloadParameters list) : Result<string list, string list> =
+    ///  - `string list` type. Contains a list of downloaded file paths
+    let downloadFiles (input: DownloadParameters list) : string list =
         input
         // DownloadParameters -> "Async<Result<FilePath, Err list>> list"
         |> List.map downloadFileAsync
@@ -135,4 +136,4 @@ module Http =
         // "Async<Result<FilePath, Err list> list>" -> "Async<Result<FilePath list, Err list>>"
         |> Async.map List.sequenceResultA
         |> Async.RunSynchronously
-        |> printDownloadResults
+        |> processResults
