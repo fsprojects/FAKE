@@ -133,7 +133,18 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
-#### 4.63.0 - 2017-07-27
+#### 4.64.4 - 17.01.2018
+* Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
+
+#### 4.64.3 - 19.12.2017
+* New helper: GetDotNetSDKVersionFromGlobalJson
+* Do not download DotNet SDK when it's already in temp
+* Use "dotnet --info" to determine DotNet SDK version
+* Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
+* Do not use "file" parameter for paket push
+* Download .NET SDK to temp path
+
+#### 4.63.0 - 27.07.2017
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
 
 #### 4.62.6 - 2017-07-26
