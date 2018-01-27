@@ -35,6 +35,7 @@ open System
 open System.IO
 open System.Security.Cryptography
 open System.Text
+open Newtonsoft.Json.Linq
 
 /// .NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location. 
 let mutable DefaultDotnetCliDir = 
@@ -708,7 +709,7 @@ let GetDotNetSDKVersionFromGlobalJson() : string =
         failwithf "global.json not found"
     try
         let content = File.ReadAllText "global.json"
-        let json = Newtonsoft.Json.Linq.JObject.Parse content
+        let json = JObject.Parse content
         let sdk = json.Item("sdk") :?> JObject
         let version = sdk.Property("version").Value.ToString()
         version
