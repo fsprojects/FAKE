@@ -249,7 +249,7 @@ let Release_2_0_3 options =
         Version = Version "2.0.3"
     }
 
-let Release_2_0_3 options =
+let Release_2_1_4 options =
     { options with
         InstallerOptions = (fun io ->
             { io with
