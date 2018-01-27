@@ -1,4 +1,5 @@
 #### 5.0.0-beta011 - 2017-12-17
+* ENHANCEMENT: Fake now writes load-scripts to provide intellisense - 
 * BUGFIX: Fix version normalization - https://github.com/fsharp/FAKE/pull/1742
 * DOCS: Fix documentation of SonarCube.End - https://github.com/fsharp/FAKE/pull/1743
 * BUGFIX: Paket.Pack uses outdated syntax - https://github.com/fsharp/FAKE/pull/1737

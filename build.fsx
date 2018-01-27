@@ -600,7 +600,7 @@ Target.Create "CreateNuGet" (fun _ ->
         NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
-(*
+
 let LatestTooling options =
     { options with
         Cli.InstallerOptions = (fun io ->
@@ -608,10 +608,11 @@ let LatestTooling options =
                 Branch = "release/2.0.0"
             })
         Cli.Channel = None
-        Cli.Version = Cli.Version "2.0.0"
-    }*)
+        Cli.Version = Cli.Version "2.0.3"
+    }
 Target.Create "InstallDotnetCore" (fun _ ->
-     Cli.DotnetCliInstall Cli.Release_2_0_0
+    Cli.DotnetCliInstall LatestTooling
+    //Cli.DotnetCliInstall Cli.Release_2_0_0
 )
 
 let root = __SOURCE_DIRECTORY__
