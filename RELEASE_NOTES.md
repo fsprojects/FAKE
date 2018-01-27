@@ -1,9 +1,10 @@
-#### 5.0.0-beta012 - 2018-01-27
-* FAKE5: New distribution as dotnet-cli-tool `dotnet-fake`
+#### 5.0.0-beta012 - 2018-01-28
+* FAKE5: New distribution as dotnet-cli-tool `dotnet-fake` - https://github.com/fsharp/FAKE/pull/1766
 * ENHANCEMENT: added GetDotNetSDKVersionFromGlobalJson - https://github.com/fsharp/FAKE/pull/1754
+* BUGFIX: Include pdb and xml files again - https://github.com/fsharp/FAKE/pull/1766
 
 #### 5.0.0-beta011 - 2018-01-27
-* ENHANCEMENT: Fake now writes load-scripts to provide intellisense - 
+* ENHANCEMENT: Fake now writes load-scripts to provide intellisense - https://github.com/fsharp/FAKE/pull/1763
 * BUGFIX: Fix version normalization - https://github.com/fsharp/FAKE/pull/1742
 * DOCS: Fix documentation of SonarCube.End - https://github.com/fsharp/FAKE/pull/1743
 * BUGFIX: Paket.Pack uses outdated syntax - https://github.com/fsharp/FAKE/pull/1737

@@ -92,7 +92,7 @@ type DotNetInstallerOptions =
     /// Parameter default values.
     static member Default = {
         AlwaysDownload = false
-        Branch = "rel/1.0.0"
+        Branch = "master"
     }
 
 /// Download .NET Core SDK installer
