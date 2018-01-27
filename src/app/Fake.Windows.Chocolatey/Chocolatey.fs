@@ -852,7 +852,7 @@ module Fake.Windows.Choco
     ///        
     ///         args |> Choco.CallChoco TimeSpan.FromMinutes 1.
     ///     )
-    let CallChoco args timeout =
+    let Exec args timeout =
         if args |> isNullOrEmpty then failwith "'args' must not be empty."
 
         callChoco null args timeout

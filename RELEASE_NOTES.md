@@ -8,7 +8,7 @@
 * FAKE4: added executeFSIWithArgsAndReturnMessages  https://github.com/fsharp/FAKE/pull/1719
 * DOCS: Fix path to migration guide - https://github.com/fsharp/FAKE/pull/1755
 * NEW MODULE: Fake.Net.Http to download files - https://github.com/fsharp/FAKE/pull/1759
-
+* ENHANCEMENT: Add Force parameter to Choco Push - https://github.com/fsharp/FAKE/pull/1735
 
 #### 5.0.0-beta010 - 2017-10-29
 * ENHANCEMENT: Refactor GitHub API - https://github.com/fsharp/FAKE/pull/1726
