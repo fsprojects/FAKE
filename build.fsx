@@ -688,6 +688,8 @@ Target.Create "DotnetPackage_" (fun _ ->
 
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
+    Environment.setEnvironVar "IncludeSource" "true"
+    Environment.setEnvironVar "PackageVersion" release.NugetVersion
     Environment.setEnvironVar "Version" release.NugetVersion
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
     Environment.setEnvironVar "Description" projectDescription
