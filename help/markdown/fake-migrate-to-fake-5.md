@@ -21,7 +21,7 @@ Upgrading to FAKE 5 is a multi step process and has various manual steps in betw
 
 - Update to legacy FAKE 5. This should not be breaking. If it breaks you please open an issue.
 
-  - With Paket: add `prerelease` after `nuget FAKE` in paket.dependencies file then `.paket/paket.exe update FAKE`, check that paket.lock references FAKE version 5 
+  - With Paket: add `prerelease` after `nuget FAKE` in paket.dependencies file then `.paket/paket.exe update`, check that paket.lock references FAKE version 5 
 
 - Fix all the (obsolete) warnings in your build-script to use the new API (see the [Use the new FAKE-API](#Use-the-new-FAKE-API) section).
   This should still not break your build. If things break here or you have difficulties after reading the 'Use the new FAKE-API' section
