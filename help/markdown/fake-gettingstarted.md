@@ -5,6 +5,7 @@
 In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
 
 * how to install the latest FAKE version
+* how to edit and run scripts
 * how to automatically compile your C# or F# projects
 * how to automatically resolve nuget dependencies
 * how to automatically run NUnit tests on your projects
