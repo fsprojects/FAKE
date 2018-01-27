@@ -777,7 +777,9 @@ Target.Create "DotnetCoreCreateChocolateyPackage" (fun _ ->
             ReleaseNotes = release.Notes |> String.toLines
             InstallerType = Choco.ChocolateyInstallerType.SelfContained
             Version = release.NugetVersion
-            Files = [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None ]
+            Files =
+                [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None
+                  (System.IO.Path.GetFullPath @"License.txt"), Some "LICENSE.txt", None ]
             OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
     ()
 )
