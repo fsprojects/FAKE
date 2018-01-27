@@ -688,7 +688,9 @@ Target.Create "DotnetPackage_" (fun _ ->
 
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
-    Environment.setEnvironVar "IncludeSource" "true"
+    //Environment.setEnvironVar "IncludeSource" "true"
+    //Environment.setEnvironVar "IncludeSymbols" "false"
+    Environment.setEnvironVar "GenerateDocumentationFile" "true"
     Environment.setEnvironVar "PackageVersion" release.NugetVersion
     Environment.setEnvironVar "Version" release.NugetVersion
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
