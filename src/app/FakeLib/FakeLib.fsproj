@@ -296,6 +296,18 @@
     <Compile Include="..\Fake.DotNet.Xamarin\Xamarin.fs">
       <Link>Fake.DotNet.Xamarin/Xamarin.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Net.Http\Async.fs">
+      <Link>Fake.Net.Http/Async.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Net.Http\Result.fs">
+      <Link>Fake.Net.Http/Result.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Net.Http\List.fs">
+      <Link>Fake.Net.Http/List.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Net.Http\HttpLoader.fs">
+      <Link>Fake.Net.Http/HttpLoader.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
