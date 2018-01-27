@@ -680,6 +680,8 @@ let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
 Target.Create "DotnetPackage_" (fun _ ->
+    Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
+
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     Environment.setEnvironVar "Version" release.NugetVersion
@@ -690,6 +692,7 @@ Target.Create "DotnetPackage_" (fun _ ->
     Environment.setEnvironVar "PackageIconUrl" "https://raw.githubusercontent.com/fsharp/FAKE/fee4f05a2ee3c646979bf753f3b1f02d927bfde9/help/content/pics/logo.png"
     Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
+
 
     // dotnet pack
     Cli.DotnetPack (fun c ->
