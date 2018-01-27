@@ -702,11 +702,15 @@ let DotnetCompile setParams project =
     let result = Dotnet param.Common args
     if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
 
-/// get sdk version from global.json
-/// ## Parameters
-///
-/// - 'project' - global.json path
-//let GlobalJsonSdk project =
-//    let data = ReadFileAsString project
-//    let info = JsonValue.Parse(data)
-//    info?sdk?version.AsString()   
+/// Gets the DotNet SDK from the global.json
+let GetDotNetSDKVersionFromGlobalJson() : string = 
+    if not (File.Exists "global.json") then
+        failwithf "global.json not found"
+    try
+        let content = File.ReadAllText "global.json"
+        let json = Newtonsoft.Json.Linq.JObject.Parse content
+        let sdk = json.Item("sdk") :?> JObject
+        let version = sdk.Property("version").Value.ToString()
+        version
+    with
+    | exn -> failwithf "Could not parse global.json: %s" exn.Message
