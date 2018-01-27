@@ -680,6 +680,8 @@ let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
 Target.Create "DotnetPackage_" (fun _ ->
+    // This line actually ensures we get the correct version checked in
+    // instead of the one previously bundled with 'fake`
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
 
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
