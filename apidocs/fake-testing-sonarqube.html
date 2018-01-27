@@ -109,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../apidocs/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="../net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.Tools.Git">Git</a></li>
@@ -221,10 +227,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1813', 1813)" onmouseover="showTip(event, '1813', 1813)">
+          <code onmouseout="hideTip(event, '1822', 1822)" onmouseover="showTip(event, '1822', 1822)">
             Begin setParams
           </code>
-          <div class="tip" id="1813">
+          <div class="tip" id="1822">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) -&gt; unit<br />
                       </div>
         </td>
@@ -246,10 +252,10 @@ Version = "1.0 })</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1814', 1814)" onmouseover="showTip(event, '1814', 1814)">
+          <code onmouseout="hideTip(event, '1823', 1823)" onmouseover="showTip(event, '1823', 1823)">
             End setParams
           </code>
-          <div class="tip" id="1814">
+          <div class="tip" id="1823">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) option -&gt; unit<br />
                       </div>
         </td>
@@ -260,9 +266,9 @@ Version = "1.0 })</p>
             </a>
           <p>open Fake.Testing</p>
 <p>SonarQube.End None</p>
-<p>SonarQube.End (fun p -&gt;
+<p>SonarQube.End (Some (fun p -&gt;
 {p with
-Settings = ["sonar.login=login", "sonar.password=password"] })</p>
+Settings = ["sonar.login=login"; "sonar.password=password"] }))</p>
 
 
         </td>
@@ -270,10 +276,10 @@ Settings = ["sonar.login=login", "sonar.password=password"] })</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1815', 1815)" onmouseover="showTip(event, '1815', 1815)">
+          <code onmouseout="hideTip(event, '1824', 1824)" onmouseover="showTip(event, '1824', 1824)">
             SonarQubeDefaults 
           </code>
-          <div class="tip" id="1815">
+          <div class="tip" id="1824">
             <strong>Signature:</strong> SonarQubeParams<br />
                       </div>
         </td>

@@ -109,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../apidocs/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="../net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.Tools.Git">Git</a></li>
@@ -249,15 +255,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1914', 1914)" onmouseover="showTip(event, '1914', 1914)">
+          <code onmouseout="hideTip(event, '1923', 1923)" onmouseover="showTip(event, '1923', 1923)">
             ChocoInstallDefaults 
           </code>
-          <div class="tip" id="1914">
+          <div class="tip" id="1923">
             <strong>Signature:</strong> ChocoInstallParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L251-251" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L256-256" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -269,15 +275,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1915', 1915)" onmouseover="showTip(event, '1915', 1915)">
+          <code onmouseout="hideTip(event, '1924', 1924)" onmouseover="showTip(event, '1924', 1924)">
             ChocoPackDefaults 
           </code>
-          <div class="tip" id="1915">
+          <div class="tip" id="1924">
             <strong>Signature:</strong> ChocoPackParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L269-269" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L274-274" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -289,15 +295,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1916', 1916)" onmouseover="showTip(event, '1916', 1916)">
+          <code onmouseout="hideTip(event, '1925', 1925)" onmouseover="showTip(event, '1925', 1925)">
             ChocoPushDefaults 
           </code>
-          <div class="tip" id="1916">
+          <div class="tip" id="1925">
             <strong>Signature:</strong> ChocoPushParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L314-314" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L319-319" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -309,15 +315,69 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1917', 1917)" onmouseover="showTip(event, '1917', 1917)">
+          <code onmouseout="hideTip(event, '1926', 1926)" onmouseover="showTip(event, '1926', 1926)">
+            Exec args timeout
+          </code>
+          <div class="tip" id="1926">
+            <strong>Signature:</strong> args:string -&gt; timeout:TimeSpan -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L855-855" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Call custom choco command</p>
+<h2>Parameters</h2>
+<ul>
+<li><p><code>args</code> - string that will be appendedn to choco.exe call</p></li>
+<li>
+<p><code>timeout</code> - parrent process maximum completion time</p>
+<h2>Sample usage</h2>
+<p>Target "ChocoPush" (fun _ -&gt;</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">newSpecFile</span> <span class="o">=</span> <span class="o">..</span><span class="pn">.</span>
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">args</span> <span class="o">=</span> 
+         <span class="k">new</span> <span class="id">StringBuilder</span><span class="pn">(</span><span class="pn">)</span>
+         <span class="o">|&gt;</span> <span class="id">append</span> <span class="s">&quot;pack&quot;</span>
+         <span class="o">|&gt;</span> <span class="id">append</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">newSpecFile</span>
+         <span class="o">|&gt;</span> <span class="id">append</span> <span class="s">&quot;-y&quot;</span>
+         <span class="o">|&gt;</span> <span class="id">toText</span>
+
+ <span class="id">args</span> <span class="o">|&gt;</span> <span class="id">Choco</span><span class="pn">.</span><span class="id">CallChoco</span> <span class="id">TimeSpan</span><span class="pn">.</span><span class="id">FromMinutes</span> <span class="n">1.</span>
+</code></pre></td>
+</tr>
+</table>
+<p>)</p>
+</li>
+</ul>
+<div class="tip" id="fs1">val newSpecFile : &#39;a</div>
+<div class="tip" id="fs2">val args : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1927', 1927)" onmouseover="showTip(event, '1927', 1927)">
             Install setParams packages
           </code>
-          <div class="tip" id="1917">
+          <div class="tip" id="1927">
             <strong>Signature:</strong> setParams:(ChocoInstallParams -&gt; ChocoInstallParams) -&gt; packages:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L713-713" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L719-719" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -340,15 +400,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1918', 1918)" onmouseover="showTip(event, '1918', 1918)">
+          <code onmouseout="hideTip(event, '1928', 1928)" onmouseover="showTip(event, '1928', 1928)">
             IsAvailable 
           </code>
-          <div class="tip" id="1918">
+          <div class="tip" id="1928">
             <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L702-702" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L708-708" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,15 +427,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1919', 1919)" onmouseover="showTip(event, '1919', 1919)">
+          <code onmouseout="hideTip(event, '1929', 1929)" onmouseover="showTip(event, '1929', 1929)">
             Pack setParams
           </code>
-          <div class="tip" id="1919">
+          <div class="tip" id="1929">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L745-745" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L751-751" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -397,15 +457,15 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1920', 1920)" onmouseover="showTip(event, '1920', 1920)">
+          <code onmouseout="hideTip(event, '1930', 1930)" onmouseover="showTip(event, '1930', 1930)">
             PackFromTemplate setParams nuspecPath
           </code>
-          <div class="tip" id="1920">
+          <div class="tip" id="1930">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; nuspecPath:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L773-773" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L779-779" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -428,15 +488,15 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1921', 1921)" onmouseover="showTip(event, '1921', 1921)">
+          <code onmouseout="hideTip(event, '1931', 1931)" onmouseover="showTip(event, '1931', 1931)">
             Push setParams nupkgPath
           </code>
-          <div class="tip" id="1921">
+          <div class="tip" id="1931">
             <strong>Signature:</strong> setParams:(ChocoPushParams -&gt; ChocoPushParams) -&gt; nupkgPath:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L814-814" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L820-820" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>

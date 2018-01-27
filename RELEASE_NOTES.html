@@ -109,6 +109,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="apidocs/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.Tools.Git">Git</a></li>
@@ -181,6 +187,20 @@
 
 									<!-- Content -->
                       <article>
+<h4><a name="5-0-0-beta011-2017-12-17" class="anchor" href="#5-0-0-beta011-2017-12-17">5.0.0-beta011 - 2017-12-17</a></h4>
+<ul>
+<li>ENHANCEMENT: Fake now writes load-scripts to provide intellisense -</li>
+<li>BUGFIX: Fix version normalization - <a href="https://github.com/fsharp/FAKE/pull/1742">https://github.com/fsharp/FAKE/pull/1742</a></li>
+<li>DOCS: Fix documentation of SonarCube.End - <a href="https://github.com/fsharp/FAKE/pull/1743">https://github.com/fsharp/FAKE/pull/1743</a></li>
+<li>BUGFIX: Paket.Pack uses outdated syntax - <a href="https://github.com/fsharp/FAKE/pull/1737">https://github.com/fsharp/FAKE/pull/1737</a></li>
+<li>ENHANCEMENT: New Fake.Net.Http API to download files - <a href="https://github.com/fsharp/FAKE/pull/1746">https://github.com/fsharp/FAKE/pull/1746</a></li>
+<li>DOCS: Add simple Hello-World example - <a href="https://github.com/fsharp/FAKE/pull/1748">https://github.com/fsharp/FAKE/pull/1748</a></li>
+<li>FAKE4: fix custom proxy credentials in DotNetCLIHelper - <a href="https://github.com/fsharp/FAKE/pull/1741">https://github.com/fsharp/FAKE/pull/1741</a></li>
+<li>FAKE4: added executeFSIWithArgsAndReturnMessages  <a href="https://github.com/fsharp/FAKE/pull/1719">https://github.com/fsharp/FAKE/pull/1719</a></li>
+<li>DOCS: Fix path to migration guide - <a href="https://github.com/fsharp/FAKE/pull/1755">https://github.com/fsharp/FAKE/pull/1755</a></li>
+<li>NEW MODULE: Fake.Net.Http to download files - <a href="https://github.com/fsharp/FAKE/pull/1759">https://github.com/fsharp/FAKE/pull/1759</a></li>
+<li>ENHANCEMENT: Add Force parameter to Choco Push - <a href="https://github.com/fsharp/FAKE/pull/1735">https://github.com/fsharp/FAKE/pull/1735</a></li>
+</ul>
 <h4><a name="5-0-0-beta010-2017-10-29" class="anchor" href="#5-0-0-beta010-2017-10-29">5.0.0-beta010 - 2017-10-29</a></h4>
 <ul>
 <li>ENHANCEMENT: Refactor GitHub API - <a href="https://github.com/fsharp/FAKE/pull/1726">https://github.com/fsharp/FAKE/pull/1726</a></li>
@@ -330,7 +350,20 @@ Migration guide is available in the documentation.
 <li>Fix NuGet key leak if push fails (<a href="https://github.com/matthid/FAKE/pull/2)">https://github.com/matthid/FAKE/pull/2)</a></li>
 <li>Coreclr nunit3 params (<a href="https://github.com/matthid/FAKE/pull/3)">https://github.com/matthid/FAKE/pull/3)</a></li>
 </ul>
-<h4><a name="4-63-0-2017-07-27" class="anchor" href="#4-63-0-2017-07-27">4.63.0 - 2017-07-27</a></h4>
+<h4><a name="4-64-4-17-01-2018" class="anchor" href="#4-64-4-17-01-2018">4.64.4 - 17.01.2018</a></h4>
+<ul>
+<li>Support for Dynamics NAV 2018 - <a href="https://github.com/fsharp/FAKE/pull/1758">https://github.com/fsharp/FAKE/pull/1758</a></li>
+</ul>
+<h4><a name="4-64-3-19-12-2017" class="anchor" href="#4-64-3-19-12-2017">4.64.3 - 19.12.2017</a></h4>
+<ul>
+<li>New helper: GetDotNetSDKVersionFromGlobalJson</li>
+<li>Do not download DotNet SDK when it's already in temp</li>
+<li>Use "dotnet --info" to determine DotNet SDK version</li>
+<li>Update PaketHelper to use new-style arguments - <a href="https://github.com/fsharp/FAKE/pull/1628">https://github.com/fsharp/FAKE/pull/1628</a></li>
+<li>Do not use "file" parameter for paket push</li>
+<li>Download .NET SDK to temp path</li>
+</ul>
+<h4><a name="4-63-0-27-07-2017" class="anchor" href="#4-63-0-27-07-2017">4.63.0 - 27.07.2017</a></h4>
 <ul>
 <li>Disable MSBuild NodeReuse by default - <a href="https://github.com/fsharp/FAKE/pull/1600">https://github.com/fsharp/FAKE/pull/1600</a></li>
 </ul>
