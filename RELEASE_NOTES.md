@@ -1,4 +1,8 @@
-#### 5.0.0-beta011 - 2017-12-17
+#### 5.0.0-beta012 - 2018-01-27
+* FAKE5: New distribution as dotnet-cli-tool `dotnet-fake`
+* ENHANCEMENT: added GetDotNetSDKVersionFromGlobalJson - https://github.com/fsharp/FAKE/pull/1754
+
+#### 5.0.0-beta011 - 2018-01-27
 * ENHANCEMENT: Fake now writes load-scripts to provide intellisense - 
 * BUGFIX: Fix version normalization - https://github.com/fsharp/FAKE/pull/1742
 * DOCS: Fix documentation of SonarCube.End - https://github.com/fsharp/FAKE/pull/1743

@@ -19,7 +19,7 @@ There are various ways to install FAKE 5
 
 - Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
   Example `choco install fake -pre`
-- Use it as dotnet tool (soon)
+- Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`
 - Bootstrap via shell script (build.cmd/build.sh) (documented soon)
   > DISCLAIMER: These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.
 

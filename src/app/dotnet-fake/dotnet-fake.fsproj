@@ -1,22 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Version>1.0.0-alpha-10</Version>
+    <Version>1.0.0-alpha-12</Version>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
-    <DelaySign>true</DelaySign>
     <DebugType>Portable</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>fake</AssemblyName>
+    <AssemblyName>dotnet-fake</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RuntimeIdentifiers>win7-x86;win7-x64;osx.10.11-x64;ubuntu.14.04-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Cli.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="..\Fake.netcore\Cli.fs" />
+    <Compile Include="..\Fake.netcore\Program.fs" />
     <!-- Note: This resource should be moved to Paket.Core... -->
     <EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" />
   </ItemGroup>

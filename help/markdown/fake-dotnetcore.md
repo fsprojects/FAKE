@@ -113,4 +113,8 @@ fake run build.fsx
 
 ## Downloads
 
-Get the latest alpha packages from GitHub: https://github.com/fsharp/FAKE/releases
+Get the latest packages from GitHub: https://github.com/fsharp/FAKE/releases
+
+Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
+
+Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)

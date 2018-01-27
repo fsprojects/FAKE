@@ -180,7 +180,8 @@ let common = [
 
 // New FAKE libraries
 let dotnetAssemblyInfos =
-    [ "Fake.Api.Slack", "Slack Integration Support"
+    [ "dotnet-fake", "Fake dotnet-cli command line tool"
+      "Fake.Api.Slack", "Slack Integration Support"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
       "Fake.Core.BuildServer", "Buildserver Support"
       "Fake.Core.Context", "Core Context Infrastructure"
@@ -622,6 +623,7 @@ let appDir = srcDir</>"app"
 
 let netCoreProjs =
     !! "src/app/Fake.Core.*/*.fsproj"
+    ++ "src/app/dotnet-fake/*.fsproj"
     ++ "src/app/Fake.Api.*/*.fsproj"
     ++ "src/app/Fake.DotNet.*/*.fsproj"
     ++ "src/app/Fake.Windows.*/*.fsproj"
