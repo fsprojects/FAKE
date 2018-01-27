@@ -918,7 +918,7 @@ Target.Create "FastRelease" (fun _ ->
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
 
-#if BOOTSTRAP
+// #if BOOTSTRAP
     let files = 
         runtimes @ [ "portable"; "packages" ]
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
@@ -928,20 +928,20 @@ Target.Create "FastRelease" (fun _ ->
     |> GitHub.UploadFiles files    
     |> GitHub.PublishDraft
     |> Async.RunSynchronously
-#else
-    let draft =
-        GitHub.createClientWithToken token
-        |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    let draftWithFiles =
-        runtimes @ [ "portable"; "packages" ]
-        |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-        |> List.fold (fun state item ->
-            state
-            |> GitHub.uploadFile item) draft
-    draftWithFiles
-    |> GitHub.releaseDraft
-    |> Async.RunSynchronously
-#endif
+// #else
+//     let draft =
+//         GitHub.createClientWithToken token
+//         |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+//     let draftWithFiles =
+//         runtimes @ [ "portable"; "packages" ]
+//         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+//         |> List.fold (fun state item ->
+//             state
+//             |> GitHub.uploadFile item) draft
+//     draftWithFiles
+//     |> GitHub.releaseDraft
+//     |> Async.RunSynchronously
+// #endif
 )
 
 open System
