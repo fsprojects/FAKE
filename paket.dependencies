@@ -1,4 +1,4 @@
-version 5.119.7
+version 5.132.4
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -118,6 +118,9 @@ group netcore
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
 
+    nuget System.Xml.XPath
+    nuget System.Xml.XPath.XDocument
+    nuget System.Xml.XPath.XmlDocument
     nuget System.Linq.Parallel
     nuget System.Diagnostics.FileVersionInfo
     nuget System.Diagnostics.Process
