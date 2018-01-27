@@ -199,7 +199,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.MsBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
-      "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentatiom"
+      "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
