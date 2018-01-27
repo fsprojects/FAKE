@@ -249,6 +249,16 @@ let Release_2_0_3 options =
         Version = Version "2.0.3"
     }
 
+let Release_2_0_3 options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "release/2.1"
+            })
+        Channel = None
+        Version = Version "2.1.4"
+    }
+
 /// [omit]
 let private optionToParam option paramFormat =
     match option with
