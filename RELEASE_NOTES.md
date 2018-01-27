@@ -2,6 +2,7 @@
 * FAKE5: New distribution as dotnet-cli-tool `dotnet-fake` - https://github.com/fsharp/FAKE/pull/1766
 * ENHANCEMENT: added GetDotNetSDKVersionFromGlobalJson - https://github.com/fsharp/FAKE/pull/1754
 * BUGFIX: Include pdb and xml files again - https://github.com/fsharp/FAKE/pull/1766
+* BUGFIX: Change default dotnet-cli-installer branch to `master` - https://github.com/fsharp/FAKE/issues/1739
 
 #### 5.0.0-beta011 - 2018-01-27
 * ENHANCEMENT: Fake now writes load-scripts to provide intellisense - https://github.com/fsharp/FAKE/pull/1763
