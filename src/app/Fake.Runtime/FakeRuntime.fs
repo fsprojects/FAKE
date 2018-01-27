@@ -126,7 +126,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       Paket.NuGet.DownloadAndExtractPackage
         (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
          source, [], Paket.Constants.MainDependencyGroup,
-         packageName, version, false, false, false, false, false)
+         packageName, version, PackageResolver.ResolvedPackageKind.Package, false, false, false, false)
       |> Async.RunSynchronously
     //let netstandard = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyName(System.Reflection.AssemblyName("netstandard"))
     let sdkDir = Path.Combine(extractedFolder, "build", "netstandard2.0", "ref")
