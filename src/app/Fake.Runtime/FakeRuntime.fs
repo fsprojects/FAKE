@@ -186,7 +186,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
 
     let lockFile = paketDependencies.GetLockFile()
     //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
-    let (cache:DependencyCache) = DependencyCache(paketDependencies.DependenciesFile, lockFile)
+    let (cache:DependencyCache) = DependencyCache(lockFile)
     if printDetails then Trace.log "Setup DependencyCache..."
     try
       cache.SetupGroup groupName |> ignore
