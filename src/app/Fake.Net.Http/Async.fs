@@ -1,7 +1,7 @@
 namespace Fake.Net.Async
 
 /// [omit]
-module Async =
+module internal Async =
     /// [omit]
     let result = async.Return
 

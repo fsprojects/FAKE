@@ -7,7 +7,7 @@ open Fake.Net.Result
 // List extensions for traversing Result and Async types
 // Functions from fsharpforfunandprofit.com, please see details here:
 // https://fsharpforfunandprofit.com/posts/elevated-world-5/
-module List =
+module internal List =
 
     /// [omit]
     /// Map a Async producing function over a list to get a new Async 

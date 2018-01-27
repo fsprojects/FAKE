@@ -40,6 +40,9 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 * Windows users can install Visual Studio 2017 (the [Community Edition](https://www.visualstudio.com/de/vs/community/)
 is freely available for open-source projects).
 
+  > Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
+  > Otherwise the test-suite will fail (However, the build should work)
+
 * Linux and Mac users can read "[Guide - Cross-Platform Development with F#](http://fsharp.org/guides/mac-linux-cross-platform/)"
 to find out the required tools.
 

@@ -15,6 +15,8 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 
 * Mono: Run *build.sh*  [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
 * Windows: Run *build.cmd* [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake)
+  Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
+Otherwise the test-suite will fail (However, the build should work)
 
 [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/pr)](http://www.issuestats.com/github/fsharp/FAKE) [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/issue)](http://www.issuestats.com/github/fsharp/FAKE)
 

@@ -1,7 +1,7 @@
 namespace Fake.Net.Result
 
 /// [omit]
-module Result =
+module internal Result =
 
     /// [omit]
     type ResultBuilder() =
