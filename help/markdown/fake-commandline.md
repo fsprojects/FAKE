@@ -24,6 +24,7 @@ For now fake only supports the `run` subcommand which is basically equivalent to
 
 ## `--verbose [-v]`
 
+
 Print details of FAKE's activity. Note that `-v` was used for `--version` in previous versions of Fake.
 Currently Fake supports 3 verbosity levels:
 
@@ -113,19 +114,8 @@ For this short sample we assume you have the latest version of FAKE installed an
  
 	Target.RunOrDefault "Deploy"
 
-If you are on windows then create this small redirect script:
+Now you can just execute
 
-	[lang=batchfile]
-	@echo off
-	"tools\Fake.exe" "%1"
-	exit /b %errorlevel%
-
-On mono you can use:
-
-	[lang=batchfile]
-	#!/bin/bash
-    mono ./tools/FAKE.exe "$@"
-
-Now you can run FAKE targets easily from the command line:
-
-![alt text](pics/commandline/cmd.png "Running FAKE from cmd")
+ - `fake run build.fsx` to run the default target (`Deploy`)
+ - `fake run build.fsx -s -t Build` to run the `Build` target without dependencies
+ - `fake run build.fsx -t Build` to run the `Build` target with the `Clean` dependency
