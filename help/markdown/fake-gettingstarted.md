@@ -52,7 +52,8 @@ Where you can add all the [fake modules](fake-fake5-modules.html) you need.
 
 > Note: If you change your dependencies you need to delete `.fake/myscript.fsx/paket.lock` (or the `.fake` folder) and run the script again for intellisense to update.
 
-> Note: Intellisense is shows for the full framework while the script is run as `netcoreapp20` therefore intellisense might show APIs which are not actually usable.
+
+> Note: Intellisense is shown for the full framework while the script is run as `netcoreapp20` therefore intellisense might show APIs which are not actually usable.
 
 ## TBD.
 
