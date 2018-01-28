@@ -209,8 +209,9 @@ Example <code>choco install fake -pre</code>
 </li>
 <li>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code></li>
 <li>
-Bootstrap via shell script (build.cmd/build.sh) (documented soon)
-&gt; DISCLAIMER: These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.
+Bootstrap via shell script (fake.cmd/fake.sh), see <a href="https://github.com/matthid/fake-bootstrap
+&gt;">https://github.com/matthid/fake-bootstrap
+></a> DISCLAIMER: These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.
 </li>
 </ul>
 <h2><a name="Create-and-Edit-scripts-with-Intellisense" class="anchor" href="#Create-and-Edit-scripts-with-Intellisense">Create and Edit scripts with Intellisense</a></h2>
@@ -252,7 +253,7 @@ This might take some seconds depending on your internet connection</p>
 </ul>
 <blockquote>
 <p>Note: If you change your dependencies you need to delete <code>.fake/myscript.fsx/paket.lock</code> (or the <code>.fake</code> folder) and run the script again for intellisense to update.
-Note: Intellisense is shows for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.</p>
+Note: Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.</p>
 </blockquote>
 <h2><a name="TBD" class="anchor" href="#TBD">TBD.</a></h2>
 <p>The best way is currently to use the <a href="fake-dotnetcore.html">quick start guide</a></p>
