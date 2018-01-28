@@ -207,7 +207,7 @@ This "new" version has several advantages:</p>
 <li>
 <p>Update to legacy FAKE 5. This should not be breaking. If it breaks you please open an issue.</p>
 <ul>
-<li><p>With Paket: add <code>prerelease</code> after <code>nuget FAKE</code> in paket.dependencies file then <code>.paket/paket.exe update FAKE</code>, check that paket.lock references FAKE version 5</p></li>
+<li><p>With Paket: add <code>prerelease</code> after <code>nuget FAKE</code> in paket.dependencies file then <code>.paket/paket.exe update</code>, check that paket.lock references FAKE version 5</p></li>
 </ul>
 </li>
 <li>
@@ -223,10 +223,10 @@ please open an issue.</p>
 <ul>
 <li>
 <p>This is for example done by installing FAKE as dependency on your build infrastructure.
-There are a variety of installing options available. (TODO: Link to 'installing FAKE' section)</p>
+There are a variety of <a href="fake-gettingstarted.html#Install-FAKE">installing options</a> available.</p>
 </li>
 <li>
-<p>Add a FAKE header (TODO: add Link), and tell FAKE which features/packages you want to use in the dependencies file or in-line.
+<p>Tell FAKE which <a href="fake-fake5-modules.html">modules</a> you need.
 See the <a href="#Adding-FAKE-dependencies">Adding FAKE dependencies</a> section below.</p>
 </li>
 <li>

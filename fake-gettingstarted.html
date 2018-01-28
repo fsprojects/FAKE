@@ -193,6 +193,7 @@
 <p>In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:</p>
 <ul>
 <li>how to install the latest FAKE version</li>
+<li>how to edit and run scripts</li>
 <li>how to automatically compile your C# or F# projects</li>
 <li>how to automatically resolve nuget dependencies</li>
 <li>how to automatically run NUnit tests on your projects</li>
@@ -206,12 +207,53 @@
 Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
 Example <code>choco install fake -pre</code>
 </li>
-<li>Use it as dotnet tool (soon)</li>
+<li>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code></li>
 <li>
 Bootstrap via shell script (build.cmd/build.sh) (documented soon)
 &gt; DISCLAIMER: These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.
 </li>
 </ul>
+<h2><a name="Create-and-Edit-scripts-with-Intellisense" class="anchor" href="#Create-and-Edit-scripts-with-Intellisense">Create and Edit scripts with Intellisense</a></h2>
+<p>Once <code>fake</code> is available you can start creating your script:</p>
+<ul>
+<li>Create a new file <code>myscript.fsx</code> with the following contents:</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
+<span class="c">storage: none</span>
+<span class="c">source https://api.nuget.org/v3/index.json</span>
+
+<span class="c">nuget Fake.Core.Target prerelease</span>
+<span class="c">-- Fake Dependencies -- *)</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<blockquote>
+<p>Note: <code>storage: none</code> is currently required because of a bug.</p>
+</blockquote>
+<p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need.</p>
+<ul>
+<li>
+<p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
+This might take some seconds depending on your internet connection</p>
+<blockquote>
+<p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
+</blockquote>
+</li>
+<li>now open the script in VS Code with ionide-fsharp extension or Visual Studio.</li>
+</ul>
+<blockquote>
+<p>Note: If you change your dependencies you need to delete <code>.fake/myscript.fsx/paket.lock</code> (or the <code>.fake</code> folder) and run the script again for intellisense to update.
+Note: Intellisense is shows for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.</p>
+</blockquote>
 <h2><a name="TBD" class="anchor" href="#TBD">TBD.</a></h2>
 <p>The best way is currently to use the <a href="fake-dotnetcore.html">quick start guide</a></p>
 
