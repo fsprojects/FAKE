@@ -323,24 +323,12 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 </code></pre></td>
 </tr>
 </table>
-<p>If you are on windows then create this small redirect script:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
-"tools\Fake.exe" "%1"
-exit /b %errorlevel%
-</code></pre></td></tr></table>
-<p>On mono you can use:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batchfile">#!/bin/bash
-mono ./tools/FAKE.exe "$@"
-</code></pre></td></tr></table>
-<p>Now you can run FAKE targets easily from the command line:</p>
-<p><img src="pics/commandline/cmd.png" alt="alt text" title="Running FAKE from cmd" /></p>
+<p>Now you can just execute</p>
+<ul>
+<li><code>fake run build.fsx</code> to run the default target (<code>Deploy</code>)</li>
+<li><code>fake run build.fsx -s -t Build</code> to run the <code>Build</code> target without dependencies</li>
+<li><code>fake run build.fsx -t Build</code> to run the <code>Build</code> target with the <code>Clean</code> dependency</li>
+</ul>
 
 <div class="tip" id="fs1">type &#39;T list = List&lt;&#39;T&gt;</div>
 <div class="tip" id="fs2">Multiple items<br />val string : value:&#39;T -&gt; string<br /><br />--------------------<br />type string = System.String</div>
