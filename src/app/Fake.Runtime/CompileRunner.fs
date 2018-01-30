@@ -118,7 +118,10 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 
-    let errorsString = formatErrors errors
+    let errorsString =
+        errors
+        |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
+        |> formatErrors
 
     let cacheInfo = handleCoreCaching context wishPath errorsString
     match cacheInfo.AsCacheInfo with
