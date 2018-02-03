@@ -285,11 +285,12 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
     if printDetails then Trace.log "Restoring with paket..."
 
     // Update
-    let localLock = script + ".lock"
+    let localLock = script + ".lock" // the primary lockfile-path </> lockFilePath.FullName is implementation detail
+    let needLocalLock = lockFilePath.FullName.Contains (Path.GetFullPath cacheDir) // Only primary if not external already.
     let localLockText = lazy File.ReadAllText localLock
-    if File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
+    if needLocalLock && File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
       File.Copy(localLock, lockFilePath.FullName)
-    if not (File.Exists localLock) then
+    if needLocalLock && not (File.Exists localLock) then
       File.Delete lockFilePath.FullName
 
     if not <| File.Exists lockFilePath.FullName then
@@ -302,8 +303,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
         // and https://github.com/fsprojects/Paket/issues/2785
         // We do a restore anyway.
         ()
-
-      File.Copy(lockFilePath.FullName, localLock)
+      if needLocalLock then File.Copy(lockFilePath.FullName, localLock)
     
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
