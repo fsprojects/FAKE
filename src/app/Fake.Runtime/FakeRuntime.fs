@@ -160,7 +160,11 @@ let tryReadPaketDependenciesFromScript cacheDir (scriptPath:string) (scriptText:
     |> String.concat "\n"
   let paketGroupReferences =
     groupReferences
-    |> List.map (fun groupRefString -> groupRefString.Substring(grRefStr.Length).Trim())
+    |> List.map (fun groupRefString ->
+      let raw = groupRefString.Substring(grRefStr.Length).Trim()
+      let commentStart = raw.IndexOf "//"
+      if commentStart >= 0 then raw.Substring(0, commentStart).Trim()
+      else raw)
 
   if paketCode <> "" && paketGroupReferences.Length > 0 then
     failwith "paket code in combination with a groupref is currently not supported!"
