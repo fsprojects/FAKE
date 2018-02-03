@@ -6,28 +6,33 @@ In this article the AssemblyInfo task is used in order to set specific version i
 
 If you succeeded with the [Getting Started tutorial](gettingstarted.html), then you just have to modify your *BuildApp* target to the following:
 
-    open Fake.DotNet
+```fsharp
+#r "paket:
+nuget Fake.DotNet.AssemblyInfo
+nuget Fake.Core.Target //"
+open Fake.DotNet
 
-	Target.Create "BuildApp" (fun _ ->
-		AssemblyInfoFile.CreateCSharp "./src/app/Calculator/Properties/AssemblyInfo.cs"
-			[AssemblyInfo.Title "Calculator Command line tool"
-			 AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
-			 AssemblyInfo.Guid "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA"
-			 AssemblyInfo.Product "Calculator"
-			 AssemblyInfo.Version version
-			 AssemblyInfo.FileVersion version]
+Target.Create "BuildApp" (fun _ ->
+	AssemblyInfoFile.CreateCSharp "./src/app/Calculator/Properties/AssemblyInfo.cs"
+		[AssemblyInfo.Title "Calculator Command line tool"
+			AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
+			AssemblyInfo.Guid "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA"
+			AssemblyInfo.Product "Calculator"
+			AssemblyInfo.Version version
+			AssemblyInfo.FileVersion version]
 
-		AssemblyInfoFile.CreateFSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.fs"
-			[AssemblyInfo.Title "Calculator library"
-			 AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
-			 AssemblyInfo.Guid "EE5621DB-B86B-44eb-987F-9C94BCC98441"
-			 AssemblyInfo.Product "Calculator"
-			 AssemblyInfo.Version version
-			 AssemblyInfo.FileVersion version]
+	AssemblyInfoFile.CreateFSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.fs"
+		[AssemblyInfo.Title "Calculator library"
+			AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
+			AssemblyInfo.Guid "EE5621DB-B86B-44eb-987F-9C94BCC98441"
+			AssemblyInfo.Product "Calculator"
+			AssemblyInfo.Version version
+			AssemblyInfo.FileVersion version]
 
-		MSBuild.MSBuildRelease buildDir "Build" appReferences
-		  |> Log "AppBuild-Output: "
-	)
+	MSBuild.MSBuildRelease buildDir "Build" appReferences
+		|> Log "AppBuild-Output: "
+)
+```
 
 As you can see generating an AssemblyInfo.cs file is pretty easy with FAKE. You can read more about the C# and F# AssemblyInfo tasks in the [API docs](apidocs/fake-assemblyinfofile.html).
 

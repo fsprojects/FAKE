@@ -18,7 +18,7 @@ fake --help
 
 This is basically it. You can now execute fake commands.
 
-For unix we don't have packages jet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
+For unix we don't have packages yet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
 
 ## CLI
 
@@ -57,7 +57,7 @@ This version assumes an existing dotnet sdk installation while the non-portable 
 Just use the `-portable` version of the downloads, extract it and execute.
 
 ```
-dotnet Fake.dll <regular-arguments>
+dotnet fake.dll <regular-arguments>
 ```
 
 The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
@@ -71,13 +71,10 @@ The disadvantage is that you need to have a dotnet sdk installed.
 
 ### Minimal example
 
-Create a file named build.fsx with the following contents:
-```
-(* -- Fake Dependencies paket-inline
-source https://api.nuget.org/v3/index.json
-
-nuget Fake.Core.Target
--- Fake Dependencies -- *)
+Create a file named `build.fsx` with the following contents:
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
 // include Fake modules, see Fake modules section
 
 open Fake.Core

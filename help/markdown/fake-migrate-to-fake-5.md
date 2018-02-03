@@ -78,20 +78,28 @@ The drawback however is that you now need to know where stuff lives and add thos
  Already a paket user?
 
 For now its quite simple: The namespace or module name is used as the package name, just search for the package and then
-add it to the dependencies file to a new group (for example netcorebuild).
+add it to the dependencies file to a new group (for example `netcorebuild`).
 
  Not a paket user?
 
-We currently don't have any simple advice but to read the dependencies file docs and go to the 'Already a paket user?' section.
+No problem! For most use-cases it is enough to find the NuGet package of the module (most times they have the same name for easier discovery) and add it to your script: 
 
-Once you added all your dependencies to a particular new group (for example netcorebuild). You can add the following header to your build script
+```fsharp
+#r "paket:
+nuget Fake.Targets prerelease
+nuget MyPackage1
+nuget MyPackage2"
+```
 
-    (* -- Fake Dependencies paket.dependencies
-    file ./paket.dependencies
-    group netcorebuild
-    -- Fake Dependencies -- *)
+to your build script. Now delete `<script>.fsx.lock` and run `fake run <script>.fsx` now you can use intellisense to start using the modules.
 
-Now you can install and run the netcore version of FAKE and it will restore and use the dependencies (you might need to do a `./paket update` before FAKE can properly restore the packages).
+> If you want to read more about the possible syntax you can use here, please consult https://fsprojects.github.io/Paket/dependencies-file.html and https://fsprojects.github.io/Paket/nuget-dependencies.html.
+
+Once you feel more confident with using to paket infrastructure you can move your dependencies into a `paket.dependencies` group and use
+
+```fsharp
+#r "paket: groupref netcorebuild //"
+```
 
 ### CLI Migration
 
@@ -99,7 +107,7 @@ Yes we even broke the CLI. The old CLI was actually a mixture of two different C
 It was obvious that we would not even try to make things compatible with it in any way.
 However your changes should only be minimal in the most cases. I'd say in 80% its just about adding the `run` verb between the `fake.exe` and the build script.
 `fake build.fsx` will be `fake run build.fsx`. Running a particular target is as easy `fake target` will be `fake run build.fsx --target target`.
-For a full reference use `--help` or the documentation.
+For a full reference use `--help` or the [documentation](fake-commandline.html).
 
 If you used special cases which aren't mentioned here please edit this page or open an issue.
 

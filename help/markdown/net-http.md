@@ -9,13 +9,15 @@ The `Fake.Net.Http` module provides a functionality to download files over HTTP.
 In order to open the `Fake.Net.Http` module from a build script you have to add a `Fake.Net.Http` dependency into your
 `paket.dependencies` file:
 
-    group NetcoreBuild
-        source https://api.nuget.org/v3/index.json
+```
+group NetcoreBuild
+    source https://api.nuget.org/v3/index.json
 
-        nuget Fake.Net.Http prerelease
+    nuget Fake.Net.Http prerelease
 
-        .... other dependencies, like
-        nuget Fake.Core.Target prerelease
+    .... other dependencies, like
+    nuget Fake.Core.Target prerelease
+```
 
 Please see more details on referencing FAKE 5 modules [here](fake-fake5-modules.html).
 
@@ -23,14 +25,19 @@ Please see more details on referencing FAKE 5 modules [here](fake-fake5-modules.
 
 To download a single file over HTTP use `downloadFile` from the Http module:
 
-    open Fake.Net
-    open Fake.Core
+```fsharp
+#r "paket:
+nuget Fake.Core.Target
+nuget Fake.Net.Http //"
+open Fake.Net
+open Fake.Core
 
-    Target.Create "DownloadFile" (fun _ ->
-        let absoluteFilePath = Http.downloadFile "/tmp/5.zip" @"http://ipv4.download.thinkbroadband.com/5MB.zip"
-        printfn "File path: %s" absoluteFilePath
-    )
-    
+Target.Create "DownloadFile" (fun _ ->
+    let absoluteFilePath = Http.downloadFile "/tmp/5.zip" @"http://ipv4.download.thinkbroadband.com/5MB.zip"
+    printfn "File path: %s" absoluteFilePath
+)
+```
+
 A console output should be:
 
     Downloading [http://ipv4.download.thinkbroadband.com/5MB.zip] ...
@@ -41,16 +48,21 @@ A console output should be:
 
 To download multiple files in parallel use `downloadFiles` from the Http module:
 
-    open Fake.Net
-    open Fake.Core
+```fsharp
+#r "paket:
+nuget Fake.Core.Target
+nuget Fake.Net.Http //"
+open Fake.Net
+open Fake.Core
 
-    Target.Create "DownloadFiles" (fun _ ->
-        let files: Http.DownloadParameters list = [
-                    {Path = "/tmp/5.zip"; Uri = "http://ipv4.download.thinkbroadband.com/5MB.zip"};
-                    {Path = "/tmp/10.zip"; Uri = "http://ipv4.download.thinkbroadband.com/10MB.zip"}]
-        let filePaths = Http.downloadFiles files
-        printfn "File paths: %A" filePaths
-    )
+Target.Create "DownloadFiles" (fun _ ->
+    let files: Http.DownloadParameters list = [
+                {Path = "/tmp/5.zip"; Uri = "http://ipv4.download.thinkbroadband.com/5MB.zip"};
+                {Path = "/tmp/10.zip"; Uri = "http://ipv4.download.thinkbroadband.com/10MB.zip"}]
+    let filePaths = Http.downloadFiles files
+    printfn "File paths: %A" filePaths
+)
+```
     
 A console output should be:
 

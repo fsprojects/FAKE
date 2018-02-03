@@ -5,13 +5,26 @@ open System.IO
 open Fake.Runtime
 open Paket
 
-//#if DOTNETCORE
+type FakeSection =
+ | PaketDependencies of Paket.Dependencies * group : String option
 
-type RawFakeSection =
+let readAllLines (r : TextReader) =
+  seq {
+    let mutable line = r.ReadLine()
+    while not (isNull line) do
+      yield line
+      line <- r.ReadLine()
+  }
+let private dependenciesFileName = "paket.dependencies"
+
+
+
+#if !REMOVE_LEGACY_HEADER
+type LegacyRawFakeSection =
   { Header : string
     Section : string }
 
-let readFakeSection (scriptText:string) =
+let legacyReadFakeSection (scriptText:string) =
   let startString = "(* -- Fake Dependencies "
   let endString = "-- Fake Dependencies -- *)"
   let start = scriptText.IndexOf(startString) + startString.Length
@@ -25,18 +38,7 @@ let readFakeSection (scriptText:string) =
     let fakeSection = fakeSectionWithVersion.Substring(newLine).Trim()
     Some { Header = header; Section = fakeSection}
 
-type FakeSection =
- | PaketDependencies of Paket.Dependencies * group : String option
-
-let readAllLines (r : TextReader) =
-  seq {
-    let mutable line = r.ReadLine()
-    while not (isNull line) do
-      yield line
-      line <- r.ReadLine()
-  }
-let private dependenciesFileName = "paket.dependencies"
-let parseHeader scriptCacheDir (f : RawFakeSection) =
+let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
   match f.Header with
   | "paket-inline" ->
     let dependenciesFile = Path.Combine(scriptCacheDir, dependenciesFileName)
@@ -81,11 +83,125 @@ let parseHeader scriptCacheDir (f : RawFakeSection) =
       | _ -> dependenciesFileName
     PaketDependencies (Paket.Dependencies(Path.GetFullPath file), group)
   | _ -> failwithf "unknown dependencies header '%s'" f.Header
+
+#endif
+
+module FSharpParser =
+  open Microsoft.FSharp.Compiler.SourceCodeServices
+
+  type InterestingItem =
+    | Reference of string
+   
+  type AnalyseState =
+    | NoAnalysis
+    | Reference of string option
+
+  let rec tokenizeLine results (line:string) (tokenizer:FSharpLineTokenizer) state =
+      match tokenizer.ScanToken(state) with
+      | Some tok, state ->
+          // Print token name
+          let result = Some tok, (line.Substring(tok.LeftColumn, tok.RightColumn - tok.LeftColumn + 1))
+          // Tokenize the rest, in the new state
+          tokenizeLine (result::results) line tokenizer state
+      | None, state -> results |> List.rev, state
+  let rec tokenizeLines (sourceTok : FSharpSourceTokenizer) state lines = seq {
+      match lines with
+      | line::lines ->
+          // Create tokenizer & tokenize single line
+          let tokenizer = sourceTok.CreateLineTokenizer(line)
+          let lineResults, state = tokenizeLine [] line tokenizer state
+          yield! lineResults
+          yield None, "\n" 
+          // Tokenize the rest using new state
+          yield! tokenizeLines sourceTok state lines
+      | [] -> () }
+
+  let rec analyseNextToken (_, state) (tok :FSharpTokenInfo option, text) =
+    match state with
+    | NoAnalysis ->
+      if tok.IsSome && tok.Value.TokenName = "HASH" && text = "#r" then
+        None, Reference None
+      else None, NoAnalysis
+    | Reference None -> // Initial string start
+      if tok.IsSome && tok.Value.TokenName = "STRING_TEXT" then
+        None, Reference (Some "")
+      else None, Reference None
+    | Reference (Some s) -> // read string
+      if tok.IsNone || (tok.IsSome && tok.Value.TokenName = "STRING_TEXT") then
+        None, Reference (Some (s + text))
+      elif tok.IsSome && tok.Value.TokenName = "STRING" then
+        Some (InterestingItem.Reference s), NoAnalysis
+      else failwithf "No idea how %A can happen in a string" (tok, text) // None, Reference (Some s)
+
+  let findInterestingItems (scriptFile:string) (scriptText:string) =
+    let sourceTok = FSharpSourceTokenizer(["FAKE_DEPENDENCIES"], Some scriptFile)            
+    scriptText.Split('\r','\n')
+      |> List.ofSeq
+      |> tokenizeLines sourceTok 0L
+      |> Seq.scan analyseNextToken (None, NoAnalysis)
+      |> Seq.choose fst
+      |> Seq.toList
+
+let tryReadPaketDependenciesFromScript cacheDir (scriptPath:string) (scriptText:string) =
+  let pRefStr = "paket:"
+  let grRefStr = "groupref"
+  let groupReferences, paketLines =
+    FSharpParser.findInterestingItems scriptPath scriptText
+    |> Seq.choose (fun item -> 
+        match item with
+        | FSharpParser.InterestingItem.Reference ref when ref.StartsWith pRefStr ->
+          let sub = ref.Substring (pRefStr.Length)
+          Some (sub.TrimStart[|' '|])
+        | _ -> None)
+    |> Seq.toList
+    |> List.partition (fun ref -> ref.StartsWith(grRefStr, System.StringComparison.OrdinalIgnoreCase))
+  let paketCode =
+    paketLines 
+    |> String.concat "\n"
+  let paketGroupReferences =
+    groupReferences
+    |> List.map (fun groupRefString ->
+      let raw = groupRefString.Substring(grRefStr.Length).Trim()
+      let commentStart = raw.IndexOf "//"
+      if commentStart >= 0 then raw.Substring(0, commentStart).Trim()
+      else raw)
+
+  if paketCode <> "" && paketGroupReferences.Length > 0 then
+    failwith "paket code in combination with a groupref is currently not supported!"
+
+  if paketGroupReferences.Length > 1 then
+    failwith "multiple paket groupref are currently not supported!"
+
+  if paketCode <> "" then
+    let fixDefaults (paketCode:string) =
+      let lines = paketCode.Split([|'\r';'\n'|])
+      let storageRef = "storage"
+      let sourceRef = "source"
+      let containsStorage = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(storageRef))
+      let containsSource = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(sourceRef))
+      paketCode
+      |> fun p -> if containsStorage then p else "storage: none" + "\n" + p
+      |> fun p -> if containsSource then p else "source https://api.nuget.org/v3/index.json" + "\n" + p
+
+    { Header = "paket-inline"
+      Section = fixDefaults paketCode }
+    |> legacyParseHeader cacheDir
+    |> Some
+  else
+    let file = dependenciesFileName
+    match paketGroupReferences with
+    | [] ->
+      None
+    | group :: _ ->
+      PaketDependencies (Paket.Dependencies(Path.GetFullPath file), Some group)
+      |> Some
+
+
 type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
+let paketCachingProvider (script:string) printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -169,6 +285,14 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     if printDetails then Trace.log "Restoring with paket..."
 
     // Update
+    let localLock = script + ".lock" // the primary lockfile-path </> lockFilePath.FullName is implementation detail
+    let needLocalLock = lockFilePath.FullName.Contains (Path.GetFullPath cacheDir) // Only primary if not external already.
+    let localLockText = lazy File.ReadAllText localLock
+    if needLocalLock && File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
+      File.Copy(localLock, lockFilePath.FullName)
+    if needLocalLock && not (File.Exists localLock) then
+      File.Delete lockFilePath.FullName
+
     if not <| File.Exists lockFilePath.FullName then
       if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
       try
@@ -179,7 +303,8 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         // and https://github.com/fsprojects/Paket/issues/2785
         // We do a restore anyway.
         ()
-
+      if needLocalLock then File.Copy(lockFilePath.FullName, localLock)
+    
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
     |> ignore
@@ -323,10 +448,10 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
           if printDetails then Trace.log "saving cache..."
           File.WriteAllText (context.CachedAssemblyFilePath + ".warnings", cache.Warnings) }
 
-let restoreDependencies printDetails cacheDir section =
+let restoreDependencies script printDetails cacheDir section =
   match section with
   | PaketDependencies (paketDependencies, group) ->
-    paketCachingProvider printDetails cacheDir paketDependencies group
+    paketCachingProvider script printDetails cacheDir paketDependencies group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -362,19 +487,26 @@ let prepareFakeScript printDetails script =
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
     let scriptText = File.ReadAllText(script)
-    let section = readFakeSection scriptText
     let section =
-        match section with
-        | Some s -> parseHeader cacheDir s |> Some
+        let newSection = tryReadPaketDependenciesFromScript cacheDir script scriptText
+        match legacyReadFakeSection scriptText with
+        | Some s ->
+          Trace.traceFAKE "Legacy header is no longer supported and will be removed soon, please upgrade to '#r \"paket: nuget FakeModule\" in paket syntax (consult the docs)."
+          match newSection with
+          | Some s -> Some s // prefer new method (but print warning)
+          | None -> legacyParseHeader cacheDir s |> Some
         | None ->
-            tryFindGroupFromDepsFile scriptDir
+            match newSection with
+            | Some s -> Some s
+            | None ->
+              tryFindGroupFromDepsFile scriptDir
 
     match section, Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" with
     | _, true ->
         Trace.traceFAKE "NetCore hack (FAKE_UNDOCUMENTED_NETCORE_HACK) is activated: %s" script
         CoreCache.Cache.defaultProvider
     | Some section, _ ->
-        restoreDependencies printDetails cacheDir section
+        restoreDependencies script printDetails cacheDir section
     | _ ->
         failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 
@@ -398,4 +530,3 @@ let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErr
 let prepareAndRunScript printDetails fsiOptions scriptPath envVars useCache =
   prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars (printf "%s") (printf "%s") useCache
 
-//#endif

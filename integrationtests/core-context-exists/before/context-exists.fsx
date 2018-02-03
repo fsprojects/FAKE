@@ -1,11 +1,12 @@
-(* -- Fake Dependencies paket-inline
+#if FAKE_DEPENDENCIES
+#r "paket:
 storage: none
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 //source https://ci.appveyor.com/nuget/paket
 
-nuget Fake.Core.Context prerelease
--- Fake Dependencies -- *)
+nuget Fake.Core.Context prerelease"
+#endif
 #load ".fake/context-exists.fsx/intellisense.fsx"
 
 printfn "loading context"

@@ -1,7 +1,4 @@
-(* -- Fake Dependencies paket.dependencies
-file paket.dependencies
-group Main
--- Fake Dependencies -- *)
+#r "paket: groupref Main //"
 #load ".fake/use_external_dependencies.fsx/intellisense.fsx"
 
 open Fake.Runtime

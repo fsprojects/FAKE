@@ -193,7 +193,7 @@ let PokeInnerTextNS (fileName : string) namespaces xpath innerTextValue =
 
 #if !NETSTANDARD
 /// Loads the given text into a XslCompiledTransform.
-[<System.Obsolete("This API is not jet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
+[<System.Obsolete("This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
 let XslTransformer text =
     if isNullOrEmpty text then null
     else
@@ -205,7 +205,7 @@ let XslTransformer text =
 ///
 ///  - `xsl` - The XslCompiledTransform which should be applied.
 ///  - `doc` - The XmlDocument to transform.
-[<System.Obsolete("This API is not jet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
+[<System.Obsolete("This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
 let XslTransform (xsl : XslCompiledTransform) (doc : XmlDocument) =
     use memoryStream = new MemoryStream()
     use textWriter = XmlWriter.Create(memoryStream) // , new UTF8Encoding(false)
@@ -224,7 +224,7 @@ let XslTransform (xsl : XslCompiledTransform) (doc : XmlDocument) =
 ///
 ///  - `stylesheetUri` - The Uri for the XSL stylesheet file.
 ///  - `fileName` - The XML file to transform.
-[<System.Obsolete("This API is not jet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
+[<System.Obsolete("This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
 let XmlTransform (stylesheetUri : string) (fileName : string) =
     let doc = new XmlDocument()
     doc.Load fileName
