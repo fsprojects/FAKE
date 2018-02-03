@@ -169,8 +169,18 @@ let tryReadPaketDependenciesFromScript cacheDir (scriptPath:string) (scriptText:
     failwith "multiple paket groupref are currently not supported!"
 
   if paketCode <> "" then
+    let fixDefaults (paketCode:string) =
+      let lines = paketCode.Split([|'\r';'\n'|])
+      let storageRef = "storage"
+      let sourceRef = "source"
+      let containsStorage = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(storageRef))
+      let containsSource = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(sourceRef))
+      paketCode
+      |> fun p -> if containsStorage then p else "storage: none" + "\n" + p
+      |> fun p -> if containsSource then p else "source https://api.nuget.org/v3/index.json" + "\n" + p
+
     { Header = "paket-inline"
-      Section = paketCode }
+      Section = fixDefaults paketCode }
     |> legacyParseHeader cacheDir
     |> Some
   else
