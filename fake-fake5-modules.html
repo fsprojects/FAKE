@@ -242,9 +242,8 @@
 <h2><a name="Declaring-FAKE-5-dependencies-within-the-script" class="anchor" href="#Declaring-FAKE-5-dependencies-within-the-script">Declaring FAKE 5 dependencies within the script</a></h2>
 <p>To be more independent from paket infrastructure (stand-alone-scripts and similar situations) there is a way to specify dependencies from within the script itself.</p>
 <blockquote>
-<p>We use the new syntax specified in <a href="https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md
-However,">https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md
-However,</a> to be fully compatible with existing tooling and infrastructure make sure to add <code>//</code> at the end of the <code>#r</code> string.
+<p>We use the new syntax specified in <a href="https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md">FST-1027</a>.
+However, to be fully compatible with existing tooling and infrastructure make sure to add <code>//</code> at the end of the <code>#r</code> string.
 See <a href="https://github.com/fsharp/FAKE/pull/1770">https://github.com/fsharp/FAKE/pull/1770</a> for details.</p>
 </blockquote>
 <h3><a name="Reference-a-paket-group" class="anchor" href="#Reference-a-paket-group">Reference a paket group</a></h3>
@@ -257,7 +256,7 @@ See <a href="https://github.com/fsharp/FAKE/pull/1770">https://github.com/fsharp
 </code></pre></td>
 </tr>
 </table>
-<p>This header will reference a <code>paket.dependencies</code> file and the <code>netcorebuild</code> group within.</p>
+<p>This header will reference the <code>paket.dependencies</code> file and the <code>netcorebuild</code> group within.</p>
 <p>The last line <code>#load</code> is not required by FAKE 5, however
 this way the file can still be edited in editors (after restoring packages initially).
 Fake will write an <code>intellisense.fsx</code> file for you importing all required references.</p>

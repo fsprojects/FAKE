@@ -195,9 +195,7 @@
 <li>how to install the latest FAKE version</li>
 <li>how to edit and run scripts</li>
 <li>how to automatically compile your C# or F# projects</li>
-<li>how to automatically resolve nuget dependencies</li>
 <li>how to automatically run NUnit tests on your projects</li>
-<li>how to zip the output to a deployment folder</li>
 </ul>
 <h2><a name="Install-FAKE" class="anchor" href="#Install-FAKE">Install FAKE</a></h2>
 <p>"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.</p>
@@ -249,9 +247,467 @@ This might take some seconds depending on your internet connection</p>
 <p>Note: If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
 Note: Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.</p>
 </blockquote>
-<h2><a name="TBD" class="anchor" href="#TBD">TBD.</a></h2>
-<p>The best way is currently to use the <a href="fake-dotnetcore.html">quick start guide</a></p>
+<h2><a name="Example-Compiling-and-building-your-NET-application" class="anchor" href="#Example-Compiling-and-building-your-NET-application">Example - Compiling and building your .NET application</a></h2>
+<p>This example will guide you by adding a fake script to your existing .NET application.</p>
+<h3><a name="Getting-started" class="anchor" href="#Getting-started">Getting started</a></h3>
+<p>Initially we need to create a file called <code>build.fsx</code> where our build-logic will have its home.
+Create a new file with Visual Studio or Visual Studio Code (with ionide) and paste the following content:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>This is all we need for now to declare that we need the <code>Fake.Core.Target</code> module and want to enable intellisense.</p>
+<p>Now run <code>fake run build.fsx</code> to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some Editors).</p>
+<p>Now that we have setup our basic environment to edit the script file we add our first target:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+
+<span class="c">// Default target</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+<span class="pn">)</span>
+
+<span class="c">// start build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>As you can see the code is really simple. The few first lines (<code>nuget Fake.Core.Target</code> and <code>open Fake.Core</code>) load the fake modules we need and is vital for all build scripts to support creating and running targets. The <code>#load</code> line is optional but a good way to make the IDE aware of all the modules (for intellisense and IDE support)</p>
+<p>After this header the <em>Default</em> target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").</p>
+<p>The last line runs the "Default" target - which means it executes the defined action of the target.</p>
+<p>Try running your new target via <code>fake run build.fsx</code> or the shortcut for a file called <code>build.fsx</code>: <code>fake build</code></p>
+<h3><a name="Cleaning-the-last-build-output" class="anchor" href="#Cleaning-the-last-build-output">Cleaning the last build output</a></h3>
+<p>A typical first step in most build scenarios is to clean the output of the last build. We can achieve this in two steps:</p>
+<p>First change your header to the following by adding the <code>Fake.IO.FileSystem</code> module:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.IO.FileSystem</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Now we remove the <code>build.fsx.lock</code> file and run <code>fake build</code> in order to restore the newly added <code>Fake.IO.FileSystem</code> module.</p>
+<p>As we can now work with intellisense we can easily discover the various modules and functions in <code>Fake.IO</code>, for example the <code>Shell</code> module provides various functions you expect from regular shell scripting, but we use <code>Shell.CleanDir</code> which will ensure the given directory is empty by deleting everything within or creating the directory if required:</p>
+<blockquote>
+<p>Hint: you can explore the APIs for example by writing <code>Fake.IO.</code> and waiting for intellisense (or pressing <code>Strg+Space</code>).
+You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on top.</p>
+</blockquote>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.IO.FileSystem</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
+
+<span class="c">// Properties</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+
+<span class="c">// Targets</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">buildDir</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+<span class="pn">)</span>
+
+<span class="c">// Dependencies</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+
+<span class="c">// start build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>We introduced some new concepts in this snippet. At first we defined a global property called <code>buildDir</code> with the relative path of a temporary build folder.</p>
+<p>In the <code>Clean</code> target we use the <code>Shell.CleanDir</code> task to clean up this build directory. As explained above this simply deletes all files in the folder or creates the directory if necessary.</p>
+<p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will be run before the execution of <em>Default</em>:</p>
+<p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
+<h3><a name="Compiling-the-application" class="anchor" href="#Compiling-the-application">Compiling the application</a></h3>
+<p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild.</p>
+<p>Again we need some new modules for this namely <code>Fake.DotNet.MsBuild</code> and <code>Fake.Core.Globbing</code>.</p>
+<p>Just like before add the required modules on top via <code>nuget Fake.DotNet.MsBuild</code> and <code>nuget Fake.Core.Globbing</code>, delete the <code>build.fsx.lock</code> file and run the script.
+Now edit the script like this:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
+<span class="l">35: </span>
+<span class="l">36: </span>
+<span class="l">37: </span>
+<span class="l">38: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.IO.FileSystem</span>
+<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.Core.Globbing</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+
+<span class="c">// Properties</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+
+<span class="c">// Targets</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">buildDir</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+<span class="pn">)</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+
+<span class="c">// start build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to <code>buildDir</code>.</p>
+<p>In order to find the right project files FAKE scans the folder <em>src/app/</em> and all subfolders with the given pattern (the <code>!!</code> operator was imported from <code>Fake.Core.Globbing</code> via <code>open Fake.Core.Globbing.Operators</code>). Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
+<p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
+<p>This means the execution order is: Clean ==&gt; BuildApp ==&gt; Default.</p>
+<p><img src="pics/gettingstarted/aftercompile.png" alt="alt text" title="We introduced a Build target" /></p>
+<h3><a name="Compiling-test-projects" class="anchor" href="#Compiling-test-projects">Compiling test projects</a></h3>
+<p>Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
+<span class="l">35: </span>
+<span class="l">36: </span>
+<span class="l">37: </span>
+<span class="l">38: </span>
+<span class="l">39: </span>
+<span class="l">40: </span>
+<span class="l">41: </span>
+<span class="l">42: </span>
+<span class="l">43: </span>
+<span class="l">44: </span>
+<span class="l">45: </span>
+<span class="l">46: </span>
+<span class="l">47: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.IO.FileSystem</span>
+<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.Core.Globbing</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+
+
+<span class="c">// Properties</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="id">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="id">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
+
+<span class="c">// Targets</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="id">testDir</span><span class="pn">]</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+<span class="pn">)</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildTest&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+
+<span class="c">// start build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>This time we defined a new target "BuildTest" which compiles all C# projects below <em>src/test/</em> in Debug mode and we put the target into our build order.</p>
+<h3><a name="Running-the-tests-with-NUnit" class="anchor" href="#Running-the-tests-with-NUnit">Running the tests with NUnit</a></h3>
+<p>Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly (again we need a new module <code>Fake.DotNet.Testing.NUnit</code>):</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
+<span class="l">35: </span>
+<span class="l">36: </span>
+<span class="l">37: </span>
+<span class="l">38: </span>
+<span class="l">39: </span>
+<span class="l">40: </span>
+<span class="l">41: </span>
+<span class="l">42: </span>
+<span class="l">43: </span>
+<span class="l">44: </span>
+<span class="l">45: </span>
+<span class="l">46: </span>
+<span class="l">47: </span>
+<span class="l">48: </span>
+<span class="l">49: </span>
+<span class="l">50: </span>
+<span class="l">51: </span>
+<span class="l">52: </span>
+<span class="l">53: </span>
+<span class="l">54: </span>
+<span class="l">55: </span>
+<span class="l">56: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.IO.FileSystem</span>
+<span class="s">nuget Fake.Core.Globbing</span>
+<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.DotNet.Testing.NUnit</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+
+<span class="c">// Properties</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 12)" onmouseover="showTip(event, 'fs1', 12)" class="id">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 13)" onmouseover="showTip(event, 'fs2', 13)" class="id">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
+
+<span class="c">// Targets</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs1', 14)" onmouseover="showTip(event, 'fs1', 14)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs2', 15)" onmouseover="showTip(event, 'fs2', 15)" class="id">testDir</span><span class="pn">]</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+   <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
+     <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
+      <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span><span class="pn">)</span>
+      <span class="o">|&gt;</span> <span class="id">NUnit3</span><span class="pn">.</span><span class="id">NUnit3</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+          <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+                <span class="id">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+<span class="pn">)</span>
+
+<span class="c">// Dependencies</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildTest&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Test&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+
+<span class="c">// start build</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Our new <em>Test</em> target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the <a href="apidocs/fake-nunitsequential.html">NUnit task documentation</a> if you need to specify the tool path explicitly.</p>
+<p>The mysterious part <strong>(fun p -&gt; ...)</strong> simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.</p>
+<p><img src="pics/gettingstarted/alltestsgreen.png" alt="alt text" title="All tests green" /></p>
+<h2><a name="What-s-next" class="anchor" href="#What-s-next">What's next?</a></h2>
+<ul>
+<li>Add more modules specific to your application and discover the Fake-APIs</li>
+<li>look at the <a href="fake-dotnetcore.html">quick start guide</a> which has the same information in a more dense form.</li>
+<li>Add fake build scripts to your projects and let us know.</li>
+<li>Automate stuff with FAKE and use standalone scripts.</li>
+<li>Write your own modules and let us know.</li>
+<li>Contribute :)</li>
+</ul>
+
+<div class="tip" id="fs1">val buildDir : string</div>
+<div class="tip" id="fs2">val testDir : string</div>
 
                       </article>
 								</div>
