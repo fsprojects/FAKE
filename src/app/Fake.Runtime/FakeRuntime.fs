@@ -298,7 +298,8 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
       try
         paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
         |> ignore
-      with e when e.Message.Contains "Did you restore groups" ->
+      with
+      | e when e.Message.Contains "Did you restore groups" ->
         // See https://github.com/fsharp/FAKE/issues/1672
         // and https://github.com/fsprojects/Paket/issues/2785
         // We do a restore anyway.

@@ -7,9 +7,7 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 * how to install the latest FAKE version
 * how to edit and run scripts
 * how to automatically compile your C# or F# projects
-* how to automatically resolve nuget dependencies
 * how to automatically run NUnit tests on your projects
-* how to zip the output to a deployment folder
 
 ## Install FAKE
 
@@ -57,59 +55,103 @@ Where you can add all the [fake modules](fake-fake5-modules.html) you need.
 
 ## Example - Compiling and building your .NET application
 
+This example will guide you by adding a fake script to your existing .NET application.
+
 ### Getting started
 
-Now open the *build.fsx* in Visual Studio or any text editor. It should look like this:
+Initially we need to create a file called `build.fsx` where our build-logic will have its home.
+Create a new file with Visual Studio or Visual Studio Code (with ionide) and paste the following content:
 
-	// include Fake lib
-	#r @"packages/FAKE/tools/FakeLib.dll"
-	open Fake
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
+#load "./.fake/build.fsx/intellisense.fsx"
+```
 
-	// Default target
-	Target "Default" (fun _ ->
-		trace "Hello World from FAKE"
-	)
+This is all we need for now to declare that we need the `Fake.Core.Target` module and want to enable intellisense.
 
-	// start build
-	RunTargetOrDefault "Default"
+Now run `fake run build.fsx` to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some Editors).
 
+Now that we have setup our basic environment to edit the script file we add our first target:
 
-As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
+#load "./.fake/build.fsx/intellisense.fsx"
+
+open Fake.Core
+
+// Default target
+Target.Create "Default" (fun _ ->
+  Trace.trace "Hello World from FAKE"
+)
+
+// start build
+Target.RunOrDefault "Default"
+```
+
+As you can see the code is really simple. The few first lines (`nuget Fake.Core.Target` and `open Fake.Core`) load the fake modules we need and is vital for all build scripts to support creating and running targets. The `#load` line is optional but a good way to make the IDE aware of all the modules (for intellisense and IDE support)
 
 After this header the *Default* target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").
 
 The last line runs the "Default" target - which means it executes the defined action of the target.
 
+Try running your new target via `fake run build.fsx` or the shortcut for a file called `build.fsx`: `fake build`
+
 ### Cleaning the last build output
 
-A typical first step in most build scenarios is to clean the output of the last build. We can achieve this by modifying the *build.fsx* to the following:
+A typical first step in most build scenarios is to clean the output of the last build. We can achieve this in two steps:
 
-	// include Fake lib
-	#r "packages/FAKE/tools/FakeLib.dll"
-	open Fake
+First change your header to the following by adding the `Fake.IO.FileSystem` module:
 
-	// Properties
-	let buildDir = "./build/"
+```fsharp
+#r "paket:
+nuget Fake.IO.FileSystem
+nuget Fake.Core.Target //"
+#load "./.fake/build.fsx/intellisense.fsx"
+```
 
-	// Targets
-	Target "Clean" (fun _ ->
-		CleanDir buildDir
-	)
+Now we remove the `build.fsx.lock` file and run `fake build` in order to restore the newly added `Fake.IO.FileSystem` module.
 
-	Target "Default" (fun _ ->
-		trace "Hello World from FAKE"
-	)
+As we can now work with intellisense we can easily discover the various modules and functions in `Fake.IO`, for example the `Shell` module provides various functions you expect from regular shell scripting, but we use `Shell.CleanDir` which will ensure the given directory is empty by deleting everything within or creating the directory if required:
 
-	// Dependencies
-	"Clean"
-	  ==> "Default"
+> Hint: you can explore the APIs for example by writing `Fake.IO.` and waiting for intellisense (or pressing `Strg+Space`).
+> You can remove `Fake.IO` once you put `open Fake.IO` on top.
 
-	// start build
-	RunTargetOrDefault "Default"
+```fsharp
+#r "paket:
+nuget Fake.IO.FileSystem
+nuget Fake.Core.Target //"
+#load "./.fake/build.fsx/intellisense.fsx"
 
-We introduced some new concepts in this snippet. At first we defined a global property called "buildDir" with the relative path of a temporary build folder.
+open Fake.Core
+open Fake.IO
 
-In the *Clean* target we use the CleanDir task to clean up this build directory. This simply deletes all files in the folder or creates the directory if necessary.
+// Properties
+let buildDir = "./build/"
+
+// Targets
+Target.Create "Clean" (fun _ ->
+  Shell.CleanDir buildDir
+)
+
+Target.Create "Default" (fun _ ->
+  Trace.trace "Hello World from FAKE"
+)
+
+// Dependencies
+open Fake.Core.TargetOperators
+
+"Clean"
+  ==> "Default"
+
+// start build
+Target.RunOrDefault "Default"
+```
+
+We introduced some new concepts in this snippet. At first we defined a global property called `buildDir` with the relative path of a temporary build folder.
+
+In the `Clean` target we use the `Shell.CleanDir` task to clean up this build directory. As explained above this simply deletes all files in the folder or creates the directory if necessary.
 
 In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words *Clean* is a prerequisite of *Default* and will be run before the execution of *Default*:
 
@@ -117,41 +159,57 @@ In the dependencies section we say that the *Default* target has a dependency on
 
 ### Compiling the application
 
-In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild:
+In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild.
 
-	// include Fake lib
-	#r "packages/FAKE/tools/FakeLib.dll"
-	open Fake
+Again we need some new modules for this namely `Fake.DotNet.MsBuild` and `Fake.Core.Globbing`.
 
-	// Properties
-	let buildDir = "./build/"
+Just like before add the required modules on top via `nuget Fake.DotNet.MsBuild` and `nuget Fake.Core.Globbing`, delete the `build.fsx.lock` file and run the script.
+Now edit the script like this:
 
-	// Targets
-	Target "Clean" (fun _ ->
-		CleanDir buildDir
-	)
+```fsharp
+#r "paket:
+nuget Fake.IO.FileSystem
+nuget Fake.DotNet.MsBuild
+nuget Fake.Core.Globbing
+nuget Fake.Core.Target //"
+#load "./.fake/build.fsx/intellisense.fsx"
 
-	Target "BuildApp" (fun _ ->
-		!! "src/app/**/*.csproj"
-		  |> MSBuildRelease buildDir "Build"
-		  |> Log "AppBuild-Output: "
-	)
+open Fake.IO
+open Fake.Core.Globbing.Operators
+open Fake.DotNet
+open Fake.Core
 
-	Target "Default" (fun _ ->
-		trace "Hello World from FAKE"
-	)
+// Properties
+let buildDir = "./build/"
 
-	// Dependencies
-	"Clean"
-	  ==> "BuildApp"
-	  ==> "Default"
+// Targets
+Target.Create "Clean" (fun _ ->
+  Shell.CleanDir buildDir
+)
 
-	// start build
-	RunTargetOrDefault "Default"
+Target.Create "BuildApp" (fun _ ->
+  !! "src/app/**/*.csproj"
+    |> MsBuild.MSBuildRelease buildDir "Build"
+    |> Trace.Log "AppBuild-Output: "
+)
 
-We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.
+Target.Create "Default" (fun _ ->
+  Trace.trace "Hello World from FAKE"
+)
 
-In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
+open Fake.Core.TargetOperators
+
+"Clean"
+  ==> "BuildApp"
+  ==> "Default"
+
+// start build
+Target.RunOrDefault "Default"
+```
+
+We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to `buildDir`.
+
+In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern (the `!!` operator was imported from `Fake.Core.Globbing` via `open Fake.Core.Globbing.Operators`). Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
 
 In addition the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs *Clean* as a prerequisite.
 
@@ -163,129 +221,120 @@ This means the execution order is: Clean ==> BuildApp ==> Default.
 
 Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:
 
-	// include Fake lib
-	#r "packages/FAKE/tools/FakeLib.dll"
-	open Fake
+```fsharp
+#r "paket:
+nuget Fake.IO.FileSystem
+nuget Fake.DotNet.MsBuild
+nuget Fake.Core.Globbing
+nuget Fake.Core.Target //"
+#load "./.fake/build.fsx/intellisense.fsx"
 
-	// Properties
-	let buildDir = "./build/"
-	let testDir  = "./test/"
+open Fake
+open Fake.IO
+open Fake.Core.Globbing.Operators
+open Fake.DotNet
+open Fake.Core
 
-	// Targets
-	Target "Clean" (fun _ ->
-		CleanDirs [buildDir; testDir]
-	)
 
-	Target "BuildApp" (fun _ ->
-	   !! "src/app/**/*.csproj"
-		 |> MSBuildRelease buildDir "Build"
-		 |> Log "AppBuild-Output: "
-	)
+// Properties
+let buildDir = "./build/"
+let testDir  = "./test/"
 
-	Target "BuildTest" (fun _ ->
-		!! "src/test/**/*.csproj"
-		  |> MSBuildDebug testDir "Build"
-		  |> Log "TestBuild-Output: "
-	)
+// Targets
+Target.Create "Clean" (fun _ ->
+  Shell.CleanDirs [buildDir; testDir]
+)
 
-	Target "Default" (fun _ ->
-		trace "Hello World from FAKE"
-	)
+Target.Create "BuildApp" (fun _ ->
+    !! "src/app/**/*.csproj"
+    |> MsBuild.MSBuildRelease buildDir "Build"
+    |> Trace.Log "AppBuild-Output: "
+)
 
-	// Dependencies
-	"Clean"
-	  ==> "BuildApp"
-	  ==> "BuildTest"
-	  ==> "Default"
+Target.Create "BuildTest" (fun _ ->
+  !! "src/test/**/*.csproj"
+    |> MsBuild.MSBuildDebug testDir "Build"
+    |> Trace.Log "TestBuild-Output: "
+)
 
-	// start build
-	RunTargetOrDefault "Default"
+Target.Create "Default" (fun _ ->
+  Trace.trace "Hello World from FAKE"
+)
+
+open Fake.Core.TargetOperators
+"Clean"
+  ==> "BuildApp"
+  ==> "BuildTest"
+  ==> "Default"
+
+// start build
+Target.RunOrDefault "Default"
+```
 
 This time we defined a new target "BuildTest" which compiles all C# projects below *src/test/* in Debug mode and we put the target into our build order.
 
-If we run build.bat again we get an error like this:
-
-![alt text](pics/gettingstarted/compileerror.png "Compile error")
-
-The problem is that we didn't download the NUnit package from nuget. So let's fix this in the build script:
-
-	// include Fake lib
-	#r "packages/FAKE/tools/FakeLib.dll"
-	open Fake
-
-	RestorePackages()
-	// ...
-
-With this simple command FAKE will use nuget.exe to install all the package dependencies.
-
-You may experience this tutorial not quite working with the newest package versions. In this case you can edit the [`paket.dependencies` file](http://fsprojects.github.io/Paket/dependencies-file.html) to something like this:
-
-    source https://nuget.org/api/v2
-
-    nuget FAKE
-
-    http https://dist.nuget.org/win-x86-commandline/latest/nuget.exe NuGet/nuget.exe
-
-    nuget NUnit ~> 2.5.10
-
-Again run Paket from the command line:
-
-    $ .paket/paket.exe install
-
-This will fetch nuget.exe from nuget.org and also download an early version of NUnit that contains the NUnit runner. The edit to [`paket.dependencies`](http://fsprojects.github.io/Paket/dependencies-file.html) does not replace the RestorePackages() step. The NUnit.Test.CalculatorLib test project references the NUnit version 2.6.2 library, so we need that version too.
-
 ### Running the tests with NUnit
 
-Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:
+Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly (again we need a new module `Fake.DotNet.Testing.NUnit`):
 
-	// include Fake lib
-	#r "packages/FAKE/tools/FakeLib.dll"
-	open Fake
+```fsharp
+#r "paket:
+nuget Fake.IO.FileSystem
+nuget Fake.Core.Globbing
+nuget Fake.DotNet.MsBuild
+nuget Fake.DotNet.Testing.NUnit
+nuget Fake.Core.Target //"
+#load "./.fake/myscript.fsx/intellisense.fsx"
 
-	RestorePackages()
+open Fake.IO
+open Fake.Core.Globbing.Operators
+open Fake.DotNet
+open Fake.DotNet.Testing
+open Fake.Core
 
-	// Properties
-	let buildDir = "./build/"
-	let testDir  = "./test/"
+// Properties
+let buildDir = "./build/"
+let testDir  = "./test/"
 
-	// Targets
-	Target "Clean" (fun _ ->
-		CleanDirs [buildDir; testDir]
-	)
+// Targets
+Target.Create "Clean" (fun _ ->
+    Shell.CleanDirs [buildDir; testDir]
+)
 
-	Target "BuildApp" (fun _ ->
-	   !! "src/app/**/*.csproj"
-		 |> MSBuildRelease buildDir "Build"
-		 |> Log "AppBuild-Output: "
-	)
+Target.Create "BuildApp" (fun _ ->
+   !! "src/app/**/*.csproj"
+     |> MsBuild.MSBuildRelease buildDir "Build"
+     |> Trace.Log "AppBuild-Output: "
+)
 
-	Target "BuildTest" (fun _ ->
-		!! "src/test/**/*.csproj"
-		  |> MSBuildDebug testDir "Build"
-		  |> Log "TestBuild-Output: "
-	)
+Target.Create "BuildTest" (fun _ ->
+    !! "src/test/**/*.csproj"
+      |> MsBuild.MSBuildDebug testDir "Build"
+      |> Trace.Log "TestBuild-Output: "
+)
 
-	Target "Test" (fun _ ->
-		!! (testDir + "/NUnit.Test.*.dll")
-		  |> NUnit (fun p ->
-			  {p with
-				 DisableShadowCopy = true;
-				 OutputFile = testDir + "TestResults.xml" })
-	)
+Target.Create "Test" (fun _ ->
+    !! (testDir + "/NUnit.Test.*.dll")
+      |> NUnit3.NUnit3 (fun p ->
+          {p with
+                ShadowCopy = false })
+)
 
-	Target "Default" (fun _ ->
-		trace "Hello World from FAKE"
-	)
+Target.Create "Default" (fun _ ->
+    Trace.trace "Hello World from FAKE"
+)
 
-	// Dependencies
-	"Clean"
-	  ==> "BuildApp"
-	  ==> "BuildTest"
-	  ==> "Test"
-	  ==> "Default"
+// Dependencies
+open Fake.Core.TargetOperators
+"Clean"
+  ==> "BuildApp"
+  ==> "BuildTest"
+  ==> "Test"
+  ==> "Default"
 
-	// start build
-	RunTargetOrDefault "Default"
+// start build
+Target.RunOrDefault "Default"
+```
 
 Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitsequential.html) if you need to specify the tool path explicitly.
 
@@ -293,22 +342,11 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 
 ![alt text](pics/gettingstarted/alltestsgreen.png "All tests green")
 
-Alternatively you could also run the tests in parallel using the [NUnitParallel](apidocs/fake-nunitparallel.html) task:
-
-	Target "Test" (fun _ ->
-		!! (testDir + "/NUnit.Test.*.dll")
-		  |> NUnitParallel (fun p ->
-			  {p with
-				 DisableShadowCopy = true;
-				 OutputFile = testDir + "TestResults.xml" })
-	)
-
-
 
 ## What's next?
 
+- Add more modules specific to your application and discover the Fake-APIs
 - look at the [quick start guide](fake-dotnetcore.html) which has the same information in a more dense form.
-- Take a look at the various fake modules which basically have most of your use-cases covered.
 - Add fake build scripts to your projects and let us know.
 - Automate stuff with FAKE and use standalone scripts.
 - Write your own modules and let us know.
