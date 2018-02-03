@@ -35,16 +35,12 @@ Once `fake` is available you can start creating your script:
 - Create a new file `myscript.fsx` with the following contents:
 
 ```fsharp
-(* -- Fake Dependencies paket-inline
-storage: none
-source https://api.nuget.org/v3/index.json
-
-nuget Fake.Core.Target prerelease
--- Fake Dependencies -- *)
+#r "paket:
+nuget Fake.Core.Target prerelease"
 #load "./.fake/myscript.fsx/intellisense.fsx"
 ```
 
-> Note: `storage: none` is currently required because of a bug.
+> Note: `storage: none` is currently required because of a bug, but it will be added by default.
 
 Where you can add all the [fake modules](fake-fake5-modules.html) you need.
 
@@ -55,8 +51,7 @@ Where you can add all the [fake modules](fake-fake5-modules.html) you need.
 
 - now open the script in VS Code with ionide-fsharp extension or Visual Studio.
 
-> Note: If you change your dependencies you need to delete `.fake/myscript.fsx/paket.lock` (or the `.fake` folder) and run the script again for intellisense to update.
-
+> Note: If you change your dependencies you need to delete `myscript.fsx.lock` and run the script again for intellisense to update.
 
 > Note: Intellisense is shown for the full framework while the script is run as `netcoreapp20` therefore intellisense might show APIs which are not actually usable.
 

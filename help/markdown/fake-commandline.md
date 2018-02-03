@@ -128,26 +128,25 @@ The recommendation is to use `fake build` if you have a single `build.fsx` and `
 
 For this short sample we assume you have the latest version of FAKE installed and available in PATH (see [the getting started guide](gettingstarted.html)). Now consider the following small FAKE script:
 
-    (* -- Fake Dependencies paket-inline
-    source https://api.nuget.org/v3/index.json
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
+open Fake.Core
 
-    nuget Fake.Core.Target prerelease
-    nuget FSharp.Core prerelease
-    -- Fake Dependencies -- *)
-	open Fake.Core
- 
-	Target.Create "Clean" (fun () ->  trace " --- Cleaning stuff --- ")
- 
-	Target.Create "Build" (fun () ->  trace " --- Building the app --- ")
- 
-	Target.Create "Deploy" (fun () -> trace " --- Deploying app --- ")
- 
- 
-	"Clean"
-	  ==> "Build"
-	  ==> "Deploy"
- 
-	Target.RunOrDefault "Deploy"
+Target.Create "Clean" (fun _ -> Trace.trace " --- Cleaning stuff --- ")
+
+Target.Create "Build" (fun _ -> Trace.trace " --- Building the app --- ")
+
+Target.Create "Deploy" (fun _ -> Trace.trace " --- Deploying app --- ")
+
+open Fake.Core.TargetOperators
+"Clean"
+    ==> "Build"
+    ==> "Deploy"
+
+Target.RunOrDefault "Deploy"
+```
+
 
 Now you can just execute
 

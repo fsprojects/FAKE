@@ -14,35 +14,40 @@ compilation has finished. The result is then collected and sent to the SonarQube
 
 ## Minimal working example
 
-    open Fake.Core
-    open Fake.Core.TargetOperators
-    open Fake.Testing
+```fsharp
+#r "paket:
+nuget Fake.Core.Target
+nuget Fake.Testing.SonarQube //"
+open Fake.Core
+open Fake.Core.TargetOperators
+open Fake.Testing
 
-    Target.Create "BeginSonarQube" (fun _ ->
-      SonarQube.Begin (fun p ->
-        {p with
-         Key = "MyProject"
-         Name = "Main solution"
-         Version = "1.0.0" }
-        )
-      )
-
-    Target.Create "EndSonarQube" (fun _ ->
-      SonarQube.End None
+Target.Create "BeginSonarQube" (fun _ ->
+  SonarQube.Begin (fun p ->
+    {p with
+      Key = "MyProject"
+      Name = "Main solution"
+      Version = "1.0.0" }
     )
+  )
 
-    Target.Create "Default" DoNothing
+Target.Create "EndSonarQube" (fun _ ->
+  SonarQube.End None
+)
 
-    "Clean"
-      ==> "SetAssemblyInfo"
-      ==> "BeginSonarQube"
-      ==> "Build" <=> "BuildTests"
-      ==> "EndSonarQube"
-      ==> "RunTests"
-      ==> "Deploy"
-      ==> "Default"
+Target.Create "Default" DoNothing
 
-    Target.RunOrDefault "Default"
+"Clean"
+  ==> "SetAssemblyInfo"
+  ==> "BeginSonarQube"
+  ==> "Build" <=> "BuildTests"
+  ==> "EndSonarQube"
+  ==> "RunTests"
+  ==> "Deploy"
+  ==> "Default"
+
+Target.RunOrDefault "Default"
+```
 
 By default, the SonarQube module looks for the MSBuild runner in the 'tools/SonarQube' directory. This can be overwritten using the ToolsPath property of the parameters.
 
@@ -51,22 +56,26 @@ By default, the SonarQube module looks for the MSBuild runner in the 'tools/Sona
 * You can send additional global settings  to the server with the '/d:' parameter.
 In the SonarQubeParams, this is the new field Settings:
 
-      SonarQube.Begin (fun p ->
-        {p with
-         Key = "MyProject"
-         Name = "Main solution"
-         Version = "1.0.0" 
-         Settings = ["sonar.debug"; "sonar.newversion"] }
-        )
+```fsharp
+SonarQube.Begin (fun p ->
+  {p with
+    Key = "MyProject"
+    Name = "Main solution"
+    Version = "1.0.0" 
+    Settings = ["sonar.debug"; "sonar.newversion"] }
+  )
+```
 
 * Configuration can also be read from a configuration file. This is the '/s:' parameter.
 This can be done with the new field Config:
 
-      SonarQube.Begin (fun p ->
-        {p with
-         Key = "MyProject"
-         Name = "Main solution"
-         Version = "1.0.0" 
-         Config = Some("myconfig.cfg") }
-        )
+```fsharp
+SonarQube.Begin (fun p ->
+  {p with
+    Key = "MyProject"
+    Name = "Main solution"
+    Version = "1.0.0" 
+    Config = Some("myconfig.cfg") }
+  )
+```
 

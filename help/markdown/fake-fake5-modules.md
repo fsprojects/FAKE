@@ -43,56 +43,46 @@ Please read introduction about [Paket](https://fsprojects.github.io/Paket/) for 
 > Note: This works because by default FAKE 5 searches for a group annotated with the `// [ FAKE GROUP ]` comment.
 
 
-## Declaring FAKE 5 Header
+## Declaring FAKE 5 dependencies within the script
 
-To get more control over this FAKE 5 behavior you can explicitely set a header to the build script.
+To be more independent from paket infrastructure (stand-alone-scripts and similar situations) there is a way to specify dependencies from within the script itself.
 
-### General Fake HEADER
+> We use the new syntax specified in https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md
+> However, to be fully compatible with existing tooling and infrastructure make sure to add `//` at the end of the `#r` string.
+> See https://github.com/fsharp/FAKE/pull/1770 for details.
 
-To tell Fake which dependencies are needed a script can start with a header as well:
-
-```fsharp
-(* -- Fake Dependencies ***header***
-*** Dependencies ***
--- Fake Dependencies -- *)
-#load "./.fake/build.fsx/intellisense.fsx"
-```
-
-The last line `#load` is not requiredby FAKE 5, however
-this way the file can still be edited in editors (after restoring packages initially).
-Fake will write an `intellisense.fsx` file for you importing all required references.
-Please note that as of right now, Fake doesn't write anything useful into this file, yet.
-
-There are two headers known by Fake:
-
-### Reference paket group
+### Reference a paket group
 
 To reference a FAKE group explicitely you can put the following at the top of your build script
 
-	[lang=fsharp]
-    (* -- Fake Dependencies paket.dependencies
-    file ./paket.dependencies
-    group netcorebuild
-    -- Fake Dependencies -- *)
-    #load "./.fake/build.fsx/intellisense.fsx"
+```fsharp
+#r "paket: groupref netcorebuild //"
+#load "./.fake/build.fsx/intellisense.fsx"
+```
+    
 
-This header will reference a `paket.dependencies` file and a group within.
+This header will reference a `paket.dependencies` file and the `netcorebuild` group within.
+
+The last line `#load` is not required by FAKE 5, however
+this way the file can still be edited in editors (after restoring packages initially).
+Fake will write an `intellisense.fsx` file for you importing all required references.
+
+> Note that in this scenario the `// [ FAKE GROUP ]` comment mentioned above is not required.
 
 ### Inline dependencies
 
-To write your build dependencies in-line you can put the following at the top of your build script
+To write your build dependencies in-line you can put the following at the top of your `build.fsx` script
 
-	[lang=fsharp]
-    (* -- Fake Dependencies paket-inline
-    source https://api.nuget.org/v3/index.json
+```fsharp
+#r "paket:
+nuget Fake.Core.Target prerelease //"
+#load "./.fake/build.fsx/intellisense.fsx"
 
-    nuget Fake.Core.Target prerelease
-    -- Fake Dependencies -- *)
-    #load "./.fake/build.fsx/intellisense.fsx"
+```
 
 This has the advantage that your build-script is now "standalone" and no separate `paket.dependencies` is required.
-We still recommend to add (`git add -f`, because usually you have `.fake` folder gitignored) the generated `paket.lock` (in `.fake/<scriptName>/`) to your repository to have reproducable script runs.
-
+Fake will generate a `build.fsx.lock` file with the "locked" dependencies to have reproducable script runs.
+If you need to update your dependencies just delete the `build.fsx.lock` file and run fake again.
 
 ## Using module dependencies
 
