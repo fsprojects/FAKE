@@ -1,3 +1,9 @@
+#### 5.0.0-beta013 - 2018-02-03
+* FAKE5: partial support for FST-1027 instead of FAKE Header (now obsolete and will be removed on release).
+  This adds support for writing `#r "paket: nuget Fake.Module prerelease"` in your scripts, see https://github.com/fsharp/FAKE/pull/1770.
+* FAKE5: Self-Contained scripts (not using/referencing external paket.dependencies) will now write a `<script>.fsx.lock` file for the dependencies, see https://github.com/fsharp/FAKE/issues/1769
+* FAKE5: `fake build <target>` is now a shortcut for `fake run build.fsx -t <target>`, see https://github.com/fsharp/FAKE/issues/1569
+
 #### 5.0.0-beta012 - 2018-01-28
 * FAKE5: New distribution as dotnet-cli-tool `dotnet-fake` - https://github.com/fsharp/FAKE/pull/1766
 * ENHANCEMENT: added GetDotNetSDKVersionFromGlobalJson - https://github.com/fsharp/FAKE/pull/1754
