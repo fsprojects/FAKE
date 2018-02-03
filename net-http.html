@@ -215,15 +215,21 @@
 <p>Please see more details on referencing FAKE 5 modules <a href="fake-fake5-modules.html">here</a>.</p>
 <h2><a name="Downloading-a-Single-File" class="anchor" href="#Downloading-a-Single-File">Downloading a Single File</a></h2>
 <p>To download a single file over HTTP use <code>downloadFile</code> from the Http module:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Net</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.Net.Http //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Net</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;DownloadFile&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
@@ -256,8 +262,14 @@
 <span class="l"> 8: </span>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Net</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.Net.Http //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Net</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;DownloadFiles&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>

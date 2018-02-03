@@ -224,23 +224,15 @@ see this <a href="https://github.com/matthid/fake-bootstrap">example project</a>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
-<span class="c">storage: none</span>
-<span class="c">source https://api.nuget.org/v3/index.json</span>
-
-<span class="c">nuget Fake.Core.Target prerelease</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <blockquote>
-<p>Note: <code>storage: none</code> is currently required because of a bug.</p>
+<p>Note: <code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
 </blockquote>
 <p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need.</p>
 <ul>
@@ -254,7 +246,7 @@ This might take some seconds depending on your internet connection</p>
 <li>now open the script in VS Code with ionide-fsharp extension or Visual Studio.</li>
 </ul>
 <blockquote>
-<p>Note: If you change your dependencies you need to delete <code>.fake/myscript.fsx/paket.lock</code> (or the <code>.fake</code> folder) and run the script again for intellisense to update.
+<p>Note: If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
 Note: Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.</p>
 </blockquote>
 <h2><a name="TBD" class="anchor" href="#TBD">TBD.</a></h2>

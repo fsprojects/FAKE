@@ -257,25 +257,19 @@ One example would be:</p>
 <span class="l">13: </span>
 <span class="l">14: </span>
 <span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
-<span class="c">source https://api.nuget.org/v3/index.json</span>
-
-<span class="c">nuget Fake.Core.Target prerelease</span>
-<span class="c">nuget MyTaskNuGetPackage</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target prerelease</span>
+<span class="s">nuget MyTaskNuGetPackage&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 <span class="k">open</span> <span class="id">MyCustomTask</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;GenerateNumber&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="c">// use custom functionality</span>
-    <span class="id">RandomNumberTask</span><span class="pn">.</span><span class="id">RandomNumber</span><span class="pn">(</span><span class="n">2</span><span class="pn">,</span><span class="n">13</span><span class="pn">)</span>
-      <span class="o">|&gt;</span> <span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
+	<span class="c">// use custom functionality</span>
+	<span class="id">RandomNumberTask</span><span class="pn">.</span><span class="id">RandomNumber</span><span class="pn">(</span><span class="n">2</span><span class="pn">,</span><span class="n">13</span><span class="pn">)</span>
+		<span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;GenerateNumber&quot;</span>

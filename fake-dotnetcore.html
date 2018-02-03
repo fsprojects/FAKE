@@ -202,7 +202,7 @@ Just install the corresponding package for your system:</p>
 <td class="snippet"><pre class="fssnip"><code lang="ps">fake --help
 </code></pre></td></tr></table>
 <p>This is basically it. You can now execute fake commands.</p>
-<p>For unix we don't have packages jet (please contribute!), but you can use the manual install process (see <a href="contributing.html">Contributing</a>)</p>
+<p>For unix we don't have packages yet (please contribute!), but you can use the manual install process (see <a href="contributing.html">Contributing</a>)</p>
 <h2><a name="CLI" class="anchor" href="#CLI">CLI</a></h2>
 <p>See <a href="fake-commandline.html">Fake command line</a></p>
 <h2><a name="Buildserver-support" class="anchor" href="#Buildserver-support">Buildserver support</a></h2>
@@ -228,7 +228,7 @@ This version assumes an existing dotnet sdk installation while the non-portable 
 <p>Just use the <code>-portable</code> version of the downloads, extract it and execute.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">dotnet</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">dll</span> <span class="pn">&lt;</span><span class="id">regular</span><span class="o">-</span><span class="id">arguments</span><span class="pn">&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">dotnet</span> <span class="id">fake</span><span class="pn">.</span><span class="id">dll</span> <span class="pn">&lt;</span><span class="id">regular</span><span class="o">-</span><span class="id">arguments</span><span class="pn">&gt;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -243,7 +243,7 @@ Therefore this example is actually pretty bad because it just opened everything 
 </li>
 </ul>
 <h3><a name="Minimal-example" class="anchor" href="#Minimal-example">Minimal example</a></h3>
-<p>Create a file named build.fsx with the following contents:</p>
+<p>Create a file named <code>build.fsx</code> with the following contents:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -272,15 +272,9 @@ Therefore this example is actually pretty bad because it just opened everything 
 <span class="l">26: </span>
 <span class="l">27: </span>
 <span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
-<span class="c">source https://api.nuget.org/v3/index.json</span>
-
-<span class="c">nuget Fake.Core.Target</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target&quot;</span>
 <span class="c">// include Fake modules, see Fake modules section</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>

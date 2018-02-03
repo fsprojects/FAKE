@@ -239,64 +239,46 @@
 <blockquote>
 <p>Note: This works because by default FAKE 5 searches for a group annotated with the <code>// [ FAKE GROUP ]</code> comment.</p>
 </blockquote>
-<h2><a name="Declaring-FAKE-5-Header" class="anchor" href="#Declaring-FAKE-5-Header">Declaring FAKE 5 Header</a></h2>
-<p>To get more control over this FAKE 5 behavior you can explicitely set a header to the build script.</p>
-<h3><a name="General-Fake-HEADER" class="anchor" href="#General-Fake-HEADER">General Fake HEADER</a></h3>
-<p>To tell Fake which dependencies are needed a script can start with a header as well:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies ***header***</span>
-<span class="c">*** Dependencies ***</span>
-<span class="c">-- Fake Dependencies -- *)</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-<p>The last line <code>#load</code> is not requiredby FAKE 5, however
-this way the file can still be edited in editors (after restoring packages initially).
-Fake will write an <code>intellisense.fsx</code> file for you importing all required references.
-Please note that as of right now, Fake doesn't write anything useful into this file, yet.</p>
-<p>There are two headers known by Fake:</p>
-<h3><a name="Reference-paket-group-1" class="anchor" href="#Reference-paket-group-1">Reference paket group</a></h3>
+<h2><a name="Declaring-FAKE-5-dependencies-within-the-script" class="anchor" href="#Declaring-FAKE-5-dependencies-within-the-script">Declaring FAKE 5 dependencies within the script</a></h2>
+<p>To be more independent from paket infrastructure (stand-alone-scripts and similar situations) there is a way to specify dependencies from within the script itself.</p>
+<blockquote>
+<p>We use the new syntax specified in <a href="https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md
+However,">https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md
+However,</a> to be fully compatible with existing tooling and infrastructure make sure to add <code>//</code> at the end of the <code>#r</code> string.
+See <a href="https://github.com/fsharp/FAKE/pull/1770">https://github.com/fsharp/FAKE/pull/1770</a> for details.</p>
+</blockquote>
+<h3><a name="Reference-a-paket-group" class="anchor" href="#Reference-a-paket-group">Reference a paket group</a></h3>
 <p>To reference a FAKE group explicitely you can put the following at the top of your build script</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket.dependencies</span>
-<span class="c">file ./paket.dependencies</span>
-<span class="c">group netcorebuild</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket: groupref netcorebuild //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 </code></pre></td>
 </tr>
 </table>
-<p>This header will reference a <code>paket.dependencies</code> file and a group within.</p>
+<p>This header will reference a <code>paket.dependencies</code> file and the <code>netcorebuild</code> group within.</p>
+<p>The last line <code>#load</code> is not required by FAKE 5, however
+this way the file can still be edited in editors (after restoring packages initially).
+Fake will write an <code>intellisense.fsx</code> file for you importing all required references.</p>
+<blockquote>
+<p>Note that in this scenario the <code>// [ FAKE GROUP ]</code> comment mentioned above is not required.</p>
+</blockquote>
 <h3><a name="Inline-dependencies" class="anchor" href="#Inline-dependencies">Inline dependencies</a></h3>
-<p>To write your build dependencies in-line you can put the following at the top of your build script</p>
+<p>To write your build dependencies in-line you can put the following at the top of your <code>build.fsx</code> script</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
-<span class="c">source https://api.nuget.org/v3/index.json</span>
-
-<span class="c">nuget Fake.Core.Target prerelease</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target prerelease //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <p>This has the advantage that your build-script is now "standalone" and no separate <code>paket.dependencies</code> is required.
-We still recommend to add (<code>git add -f</code>, because usually you have <code>.fake</code> folder gitignored) the generated <code>paket.lock</code> (in <code>.fake/&lt;scriptName&gt;/</code>) to your repository to have reproducable script runs.</p>
+Fake will generate a <code>build.fsx.lock</code> file with the "locked" dependencies to have reproducable script runs.
+If you need to update your dependencies just delete the <code>build.fsx.lock</code> file and run fake again.</p>
 <h2><a name="Using-module-dependencies" class="anchor" href="#Using-module-dependencies">Using module dependencies</a></h2>
 <p>You use the modules as documented in their corresponding help section.</p>
 <p>But usually it's:

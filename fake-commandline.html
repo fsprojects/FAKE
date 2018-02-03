@@ -203,11 +203,15 @@
 <span class="l">10: </span>
 <span class="l">11: </span>
 <span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">USAGE</span><span class="pn">:</span> <span class="id">fake</span> <span class="pn">[</span><span class="o">--</span><span class="id">help</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">version</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">verbose</span><span class="pn">]</span> <span class="pn">[&lt;</span><span class="id">subcommand</span><span class="pn">&gt;</span> <span class="pn">[&lt;</span><span class="id">options</span><span class="pn">&gt;]</span><span class="pn">]</span>
+
 <span class="id">SUBCOMMANDS</span><span class="pn">:</span>
 
-    <span class="id">run</span> <span class="pn">&lt;</span><span class="id">options</span><span class="pn">&gt;</span>         <span class="id">Runs</span> <span class="id">a</span> <span class="id">build</span> <span class="id">script</span><span class="pn">.</span>
+    <span class="id">run</span> <span class="pn">&lt;</span><span class="id">options</span><span class="pn">&gt;</span>         <span class="id">Runs</span> <span class="id">a</span> <span class="id">script</span><span class="pn">.</span>
+    <span class="id">build</span> <span class="pn">&lt;</span><span class="id">options</span><span class="pn">&gt;</span>       <span class="id">Build</span> <span class="id">a</span> <span class="id">target</span> <span class="id">via</span> <span class="id">build</span><span class="pn">.</span><span class="id">fsx</span> <span class="id">script</span><span class="pn">.</span>
 
     <span class="id">Use</span> <span class="id">&#39;</span><span class="id">fake</span> <span class="pn">&lt;</span><span class="id">subcommand</span><span class="pn">&gt;</span> <span class="o">--</span><span class="id">help&#39;</span> <span class="k">for</span> <span class="id">additional</span> <span class="id">information</span><span class="pn">.</span>
 
@@ -219,7 +223,7 @@
 </code></pre></td>
 </tr>
 </table>
-<p>For now fake only supports the <code>run</code> subcommand which is basically equivalent to the Fake as you know it, but more are planned in the future.</p>
+<p>For now fake only supports the <code>run</code> and <code>build</code> subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future.</p>
 <h2><a name="header" class="anchor" href="#header"><code>--verbose [-v]</code></a></h2>
 <p>Print details of FAKE's activity. Note that <code>-v</code> was used for <code>--version</code> in previous versions of Fake.
 Currently Fake supports 3 verbosity levels:</p>
@@ -247,11 +251,19 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <span class="l">10: </span>
 <span class="l">11: </span>
 <span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">USAGE</span><span class="pn">:</span> <span class="id">fake</span> <span class="id">run</span> <span class="pn">[</span><span class="o">--</span><span class="id">help</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">script</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">target</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">environmentvariable</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">string</span><span class="pn">&gt;</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">debug</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">singletarget</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">nocache</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">fsiargs</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="id">string</span><span class="pn">&gt;]</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">USAGE</span><span class="pn">:</span> <span class="id">fake</span> <span class="id">run</span> <span class="pn">[</span><span class="o">--</span><span class="id">help</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">script</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">target</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">string</span><span class="pn">&gt;]</span>
+                <span class="pn">[</span><span class="o">--</span><span class="id">environmentvariable</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="id">string</span><span class="pn">&gt;</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">debug</span><span class="pn">]</span>
+                <span class="pn">[</span><span class="o">--</span><span class="id">singletarget</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">nocache</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">fsiargs</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="id">string</span><span class="pn">&gt;]</span>
+
 <span class="id">OPTIONS</span><span class="pn">:</span>
 
-    <span class="o">--</span><span class="id">script</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="id">string</span><span class="pn">&gt;</span>     <span class="id">Specify</span> <span class="id">the</span> <span class="id">script</span> <span class="k">to</span> <span class="id">run</span><span class="pn">.</span> <span class="pn">(</span><span class="o">--</span><span class="id">script</span> <span class="id">is</span> <span class="id">optional</span><span class="pn">)</span>
+    <span class="o">--</span><span class="id">script</span><span class="pn">,</span> <span class="o">-</span><span class="id">f</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="id">string</span><span class="pn">&gt;</span> <span class="id">Specify</span> <span class="id">the</span> <span class="id">script</span> <span class="k">to</span> <span class="id">run</span><span class="pn">.</span> <span class="pn">(</span><span class="o">--</span><span class="id">script</span> <span class="k">or</span> <span class="o">-</span><span class="id">f</span> <span class="id">is</span>
+                          <span class="id">optional</span><span class="pn">)</span>
     <span class="o">--</span><span class="id">target</span><span class="pn">,</span> <span class="o">-</span><span class="id">t</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 8)" onmouseover="showTip(event, 'fs2', 8)" class="id">string</span><span class="pn">&gt;</span> <span class="id">The</span> <span class="id">target</span> <span class="k">to</span> <span class="id">run</span><span class="pn">.</span>
     <span class="o">--</span><span class="id">environmentvariable</span><span class="pn">,</span> <span class="o">-</span><span class="id">e</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="id">string</span><span class="pn">&gt;</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="id">string</span><span class="pn">&gt;</span>
                           <span onmouseout="hideTip(event, 'fs3', 11)" onmouseover="showTip(event, 'fs3', 11)" class="id">Set</span> <span class="id">an</span> <span class="id">environment</span> <span class="id">variable</span><span class="pn">.</span>
@@ -266,7 +278,7 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <p>The run command is basically to start scripts or build-scripts therefore the <code>--script</code> is optional and you can just write <code>fake run build.fsx</code>.</p>
 <h4><a name="Basic-examples" class="anchor" href="#Basic-examples">Basic examples</a></h4>
 <p><strong>Specify build script only:</strong> <code>fake.exe run mybuildscript.fsx</code></p>
-<p><strong>Specify target name only:</strong> <code>fake.exe run build.fsx --target clean</code> (runs the <code>clean</code> target).</p>
+<p><strong>Specify target name only:</strong> <code>fake.exe run build.fsx --target Clean</code> (runs the <code>Clean</code> target).</p>
 <h4><a name="header-3" class="anchor" href="#header-3"><code>script</code></a></h4>
 <p>Required. The path to your <code>.fsx</code> build file. Note the <code>--script</code> is optional, you can use it if you have specially crafted file names like <code>--debug</code>.</p>
 <h4><a name="header-4" class="anchor" href="#header-4"><code>target</code></a></h4>
@@ -277,6 +289,51 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <p>Pass an single argument after this switch to FSI when running the build script.  See <a href="http://msdn.microsoft.com/en-us/library/dd233172.aspx">F# Interactive Options</a> for the fsi CLI details.</p>
 <h4><a name="header-7" class="anchor" href="#header-7"><code>--help [-h|/h|/help|/?]</code></a></h4>
 <p>Display CLI help.</p>
+<h3><a name="Build" class="anchor" href="#Build">Build</a></h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">USAGE</span><span class="pn">:</span> <span class="id">fake</span> <span class="id">build</span> <span class="pn">[</span><span class="o">--</span><span class="id">help</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">target</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 15)" onmouseover="showTip(event, 'fs2', 15)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">script</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 16)" onmouseover="showTip(event, 'fs2', 16)" class="id">string</span><span class="pn">&gt;]</span>
+                  <span class="pn">[</span><span class="o">--</span><span class="id">environmentvariable</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">string</span><span class="pn">&gt;</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="id">string</span><span class="pn">&gt;]</span> <span class="pn">[</span><span class="o">--</span><span class="id">debug</span><span class="pn">]</span>
+                  <span class="pn">[</span><span class="o">--</span><span class="id">singletarget</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">nocache</span><span class="pn">]</span> <span class="pn">[</span><span class="o">--</span><span class="id">fsiargs</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 19)" onmouseover="showTip(event, 'fs2', 19)" class="id">string</span><span class="pn">&gt;]</span>
+
+<span class="id">OPTIONS</span><span class="pn">:</span>
+
+    <span class="o">--</span><span class="id">target</span><span class="pn">,</span> <span class="o">-</span><span class="id">t</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 20)" onmouseover="showTip(event, 'fs2', 20)" class="id">string</span><span class="pn">&gt;</span> <span class="id">The</span> <span class="id">target</span> <span class="k">to</span> <span class="id">run</span> <span class="pn">(</span><span class="o">--</span><span class="id">target</span> <span class="k">or</span> <span class="o">-</span><span class="id">t</span> <span class="id">is</span> <span class="id">optional</span> <span class="k">when</span>
+                          <span class="id">running</span> <span class="id">&#39;</span><span class="id">build&#39;</span><span class="pn">)</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">script</span><span class="pn">,</span> <span class="o">-</span><span class="id">f</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 21)" onmouseover="showTip(event, 'fs2', 21)" class="id">string</span><span class="pn">&gt;</span> <span class="id">Specify</span> <span class="id">the</span> <span class="id">script</span> <span class="k">to</span> <span class="id">run</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">environmentvariable</span><span class="pn">,</span> <span class="o">-</span><span class="id">e</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 22)" onmouseover="showTip(event, 'fs2', 22)" class="id">string</span><span class="pn">&gt;</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 23)" onmouseover="showTip(event, 'fs2', 23)" class="id">string</span><span class="pn">&gt;</span>
+                          <span onmouseout="hideTip(event, 'fs3', 24)" onmouseover="showTip(event, 'fs3', 24)" class="id">Set</span> <span class="id">an</span> <span class="id">environment</span> <span class="id">variable</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">debug</span><span class="pn">,</span> <span class="o">-</span><span class="id">d</span>           <span class="id">Debug</span> <span class="id">the</span> <span class="id">script</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs4', 25)" onmouseover="showTip(event, 'fs4', 25)" class="id">set</span> <span class="id">a</span> <span class="id">breakpoint</span> <span class="id">at</span> <span class="id">the</span> <span class="id">start</span><span class="pn">)</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">singletarget</span><span class="pn">,</span> <span class="o">-</span><span class="id">s</span>    <span class="id">Run</span> <span class="id">only</span> <span class="id">the</span> <span class="id">specified</span> <span class="id">target</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">nocache</span><span class="pn">,</span> <span class="o">-</span><span class="id">n</span>         <span class="id">Disable</span> <span class="id">caching</span> <span class="k">of</span> <span class="id">the</span> <span class="id">compiled</span> <span class="id">script</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">fsiargs</span> <span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs2', 26)" onmouseover="showTip(event, 'fs2', 26)" class="id">string</span><span class="pn">&gt;</span>    <span class="id">Arguments</span> <span class="id">passed</span> <span class="k">to</span> <span class="id">the</span> <span class="id">f#</span> <span class="id">interactive</span><span class="pn">.</span>
+    <span class="o">--</span><span class="id">help</span>                <span class="id">display</span> <span class="id">this</span> <span onmouseout="hideTip(event, 'fs1', 27)" onmouseover="showTip(event, 'fs1', 27)" class="id">list</span> <span class="k">of</span> <span class="id">options</span><span class="pn">.</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Very similar to <code>run</code>. The difference is that with <code>build</code> the <code>--target</code> is optional and <code>build.fsx</code> is assumed where in <code>run</code> the <code>--script</code> is optional.
+Examples:</p>
+<ul>
+<li><code>fake build</code> to run the default target and <code>build.fsx</code></li>
+<li><code>fake build Build -s</code> to run the <code>Build</code> target without dependencies</li>
+<li><code>fake build Build</code> to run the <code>Build</code> target with all dependencies</li>
+</ul>
+<p>The recommendation is to use <code>fake build</code> if you have a single <code>build.fsx</code> and <code>fake run</code> for scripting (or multiple <code>.fsx</code> files).</p>
 <h1><a name="Running-FAKE-targets-from-the-command-line" class="anchor" href="#Running-FAKE-targets-from-the-command-line">Running FAKE targets from the command line</a></h1>
 <p>For this short sample we assume you have the latest version of FAKE installed and available in PATH (see <a href="gettingstarted.html">the getting started guide</a>). Now consider the following small FAKE script:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -295,29 +352,21 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <span class="l">14: </span>
 <span class="l">15: </span>
 <span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket-inline</span>
-<span class="c">source https://api.nuget.org/v3/index.json</span>
-
-<span class="c">nuget Fake.Core.Target prerelease</span>
-<span class="c">nuget FSharp.Core prerelease</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  <span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span><span class="pn">)</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span><span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>  <span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span><span class="pn">)</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span><span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> <span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span><span class="pn">)</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span><span class="pn">)</span>
 
-
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
 <span class="s">&quot;Clean&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
 </code></pre></td>
@@ -326,8 +375,11 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <p>Now you can just execute</p>
 <ul>
 <li><code>fake run build.fsx</code> to run the default target (<code>Deploy</code>)</li>
+<li><code>fake build</code> same as above</li>
 <li><code>fake run build.fsx -s -t Build</code> to run the <code>Build</code> target without dependencies</li>
+<li><code>fake build Build -s</code> same as above</li>
 <li><code>fake run build.fsx -t Build</code> to run the <code>Build</code> target with the <code>Clean</code> dependency</li>
+<li><code>fake build Build</code> same as above</li>
 </ul>
 
 <div class="tip" id="fs1">type &#39;T list = List&lt;&#39;T&gt;</div>

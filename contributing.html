@@ -357,7 +357,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 </ul>
 <h2><a name="Porting-a-module-to-FAKE-5" class="anchor" href="#Porting-a-module-to-FAKE-5">Porting a module to FAKE 5</a></h2>
 <p>As mentioned in the <a href="fake-fake5-learn-more.html">"Fake 5 learn more"</a> section we have a large list to choose from to help the project. One of these things is porting modules to FAKE 5. To save you from some pitfalls this sections guides you in migrating modules with an (at least for me) working approach.</p>
-<p>Tooling in netcore it not optimal jet so some things have to be done by hand, but with these steps you have pretty good IDE support:</p>
+<p>Tooling in netcore it not optimal yet so some things have to be done by hand, but with these steps you have pretty good IDE support:</p>
 <ul>
 <li>Copy one of the existing netcore projects and edit the project file by hand (rename)</li>
 <li>Copy the old implementation files from <code>src/app/FakeLib</code> to <code>/src/app/Fake.&lt;ModuleType&gt;.&lt;Name&gt;</code> (update project file again if required)</li>
@@ -368,7 +368,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 <li>Mark the old module with the <code>Obsolete</code> attribute.</li>
 </ul>
 <blockquote>
-<p>Note that <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that jet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.</p>
+<p>Note that <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that yet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.</p>
 </blockquote>
 <p>These steps will ensure:
 - People using the NuGet package will get the warnings to update the new API

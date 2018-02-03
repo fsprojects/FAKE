@@ -194,7 +194,7 @@
 <h2><a name="Listing-targets" class="anchor" href="#Listing-targets">Listing targets</a></h2>
 <p>Not yet available in FAKE 5</p>
 <blockquote>
-<p>Note: This feature still makes sense, but a good CLI has not been found jet, please propose one.
+<p>Note: This feature still makes sense, but a good CLI has not been found yet, please propose one.
 For not you can run the target with name '--listTargets' or '-lt'. <code>fake run build.fsx -t '--list-Targets'</code></p>
 </blockquote>
 <h2><a name="Running-specific-targets" class="anchor" href="#Running-specific-targets">Running specific targets</a></h2>
@@ -225,30 +225,32 @@ For not you can run the target with name '--listTargets' or '-lt'. <code>fake ru
 <span class="l">24: </span>
 <span class="l">25: </span>
 <span class="l">26: </span>
+<span class="l">27: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake modules, see Fake modules section</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
 <span class="c">// *** Define Targets ***</span>
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
+	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
 <span class="pn">)</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Clean&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="c">// *** Start Build ***</span>
 <span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
@@ -258,7 +260,7 @@ For not you can run the target with name '--listTargets' or '-lt'. <code>fake ru
 <blockquote>
 <p>Warning: Previous versions of FAKE 5 used <code>(fun () -&gt; ...)</code> instead of <code>(fun _ -&gt; ...)</code>.
 We decided to change the syntax here to introduce some parameters or other features at a later point.
-Using the current parameter object is not supported jet.</p>
+Using the current parameter object is not supported yet.</p>
 </blockquote>
 <p>Now we have the following options:</p>
 <ul>
@@ -276,9 +278,11 @@ These targets will be executed even if the build fails but have to be activated 
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
+<span class="l">7: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">CreateFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 	<span class="c">// close stuff and release resources</span>
+	<span class="pn">(</span><span class="pn">)</span>
 <span class="pn">)</span>
 
 <span class="c">// Activate Final target somewhere during build</span>
@@ -295,9 +299,11 @@ These targets will be executed only after a build failure but have to be activat
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
+<span class="l">7: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">CreateBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
 	<span class="c">// send mail about the failure</span>
+	<span class="pn">(</span><span class="pn">)</span>
 <span class="pn">)</span>
 
 <span class="c">// Activate Build Failure Target somewhere during build</span>
@@ -305,46 +311,6 @@ These targets will be executed only after a build failure but have to be activat
 </code></pre></td>
 </tr>
 </table>
-<h2><a name="Visualising-target-dependencies" class="anchor" href="#Visualising-target-dependencies">Visualising target dependencies</a></h2>
-<blockquote>
-<p>WARNING: This is not supported, feel free to contribute.</p>
-</blockquote>
-<p>FAKE can output the graph of target dependencies in the <a href="http://www.graphviz.org/doc/info/lang.html">DOT</a>
-format, which can then be rendered to a PNG-file by <a href="http://www.graphviz.org">Graphviz</a>.</p>
-<p>Specifying the command line option <em>--dotGraph</em> (short version: <em>-dg</em>) makes FAKE write
-the dependency graph to the standard output <em>instead</em> of building anything. This option only works when
-the build script contains a call like this:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-<h3><a name="Example" class="anchor" href="#Example">Example</a></h3>
-<p>Say, the build script <code>build.fsx</code> defines the target dependencies as follows:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// The rest of the script is omitted...</span>
-
-<span class="s">&quot;BuildJs&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;WebPackage&quot;</span> <span class="o">&lt;=&gt;</span> <span class="s">&quot;AdminPackage&quot;</span> <span class="o">&lt;=&gt;</span> <span class="s">&quot;WebApiPackage&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;MainAppPackage&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-<p>The following command saves the target dependency graph in the <code>graph.png</code> file (PowerShell syntax):</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">FAKE</span><span class="pn">.</span><span class="id">exe</span> <span class="id">build</span><span class="pn">.</span><span class="id">fsx</span> <span class="o">-</span><span class="id">dg</span> <span class="pn">|</span> <span class="o">&amp;</span> <span class="id">&#39;</span><span class="id">C</span><span class="pn">:</span><span class="o">/</span><span class="id">Program</span> <span class="id">Files</span> <span class="pn">(</span><span class="id">x86</span><span class="pn">)</span><span class="o">/</span><span class="id">Graphviz2</span><span class="pn">.</span><span class="n">38</span><span class="o">/</span><span class="id">bin</span><span class="o">/</span><span class="id">dot</span><span class="pn">.</span><span class="id">exe&#39;</span> <span class="o">-</span><span class="id">Tpng</span> <span class="o">-</span><span class="id">o</span> <span class="pn">.</span><span class="o">/</span><span class="id">graph</span><span class="pn">.</span><span class="id">png</span>
-</code></pre></td>
-</tr>
-</table>
-<p>resulting in an image like this:</p>
-<p><img src="pics/specifictargets/graph.png" alt="graph" title="Dependency graph" /></p>
 <h2><a name="Using-FAKE-s-parallel-option" class="anchor" href="#Using-FAKE-s-parallel-option">Using FAKE's parallel option</a></h2>
 <p>Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
 number of threads used for traversing the dependency tree.
@@ -364,7 +330,7 @@ setting environment variables:</p>
 </ul>
 <p>Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
 However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful</p>
-<h2><a name="Example-1" class="anchor" href="#Example-1">Example</a></h2>
+<h2><a name="Example" class="anchor" href="#Example">Example</a></h2>
 <p>When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
 For example this dependency tree:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -385,21 +351,21 @@ For example this dependency tree:</p>
 <span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Task 1&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task A2&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task A2&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
 
 <span class="s">&quot;Task 1&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task B2&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task B2&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
 
 <span class="s">&quot;Task C2&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
 
 <span class="s">&quot;Task 3&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task A4&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task A4&quot;</span>
 
 <span class="s">&quot;Task 3&quot;</span>
- <span class="o">==&gt;</span> <span class="s">&quot;Task B4&quot;</span>
+	<span class="o">==&gt;</span> <span class="s">&quot;Task B4&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -423,7 +389,7 @@ say that target B has a soft dependency on target A:</p>
 </table>
 <p>With this soft dependency, running B will not require that A be run first. However it does mean that <em>if</em> A is run
 (due to other dependencies) it must be run before B.</p>
-<h2><a name="Example-2" class="anchor" href="#Example-2">Example</a></h2>
+<h2><a name="Example-1" class="anchor" href="#Example-1">Example</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -442,15 +408,15 @@ say that target B has a soft dependency on target A:</p>
 <span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
-	<span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
+	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
-	<span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
+	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Rebuild&quot;</span> <span class="id">DoNothing</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Rebuild&quot;</span> <span class="id">Target</span><span class="pn">.</span><span class="id">DoNothing</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Build&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Rebuild&quot;</span>

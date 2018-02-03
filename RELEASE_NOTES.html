@@ -187,6 +187,15 @@
 
 									<!-- Content -->
                       <article>
+<h4><a name="5-0-0-beta013-2018-02-03" class="anchor" href="#5-0-0-beta013-2018-02-03">5.0.0-beta013 - 2018-02-03</a></h4>
+<ul>
+<li>
+FAKE5: partial support for FST-1027 instead of FAKE Header (now obsolete and will be removed on release).
+This adds support for writing <code>#r "paket: nuget Fake.Module prerelease"</code> in your scripts, see <a href="https://github.com/fsharp/FAKE/pull/1770.">https://github.com/fsharp/FAKE/pull/1770.</a>
+</li>
+<li>FAKE5: Self-Contained scripts (not using/referencing external paket.dependencies) will now write a <code>&lt;script&gt;.fsx.lock</code> file for the dependencies, see <a href="https://github.com/fsharp/FAKE/issues/1769">https://github.com/fsharp/FAKE/issues/1769</a></li>
+<li>FAKE5: <code>fake build &lt;target&gt;</code> is now a shortcut for <code>fake run build.fsx -t &lt;target&gt;</code>, see <a href="https://github.com/fsharp/FAKE/issues/1569">https://github.com/fsharp/FAKE/issues/1569</a></li>
+</ul>
 <h4><a name="5-0-0-beta012-2018-01-28" class="anchor" href="#5-0-0-beta012-2018-01-28">5.0.0-beta012 - 2018-01-28</a></h4>
 <ul>
 <li>FAKE5: New distribution as dotnet-cli-tool <code>dotnet-fake</code> - <a href="https://github.com/fsharp/FAKE/pull/1766">https://github.com/fsharp/FAKE/pull/1766</a></li>

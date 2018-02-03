@@ -227,17 +227,23 @@ compilation has finished. The result is then collected and sent to the SonarQube
 <span class="l">27: </span>
 <span class="l">28: </span>
 <span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.Testing.SonarQube //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Testing</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BeginSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
     <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
-     <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-     <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-     <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> <span class="pn">}</span>
+      <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+      <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+      <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> <span class="pn">}</span>
     <span class="pn">)</span>
   <span class="pn">)</span>
 
@@ -264,50 +270,52 @@ compilation has finished. The result is then collected and sent to the SonarQube
 <h2><a name="Additional-options-for-SonarQube" class="anchor" href="#Additional-options-for-SonarQube">Additional options for SonarQube</a></h2>
 <ul>
 <li>
-<p>You can send additional global settings  to the server with the '/d:' parameter.
-In the SonarQubeParams, this is the new field Settings:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
-  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
-   <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-   <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-   <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
-   <span class="id">Settings</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;sonar.debug&quot;</span><span class="pn">;</span> <span class="s">&quot;sonar.newversion&quot;</span><span class="pn">]</span> <span class="pn">}</span>
-  <span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
-</li>
-<li>
-<p>Configuration can also be read from a configuration file. This is the '/s:' parameter.
-This can be done with the new field Config:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
-  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
-   <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-   <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-   <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
-   <span class="id">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Some</span><span class="pn">(</span><span class="s">&quot;myconfig.cfg&quot;</span><span class="pn">)</span> <span class="pn">}</span>
-  <span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
+You can send additional global settings  to the server with the '/d:' parameter.
+In the SonarQubeParams, this is the new field Settings:
 </li>
 </ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+    <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+    <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+    <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
+    <span class="id">Settings</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;sonar.debug&quot;</span><span class="pn">;</span> <span class="s">&quot;sonar.newversion&quot;</span><span class="pn">]</span> <span class="pn">}</span>
+  <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<ul>
+<li>
+Configuration can also be read from a configuration file. This is the '/s:' parameter.
+This can be done with the new field Config:
+</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+  <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
+    <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
+    <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
+    <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
+    <span class="id">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Some</span><span class="pn">(</span><span class="s">&quot;myconfig.cfg&quot;</span><span class="pn">)</span> <span class="pn">}</span>
+  <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
 
 <div class="tip" id="fs1">union case Option.None: Option&lt;&#39;T&gt;</div>
 <div class="tip" id="fs2">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>

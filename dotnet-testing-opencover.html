@@ -200,8 +200,12 @@
 <span class="l">5: </span>
 <span class="l">6: </span>
 <span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.DotNet.Testing.OpenCover //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
 
 <span class="id">OpenCover</span><span class="pn">.</span><span class="id">Run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
     <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
@@ -216,8 +220,12 @@
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.DotNet.Testing.OpenCover //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
 
 <span class="id">OpenCover</span><span class="pn">.</span><span class="id">Version</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span>
 </code></pre></td>
@@ -249,8 +257,14 @@
 <span class="l">23: </span>
 <span class="l">24: </span>
 <span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.DotNet.Testing.OpenCover //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span><span class="pn">.</span><span class="id">OpenCover</span>
 

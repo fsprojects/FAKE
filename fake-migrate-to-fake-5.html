@@ -269,29 +269,38 @@ stuff you are using was not migrated yet (let us know or send a PR, TODO: Add li
 <p>The drawback however is that you now need to know where stuff lives and add those packages to your build.</p>
 <p>Already a paket user?</p>
 <p>For now its quite simple: The namespace or module name is used as the package name, just search for the package and then
-add it to the dependencies file to a new group (for example netcorebuild).</p>
+add it to the dependencies file to a new group (for example <code>netcorebuild</code>).</p>
 <p>Not a paket user?</p>
-<p>We currently don't have any simple advice but to read the dependencies file docs and go to the 'Already a paket user?' section.</p>
-<p>Once you added all your dependencies to a particular new group (for example netcorebuild). You can add the following header to your build script</p>
+<p>No problem! For most use-cases it is enough to find the NuGet package of the module (most times they have the same name for easier discovery) and add it to your script:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">(* -- Fake Dependencies paket.dependencies</span>
-<span class="c">file ./paket.dependencies</span>
-<span class="c">group netcorebuild</span>
-<span class="c">-- Fake Dependencies -- *)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Targets prerelease</span>
+<span class="s">nuget MyPackage1</span>
+<span class="s">nuget MyPackage2&quot;</span>
 </code></pre></td>
 </tr>
 </table>
-<p>Now you can install and run the netcore version of FAKE and it will restore and use the dependencies (you might need to do a <code>./paket update</code> before FAKE can properly restore the packages).</p>
+<p>to your build script. Now delete <code>&lt;script&gt;.fsx.lock</code> and run <code>fake run &lt;script&gt;.fsx</code> now you can use intellisense to start using the modules.</p>
+<blockquote>
+<p>If you want to read more about the possible syntax you can use here, please consult <a href="https://fsprojects.github.io/Paket/dependencies-file.html">https://fsprojects.github.io/Paket/dependencies-file.html</a> and <a href="https://fsprojects.github.io/Paket/nuget-dependencies.html.">https://fsprojects.github.io/Paket/nuget-dependencies.html.</a></p>
+</blockquote>
+<p>Once you feel more confident with using to paket infrastructure you can move your dependencies into a <code>paket.dependencies</code> group and use</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket: groupref netcorebuild //&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 <h3><a name="CLI-Migration" class="anchor" href="#CLI-Migration">CLI Migration</a></h3>
 <p>Yes we even broke the CLI. The old CLI was actually a mixture of two different CLI styles, confused a lot of users and to be honest was an ugly hack.
 It was obvious that we would not even try to make things compatible with it in any way.
 However your changes should only be minimal in the most cases. I'd say in 80% its just about adding the <code>run</code> verb between the <code>fake.exe</code> and the build script.
 <code>fake build.fsx</code> will be <code>fake run build.fsx</code>. Running a particular target is as easy <code>fake target</code> will be <code>fake run build.fsx --target target</code>.
-For a full reference use <code>--help</code> or the documentation.</p>
+For a full reference use <code>--help</code> or the <a href="fake-commandline.html">documentation</a>.</p>
 <p>If you used special cases which aren't mentioned here please edit this page or open an issue.</p>
 
 
