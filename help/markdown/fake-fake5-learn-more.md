@@ -21,7 +21,7 @@ First let me say that there are two distributions of FAKE 5.
 
  - The first one is an update to the 'regular' FAKE 4 package on NuGet.
    It's very safe to update to this package as mentioned in the [migrate to fake 5 guide](fake-migrate-to-fake-5.html).
-   The reason it is considered "alpha" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized jet.
+   The reason it is considered "alpha" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized yet.
    So just ignore the `Obsolete` warnings and upgrade. If you start fixing the obsolete warnings we MIGHT break your script in an update.
    Hope this makes it clear why the Fake-5 nuget package is marked as alpha.
    Alpha stage will end when all `Obsolete` attributes are correct and the new API is considered stable.
