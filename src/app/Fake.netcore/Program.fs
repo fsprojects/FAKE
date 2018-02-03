@@ -61,10 +61,104 @@ let splitCommandLine s =
   |> Seq.filter (System.String.IsNullOrEmpty >> not)
 
 
+type RunArguments = {
+   Script : string option
+   Target : string option
+   FsiArgLine : string
+   EnvironmentVariables : (string * string) list
+   Debug : bool
+   SingleTarget : bool
+   NoCache : bool
+   PrintDetails : bool
+   IsBuild : bool // Did the user call `fake build` or `fake run`?
+}
+
+let runOrBuild (args : RunArguments) =
+  if args.Debug then
+    Diagnostics.Debugger.Launch() |> ignore
+    Diagnostics.Debugger.Break() |> ignore
+
+  try
+    if args.PrintDetails then printVersion()
+
+    //Maybe log.
+    //match fakeArgs.TryGetResult <@ Cli.LogFile @> with
+    //| Some(path) -> addXmlListener path
+    //| None -> ()
+
+    //Get our fsiargs from somewhere!
+    
+    let s = args.Script
+    let additionalArgs, scriptFile, scriptArgs = 
+        match
+            splitCommandLine args.FsiArgLine |> Seq.toList,
+            s,
+            List.isEmpty buildScripts with
+
+        //TODO check for presence of --fsiargs with no args?  Make attribute for UAP?
+
+        //Use --fsiargs approach.
+        | x::xs, _, _ ->
+            let args = x::xs |> Array.ofList
+            //Find first arg that does not start with - (as these are fsi options that precede the fsx).
+            match args |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
+            | Some(i) ->
+                let fsxPath = args.[i]
+                if fsxPath.EndsWith(".fsx", StringComparison.OrdinalIgnoreCase) then
+                    let fsiOpts = if i > 0 then args.[0..i-1] else [||]
+                    let scriptArgs = if args.Length > (i+1) then args.[i+1..] else [||]
+                    fsiOpts |> List.ofArray, fsxPath, scriptArgs |> List.ofArray
+                else 
+                  let msg = sprintf "Expected argument %s to be the build script path, but it does not have the .fsx extension." fsxPath
+                  failwithf "Unable to parse --fsiargs.  %s" msg
+            | None ->
+                  let msg = "Unable to locate the build script path."
+                  failwithf "Unable to parse --fsiargs.  %s" msg
+        //Script path is specified.
+        | [], Some(script), _ -> [], script, []
+
+        //No explicit script, but have in working directory.
+        | [], None, false -> 
+          match buildScripts |> List.tryFind (fun f -> Path.GetFileName f = "build.fsx") with
+          | Some find -> [], find, []
+          | None -> [], List.head buildScripts, []
+
+        //Noooo script anywhere!
+        | [], None, true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
+
+    //Combine the key value pair vars and the flag vars.
+    let envVars =
+        seq {
+          yield! args.EnvironmentVariables
+            //|> Seq.map (fun s -> let split = s.Split(':') in split.[0], split.[1])
+          if args.SingleTarget then yield "single-target", "true"
+          if args.Target.IsSome then yield "target", args.Target.Value
+          yield "fsiargs-buildscriptargs", String.Join(" ", scriptArgs)
+        }
+
+    let useCache = not args.NoCache
+    if not (FakeRuntime.prepareAndRunScript args.PrintDetails additionalArgs scriptFile envVars useCache) then false
+    else 
+        if args.PrintDetails then log "Ready."
+        true
+  with
+  | exn ->
+      traceError "Script failed with"
+      if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
+          Paket.Logging.printErrorExt true true false exn
+      else Paket.Logging.printErrorExt args.PrintDetails args.PrintDetails false exn
+
+      //let isKnownException = exn :? FAKEException
+      //if not isKnownException then
+      //    sendTeamCityError exn.Message
+
+      false
+
 let handleCli (results:ParseResults<Cli.FakeArgs>) =
 
   let mutable didSomething = false
   let mutable exitCode = 0
+  let mutable runarg = None
   let verbLevel = (results.GetResults <@ Cli.FakeArgs.Verbose @>) |> List.length
   let printDetails = verbLevel > 0
   if verbLevel > 1 then
@@ -77,100 +171,43 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
     didSomething <- true
     printVersion()
     printFakePath()
+    
   results.IterResult (<@ Cli.FakeArgs.Run @>, fun runArgs ->
-    didSomething <- true
-    if runArgs.Contains <@ Cli.RunArgs.Debug @> then
-      Diagnostics.Debugger.Launch() |> ignore
-      Diagnostics.Debugger.Break() |> ignore
-
-    try
-      //AutoCloseXmlWriter <- true
-      //let cmdArgs = System.Environment.GetCommandLineArgs()
-      //match isBoot with
-      ////Boot.
-      //| true ->
-      //    let handler = Boot.HandlerForArgs bootArgs//Could be List.empty, but let Boot handle this.
-      //    handler.Interact()
-      //
-      ////Try and run a build script! 
-      //| false ->
-
-      if printDetails then printVersion()
-
-      //Maybe log.
-      //match fakeArgs.TryGetResult <@ Cli.LogFile @> with
-      //| Some(path) -> addXmlListener path
-      //| None -> ()
-
-      //Get our fsiargs from somewhere!
-      let fsiArgLine = if runArgs.Contains <@ Cli.RunArgs.FsiArgs @> then runArgs.GetResult <@ Cli.RunArgs.FsiArgs @> else ""
-      let s = if runArgs.Contains <@ Cli.RunArgs.Script @> then Some (runArgs.GetResult <@ Cli.RunArgs.Script @>)  else None
-      let additionalArgs, scriptFile, scriptArgs = 
-          match
-              splitCommandLine fsiArgLine |> Seq.toList,
-              s,
-              List.isEmpty buildScripts with
-
-          //TODO check for presence of --fsiargs with no args?  Make attribute for UAP?
-
-          //Use --fsiargs approach.
-          | x::xs, _, _ ->
-              let args = x::xs |> Array.ofList
-              //Find first arg that does not start with - (as these are fsi options that precede the fsx).
-              match args |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
-              | Some(i) ->
-                  let fsxPath = args.[i]
-                  if fsxPath.EndsWith(".fsx", StringComparison.OrdinalIgnoreCase) then
-                      let fsiOpts = if i > 0 then args.[0..i-1] else [||]
-                      let scriptArgs = if args.Length > (i+1) then args.[i+1..] else [||]
-                      fsiOpts |> List.ofArray, fsxPath, scriptArgs |> List.ofArray
-                  else 
-                    let msg = sprintf "Expected argument %s to be the build script path, but it does not have the .fsx extension." fsxPath
-                    failwithf "Unable to parse --fsiargs.  %s" msg
-              | None ->
-                    let msg = "Unable to locate the build script path."
-                    failwithf "Unable to parse --fsiargs.  %s" msg
-          //Script path is specified.
-          | [], Some(script), _ -> [], script, []
-
-          //No explicit script, but have in working directory.
-          | [], None, false -> [], List.head buildScripts, []
-
-          //Noooo script anywhere!
-          | [], None, true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
-
-      //Combine the key value pair vars and the flag vars.
-      let envVars =
-          seq {
-            yield! 
-              runArgs.GetResults(<@ Cli.RunArgs.EnvironmentVariable @>)
-              //|> Seq.map (fun s -> let split = s.Split(':') in split.[0], split.[1])
-            if runArgs.Contains <@ Cli.RunArgs.SingleTarget @> then yield "single-target", "true"
-            if runArgs.Contains <@ Cli.RunArgs.Target @> then yield "target", runArgs.GetResult <@ Cli.RunArgs.Target @>
-            yield "fsiargs-buildscriptargs", String.Join(" ", scriptArgs)
-          }
-
-      let useCache = not (runArgs.Contains <@ Cli.RunArgs.NoCache @>)
-      if not (FakeRuntime.prepareAndRunScript printDetails additionalArgs scriptFile envVars useCache) then exitCode <- 1
-      else if printDetails then log "Ready."
-    with
-    | exn ->
-        traceError "Script failed with"
-        if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
-            Paket.Logging.printErrorExt true true false exn
-        else Paket.Logging.printErrorExt printDetails printDetails false exn
-
-        //let isKnownException = exn :? FAKEException
-        //if not isKnownException then
-        //    sendTeamCityError exn.Message
-
-        exitCode <- 1
-
-    //killAllCreatedProcesses()
+    runarg <- Some {
+       Script = if runArgs.Contains <@ Cli.RunArgs.Script @> then Some (runArgs.GetResult <@ Cli.RunArgs.Script @>) else None
+       Target = if runArgs.Contains <@ Cli.RunArgs.Target @> then Some (runArgs.GetResult <@ Cli.RunArgs.Target @>) else None
+       FsiArgLine = if runArgs.Contains <@ Cli.RunArgs.FsiArgs @> then runArgs.GetResult <@ Cli.RunArgs.FsiArgs @> else ""
+       EnvironmentVariables = runArgs.GetResults(<@ Cli.RunArgs.EnvironmentVariable @>)
+       Debug = runArgs.Contains <@ Cli.RunArgs.Debug @>
+       SingleTarget =  runArgs.Contains <@ Cli.RunArgs.SingleTarget @>
+       NoCache = runArgs.Contains <@ Cli.RunArgs.NoCache @>
+       PrintDetails = printDetails
+       IsBuild = false // Did the user call `fake build` or `fake run`?
+    }
   )
 
-  if not didSomething then
+  results.IterResult (<@ Cli.FakeArgs.Build @>, fun buildArg ->
+    if runarg.IsSome then failwithf "`fake run` was already executed, executing `fake build` at the same time is impossible!"
+    runarg <- Some {
+       Script = if buildArg.Contains <@ Cli.BuildArgs.Script @> then Some (buildArg.GetResult <@ Cli.BuildArgs.Script @>) else None
+       Target = if buildArg.Contains <@ Cli.BuildArgs.Target @> then Some (buildArg.GetResult <@ Cli.BuildArgs.Target @>) else None
+       FsiArgLine = if buildArg.Contains <@ Cli.BuildArgs.FsiArgs @> then buildArg.GetResult <@ Cli.BuildArgs.FsiArgs @> else ""
+       EnvironmentVariables = buildArg.GetResults(<@ Cli.BuildArgs.EnvironmentVariable @>)
+       Debug = buildArg.Contains <@ Cli.BuildArgs.Debug @>
+       SingleTarget =  buildArg.Contains <@ Cli.BuildArgs.SingleTarget @>
+       NoCache = buildArg.Contains <@ Cli.BuildArgs.NoCache @>
+       PrintDetails = printDetails
+       IsBuild = true // Did the user call `fake build` or `fake run`?
+    }
+  )
+
+  match runarg with
+  | Some arg ->
+    let success = runOrBuild arg
+    if not success then exitCode <- 1
+  | None when not didSomething ->
     results.Raise ("Please specify what you want to do!", showUsage = true)
+  | None -> ()  
 
   exitCode
 
