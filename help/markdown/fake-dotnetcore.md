@@ -18,7 +18,7 @@ fake --help
 
 This is basically it. You can now execute fake commands.
 
-For unix we don't have packages jet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
+For unix we don't have packages yet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
 
 ## CLI
 

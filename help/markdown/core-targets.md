@@ -8,7 +8,7 @@
 
 Not yet available in FAKE 5
 
-> Note: This feature still makes sense, but a good CLI has not been found jet, please propose one.
+> Note: This feature still makes sense, but a good CLI has not been found yet, please propose one.
 > For not you can run the target with name '--listTargets' or '-lt'. `fake run build.fsx -t '--list-Targets'`
 
 ## Running specific targets
@@ -44,7 +44,7 @@ FAKE has a special param "target" which can be used to run specific targets in a
 
 > Warning: Previous versions of FAKE 5 used `(fun () -> ...)` instead of `(fun _ -> ...)`.
 > We decided to change the syntax here to introduce some parameters or other features at a later point.
-> Using the current parameter object is not supported jet.
+> Using the current parameter object is not supported yet.
 
 Now we have the following options:
 
