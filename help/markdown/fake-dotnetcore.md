@@ -74,7 +74,7 @@ The disadvantage is that you need to have a dotnet sdk installed.
 Create a file named `build.fsx` with the following contents:
 ```fsharp
 #r "paket:
-nuget Fake.Core.Target"
+nuget Fake.Core.Target //"
 // include Fake modules, see Fake modules section
 
 open Fake.Core

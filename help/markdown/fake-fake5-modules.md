@@ -47,7 +47,7 @@ Please read introduction about [Paket](https://fsprojects.github.io/Paket/) for 
 
 To be more independent from paket infrastructure (stand-alone-scripts and similar situations) there is a way to specify dependencies from within the script itself.
 
-> We use the new syntax specified in https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md
+> We use the new syntax specified in [FST-1027](https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md). 
 > However, to be fully compatible with existing tooling and infrastructure make sure to add `//` at the end of the `#r` string.
 > See https://github.com/fsharp/FAKE/pull/1770 for details.
 
@@ -61,7 +61,7 @@ To reference a FAKE group explicitely you can put the following at the top of yo
 ```
     
 
-This header will reference a `paket.dependencies` file and the `netcorebuild` group within.
+This header will reference the `paket.dependencies` file and the `netcorebuild` group within.
 
 The last line `#load` is not required by FAKE 5, however
 this way the file can still be edited in editors (after restoring packages initially).
