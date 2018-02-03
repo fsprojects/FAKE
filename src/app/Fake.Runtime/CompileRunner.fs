@@ -113,15 +113,15 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
 
     let fsc = FSharpChecker.Create()
     let errors, returnCode = fsc.Compile (args |> List.toArray) |> Async.RunSynchronously
+    let errors =
+        errors
+        |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
     if returnCode <> 0 then failwithf "Compilation failed: \n%s" (formatErrors errors)
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 
-    let errorsString =
-        errors
-        |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
-        |> formatErrors
+    let errorsString = formatErrors errors
 
     let cacheInfo = handleCoreCaching context wishPath errorsString
     match cacheInfo.AsCacheInfo with
