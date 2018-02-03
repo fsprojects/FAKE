@@ -197,7 +197,7 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
+let paketCachingProvider (script:string) printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -281,6 +281,13 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     if printDetails then Trace.log "Restoring with paket..."
 
     // Update
+    let localLock = script + ".lock"
+    let localLockText = lazy File.ReadAllText localLock
+    if File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
+      File.Copy(localLock, lockFilePath.FullName)
+    if not (File.Exists localLock) then
+      File.Delete lockFilePath.FullName
+
     if not <| File.Exists lockFilePath.FullName then
       if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
       try
@@ -292,6 +299,8 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         // We do a restore anyway.
         ()
 
+      File.Copy(lockFilePath.FullName, localLock)
+    
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
     |> ignore
@@ -435,10 +444,10 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
           if printDetails then Trace.log "saving cache..."
           File.WriteAllText (context.CachedAssemblyFilePath + ".warnings", cache.Warnings) }
 
-let restoreDependencies printDetails cacheDir section =
+let restoreDependencies script printDetails cacheDir section =
   match section with
   | PaketDependencies (paketDependencies, group) ->
-    paketCachingProvider printDetails cacheDir paketDependencies group
+    paketCachingProvider script printDetails cacheDir paketDependencies group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -493,7 +502,7 @@ let prepareFakeScript printDetails script =
         Trace.traceFAKE "NetCore hack (FAKE_UNDOCUMENTED_NETCORE_HACK) is activated: %s" script
         CoreCache.Cache.defaultProvider
     | Some section, _ ->
-        restoreDependencies printDetails cacheDir section
+        restoreDependencies script printDetails cacheDir section
     | _ ->
         failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 

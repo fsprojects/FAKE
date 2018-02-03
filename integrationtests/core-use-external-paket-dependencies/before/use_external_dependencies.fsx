@@ -1,4 +1,4 @@
-#r "paket: groupref Main"
+#r "paket: groupref Main //"
 #load ".fake/use_external_dependencies.fsx/intellisense.fsx"
 
 open Fake.Runtime
