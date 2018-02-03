@@ -7,9 +7,11 @@ The FAKE.exe command line interface (CLI) is defined as follows:`
 
 ```
 USAGE: fake [--help] [--version] [--verbose] [<subcommand> [<options>]]
+
 SUBCOMMANDS:
 
-    run <options>         Runs a build script.
+    run <options>         Runs a script.
+    build <options>       Build a target via build.fsx script.
 
     Use 'fake <subcommand> --help' for additional information.
 
@@ -20,7 +22,7 @@ OPTIONS:
     --help                display this list of options.
 ```
 
-For now fake only supports the `run` subcommand which is basically equivalent to the Fake as you know it, but more are planned in the future.
+For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future.
 
 ## `--verbose [-v]`
 
@@ -46,10 +48,14 @@ For example `fake run --help` to get help about the `run` subcommand.
 ### Run
 
 ```
-USAGE: fake run [--help] [--script <string>] [--target <string>] [--environmentvariable <string> <string>] [--debug] [--singletarget] [--nocache] [--fsiargs <string>]
+USAGE: fake run [--help] [--script <string>] [--target <string>]
+                [--environmentvariable <string> <string>] [--debug]
+                [--singletarget] [--nocache] [--fsiargs <string>]
+
 OPTIONS:
 
-    --script <string>     Specify the script to run. (--script is optional)
+    --script, -f <string> Specify the script to run. (--script or -f is
+                          optional)
     --target, -t <string> The target to run.
     --environmentvariable, -e <string> <string>
                           Set an environment variable.
@@ -66,7 +72,7 @@ The run command is basically to start scripts or build-scripts therefore the `--
 
 **Specify build script only:** `fake.exe run mybuildscript.fsx`
 
-**Specify target name only:** `fake.exe run build.fsx --target clean` (runs the `clean` target).
+**Specify target name only:** `fake.exe run build.fsx --target Clean` (runs the `Clean` target).
 
 #### `script`
 
@@ -88,6 +94,35 @@ Pass an single argument after this switch to FSI when running the build script. 
 
 Display CLI help.
                                                                                                          
+### Build
+
+```
+USAGE: fake build [--help] [--target <string>] [--script <string>]
+                  [--environmentvariable <string> <string>] [--debug]
+                  [--singletarget] [--nocache] [--fsiargs <string>]
+
+OPTIONS:
+
+    --target, -t <string> The target to run (--target or -t is optional when
+                          running 'build').
+    --script, -f <string> Specify the script to run.
+    --environmentvariable, -e <string> <string>
+                          Set an environment variable.
+    --debug, -d           Debug the script (set a breakpoint at the start).
+    --singletarget, -s    Run only the specified target.
+    --nocache, -n         Disable caching of the compiled script.
+    --fsiargs <string>    Arguments passed to the f# interactive.
+    --help                display this list of options.
+```
+
+Very similar to `run`. The difference is that with `build` the `--target` is optional and `build.fsx` is assumed where in `run` the `--script` is optional.
+Examples:
+
+ - `fake build` to run the default target and `build.fsx`
+ - `fake build Build -s` to run the `Build` target without dependencies
+ - `fake build Build` to run the `Build` target with all dependencies
+
+The recommendation is to use `fake build` if you have a single `build.fsx` and `fake run` for scripting (or multiple `.fsx` files). 
 
 # Running FAKE targets from the command line
 
@@ -117,5 +152,8 @@ For this short sample we assume you have the latest version of FAKE installed an
 Now you can just execute
 
  - `fake run build.fsx` to run the default target (`Deploy`)
+ - `fake build` same as above
  - `fake run build.fsx -s -t Build` to run the `Build` target without dependencies
+ - `fake build Build -s` same as above
  - `fake run build.fsx -t Build` to run the `Build` target with the `Clean` dependency
+ - `fake build Build` same as above
