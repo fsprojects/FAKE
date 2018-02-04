@@ -47,8 +47,9 @@ is freely available for open-source projects).
 to find out the required tools.
 
 * Install FAKE
-  * For example on windows run `choco install fake -pre`
+  * For example on windows run `choco install fake -pre` (remember to update from time to time with `choco update fake -pre`)
   * On unix we don't have fake properly packaged yet (please HELP!). You can use the steps outlined in [`.travis.yml`](https://github.com/fsharp/FAKE/blob/master/.travis.yml#L14-L18)
+  * alternatively you can install the dotnet-sdk and use `dotnet restore build.proj` and `dotnet fake <arguments>` instead of `fake <arguments>`
 
 * Alternately, you can use [Vagrant](https://www.vagrantup.com/) in-pair with [VirtualBox](https://www.virtualbox.org/)
 to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](vagrant.html) to get in touch with the tool.
