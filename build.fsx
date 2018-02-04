@@ -275,7 +275,11 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
 )
 
 Target.Create "BuildSolution_" (fun _ ->
+#if BOOTSTRAP
+    MsBuild.RunWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
+#else
     MsBuild.MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
+#endif
     |> Trace.Log "AppBuild-Output: "
 )
 
