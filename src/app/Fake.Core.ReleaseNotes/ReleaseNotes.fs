@@ -47,7 +47,7 @@ type ReleaseNotes =
       /// The nuget package version.
       NugetVersion: string
       /// Semantic version
-      SemVer: SemVer.SemVerInfo
+      SemVer: SemVerInfo
       /// Release date
       Date : DateTime option
       // The parsed release notes.
