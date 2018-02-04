@@ -33,6 +33,8 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
+// Workaround https://github.com/fsharp/FAKE/issues/1776
+System.Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", null)
 
 // properties
 let projectName = "FAKE"
