@@ -34,7 +34,9 @@ open Fake.DotNet
 open Fake.DotNet.Testing
 
 // Workaround https://github.com/fsharp/FAKE/issues/1776
+printfn "clear msbuild envvars"
 System.Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", null)
+System.Environment.SetEnvironmentVariable("MSBuildExtensionsPath", null)
 
 // properties
 let projectName = "FAKE"
