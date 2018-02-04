@@ -1,7 +1,7 @@
 language: csharp
 sudo: required
 dist: trusty # Ubuntu 14.04
-
+dotnet : 2.1.4
 env:
  - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
@@ -10,12 +10,13 @@ addons:
     packages:
       - libunwind8
 
-before_script:
-  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta013/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
-  - mkdir fake-dotnetcore
-  - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
-  - export PATH=$PATH:$PWD/fake-dotnetcore/
-  - chmod +x $PWD/fake-dotnetcore/fake
+#before_script:
+#  - dotnet restore dotnet-fake.csproj
+#  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta013/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+#  - mkdir fake-dotnetcore
+#  - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
+#  - export PATH=$PATH:$PWD/fake-dotnetcore/
+#  - chmod +x $PWD/fake-dotnetcore/fake
 #  - export FAKE="$PWD/fake-dotnetcore/Fake"
   
 before install:
@@ -27,7 +28,8 @@ mono:
   - 5.0.1
 
 script: 
-  - fake run build.fsx
+  - dotnet build build.proj
+#  - fake run build.fsx
 #  - ./build.sh
 
 branches:
