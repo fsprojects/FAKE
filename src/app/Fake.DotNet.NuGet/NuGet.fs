@@ -119,6 +119,22 @@ let NuGetDefaults() =
 /// Creates a string which tells NuGet that you require exactly this package version.
 let RequireExactly version = sprintf "[%s]" version
 
+type BreakingPoint =
+  | SemVer
+  | Minor
+  | Patch
+
+// See https://docs.nuget.org/create/versioning
+let RequireRange breakingPoint version =
+  let v = SemVer.parse version
+  match breakingPoint with
+  | SemVer ->
+    sprintf "[%s,%d.0)" version (v.Major + 1)
+  | Minor -> // Like Semver but we assume that the increase of a minor version is already breaking
+    sprintf "[%s,%d.%d)" version v.Major (v.Minor + 1)
+  | Patch -> // Every update breaks
+    version |> Fake.DotNet.NuGet.NuGet.RequireExactly
+
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
 [<Obsolete("I was just lazy in porting")>]
