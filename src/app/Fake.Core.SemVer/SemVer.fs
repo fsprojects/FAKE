@@ -1,20 +1,80 @@
-﻿/// Contains helpers which allow to deal with [Semantic Versioning](http://semver.org/) (SemVer).
-module Fake.Core.SemVer
+﻿
+namespace Fake.Core
 
 open System
+open System.Text.RegularExpressions
 open Fake.Core
+
+/// Contains active patterns which allow to deal with [Semantic Versioning](http://semver.org/) (SemVer).
+module SemVerActivePattern =
+    let (|ParseRegex|_|) pattern input  =
+        let m = Regex.Match(input, pattern, RegexOptions.ExplicitCapture)
+
+        match m.Success with
+        | true ->
+            Some (List.tail [ for g in m.Groups -> g.Value ])
+        | false ->
+            None
+
+    let (|SemVer|_|) version =
+        let pattern =
+            @"^(?<major>\d+)" +
+            @"(\.(?<minor>\d+))?" +
+            @"(\.(?<patch>\d+))?" +
+            @"(\-(?<pre>[0-9A-Za-z\-\.]+))?" +
+            @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
+
+        match version with
+        | ParseRegex pattern [major; minor; patch; pre; build] ->
+            Some [major; minor; patch; pre; build]
+        | _ ->
+            None
+
+    let (|ValidVersion|_|) = function
+        | null | "" -> None
+        | ver when ver.Length > 1 && ver.StartsWith("0") -> None
+        | _ -> Some ValidVersion
+
+module internal InternalHelper =
+
+    let ComparePreRelease a b =
+        let (|Int|_|) str =
+           match System.Int32.TryParse(str) with
+           | (true, int) -> Some(int)
+           | _ -> None
+
+        let comp a b = 
+            match (a, b) with
+            | (Int a, Int b) -> a.CompareTo(b)
+            | (Int a, _) -> -1
+            | (_, Int b) -> 1
+            | _ -> match String.CompareOrdinal(a, b) with
+                   | i when not (i = 0) -> i
+                   | _ -> 0
+
+        let aEmpty = String.IsNullOrEmpty(a)
+        let bEmpty = String.IsNullOrEmpty(b)
+
+        match (aEmpty, bEmpty) with
+        | (true, true) -> 0
+        | (true, false) -> 1
+        | (false, true) -> -1
+        | _ -> Seq.compareWith comp (a.Split '.') (b.Split '.')
+
+open SemVerActivePattern
+open InternalHelper
 
 [<CustomEquality; CustomComparison>]
 type PreRelease = 
     { Origin: string
-      Name: string
-      Number: int option }
+      Name: string }
     static member TryParse str = 
-        let m = String.getRegEx("^(?<name>[a-zA-Z]+)(?<number>\d*)$").Match(str)
-        match m.Success, m.Groups.["name"].Value, m.Groups.["number"].Value with
-        | true, name, "" -> Some { Origin = str; Name = name; Number = None }
-        | true, name, number -> Some { Origin = str; Name = name; Number = Some (int number) }
-        | _ -> None
+        match str with
+        | ParseRegex "^(?<name>[0-9A-Za-z\-\.]+)$" [name] ->
+            Some { Origin = str; Name = name }
+        | _ ->
+            None
+
     override x.Equals(yobj) =
         match yobj with
         | :? PreRelease as y -> x.Origin = y.Origin
@@ -24,8 +84,7 @@ type PreRelease =
         member x.CompareTo yobj =
             match yobj with
             | :? PreRelease as y ->
-                if x.Name <> y.Name then compare x.Name y.Name else
-                compare x.Number y.Number
+                ComparePreRelease x.Name y.Name
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
 /// Contains the version information.
@@ -42,12 +101,13 @@ type SemVerInfo =
       /// The optional build no.
       Build: string }
     override x.ToString() =
-        sprintf "%d.%d.%d" x.Major x.Minor x.Patch +
-         (match x.PreRelease, String.isNotNullOrEmpty x.Build with
-          | Some preRelease, _ -> "-" + preRelease.Name 
-          | None, true -> "-"
-          | _ -> "") +
-         (if String.isNotNullOrEmpty x.Build then "." + x.Build else "")
+        sprintf "%d.%d.%d%s%s" x.Major x.Minor x.Patch
+            (match x.PreRelease with
+             | Some preRelease -> sprintf "-%s"preRelease.Name 
+             | _ -> "")
+            (match String.isNotNullOrEmpty x.Build with
+             | true -> sprintf "+%s" x.Build
+             | _ -> "")
 
     override x.Equals(yobj) =
         match yobj with
@@ -77,38 +137,35 @@ type SemVerInfo =
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
 
-let private semVerPattern = "^(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?(?:\+[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?$"
+/// Contains helpers which allow to deal with [Semantic Versioning](http://semver.org/) (SemVer).
+module SemVer =
+    /// Returns true if input appears to be a parsable semver string
+    let isValidSemVer version =
+        match version with
+        | SemVer [ValidVersion major; ValidVersion minor; ValidVersion patch; pre; build] ->
+            true
+        | _ ->
+            false
 
-/// Returns true if input appears to be a parsable semver string
-let isValidSemVer input =
-    let r = String.getRegEx semVerPattern
-    let m = r.Match(input)
-    m.Success
-
-/// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
-/// according to the rules described in the [SemVer docs](http://semver.org/).
-/// ## Sample
-///
-///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
-///     parse "1.2.3-alpha"    > parse "1.2.2"          // true
-///     parse "1.2.3-alpha2"   > parse "1.2.3-alpha"    // true
-///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // true
-///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
-let parse version =
-    let splitted = String.split '.' version
-    let l = splitted.Length
-    let patch,preRelease =
-        if l <= 2 then 0,"" else
-        let splitted' = String.split '-' splitted.[2]
-        Int32.Parse splitted'.[0], if splitted'.Length > 1 then splitted'.[1] else ""
-
-
-    { Major = if l > 0 then Int32.Parse splitted.[0] else 0
-      Minor = if l > 1 then Int32.Parse splitted.[1] else 0
-      Patch = patch
-      PreRelease = PreRelease.TryParse preRelease
-      Build = if l > 3 then splitted.[3] else "" 
-    }
-
-
+    /// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
+    /// according to the rules described in the [SemVer docs](http://semver.org/).
+    /// ## Sample
+    ///
+    ///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
+    ///     parse "1.2.3-alpha"    > parse "1.2.2"          // true
+    ///     parse "1.2.3-alpha2"   > parse "1.2.3-alpha"    // true
+    ///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // false
+    ///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
+    let parse version =
+        match version with
+        | SemVer [major; minor; patch; pre; build] ->
+            {
+                Major = if String.isNullOrEmpty major then 1 else Int32.Parse major
+                Minor = if String.isNullOrEmpty minor then 0 else Int32.Parse minor
+                Patch = if String.isNullOrEmpty patch then 0 else Int32.Parse patch
+                PreRelease = PreRelease.TryParse pre
+                Build = build
+            }
+        | _ ->
+            failwithf "Unable to parse version %s" version
 
