@@ -1,3 +1,6 @@
+#### 5.0.0-beta014
+* BREAKING: Change Fake.DotNet.Cli API according to latest changes and add `dotnet test`
+
 #### 5.0.0-beta013 - 2018-02-03
 * FAKE5: partial support for FST-1027 instead of FAKE Header (now obsolete and will be removed on release).
   This adds support for writing `#r "paket: nuget Fake.Module prerelease"` in your scripts, see https://github.com/fsharp/FAKE/pull/1770.
