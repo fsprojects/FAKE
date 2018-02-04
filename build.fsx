@@ -639,19 +639,33 @@ Target.Create "DotnetRestore" (fun _ ->
     Environment.setEnvironVar "Version" release.NugetVersion
 
     //dotnet root "--info"
+#if BOOTSTRAP
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "--info" ""
+        |> ignore
+#else
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "--info"
         |> ignore
+#endif    
 
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
     Directory.ensure t
+#if BOOTSTRAP
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new" "console --language f#"
+        |> ignore
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore" ""
+        |> ignore
+    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "build" ""
+        |> ignore
+#else
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
         |> ignore
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore"
         |> ignore
     Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "build"
         |> ignore
+#endif
     Directory.Delete(t, true)
 
     // Copy nupkgs to nuget/dotnetcore
@@ -660,8 +674,11 @@ Target.Create "DotnetRestore" (fun _ ->
         let dir = nugetDncDir //@@ "dotnetcore"
         Directory.ensure dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
-
+#if BOOTSTRAP
+    let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln" "src/Fake-netcore.sln list"
+#else
     let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
+#endif
     let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
     let missingNetCoreProj =
         netCoreProjs
