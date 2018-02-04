@@ -133,7 +133,7 @@ let RequireRange breakingPoint version =
   | Minor -> // Like Semver but we assume that the increase of a minor version is already breaking
     sprintf "[%s,%d.%d)" version v.Major (v.Minor + 1)
   | Patch -> // Every update breaks
-    version |> Fake.DotNet.NuGet.NuGet.RequireExactly
+    version |> RequireExactly
 
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
