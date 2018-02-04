@@ -500,7 +500,7 @@ let DotnetRestore setParams project =
     use t = Trace.traceTask "Dotnet:restore" project
     let param = DotnetRestoreOptions.Default |> setParams    
     let args = sprintf "%s %s" project (buildRestoreArgs param)
-    let result = Dotnet param.Common args    
+    let result = Dotnet param.Common "restore" args    
     if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
 
 /// build configuration
