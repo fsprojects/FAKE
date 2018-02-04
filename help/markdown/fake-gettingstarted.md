@@ -189,7 +189,7 @@ Target.Create "Clean" (fun _ ->
 
 Target.Create "BuildApp" (fun _ ->
   !! "src/app/**/*.csproj"
-    |> MsBuild.MSBuildRelease buildDir "Build"
+    |> MsBuild.RunRelease buildDir "Build"
     |> Trace.Log "AppBuild-Output: "
 )
 
@@ -247,13 +247,13 @@ Target.Create "Clean" (fun _ ->
 
 Target.Create "BuildApp" (fun _ ->
     !! "src/app/**/*.csproj"
-    |> MsBuild.MSBuildRelease buildDir "Build"
+    |> MsBuild.RunRelease buildDir "Build"
     |> Trace.Log "AppBuild-Output: "
 )
 
 Target.Create "BuildTest" (fun _ ->
   !! "src/test/**/*.csproj"
-    |> MsBuild.MSBuildDebug testDir "Build"
+    |> MsBuild.RunDebug testDir "Build"
     |> Trace.Log "TestBuild-Output: "
 )
 
@@ -303,13 +303,13 @@ Target.Create "Clean" (fun _ ->
 
 Target.Create "BuildApp" (fun _ ->
    !! "src/app/**/*.csproj"
-     |> MsBuild.MSBuildRelease buildDir "Build"
+     |> MsBuild.RunRelease buildDir "Build"
      |> Trace.Log "AppBuild-Output: "
 )
 
 Target.Create "BuildTest" (fun _ ->
     !! "src/test/**/*.csproj"
-      |> MsBuild.MSBuildDebug testDir "Build"
+      |> MsBuild.RunDebug testDir "Build"
       |> Trace.Log "TestBuild-Output: "
 )
 

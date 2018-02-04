@@ -280,14 +280,20 @@ let setEnvironmentVariable envKey envVar (startInfo : ProcStartInfo) =
     { startInfo with
         Environment =
             match startInfo.Environment with
-            | None -> [envKey, envVar] |> Map.ofSeq
+            | None -> (if isNull envVar then [] else [envKey, envVar]) |> Map.ofSeq
+            | Some map when isNull envVar -> map |> Map.remove envKey
             | Some map -> map |> Map.add envKey envVar
-            |> Some }
-
+            |> Some
+             }
+let removeEnvironmentVariable envKey (startInfo : ProcStartInfo) = setEnvironmentVariable envKey null startInfo
 let setEnvironmentVariables vars (startInfo : ProcStartInfo) =
     vars
     |> Seq.fold (fun state (newKey, newVar) ->
             setEnvironmentVariable newKey newVar state) startInfo
+
+
+let setCurrentEnvironmentVariables (startInfo : ProcStartInfo) =
+    setEnvironmentVariables (Environment.environVars ()) startInfo
 
 type ProcStartInfo with
     /// Gets or sets the set of command-line arguments to use when starting the application.
@@ -304,6 +310,10 @@ type ProcStartInfo with
     /// Gets or sets a value that identifies the domain to use when starting the process.
     member x.WithEnvironmentVariables vars =
         setEnvironmentVariables vars x
+
+    /// Sets the current environment variables.
+    member x.WithCurrentEnvironmentVariables () =
+        setCurrentEnvironmentVariables x
 
 #if FX_ERROR_DIALOG
     /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.

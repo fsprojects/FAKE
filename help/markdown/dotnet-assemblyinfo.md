@@ -9,6 +9,7 @@ If you succeeded with the [Getting Started tutorial](gettingstarted.html), then 
 ```fsharp
 #r "paket:
 nuget Fake.DotNet.AssemblyInfo
+nuget Fake.DotNet.MsBuild
 nuget Fake.Core.Target //"
 open Fake.DotNet
 
@@ -29,7 +30,7 @@ Target.Create "BuildApp" (fun _ ->
 			AssemblyInfo.Version version
 			AssemblyInfo.FileVersion version]
 
-	MSBuild.MSBuildRelease buildDir "Build" appReferences
+	MsBuild.RunRelease buildDir "Build" appReferences
 		|> Log "AppBuild-Output: "
 )
 ```

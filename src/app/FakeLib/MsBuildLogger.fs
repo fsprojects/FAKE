@@ -9,9 +9,11 @@ open System.Collections.Generic
 open System.IO
 
 /// [omit]
+[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
 let errToStr (a : BuildErrorEventArgs) = sprintf "%s: %s(%d,%d): %s" a.Code a.File a.LineNumber a.ColumnNumber a.Message
 
 /// Abstract MSBuild Logger class.
+[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
 type MSBuildLogger() = 
     let mutable Verbosity = LoggerVerbosity.Normal
     let mutable Parameters = ""
@@ -34,15 +36,18 @@ type MSBuildLogger() =
         member this.Initialize(eventSource) = this.RegisterEvents(eventSource)
 
 /// TeamCity Logger for MSBuild
+[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
 type TeamCityLogger() = 
     inherit MSBuildLogger()
     override this.RegisterEvents(eventSource) = 
         eventSource.ErrorRaised.Add(fun a -> errToStr a |> TeamCityHelper.sendTeamCityError)
 
 /// The ErrorLogFile
+[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
 let ErrorLoggerFile = Path.Combine(Path.GetTempPath(), "Fake.Errors.txt")
 
 /// TeamCity Logger for MSBuild
+[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
 type ErrorLogger() = 
     inherit MSBuildLogger()
     let errors = new List<BuildErrorEventArgs>()
