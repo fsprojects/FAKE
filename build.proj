@@ -21,9 +21,6 @@
     <Exec Command='dotnet fake build' WorkingDirectory="$(RepoRootDir)" />
   </Target>
 
-  <Target Name="Restore">
-  </Target>
-
   <Target Name="Pack">
   </Target>
 

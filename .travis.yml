@@ -10,8 +10,9 @@ addons:
     packages:
       - libunwind8
 
-before_script:
-  - dotnet restore build.proj
+#before_script:
+#  - dotnet restore build.proj
+
 #  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta013/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
 #  - mkdir fake-dotnetcore
 #  - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
@@ -28,8 +29,8 @@ mono:
   - 5.0.1
 
 script: 
-#  - dotnet build build.proj
-  - dotnet fake build
+  - dotnet build build.proj
+#  - dotnet fake build
 #  - fake run build.fsx
 #  - ./build.sh
 
