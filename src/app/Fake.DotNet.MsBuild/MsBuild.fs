@@ -254,7 +254,8 @@ type MSBuildParams =
       /// corresponds to the msbuild option '/bl'
       BinaryLoggers : string list option
       /// corresponds to the msbuild option '/dl'
-      DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
+      DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
+      EnvironmentVariables : (string*string) list option }
 /// Defines a default for MSBuild task parameters
 let mutable MSBuildDefaults =
     { ToolPath = msBuildExe
@@ -270,7 +271,8 @@ let mutable MSBuildDefaults =
       RestorePackagesFlag = false
       FileLoggers = None
       BinaryLoggers = None
-      DistributedLoggers = None }
+      DistributedLoggers = None
+      EnvironmentVariables = None }
 
 /// [omit]
 let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
@@ -473,9 +475,17 @@ let build setParams project =
         { info with
             FileName = msBuildParams.ToolPath
             Arguments = args}
-        |> Process.setCurrentEnvironmentVariables
-        |> Process.removeEnvironmentVariable "MSBUILD_EXE_PATH"
-        |> Process.removeEnvironmentVariable "MSBuildExtensionsPath") TimeSpan.MaxValue
+        |> fun procInfo -> 
+              match msBuildParams.EnvironmentVariables with
+              | None ->
+                // By default we remove MSBUILD_EXE_PATH and MSBuildExtensionPath
+                // This seems to be best practice, see https://github.com/fsharp/FAKE/issues/1776
+                procInfo
+                |> Process.setCurrentEnvironmentVariables
+                |> Process.removeEnvironmentVariable "MSBUILD_EXE_PATH"
+                |> Process.removeEnvironmentVariable "MSBuildExtensionsPath"
+              | Some env ->
+                procInfo |> Process.setEnvironmentVariables env) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write

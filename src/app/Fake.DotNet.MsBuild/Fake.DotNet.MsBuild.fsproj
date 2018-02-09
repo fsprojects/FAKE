@@ -1,15 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
+  <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
     <AssemblyName>Fake.DotNet.MsBuild</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="MsBuildLogger.fs" />
-    <Compile Include="MsBuild.fs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
     <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
@@ -17,18 +12,13 @@
     <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
-    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
-    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
+    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
   </ItemGroup>
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);FX_NO_SYSTEM_CONFIGURATION;NO_MSBUILD_AVAILABLE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-  </PropertyGroup>
-  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="MsBuild.fs" />
+    <Compile Include="MsBuildLogger.fs" />
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
 </Project>
