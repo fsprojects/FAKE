@@ -2,6 +2,8 @@
 * BREAKING: Change Fake.DotNet.Cli API according to latest changes and add `dotnet test`
 * BREAKING: Change Fake.DotNet.MsBuild API according to new API-Guidelines
 * BUGFIX: msbuild doesn't work within dotnet-fake - https://github.com/fsharp/FAKE/issues/1776
+* ENHANCEMENT: Fix SemVer - https://github.com/fsharp/FAKE/pull/848
+* ENHANCEMENT: Add Nuget.RequireRange - https://github.com/fsharp/FAKE/pull/1775/commits/0c5b86b747285c596de0fff68002df422fabf15e
 
 #### 5.0.0-beta013 - 2018-02-03
 * FAKE5: partial support for FST-1027 instead of FAKE Header (now obsolete and will be removed on release).
