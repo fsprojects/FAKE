@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <Target Name="Build">
-    <Exec Command='dotnet fake build' WorkingDirectory="$(RepoRootDir)" />
+    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake build' WorkingDirectory="$(RepoRootDir)" />
   </Target>
 
   <Target Name="Pack">
