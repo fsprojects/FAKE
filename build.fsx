@@ -646,12 +646,14 @@ Target.Create "DotnetRestore" (fun _ ->
 
     Environment.setEnvironVar "Version" release.NugetVersion
 
+    let withWorkDir wd (cliOpts:Cli.DotnetOptions) = { cliOpts with WorkingDirectory = wd }
+    let withWorkDirDef wd = withWorkDir wd Cli.DotnetOptions.Default
     //dotnet root "--info"
 #if BOOTSTRAP
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "--info" ""
+    Cli.Dotnet (withWorkDir root) "--info" ""
         |> ignore
 #else
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "--info"
+    Cli.Dotnet (withWorkDirDef root) "--info"
         |> ignore
 #endif    
 
@@ -660,18 +662,18 @@ Target.Create "DotnetRestore" (fun _ ->
     let t = Path.GetFullPath "workaround"
     Directory.ensure t
 #if BOOTSTRAP
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new" "console --language f#"
+    Cli.Dotnet (withWorkDir t) "new" "console --language f#"
         |> ignore
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore" ""
+    Cli.Dotnet (withWorkDir t) "restore" ""
         |> ignore
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "build" ""
+    Cli.Dotnet (withWorkDir t) "build" ""
         |> ignore
 #else
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
+    Cli.Dotnet (withWorkDirDef t) "new console --language f#"
         |> ignore
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "restore"
+    Cli.Dotnet (withWorkDirDef t) "restore"
         |> ignore
-    Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = t } "build"
+    Cli.Dotnet (withWorkDirDef t) "build"
         |> ignore
 #endif
     Directory.Delete(t, true)
@@ -682,10 +684,11 @@ Target.Create "DotnetRestore" (fun _ ->
         let dir = nugetDncDir //@@ "dotnetcore"
         Directory.ensure dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
+
 #if BOOTSTRAP
-    let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln" "src/Fake-netcore.sln list"
+    let result = Cli.Dotnet (withWorkDir root) "sln" "src/Fake-netcore.sln list"
 #else
-    let result = Cli.Dotnet { Cli.DotnetOptions.Default with WorkingDirectory = root } "sln src/Fake-netcore.sln list"
+    let result = Cli.Dotnet (withWorkDirDef root) "sln src/Fake-netcore.sln list"
 #endif
     let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
     let missingNetCoreProj =

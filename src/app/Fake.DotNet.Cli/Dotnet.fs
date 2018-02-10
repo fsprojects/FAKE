@@ -409,7 +409,7 @@ let private buildSdkOptionsArgs (param: DotnetOptions) =
 /// - 'options' - common execution options
 /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
 /// - 'args' - command arguments
-let Dotnet (options: DotnetOptions) command args = 
+let Dotnet (buildOptions: DotnetOptions -> DotnetOptions) command args = 
     let errors = new System.Collections.Generic.List<string>()
     let messages = new System.Collections.Generic.List<string>()
     let timeout = TimeSpan.MaxValue
@@ -422,6 +422,7 @@ let Dotnet (options: DotnetOptions) command args =
         Trace.traceImportant msg
         messages.Add msg
 
+    let options = buildOptions DotnetOptions.Default
     let sdkOptions = buildSdkOptionsArgs options
     let commonOptions = buildCommonArgs options
     let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args 
@@ -497,10 +498,10 @@ let private buildRestoreArgs (param: DotnetRestoreOptions) =
 /// - 'setParams' - set restore command parameters
 /// - 'project' - project to restore packages
 let DotnetRestore setParams project =    
-    use t = Trace.traceTask "Dotnet:restore" project
+    use __ = Trace.traceTask "Dotnet:restore" project
     let param = DotnetRestoreOptions.Default |> setParams    
     let args = sprintf "%s %s" project (buildRestoreArgs param)
-    let result = Dotnet param.Common "restore" args    
+    let result = Dotnet (fun _ -> param.Common) "restore" args    
     if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
 
 /// build configuration
@@ -561,10 +562,10 @@ let private buildPackArgs (param: DotNetPackOptions) =
 /// - 'setParams' - set pack command parameters
 /// - 'project' - project to pack
 let DotnetPack setParams project =    
-    use t = Trace.traceTask "Dotnet:pack" project
+    use __ = Trace.traceTask "Dotnet:pack" project
     let param = DotNetPackOptions.Default |> setParams    
     let args = sprintf "pack %s %s" project (buildPackArgs param)
-    let result = Dotnet param.Common "pack" args    
+    let result = Dotnet (fun _ -> param.Common) "pack" args    
     if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 
 /// dotnet --info command options
@@ -589,10 +590,10 @@ type DotNetInfoResult =
 ///
 /// - 'setParams' - set info command parameters
 let DotnetInfo setParams =    
-    use t = Trace.traceTask "Dotnet:info" "running dotnet --info"
+    use __ = Trace.traceTask "Dotnet:info" "running dotnet --info"
     let param = DotNetInfoOptions.Default |> setParams    
     let args = "--info" // project (buildPackArgs param)
-    let result = Dotnet param.Common "" args
+    let result = Dotnet (fun _ -> param.Common) "" args
     if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
 
     let rid =
@@ -656,10 +657,10 @@ let private buildPublishArgs (param: DotNetPublishOptions) =
 /// - 'setParams' - set publish command parameters
 /// - 'project' - project to publish
 let DotnetPublish setParams project =    
-    use t = Trace.traceTask "Dotnet:publish" project
+    use __ = Trace.traceTask "Dotnet:publish" project
     let param = DotNetPublishOptions.Default |> setParams    
     let args = sprintf "%s %s" project (buildPublishArgs param)
-    let result = Dotnet param.Common "publish" args    
+    let result = Dotnet (fun _ -> param.Common) "publish" args    
     if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
 
 /// dotnet build command options
@@ -711,10 +712,10 @@ let private buildBuildArgs (param: DotNetBuildOptions) =
 /// - 'setParams' - set compile command parameters
 /// - 'project' - project to compile
 let DotnetCompile setParams project =    
-    use t = Trace.traceTask "Dotnet:build" project
+    use __ = Trace.traceTask "Dotnet:build" project
     let param = DotNetBuildOptions.Default |> setParams    
     let args = sprintf "%s %s" project (buildBuildArgs param)
-    let result = Dotnet param.Common "build" args
+    let result = Dotnet (fun _ -> param.Common) "build" args
     if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
 
 let DotnetBuild = DotnetCompile
@@ -805,10 +806,10 @@ let private buildTestArgs (param: DotNetTestOptions) =
 /// - 'setParams' - set compile command parameters
 /// - 'project' - project to compile
 let DotnetTest setParams project =    
-    use t = Trace.traceTask "Dotnet:test" project
+    use __ = Trace.traceTask "Dotnet:test" project
     let param = DotNetTestOptions.Default |> setParams    
     let args = sprintf "%s %s" project (buildTestArgs param)
-    let result = Dotnet param.Common "test" args
+    let result = Dotnet (fun _ -> param.Common) "test" args
     if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
 
 
