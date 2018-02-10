@@ -1,6 +1,8 @@
 ﻿
 namespace Fake.Core
 
+// This implementation is taken from Paket
+
 open System
 open System.Globalization
 open System.Text.RegularExpressions

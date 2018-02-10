@@ -118,6 +118,7 @@ group netcore
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
 
+    nuget System.Runtime.Numerics
     nuget System.Xml.XPath
     nuget System.Xml.XPath.XDocument
     nuget System.Xml.XPath.XmlDocument
