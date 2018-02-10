@@ -131,8 +131,12 @@ let runOrBuild (args : RunArguments) =
         seq {
           yield! args.EnvironmentVariables
             //|> Seq.map (fun s -> let split = s.Split(':') in split.[0], split.[1])
-          if args.SingleTarget then yield "single-target", "true"
-          if args.Target.IsSome then yield "target", args.Target.Value
+          if args.SingleTarget
+          then yield "single-target", "true"
+          else yield "single-target", "" // we don't allow that this is set from outside, it is an implementation detail
+          if args.Target.IsSome 
+          then yield "target", args.Target.Value
+          else yield "target", "" // we don't allow that this is set from outside, it is an implementation detail
           yield "fsiargs-buildscriptargs", String.Join(" ", scriptArgs)
         }
 
