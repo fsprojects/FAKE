@@ -1,6 +1,6 @@
-<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-  <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
     <AssemblyName>Fake.DotNet.MsBuild</AssemblyName>
     <OutputType>Library</OutputType>
@@ -20,5 +20,5 @@
     <Compile Include="MsBuild.fs" />
     <Compile Include="MsBuildLogger.fs" />
   </ItemGroup>
-  <Import Project="..\..\..\.paket\Paket.Restore.targets" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
