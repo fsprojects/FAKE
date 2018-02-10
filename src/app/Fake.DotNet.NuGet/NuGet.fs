@@ -129,9 +129,9 @@ let RequireRange breakingPoint version =
   let v = SemVer.parse version
   match breakingPoint with
   | SemVer ->
-    sprintf "[%s,%d.0)" version (v.Major + 1)
+    sprintf "[%s,%d.0)" version (v.Major + 1u)
   | Minor -> // Like Semver but we assume that the increase of a minor version is already breaking
-    sprintf "[%s,%d.%d)" version v.Major (v.Minor + 1)
+    sprintf "[%s,%d.%d)" version v.Major (v.Minor + 1u)
   | Patch -> // Every update breaks
     version |> RequireExactly
 

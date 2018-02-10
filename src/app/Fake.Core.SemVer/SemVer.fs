@@ -225,6 +225,7 @@ type SemVerInfo =
 ///  Parser which allows to deal with [Semantic Versioning](http://semver.org/) (SemVer).
 module SemVer =
     open System.Numerics
+    open SemVerActivePattern
   
     /// Returns true if input appears to be a parsable semver string
     let isValidSemVer version =
