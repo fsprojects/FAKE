@@ -14,8 +14,8 @@
     <Compile Include="File.fs" />
     <Compile Include="Directory.fs" />
     <Compile Include="FileSystemInfo.fs" />
-    <Compile Include="Shell.fs" />
     <Compile Include="Templates.fs" />
+    <Compile Include="Shell.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />

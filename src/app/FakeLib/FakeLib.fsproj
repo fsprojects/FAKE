@@ -134,11 +134,11 @@
     <Compile Include="..\Fake.IO.FileSystem\FileSystemInfo.fs">
       <Link>Fake.IO.FileSystem/FileSystemInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Shell.fs">
-      <Link>Fake.IO.FileSystem/Shell.fs</Link>
-    </Compile>
     <Compile Include="..\Fake.IO.FileSystem\Templates.fs">
       <Link>Fake.IO.FileSystem/Templates.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\Shell.fs">
+      <Link>Fake.IO.FileSystem/Shell.fs</Link>
     </Compile>
     <Compile Include="..\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
       <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>

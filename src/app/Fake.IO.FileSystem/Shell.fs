@@ -326,6 +326,13 @@ module Shell =
             for (key, value) in parameters do
                 streamWriter.WriteLine("{0};{1}", key, value)
 
+    /// Replaces all occurences of the patterns in the given files with the given replacements.
+    /// ## Parameters
+    ///
+    ///  - `replacements` - A sequence of tuples with the patterns and the replacements.
+    ///  - `files` - The files to process.
+    let ReplaceInFiles replacements files = Templates.processTemplates replacements files
+
     /// Replace all occurences of the regex pattern with the given replacement in the specified file
     /// ## Parameters
     ///
