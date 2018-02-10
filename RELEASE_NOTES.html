@@ -187,6 +187,14 @@
 
 									<!-- Content -->
                       <article>
+<h4><a name="5-0-0-beta014" class="anchor" href="#5-0-0-beta014">5.0.0-beta014</a></h4>
+<ul>
+<li>BREAKING: Change Fake.DotNet.Cli API according to latest changes and add <code>dotnet test</code></li>
+<li>BREAKING: Change Fake.DotNet.MsBuild API according to new API-Guidelines</li>
+<li>BUGFIX: msbuild doesn't work within dotnet-fake - <a href="https://github.com/fsharp/FAKE/issues/1776">https://github.com/fsharp/FAKE/issues/1776</a></li>
+<li>ENHANCEMENT: Fix SemVer - <a href="https://github.com/fsharp/FAKE/pull/848">https://github.com/fsharp/FAKE/pull/848</a></li>
+<li>ENHANCEMENT: Add Nuget.RequireRange - <a href="https://github.com/fsharp/FAKE/pull/1775/commits/0c5b86b747285c596de0fff68002df422fabf15e">https://github.com/fsharp/FAKE/pull/1775/commits/0c5b86b747285c596de0fff68002df422fabf15e</a></li>
+</ul>
 <h4><a name="5-0-0-beta013-2018-02-03" class="anchor" href="#5-0-0-beta013-2018-02-03">5.0.0-beta013 - 2018-02-03</a></h4>
 <ul>
 <li>
@@ -1332,7 +1340,7 @@ This resets the breaking change introduced in <a href="https://github.com/fsharp
 <li>Add support for VS2013 MSTest</li>
 <li>Lots of small fixes</li>
 </ul>
-<h4><a name="2-2" class="anchor" href="#2-2">2.2</a></h4>
+<h4><a name="2-2-0" class="anchor" href="#2-2-0">2.2.0</a></h4>
 <ul>
 <li>
 Created new packages on nuget:
@@ -1364,16 +1372,16 @@ New tasks:
 <li>Tons of bug fixes</li>
 <li>Bundles F# 3.0 compiler and FSI.</li>
 </ul>
-<h4><a name="1-72-0-0" class="anchor" href="#1-72-0-0">1.72.0.0</a></h4>
+<h4><a name="1-72-0" class="anchor" href="#1-72-0">1.72.0</a></h4>
 <ul>
 <li>"RestorePackages" allows to restore nuget packages</li>
 </ul>
-<h4><a name="1-70-0-0" class="anchor" href="#1-70-0-0">1.70.0.0</a></h4>
+<h4><a name="1-70-0" class="anchor" href="#1-70-0">1.70.0</a></h4>
 <ul>
 <li>FAKE nuget package comes bundles with a fsi.exe</li>
 <li>Self build downloads latest FAKE master via nuget</li>
 </ul>
-<h4><a name="1-66-1-0" class="anchor" href="#1-66-1-0">1.66.1.0</a></h4>
+<h4><a name="1-66-1" class="anchor" href="#1-66-1">1.66.1</a></h4>
 <ul>
 <li>Fixed bug where FAKE.Deploy didn't run the deploy scripts where used as a windows service</li>
 <li>It's possible to add file loggers for MSBuild</li>
@@ -1386,49 +1394,49 @@ New tasks:
 <li>Added a SpecFlow helper</li>
 <li>Fixed some issues in file helper routines when working with no existing directory chain</li>
 </ul>
-<h4><a name="1-64-1-0" class="anchor" href="#1-64-1-0">1.64.1.0</a></h4>
+<h4><a name="1-64-1" class="anchor" href="#1-64-1">1.64.1</a></h4>
 <ul>
 <li>Fixed bug where FAKE didn't run the correct build script</li>
 </ul>
-<h4><a name="1-64-0-0" class="anchor" href="#1-64-0-0">1.64.0.0</a></h4>
+<h4><a name="1-64-0" class="anchor" href="#1-64-0">1.64.0</a></h4>
 <ul>
 <li>New conditional dependency operator =?&gt;</li>
 <li>BREAKING CHANGE: Some AssemblyInfo task parameters are now option types. See type hints.</li>
 </ul>
-<h4><a name="1-62-0-0" class="anchor" href="#1-62-0-0">1.62.0.0</a></h4>
+<h4><a name="1-62-0" class="anchor" href="#1-62-0">1.62.0</a></h4>
 <ul>
 <li>New RegAsm task, allows to create TLBs from a dll.</li>
 <li>New MSI task, allows to install or uninstall msi files.</li>
 <li>StringHelper.NormalizeVersion fixed for WiX.</li>
 </ul>
-<h4><a name="1-58-9-0" class="anchor" href="#1-58-9-0">1.58.9.0</a></h4>
+<h4><a name="1-58-9" class="anchor" href="#1-58-9">1.58.9</a></h4>
 <ul>
 <li>Allow to choose specific nunit-console runner.</li>
 </ul>
-<h4><a name="1-58-6-0" class="anchor" href="#1-58-6-0">1.58.6.0</a></h4>
+<h4><a name="1-58-6" class="anchor" href="#1-58-6">1.58.6</a></h4>
 <ul>
 <li>Using nuget packages for mspec.</li>
 <li>FAKE tries to kill all MSBuild and FSI processes at the end of a build.</li>
 </ul>
-<h4><a name="1-58-1-0" class="anchor" href="#1-58-1-0">1.58.1.0</a></h4>
+<h4><a name="1-58-1" class="anchor" href="#1-58-1">1.58.1</a></h4>
 <ul>
 <li>Removed message system for build output. Back to simpler tracing.</li>
 </ul>
-<h4><a name="1-58-0-0" class="anchor" href="#1-58-0-0">1.58.0.0</a></h4>
+<h4><a name="1-58-0" class="anchor" href="#1-58-0">1.58.0</a></h4>
 <ul>
 <li>ReplaceAssemblyInfoVersions task allows to replace version info in AssemblyVersion-files</li>
 <li>New task ConvertFileToWindowsLineBreaks</li>
 </ul>
-<h4><a name="1-56-10-0" class="anchor" href="#1-56-10-0">1.56.10.0</a></h4>
+<h4><a name="1-56-10" class="anchor" href="#1-56-10">1.56.10</a></h4>
 <ul>
 <li>Allows to build .sln files</li>
 </ul>
-<h4><a name="1-56-0-0" class="anchor" href="#1-56-0-0">1.56.0.0</a></h4>
+<h4><a name="1-56-0" class="anchor" href="#1-56-0">1.56.0</a></h4>
 <ul>
 <li>Allows to publish symbols via nuget.exe</li>
 <li>Autotrim trailing .0 from version in order to fullfill nuget standards.</li>
 </ul>
-<h4><a name="1-54-0-0" class="anchor" href="#1-54-0-0">1.54.0.0</a></h4>
+<h4><a name="1-54-0" class="anchor" href="#1-54-0">1.54.0</a></h4>
 <ul>
 <li>If the publishment of a Nuget package fails, then FAKE will try it again.</li>
 <li>Added Changelog.markdown to FAKE deployment</li>
@@ -1436,18 +1444,18 @@ New tasks:
 <li>NugetHelper.GetPackageVersion - Gets the version no. for a given package in the packages folder.</li>
 <li>EnvironmentHelper.getTargetPlatformDir - Gets the directory for the given target platform.</li>
 </ul>
-<h4><a name="1-52-0-0" class="anchor" href="#1-52-0-0">1.52.0.0</a></h4>
+<h4><a name="1-52-0" class="anchor" href="#1-52-0">1.52.0</a></h4>
 <ul>
 <li>Some smaller bugfixes</li>
 <li>New dependency syntax with ==&gt; and <=></li>
 <li>Tracing of StackTrace only if TargetHelper.PrintStackTraceOnError was set to true</li>
 </ul>
-<h4><a name="1-50-0-0" class="anchor" href="#1-50-0-0">1.50.0.0</a></h4>
+<h4><a name="1-50-0" class="anchor" href="#1-50-0">1.50.0</a></h4>
 <ul>
 <li>New task DeleteDirs allows to delete multiple directories.</li>
 <li>New parameter for NuGet dependencies.</li>
 </ul>
-<h4><a name="1-48-0-0" class="anchor" href="#1-48-0-0">1.48.0.0</a></h4>
+<h4><a name="1-48-0" class="anchor" href="#1-48-0">1.48.0</a></h4>
 <ul>
 <li>Bundled with docu.exe compiled against .Net 4.0.</li>
 <li>Fixed docu calls to run with full filenames.</li>
@@ -1455,11 +1463,11 @@ New tasks:
 <li>Added Git.Information.getLastTag() which gets the last git tag by calling git describe.</li>
 <li>Added Git.Information.getCurrentHash() which gets the last current sha1.</li>
 </ul>
-<h4><a name="1-46-0-0" class="anchor" href="#1-46-0-0">1.46.0.0</a></h4>
+<h4><a name="1-46-0" class="anchor" href="#1-46-0">1.46.0</a></h4>
 <ul>
 <li>Fixed Nuget support and allows automatic push.</li>
 </ul>
-<h4><a name="1-44-0-0" class="anchor" href="#1-44-0-0">1.44.0.0</a></h4>
+<h4><a name="1-44-0" class="anchor" href="#1-44-0">1.44.0</a></h4>
 <ul>
 <li>Tracing of all external process starts.</li>
 <li>MSpec support.</li>

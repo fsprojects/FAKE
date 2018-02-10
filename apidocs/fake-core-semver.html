@@ -193,36 +193,11 @@
 
 <a name="SemVer" class="anchor" href="#SemVer"><h1>SemVer</h1></a>
 <div class="xmldoc">
-<p>Contains helpers which allow to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
+<p>Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
 
 </div>
 
 <!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-core-semver-prerelease.html">PreRelease</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-core-semver-semverinfo.html">SemVerInfo</a>
-          </td>
-          <td class="xmldoc"><p>Contains the version information.</p>
-
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
 
   <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
   <table class="table table-bordered member-list">
@@ -233,15 +208,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1215', 1215)" onmouseover="showTip(event, '1215', 1215)">
-            isValidSemVer input
+          <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
+            isValidSemVer version
           </code>
-          <div class="tip" id="1215">
-            <strong>Signature:</strong> input:string -&gt; bool<br />
+          <div class="tip" id="1217">
+            <strong>Signature:</strong> version:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L83-83" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L233-233" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -253,15 +228,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
+          <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
             parse version
           </code>
-          <div class="tip" id="1216">
+          <div class="tip" id="1218">
             <strong>Signature:</strong> version:string -&gt; SemVerInfo<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L97-97" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L281-281" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -277,7 +252,7 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">parse</span> <span class="s">&quot;1.0.0-rc.1&quot;</span>     <span class="o">&lt;</span> <span class="id">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true</span>
 <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.2&quot;</span>          <span class="c">// true</span>
 <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha2&quot;</span>   <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="c">// true</span>
-<span class="id">parse</span> <span class="s">&quot;1.2.3-alpha002&quot;</span> <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha1&quot;</span>   <span class="c">// true</span>
+<span class="id">parse</span> <span class="s">&quot;1.2.3-alpha002&quot;</span> <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.2.3-alpha1&quot;</span>   <span class="c">// false</span>
 <span class="id">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="id">parse</span> <span class="s">&quot;1.5.0-rc.1&quot;</span>     <span class="c">// false</span>
 </code></pre></td>
 </tr>

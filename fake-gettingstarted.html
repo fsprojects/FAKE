@@ -450,7 +450,7 @@ Now edit the script like this:</p>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
@@ -549,13 +549,13 @@ Now edit the script like this:</p>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
@@ -659,13 +659,13 @@ Now edit the script like this:</p>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+     <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
      <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunDebug</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
       <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 <span class="pn">)</span>
 

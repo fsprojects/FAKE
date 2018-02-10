@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>SemVerInfo - FAKE - F# Make</title>
+		<title>PreReleaseSegment - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,24 +191,22 @@
 
 
 
-<a name="SemVerInfo" class="anchor" href="#SemVerInfo" ><h1>SemVerInfo</h1></a>
+<a name="PreReleaseSegment" class="anchor" href="#PreReleaseSegment" ><h1>PreReleaseSegment</h1></a>
 <div class="xmldoc">
-<p>Contains the version information.</p>
-
 </div>
-  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
+  <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3991', 3991)" onmouseover="showTip(event, '3991', 3991)">
-            Build
+          <code onmouseout="hideTip(event, '4024', 4024)" onmouseover="showTip(event, '4024', 4024)">
+            AlphaNumeric(string)
           </code>
-          <div class="tip" id="3991">
+          <div class="tip" id="4024">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -217,89 +215,69 @@
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>The optional build no.</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3992', 3992)" onmouseover="showTip(event, '3992', 3992)">
-            Major
+          <code onmouseout="hideTip(event, '4025', 4025)" onmouseover="showTip(event, '4025', 4025)">
+            Numeric(bigint)
           </code>
-          <div class="tip" id="3992">
-            <strong>Signature:</strong> int<br />
+          <div class="tip" id="4025">
+            <strong>Signature:</strong> bigint<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L35-35" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L44-44" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>MAJOR version when you make incompatible API changes.</p>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a name="Instance members" class="anchor" href="#Instance members"><h3>Instance members</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
 
-
+          <code onmouseout="hideTip(event, '4026', 4026)" onmouseover="showTip(event, '4026', 4026)">
+            CompareTo(y)
+          </code>
+          <div class="tip" id="4026">
+            <strong>Signature:</strong> y:PreReleaseSegment -&gt; int<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L46-46" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3993', 3993)" onmouseover="showTip(event, '3993', 3993)">
-            Minor
+          <code onmouseout="hideTip(event, '4027', 4027)" onmouseover="showTip(event, '4027', 4027)">
+            Equals(y)
           </code>
-          <div class="tip" id="3993">
-            <strong>Signature:</strong> int<br />
+          <div class="tip" id="4027">
+            <strong>Signature:</strong> y:PreReleaseSegment -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L37-37" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L61-61" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>MINOR version when you add functionality in a backwards-compatible manner.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3994', 3994)" onmouseover="showTip(event, '3994', 3994)">
-            Patch
-          </code>
-          <div class="tip" id="3994">
-            <strong>Signature:</strong> int<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L39-39" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>PATCH version when you make backwards-compatible bug fixes.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3995', 3995)" onmouseover="showTip(event, '3995', 3995)">
-            PreRelease
-          </code>
-          <div class="tip" id="3995">
-            <strong>Signature:</strong> PreRelease option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L41-41" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>The optional PreRelease version</p>
-
-
+          
         </td>
       </tr>
     </tbody>

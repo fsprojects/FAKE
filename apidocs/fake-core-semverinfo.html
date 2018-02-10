@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>NugetRestoreVerbosity - FAKE - F# Make</title>
+		<title>SemVerInfo - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,29 +191,49 @@
 
 
 
-<a name="NugetRestoreVerbosity" class="anchor" href="#NugetRestoreVerbosity" ><h1>NugetRestoreVerbosity</h1></a>
+<a name="SemVerInfo" class="anchor" href="#SemVerInfo" ><h1>SemVerInfo</h1></a>
 <div class="xmldoc">
-<p>dotnet restore verbosity</p>
+<p>Contains the version information.</p>
 
 </div>
-  <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
+  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Union Case</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4102', 4102)" onmouseover="showTip(event, '4102', 4102)">
-            Debug
+          <code onmouseout="hideTip(event, '4028', 4028)" onmouseover="showTip(event, '4028', 4028)">
+            Build
           </code>
-          <div class="tip" id="4102">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4028">
+            <strong>Signature:</strong> bigint<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/Dotnet.fs#L424-424" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L158-158" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The optional build no.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4029', 4029)" onmouseover="showTip(event, '4029', 4029)">
+            BuildMetaData
+          </code>
+          <div class="tip" id="4029">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L159-159" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -223,15 +243,55 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4103', 4103)" onmouseover="showTip(event, '4103', 4103)">
-            Error
+          <code onmouseout="hideTip(event, '4030', 4030)" onmouseover="showTip(event, '4030', 4030)">
+            Major
           </code>
-          <div class="tip" id="4103">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4030">
+            <strong>Signature:</strong> uint32<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/Dotnet.fs#L429-429" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L150-150" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>MAJOR version when you make incompatible API changes.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4031', 4031)" onmouseover="showTip(event, '4031', 4031)">
+            Minor
+          </code>
+          <div class="tip" id="4031">
+            <strong>Signature:</strong> uint32<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L152-152" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>MINOR version when you add functionality in a backwards-compatible manner.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4032', 4032)" onmouseover="showTip(event, '4032', 4032)">
+            Original
+          </code>
+          <div class="tip" id="4032">
+            <strong>Signature:</strong> string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L161-161" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -241,15 +301,63 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4104', 4104)" onmouseover="showTip(event, '4104', 4104)">
-            Information
+          <code onmouseout="hideTip(event, '4033', 4033)" onmouseover="showTip(event, '4033', 4033)">
+            Patch
           </code>
-          <div class="tip" id="4104">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4033">
+            <strong>Signature:</strong> uint32<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/Dotnet.fs#L426-426" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L154-154" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>PATCH version when you make backwards-compatible bug fixes.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4034', 4034)" onmouseover="showTip(event, '4034', 4034)">
+            PreRelease
+          </code>
+          <div class="tip" id="4034">
+            <strong>Signature:</strong> PreRelease option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L156-156" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The optional PreRelease version</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a name="Instance members" class="anchor" href="#Instance members"><h3>Instance members</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4035', 4035)" onmouseover="showTip(event, '4035', 4035)">
+            AsString
+          </code>
+          <div class="tip" id="4035">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L184-184" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -259,15 +367,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4105', 4105)" onmouseover="showTip(event, '4105', 4105)">
-            Minimal
+          <code onmouseout="hideTip(event, '4036', 4036)" onmouseover="showTip(event, '4036', 4036)">
+            CompareTo(y)
           </code>
-          <div class="tip" id="4105">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4036">
+            <strong>Signature:</strong> y:SemVerInfo -&gt; int<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/Dotnet.fs#L427-427" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L197-197" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -277,15 +385,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4106', 4106)" onmouseover="showTip(event, '4106', 4106)">
-            Verbose
+          <code onmouseout="hideTip(event, '4037', 4037)" onmouseover="showTip(event, '4037', 4037)">
+            Equals(y)
           </code>
-          <div class="tip" id="4106">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4037">
+            <strong>Signature:</strong> y:SemVerInfo -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/Dotnet.fs#L425-425" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L187-187" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -295,15 +403,33 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4107', 4107)" onmouseover="showTip(event, '4107', 4107)">
-            Warning
+          <code onmouseout="hideTip(event, '4038', 4038)" onmouseover="showTip(event, '4038', 4038)">
+            Normalize()
           </code>
-          <div class="tip" id="4107">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4038">
+            <strong>Signature:</strong> unit -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/Dotnet.fs#L428-428" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L163-163" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4039', 4039)" onmouseover="showTip(event, '4039', 4039)">
+            NormalizeToShorter()
+          </code>
+          <div class="tip" id="4039">
+            <strong>Signature:</strong> unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L174-174" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
