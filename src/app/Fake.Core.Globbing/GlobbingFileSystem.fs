@@ -1,16 +1,16 @@
 /// This module contains a file pattern globbing implementation.
-namespace Fake.Core.Globbing
-
-open System
+namespace Fake.Core
 open System.Collections.Generic
-open System.IO
-open System.Text.RegularExpressions
 
 type IGlobbingPattern =
     inherit IEnumerable<string>
     abstract BaseDirectory : string
     abstract Includes : string list
     abstract Excludes : string list
+
+namespace Fake.Core.Globbing
+open Fake.Core
+open System.Collections.Generic
 
 type LazyGlobbingPattern =
     { BaseDirectory : string
@@ -61,7 +61,11 @@ type ResolvedGlobbingPattern =
         member this.GetEnumerator() = (this.Results :> IEnumerable<string>).GetEnumerator()
         member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
-[<AutoOpen>]
+namespace Fake.Core
+open System.IO
+open Fake.Core.Globbing
+
+[<AutoOpen>] // A bit of a hack but we need those extensions for backwards compat.
 module GlobbingPatternExtensions =
     type IGlobbingPattern with
         member internal this.Pattern =
@@ -98,23 +102,20 @@ module GlobbingPatternExtensions =
                     pattern
                 else
                     System.IO.Path.Combine(this.BaseDirectory, pattern)
-
+            let fullPath = fullDir path
             let included = 
                 this.Includes
                 |> Seq.exists(fun fileInclude ->
-                    Glob.isMatch (fullDir fileInclude) path
+                    Glob.isMatch (fullDir fileInclude) fullPath
                 )
             let excluded = 
                 this.Excludes
                 |> Seq.exists(fun fileExclude ->
-                    Glob.isMatch (fullDir fileExclude) path
+                    Glob.isMatch (fullDir fileExclude) fullPath
                 )
 
             included && not excluded
 
-// Compat
-[<System.Obsolete("Please use IGlobbingPattern instead")>]
-type FileIncludes = IGlobbingPattern
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module GlobbingPattern =
@@ -128,6 +129,17 @@ module GlobbingPattern =
 
     /// Sets a directory as baseDirectory for fileIncludes. 
     let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
+
+
+
+namespace Fake.Core.Globbing
+
+open Fake.Core
+open System.IO
+
+// Compat
+[<System.Obsolete("Please use IGlobbingPattern instead")>]
+type FileIncludes = IGlobbingPattern
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 [<System.Obsolete("Please use GlobbingPattern instead")>]

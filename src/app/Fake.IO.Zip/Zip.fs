@@ -207,7 +207,7 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
 
-let internal filesAsSpecsExt flatten workingDir (files:Globbing.FileIncludes) =
+let internal filesAsSpecsExt flatten workingDir (files:IGlobbingPattern) =
     seq {
         let baseFull = (Path.GetFullPath files.BaseDirectory).TrimEnd [|'/';'\\'|]
         for item in files do

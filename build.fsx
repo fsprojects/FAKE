@@ -393,6 +393,7 @@ let withWorkDir wd (cliOpts:Cli.DotnetOptions) = { cliOpts with WorkingDirectory
 let withWorkDirDef wd = withWorkDir wd Cli.DotnetOptions.Default
 
 Target.Create "DotnetCoreUnitTests" (fun _ ->
+    // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     let processResult =
 #if BOOTSTRAP
         Cli.Dotnet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"

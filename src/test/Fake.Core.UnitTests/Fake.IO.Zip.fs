@@ -2,12 +2,13 @@ module Fake.IO.ZipTests
 
 open Fake.Core
 open Fake.IO
+open Fake.IO.FileSystemOperators
 open Expecto
 
 [<Tests>]
 let tests = 
   testList "Fake.IO.Zip.Tests" [
-    testCase "Test simple Zip.FilesAsSpec" <| fun _ ->
+    testCase "Test simple Zip.FilesAsSpec - #1014" <| fun _ ->
       
       let globExe = // !! "folder/*.exe"
           { Fake.Core.Globbing.ResolvedGlobbingPattern.BaseDirectory = "."
@@ -22,11 +23,11 @@ let tests =
           |> Zip.MoveToFolder "renamedfolder"
           |> Seq.toList
       
-      let expected = [ @"folder/file1.exe", @"renamedfolder\file1.exe";
-                       @"folder/file2.exe", @"renamedfolder\file2.exe"]
+      let expected = [ @"folder/file1.exe", @"renamedfolder"</>"file1.exe";
+                       @"folder/file2.exe", @"renamedfolder"</>"file2.exe"]
       Expect.equal actual expected "FilesAsSpecs failed."
       
-    testCase "Test simple Zip.FilesAsSpec (2)" <| fun _ ->
+    testCase "Test simple Zip.FilesAsSpec (2) - #1014" <| fun _ ->
       let globSubFolder = // !! "subfolder/*/*.dll"
           { Fake.Core.Globbing.ResolvedGlobbingPattern.BaseDirectory = "."
             Fake.Core.Globbing.ResolvedGlobbingPattern.Includes = [ "subfolder/*/*.dll" ]
@@ -41,8 +42,8 @@ let tests =
           |> Seq.toList
       
       let expected =
-        [ @"subfolder/1/file1.dll", @"1\file1.dll"
-          @"subfolder/1/file2.dll", @"1\file2.dll"
-          @"subfolder/2/file2.dll", @"2\file2.dll" ]
+        [ @"subfolder/1/file1.dll", @"1"</>"file1.dll"
+          @"subfolder/1/file2.dll", @"1"</>"file2.dll"
+          @"subfolder/2/file2.dll", @"2"</>"file2.dll" ]
       Expect.equal actual expected "FilesAsSpecs failed."
   ]    
