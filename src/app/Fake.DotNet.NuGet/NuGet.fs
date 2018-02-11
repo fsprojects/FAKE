@@ -733,6 +733,8 @@ let argList name values =
     |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
     |> String.concat " "
 
+type NuGetDependency =
+    {  Id : string; Version : SemVerInfo; IsDevelopmentDependency : bool }
 
 /// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
@@ -742,7 +744,13 @@ let getDependencies (packagesFile:string) =
         | null -> ""
         | a -> a.Value
 
+    let isDevDependency package = 
+       let value = attribute "developmentDependency" package
+       String.Equals(value, bool.TrueString, StringComparison.OrdinalIgnoreCase)
+
     let doc =
         XDocument.Load packagesFile
     [for package in doc.Descendants (xname"package") ->
-        attribute "id" package, attribute "version" package ]
+        {  Id = attribute "id" package
+           Version = SemVer.parse (attribute "version" package)
+           IsDevelopmentDependency = isDevDependency package } ]
