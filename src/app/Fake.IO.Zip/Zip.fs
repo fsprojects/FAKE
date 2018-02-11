@@ -96,6 +96,22 @@ let CreateZip workingDir fileName comment level flatten files =
 ///  - `files` - A sequence with files to zip.
 let Zip workingDir fileName files = CreateZip workingDir fileName "" DefaultZipLevel false files
 
+/// Creates a zip file with the given files and specs.
+/// ## Parameters
+///  - `fileName` - The fileName of the resulting zip file.
+///  - `comment` - A comment for the resulting zip file.
+///  - `level` - The compression level.
+///  - `items` - A sequence with files and their target location in the zip.
+let CreateZipSpec fileName comment level items = createZip fileName comment level items
+
+/// Creates a zip file with the given files and specs.
+/// ## Parameters
+///  - `fileName` - The fileName of the resulting zip file.
+///  - `comment` - A comment for the resulting zip file.
+///  - `level` - The compression level.
+///  - `items` - A sequence with files and their target location in the zip.
+let ZipSpec fileName items = CreateZipSpec fileName "" DefaultZipLevel items
+
 /// Creates a zip file with the given file.
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
@@ -158,7 +174,7 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 #else
     use zf = new ZipFile(zipFileName)
     let ze = zf.GetEntry fileToUnzip
-    if ze = null then raise <| ArgumentException(fileToUnzip, "not found in zip")
+    if isNull ze then raise <| ArgumentException(fileToUnzip, "not found in zip")
     use stream = zf.GetInputStream(ze)
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
@@ -191,6 +207,115 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
 
+let internal filesAsSpecsExt flatten workingDir (files:Globbing.FileIncludes) =
+    seq {
+        let baseFull = (Path.GetFullPath files.BaseDirectory).TrimEnd [|'/';'\\'|]
+        for item in files do
+            let info = FileInfo.ofPath item
+            let itemSpec = 
+                if flatten then info.Name
+                else 
+                    // first get relative path from the globbing
+                    let relative = (info.FullName.Substring (baseFull.Length+1))
+                    if not (String.IsNullOrEmpty(workingDir))
+                        && relative.StartsWith(workingDir, StringComparison.OrdinalIgnoreCase) then
+                        relative.Remove(0, workingDir.Length).TrimStart[|'/';'\\'|]
+                    else relative
+            yield item, itemSpec }
+
+/// This helper helps with creating complex zip file with multiple include patterns.
+/// This method will convert a given glob pattern with the given workingDir to a sequence of zip specifications.
+/// ## Parameters
+///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
+///  - `files` - A sequence of target folders and files to include relative to their base directory.
+///
+/// ## Sample
+///
+/// The following sample creates a zip file containing the files from multiple patterns and moves them to different folders within the zip file.
+///
+///
+///     Target "Zip" (fun _ ->
+///         [   !! "ci/build/project1/**/*"
+///                 |> Zip.FilesAsSpecs "ci/build/project1"
+///                 |> Zip.MoveToFolder "project1"
+///             !! "ci/build/project2/**/*"
+///                 |> Zip.FilesAsSpecs "ci/build/project2"
+///                 |> Zip.MoveToFolder "project2"
+///             !! "ci/build/project3/sub/dir/**/*"
+///                 |> Zip.FilesAsSpecs "ci/build/project3"
+///                 |> Zip.MoveToFolder "project3"
+///         ]
+///         |> Seq.concat
+///         |> Zip.ZipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion) "" Zip.DefaultZipLevel
+///     )
+///
+let FilesAsSpecs workingDir files = filesAsSpecsExt false workingDir files
+
+/// This helper helps with creating complex zip file with multiple include patterns.
+/// ## Parameters
+///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
+///  - `files` - A sequence of target folders and files to include relative to their base directory.
+///
+/// ## Sample
+///
+/// The following sample creates a zip file containing the files from multiple patterns and moves them to different folders within the zip file.
+///
+///
+///     Target "Zip" (fun _ ->
+///         [   !! "ci/build/project1/**/*"
+///                 |> Zip.FilesAsSpecsFlatten
+///                 |> Zip.MoveToFolder "project1"
+///             !! "ci/build/project2/**/*"
+///                 |> Zip.FilesAsSpecsFlatten
+///                 |> Zip.MoveToFolder "project2"
+///             !! "ci/build/project3/sub/dir/**/*"
+///                 |> Zip.FilesAsSpecs "ci/build/project3"
+///                 |> Zip.MoveToFolder "project3"
+///         ]
+///         |> Seq.concat
+///         |> Zip.ZipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
+///     )
+///
+let FilesAsSpecsFlatten files = filesAsSpecsExt true "" files
+
+/// This helper helps with creating complex zip file with multiple include patterns.
+/// This function will move a given list of zip specifications to the given folder (while keeping original folder structure intact).
+/// ## Parameters
+///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
+///  - `files` - A sequence of target folders and files to include relative to their base directory.
+///
+/// ## Sample
+///
+/// The following sample creates a zip file containing the files from multiple patterns and moves them to different folders within the zip file.
+///
+///
+///     Target "Zip" (fun _ ->
+///         [   !! "ci/build/project1/**/*"
+///                 |> Zip.FilesAsSpecsFlatten
+///                 |> Zip.MoveToFolder "project1"
+///             !! "ci/build/project2/**/*"
+///                 |> Zip.FilesAsSpecsFlatten
+///                 |> Zip.MoveToFolder "project2"
+///             !! "ci/build/project3/sub/dir/**/*"
+///                 |> Zip.FilesAsSpecs "ci/build/project3"
+///                 |> Zip.MoveToFolder "project3"
+///         ]
+///         |> Seq.concat
+///         |> Zip.ZipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
+///     )
+///
+let MoveToFolder path items =
+    seq {
+        for file, oldSpec in items do
+            let info = FileInfo.ofPath file
+            //if info.Exists then
+            let path =
+                if String.IsNullOrEmpty path then ""
+                else sprintf "%s%c" (path.TrimEnd [|'/';'\\'|]) Path.DirectorySeparatorChar
+            let spec = sprintf "%s%s" path oldSpec
+            yield file, spec }
+
+
 /// Creates a zip file with the given files.
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
@@ -198,19 +323,25 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
 ///  - `level` - The compression level.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
 let CreateZipOfIncludes fileName comment level (files : (string * Globbing.FileIncludes) seq) =
-    let items = seq {
-        for path, incl in files do
-            for file in incl do
-                let info = FileInfo.ofPath file
-                if info.Exists then
-                    let baseFull = (Path.GetFullPath incl.BaseDirectory).TrimEnd [|'/';'\\'|]
-                    let path =
-                        if String.IsNullOrEmpty path then ""
-                        else sprintf "%s%c" (path.TrimEnd [|'/';'\\'|]) Path.DirectorySeparatorChar
-                    let spec = sprintf "%s%s" path (info.FullName.Substring (baseFull.Length+1))
-                    yield file, spec }
-
-    createZip fileName comment level items
+    files
+    |> Seq.map (fun (wd, glob) ->
+        glob
+        |> FilesAsSpecs ""
+        |> MoveToFolder wd)
+    |> Seq.concat
+    |> CreateZipSpec fileName comment level
+    //let items = seq {
+    //    for path, incl in files do
+    //        for file in incl do
+    //            let info = FileInfo.ofPath file
+    //            if info.Exists then
+    //                let baseFull = (Path.GetFullPath incl.BaseDirectory).TrimEnd [|'/';'\\'|]
+    //                let path =
+    //                    if String.IsNullOrEmpty path then ""
+    //                    else sprintf "%s%c" (path.TrimEnd [|'/';'\\'|]) Path.DirectorySeparatorChar
+    //                let spec = sprintf "%s%s" path (info.FullName.Substring (baseFull.Length+1))
+    //                yield file, spec }
+    //createZip fileName comment level items
 
 /// Creates a zip file with the given files.
 /// ## Parameters

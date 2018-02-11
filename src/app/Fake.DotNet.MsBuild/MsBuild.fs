@@ -275,7 +275,7 @@ let mutable MSBuildDefaults =
       EnvironmentVariables = None }
 
 /// [omit]
-let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
+let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
     if Environment.isUnix then [ targets; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
     else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
 
@@ -298,14 +298,16 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Detailed -> "d"
         | Diagnostic -> "diag"
 
-
-
     let targets =
         match p.Targets with
         | [] -> None
         | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
 
-    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
+    let escapePropertyValue (v:string) =
+        let escapedQuotes = v.Replace("\"", "\\\"")
+        if escapedQuotes.EndsWith "\\" then escapedQuotes + "\\" // Fix https://github.com/fsharp/FAKE/issues/869
+        else escapedQuotes
+    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k (escapePropertyValue v)))
 
     let maxcpu =
         match p.MaxCpuCount with
@@ -457,7 +459,7 @@ match BuildServer.buildServer with
 ///     build setParams "./MySolution.sln"
 ///           |> DoNothing
 let build setParams project =
-    use t = Trace.traceTask "MSBuild" project
+    use __ = Trace.traceTask "MSBuild" project
     let msBuildParams =
         MSBuildDefaults
         |> setParams

@@ -6,41 +6,21 @@ open System.Collections.Generic
 open System.IO
 open System.Text.RegularExpressions
 
-/// Internal representation of a file set.
-type FileIncludes = 
+type IGlobbingPattern =
+    inherit IEnumerable<string>
+    abstract BaseDirectory : string
+    abstract Includes : string list
+    abstract Excludes : string list
+
+type LazyGlobbingPattern =
     { BaseDirectory : string
       Includes : string list
       Excludes : string list }
     
-    /// Adds the given pattern to the file includes
-    member this.And pattern = { this with Includes = this.Includes @ [ pattern ] }
-    
-    /// Ignores files with the given pattern
-    member this.ButNot pattern = { this with Excludes = pattern :: this.Excludes }
-    
-    /// Sets a directory as BaseDirectory.
-    member this.SetBaseDirectory(dir : string) = { this with BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) }
-    
-    /// Checks if a particular file is matched
-    member this.IsMatch (path : string) =
-        let fullDir pattern = 
-            if Path.IsPathRooted(pattern) then
-                pattern
-            else
-                System.IO.Path.Combine(this.BaseDirectory, pattern)
-
-        let included = 
-            this.Includes
-            |> Seq.exists(fun fileInclude ->
-                Glob.isMatch (fullDir fileInclude) path
-            )
-        let excluded = 
-            this.Excludes
-            |> Seq.exists(fun fileExclude ->
-                Glob.isMatch (fullDir fileExclude) path
-            )
-
-        included && not excluded
+    interface IGlobbingPattern with
+        member this.BaseDirectory = this.BaseDirectory
+        member this.Includes = this.Includes
+        member this.Excludes = this.Excludes
 
     interface IEnumerable<string> with
         
@@ -66,28 +46,109 @@ type FileIncludes =
         
         member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
+type ResolvedGlobbingPattern =
+    { BaseDirectory : string
+      Includes : string list
+      Excludes : string list
+      Results : string list }
+    
+    interface IGlobbingPattern with
+        member this.BaseDirectory = this.BaseDirectory
+        member this.Includes = this.Includes
+        member this.Excludes = this.Excludes
+
+    interface IEnumerable<string> with
+        member this.GetEnumerator() = (this.Results :> IEnumerable<string>).GetEnumerator()
+        member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
+
+[<AutoOpen>]
+module GlobbingPatternExtensions =
+    type IGlobbingPattern with
+        member internal this.Pattern =
+            match this with
+            | :? LazyGlobbingPattern as l -> l
+            | _ ->
+                { BaseDirectory = this.BaseDirectory
+                  Includes = this.Includes
+                  Excludes = this.Excludes }
+        member this.Resolve() =
+            match this with
+            | :? ResolvedGlobbingPattern as res -> res :> IGlobbingPattern
+            | _ ->
+                let list =
+                    this
+                    |> Seq.toList
+                { BaseDirectory = this.BaseDirectory
+                  Includes = this.Includes
+                  Excludes = this.Excludes
+                  Results = list } :> IGlobbingPattern
+        /// Adds the given pattern to the file includes
+        member this.And pattern = { this.Pattern with Includes = this.Includes @ [ pattern ] } :> IGlobbingPattern
+        
+        /// Ignores files with the given pattern
+        member this.ButNot pattern = { this.Pattern with Excludes = pattern :: this.Excludes } :> IGlobbingPattern
+        
+        /// Sets a directory as BaseDirectory.
+        member this.SetBaseDirectory(dir : string) = { this.Pattern with BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) } :> IGlobbingPattern
+        
+        /// Checks if a particular file is matched
+        member this.IsMatch (path : string) =
+            let fullDir pattern = 
+                if Path.IsPathRooted(pattern) then
+                    pattern
+                else
+                    System.IO.Path.Combine(this.BaseDirectory, pattern)
+
+            let included = 
+                this.Includes
+                |> Seq.exists(fun fileInclude ->
+                    Glob.isMatch (fullDir fileInclude) path
+                )
+            let excluded = 
+                this.Excludes
+                |> Seq.exists(fun fileExclude ->
+                    Glob.isMatch (fullDir fileExclude) path
+                )
+
+            included && not excluded
+
+// Compat
+[<System.Obsolete("Please use IGlobbingPattern instead")>]
+type FileIncludes = IGlobbingPattern
+
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-module FileIncludes =
+module GlobbingPattern =
     let private defaultBaseDir = Path.GetFullPath "."
 
     /// Include files
     let Include x = 
         { BaseDirectory = defaultBaseDir
           Includes = [ x ]
-          Excludes = [] }
+          Excludes = [] } :> IGlobbingPattern
 
     /// Sets a directory as baseDirectory for fileIncludes. 
-    let SetBaseDir (dir : string) (fileIncludes : FileIncludes) = fileIncludes.SetBaseDirectory dir
+    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+[<System.Obsolete("Please use GlobbingPattern instead")>]
+module FileIncludes =
+    /// Include files
+    [<System.Obsolete("Please use GlobbingPattern instead")>]
+    let Include x = GlobbingPattern.Include x
+
+    /// Sets a directory as baseDirectory for fileIncludes. 
+    [<System.Obsolete("Please use GlobbingPattern instead")>]
+    let SetBaseDir (dir : string) (fileIncludes : FileIncludes) = GlobbingPattern.SetBaseDir dir fileIncludes
 
 module Operators =
     /// Add Include operator
-    let inline (++) (x : FileIncludes) pattern = x.And pattern
+    let inline (++) (x : IGlobbingPattern) pattern = x.And pattern
 
     /// Exclude operator
-    let inline (--) (x : FileIncludes) pattern = x.ButNot pattern
+    let inline (--) (x : IGlobbingPattern) pattern = x.ButNot pattern
 
     /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-    let inline (!!) x = FileIncludes.Include x
+    let inline (!!) x = GlobbingPattern.Include x
 
 module Tools =
     open Operators
