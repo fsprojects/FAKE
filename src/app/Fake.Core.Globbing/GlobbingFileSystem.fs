@@ -102,7 +102,7 @@ module GlobbingPatternExtensions =
                     pattern
                 else
                     System.IO.Path.Combine(this.BaseDirectory, pattern)
-            let fullPath = fullDir path
+            let fullPath = Path.GetFullPath path
             let included = 
                 this.Includes
                 |> Seq.exists(fun fileInclude ->
