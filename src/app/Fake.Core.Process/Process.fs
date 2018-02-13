@@ -146,6 +146,8 @@ type ProcessResult =
           Messages = messages
           Errors = errors }
 
+let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
+
 type ProcStartInfo =
     { /// Gets or sets the set of command-line arguments to use when starting the application.
       Arguments : string
@@ -199,7 +201,7 @@ type ProcStartInfo =
       { Arguments = null
         CreateNoWindow = false
         Domain = null
-        Environment = Environment.environVars () |> Map.ofSeq
+        Environment = Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
 #if FX_ERROR_DIALOG
         ErrorDialog = false
         ErrorDialogParentHandle = IntPtr.Zero
@@ -223,16 +225,25 @@ type ProcStartInfo =
         WorkingDirectory = "" }
     [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
     static member Empty = ProcStartInfo.Create()
+    /// Sets the current environment variables.
+    member x.WithEnvironment map =
+        { x with Environment = map }
+
     member x.AsStartInfo =
         let p = new ProcessStartInfo(x.FileName, x.Arguments)
         p.CreateNoWindow <- x.CreateNoWindow
         if not (isNull x.Domain) then
             p.Domain <- x.Domain
 
-        if not x.UseShellExecute then  
-            p.Environment.Clear()
-            x.Environment |> Map.iter (fun var key ->
-                p.Environment.[var] <- key)
+        match x.Environment |> Map.tryFind defaultEnvVar with
+        | None -> failwithf "Your environment variables look like they are set manually, use the `Process.` helpers to change the 'Environment' field to inherit default values!"
+        | Some _ ->
+            if not x.UseShellExecute then  
+                p.Environment.Clear()
+                x.Environment
+                |> Map.remove defaultEnvVar
+                |> Map.iter (fun var key ->
+                    p.Environment.[var] <- key)
 
 #if FX_ERROR_DIALOG
         if p.ErrorDialog then
@@ -277,40 +288,44 @@ type ProcStartInfo =
         p.WorkingDirectory <- x.WorkingDirectory
         p
 
-/// [omit] 
-let internal modifyEnvironmentVariable envKey envActionOption (startInfo : ProcStartInfo) =
-    { startInfo with
-        Environment =
-            match  envActionOption with
-            | None -> startInfo.Environment |> Map.remove envKey
-            | Some envAction -> startInfo.Environment |> Map.add envKey envAction }
-
-let setEnvironment (map:Map<string, string>) (startInfo : ProcStartInfo) =
-    { startInfo with Environment = map }
+let inline setEnvironment (map:Map<string, string>) (startInfo : ^a) =
+    //let inline getEnv s = ((^a) : (member Environment : unit -> Map<string, string>) (s))
+    let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
+    setEnv startInfo map
+    //{ startInfo with Environment = map }
 
 let disableShellExecute (startInfo : ProcStartInfo) =
     { startInfo with UseShellExecute = false }
 
 /// Sets the given environment variable for the given startInfo.
 /// Existing values will be overriden.
-let setEnvironmentVariable envKey (envVar:string) (startInfo : ProcStartInfo) =
-    startInfo
-    |> modifyEnvironmentVariable envKey (Some envVar)
+let inline setEnvironmentVariable envKey (envVar:string) (startInfo : ^a) =
+    let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
+    let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
+    
+    getEnv startInfo
+    |> Map.add envKey envVar
+    |> setEnv startInfo
     
 /// Unsets the given environment variable for the started process
-let removeEnvironmentVariable envKey (startInfo : ProcStartInfo) =
-    startInfo
-    |> modifyEnvironmentVariable envKey None
+let inline removeEnvironmentVariable envKey (startInfo : ^a) =
+    let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
+    let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
+    
+    getEnv startInfo
+    |> Map.remove envKey
+    |> setEnv startInfo
 
 /// Sets the given environment variables.
-let setEnvironmentVariables vars (startInfo : ProcStartInfo) =
+let inline setEnvironmentVariables vars (startInfo : ^a) =
     vars
     |> Seq.fold (fun state (newKey, newVar) ->
             setEnvironmentVariable newKey newVar state) startInfo
 
 /// Sets all current environment variables to their current values
-let setCurrentEnvironmentVariables (startInfo : ProcStartInfo) =
+let inline setCurrentEnvironmentVariables (startInfo : ^a) =
     setEnvironmentVariables (Environment.environVars ()) startInfo
+    |> setEnvironmentVariable defaultEnvVar defaultEnvVar
 
 type ProcStartInfo with
     /// Gets or sets the set of command-line arguments to use when starting the application.

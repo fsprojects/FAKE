@@ -255,7 +255,7 @@ type MSBuildParams =
       BinaryLoggers : string list option
       /// corresponds to the msbuild option '/dl'
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
-      EnvironmentVariables : Map<string, string> }
+      Environment : Map<string, string> }
     /// Defines a default for MSBuild task parameters
     static member Create() =
         { ToolPath = msBuildExe
@@ -272,13 +272,17 @@ type MSBuildParams =
           FileLoggers = None
           BinaryLoggers = None
           DistributedLoggers = None
-          EnvironmentVariables = 
+          Environment = 
             Environment.environVars () |> Map.ofSeq
+            |> Map.add Process.defaultEnvVar Process.defaultEnvVar
             |> Map.remove "MSBUILD_EXE_PATH"
             |> Map.remove "MSBuildExtensionsPath" }
     [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
     static member Empty = MSBuildParams.Create()
 
+    /// Sets the current environment variables.
+    member x.WithEnvironment map =
+        { x with Environment = map }
 
 /// [omit]
 let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
@@ -483,7 +487,7 @@ let build setParams project =
         { info with
             FileName = msBuildParams.ToolPath
             Arguments = args }
-        |> Process.setEnvironment msBuildParams.EnvironmentVariables) TimeSpan.MaxValue
+        |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
