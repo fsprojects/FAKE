@@ -255,24 +255,30 @@ type MSBuildParams =
       BinaryLoggers : string list option
       /// corresponds to the msbuild option '/dl'
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
-      EnvironmentVariables : (string*string) list option }
-/// Defines a default for MSBuild task parameters
-let mutable MSBuildDefaults =
-    { ToolPath = msBuildExe
-      Targets = []
-      Properties = []
-      MaxCpuCount = Some None
-      NoLogo = false
-      NodeReuse = false
-      ToolsVersion = None
-      Verbosity = None
-      NoConsoleLogger = false
-      WarnAsError = None
-      RestorePackagesFlag = false
-      FileLoggers = None
-      BinaryLoggers = None
-      DistributedLoggers = None
-      EnvironmentVariables = None }
+      EnvironmentVariables : Map<string, string> }
+    /// Defines a default for MSBuild task parameters
+    static member Create() =
+        { ToolPath = msBuildExe
+          Targets = []
+          Properties = []
+          MaxCpuCount = Some None
+          NoLogo = false
+          NodeReuse = false
+          ToolsVersion = None
+          Verbosity = None
+          NoConsoleLogger = false
+          WarnAsError = None
+          RestorePackagesFlag = false
+          FileLoggers = None
+          BinaryLoggers = None
+          DistributedLoggers = None
+          EnvironmentVariables = 
+            Environment.environVars () |> Map.ofSeq
+            |> Map.remove "MSBUILD_EXE_PATH"
+            |> Map.remove "MSBuildExtensionsPath" }
+    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
+    static member Empty = MSBuildParams.Create()
+
 
 /// [omit]
 let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
@@ -461,7 +467,7 @@ match BuildServer.buildServer with
 let build setParams project =
     use __ = Trace.traceTask "MSBuild" project
     let msBuildParams =
-        MSBuildDefaults
+        MSBuildParams.Create()
         |> setParams
     let argsString = msBuildParams |> serializeMSBuildParams
 
@@ -476,18 +482,8 @@ let build setParams project =
         Process.ExecProcess (fun info ->
         { info with
             FileName = msBuildParams.ToolPath
-            Arguments = args}
-        |> fun procInfo -> 
-              match msBuildParams.EnvironmentVariables with
-              | None ->
-                // By default we remove MSBUILD_EXE_PATH and MSBuildExtensionPath
-                // This seems to be best practice, see https://github.com/fsharp/FAKE/issues/1776
-                procInfo
-                |> Process.setCurrentEnvironmentVariables
-                |> Process.removeEnvironmentVariable "MSBUILD_EXE_PATH"
-                |> Process.removeEnvironmentVariable "MSBuildExtensionsPath"
-              | Some env ->
-                procInfo |> Process.setEnvironmentVariables env) TimeSpan.MaxValue
+            Arguments = args }
+        |> Process.setEnvironment msBuildParams.EnvironmentVariables) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write

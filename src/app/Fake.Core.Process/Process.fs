@@ -154,7 +154,9 @@ type ProcStartInfo =
       /// Gets or sets a value that identifies the domain to use when starting the process. If this value is null, the UserName property must be specified in UPN format.
       Domain : string
       /// Gets the environment variables that apply to this process and its child processes.
-      Environment : Map<string, string> option
+      /// NOTE: Recommendation is to not use this Field, but instead use the helper function in the Proc module (for example Process.setEnvironmentVariable)
+      /// NOTE: This field is ignored when UseShellExecute is true.
+      Environment : Map<string, string>
 #if FX_ERROR_DIALOG
       /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
       ErrorDialog : bool
@@ -193,11 +195,11 @@ type ProcStartInfo =
       /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
       WorkingDirectory : string
       } 
-    static member Empty =
+    static member Create() =
       { Arguments = null
         CreateNoWindow = false
         Domain = null
-        Environment = None
+        Environment = Environment.environVars () |> Map.ofSeq
 #if FX_ERROR_DIALOG
         ErrorDialog = false
         ErrorDialogParentHandle = IntPtr.Zero
@@ -219,17 +221,19 @@ type ProcStartInfo =
         Verb = ""
 #endif
         WorkingDirectory = "" }
+    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
+    static member Empty = ProcStartInfo.Create()
     member x.AsStartInfo =
         let p = new ProcessStartInfo(x.FileName, x.Arguments)
         p.CreateNoWindow <- x.CreateNoWindow
         if not (isNull x.Domain) then
             p.Domain <- x.Domain
-        match x.Environment with
-        | Some env ->
-            env |> Map.iter (fun var key ->
+
+        if not x.UseShellExecute then  
+            p.Environment.Clear()
+            x.Environment |> Map.iter (fun var key ->
                 p.Environment.[var] <- key)
-            //p.Environment = None
-        | _ -> ()
+
 #if FX_ERROR_DIALOG
         if p.ErrorDialog then
             p.ErrorDialog <- x.ErrorDialog
@@ -272,26 +276,39 @@ type ProcStartInfo =
 #endif    
         p.WorkingDirectory <- x.WorkingDirectory
         p
-    
-/// Sets the environment Settings for the given startInfo.
-/// Existing values will be overriden.
-/// [omit]
-let setEnvironmentVariable envKey envVar (startInfo : ProcStartInfo) =
+
+/// [omit] 
+let internal modifyEnvironmentVariable envKey envActionOption (startInfo : ProcStartInfo) =
     { startInfo with
         Environment =
-            match startInfo.Environment with
-            | None -> (if isNull envVar then [] else [envKey, envVar]) |> Map.ofSeq
-            | Some map when isNull envVar -> map |> Map.remove envKey
-            | Some map -> map |> Map.add envKey envVar
-            |> Some
-             }
-let removeEnvironmentVariable envKey (startInfo : ProcStartInfo) = setEnvironmentVariable envKey null startInfo
+            match  envActionOption with
+            | None -> startInfo.Environment |> Map.remove envKey
+            | Some envAction -> startInfo.Environment |> Map.add envKey envAction }
+
+let setEnvironment (map:Map<string, string>) (startInfo : ProcStartInfo) =
+    { startInfo with Environment = map }
+
+let disableShellExecute (startInfo : ProcStartInfo) =
+    { startInfo with UseShellExecute = false }
+
+/// Sets the given environment variable for the given startInfo.
+/// Existing values will be overriden.
+let setEnvironmentVariable envKey (envVar:string) (startInfo : ProcStartInfo) =
+    startInfo
+    |> modifyEnvironmentVariable envKey (Some envVar)
+    
+/// Unsets the given environment variable for the started process
+let removeEnvironmentVariable envKey (startInfo : ProcStartInfo) =
+    startInfo
+    |> modifyEnvironmentVariable envKey None
+
+/// Sets the given environment variables.
 let setEnvironmentVariables vars (startInfo : ProcStartInfo) =
     vars
     |> Seq.fold (fun state (newKey, newVar) ->
             setEnvironmentVariable newKey newVar state) startInfo
 
-
+/// Sets all current environment variables to their current values
 let setCurrentEnvironmentVariables (startInfo : ProcStartInfo) =
     setEnvironmentVariables (Environment.environVars ()) startInfo
 
@@ -302,15 +319,17 @@ type ProcStartInfo with
     member x.WithCreateNoWindow noWindow = { x with CreateNoWindow = noWindow }
     /// Gets or sets a value that identifies the domain to use when starting the process.
     member x.WithDomain domain = { x with Domain = domain }
-    /// Gets or sets a value that identifies the domain to use when starting the process.
-    member x.WithoutEnvironment () = { x with Environment = None }
-    /// Gets or sets a value that identifies the domain to use when starting the process.
+    /// Remove the current Environment Variables and use the default
+    member x.WithoutEnvironment () = { x with Environment = Map.empty } |> setCurrentEnvironmentVariables
+    /// Sets the given environment variable for the given startInfo.
     member x.WithEnvironmentVariable(envKey, envVar) =
         setEnvironmentVariable envKey envVar x
+    /// Unsets the given environment variable for the given startInfo.
+    member x.WithRemovedEnvironmentVariable(envKey) =
+        removeEnvironmentVariable envKey x
     /// Gets or sets a value that identifies the domain to use when starting the process.
     member x.WithEnvironmentVariables vars =
         setEnvironmentVariables vars x
-
     /// Sets the current environment variables.
     member x.WithCurrentEnvironmentVariables () =
         setCurrentEnvironmentVariables x
@@ -355,7 +374,7 @@ type ProcStartInfo with
 
 let inline getProc config =
     let startInfo : ProcStartInfo =
-        config { ProcStartInfo.Empty with UseShellExecute = false }
+        config { ProcStartInfo.Create() with UseShellExecute = false }
     let proc = new Process()
     proc.StartInfo <- startInfo.AsStartInfo
     proc

@@ -429,16 +429,13 @@ let Dotnet (buildOptions: DotnetOptions -> DotnetOptions) command args =
 
     let result = 
         Process.ExecProcessWithLambdas (fun info ->
+        let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
+        let oldPath = System.Environment.GetEnvironmentVariable "PATH"
         { info with
             FileName = options.DotnetCliPath
             WorkingDirectory = options.WorkingDirectory
-            Arguments = cmdArgs
-            Environment =
-                let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
-                let oldPath = System.Environment.GetEnvironmentVariable "PATH"
-                [ "PATH", sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath ]
-                |> Map.ofSeq
-                |> Some }
+            Arguments = cmdArgs }
+        |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
         ) timeout true errorF messageF
 #if NO_DOTNETCORE_BOOTSTRAP
     Process.ProcessResult.New result messages errors
