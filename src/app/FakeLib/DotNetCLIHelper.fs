@@ -469,6 +469,20 @@ let SetVersionInProjectJson (version:string) fileName =
 let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) </> "dotnetcore" |> FullName
 
 
+/// Gets the DotNet SDK from the global.json
+let GetDotNetSDKVersionFromGlobalJson() : string = 
+    if not (File.Exists "global.json") then
+        failwithf "global.json not found"
+    try
+        let content = File.ReadAllText "global.json"
+        let json = Newtonsoft.Json.Linq.JObject.Parse content
+        let sdk = json.Item("sdk") :?> JObject
+        let version = sdk.Property("version").Value.ToString()
+        version
+    with
+    | exn -> failwithf "Could not parse global.json: %s" exn.Message
+
+
 /// Installs the DotNet SDK locally to the given path
 let InstallDotNetSDK sdkVersion =
     let buildLocalPath = DotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
@@ -479,10 +493,21 @@ let InstallDotNetSDK sdkVersion =
                 ExecProcessAndReturnMessages (fun info ->  
                 info.FileName <- exe
                 info.WorkingDirectory <- Environment.CurrentDirectory
-                info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
-            processResult.Messages |> separated "" = sdkVersion
+                info.Arguments <- "--info") (TimeSpan.FromMinutes 30.)
+
+            processResult.Messages
+            |> Seq.exists (fun m -> m.Contains "Version" && m.Contains(sdkVersion)) // This checks sdk and cli version
         with 
-        | _ -> false
+        | _ ->
+            try
+                let processResult = 
+                    ExecProcessAndReturnMessages (fun info ->  
+                    info.FileName <- exe
+                    info.WorkingDirectory <- Environment.CurrentDirectory
+                    info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
+                processResult.Messages |> separated "" = sdkVersion
+            with 
+            | _ -> false
 
     if correctVersionInstalled dotnetExePath then
         tracefn "dotnetcli %s already installed in PATH" sdkVersion
@@ -491,14 +516,19 @@ let InstallDotNetSDK sdkVersion =
         dotnetExePath <- buildLocalPath
     else
         CleanDir DotnetSDKPath
+        let tempDir = Path.GetTempPath()
 
         let downloadSDK downloadPath archiveFileName =
-            let localPath = Path.Combine(DotnetSDKPath, archiveFileName) |> FullName
-            tracefn "Installing '%s' to '%s'" downloadPath localPath
 
-            let proxy = Utils.getDefaultProxyForUrl downloadPath
-            use webclient = new Net.WebClient(Proxy = proxy)
-            webclient.DownloadFile(downloadPath, localPath)
+            let localPath = Path.Combine(tempDir, archiveFileName) |> FullName
+            if not (File.Exists localPath) then
+                tracefn "Downloading '%s' to '%s'" downloadPath localPath
+            
+                let proxy = Net.WebRequest.DefaultWebProxy
+                proxy.Credentials <- Net.CredentialCache.DefaultCredentials
+
+                use webclient = new Net.WebClient(Proxy = proxy)
+                webclient.DownloadFile(downloadPath, localPath)
             localPath
 
         let localPath =

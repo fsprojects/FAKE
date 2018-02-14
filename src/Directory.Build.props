@@ -1,5 +1,7 @@
 <Project>
  <PropertyGroup>
 	<TargetFrameworkRootPath>$(MSBuildThisFileDirectory)..\packages\build\RoslynTools.ReferenceAssemblies\tools\framework</TargetFrameworkRootPath>
+     <!-- Include PDBs in Nuget package. -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb; $(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
  </PropertyGroup>
 </Project>

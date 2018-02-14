@@ -177,7 +177,7 @@ let processReferences elementName f projectFileName (doc : XDocument) =
     let fi = FileInfo.ofPath projectFileName
     doc
         |> getReferenceElements elementName projectFileName
-    |> Seq.iter (fun (a, fileName) -> a.Value <- f fileName)
+        |> Seq.iter (fun (a, fileName) -> a.Value <- f fileName)
     doc
 
 /// [omit]
@@ -188,8 +188,7 @@ let rec getProjectReferences (projectFileName : string) =
     let doc = loadProject projectFileName
     let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd |> Seq.filter File.Exists
     references
-      |> Seq.map getProjectReferences
-      |> Seq.concat
+      |> Seq.collect getProjectReferences
       |> Seq.append references
       |> Set.ofSeq
 
@@ -255,26 +254,38 @@ type MSBuildParams =
       /// corresponds to the msbuild option '/bl'
       BinaryLoggers : string list option
       /// corresponds to the msbuild option '/dl'
-      DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
-/// Defines a default for MSBuild task parameters
-let mutable MSBuildDefaults =
-    { ToolPath = msBuildExe
-      Targets = []
-      Properties = []
-      MaxCpuCount = Some None
-      NoLogo = false
-      NodeReuse = false
-      ToolsVersion = None
-      Verbosity = None
-      NoConsoleLogger = false
-      WarnAsError = None
-      RestorePackagesFlag = false
-      FileLoggers = None
-      BinaryLoggers = None
-      DistributedLoggers = None }
+      DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option
+      Environment : Map<string, string> }
+    /// Defines a default for MSBuild task parameters
+    static member Create() =
+        { ToolPath = msBuildExe
+          Targets = []
+          Properties = []
+          MaxCpuCount = Some None
+          NoLogo = false
+          NodeReuse = false
+          ToolsVersion = None
+          Verbosity = None
+          NoConsoleLogger = false
+          WarnAsError = None
+          RestorePackagesFlag = false
+          FileLoggers = None
+          BinaryLoggers = None
+          DistributedLoggers = None
+          Environment = 
+            Environment.environVars () |> Map.ofSeq
+            |> Map.add Process.defaultEnvVar Process.defaultEnvVar
+            |> Map.remove "MSBUILD_EXE_PATH"
+            |> Map.remove "MSBuildExtensionsPath" }
+    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
+    static member Empty = MSBuildParams.Create()
+
+    /// Sets the current environment variables.
+    member x.WithEnvironment map =
+        { x with Environment = map }
 
 /// [omit]
-let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
+let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
     if Environment.isUnix then [ targets; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
     else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
 
@@ -297,14 +308,16 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Detailed -> "d"
         | Diagnostic -> "diag"
 
-
-
     let targets =
         match p.Targets with
         | [] -> None
         | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
 
-    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
+    let escapePropertyValue (v:string) =
+        let escapedQuotes = v.Replace("\"", "\\\"")
+        if escapedQuotes.EndsWith "\\" then escapedQuotes + "\\" // Fix https://github.com/fsharp/FAKE/issues/869
+        else escapedQuotes
+    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k (escapePropertyValue v)))
 
     let maxcpu =
         match p.MaxCpuCount with
@@ -456,9 +469,9 @@ match BuildServer.buildServer with
 ///     build setParams "./MySolution.sln"
 ///           |> DoNothing
 let build setParams project =
-    use t = Trace.traceTask "MSBuild" project
+    use __ = Trace.traceTask "MSBuild" project
     let msBuildParams =
-        MSBuildDefaults
+        MSBuildParams.Create()
         |> setParams
     let argsString = msBuildParams |> serializeMSBuildParams
 
@@ -473,7 +486,8 @@ let build setParams project =
         Process.ExecProcess (fun info ->
         { info with
             FileName = msBuildParams.ToolPath
-            Arguments = args}) TimeSpan.MaxValue
+            Arguments = args }
+        |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
@@ -494,7 +508,7 @@ let build setParams project =
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `projects` - A list of project or solution files.
-let MSBuildWithProjectProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
+let RunWithProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
     let projects = projects |> Seq.toList
 
     let output =
@@ -529,27 +543,27 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `projects` - A list of project or solution files.
-let MSBuild outputPath targets properties projects = MSBuildWithProjectProperties outputPath targets (fun _ -> properties) projects
+let Run outputPath targets properties projects = RunWithProperties outputPath targets (fun _ -> properties) projects
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-let MSBuildDebug outputPath targets projects = MSBuild outputPath targets [ "Configuration", "Debug" ] projects
+let RunDebug outputPath targets projects = Run outputPath targets [ "Configuration", "Debug" ] projects
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-let MSBuildRelease outputPath targets projects = MSBuild outputPath targets [ "Configuration", "Release" ] projects
+let RunRelease outputPath targets projects = Run outputPath targets [ "Configuration", "Release" ] projects
 
 /// Builds the given project files or solution files in release mode to the default outputs.
 /// ## Parameters
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-let MSBuildWithDefaults targets projects = MSBuild null targets [ "Configuration", "Release" ] projects
+let RunWithDefaults targets projects = Run null targets [ "Configuration", "Release" ] projects
 
 /// Builds the given project files or solution files in release mode and collects the output files.
 /// ## Parameters
@@ -557,9 +571,9 @@ let MSBuildWithDefaults targets projects = MSBuild null targets [ "Configuration
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-let MSBuildReleaseExt outputPath properties targets projects =
+let RunReleaseExt outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
-    MSBuild outputPath targets properties projects
+    Run outputPath targets properties projects
 
 /// Builds the given web project file in the specified configuration and copies it to the given outputPath.
 /// ## Parameters
@@ -583,8 +597,8 @@ let BuildWebsiteConfig outputPath configuration projectFile  =
                  then ""
                  else (String.replicate diff "../")
 
-    MSBuild null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
-    MSBuild null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
+    Run null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
+    Run null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
         [ "Configuration", configuration
           "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]

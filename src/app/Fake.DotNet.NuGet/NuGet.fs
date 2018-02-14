@@ -119,6 +119,22 @@ let NuGetDefaults() =
 /// Creates a string which tells NuGet that you require exactly this package version.
 let RequireExactly version = sprintf "[%s]" version
 
+type BreakingPoint =
+  | SemVer
+  | Minor
+  | Patch
+
+// See https://docs.nuget.org/create/versioning
+let RequireRange breakingPoint version =
+  let v = SemVer.parse version
+  match breakingPoint with
+  | SemVer ->
+    sprintf "[%s,%d.0)" version (v.Major + 1u)
+  | Minor -> // Like Semver but we assume that the increase of a minor version is already breaking
+    sprintf "[%s,%d.%d)" version v.Major (v.Minor + 1u)
+  | Patch -> // Every update breaks
+    version |> RequireExactly
+
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
 [<Obsolete("I was just lazy in porting")>]
@@ -717,6 +733,8 @@ let argList name values =
     |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
     |> String.concat " "
 
+type NuGetDependency =
+    {  Id : string; Version : SemVerInfo; IsDevelopmentDependency : bool }
 
 /// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
@@ -726,7 +744,13 @@ let getDependencies (packagesFile:string) =
         | null -> ""
         | a -> a.Value
 
+    let isDevDependency package = 
+       let value = attribute "developmentDependency" package
+       String.Equals(value, bool.TrueString, StringComparison.OrdinalIgnoreCase)
+
     let doc =
         XDocument.Load packagesFile
     [for package in doc.Descendants (xname"package") ->
-        attribute "id" package, attribute "version" package ]
+        {  Id = attribute "id" package
+           Version = SemVer.parse (attribute "version" package)
+           IsDevelopmentDependency = isDevDependency package } ]

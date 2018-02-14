@@ -40,12 +40,16 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 * Windows users can install Visual Studio 2017 (the [Community Edition](https://www.visualstudio.com/de/vs/community/)
 is freely available for open-source projects).
 
+  > Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
+  > Otherwise the test-suite will fail (However, the build should work)
+
 * Linux and Mac users can read "[Guide - Cross-Platform Development with F#](http://fsharp.org/guides/mac-linux-cross-platform/)"
 to find out the required tools.
 
 * Install FAKE
-  * For example on windows run `choco install fake -pre`
+  * For example on windows run `choco install fake -pre` (remember to update from time to time with `choco update fake -pre`)
   * On unix we don't have fake properly packaged yet (please HELP!). You can use the steps outlined in [`.travis.yml`](https://github.com/fsharp/FAKE/blob/master/.travis.yml#L14-L18)
+  * alternatively you can install the dotnet-sdk and use `dotnet restore build.proj` and `dotnet fake <arguments>` instead of `fake <arguments>`
 
 * Alternately, you can use [Vagrant](https://www.vagrantup.com/) in-pair with [VirtualBox](https://www.virtualbox.org/)
 to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](vagrant.html) to get in touch with the tool.
@@ -136,7 +140,7 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
 
 As mentioned in the ["Fake 5 learn more"](fake-fake5-learn-more.html) section we have a large list to choose from to help the project. One of these things is porting modules to FAKE 5. To save you from some pitfalls this sections guides you in migrating modules with an (at least for me) working approach.
 
-Tooling in netcore it not optimal jet so some things have to be done by hand, but with these steps you have pretty good IDE support:
+Tooling in netcore it not optimal yet so some things have to be done by hand, but with these steps you have pretty good IDE support:
 
  - Copy one of the existing netcore projects and edit the project file by hand (rename)
  - Copy the old implementation files from `src/app/FakeLib` to `/src/app/Fake.<ModuleType>.<Name>` (update project file again if required)
@@ -146,7 +150,7 @@ Tooling in netcore it not optimal jet so some things have to be done by hand, bu
  - Add the info about the new module to the `dotnetAssemblyInfos` variable in `build.fsx`. From this point on the build script will let you know if anything is missing. Again, if you have problems let us know.
  - Mark the old module with the `Obsolete` attribute.
 
-> Note that `src/Fake-netcore.sln` is currently not used (as IDEs don't support that jet). However it is used so speed up the build, `fake run build.fsx` will let you know what to do in the error message.
+> Note that `src/Fake-netcore.sln` is currently not used (as IDEs don't support that yet). However it is used so speed up the build, `fake run build.fsx` will let you know what to do in the error message.
 
 These steps will ensure:
  - People using the NuGet package will get the warnings to update the new API

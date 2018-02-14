@@ -3,38 +3,34 @@ module Fake.Tools.Git.Information
 
 open Fake.Tools.Git.CommandHelper
 open Fake.Tools.Git.Branches
+open Fake.Core
 open Fake.Core.String
 open Fake.Core.String.Operators
 open Fake.Core.Environment
 open Fake.Core.BuildServer
-open Fake.Core.SemVer
 open System
 open System.Text.RegularExpressions
 open System.IO
 
-let versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compiled)
+let internal versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compiled)
 
 /// Gets the git version
 let getVersion repositoryDir =
     let ok,msg,errors = runGitCommand repositoryDir "--version"
     msg |> separated ""
 
-let isVersionHigherOrEqual currentVersion referenceVersion =
-    parse currentVersion >= parse referenceVersion
-
 /// [omit]
 let extractGitVersion version =
     let regexRes = versionRegex.Match version
     if regexRes.Success then
-        regexRes.Groups.[1].Value
+        SemVer.parse regexRes.Groups.[1].Value
     else
         failwith "unable to find git version"
 
 let isGitVersionHigherOrEqual referenceVersion =
-
     let versionParts = getVersion "." |> extractGitVersion
 
-    isVersionHigherOrEqual versionParts referenceVersion
+    versionParts > SemVer.parse referenceVersion
 
 /// Gets the git branch name
 let getBranchName repositoryDir =

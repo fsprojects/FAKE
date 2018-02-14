@@ -1,4 +1,4 @@
 @echo off
 
-fake run "build.fsx" -s --target GenerateDocs
-fake run "build.fsx" -s --target ReleaseDocs
+fake build GenerateDocs -s 
+fake build ReleaseDocs -s 

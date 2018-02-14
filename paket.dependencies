@@ -1,4 +1,4 @@
-version 5.119.7
+version 5.132.4
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -51,6 +51,9 @@ nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
+
+group TestAdapter 
+    nuget Expecto.VisualStudio.TestAdapter version_in_path: true
 
 group Build
     content: none
@@ -118,6 +121,13 @@ group netcore
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
 
+    // Testing
+    nuget Expecto >= 5.0
+
+    nuget System.Runtime.Numerics
+    nuget System.Xml.XPath
+    nuget System.Xml.XPath.XDocument
+    nuget System.Xml.XPath.XmlDocument
     nuget System.Linq.Parallel
     nuget System.Diagnostics.FileVersionInfo
     nuget System.Diagnostics.Process

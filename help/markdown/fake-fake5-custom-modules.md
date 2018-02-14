@@ -44,25 +44,24 @@ to your [paket.dependencies](fake-fake5-modules.md), see the relevant documentat
 This documentation now applies to your package too!
 One example would be:
 
-	[lang=fsharp]
-    (* -- Fake Dependencies paket-inline
-    source https://api.nuget.org/v3/index.json
+```fsharp
+#r "paket:
+nuget Fake.Core.Target prerelease
+nuget MyTaskNuGetPackage"
+#load "./.fake/build.fsx/intellisense.fsx"
 
-    nuget Fake.Core.Target prerelease
-    nuget MyTaskNuGetPackage
-    -- Fake Dependencies -- *)
-    #load "./.fake/build.fsx/intellisense.fsx"
+open Fake.Core
+open MyCustomTask
 
-    open Fake.Core
-    open MyCustomTask
+Target.Create "GenerateNumber" (fun _ ->
+	// use custom functionality
+	RandomNumberTask.RandomNumber(2,13)
+		|> Trace.tracefn "RandomNumber: %d"
+)
 
-    Target.Create "GenerateNumber" (fun _ ->
-	    // use custom functionality
-	    RandomNumberTask.RandomNumber(2,13)
-	      |> tracefn "RandomNumber: %d"
-    )
+Target.RunOrDefault "GenerateNumber"
+```
 
-    Target.RunOrDefault "GenerateNumber"
 
 
 

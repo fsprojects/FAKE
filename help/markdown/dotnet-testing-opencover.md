@@ -7,46 +7,59 @@ It will analyze the code coverage during testing and generates an XML report whi
 
 ## Minimal working example
 
-    open Fake.DotNet.Testing
+```fsharp
+#r "paket:
+nuget Fake.DotNet.Testing.OpenCover //"
+open Fake.DotNet.Testing
 
-    OpenCover.Run (fun p ->
-        { p with
-            TestRunnerExePath = "./Tools/NUnit/nunit-console.exe";
-        })
-        "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
+OpenCover.Run (fun p ->
+    { p with
+        TestRunnerExePath = "./Tools/NUnit/nunit-console.exe";
+    })
+    "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
+```
 
 By default, the OpenCover module looks for the OpenCover Console in the OpenCover installation path '%LOCALAPPDATA%/Apps/OpenCover' directory. This can be overwritten using the `ExePath` property of the parameters.
 
 ## Version
 
-    open Fake.DotNet.Testing
+```fsharp
+#r "paket:
+nuget Fake.DotNet.Testing.OpenCover //"
+open Fake.DotNet.Testing
 
-    OpenCover.Version None
+OpenCover.Version None
+```
 
 ## Full example
 
-    open Fake.Core
-    open Fake.DotNet.Testing
-    open Fake.DotNet.Testing.OpenCover
+```fsharp
+#r "paket:
+nuget Fake.Core.Target
+nuget Fake.DotNet.Testing.OpenCover //"
+open Fake.Core
+open Fake.DotNet.Testing
+open Fake.DotNet.Testing.OpenCover
 
-    Target.Create "OpenCover" (fun _ ->
-        OpenCover.Version (fun p -> { p with ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe" })
+Target.Create "OpenCover" (fun _ ->
+    OpenCover.Version (fun p -> { p with ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe" })
 
-        OpenCover.Run (fun p ->
-        { p with
-                ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe"
-                TestRunnerExePath = "./tools/xunit.runner.console/tools/xunit.console.exe";
-                Output = "coverage.xml";
-                Register = RegisterUser;
-                Filter = "+[MyProject]*";
-                ExcludeByAttribute = [ "*.ExcludeFromCodeCoverage*" ];
-                ExcludeByFile = [ "Program.cs"; "Window.cs" ];
-                ExcludeDirs = [ "Test1"; "Test2" ];
-                HideSkipped = [File; Attribute];
-                MergeOutput = true;
-                ReturnTargetCode = Offset 5;
-                SearchDirs = [ "c:\projects\common\bin\debug\dnx451" ];
-                SkipAutoProps = true;
-        })
-        "MyProject.Tests.dll -noshadow"
-    )
+    OpenCover.Run (fun p ->
+    { p with
+            ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe"
+            TestRunnerExePath = "./tools/xunit.runner.console/tools/xunit.console.exe";
+            Output = "coverage.xml";
+            Register = RegisterUser;
+            Filter = "+[MyProject]*";
+            ExcludeByAttribute = [ "*.ExcludeFromCodeCoverage*" ];
+            ExcludeByFile = [ "Program.cs"; "Window.cs" ];
+            ExcludeDirs = [ "Test1"; "Test2" ];
+            HideSkipped = [File; Attribute];
+            MergeOutput = true;
+            ReturnTargetCode = Offset 5;
+            SearchDirs = [ "c:\projects\common\bin\debug\dnx451" ];
+            SkipAutoProps = true;
+    })
+    "MyProject.Tests.dll -noshadow"
+)
+```

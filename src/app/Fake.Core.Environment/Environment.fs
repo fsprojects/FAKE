@@ -56,7 +56,7 @@ module Environment =
         let vars = System.Environment.GetEnvironmentVariables ()
         [ for e in vars -> 
               let e1 = e :?> Collections.DictionaryEntry
-              e1.Key, e1.Value ]
+              e1.Key.ToString(), e1.Value.ToString() ]
 
     #if !DOTNETCORE
     [<Obsolete("Will be removed in dotnetcore. Use environVars instead.")>]

@@ -1,12 +1,12 @@
-(* -- Fake Dependencies paket-inline
-storage: none
+#if FAKE_DEPENDENCIES
+#r "paket:
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 //source https://ci.appveyor.com/nuget/paket
 
 nuget Fake.Runtime prerelease
-nuget FSharp.Core prerelease
--- Fake Dependencies -- *)
+nuget FSharp.Core prerelease"
+#endif
 open klajsdhgfasjkhd
 
 printfn asd

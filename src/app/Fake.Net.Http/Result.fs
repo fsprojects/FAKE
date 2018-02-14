@@ -1,7 +1,9 @@
 namespace Fake.Net.Result
 
-module Result =
+/// [omit]
+module internal Result =
 
+    /// [omit]
     type ResultBuilder() =
         member __.Bind(m, f) = 
             match m with
@@ -11,6 +13,7 @@ module Result =
         member __.Return(x) = 
             Ok x
     
+    /// [omit]
     let apply fResult xResult = 
         match fResult,xResult with
         | Ok f, Ok x ->

@@ -35,6 +35,8 @@ open System
 open System.IO
 open System.Security.Cryptography
 open System.Text
+open Newtonsoft.Json.Linq
+open System
 
 /// .NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location. 
 let mutable DefaultDotnetCliDir = 
@@ -91,7 +93,7 @@ type DotNetInstallerOptions =
     /// Parameter default values.
     static member Default = {
         AlwaysDownload = false
-        Branch = "rel/1.0.0"
+        Branch = "master"
     }
 
 /// Download .NET Core SDK installer
@@ -239,6 +241,26 @@ let Release_2_0_0 options =
         Version = Version "2.0.0"
     }
 
+let Release_2_0_3 options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "release/2.0.0"
+            })
+        Channel = None
+        Version = Version "2.0.3"
+    }
+
+let Release_2_1_4 options =
+    { options with
+        InstallerOptions = (fun io ->
+            { io with
+                Branch = "release/2.1"
+            })
+        Channel = None
+        Version = Version "2.1.4"
+    }
+
 /// [omit]
 let private optionToParam option paramFormat =
     match option with
@@ -327,64 +349,36 @@ let DotnetCliInstall setParams =
             })) |> ignore
         failwithf ".NET Core SDK install failed with code %i" exitCode
 
+/// dotnet restore verbosity
+type DotnetVerbosity =
+    | Quiet
+    | Minimal
+    | Normal
+    | Detailed
+    | Diagnostic
+
 /// dotnet cli command execution options
 type DotnetOptions =
     {
         /// Dotnet cli executable path
-        DotnetCliPath: string;
+        DotnetCliPath: string
         /// Command working directory
-        WorkingDirectory: string;
+        WorkingDirectory: string
         /// Custom parameters
         CustomParams: string option
+        /// Logging verbosity (--verbosity)
+        Verbosity: DotnetVerbosity option
+        /// Restore logging verbosity (--verbosity)
+        Diagnostics: bool
     }
 
     static member Default = {
         DotnetCliPath = dotnetCliPath DefaultDotnetCliDir
         WorkingDirectory = Directory.GetCurrentDirectory()
         CustomParams = None
+        Verbosity = None
+        Diagnostics = false
     }
-
-
-/// Execute raw dotnet cli command
-/// ## Parameters
-///
-/// - 'options' - common execution options
-/// - 'args' - command arguments
-let Dotnet (options: DotnetOptions) args = 
-    let errors = new System.Collections.Generic.List<string>()
-    let messages = new System.Collections.Generic.List<string>()
-    let timeout = TimeSpan.MaxValue
-
-    let errorF msg =
-        Trace.traceError msg
-        errors.Add msg 
-
-    let messageF msg =
-        Trace.traceImportant msg
-        messages.Add msg
-
-    let cmdArgs = match options.CustomParams with
-                    | Some v -> sprintf "%s %s" args v
-                    | None -> args
-
-    let result = 
-        Process.ExecProcessWithLambdas (fun info ->
-        { info with
-            FileName = options.DotnetCliPath
-            WorkingDirectory = options.WorkingDirectory
-            Arguments = cmdArgs
-            Environment =
-                let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
-                let oldPath = System.Environment.GetEnvironmentVariable "PATH"
-                [ "PATH", sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath ]
-                |> Map.ofSeq
-                |> Some }
-        ) timeout true errorF messageF
-#if NO_DOTNETCORE_BOOTSTRAP
-    Process.ProcessResult.New result messages errors
-#else
-    ProcessResult.New result messages errors
-#endif
 
 /// [omit]
 let private argList2 name values =
@@ -398,14 +392,57 @@ let private argOption name value =
         | true -> sprintf "--%s" name
         | false -> ""
 
-/// dotnet restore verbosity
-type NugetRestoreVerbosity =
-    | Debug
-    | Verbose
-    | Information
-    | Minimal
-    | Warning
-    | Error
+/// [omit]
+let private buildCommonArgs (param: DotnetOptions) =
+    [   defaultArg param.CustomParams "" 
+        param.Verbosity |> Option.toList |> Seq.map (fun v -> v.ToString().ToLowerInvariant()) |> argList2 "verbosity"
+    ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+
+/// [omit]
+let private buildSdkOptionsArgs (param: DotnetOptions) =
+    [   param.Diagnostics |> argOption "--diagostics"
+    ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+
+/// Execute raw dotnet cli command
+/// ## Parameters
+///
+/// - 'options' - common execution options
+/// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
+/// - 'args' - command arguments
+let Dotnet (buildOptions: DotnetOptions -> DotnetOptions) command args = 
+    let errors = new System.Collections.Generic.List<string>()
+    let messages = new System.Collections.Generic.List<string>()
+    let timeout = TimeSpan.MaxValue
+
+    let errorF msg =
+        Trace.traceError msg
+        errors.Add msg 
+
+    let messageF msg =
+        Trace.traceImportant msg
+        messages.Add msg
+
+    let options = buildOptions DotnetOptions.Default
+    let sdkOptions = buildSdkOptionsArgs options
+    let commonOptions = buildCommonArgs options
+    let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args 
+
+    let result = 
+        Process.ExecProcessWithLambdas (fun info ->
+        let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
+        let oldPath = System.Environment.GetEnvironmentVariable "PATH"
+        { info with
+            FileName = options.DotnetCliPath
+            WorkingDirectory = options.WorkingDirectory
+            Arguments = cmdArgs }
+        |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
+        ) timeout true errorF messageF
+#if NO_DOTNETCORE_BOOTSTRAP
+    Process.ProcessResult.New result messages errors
+#else
+    ProcessResult.New result messages errors
+#endif
+
 
 /// dotnet restore command options
 type DotnetRestoreOptions =
@@ -422,8 +459,6 @@ type DotnetRestoreOptions =
         ConfigFile: string option;
         /// No cache flag (--no-cache)
         NoCache: bool;
-        /// Restore logging verbosity (--verbosity)
-        Verbosity: NugetRestoreVerbosity option
         /// Only warning failed sources if there are packages meeting version requirement (--ignore-failed-sources)
         IgnoreFailedSources: bool;
         /// Disables restoring multiple projects in parallel (--disable-parallel)
@@ -438,7 +473,6 @@ type DotnetRestoreOptions =
         Packages = []
         ConfigFile = None        
         NoCache = false
-        Verbosity = None
         IgnoreFailedSources = false
         DisableParallel = false
     }
@@ -452,7 +486,6 @@ let private buildRestoreArgs (param: DotnetRestoreOptions) =
         param.Runtime |> Option.toList |> argList2 "runtime"
         param.IgnoreFailedSources |> argOption "ignore-failed-sources"
         param.DisableParallel |> argOption "disable-parallel"
-        param.Verbosity |> Option.toList |> Seq.map (fun v -> v.ToString()) |> argList2 "verbosity"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
 
@@ -462,10 +495,10 @@ let private buildRestoreArgs (param: DotnetRestoreOptions) =
 /// - 'setParams' - set restore command parameters
 /// - 'project' - project to restore packages
 let DotnetRestore setParams project =    
-    use t = Trace.traceTask "Dotnet:restore" project
+    use __ = Trace.traceTask "Dotnet:restore" project
     let param = DotnetRestoreOptions.Default |> setParams    
-    let args = sprintf "restore %s %s" project (buildRestoreArgs param)
-    let result = Dotnet param.Common args    
+    let args = sprintf "%s %s" project (buildRestoreArgs param)
+    let result = Dotnet (fun _ -> param.Common) "restore" args    
     if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
 
 /// build configuration
@@ -526,10 +559,10 @@ let private buildPackArgs (param: DotNetPackOptions) =
 /// - 'setParams' - set pack command parameters
 /// - 'project' - project to pack
 let DotnetPack setParams project =    
-    use t = Trace.traceTask "Dotnet:pack" project
+    use __ = Trace.traceTask "Dotnet:pack" project
     let param = DotNetPackOptions.Default |> setParams    
     let args = sprintf "pack %s %s" project (buildPackArgs param)
-    let result = Dotnet param.Common args    
+    let result = Dotnet (fun _ -> param.Common) "pack" args    
     if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 
 /// dotnet --info command options
@@ -554,10 +587,10 @@ type DotNetInfoResult =
 ///
 /// - 'setParams' - set info command parameters
 let DotnetInfo setParams =    
-    use t = Trace.traceTask "Dotnet:info" "running dotnet --info"
+    use __ = Trace.traceTask "Dotnet:info" "running dotnet --info"
     let param = DotNetInfoOptions.Default |> setParams    
     let args = "--info" // project (buildPackArgs param)
-    let result = Dotnet param.Common args
+    let result = Dotnet (fun _ -> param.Common) "" args
     if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
 
     let rid =
@@ -621,10 +654,10 @@ let private buildPublishArgs (param: DotNetPublishOptions) =
 /// - 'setParams' - set publish command parameters
 /// - 'project' - project to publish
 let DotnetPublish setParams project =    
-    use t = Trace.traceTask "Dotnet:publish" project
+    use __ = Trace.traceTask "Dotnet:publish" project
     let param = DotNetPublishOptions.Default |> setParams    
-    let args = sprintf "publish %s %s" project (buildPublishArgs param)
-    let result = Dotnet param.Common args    
+    let args = sprintf "%s %s" project (buildPublishArgs param)
+    let result = Dotnet (fun _ -> param.Common) "publish" args    
     if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
 
 /// dotnet build command options
@@ -676,17 +709,117 @@ let private buildBuildArgs (param: DotNetBuildOptions) =
 /// - 'setParams' - set compile command parameters
 /// - 'project' - project to compile
 let DotnetCompile setParams project =    
-    use t = Trace.traceTask "Dotnet:build" project
+    use __ = Trace.traceTask "Dotnet:build" project
     let param = DotNetBuildOptions.Default |> setParams    
-    let args = sprintf "build %s %s" project (buildBuildArgs param)
-    let result = Dotnet param.Common args
+    let args = sprintf "%s %s" project (buildBuildArgs param)
+    let result = Dotnet (fun _ -> param.Common) "build" args
     if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
 
-/// get sdk version from global.json
+let DotnetBuild = DotnetCompile
+
+
+/// dotnet build command options
+type DotNetTestOptions =
+    {   
+        /// Common tool options
+        Common: DotnetOptions
+        /// Settings to use when running tests (--settings)
+        Settings: string option
+        /// Lists discovered tests (--list-tests)
+        ListTests: bool
+        /// Run tests that match the given expression. (--filter)
+        ///  Examples:
+        ///   Run tests with priority set to 1: --filter "Priority = 1"
+        ///   Run a test with the specified full name: --filter "FullyQualifiedName=Namespace.ClassName.MethodName"
+        ///   Run tests that contain the specified name: --filter "FullyQualifiedName~Namespace.Class"
+        ///   More info on filtering support: https://aka.ms/vstest-filtering
+        Filter: string option
+        /// Use custom adapters from the given path in the test run. (--test-adapter-path)
+        TestAdapterPath: string option
+        /// Specify a logger for test results. (--logger)
+        Logger: string option
+        ///Configuration to use for building the project.  Default for most projects is  "Debug". (--configuration)
+        Configuration: BuildConfiguration
+        /// Target framework to publish for. The target framework has to be specified in the project file. (--framework)
+        Framework: string option
+        ///  Directory in which to find the binaries to be run (--output)
+        Output: string option
+        /// Enable verbose logs for test platform. Logs are written to the provided file. (--diag)
+        Diag: string option
+        ///  Do not build project before testing. (--no-build)
+        NoBuild: bool
+        /// The directory where the test results are going to be placed. The specified directory will be created if it does not exist. (--results-directory)
+        ResultsDirectory: string option
+        /// Enables data collector for the test run. More info here : https://aka.ms/vstest-collect (--collect)
+        Collect: string option
+        ///  Does not do an implicit restore when executing the command. (--no-restore)
+        NoRestore: bool
+        /// Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
+        RunSettingsArguments : string option
+    }
+
+    /// Parameter default values.
+    static member Default = {
+        Common = DotnetOptions.Default
+        Settings = None
+        ListTests = false
+        Filter = None
+        TestAdapterPath = None
+        Logger = None
+        Configuration = BuildConfiguration.Debug
+        Framework = None
+        Output = None
+        Diag = None
+        NoBuild = false
+        ResultsDirectory = None
+        Collect = None
+        NoRestore = false
+        RunSettingsArguments = None
+    }
+
+
+/// [omit]
+let private buildTestArgs (param: DotNetTestOptions) =
+    [  
+        param.Settings |> Option.toList |> argList2 "settings"
+        param.ListTests |> argOption "list-tests"
+        param.Filter |> Option.toList |> argList2 "filter"
+        param.TestAdapterPath |> Option.toList |> argList2 "test-adapter-path"
+        param.Logger |> Option.toList |> argList2 "logger"
+        buildConfigurationArg param.Configuration
+        param.Framework |> Option.toList |> argList2 "framework"
+        param.Output |> Option.toList |> argList2 "output"
+        param.Diag |> Option.toList |> argList2 "diag"
+        param.NoBuild |> argOption "no-build"
+        param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
+        param.Collect |> Option.toList |> argList2 "collect"
+        param.NoRestore |> argOption "no-restore"
+    ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+
+
+/// Execute dotnet build command
 /// ## Parameters
 ///
-/// - 'project' - global.json path
-//let GlobalJsonSdk project =
-//    let data = ReadFileAsString project
-//    let info = JsonValue.Parse(data)
-//    info?sdk?version.AsString()   
+/// - 'setParams' - set compile command parameters
+/// - 'project' - project to compile
+let DotnetTest setParams project =    
+    use __ = Trace.traceTask "Dotnet:test" project
+    let param = DotNetTestOptions.Default |> setParams    
+    let args = sprintf "%s %s" project (buildTestArgs param)
+    let result = Dotnet (fun _ -> param.Common) "test" args
+    if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
+
+
+
+/// Gets the DotNet SDK from the global.json
+let GetDotNetSDKVersionFromGlobalJson() : string = 
+    if not (File.Exists "global.json") then
+        failwithf "global.json not found"
+    try
+        let content = File.ReadAllText "global.json"
+        let json = JObject.Parse content
+        let sdk = json.Item("sdk") :?> JObject
+        let version = sdk.Property("version").Value.ToString()
+        version
+    with
+    | exn -> failwithf "Could not parse global.json: %s" exn.Message

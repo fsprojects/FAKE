@@ -1,4 +1,24 @@
-#### 5.0.0-beta011 - 2017-12-17
+#### 5.0.0-beta014
+* BREAKING: Change Fake.DotNet.Cli API according to latest changes and add `dotnet test`
+* BREAKING: Change Fake.DotNet.MsBuild API according to new API-Guidelines
+* BUGFIX: msbuild doesn't work within dotnet-fake - https://github.com/fsharp/FAKE/issues/1776
+* ENHANCEMENT: Fix SemVer - https://github.com/fsharp/FAKE/pull/848
+* ENHANCEMENT: Add Nuget.RequireRange - https://github.com/fsharp/FAKE/pull/1775/commits/0c5b86b747285c596de0fff68002df422fabf15e
+
+#### 5.0.0-beta013 - 2018-02-03
+* FAKE5: partial support for FST-1027 instead of FAKE Header (now obsolete and will be removed on release).
+  This adds support for writing `#r "paket: nuget Fake.Module prerelease"` in your scripts, see https://github.com/fsharp/FAKE/pull/1770.
+* FAKE5: Self-Contained scripts (not using/referencing external paket.dependencies) will now write a `<script>.fsx.lock` file for the dependencies, see https://github.com/fsharp/FAKE/issues/1769
+* FAKE5: `fake build <target>` is now a shortcut for `fake run build.fsx -t <target>`, see https://github.com/fsharp/FAKE/issues/1569
+
+#### 5.0.0-beta012 - 2018-01-28
+* FAKE5: New distribution as dotnet-cli-tool `dotnet-fake` - https://github.com/fsharp/FAKE/pull/1766
+* ENHANCEMENT: added GetDotNetSDKVersionFromGlobalJson - https://github.com/fsharp/FAKE/pull/1754
+* BUGFIX: Include pdb and xml files again - https://github.com/fsharp/FAKE/pull/1766
+* BUGFIX: Change default dotnet-cli-installer branch to `master` - https://github.com/fsharp/FAKE/issues/1739
+
+#### 5.0.0-beta011 - 2018-01-27
+* ENHANCEMENT: Fake now writes load-scripts to provide intellisense - https://github.com/fsharp/FAKE/pull/1763
 * BUGFIX: Fix version normalization - https://github.com/fsharp/FAKE/pull/1742
 * DOCS: Fix documentation of SonarCube.End - https://github.com/fsharp/FAKE/pull/1743
 * BUGFIX: Paket.Pack uses outdated syntax - https://github.com/fsharp/FAKE/pull/1737
@@ -6,6 +26,9 @@
 * DOCS: Add simple Hello-World example - https://github.com/fsharp/FAKE/pull/1748
 * FAKE4: fix custom proxy credentials in DotNetCLIHelper - https://github.com/fsharp/FAKE/pull/1741
 * FAKE4: added executeFSIWithArgsAndReturnMessages  https://github.com/fsharp/FAKE/pull/1719
+* DOCS: Fix path to migration guide - https://github.com/fsharp/FAKE/pull/1755
+* NEW MODULE: Fake.Net.Http to download files - https://github.com/fsharp/FAKE/pull/1759
+* ENHANCEMENT: Add Force parameter to Choco Push - https://github.com/fsharp/FAKE/pull/1735
 
 #### 5.0.0-beta010 - 2017-10-29
 * ENHANCEMENT: Refactor GitHub API - https://github.com/fsharp/FAKE/pull/1726
@@ -133,7 +156,18 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
-#### 4.63.0 - 2017-07-27
+#### 4.64.4 - 17.01.2018
+* Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
+
+#### 4.64.3 - 19.12.2017
+* New helper: GetDotNetSDKVersionFromGlobalJson
+* Do not download DotNet SDK when it's already in temp
+* Use "dotnet --info" to determine DotNet SDK version
+* Update PaketHelper to use new-style arguments - https://github.com/fsharp/FAKE/pull/1628
+* Do not use "file" parameter for paket push
+* Download .NET SDK to temp path
+
+#### 4.63.0 - 27.07.2017
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
 
 #### 4.62.6 - 2017-07-26
@@ -972,7 +1006,7 @@
 * Add support for VS2013 MSTest
 * Lots of small fixes
 
-#### 2.2
+#### 2.2.0
 * Created new packages on nuget:
 	* Fake.Deploy - allows to use FAKE scripts in deployment.
 	* Fake.Experimental - new stuff where we aren't sure if we want to support it.
@@ -995,16 +1029,16 @@
 * Tons of bug fixes
 * Bundles F# 3.0 compiler and FSI.
 
-#### 1.72.0.0
+#### 1.72.0
 
 * "RestorePackages" allows to restore nuget packages
 
-#### 1.70.0.0
+#### 1.70.0
 
 * FAKE nuget package comes bundles with a fsi.exe
 * Self build downloads latest FAKE master via nuget
 
-#### 1.66.1.0
+#### 1.66.1
 
 * Fixed bug where FAKE.Deploy didn't run the deploy scripts where used as a windows service
 * It's possible to add file loggers for MSBuild
@@ -1017,49 +1051,49 @@
 * Added a SpecFlow helper
 * Fixed some issues in file helper routines when working with no existing directory chain
 
-#### 1.64.1.0
+#### 1.64.1
 
 * Fixed bug where FAKE didn't run the correct build script
 
-#### 1.64.0.0
+#### 1.64.0
 
 * New conditional dependency operator =?>
 * BREAKING CHANGE: Some AssemblyInfo task parameters are now option types. See type hints.
 
-#### 1.62.0.0
+#### 1.62.0
 
 * New RegAsm task, allows to create TLBs from a dll.
 * New MSI task, allows to install or uninstall msi files.
 * StringHelper.NormalizeVersion fixed for WiX.
 
-#### 1.58.9.0
+#### 1.58.9
 
 * Allow to choose specific nunit-console runner.
 
-#### 1.58.6.0
+#### 1.58.6
 
 * Using nuget packages for mspec.
 * FAKE tries to kill all MSBuild and FSI processes at the end of a build.
 
-#### 1.58.1.0
+#### 1.58.1
 
 * Removed message system for build output. Back to simpler tracing.
 
-#### 1.58.0.0
+#### 1.58.0
 
 * ReplaceAssemblyInfoVersions task allows to replace version info in AssemblyVersion-files
 * New task ConvertFileToWindowsLineBreaks
 
-#### 1.56.10.0
+#### 1.56.10
 
 * Allows to build .sln files
 
-#### 1.56.0.0
+#### 1.56.0
 
 * Allows to publish symbols via nuget.exe
 * Autotrim trailing .0 from version in order to fullfill nuget standards.
 
-#### 1.54.0.0
+#### 1.54.0
 
 * If the publishment of a Nuget package fails, then FAKE will try it again.
 * Added Changelog.markdown to FAKE deployment
@@ -1067,18 +1101,18 @@
 * NugetHelper.GetPackageVersion - Gets the version no. for a given package in the packages folder.
 * EnvironmentHelper.getTargetPlatformDir - Gets the directory for the given target platform.
 
-#### 1.52.0.0
+#### 1.52.0
 
 * Some smaller bugfixes
 * New dependency syntax with ==> and <=>
 * Tracing of StackTrace only if TargetHelper.PrintStackTraceOnError was set to true
 
-#### 1.50.0.0
+#### 1.50.0
 
 * New task DeleteDirs allows to delete multiple directories.
 * New parameter for NuGet dependencies.
 
-#### 1.48.0.0
+#### 1.48.0
 
 * Bundled with docu.exe compiled against .Net 4.0.
 * Fixed docu calls to run with full filenames.
@@ -1086,11 +1120,11 @@
 * Added Git.Information.getLastTag() which gets the last git tag by calling git describe.
 * Added Git.Information.getCurrentHash() which gets the last current sha1.
 
-#### 1.46.0.0
+#### 1.46.0
 
 * Fixed Nuget support and allows automatic push.
 
-#### 1.44.0.0
+#### 1.44.0
 
 * Tracing of all external process starts.
 * MSpec support.

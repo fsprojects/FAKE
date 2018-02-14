@@ -2,3 +2,4 @@ group netcore
 
 FSharp.Core
 NETStandard.Library
+System.Runtime.Numerics

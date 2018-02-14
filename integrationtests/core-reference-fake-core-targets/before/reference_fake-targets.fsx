@@ -1,11 +1,11 @@
-(* -- Fake Dependencies paket-inline
-storage: none
+#if FAKE_DEPENDENCIES
+#r "paket:
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 
 nuget Fake.Core.Target prerelease
-nuget FSharp.Core prerelease
--- Fake Dependencies -- *)
+nuget FSharp.Core prerelease"
+#endif
 
 printfn "before load"
 

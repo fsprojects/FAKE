@@ -10,8 +10,34 @@ module FileFilter =
     let allFiles _ = true
 
 module File =
+
+    // Detect the encoding, from https://stackoverflow.com/questions/3825390/effective-way-to-find-any-files-encoding
+    let getEncoding def filename = 
+        // Read the BOM
+        let bom = Array.zeroCreate 4
+        let read =
+            use file = new FileStream(filename, FileMode.Open, FileAccess.Read)
+            file.Read(bom, 0, 4)
+            
+        match bom |> Array.toList with
+        | _ when read < 2 -> def
+        | 0xffuy :: 0xfeuy :: _ -> Encoding.Unicode //UTF-16LE
+        | 0xfeuy :: 0xffuy :: _ -> Encoding.BigEndianUnicode //UTF-16BE
+        | _ when read < 3 -> def
+        | 0x2buy :: 0x2fuy :: 0x76uy :: _ -> Encoding.UTF7
+        | 0xefuy :: 0xbbuy :: 0xbfuy :: _ -> Encoding.UTF8
+        | _ when read < 4 -> def
+        | 0uy :: 0uy :: 0xfeuy :: 0xffuy :: _ -> Encoding.UTF32
+        | _ -> def
+
+
     /// Checks if the file exists on disk.
     let exists fileName = File.Exists fileName
+
+    /// Gets the encoding from the file or the default of the file doesn't exist
+    let getEncodingOrDefault def filename =
+        if not (exists filename) then def
+        else getEncoding def filename
 
     /// Raises an exception if the file doesn't exist on disk.
     let checkExists fileName = 
@@ -58,7 +84,7 @@ module File =
             while not textReader.EndOfStream do
                 yield textReader.ReadLine()
         }
-    let read (file : string) = readWithEncoding (Encoding.UTF8) file
+    let read (file : string) = readWithEncoding (getEncodingOrDefault Encoding.UTF8 file) file
     
     /// Reads the first line of a file. This can be helpful to read a password from file.
     let readLineWithEncoding (encoding:Encoding) (file : string) =
@@ -67,7 +93,7 @@ module File =
         sr.ReadLine()
 
     /// Reads the first line of a file. This can be helpful to read a password from file.
-    let readLine(file : string) = readLineWithEncoding Encoding.UTF8 file
+    let readLine(file : string) = readLineWithEncoding (getEncodingOrDefault Encoding.UTF8 file) file
 
     /// Writes a file line by line
     let writeWithEncoding (encoding:Encoding) append fileName (lines : seq<string>) =
@@ -76,7 +102,7 @@ module File =
         use writer = new StreamWriter(file, encoding)
         lines |> Seq.iter writer.WriteLine
 
-    let write append fileName (lines : seq<string>) = writeWithEncoding Encoding.UTF8 append fileName lines
+    let write append fileName (lines : seq<string>) = writeWithEncoding (getEncodingOrDefault Encoding.UTF8 fileName) append fileName lines
         
     /// Writes a byte array to a file
     let writeBytes file bytes = File.WriteAllBytes(file, bytes)
@@ -88,7 +114,7 @@ module File =
         use writer = new StreamWriter(file, encoding)
         writer.Write text
 
-    let writeString append fileName (text : string) = writeStringWithEncoding Encoding.UTF8 append fileName text
+    let writeString append fileName (text : string) = writeStringWithEncoding (getEncodingOrDefault Encoding.UTF8 fileName) append fileName text
 
     /// Replaces the file with the given string
     let replaceContent fileName text = 
@@ -106,7 +132,7 @@ module File =
 
     /// Reads a file as one text
     let inline readAsStringWithEncoding encoding file = File.ReadAllText(file, encoding)
-    let inline readAsString file = File.ReadAllText(file, Encoding.UTF8)
+    let inline readAsString file = File.ReadAllText(file, (getEncodingOrDefault Encoding.UTF8 file))
 
     /// Reads a file as one array of bytes
     let readAsBytes file = File.ReadAllBytes file

@@ -18,7 +18,7 @@ fake --help
 
 This is basically it. You can now execute fake commands.
 
-For unix we don't have packages jet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
+For unix we don't have packages yet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
 
 ## CLI
 
@@ -43,7 +43,7 @@ Please read https://github.com/fsharp/FAKE/issues/1232
 
 ## What is the migration path?
 
-See [Fake 5 Migration Guide](migrate-to-fake5.html)
+See [Fake 5 Migration Guide](fake-migrate-to-fake-5.html)
 
 ## How to specify dependencies?
 
@@ -57,7 +57,7 @@ This version assumes an existing dotnet sdk installation while the non-portable 
 Just use the `-portable` version of the downloads, extract it and execute.
 
 ```
-dotnet Fake.dll <regular-arguments>
+dotnet fake.dll <regular-arguments>
 ```
 
 The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
@@ -71,13 +71,10 @@ The disadvantage is that you need to have a dotnet sdk installed.
 
 ### Minimal example
 
-Create a file named build.fsx with the following contents:
-```
-(* -- Fake Dependencies paket-inline
-source https://api.nuget.org/v3/index.json
-
-nuget Fake.Core.Target
--- Fake Dependencies -- *)
+Create a file named `build.fsx` with the following contents:
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
 // include Fake modules, see Fake modules section
 
 open Fake.Core
@@ -113,4 +110,8 @@ fake run build.fsx
 
 ## Downloads
 
-Get the latest alpha packages from GitHub: https://github.com/fsharp/FAKE/releases
+Get the latest packages from GitHub: https://github.com/fsharp/FAKE/releases
+
+Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
+
+Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)

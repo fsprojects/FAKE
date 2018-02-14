@@ -174,7 +174,7 @@ let PushFiles setParams files =
                             ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
                                 info.WorkingDirectory <- parameters.WorkingDir
-                                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                                info.Arguments <- sprintf "push %s%s%s %s" url endpoint key (toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
             Async.Parallel tasks
@@ -187,7 +187,7 @@ let PushFiles setParams files =
                 ExecProcess (fun info ->
                     info.FileName <- parameters.ToolPath
                     info.WorkingDirectory <- parameters.WorkingDir
-                    info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                    info.Arguments <- sprintf "push %s%s%s %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
 
 /// Pushes all NuGet packages in the working dir to the server by using Paket push.

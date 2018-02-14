@@ -21,17 +21,17 @@ First let me say that there are two distributions of FAKE 5.
 
  - The first one is an update to the 'regular' FAKE 4 package on NuGet.
    It's very safe to update to this package as mentioned in the [migrate to fake 5 guide](fake-migrate-to-fake-5.html).
-   The reason it is considered "alpha" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized jet.
+   The reason it is considered "beta" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized yet.
    So just ignore the `Obsolete` warnings and upgrade. If you start fixing the obsolete warnings we MIGHT break your script in an update.
-   Hope this makes it clear why the Fake-5 nuget package is marked as alpha.
-   Alpha stage will end when all `Obsolete` attributes are correct and the new API is considered stable.
+   Hope this makes it clear why the Fake-5 nuget package is marked as beta.
+   Beta stage will end when all `Obsolete` attributes are correct and the new API is considered stable.
  - The second one is the new dotnet-core version of FAKE.
-   This version is brand-new, was migrated to a new platform and has several API changes which are not stabelized jet.
-   So it's considered an alpha.
-   But please use it: In the alpha phase we wan't to learn how we can handle breaking changes in the new modularized system and need actual users we break. Note that Fake 5 uses paket.lock for it's modules so you can always go back to a working version and report the issue. 
+   This version is brand-new, was migrated to a new platform and has several API changes which are not stabelized yet.
+   So it's considered an beta.
+   But please use it: In the beta phase we wan't to learn how we can handle breaking changes in the new modularized system and need actual users we break. Note that Fake 5 uses `paket.lock` for it's modules so you can always go back to a working version and report the issue. 
 
 > Fake 5 and this website are already released with Fake 5, so it might be more stable than you think. It's just that 
-> Some APIs are still missing and others might be renamed within the alpha phase.
+> Some APIs are still missing and others might be renamed within the beta phase.
 
 ## Modules? Packages? Paket?
 
