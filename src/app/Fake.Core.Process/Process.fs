@@ -236,7 +236,7 @@ type ProcStartInfo =
             p.Domain <- x.Domain
 
         match x.Environment |> Map.tryFind defaultEnvVar with
-        | None -> failwithf "Your environment variables look like they are set manually, use the `Process.` helpers to change the 'Environment' field to inherit default values!"
+        | None -> failwithf "Your environment variables look like they are set manually, but you are missing the default variables. Use the `Process.` helpers to change the 'Environment' field to inherit default values! See https://github.com/fsharp/FAKE/issues/1776#issuecomment-365431982"
         | Some _ ->
             if not x.UseShellExecute then  
                 p.Environment.Clear()
