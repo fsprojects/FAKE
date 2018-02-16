@@ -208,10 +208,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1729', 1729)" onmouseover="showTip(event, '1729', 1729)">
+          <code onmouseout="hideTip(event, '1739', 1739)" onmouseover="showTip(event, '1739', 1739)">
             CreateZip (...)
           </code>
-          <div class="tip" id="1729">
+          <div class="tip" id="1739">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -237,15 +237,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1730', 1730)" onmouseover="showTip(event, '1730', 1730)">
+          <code onmouseout="hideTip(event, '1740', 1740)" onmouseover="showTip(event, '1740', 1740)">
             CreateZipOfIncludes (...)
           </code>
-          <div class="tip" id="1730">
+          <div class="tip" id="1740">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; files:seq&lt;string * FileIncludes&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L200-200" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L325-325" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -264,10 +264,37 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1731', 1731)" onmouseover="showTip(event, '1731', 1731)">
+          <code onmouseout="hideTip(event, '1741', 1741)" onmouseover="showTip(event, '1741', 1741)">
+            CreateZipSpec (...)
+          </code>
+          <div class="tip" id="1741">
+            <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L105-105" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a zip file with the given files and specs.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>fileName</code> - The fileName of the resulting zip file.</li>
+<li><code>comment</code> - A comment for the resulting zip file.</li>
+<li><code>level</code> - The compression level.</li>
+<li><code>items</code> - A sequence with files and their target location in the zip.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1742', 1742)" onmouseover="showTip(event, '1742', 1742)">
             DefaultZipLevel 
           </code>
-          <div class="tip" id="1731">
+          <div class="tip" id="1742">
             <strong>Signature:</strong> int<br />
                       </div>
         </td>
@@ -284,15 +311,203 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1732', 1732)" onmouseover="showTip(event, '1732', 1732)">
+          <code onmouseout="hideTip(event, '1743', 1743)" onmouseover="showTip(event, '1743', 1743)">
+            FilesAsSpecs workingDir files
+          </code>
+          <div class="tip" id="1743">
+            <strong>Signature:</strong> workingDir:string -&gt; files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L252-252" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>This helper helps with creating complex zip file with multiple include patterns.
+This method will convert a given glob pattern with the given workingDir to a sequence of zip specifications.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
+<li><code>files</code> - A sequence of target folders and files to include relative to their base directory.</li>
+</ul>
+<h2>Sample</h2>
+<p>The following sample creates a zip file containing the files from multiple patterns and moves them to different folders within the zip file.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Zip&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span>   <span class="o">!!</span> <span class="s">&quot;ci/build/project1/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project1&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project1&quot;</span>
+        <span class="o">!!</span> <span class="s">&quot;ci/build/project2/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project2&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project2&quot;</span>
+        <span class="o">!!</span> <span class="s">&quot;ci/build/project3/sub/dir/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project3&quot;</span>
+    <span class="pn">]</span>
+    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">concat</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">ZipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span> <span class="s">&quot;&quot;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">DefaultZipLevel</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs2">val concat : sources:seq&lt;#seq&lt;&#39;T&gt;&gt; -&gt; seq&lt;&#39;T&gt;</div>
+<div class="tip" id="fs3">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1744', 1744)" onmouseover="showTip(event, '1744', 1744)">
+            FilesAsSpecsFlatten files
+          </code>
+          <div class="tip" id="1744">
+            <strong>Signature:</strong> files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L279-279" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>This helper helps with creating complex zip file with multiple include patterns.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
+<li><code>files</code> - A sequence of target folders and files to include relative to their base directory.</li>
+</ul>
+<h2>Sample</h2>
+<p>The following sample creates a zip file containing the files from multiple patterns and moves them to different folders within the zip file.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Zip&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span>   <span class="o">!!</span> <span class="s">&quot;ci/build/project1/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project1&quot;</span>
+        <span class="o">!!</span> <span class="s">&quot;ci/build/project2/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project2&quot;</span>
+        <span class="o">!!</span> <span class="s">&quot;ci/build/project3/sub/dir/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project3&quot;</span>
+    <span class="pn">]</span>
+    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">concat</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">ZipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs2">val concat : sources:seq&lt;#seq&lt;&#39;T&gt;&gt; -&gt; seq&lt;&#39;T&gt;</div>
+<div class="tip" id="fs3">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1745', 1745)" onmouseover="showTip(event, '1745', 1745)">
+            MoveToFolder path items
+          </code>
+          <div class="tip" id="1745">
+            <strong>Signature:</strong> path:string -&gt; items:seq&lt;string * string&gt; -&gt; seq&lt;string * string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L307-307" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>This helper helps with creating complex zip file with multiple include patterns.
+This function will move a given list of zip specifications to the given folder (while keeping original folder structure intact).</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
+<li><code>files</code> - A sequence of target folders and files to include relative to their base directory.</li>
+</ul>
+<h2>Sample</h2>
+<p>The following sample creates a zip file containing the files from multiple patterns and moves them to different folders within the zip file.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Zip&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="pn">[</span>   <span class="o">!!</span> <span class="s">&quot;ci/build/project1/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project1&quot;</span>
+        <span class="o">!!</span> <span class="s">&quot;ci/build/project2/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project2&quot;</span>
+        <span class="o">!!</span> <span class="s">&quot;ci/build/project3/sub/dir/**/*&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project3&quot;</span>
+    <span class="pn">]</span>
+    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">concat</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">ZipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs2">val concat : sources:seq&lt;#seq&lt;&#39;T&gt;&gt; -&gt; seq&lt;&#39;T&gt;</div>
+<div class="tip" id="fs3">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1746', 1746)" onmouseover="showTip(event, '1746', 1746)">
             Unzip target fileName
           </code>
-          <div class="tip" id="1732">
+          <div class="tip" id="1746">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L112-112" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L128-128" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -309,15 +524,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1733', 1733)" onmouseover="showTip(event, '1733', 1733)">
+          <code onmouseout="hideTip(event, '1747', 1747)" onmouseover="showTip(event, '1747', 1747)">
             UnzipFirstMatchingFileInMemory (...)
           </code>
-          <div class="tip" id="1733">
+          <div class="tip" id="1747">
             <strong>Signature:</strong> predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L171-171" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L187-187" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -334,15 +549,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1734', 1734)" onmouseover="showTip(event, '1734', 1734)">
+          <code onmouseout="hideTip(event, '1748', 1748)" onmouseover="showTip(event, '1748', 1748)">
             UnzipSingleFileInMemory (...)
           </code>
-          <div class="tip" id="1734">
+          <div class="tip" id="1748">
             <strong>Signature:</strong> fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L149-149" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L165-165" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -359,10 +574,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1735', 1735)" onmouseover="showTip(event, '1735', 1735)">
+          <code onmouseout="hideTip(event, '1749', 1749)" onmouseover="showTip(event, '1749', 1749)">
             Zip workingDir fileName files
           </code>
-          <div class="tip" id="1735">
+          <div class="tip" id="1749">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -385,15 +600,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1736', 1736)" onmouseover="showTip(event, '1736', 1736)">
+          <code onmouseout="hideTip(event, '1750', 1750)" onmouseover="showTip(event, '1750', 1750)">
             ZipFile fileName targetFileName
           </code>
-          <div class="tip" id="1736">
+          <div class="tip" id="1750">
             <strong>Signature:</strong> fileName:string -&gt; targetFileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L103-103" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L119-119" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -410,15 +625,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1737', 1737)" onmouseover="showTip(event, '1737', 1737)">
+          <code onmouseout="hideTip(event, '1751', 1751)" onmouseover="showTip(event, '1751', 1751)">
             ZipOfIncludes fileName files
           </code>
-          <div class="tip" id="1737">
+          <div class="tip" id="1751">
             <strong>Signature:</strong> fileName:string -&gt; files:seq&lt;string * FileIncludes&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L242-242" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L373-373" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -465,6 +680,33 @@
 </tr>
 </table>
 <div class="tip" id="fs1">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1752', 1752)" onmouseover="showTip(event, '1752', 1752)">
+            ZipSpec fileName items
+          </code>
+          <div class="tip" id="1752">
+            <strong>Signature:</strong> fileName:string -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.Zip/Zip.fs#L113-113" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a zip file with the given files and specs.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>fileName</code> - The fileName of the resulting zip file.</li>
+<li><code>comment</code> - A comment for the resulting zip file.</li>
+<li><code>level</code> - The compression level.</li>
+<li><code>items</code> - A sequence with files and their target location in the zip.</li>
+</ul>
 
 
         </td>

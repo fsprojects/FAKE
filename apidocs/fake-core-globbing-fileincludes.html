@@ -193,71 +193,7 @@
 
 <a name="FileIncludes" class="anchor" href="#FileIncludes" ><h1>FileIncludes</h1></a>
 <div class="xmldoc">
-<p>Internal representation of a file set.</p>
-
 </div>
-  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4050', 4050)" onmouseover="showTip(event, '4050', 4050)">
-            BaseDirectory
-          </code>
-          <div class="tip" id="4050">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L11-11" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4051', 4051)" onmouseover="showTip(event, '4051', 4051)">
-            Excludes
-          </code>
-          <div class="tip" id="4051">
-            <strong>Signature:</strong> string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L13-13" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4052', 4052)" onmouseover="showTip(event, '4052', 4052)">
-            Includes
-          </code>
-          <div class="tip" id="4052">
-            <strong>Signature:</strong> string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L12-12" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
   <a name="Instance members" class="anchor" href="#Instance members"><h3>Instance members</h3></a>
   <table class="table table-bordered member-list">
     <thead>
@@ -267,81 +203,58 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4053', 4053)" onmouseover="showTip(event, '4053', 4053)">
-            And(pattern)
+          <code onmouseout="hideTip(event, '4069', 4069)" onmouseover="showTip(event, '4069', 4069)">
+            BaseDirectory
           </code>
-          <div class="tip" id="4053">
-            <strong>Signature:</strong> pattern:string -&gt; FileIncludes<br />
+          <div class="tip" id="4069">
+            <strong>Signature:</strong> string<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L16-16" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L7-7" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Adds the given pattern to the file includes</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4054', 4054)" onmouseover="showTip(event, '4054', 4054)">
-            ButNot(pattern)
+          <code onmouseout="hideTip(event, '4070', 4070)" onmouseover="showTip(event, '4070', 4070)">
+            Excludes
           </code>
-          <div class="tip" id="4054">
-            <strong>Signature:</strong> pattern:string -&gt; FileIncludes<br />
+          <div class="tip" id="4070">
+            <strong>Signature:</strong> string list<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L19-19" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L9-9" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Ignores files with the given pattern</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4055', 4055)" onmouseover="showTip(event, '4055', 4055)">
-            IsMatch(path)
+          <code onmouseout="hideTip(event, '4071', 4071)" onmouseover="showTip(event, '4071', 4071)">
+            Includes
           </code>
-          <div class="tip" id="4055">
-            <strong>Signature:</strong> path:string -&gt; bool<br />
+          <div class="tip" id="4071">
+            <strong>Signature:</strong> string list<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L25-25" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L8-8" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Checks if a particular file is matched</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4056', 4056)" onmouseover="showTip(event, '4056', 4056)">
-            SetBaseDirectory(dir)
-          </code>
-          <div class="tip" id="4056">
-            <strong>Signature:</strong> dir:string -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Globbing/GlobbingFileSystem.fs#L22-22" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Sets a directory as BaseDirectory.</p>
-
-
+          
         </td>
       </tr>
     </tbody>
