@@ -1,4 +1,10 @@
-#### 5.0.0-beta014
+#### 5.0.0-beta015 - 2018-02-16
+* INFRA: Add unit-test-suite for dotnetcore
+* ENHANCEMENT: Add zip-helpers to allow more complex zip structures, fixes #1014
+* BREAKING: Hide globbing behind an interface to make stuff more testable.
+* BREAKING: Change Environment Map behavior in Process to allow removal of environment variables, required to fix #1776
+
+#### 5.0.0-beta014 - 2018-02-10
 * BREAKING: Change Fake.DotNet.Cli API according to latest changes and add `dotnet test`
 * BREAKING: Change Fake.DotNet.MsBuild API according to new API-Guidelines
 * BUGFIX: msbuild doesn't work within dotnet-fake - https://github.com/fsharp/FAKE/issues/1776
