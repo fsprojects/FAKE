@@ -28,21 +28,21 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Tasks", "app/Fake
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Xml", "app/Fake.Core.Xml/Fake.Core.Xml.fsproj", "{C3C12DCE-7AC4-4E97-A7FC-49189D218885}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.AssemblyInfoFile", "app/Fake.Dotnet.AssemblyInfoFile/Fake.Dotnet.AssemblyInfoFile.fsproj", "{BB293F2E-C3BD-4F1C-8345-8AEF01998D2C}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.AssemblyInfoFile", "app/Fake.DotNet.AssemblyInfoFile/Fake.DotNet.AssemblyInfoFile.fsproj", "{BB293F2E-C3BD-4F1C-8345-8AEF01998D2C}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Cli", "app/Fake.Dotnet.Cli/Fake.Dotnet.Cli.fsproj", "{B2C0063A-FC66-4883-BB69-B1DBE6BF9CA2}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Cli", "app/Fake.DotNet.Cli/Fake.DotNet.Cli.fsproj", "{B2C0063A-FC66-4883-BB69-B1DBE6BF9CA2}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.MsBuild", "app/Fake.Dotnet.MsBuild/Fake.Dotnet.MsBuild.fsproj", "{64195C50-E138-4218-A7CE-13CD4565B87E}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.MsBuild", "app/Fake.DotNet.MsBuild/Fake.DotNet.MsBuild.fsproj", "{64195C50-E138-4218-A7CE-13CD4565B87E}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.NuGet", "app/Fake.Dotnet.NuGet/Fake.Dotnet.NuGet.fsproj", "{93F1A71E-54E2-4C65-BB1E-1D499890317F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.NuGet", "app/Fake.DotNet.NuGet/Fake.DotNet.NuGet.fsproj", "{93F1A71E-54E2-4C65-BB1E-1D499890317F}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Testing.MSpec", "app/Fake.Dotnet.Testing.MSpec/Fake.Dotnet.Testing.MSpec.fsproj", "{C1B87E1F-8D0D-4A78-9A24-9D5D38B7E9A8}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.MSpec", "app/Fake.DotNet.Testing.MSpec/Fake.DotNet.Testing.MSpec.fsproj", "{C1B87E1F-8D0D-4A78-9A24-9D5D38B7E9A8}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Testing.NUnit", "app/Fake.Dotnet.Testing.NUnit/Fake.Dotnet.Testing.NUnit.fsproj", "{75C9DD21-B4EA-4117-BF4F-AFE777A80B5B}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.NUnit", "app/Fake.DotNet.Testing.NUnit/Fake.DotNet.Testing.NUnit.fsproj", "{75C9DD21-B4EA-4117-BF4F-AFE777A80B5B}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Testing.XUnit2", "app/Fake.Dotnet.Testing.XUnit2/Fake.Dotnet.Testing.XUnit2.fsproj", "{21E2FE31-4E7C-489E-8215-9303108A2F39}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.XUnit2", "app/Fake.DotNet.Testing.XUnit2/Fake.DotNet.Testing.XUnit2.fsproj", "{21E2FE31-4E7C-489E-8215-9303108A2F39}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Testing.MSTest", "app/Fake.Dotnet.Testing.MSTest/Fake.Dotnet.Testing.MSTest.fsproj", "{21E2FE31-4E7C-489E-8215-9303108A2F30}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.MSTest", "app/Fake.DotNet.Testing.MSTest/Fake.DotNet.Testing.MSTest.fsproj", "{21E2FE31-4E7C-489E-8215-9303108A2F30}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.IO.FileSystem", "app/Fake.IO.FileSystem/Fake.IO.FileSystem.fsproj", "{4B1416CD-C7CB-4670-8EFE-871ED316D51D}"
 EndProject
@@ -56,21 +56,21 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Windows.Chocolatey", "
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Tools.Git", "app/Fake.Tools.Git/Fake.Tools.Git.fsproj", "{E32B2631-476A-4C2D-AE18-275ED7A22F10}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.FSFormatting", "app/Fake.Dotnet.FSFormatting/Fake.Dotnet.FSFormatting.fsproj", "{80314941-78D5-4928-B943-93FC945E050F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.FSFormatting", "app/Fake.DotNet.FSFormatting/Fake.DotNet.FSFormatting.fsproj", "{80314941-78D5-4928-B943-93FC945E050F}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Paket", "app/Fake.Dotnet.Paket/Fake.Dotnet.Paket.fsproj", "{CDFB2B10-050A-4188-8F72-2BCC61E9814F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Paket", "app/Fake.DotNet.Paket/Fake.DotNet.Paket.fsproj", "{CDFB2B10-050A-4188-8F72-2BCC61E9814F}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.netcore", "app/Fake.netcore/Fake.netcore.fsproj", "{6B339DA3-8DED-4262-A427-3C4CCDD00650}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Testing.SonarQube", "app/Fake.Testing.SonarQube/Fake.Testing.SonarQube.fsproj", "{2A985028-4410-40F7-992C-5397DC1ED116}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Testing.OpenCover", "app/Fake.Dotnet.Testing.OpenCover/Fake.Dotnet.Testing.OpenCover.fsproj", "{A9AF015B-43C9-405E-BF74-CE936B8418F9}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.OpenCover", "app/Fake.DotNet.Testing.OpenCover/Fake.DotNet.Testing.OpenCover.fsproj", "{A9AF015B-43C9-405E-BF74-CE936B8418F9}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Api.Slack", "app/Fake.Api.Slack/Fake.Api.Slack.fsproj", "{58A3EDF0-CA9D-4757-B1E8-2A4E3592B308}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Api.GitHub", "app/Fake.Api.GitHub/Fake.Api.GitHub.fsproj", "{4BCE4F9C-8FC2-4207-81F1-20CB07D852DC}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Dotnet.Xamarin", "app/Fake.Dotnet.Xamarin/Fake.Dotnet.Xamarin.fsproj", "{13C1F95D-2FAD-4890-BF94-0AE7CF9AB2FC}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Xamarin", "app/Fake.DotNet.Xamarin/Fake.DotNet.Xamarin.fsproj", "{13C1F95D-2FAD-4890-BF94-0AE7CF9AB2FC}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Net.Http", "app/Fake.Net.Http/Fake.Net.Http.fsproj", "{D24CEE35-B6C0-4C92-AE18-E80F90B69974}"
 EndProject
