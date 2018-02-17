@@ -692,6 +692,37 @@ Target.Create "DotnetRestore" (fun _ ->
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
+// REMOVE ME
+let private argList2 name values =
+    values
+    |> Seq.collect (fun v -> ["--" + name; sprintf @"""%s""" v])
+    |> String.concat " "
+let private argOption name value =
+    match value with
+        | true -> sprintf "--%s" name
+        | false -> ""
+let private buildConfigurationArg (param: Cli.BuildConfiguration) =
+    sprintf "--configuration %s" 
+        (match param with
+        | Cli.Debug -> "Debug"
+        | Cli.Release -> "Release"
+        | Cli.Custom config -> config)
+let buildPackArgs (param: Cli.DotNetPackOptions) =
+    [  
+        buildConfigurationArg param.Configuration
+        param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
+        param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
+        param.OutputPath |> Option.toList |> argList2 "output"
+        param.NoBuild |> argOption "no-build" 
+    ] |> Seq.filter (not << String.isNullOrEmpty) |> String.concat " "
+let DotnetPack setParams project =    
+    use __ = Trace.traceTask "Dotnet:pack" project
+    let param = Cli.DotNetPackOptions.Default |> setParams    
+    let args = sprintf "%s %s" project (buildPackArgs param)
+    let result = Cli.Dotnet (fun _ -> param.Common) "pack" args    
+    if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
+/// --- REMOVE ME
+
 Target.Create "DotnetPackage_" (fun _ ->
     // This line actually ensures we get the correct version checked in
     // instead of the one previously bundled with 'fake`
@@ -714,7 +745,7 @@ Target.Create "DotnetPackage_" (fun _ ->
 
 
     // dotnet pack
-    Cli.DotnetPack (fun c ->
+    DotnetPack (fun c ->
         { c with
             Configuration = Cli.Release
             OutputPath = Some nugetDir

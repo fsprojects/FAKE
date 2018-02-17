@@ -561,7 +561,7 @@ let private buildPackArgs (param: DotNetPackOptions) =
 let DotnetPack setParams project =    
     use __ = Trace.traceTask "Dotnet:pack" project
     let param = DotNetPackOptions.Default |> setParams    
-    let args = sprintf "pack %s %s" project (buildPackArgs param)
+    let args = sprintf "%s %s" project (buildPackArgs param)
     let result = Dotnet (fun _ -> param.Common) "pack" args    
     if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 

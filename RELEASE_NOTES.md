@@ -1,3 +1,6 @@
+#### 5.0.0-beta016 - 2018-02-17
+* BUGFIX: Fix bug in Cli.DotNetPack
+
 #### 5.0.0-beta015 - 2018-02-16
 * INFRA: Add unit-test-suite for dotnetcore
 * ENHANCEMENT: Add zip-helpers to allow more complex zip structures, fixes #1014
