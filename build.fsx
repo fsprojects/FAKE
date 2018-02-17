@@ -279,11 +279,7 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
 )
 
 Target.Create "BuildSolution_" (fun _ ->
-#if BOOTSTRAP
     MsBuild.RunWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
-#else
-    MsBuild.MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
-#endif
     |> Trace.Log "AppBuild-Output: "
 )
 
@@ -390,11 +386,7 @@ let withWorkDirDef wd = withWorkDir wd Cli.DotnetOptions.Default
 Target.Create "DotnetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     let processResult =
-#if BOOTSTRAP
         Cli.Dotnet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
-#else    
-        Cli.Dotnet (withWorkDirDef root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll --summary"
-#endif
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed." 
 )
 
@@ -658,33 +650,19 @@ Target.Create "DotnetRestore" (fun _ ->
     Environment.setEnvironVar "Version" release.NugetVersion
 
     //dotnet root "--info"
-#if BOOTSTRAP
     Cli.Dotnet (withWorkDir root) "--info" ""
         |> ignore
-#else
-    Cli.Dotnet (withWorkDirDef root) "--info"
-        |> ignore
-#endif    
 
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
     Directory.ensure t
-#if BOOTSTRAP
     Cli.Dotnet (withWorkDir t) "new" "console --language f#"
         |> ignore
     Cli.Dotnet (withWorkDir t) "restore" ""
         |> ignore
     Cli.Dotnet (withWorkDir t) "build" ""
         |> ignore
-#else
-    Cli.Dotnet (withWorkDirDef t) "new console --language f#"
-        |> ignore
-    Cli.Dotnet (withWorkDirDef t) "restore"
-        |> ignore
-    Cli.Dotnet (withWorkDirDef t) "build"
-        |> ignore
-#endif
     Directory.Delete(t, true)
 
     // Copy nupkgs to nuget/dotnetcore
@@ -694,11 +672,7 @@ Target.Create "DotnetRestore" (fun _ ->
         Directory.ensure dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
-#if BOOTSTRAP
     let result = Cli.Dotnet (withWorkDir root) "sln" "src/Fake-netcore.sln list"
-#else
-    let result = Cli.Dotnet (withWorkDirDef root) "sln src/Fake-netcore.sln list"
-#endif
     let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
     let missingNetCoreProj =
         netCoreProjs
