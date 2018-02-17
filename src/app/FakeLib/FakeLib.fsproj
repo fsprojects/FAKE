@@ -173,8 +173,8 @@
     <Compile Include="..\Fake.Tracing.NAntXml\NAntXmlTraceListener.fs">
       <Link>Fake.Tracing.NAntXml/NAntXmlTraceListener.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Cli\Dotnet.fs">
-      <Link>Fake.DotNet.Cli/Dotnet.fs</Link>
+    <Compile Include="..\Fake.DotNet.Cli\DotNet.fs">
+      <Link>Fake.DotNet.Cli/DotNet.fs</Link>
     </Compile>
     <Compile Include="..\Fake.Testing.Common\TestingCommon.fs">
       <Link>Fake.Testing.Common/TestingCommon.fs</Link>
