@@ -1,26 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="Fake.Core.Globbing.fs" />
-    <Compile Include="Fake.Tools.Git.fs" />
-    <Compile Include="Fake.IO.Zip.fs" />
-    <Compile Include="Main.fs" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\app\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Include="Fake.Core.Globbing.fs" />
+    <Compile Include="Fake.DotNet.Cli.fs" />
+    <Compile Include="Fake.Tools.Git.fs" />
+    <Compile Include="Fake.IO.Zip.fs" />
+    <Compile Include="Main.fs" />
+  </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
-  </ItemGroup> 
+  </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

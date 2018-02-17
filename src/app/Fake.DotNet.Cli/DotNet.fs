@@ -381,7 +381,10 @@ type DotNetOptions =
         CustomParams = None
         Verbosity = None
         Diagnostics = false
-        Environment = Process.createEnvironmentMap()
+        Environment =
+            Process.createEnvironmentMap()
+            |> Map.remove "MSBUILD_EXE_PATH"
+            |> Map.remove "MSBuildExtensionsPath" 
     }
     [<Obsolete("Use DotNetOptions.Create instead")>]
     static member Default = DotNetOptions.Create()

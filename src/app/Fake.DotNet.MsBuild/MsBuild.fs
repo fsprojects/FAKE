@@ -51,6 +51,7 @@ let monoVersionToUseMSBuildOn = System.Version("5.0")
 
 
 /// Tries to detect the right version of MSBuild.
+///
 ///   - On all OS's, we check a `MSBuild` environment variable which is either
 ///     * a direct path to a file to use, or
 ///     * a directory that contains a file called
@@ -272,9 +273,8 @@ type MSBuildParams =
           FileLoggers = None
           BinaryLoggers = None
           DistributedLoggers = None
-          Environment = 
-            Environment.environVars () |> Map.ofSeq
-            |> Map.add Process.defaultEnvVar Process.defaultEnvVar
+          Environment =
+            Process.createEnvironmentMap()
             |> Map.remove "MSBUILD_EXE_PATH"
             |> Map.remove "MSBuildExtensionsPath" }
     [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
@@ -454,8 +454,9 @@ match BuildServer.buildServer with
 ///
 /// ## Sample
 ///
-///     let buildMode = getBuildParamOrDefault "buildMode" "Release"
-///     let setParams defaults =
+///     open Fake.DotNet
+///     let buildMode = Environment.environVarOrDefault "buildMode" "Release"
+///     let setParams (defaults:MSBuildParams) =
 ///             { defaults with
 ///                 Verbosity = Some(Quiet)
 ///                 Targets = ["Build"]
@@ -466,8 +467,7 @@ match BuildServer.buildServer with
 ///                         "Configuration", buildMode
 ///                     ]
 ///              }
-///     build setParams "./MySolution.sln"
-///           |> DoNothing
+///     MsBuild.build setParams "./MySolution.sln"
 let build setParams project =
     use __ = Trace.traceTask "MSBuild" project
     let msBuildParams =
