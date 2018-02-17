@@ -148,6 +148,8 @@ type ProcessResult =
 
 let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
 
+let createEnvironmentMap () = Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
+
 type ProcStartInfo =
     { /// Gets or sets the set of command-line arguments to use when starting the application.
       Arguments : string
@@ -201,7 +203,7 @@ type ProcStartInfo =
       { Arguments = null
         CreateNoWindow = false
         Domain = null
-        Environment = Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
+        Environment = createEnvironmentMap()
 #if FX_ERROR_DIALOG
         ErrorDialog = false
         ErrorDialogParentHandle = IntPtr.Zero

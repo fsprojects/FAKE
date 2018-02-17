@@ -1,3 +1,6 @@
+#### 5.0.0-beta017 - 2018-02-17
+* BUGFIX: Fix https://github.com/fsharp/FAKE/issues/1776 again for dotnet cli helpers.
+
 #### 5.0.0-beta016 - 2018-02-17
 * BUGFIX: Fix bug in Cli.DotNetPack
 
