@@ -15,4 +15,3 @@ Cli.DotNet id "build" "mysolution.sln"
 ```
 
 More [API Documentation](apidocs/fake-dotnet-cli.html)
-
