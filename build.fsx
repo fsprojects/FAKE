@@ -74,6 +74,10 @@ let reportDir = "./report"
 let packagesDir = "./packages"
 let buildMergedDir = buildDir </> "merged"
 
+let root = __SOURCE_DIRECTORY__
+let srcDir = root</>"src"
+let appDir = srcDir</>"app"
+
 let additionalFiles = [
     "License.txt"
     "README.markdown"
@@ -119,6 +123,7 @@ Target.Create "Clean" (fun _ ->
     |> Shell.CleanDirs
 
     !! "src/*/*/obj/*.nuspec"
+    -- (sprintf "src/*/*/obj/*%s.nuspec" release.NugetVersion)
     //-- "src/*/*/obj/*.references"
     //-- "src/*/*/obj/*.props"
     //-- "src/*/*/obj/*.paket.references.cached"
@@ -256,7 +261,7 @@ Target.Create "SetAssemblyInfo" (fun _ ->
     for assemblyFile, attributes in assemblyInfos do
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
-        // not yet released
+        // Quick-fix: git ls-files -v . | grep ^S | cut -c3- | xargs git update-index --no-skip-worktree
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> AssemblyInfoFile.CreateFSharp assemblyFile
 )
@@ -377,11 +382,25 @@ Target.Create "Test" (fun _ ->
         Trace.traceFAKE "Ignoring xUnit timeout for now, there seems to be something funny going on ..."
 )
 
-Target.Create "TestDotnetCore" (fun _ ->
+Target.Create "DotnetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
     !! (testDir @@ "*.IntegrationTests.dll")
     |> NUnit3.NUnit3 id
+)
+
+let withWorkDir wd (cliOpts:Cli.DotnetOptions) = { cliOpts with WorkingDirectory = wd }
+let withWorkDirDef wd = withWorkDir wd Cli.DotnetOptions.Default
+
+Target.Create "DotnetCoreUnitTests" (fun _ ->
+    // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
+    let processResult =
+#if BOOTSTRAP
+        Cli.Dotnet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
+#else    
+        Cli.Dotnet (withWorkDirDef root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll --summary"
+#endif
+    if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed." 
 )
 
 Target.Create "BootstrapTest" (fun _ ->
@@ -624,9 +643,6 @@ Target.Create "InstallDotnetCore" (fun _ ->
     //Cli.DotnetCliInstall Cli.Release_2_0_0
 )
 
-let root = __SOURCE_DIRECTORY__
-let srcDir = root</>"src"
-let appDir = srcDir</>"app"
 
 
 let netCoreProjs =
@@ -646,8 +662,6 @@ Target.Create "DotnetRestore" (fun _ ->
 
     Environment.setEnvironVar "Version" release.NugetVersion
 
-    let withWorkDir wd (cliOpts:Cli.DotnetOptions) = { cliOpts with WorkingDirectory = wd }
-    let withWorkDirDef wd = withWorkDir wd Cli.DotnetOptions.Default
     //dotnet root "--info"
 #if BOOTSTRAP
     Cli.Dotnet (withWorkDir root) "--info" ""
@@ -1056,8 +1070,9 @@ open Fake.Core.TargetOperators
 
 // Test the dotnetcore build
 "DotnetPackage"
+    =?> ("DotnetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
     ==> "DotnetCoreCreateZipPackages"
-    =?> ("TestDotnetCore", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("DotnetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     =?> ("BootstrapTestDotnetCore",not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
