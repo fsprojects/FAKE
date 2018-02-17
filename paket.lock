@@ -44,7 +44,7 @@ NUGET
       System.Runtime.Loader (>= 4.0) - restriction: && (< net45) (>= netstandard1.6)
       System.Security.Cryptography.Algorithms (>= 4.3) - restriction: && (< net45) (>= netstandard1.6)
       System.ValueTuple (>= 4.4) - restriction: && (< net45) (>= netstandard1.6)
-    FSharp.Compiler.Tools (4.1.34) - restriction: >= net45
+    FSharp.Compiler.Tools (4.1.29) - restriction: >= net45
     FSharp.Core (4.1.18) - redirects: force
       System.Collections (>= 4.0.11) - restriction: && (< net20) (>= netstandard1.6) (< xamarinmac)
       System.Console (>= 4.0) - restriction: && (< net20) (>= netstandard1.6) (< xamarinmac)
