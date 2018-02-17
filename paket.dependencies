@@ -53,6 +53,7 @@ nuget Microsoft.DotNet.PlatformAbstractions
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
 group TestAdapter 
+    source https://api.nuget.org/v3/index.json
     nuget Expecto.VisualStudio.TestAdapter version_in_path: true
 
 group Build
