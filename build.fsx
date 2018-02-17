@@ -379,20 +379,35 @@ Target.Create "Test" (fun _ ->
         Trace.traceFAKE "Ignoring xUnit timeout for now, there seems to be something funny going on ..."
 )
 
-Target.Create "DotnetCoreIntegrationTests" (fun _ ->
+Target.Create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
     !! (testDir @@ "*.IntegrationTests.dll")
     |> NUnit3.NUnit3 id
 )
 
-let withWorkDir wd (cliOpts:Cli.DotnetOptions) = { cliOpts with WorkingDirectory = wd }
-let withWorkDirDef wd = withWorkDir wd Cli.DotnetOptions.Default
+#if BOOTSTRAP
+type DotNetOptions = Cli.DotNetOptions
+let DotNet = Cli.DotNet
+let DotNetCliInstall = Cli.DotNetCliInstall
+let DotNetRestore = Cli.DotNetRestore
+let DotNetInfo = Cli.DotNetInfo
+let DotNetPublish = Cli.DotNetPublish
+#else
+type DotNetOptions = Cli.DotnetOptions
+let DotNet = Cli.Dotnet
+let DotNetCliInstall = Cli.DotnetCliInstall
+let DotNetRestore = Cli.DotnetRestore
+let DotNetInfo = Cli.DotnetInfo
+let DotNetPublish = Cli.DotnetPublish
+#endif
+let withWorkDir wd (cliOpts:DotNetOptions) = { cliOpts with WorkingDirectory = wd }
+let withWorkDirDef wd = withWorkDir wd DotNetOptions.Default
 
-Target.Create "DotnetCoreUnitTests" (fun _ ->
+Target.Create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     let processResult =
-        Cli.Dotnet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
+        DotNet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed." 
 )
 
@@ -447,7 +462,7 @@ Target.Create "BootstrapTest" (fun _ ->
 )
 
 
-Target.Create "BootstrapTestDotnetCore" (fun _ ->
+Target.Create "BootstrapTestDotNetCore" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
@@ -631,9 +646,8 @@ let LatestTooling options =
         Cli.Channel = None
         Cli.Version = Cli.Version "2.1.4"
     }
-Target.Create "InstallDotnetCore" (fun _ ->
-    Cli.DotnetCliInstall LatestTooling
-    //Cli.DotnetCliInstall Cli.Release_2_0_0
+Target.Create "InstallDotNetCore" (fun _ ->
+    DotNetCliInstall Cli.Release_2_1_4
 )
 
 
@@ -651,23 +665,23 @@ let netCoreProjs =
     ++ "src/app/Fake.Testing.*/*.fsproj"
     ++ "src/app/Fake.Runtime/*.fsproj"
 
-Target.Create "DotnetRestore" (fun _ ->
+Target.Create "DotNetRestore" (fun _ ->
 
     Environment.setEnvironVar "Version" release.NugetVersion
 
     //dotnet root "--info"
-    Cli.Dotnet (withWorkDir root) "--info" ""
+    DotNet (withWorkDir root) "--info" ""
         |> ignore
 
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
     Directory.ensure t
-    Cli.Dotnet (withWorkDir t) "new" "console --language f#"
+    DotNet (withWorkDir t) "new" "console --language f#"
         |> ignore
-    Cli.Dotnet (withWorkDir t) "restore" ""
+    DotNet (withWorkDir t) "restore" ""
         |> ignore
-    Cli.Dotnet (withWorkDir t) "build" ""
+    DotNet (withWorkDir t) "build" ""
         |> ignore
     Directory.Delete(t, true)
 
@@ -678,7 +692,7 @@ Target.Create "DotnetRestore" (fun _ ->
         Directory.ensure dir
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
-    let result = Cli.Dotnet (withWorkDir root) "sln" "src/Fake-netcore.sln list"
+    let result = DotNet (withWorkDir root) "sln" "src/Fake-netcore.sln list"
     let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
     let missingNetCoreProj =
         netCoreProjs
@@ -692,7 +706,7 @@ Target.Create "DotnetRestore" (fun _ ->
         |> Seq.exists id
     if missingNetCoreProj then failwith "At least one netcore project seems to be missing from the src/Fake-netcore.sln solution!"
     // dotnet restore
-    Cli.DotnetRestore id "src/Fake-netcore.sln"
+    DotNetRestore id "src/Fake-netcore.sln"
 )
 
 let runtimes =
@@ -721,15 +735,15 @@ let buildPackArgs (param: Cli.DotNetPackOptions) =
         param.OutputPath |> Option.toList |> argList2 "output"
         param.NoBuild |> argOption "no-build" 
     ] |> Seq.filter (not << String.isNullOrEmpty) |> String.concat " "
-let DotnetPack setParams project =    
-    use __ = Trace.traceTask "Dotnet:pack" project
+let DotNetPack setParams project =    
+    use __ = Trace.traceTask "DotNet:pack" project
     let param = Cli.DotNetPackOptions.Default |> setParams    
     let args = sprintf "%s %s" project (buildPackArgs param)
-    let result = Cli.Dotnet (fun _ -> param.Common) "pack" args    
+    let result = DotNet (fun _ -> param.Common) "pack" args    
     if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 /// --- REMOVE ME
 
-Target.Create "DotnetPackage_" (fun _ ->
+Target.Create "DotNetPackage_" (fun _ ->
     // This line actually ensures we get the correct version checked in
     // instead of the one previously bundled with 'fake`
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
@@ -751,13 +765,13 @@ Target.Create "DotnetPackage_" (fun _ ->
 
 
     // dotnet pack
-    DotnetPack (fun c ->
+    DotNetPack (fun c ->
         { c with
             Configuration = Cli.Release
             OutputPath = Some nugetDir
         }) "src/Fake-netcore.sln"
 
-    let info = Cli.DotnetInfo id
+    let info = DotNetInfo id
 
     // dotnet publish
     runtimes
@@ -772,9 +786,9 @@ Target.Create "DotnetPackage_" (fun _ ->
                 | Some r -> r, r
                 | None -> "current", info.RID
 
-            //DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
+            //DotNetRestore (fun c -> {c with Runtime = Some runtime}) proj
             let outDir = nugetDir @@ projName @@ runtimeName
-            Cli.DotnetPublish (fun c ->
+            DotNetPublish (fun c ->
                 { c with
                     Runtime = Some runtime
                     Configuration = Cli.Release
@@ -792,7 +806,7 @@ Target.Create "DotnetPackage_" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-    Cli.DotnetPublish (fun c ->
+    DotNetPublish (fun c ->
         { c with
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
@@ -800,7 +814,7 @@ Target.Create "DotnetPackage_" (fun _ ->
 
 )
 
-Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
+Target.Create "DotNetCoreCreateZipPackages" (fun _ ->
     Environment.setEnvironVar "Version" release.NugetVersion
 
     // build zip packages
@@ -816,7 +830,7 @@ Target.Create "DotnetCoreCreateZipPackages" (fun _ ->
     )
 )
 
-Target.Create "DotnetCoreCreateChocolateyPackage" (fun _ ->
+Target.Create "DotNetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
     Directory.ensure "nuget/dotnetcore/chocolatey"
     Choco.PackFromTemplate (fun p ->
@@ -831,7 +845,7 @@ Target.Create "DotnetCoreCreateChocolateyPackage" (fun _ ->
             OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
     ()
 )
-Target.Create "DotnetCorePushChocolateyPackage" (fun _ ->
+Target.Create "DotNetCorePushChocolateyPackage" (fun _ ->
     let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
     path |> Choco.Push (fun p ->
         { p with
@@ -883,7 +897,7 @@ setting permissions also, its just a shell script
 might also want a prerm and postrm if you want to play nice on cleanup
 *)
 
-Target.Create "DotnetCoreCreateDebianPackage" (fun _ ->
+Target.Create "DotNetCoreCreateDebianPackage" (fun _ ->
     let createDebianPackage (manifest : DebPackageManifest) =
         let argsList = ResizeArray<string>()
         argsList.Add <| match manifest.SourceType with
@@ -929,7 +943,7 @@ let rec nugetPush tries nugetpackage =
         Trace.traceFAKE "Error while pushing NuGet package: %s" exn.Message
         nugetPush (tries - 1) nugetpackage
 
-Target.Create "DotnetCorePushNuGet" (fun _ ->
+Target.Create "DotNetCorePushNuGet" (fun _ ->
     // dotnet pack
     netCoreProjs
     -- "src/app/Fake.netcore/*.fsproj"
@@ -1030,7 +1044,7 @@ Target.Create "Default" ignore
 Target.Create "StartDnc" ignore
 Target.Create "Release" ignore
 Target.Create "BuildSolution" ignore
-Target.Create "DotnetPackage" ignore
+Target.Create "DotNetPackage" ignore
 Target.Create "AfterBuild" ignore
 
 open Fake.Core.TargetOperators
@@ -1039,12 +1053,12 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
-    ==> "InstallDotnetCore"
+    ==> "InstallDotNetCore"
     ==> "DownloadPaket"
     ==> "SetAssemblyInfo"
-    ==> "DotnetPackage_"
+    ==> "DotNetPackage_"
     ==> "UnskipAndRevertAssemblyInfo"
-    ==> "DotnetPackage"
+    ==> "DotNetPackage"
 
 // Full framework build
 "Clean"
@@ -1057,14 +1071,14 @@ open Fake.Core.TargetOperators
 // AfterBuild -> Both Builds completed
 "BuildSolution"
     ==> "AfterBuild"
-"DotnetPackage"
+"DotNetPackage"
     ==> "AfterBuild"
 
 // Create artifacts when build is finished
 "AfterBuild"
     =?> ("CreateNuGet", not Environment.isLinux)
     ==> "CopyLicense"
-    =?> ("DotnetCoreCreateChocolateyPackage", not Environment.isLinux)
+    =?> ("DotNetCoreCreateChocolateyPackage", not Environment.isLinux)
     =?> ("GenerateDocs", BuildServer.isLocalBuild && not Environment.isLinux)
     ==> "Default"
 
@@ -1075,18 +1089,18 @@ open Fake.Core.TargetOperators
     ==> "Default"
 
 // Test the dotnetcore build
-"DotnetPackage"
-    =?> ("DotnetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
-    ==> "DotnetCoreCreateZipPackages"
-    =?> ("DotnetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTestDotnetCore",not <| Environment.hasEnvironVar "SkipTests")
+"DotNetPackage"
+    =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
+    ==> "DotNetCoreCreateZipPackages"
+    =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTestDotNetCore",not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
-    =?> ("DotnetCorePushChocolateyPackage", not Environment.isLinux)
+    =?> ("DotNetCorePushChocolateyPackage", not Environment.isLinux)
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && not Environment.isLinux)
-    ==> "DotnetCorePushNuGet"
+    ==> "DotNetCorePushNuGet"
     ==> "PublishNuget"
     ==> "FastRelease"
 

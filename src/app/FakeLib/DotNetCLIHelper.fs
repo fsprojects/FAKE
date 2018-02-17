@@ -1,4 +1,5 @@
 ﻿/// Contains a task which can be used to run dotnet CLI commands.
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 module Fake.DotNetCli
 
 open Fake
@@ -9,9 +10,11 @@ open System.Text
 open Newtonsoft.Json.Linq
 
 /// The dotnet command name
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let commandName = "dotnet"
 
 /// Gets the installed dotnet version
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let getVersion() = 
     let processResult = 
         ExecProcessAndReturnMessages (fun info ->  
@@ -22,6 +25,7 @@ let getVersion() =
     processResult.Messages |> separated ""
 
 /// Checks wether the dotnet CLI is installed
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let isInstalled() =
     try
         let processResult =
@@ -34,6 +38,7 @@ let isInstalled() =
     with _ -> false
 
 /// DotNet parameters
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 [<CLIMutable>]
 type CommandParams = {
     /// ToolPath - usually just "dotnet"
@@ -65,6 +70,7 @@ let private DefaultCommandParams : CommandParams = {
 ///              { p with 
 ///                   TimeOut = TimeSpan.FromMinutes 10. })
 ///         "restore"
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let RunCommand (setCommandParams: CommandParams -> CommandParams) args =
     use __ = traceStartTaskUsing "DotNet" ""
 
@@ -78,6 +84,7 @@ let RunCommand (setCommandParams: CommandParams -> CommandParams) args =
         failwithf "dotnet command failed on %s" args
 
 /// DotNet restore parameters
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 [<CLIMutable>]
 type RestoreParams = {
     /// ToolPath - usually just "dotnet"
@@ -123,6 +130,7 @@ let private DefaultRestoreParams : RestoreParams = {
 ///         (fun p -> 
 ///              { p with 
 ///                   NoCache = true })
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
     use __ = traceStartTaskUsing "DotNet.Restore" ""
 
@@ -146,6 +154,7 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
         failwithf "Restore failed on %s" args
 
 /// DotNet build parameters
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 [<CLIMutable>]
 type BuildParams = {
     /// ToolPath - usually just "dotnet"
@@ -199,6 +208,7 @@ let private DefaultBuildParams : BuildParams = {
 ///       (fun p -> 
 ///            { p with 
 ///                 Configuration = "Release" })
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let Build (setBuildParams: BuildParams -> BuildParams) =
     use __ = traceStartTaskUsing "DotNet.Build" ""
 
@@ -225,6 +235,7 @@ let Build (setBuildParams: BuildParams -> BuildParams) =
 
 
 /// DotNet test parameters
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 [<CLIMutable>]
 type TestParams = {
     /// ToolPath - usually just "dotnet"
@@ -274,6 +285,7 @@ let private DefaultTestParams : TestParams = {
 ///       (fun p -> 
 ///            { p with 
 ///                 Configuration = "Release" })
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let Test (setTestParams: TestParams -> TestParams) =
     use __ = traceStartTaskUsing "DotNet.Test" ""
 
@@ -299,6 +311,7 @@ let Test (setTestParams: TestParams -> TestParams) =
 
 
 /// DotNet pack parameters
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 [<CLIMutable>]
 type PackParams = {
     /// ToolPath - usually just "dotnet"
@@ -348,6 +361,7 @@ let private DefaultPackParams : PackParams = {
 ///       (fun p -> 
 ///            { p with 
 ///                 Configuration = "Release" })
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let Pack (setPackParams: PackParams -> PackParams) =
     use __ = traceStartTaskUsing "DotNet.Pack" ""
 
@@ -372,6 +386,7 @@ let Pack (setPackParams: PackParams -> PackParams) =
         failwithf "Pack failed on %s" args
 
 /// DotNet publish parameters
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 [<CLIMutable>]
 type PublishParams = {
     /// ToolPath - usually just "dotnet"
@@ -429,6 +444,7 @@ let private DefaultPublishParams : PublishParams = {
 ///       (fun p -> 
 ///            { p with 
 ///                 Configuration = "Release" })
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let Publish (setPublishParams: PublishParams -> PublishParams) =
     use __ = traceStartTaskUsing "DotNet.Publish" ""
 
@@ -457,6 +473,7 @@ let Publish (setPublishParams: PublishParams -> PublishParams) =
 
 
 /// Sets version in project.json
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let SetVersionInProjectJson (version:string) fileName = 
     use __ = traceStartTaskUsing "DotNet.SetVersion" fileName
     let original = File.ReadAllText fileName
@@ -466,10 +483,12 @@ let SetVersionInProjectJson (version:string) fileName =
     if newText <> original then
         File.WriteAllText(fileName,newText)
 
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) </> "dotnetcore" |> FullName
 
 
 /// Gets the DotNet SDK from the global.json
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let GetDotNetSDKVersionFromGlobalJson() : string = 
     if not (File.Exists "global.json") then
         failwithf "global.json not found"
@@ -484,6 +503,7 @@ let GetDotNetSDKVersionFromGlobalJson() : string =
 
 
 /// Installs the DotNet SDK locally to the given path
+[<System.Obsolete("Please use the Fake.DotNet.Cli module instead")>]
 let InstallDotNetSDK sdkVersion =
     let buildLocalPath = DotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
     let mutable dotnetExePath = "dotnet"

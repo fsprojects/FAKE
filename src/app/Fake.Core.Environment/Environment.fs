@@ -199,14 +199,16 @@ module Environment =
         isUnix
     #endif
 
-    let isDotnetCore = 
+    let isDotNetCore = 
     #if NETSTANDARD1_6
         // See https://github.com/dotnet/corefx/blob/master/src/System.Runtime.InteropServices.RuntimeInformation/src/System/Runtime/InteropServices/RuntimeInformation/RuntimeInformation.cs
         System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core")
     #else
         false
     #endif
-
+    [<System.Obsolete("Use isDotNetCore instead (different casing of 'N')")>]
+    let isDotnetCore = isDotNetCore
+    
     module Internal =
         /// Internal, do not use.
         /// We use this internally for parsing the output of mono --version

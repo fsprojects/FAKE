@@ -1,9 +1,9 @@
-// From https://raw.githubusercontent.com/dolly22/FAKE.Dotnet/master/src/Fake.Dotnet/Dotnet.fs
+// From https://raw.githubusercontent.com/dolly22/FAKE.DotNet/master/src/Fake.DotNet/DotNet.fs
 // Temporary copied into Fake until the dotnetcore conversation has finished.
 // This probably needs to stay within Fake to bootstrap?
 // Currently last file in FakeLib, until all dependencies are available in dotnetcore.
 /// .NET Core + CLI tools helpers
-module Fake.Dotnet.Cli
+module Fake.DotNet.Cli
 
 // NOTE: The #if can be removed once we have a working release with the "new" API
 // Currently we #load this file in build.fsx
@@ -39,7 +39,7 @@ open Newtonsoft.Json.Linq
 open System
 
 /// .NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location. 
-let mutable DefaultDotnetCliDir = 
+let mutable DefaultDotNetCliDir = 
     if Environment.isUnix
     then Environment.environVar "HOME" @@ ".dotnet"
     else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
@@ -51,16 +51,16 @@ let mutable DefaultDotnetCliDir =
 let private dotnetCliPath dotnetCliDir = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
 
 /// Get .NET Core SDK download uri
-let private getGenericDotnetCliInstallerUrl branch installerName =
+let private getGenericDotNetCliInstallerUrl branch installerName =
     sprintf "https://raw.githubusercontent.com/dotnet/cli/%s/scripts/obtain/%s" branch installerName
 
-let private getPowershellDotnetCliInstallerUrl branch = getGenericDotnetCliInstallerUrl branch "dotnet-install.ps1"
-let private getBashDotnetCliInstallerUrl branch = getGenericDotnetCliInstallerUrl branch "dotnet-install.sh"
+let private getPowershellDotNetCliInstallerUrl branch = getGenericDotNetCliInstallerUrl branch "dotnet-install.ps1"
+let private getBashDotNetCliInstallerUrl branch = getGenericDotNetCliInstallerUrl branch "dotnet-install.sh"
 
 
 /// Download .NET Core SDK installer
-let private downloadDotnetInstallerFromUrl (url:string) fileName =
-    //let url = getDotnetCliInstallerUrl branch
+let private downloadDotNetInstallerFromUrl (url:string) fileName =
+    //let url = getDotNetCliInstallerUrl branch
 #if USE_HTTPCLIENT
     let h = new System.Net.Http.HttpClient();
     use f = File.Open(fileName, FileMode.Create);
@@ -82,7 +82,7 @@ let private md5 (data : byte array) : string =
 
 
 /// .NET Core SDK installer download options
-type DotnetInstallerOptions =
+type DotNetInstallerOptions =
     {
         /// Always download install script (otherwise install script is cached in temporary folder)
         AlwaysDownload: bool;
@@ -100,11 +100,11 @@ type DotnetInstallerOptions =
 /// ## Parameters
 ///
 /// - 'setParams' - set download installer options
-let DotnetDownloadInstaller setParams =
-    let param = DotnetInstallerOptions.Default |> setParams
+let DotNetDownloadInstaller setParams =
+    let param = DotNetInstallerOptions.Default |> setParams
 
     let ext = if Environment.isUnix then "sh" else "ps1"
-    let getInstallerUrl = if Environment.isUnix then getBashDotnetCliInstallerUrl else getPowershellDotnetCliInstallerUrl
+    let getInstallerUrl = if Environment.isUnix then getBashDotNetCliInstallerUrl else getPowershellDotNetCliInstallerUrl
     let scriptName =
         sprintf "dotnet_install_%s.%s" (md5 (Encoding.ASCII.GetBytes(param.Branch))) ext
     let tempInstallerScript = Path.GetTempPath() @@ scriptName
@@ -113,21 +113,21 @@ let DotnetDownloadInstaller setParams =
     match param.AlwaysDownload || not(File.Exists(tempInstallerScript)) with
         | true -> 
             let url = getInstallerUrl param.Branch
-            downloadDotnetInstallerFromUrl url tempInstallerScript
+            downloadDotNetInstallerFromUrl url tempInstallerScript
         | _ -> ()
 
     tempInstallerScript
 
 
 /// .NET Core SDK architecture
-type DotnetCliArchitecture =
+type DotNetCliArchitecture =
     /// this value represents currently running OS architecture
     | Auto
     | X86
     | X64
 
 /// .NET Core SDK version (used to specify version when installing .NET Core SDK)
-type DotnetCliVersion =
+type DotNetCliVersion =
     /// most latest build on specific channel
     | Latest
     ///  last known good version on specific channel (Note: LKG work is in progress. Once the work is finished, this will become new default)
@@ -136,18 +136,18 @@ type DotnetCliVersion =
     | Version of string
 
 /// .NET Core SDK install options
-type DotnetCliInstallOptions =
+type DotNetCliInstallOptions =
     {
         /// Custom installer obtain (download) options
-        InstallerOptions: DotnetInstallerOptions -> DotnetInstallerOptions
+        InstallerOptions: DotNetInstallerOptions -> DotNetInstallerOptions
         /// .NET Core SDK channel (defaults to normalized installer branch)
         Channel: string option;
         /// .NET Core SDK version
-        Version: DotnetCliVersion;
+        Version: DotNetCliVersion;
         /// Custom installation directory (for local build installation)
         CustomInstallDir: string option
         /// Architecture
-        Architecture: DotnetCliArchitecture;
+        Architecture: DotNetCliArchitecture;
         /// Include symbols in the installation (Switch does not work yet. Symbols zip is not being uploaded yet) 
         DebugSymbols: bool;
         /// If set it will not perform installation but instead display what command line to use
@@ -274,7 +274,7 @@ let private boolToFlag value flagParam =
     | false -> ""
 
 /// [omit]
-let private buildDotnetCliInstallArgs quoteChar (param: DotnetCliInstallOptions) =
+let private buildDotNetCliInstallArgs quoteChar (param: DotNetCliInstallOptions) =
     let versionParamValue = 
         match param.Version with
         | Latest -> "latest"
@@ -286,7 +286,7 @@ let private buildDotnetCliInstallArgs quoteChar (param: DotnetCliInstallOptions)
         match param.Channel with
             | Some ch -> ch
             | None -> 
-                let installerOptions = DotnetInstallerOptions.Default |> param.InstallerOptions
+                let installerOptions = DotNetInstallerOptions.Default |> param.InstallerOptions
                 installerOptions.Branch |> String.replace "/" "-"
     let quoteStr str = sprintf "%c%s%c" quoteChar str quoteChar
     let architectureParamValue = 
@@ -310,9 +310,9 @@ let private buildDotnetCliInstallArgs quoteChar (param: DotnetCliInstallOptions)
 /// ## Parameters
 ///
 /// - 'setParams' - set installation options
-let DotnetCliInstall setParams =
-    let param = DotnetCliInstallOptions.Default |> setParams  
-    let installScript = DotnetDownloadInstaller param.InstallerOptions
+let DotNetCliInstall setParams =
+    let param = DotNetCliInstallOptions.Default |> setParams  
+    let installScript = DotNetDownloadInstaller param.InstallerOptions
 
     let exitCode =
         let args, fileName =
@@ -324,14 +324,14 @@ let DotnetCliInstall setParams =
 #else
                 let quoteChar = '\''
 #endif
-                let args = sprintf "%s %s" installScript (buildDotnetCliInstallArgs quoteChar param)
+                let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs quoteChar param)
                 args, "bash" // Otherwise we need to set the executable flag!
             else
                 let args = 
                     sprintf 
                         "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" 
                         installScript 
-                        (buildDotnetCliInstallArgs '\'' param)
+                        (buildDotNetCliInstallArgs '\'' param)
                 args, "powershell"
         Process.ExecProcess (fun info ->
         { info with
@@ -343,14 +343,14 @@ let DotnetCliInstall setParams =
     if exitCode <> 0 then
         // force download new installer script
         Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
-        DotnetDownloadInstaller (param.InstallerOptions >> (fun o -> 
+        DotNetDownloadInstaller (param.InstallerOptions >> (fun o -> 
             { o with 
                 AlwaysDownload = true
             })) |> ignore
         failwithf ".NET Core SDK install failed with code %i" exitCode
 
 /// dotnet restore verbosity
-type DotnetVerbosity =
+type DotNetVerbosity =
     | Quiet
     | Minimal
     | Normal
@@ -358,16 +358,16 @@ type DotnetVerbosity =
     | Diagnostic
 
 /// dotnet cli command execution options
-type DotnetOptions =
+type DotNetOptions =
     {
-        /// Dotnet cli executable path
-        DotnetCliPath: string
+        /// DotNet cli executable path
+        DotNetCliPath: string
         /// Command working directory
         WorkingDirectory: string
         /// Custom parameters
         CustomParams: string option
         /// Logging verbosity (--verbosity)
-        Verbosity: DotnetVerbosity option
+        Verbosity: DotNetVerbosity option
         /// Restore logging verbosity (--verbosity)
         Diagnostics: bool
         /// Gets the environment variables that apply to this process and its child processes.
@@ -376,15 +376,15 @@ type DotnetOptions =
         Environment : Map<string, string>
     }
     static member Create() = {
-        DotnetCliPath = dotnetCliPath DefaultDotnetCliDir
+        DotNetCliPath = dotnetCliPath DefaultDotNetCliDir
         WorkingDirectory = Directory.GetCurrentDirectory()
         CustomParams = None
         Verbosity = None
         Diagnostics = false
         Environment = Process.createEnvironmentMap()
     }
-    [<Obsolete("Use DotnetOptions.Create instead")>]
-    static member Default = DotnetOptions.Create()
+    [<Obsolete("Use DotNetOptions.Create instead")>]
+    static member Default = DotNetOptions.Create()
 
     /// Sets the current environment variables.
     member x.WithEnvironment map =
@@ -403,13 +403,13 @@ let private argOption name value =
         | false -> ""
 
 /// [omit]
-let private buildCommonArgs (param: DotnetOptions) =
+let private buildCommonArgs (param: DotNetOptions) =
     [   defaultArg param.CustomParams "" 
         param.Verbosity |> Option.toList |> Seq.map (fun v -> v.ToString().ToLowerInvariant()) |> argList2 "verbosity"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
 /// [omit]
-let private buildSdkOptionsArgs (param: DotnetOptions) =
+let private buildSdkOptionsArgs (param: DotNetOptions) =
     [   param.Diagnostics |> argOption "--diagostics"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
@@ -419,7 +419,7 @@ let private buildSdkOptionsArgs (param: DotnetOptions) =
 /// - 'options' - common execution options
 /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
 /// - 'args' - command arguments
-let Dotnet (buildOptions: DotnetOptions -> DotnetOptions) command args = 
+let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args = 
     let errors = new System.Collections.Generic.List<string>()
     let messages = new System.Collections.Generic.List<string>()
     let timeout = TimeSpan.MaxValue
@@ -432,17 +432,17 @@ let Dotnet (buildOptions: DotnetOptions -> DotnetOptions) command args =
         Trace.traceImportant msg
         messages.Add msg
 
-    let options = buildOptions DotnetOptions.Default
+    let options = buildOptions DotNetOptions.Default
     let sdkOptions = buildSdkOptionsArgs options
     let commonOptions = buildCommonArgs options
     let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args 
 
     let result = 
         Process.ExecProcessWithLambdas (fun info ->
-        let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
+        let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
         let oldPath = System.Environment.GetEnvironmentVariable "PATH"
         { info with
-            FileName = options.DotnetCliPath
+            FileName = options.DotNetCliPath
             WorkingDirectory = options.WorkingDirectory
             Arguments = cmdArgs }
         |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
@@ -455,10 +455,10 @@ let Dotnet (buildOptions: DotnetOptions -> DotnetOptions) command args =
 
 
 /// dotnet restore command options
-type DotnetRestoreOptions =
+type DotNetRestoreOptions =
     {   
         /// Common tool options
-        Common: DotnetOptions;
+        Common: DotNetOptions;
         /// The runtime to restore for (seems added in RC4). Maybe a bug, but works.
         Runtime: string option;
         /// Nuget feeds to search updates in. Use default if empty.
@@ -477,7 +477,7 @@ type DotnetRestoreOptions =
 
     /// Parameter default values.
     static member Create() = {
-        Common = DotnetOptions.Create()
+        Common = DotNetOptions.Create()
         Sources = []
         Runtime = None
         Packages = []
@@ -486,8 +486,8 @@ type DotnetRestoreOptions =
         IgnoreFailedSources = false
         DisableParallel = false
     }
-    [<Obsolete("Use DotnetOptions.Create instead")>]
-    static member Default = DotnetOptions.Create()
+    [<Obsolete("Use DotNetOptions.Create instead")>]
+    static member Default = DotNetOptions.Create()
 
     /// Gets the current environment
     member x.Environment = x.Common.Environment
@@ -496,7 +496,7 @@ type DotnetRestoreOptions =
         { x with Common = { x.Common with Environment = map } }
 
 /// [omit]
-let private buildRestoreArgs (param: DotnetRestoreOptions) =
+let private buildRestoreArgs (param: DotNetRestoreOptions) =
     [   param.Sources |> argList2 "source"
         param.Packages |> argList2 "packages"
         param.ConfigFile |> Option.toList |> argList2 "configFile"
@@ -512,11 +512,11 @@ let private buildRestoreArgs (param: DotnetRestoreOptions) =
 ///
 /// - 'setParams' - set restore command parameters
 /// - 'project' - project to restore packages
-let DotnetRestore setParams project =    
-    use __ = Trace.traceTask "Dotnet:restore" project
-    let param = DotnetRestoreOptions.Create() |> setParams    
+let DotNetRestore setParams project =    
+    use __ = Trace.traceTask "DotNet:restore" project
+    let param = DotNetRestoreOptions.Create() |> setParams    
     let args = sprintf "%s %s" project (buildRestoreArgs param)
-    let result = Dotnet (fun _ -> param.Common) "restore" args    
+    let result = DotNet (fun _ -> param.Common) "restore" args    
     if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
 
 /// build configuration
@@ -534,10 +534,10 @@ let private buildConfigurationArg (param: BuildConfiguration) =
         | Custom config -> config)
 
 /// dotnet pack command options
-type DotnetPackOptions =
+type DotNetPackOptions =
     {   
         /// Common tool options
-        Common: DotnetOptions;
+        Common: DotNetOptions;
         /// Pack configuration (--configuration)
         Configuration: BuildConfiguration;
         /// Version suffix to use
@@ -552,15 +552,15 @@ type DotnetPackOptions =
 
     /// Parameter default values.
     static member Create() = {
-        Common = DotnetOptions.Create()
+        Common = DotNetOptions.Create()
         Configuration = Release
         VersionSuffix = None
         BuildBasePath = None
         OutputPath = None
         NoBuild = false
     }
-    [<Obsolete("Use DotnetPackOptions.Create instead")>]
-    static member Default = DotnetPackOptions.Create()
+    [<Obsolete("Use DotNetPackOptions.Create instead")>]
+    static member Default = DotNetPackOptions.Create()
     /// Gets the current environment
     member x.Environment = x.Common.Environment
     /// Sets the current environment variables.
@@ -568,7 +568,7 @@ type DotnetPackOptions =
         { x with Common = { x.Common with Environment = map } }
 
 /// [omit]
-let private buildPackArgs (param: DotnetPackOptions) =
+let private buildPackArgs (param: DotNetPackOptions) =
     [  
         buildConfigurationArg param.Configuration
         param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
@@ -583,25 +583,25 @@ let private buildPackArgs (param: DotnetPackOptions) =
 ///
 /// - 'setParams' - set pack command parameters
 /// - 'project' - project to pack
-let DotnetPack setParams project =    
-    use __ = Trace.traceTask "Dotnet:pack" project
-    let param = DotnetPackOptions.Create() |> setParams    
+let DotNetPack setParams project =    
+    use __ = Trace.traceTask "DotNet:pack" project
+    let param = DotNetPackOptions.Create() |> setParams    
     let args = sprintf "%s %s" project (buildPackArgs param)
-    let result = Dotnet (fun _ -> param.Common) "pack" args    
+    let result = DotNet (fun _ -> param.Common) "pack" args    
     if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 
 /// dotnet --info command options
-type DotnetInfoOptions =
+type DotNetInfoOptions =
     {   
         /// Common tool options
-        Common: DotnetOptions;
+        Common: DotNetOptions;
     }
     /// Parameter default values.
     static member Create() = {
-        Common = DotnetOptions.Create()
+        Common = DotNetOptions.Create()
     }
-    [<Obsolete("Use DotnetInfoOptions.Create instead")>]
-    static member Default = DotnetPackOptions.Create()
+    [<Obsolete("Use DotNetInfoOptions.Create instead")>]
+    static member Default = DotNetPackOptions.Create()
     /// Gets the current environment
     member x.Environment = x.Common.Environment
     /// Sets the current environment variables.
@@ -609,7 +609,7 @@ type DotnetInfoOptions =
         { x with Common = { x.Common with Environment = map } }
     
 /// dotnet info result
-type DotnetInfoResult =
+type DotNetInfoResult =
     {   
         /// Common tool options
         RID: string;
@@ -618,11 +618,11 @@ type DotnetInfoResult =
 /// ## Parameters
 ///
 /// - 'setParams' - set info command parameters
-let DotnetInfo setParams =    
-    use __ = Trace.traceTask "Dotnet:info" "running dotnet --info"
-    let param = DotnetInfoOptions.Create() |> setParams    
+let DotNetInfo setParams =    
+    use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
+    let param = DotNetInfoOptions.Create() |> setParams    
     let args = "--info" // project (buildPackArgs param)
-    let result = Dotnet (fun _ -> param.Common) "" args
+    let result = DotNet (fun _ -> param.Common) "" args
     if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
 
     let rid =
@@ -635,10 +635,10 @@ let DotnetInfo setParams =
     { RID = rid.Value }
 
 /// dotnet publish command options
-type DotnetPublishOptions =
+type DotNetPublishOptions =
     {   
         /// Common tool options
-        Common: DotnetOptions;
+        Common: DotNetOptions;
         /// Pack configuration (--configuration)
         Configuration: BuildConfiguration;
         /// Target framework to compile for (--framework)
@@ -657,7 +657,7 @@ type DotnetPublishOptions =
 
     /// Parameter default values.
     static member Create() = {
-        Common = DotnetOptions.Create()
+        Common = DotNetOptions.Create()
         Configuration = Release
         Framework = None
         Runtime = None
@@ -666,8 +666,8 @@ type DotnetPublishOptions =
         VersionSuffix = None
         NoBuild = false
     }
-    [<Obsolete("Use DotnetPublishOptions.Create instead")>]
-    static member Default = DotnetPublishOptions.Create()
+    [<Obsolete("Use DotNetPublishOptions.Create instead")>]
+    static member Default = DotNetPublishOptions.Create()
     /// Gets the current environment
     member x.Environment = x.Common.Environment
     /// Sets the current environment variables.
@@ -675,7 +675,7 @@ type DotnetPublishOptions =
         { x with Common = { x.Common with Environment = map } }
 
 /// [omit]
-let private buildPublishArgs (param: DotnetPublishOptions) =
+let private buildPublishArgs (param: DotNetPublishOptions) =
     [  
         buildConfigurationArg param.Configuration
         param.Framework |> Option.toList |> argList2 "framework"
@@ -692,18 +692,18 @@ let private buildPublishArgs (param: DotnetPublishOptions) =
 ///
 /// - 'setParams' - set publish command parameters
 /// - 'project' - project to publish
-let DotnetPublish setParams project =    
-    use __ = Trace.traceTask "Dotnet:publish" project
-    let param = DotnetPublishOptions.Create() |> setParams    
+let DotNetPublish setParams project =    
+    use __ = Trace.traceTask "DotNet:publish" project
+    let param = DotNetPublishOptions.Create() |> setParams    
     let args = sprintf "%s %s" project (buildPublishArgs param)
-    let result = Dotnet (fun _ -> param.Common) "publish" args    
+    let result = DotNet (fun _ -> param.Common) "publish" args    
     if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
 
 /// dotnet build command options
-type DotnetBuildOptions =
+type DotNetBuildOptions =
     {   
         /// Common tool options
-        Common: DotnetOptions;
+        Common: DotNetOptions;
         /// Pack configuration (--configuration)
         Configuration: BuildConfiguration;
         /// Target framework to compile for (--framework)
@@ -720,7 +720,7 @@ type DotnetBuildOptions =
 
     /// Parameter default values.
     static member Create() = {
-        Common = DotnetOptions.Create()
+        Common = DotNetOptions.Create()
         Configuration = Release
         Framework = None
         Runtime = None
@@ -728,8 +728,8 @@ type DotnetBuildOptions =
         OutputPath = None
         Native = false
     }
-    [<Obsolete("Use DotnetBuildOptions.Create instead")>]
-    static member Default = DotnetBuildOptions.Create()
+    [<Obsolete("Use DotNetBuildOptions.Create instead")>]
+    static member Default = DotNetBuildOptions.Create()
     /// Gets the current environment
     member x.Environment = x.Common.Environment
     /// Sets the current environment variables.
@@ -738,7 +738,7 @@ type DotnetBuildOptions =
 
 
 /// [omit]
-let private buildBuildArgs (param: DotnetBuildOptions) =
+let private buildBuildArgs (param: DotNetBuildOptions) =
     [  
         buildConfigurationArg param.Configuration
         param.Framework |> Option.toList |> argList2 "framework"
@@ -754,21 +754,21 @@ let private buildBuildArgs (param: DotnetBuildOptions) =
 ///
 /// - 'setParams' - set compile command parameters
 /// - 'project' - project to compile
-let DotnetCompile setParams project =    
-    use __ = Trace.traceTask "Dotnet:build" project
-    let param = DotnetBuildOptions.Create |> setParams    
+let DotNetCompile setParams project =    
+    use __ = Trace.traceTask "DotNet:build" project
+    let param = DotNetBuildOptions.Create |> setParams    
     let args = sprintf "%s %s" project (buildBuildArgs param)
-    let result = Dotnet (fun _ -> param.Common) "build" args
+    let result = DotNet (fun _ -> param.Common) "build" args
     if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
 
-let DotnetBuild = DotnetCompile
+let DotNetBuild = DotNetCompile
 
 
 /// dotnet build command options
-type DotnetTestOptions =
+type DotNetTestOptions =
     {   
         /// Common tool options
-        Common: DotnetOptions
+        Common: DotNetOptions
         /// Settings to use when running tests (--settings)
         Settings: string option
         /// Lists discovered tests (--list-tests)
@@ -806,7 +806,7 @@ type DotnetTestOptions =
 
     /// Parameter default values.
     static member Create() = {
-        Common = DotnetOptions.Create()
+        Common = DotNetOptions.Create()
         Settings = None
         ListTests = false
         Filter = None
@@ -822,8 +822,8 @@ type DotnetTestOptions =
         NoRestore = false
         RunSettingsArguments = None
     }
-    [<Obsolete("Use DotnetTestOptions.Create instead")>]
-    static member Default = DotnetTestOptions.Create()
+    [<Obsolete("Use DotNetTestOptions.Create instead")>]
+    static member Default = DotNetTestOptions.Create()
     /// Gets the current environment
     member x.Environment = x.Common.Environment
     /// Sets the current environment variables.
@@ -832,7 +832,7 @@ type DotnetTestOptions =
 
 
 /// [omit]
-let private buildTestArgs (param: DotnetTestOptions) =
+let private buildTestArgs (param: DotNetTestOptions) =
     [  
         param.Settings |> Option.toList |> argList2 "settings"
         param.ListTests |> argOption "list-tests"
@@ -855,17 +855,17 @@ let private buildTestArgs (param: DotnetTestOptions) =
 ///
 /// - 'setParams' - set compile command parameters
 /// - 'project' - project to compile
-let DotnetTest setParams project =    
-    use __ = Trace.traceTask "Dotnet:test" project
-    let param = DotnetTestOptions.Create() |> setParams    
+let DotNetTest setParams project =    
+    use __ = Trace.traceTask "DotNet:test" project
+    let param = DotNetTestOptions.Create() |> setParams    
     let args = sprintf "%s %s" project (buildTestArgs param)
-    let result = Dotnet (fun _ -> param.Common) "test" args
+    let result = DotNet (fun _ -> param.Common) "test" args
     if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
 
 
 
-/// Gets the Dotnet SDK from the global.json
-let GetDotnetSDKVersionFromGlobalJson() : string = 
+/// Gets the DotNet SDK from the global.json
+let GetDotNetSDKVersionFromGlobalJson() : string = 
     if not (File.Exists "global.json") then
         failwithf "global.json not found"
     try
