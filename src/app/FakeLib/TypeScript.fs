@@ -4,6 +4,7 @@ module Fake.TypeScript
 open System
 open System.Text
 open System.IO
+open Fake.TraceHelper
 
 /// Generated ECMAScript version
 type ECMAScript =
@@ -129,3 +130,54 @@ let TypeScriptCompiler setParams files =
        |> not
     then Seq.iter traceError errors
     Seq.collect (fun x -> x.Messages) callResults |> Seq.iter trace
+
+
+
+/// TypeScript config task parameter type
+[<CLIMutable>]
+type TypeScriptTsConfigParams =
+    { 
+      /// Specifies the TypeScript project file.
+      Project : string
+      /// Specifies the TypeScript compiler path.
+      ToolPath : string
+      /// Specifies the TypeScript compiler output path.
+      TimeOut : TimeSpan }
+
+      
+/// Default parameters for the TypeScript config task
+let TypeScriptTsConfigDefaultParams = 
+    { Project = ""
+      ToolPath = 
+            if isUnix then "tsc"
+            else 
+                let paths = 
+                    [ System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFiles; System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFilesX86]
+                    |> List.map (fun p -> p </> TypeScriptCompilerPrefix)
+                    |> List.collect (fun p -> try System.IO.DirectoryInfo(p).GetDirectories() |> List.ofArray with | _ -> [])
+                    |> List.sortByDescending extractVersionNumber
+                    |> List.map (fun di -> di.FullName)
+                findPath "TypeScriptPath" (String.Join(";", paths)) "tsc.exe"
+      TimeOut = TimeSpan.FromMinutes 5. }
+      
+    
+/// This task to can be used to call the [TypeScript](http://www.typescriptlang.org/) compiler.
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the TypeScript default settings.
+///
+/// ## Sample
+///
+///         !! "src/**/*.ts"
+///             |> TypeScriptCompilerTsConfig (fun p -> { p with Project = "./build" }) 
+let TypeScriptCompilerTsConfig setParams =
+    use __ = traceStartTaskUsing "Typescript" ""
+    let parameters = setParams TypeScriptTsConfigDefaultParams
+    let arguments = " --project " + parameters.Project
+    let callResults =
+        ExecProcessAndReturnMessages (fun (info : Diagnostics.ProcessStartInfo) ->
+            info.FileName <- parameters.ToolPath
+            info.Arguments <- arguments) parameters.TimeOut
+    if callResults.Errors |> Seq.isEmpty |> not then
+        Seq.iter traceError callResults.Errors
+    callResults.Messages |> Seq.iter trace
