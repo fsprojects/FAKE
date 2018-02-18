@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>FAKE 5 - Learn more
+		<title>Run the 'dotnet' sdk command line tool
 </title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
@@ -188,77 +188,30 @@
 
 									<!-- Content -->
                       <article>
-<h1><a name="FAKE-5-Learn-more" class="anchor" href="#FAKE-5-Learn-more">FAKE 5 - Learn more</a></h1>
-<blockquote>
-<p>This is especially about the FAKE 5 update, <a href="fake-what-is-fake.html">here you can learn about FAKE</a></p>
-</blockquote>
-<p>FAKE 5 is a huge undertaking in modularizing and porting FAKE 4 to dotnet-core.
-At the same time we want to use that opportunity to pay old API depths.</p>
-<p>On top of that compatibility was always a major concern when updating FAKE,
-therefore we need a clear <a href="fake-migrate-to-fake-5.html">migration path</a> for existing projects.</p>
-<p>So before I go into the details of what changed and what the vision is going forward let me say:</p>
-<blockquote>
-<p>Every help matters. I've tried - but the code-base is just too large to handle.
-I think we now have a good foundation to finish the remaining work.
-Therefore I decided to make the finish line of FAKE 5 a community effort.
-If your favorite module is missing, please port it and send a PR (see Open Work section below).</p>
-</blockquote>
-<h2><a name="How-stable-is-it-What-is-alpha-Should-I-use-it" class="anchor" href="#How-stable-is-it-What-is-alpha-Should-I-use-it">How stable is it? What is alpha? Should I use it?</a></h2>
-<p>First let me say that there are two distributions of FAKE 5.</p>
-<ul>
-<li>
-The first one is an update to the 'regular' FAKE 4 package on NuGet.
-It's very safe to update to this package as mentioned in the <a href="fake-migrate-to-fake-5.html">migrate to fake 5 guide</a>.
-The reason it is considered "beta" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized yet.
-So just ignore the <code>Obsolete</code> warnings and upgrade. If you start fixing the obsolete warnings we MIGHT break your script in an update.
-Hope this makes it clear why the Fake-5 nuget package is marked as beta.
-Beta stage will end when all <code>Obsolete</code> attributes are correct and the new API is considered stable.
-</li>
-<li>
-The second one is the new dotnet-core version of FAKE.
-This version is brand-new, was migrated to a new platform and has several API changes which are not stabelized yet.
-So it's considered an beta.
-But please use it: In the beta phase we wan't to learn how we can handle breaking changes in the new modularized system and need actual users we break. Note that Fake 5 uses <code>paket.lock</code> for it's modules so you can always go back to a working version and report the issue.
-</li>
-</ul>
-<blockquote>
-<p>Fake 5 and this website are already released with Fake 5, so it might be more stable than you think. It's just that
-Some APIs are still missing and others might be renamed within the beta phase.</p>
-</blockquote>
-<h2><a name="Modules-Packages-Paket" class="anchor" href="#Modules-Packages-Paket">Modules? Packages? Paket?</a></h2>
-<p>In the past it was cumbersome and hard to extend your own builds with customized logic or share logic across builds easily.
-Paket loading scripts helped a lot in that issue space, but now you have quite a lot infrastructor for simply running a build script.
-So in a sense it made sense to combine all good parts of paket, dotnet-core and the huge fake library to go to the next level. The result is a standalone, dependency free version of Fake which is modular and extendible. On top of that you can now use all the Fake 5 modules in your "regular" F# projects!</p>
-<p>You only need to know the simple <a href="http://fsprojects.github.io/Paket/dependencies-file.html">paket.dependencies</a> syntax (basically a list of nuget packages) and are able to add custom logic to your script.
-If you are in the scripting area there is not even a need to save <code>paket.dependencies</code> as a separate file. Just put it on top of the script. Fake will take care of the rest.</p>
-<h2><a name="Open-Work-Help-wanted" class="anchor" href="#Open-Work-Help-wanted">Open Work / Help wanted</a></h2>
-<p>This section describes work that still need to be done to finally release FAKE 5.</p>
-<ul>
-<li>Regulary updated issue with smaller (but blocking) work-items: <a href="https://github.com/fsharp/FAKE/issues/1523">https://github.com/fsharp/FAKE/issues/1523</a></li>
-<li>Porting modules (See Modules -&gt; Legacy), please read the migrate modules section in the <a href="contributing.html">contribution guide</a>.</li>
-<li>Missing Obsolete Attributes in the old API (please help when you migrate and notice anything)</li>
-<li>Bootstrapping via Script and System to update scripts automatically + lock FAKE version</li>
-<li>Concept and work on how we want do document modules and module overviews (website is generated automatically)</li>
-<li>Missing documentation</li>
-<li>Update documentation</li>
-<li>Fixing issues with the new website</li>
-<li>Implement a special formatting for the obsolete warnings -&gt; parse them -&gt; suggest new API dependencies file.</li>
-</ul>
-<h2><a name="New-API-Design" class="anchor" href="#New-API-Design">New API-Design</a></h2>
-<p>The old API suffered from several issues:</p>
-<ul>
-<li>
-<p>AutoOpen polluted the "Fake" namespace.</p>
-<p>One problem with this that some modules introduced generic function names which are perfectly valid for other modules as well. Now the second module needs to introduce a "quirk" name.</p>
-</li>
-<li>No visible structure and unified naming made it incredible hard to find an API.</li>
-</ul>
-<p>For example consider the old API <code>CreateDirectory</code> which is a globally available.
-It needs to have its context "Directory" in the name, but this means longer method names.
-Imagine <code>Directory.Create</code> it's not really that much longer - but the IDE can support me a lot more.
-This old API design lead to ambiguities and even user issues.</p>
-<p>Therefore we propose a new <a href="contributing.html">API design in the contributors guide</a></p>
+<h1><a name="Run-the-dotnet-sdk-command-line-tool" class="anchor" href="#Run-the-dotnet-sdk-command-line-tool">Run the 'dotnet' sdk command line tool</a></h1>
+<p>The <code>dotnet</code> command line tool can build and publish projects.</p>
+<h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.DotNet.Cli //&quot;</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
 
+<span class="id">Cli</span><span class="pn">.</span><span class="id">DotNet</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">id</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;&quot;</span>
+<span class="id">Cli</span><span class="pn">.</span><span class="id">DotNet</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">id</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;myproject.fsproj&quot;</span>
+<span class="id">Cli</span><span class="pn">.</span><span class="id">DotNet</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">id</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;mysolution.sln&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>More <a href="apidocs/fake-dotnet-cli.html">API Documentation</a></p>
+
+<div class="tip" id="fs1">val id : x:&#39;T -&gt; &#39;T</div>
 
                       </article>
 								</div>

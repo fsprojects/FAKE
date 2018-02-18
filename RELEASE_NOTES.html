@@ -97,7 +97,7 @@
 														<li>
 															<a href="apidocs/index.html#Fake.DotNet">DotNet</a>
 															<ul>
-																<li><a href="apidocs/fake-dotnet-cli.html">Cli</a></li>
+																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
 																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
@@ -187,6 +187,13 @@
 
 									<!-- Content -->
                       <article>
+<h4><a name="5-0-0-beta017-2018-02-17" class="anchor" href="#5-0-0-beta017-2018-02-17">5.0.0-beta017 - 2018-02-17</a></h4>
+<ul>
+<li>BUGFIX: Fix <a href="https://github.com/fsharp/FAKE/issues/1776">https://github.com/fsharp/FAKE/issues/1776</a> again for dotnet cli helpers.</li>
+<li>BREAKING: the <code>Fake.Core.Tracing</code> nuget package has been renamed to <code>Fake.Core.Trace</code></li>
+<li>BREAKING: Some functions/types with the name <code>Dotnet</code> have been renamed to <code>DotNet</code> for overall consistency.</li>
+<li>BUGFIX: ArgumentException in FtpHelper.uploadAFolder - <a href="https://github.com/fsharp/FAKE/issues/1785">https://github.com/fsharp/FAKE/issues/1785</a></li>
+</ul>
 <h4><a name="5-0-0-beta016-2018-02-17" class="anchor" href="#5-0-0-beta016-2018-02-17">5.0.0-beta016 - 2018-02-17</a></h4>
 <ul>
 <li>BUGFIX: Fix bug in Cli.DotNetPack</li>

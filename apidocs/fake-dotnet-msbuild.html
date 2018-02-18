@@ -97,7 +97,7 @@
 														<li>
 															<a href="../apidocs/index.html#Fake.DotNet">DotNet</a>
 															<ul>
-																<li><a href="../apidocs/fake-dotnet-cli.html">Cli</a></li>
+																<li><a href="../dotnet-cli.html">Cli</a></li>
 																<li><a href="../dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
 																<li><a href="../apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
@@ -279,10 +279,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1450', 1450)" onmouseover="showTip(event, '1450', 1450)">
+          <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
             build setParams project
           </code>
-          <div class="tip" id="1450">
+          <div class="tip" id="1452">
             <strong>Signature:</strong> setParams:(MSBuildParams -&gt; MSBuildParams) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
@@ -313,27 +313,31 @@
 <span class="l">13: </span>
 <span class="l">14: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">buildMode</span> <span class="o">=</span> <span class="id">getBuildParamOrDefault</span> <span class="s">&quot;buildMode&quot;</span> <span class="s">&quot;Release&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="fn">setParams</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">defaults</span> <span class="o">=</span>
-        <span class="pn">{</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">defaults</span> <span class="k">with</span>
-            <span class="id">Verbosity</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">Some</span><span class="pn">(</span><span class="id">Quiet</span><span class="pn">)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">DotNet</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">buildMode</span> <span class="o">=</span> <span class="id">Environment</span><span class="pn">.</span><span class="id">environVarOrDefault</span> <span class="s">&quot;buildMode&quot;</span> <span class="s">&quot;Release&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="fn">setParams</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">defaults</span><span class="pn">:</span><span class="id">MSBuildParams</span><span class="pn">)</span> <span class="o">=</span>
+        <span class="pn">{</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">defaults</span> <span class="k">with</span>
+            <span class="id">Verbosity</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">Some</span><span class="pn">(</span><span class="id">Quiet</span><span class="pn">)</span>
             <span class="id">Targets</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;Build&quot;</span><span class="pn">]</span>
             <span class="id">Properties</span> <span class="o">=</span>
                 <span class="pn">[</span>
                     <span class="s">&quot;Optimize&quot;</span><span class="pn">,</span> <span class="s">&quot;True&quot;</span>
                     <span class="s">&quot;DebugSymbols&quot;</span><span class="pn">,</span> <span class="s">&quot;True&quot;</span>
-                    <span class="s">&quot;Configuration&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="id">buildMode</span>
+                    <span class="s">&quot;Configuration&quot;</span><span class="pn">,</span> <span onmouseout="hideTip(event, 'fs3', 8)" onmouseover="showTip(event, 'fs3', 8)" class="id">buildMode</span>
                 <span class="pn">]</span>
          <span class="pn">}</span>
-<span class="id">build</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="id">setParams</span> <span class="s">&quot;./MySolution.sln&quot;</span>
-      <span class="o">|&gt;</span> <span class="id">DoNothing</span>
+<span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="m">MsBuild</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs8', 10)" onmouseover="showTip(event, 'fs8', 10)" class="id">build</span> <span onmouseout="hideTip(event, 'fs4', 11)" onmouseover="showTip(event, 'fs4', 11)" class="fn">setParams</span> <span class="s">&quot;./MySolution.sln&quot;</span>
 </code></pre></td>
 </tr>
 </table>
-<div class="tip" id="fs1">val buildMode : obj</div>
-<div class="tip" id="fs2">val setParams : defaults:&#39;a -&gt; &#39;a</div>
-<div class="tip" id="fs3">val defaults : &#39;a</div>
-<div class="tip" id="fs4">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs1">namespace Fake</div>
+<div class="tip" id="fs2">namespace Fake.DotNet</div>
+<div class="tip" id="fs3">val buildMode : obj</div>
+<div class="tip" id="fs4">val setParams : defaults:&#39;a -&gt; &#39;a</div>
+<div class="tip" id="fs5">val defaults : &#39;a</div>
+<div class="tip" id="fs6">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs7">module MsBuild<br /><br />from Fake.DotNet</div>
+<div class="tip" id="fs8">val build : setParams:(MsBuild.MSBuildParams -&gt; MsBuild.MSBuildParams) -&gt; project:string -&gt; unit</div>
 
 
         </td>
@@ -341,10 +345,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1451', 1451)" onmouseover="showTip(event, '1451', 1451)">
+          <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
             BuildWebsite outputPath projectFile
           </code>
-          <div class="tip" id="1451">
+          <div class="tip" id="1453">
             <strong>Signature:</strong> outputPath:string -&gt; projectFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -366,10 +370,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
+          <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
             BuildWebsiteConfig (...)
           </code>
-          <div class="tip" id="1452">
+          <div class="tip" id="1454">
             <strong>Signature:</strong> outputPath:string -&gt; configuration:string -&gt; projectFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -392,10 +396,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
+          <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
             BuildWebsites outputPath projectFiles
           </code>
-          <div class="tip" id="1453">
+          <div class="tip" id="1455">
             <strong>Signature:</strong> outputPath:string -&gt; projectFiles:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -417,10 +421,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
+          <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
             BuildWebsitesConfig (...)
           </code>
-          <div class="tip" id="1454">
+          <div class="tip" id="1456">
             <strong>Signature:</strong> outputPath:string -&gt; configuration:string -&gt; projectFiles:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -443,10 +447,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
+          <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
             knownMsBuildEntries 
           </code>
-          <div class="tip" id="1455">
+          <div class="tip" id="1457">
             <strong>Signature:</strong> MsBuildEntry list<br />
                       </div>
         </td>
@@ -461,10 +465,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
+          <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
             monoVersionToUseMSBuildOn 
           </code>
-          <div class="tip" id="1456">
+          <div class="tip" id="1458">
             <strong>Signature:</strong> Version<br />
                       </div>
         </td>
@@ -482,33 +486,51 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
+          <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
             msBuildExe 
           </code>
-          <div class="tip" id="1457">
+          <div class="tip" id="1459">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MsBuild/MsBuild.fs#L68-68" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MsBuild/MsBuild.fs#L69-69" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Tries to detect the right version of MSBuild.
-- On all OS's, we check a <code>MSBuild</code> environment variable which is either
-<em> a direct path to a file to use, or
-</em> a directory that contains a file called
-<em> <code>msbuild</code> on non-Windows systems with mono &gt;= 5.0.0.0, or
-</em> <code>xbuild</code> on non-Windows systems with mono < 5.0.0.0,
-* `MSBuild.exe` on Windows systems, or
-* a tool that exists on the current PATH
-- In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
-* Mono >= 5.0.0.0: <code>msbuild</code>, <code>xbuild</code>
-<em> Mono &lt; 5.0.0.0: <code>xbuild</code>, <code>msbuild</code>
-</em> This is due to several known issues in the Mono &lt; 5.0 implementation of MSBuild.
-- In addition, on Windows systems we
-<em> try to read the MSBuild tool location from the AppSettings file using a parameter named <code>MSBuild</code>, and finally
-</em> if a <code>VisualStudioVersion</code> environment variable is specified, we try to use the specific MSBuild version, matching that Visual Studio version.</p>
+          <p>Tries to detect the right version of MSBuild.</p>
+<ul>
+<li>
+On all OS's, we check a <code>MSBuild</code> environment variable which is either
+<ul>
+<li>a direct path to a file to use, or</li>
+<li>
+a directory that contains a file called
+<ul>
+<li><code>msbuild</code> on non-Windows systems with mono &gt;= 5.0.0.0, or</li>
+<li><code>xbuild</code> on non-Windows systems with mono &lt; 5.0.0.0,</li>
+<li><code>MSBuild.exe</code> on Windows systems, or</li>
+</ul>
+</li>
+<li>a tool that exists on the current PATH</li>
+</ul>
+</li>
+<li>
+In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
+<ul>
+<li>Mono &gt;= 5.0.0.0: <code>msbuild</code>, <code>xbuild</code></li>
+<li>Mono &lt; 5.0.0.0: <code>xbuild</code>, <code>msbuild</code></li>
+<li>This is due to several known issues in the Mono &lt; 5.0 implementation of MSBuild.</li>
+</ul>
+</li>
+<li>
+In addition, on Windows systems we
+<ul>
+<li>try to read the MSBuild tool location from the AppSettings file using a parameter named <code>MSBuild</code>, and finally</li>
+<li>if a <code>VisualStudioVersion</code> environment variable is specified, we try to use the specific MSBuild version, matching that Visual Studio version.</li>
+</ul>
+</li>
+</ul>
 
 
         </td>
@@ -516,10 +538,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
+          <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
             oldMsBuildLocations 
           </code>
-          <div class="tip" id="1458">
+          <div class="tip" id="1460">
             <strong>Signature:</strong> string list<br />
                       </div>
         </td>
@@ -534,10 +556,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
+          <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
             Run (...)
           </code>
-          <div class="tip" id="1459">
+          <div class="tip" id="1461">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; properties:(string * string) list -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -561,10 +583,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
+          <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
             RunDebug outputPath targets projects
           </code>
-          <div class="tip" id="1460">
+          <div class="tip" id="1462">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -587,10 +609,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
+          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
             RunRelease outputPath targets projects
           </code>
-          <div class="tip" id="1461">
+          <div class="tip" id="1463">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -613,10 +635,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
+          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
             RunReleaseExt (...)
           </code>
-          <div class="tip" id="1462">
+          <div class="tip" id="1464">
             <strong>Signature:</strong> outputPath:string -&gt; properties:(string * string) list -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -640,10 +662,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
+          <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
             RunWithDefaults targets projects
           </code>
-          <div class="tip" id="1463">
+          <div class="tip" id="1465">
             <strong>Signature:</strong> targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -665,10 +687,10 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
+          <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
             RunWithProperties (...)
           </code>
-          <div class="tip" id="1464">
+          <div class="tip" id="1466">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; properties:(string -&gt; (string * string) list) -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
