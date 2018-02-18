@@ -95,11 +95,11 @@
     <Compile Include="..\Fake.Core.BuildServer\BuildServer.fs">
       <Link>Fake.Core.BuildServer/BuildServer.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Tracing\TraceListener.fs">
-      <Link>Fake.Core.Tracing/TraceListener.fs</Link>
+    <Compile Include="..\Fake.Core.Trace\TraceListener.fs">
+      <Link>Fake.Core.Trace/TraceListener.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Tracing\Trace.fs">
-      <Link>Fake.Core.Tracing/Trace.fs</Link>
+    <Compile Include="..\Fake.Core.Trace\Trace.fs">
+      <Link>Fake.Core.Trace/Trace.fs</Link>
     </Compile>
     <Compile Include="..\Fake.Core.Target\Target.fs">
       <Link>Fake.Core.Target/Target.fs</Link>

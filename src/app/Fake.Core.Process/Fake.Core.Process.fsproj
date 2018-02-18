@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
     <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj" />
   </ItemGroup>

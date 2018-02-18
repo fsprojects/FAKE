@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 /// This module contains function which allow to trace build output
 module Fake.TraceHelper
 
@@ -9,7 +9,7 @@ open System.IO
 open System.Reflection
 open System.Threading
 
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 type FAKEException(msg) =
     inherit System.Exception(msg)
 
@@ -24,56 +24,56 @@ let fakeVersion = AssemblyVersionInformation.AssemblyVersion
 let private openTags = new ThreadLocal<list<string>>(fun _ -> [])
 
 /// Logs the specified string
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let log message = LogMessage(message, true) |> postMessage
 
 /// Logs the specified message
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let logfn fmt = Printf.ksprintf log fmt
 
 /// Logs the specified message (without line break)
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let logf fmt = Printf.ksprintf (fun text -> postMessage (LogMessage(text, false))) fmt
 
 /// Logs the specified string if the verbose mode is activated.
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let logVerbosefn fmt = 
     Printf.ksprintf (if verbose then log
                      else ignore) fmt
 
 /// Writes a trace to the command line (in green)
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let trace message = postMessage (TraceMessage(message, true))
 
 /// Writes a message to the command line (in green)
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let tracefn fmt = Printf.ksprintf trace fmt
 
 /// Writes a message to the command line (in green) and without a line break
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let tracef fmt = Printf.ksprintf (fun text -> postMessage (TraceMessage(text, false))) fmt
 
 /// Writes a trace to the command line (in green) if the verbose mode is activated.
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceVerbose s = 
     if verbose then trace s
 
 /// Writes a trace to stderr (in yellow)  
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceImportant text = postMessage (ImportantMessage text)
 
 /// Writes a trace to the command line (in yellow)
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage (ImportantMessage text)) fmt
 
 /// Traces an error (in red)
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceError error = postMessage (ErrorMessage error)
 
 open Microsoft.FSharp.Core.Printf
 
 /// Converts an exception and its inner exceptions to a nice string.
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let exceptionAndInnersToString (ex:Exception) =
     let sb = Text.StringBuilder()
     let delimeter = String.replicate 50 "*"
@@ -109,11 +109,11 @@ let exceptionAndInnersToString (ex:Exception) =
     sb.ToString()
 
 /// Traces an exception details (in red)
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceException (ex:Exception) = exceptionAndInnersToString ex |> traceError
 
 /// Traces the EnvironmentVariables
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let TraceEnvironmentVariables() = 
     [ EnvironTarget.Machine; EnvironTarget.Process; EnvironTarget.User ] 
     |> Seq.iter (fun mode -> 
@@ -125,11 +125,11 @@ let TraceEnvironmentVariables() =
 let fakeVersionStr = sprintf "FAKE - F# Make %A" fakeVersion
 
 /// Traces a line
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceLine() = trace "---------------------------------------------------------------------"
 
 /// Traces a header
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceHeader name = 
     trace ""
     traceLine()
@@ -137,26 +137,26 @@ let traceHeader name =
     traceLine()
 
 /// Traces the begin of the build
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceStartBuild() = postMessage StartMessage
 
 /// Traces the end of the build
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let traceEndBuild() = postMessage FinishedMessage
 
 /// Puts an opening tag on the internal tag stack
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let openTag tag = openTags.Value <- tag :: openTags.Value
 
 /// Removes an opening tag from the internal tag stack
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let closeTag tag = 
     match openTags.Value with
     | x :: rest when x = tag -> openTags.Value <- rest
     | _ -> failwithf "Invalid tag structure. Trying to close %s tag but stack is %A" tag openTags
     CloseTag tag |> postMessage
     
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let closeAllOpenTags() = Seq.iter closeTag openTags.Value
 
 /// Traces the begin of a target
@@ -197,13 +197,13 @@ let traceStartTaskUsing task description =
     traceStartTask task description
     { new IDisposable with member x.Dispose() = traceEndTask task description }
     
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let console = new ConsoleTraceListener(false, colorMap, false) :> ITraceListener
 
 open System.Diagnostics
 
 /// Traces the message to the console
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let logToConsole (msg, eventLogEntry : EventLogEntryType) = 
     match eventLogEntry with
     | EventLogEntryType.Error -> ErrorMessage msg
@@ -213,5 +213,5 @@ let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     |> console.Write
 
 /// Logs the given files with the message.
-[<System.Obsolete("use Fake.Core.Tracing instead (open Fake.Core and use 'Tracing.')")>]
+[<System.Obsolete("use Fake.Core.Trace instead (open Fake.Core and use 'Trace.')")>]
 let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)

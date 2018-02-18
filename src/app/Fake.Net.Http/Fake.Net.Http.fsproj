@@ -18,7 +18,7 @@
     <Compile Include="HttpLoader.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
