@@ -407,6 +407,7 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
+    <Compile Include="SignTool.fs" />
     <Compile Include="SignToolHelper.fs" />
     <Compile Include="MageHelper.fs" />
     <Compile Include="SemVerHelper.fs" />
