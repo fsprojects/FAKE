@@ -33,12 +33,6 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
- 
-// Workaround https://github.com/fsharp/FAKE/issues/1776
-printfn "clear msbuild envvars"
-System.Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", null)
-System.Environment.SetEnvironmentVariable("MSBuildExtensionsPath", null)
-
 // properties
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
@@ -386,23 +380,14 @@ Target.Create "DotNetCoreIntegrationTests" (fun _ ->
     |> NUnit3.NUnit3 id
 )
 
-#if BOOTSTRAP
 type DotNetOptions = Cli.DotNetOptions
 let DotNet = Cli.DotNet
 let DotNetCliInstall = Cli.DotNetCliInstall
 let DotNetRestore = Cli.DotNetRestore
 let DotNetInfo = Cli.DotNetInfo
 let DotNetPublish = Cli.DotNetPublish
-#else
-type DotNetOptions = Cli.DotnetOptions
-let DotNet = Cli.Dotnet
-let DotNetCliInstall = Cli.DotnetCliInstall
-let DotNetRestore = Cli.DotnetRestore
-let DotNetInfo = Cli.DotnetInfo
-let DotNetPublish = Cli.DotnetPublish
-#endif
+
 let withWorkDir wd (cliOpts:DotNetOptions) = { cliOpts with WorkingDirectory = wd }
-let withWorkDirDef wd = withWorkDir wd DotNetOptions.Default
 
 Target.Create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
