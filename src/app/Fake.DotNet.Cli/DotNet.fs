@@ -435,7 +435,7 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
         Trace.traceImportant msg
         messages.Add msg
 
-    let options = buildOptions DotNetOptions.Default
+    let options = buildOptions (DotNetOptions.Create())
     let sdkOptions = buildSdkOptionsArgs options
     let commonOptions = buildCommonArgs options
     let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args 
@@ -443,11 +443,15 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
     let result = 
         Process.ExecProcessWithLambdas (fun info ->
         let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
-        let oldPath = System.Environment.GetEnvironmentVariable "PATH"
+        let oldPath =
+            match options.Environment |> Map.tryFind "PATH" with
+            | None -> ""
+            | Some s -> s
         { info with
             FileName = options.DotNetCliPath
             WorkingDirectory = options.WorkingDirectory
             Arguments = cmdArgs }
+        |> Process.setEnvironment options.Environment
         |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
         ) timeout true errorF messageF
 #if NO_DOTNETCORE_BOOTSTRAP
