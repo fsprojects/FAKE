@@ -1,5 +1,8 @@
 #### 5.0.0-beta017 - 2018-02-17
 * BUGFIX: Fix https://github.com/fsharp/FAKE/issues/1776 again for dotnet cli helpers.
+* BREAKING: the `Fake.Core.Tracing` nuget package has been renamed to `Fake.Core.Trace`
+* BREAKING: Some functions/types with the name `Dotnet` have been renamed to `DotNet` for overall consistency.
+* BUGFIX: ArgumentException in FtpHelper.uploadAFolder - https://github.com/fsharp/FAKE/issues/1785
 
 #### 5.0.0-beta016 - 2018-02-17
 * BUGFIX: Fix bug in Cli.DotNetPack
