@@ -137,9 +137,9 @@ and private upload server user pwd (fsi : FileSystemInfo) (rootDir : string) =
     match fsi.GetType().ToString() with
     | "System.IO.DirectoryInfo" -> 
         createAFolder server user pwd rootDir
-        createAFolder server user pwd (sprintf "%s\\%s" rootDir fsi.Name)
-        uploadAFolder server user pwd fsi.FullName (sprintf "%s\\%s" rootDir fsi.Name)
-    | "System.IO.FileInfo" -> uploadAFile server user pwd (sprintf "%s\\%s" rootDir fsi.Name) fsi.FullName
+        createAFolder server user pwd (sprintf "%s/%s" rootDir fsi.Name)
+        uploadAFolder server user pwd fsi.FullName (sprintf "%s/%s" rootDir fsi.Name)
+    | "System.IO.FileInfo" -> uploadAFile server user pwd (sprintf "%s/%s" rootDir fsi.Name) fsi.FullName
     | _ -> logfn "Unknown object found at %A" fsi
 
 /// Deletes a single file from remote FTP folder.
