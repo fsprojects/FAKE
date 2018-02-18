@@ -52,6 +52,25 @@ let toDict items =
 let getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
 
+let rec directoryCopy srcPath dstPath copySubDirs =
+    if not <| Directory.Exists(srcPath) then
+        let msg = String.Format("Source directory does not exist or could not be found: {0}", srcPath)
+        raise (DirectoryNotFoundException(msg))
+
+    if not <| Directory.Exists(dstPath) then
+        Directory.CreateDirectory(dstPath) |> ignore
+
+    let srcDir = new DirectoryInfo(srcPath)
+
+    for file in srcDir.GetFiles() do
+        let temppath = Path.Combine(dstPath, file.Name)
+        file.CopyTo(temppath, true) |> ignore
+
+    if copySubDirs then
+        for subdir in srcDir.GetDirectories() do
+            let dstSubDir = Path.Combine(dstPath, subdir.Name)
+            directoryCopy subdir.FullName dstSubDir copySubDirs
+
 /// Versions of Mono prior to this one have faulty implementations of MSBuild
 /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
 [<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
@@ -607,7 +626,10 @@ let BuildWebsiteConfig outputPath configuration projectFile  =
           "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
-    !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
+
+    let builtBin = projectDir + "/bin"
+    let srcBin = outputPath + projectName + "/bin"
+    directoryCopy builtBin srcBin true
 
 /// Builds the given web project file with debug configuration and copies it to the given outputPath.
 /// ## Parameters
