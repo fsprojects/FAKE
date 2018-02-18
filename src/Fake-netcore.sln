@@ -20,7 +20,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.SemVer", "app/Fak
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.String", "app/Fake.Core.String/Fake.Core.String.fsproj", "{D5B2FEB2-BA3A-492D-B83D-414835043D86}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Tracing", "app/Fake.Core.Tracing/Fake.Core.Tracing.fsproj", "{9430365D-C956-4290-A006-A87F9083DC4B}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Trace", "app/Fake.Core.Trace/Fake.Core.Trace.fsproj", "{9430365D-C956-4290-A006-A87F9083DC4B}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Target", "app/Fake.Core.Target/Fake.Core.Target.fsproj", "{0C28F2FB-2B12-4893-AAA4-2C2548926847}"
 EndProject
