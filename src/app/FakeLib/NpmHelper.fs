@@ -11,11 +11,11 @@ let private npmFileName =
     | true -> 
         System.Environment.GetEnvironmentVariable("PATH")
         |> fun path -> path.Split ';'
-        |> Seq.tryFind (fun p -> p.Contains "nodejs")
-        |> fun res ->
-            match res with
-            | Some npm when File.Exists (sprintf @"%s\npm.cmd" npm) -> (sprintf @"%s\npm.cmd" npm)
-            | _ -> "./packages/Npm.js/tools/npm.cmd"
+        |> Seq.filter (fun p -> p.Contains "nodejs")
+        |> Seq.tryFind (sprintf @"%s\npm.cmd" >> File.Exists)
+        |> function
+            | Some npm -> (sprintf @"%s\npm.cmd" npm)
+            | None -> failwith "Unable to find npm.cmd. Make sure you have the folder that holds npm.cmd in your PATH environment variable. Optionally you can set the NpmFilePath input parameter."
     | _ -> 
         let info = new ProcessStartInfo("which","npm")
         info.StandardOutputEncoding <- System.Text.Encoding.UTF8
