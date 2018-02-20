@@ -35,9 +35,19 @@ module Replacements =
     let ConvertFileFromWin7ToWin8 fileName =
         if isWin8 then
             traceVerbose "Converting from Win7 format to Win8"
-            Fake.StringHelper.ReadFileAsString fileName
-            |> Win7ToWin8
-            |> Fake.StringHelper.WriteStringToFile false fileName
+            use input = IO.File.OpenText(fileName)
+            let tmpFile = fileName + ".tmp"
+            use output = new StreamWriter(tmpFile)
+            let mutable line = input.ReadLine()
+            while not (isNull line) do
+                output.WriteLine(Win7ToWin8 line)
+                line <- input.ReadLine()
+
+            input.Close()
+            output.Close()
+
+            File.Delete(fileName)
+            File.Move(tmpFile, fileName)
 
     let shortcutReplacements =
         ["ShortCutKey=Strg","ShortCutKey=Ctrl"

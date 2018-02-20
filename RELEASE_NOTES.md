@@ -1,3 +1,6 @@
+#### 4.64.5 - 20.02.2018
+* ConvertFileFromWin7ToWin8 reads file line by line 
+
 #### 4.64.4 - 17.01.2018
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
 
