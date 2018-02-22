@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Fake;
+using Fake.Core.Globbing;
 using Machine.Specifications;
 using Microsoft.FSharp.Collections;
 
@@ -11,7 +12,7 @@ namespace Test.FAKECore
             () =>
             {
                 var includes = ListModule.OfArray(new[] { @"test1\bin\*.dll", @"test2\bin\*.dll", });
-                var fileIncludes = new FileSystem.FileIncludes(@"C:\Project", includes, ListModule.Empty<string>());
+                var fileIncludes = new LazyGlobbingPattern(@"C:\Project", includes, ListModule.Empty<string>());
 
                 var dirsToWatch = ChangeWatcher.calcDirsToWatch(fileIncludes);
 
@@ -24,7 +25,7 @@ namespace Test.FAKECore
             () =>
             {
                 var includes = ListModule.OfArray(new[] { @"tests\**\test1\bin\*.dll", @"tests\test2\bin\*.dll", });
-                var fileIncludes = new FileSystem.FileIncludes(@"C:\Project", includes, ListModule.Empty<string>());
+                var fileIncludes = new LazyGlobbingPattern(@"C:\Project", includes, ListModule.Empty<string>());
 
                 var dirsToWatch = ChangeWatcher.calcDirsToWatch(fileIncludes);
 

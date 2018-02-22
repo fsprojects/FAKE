@@ -3,6 +3,7 @@
 module Fake.ChangeWatcher
 
 open System.IO
+open Fake.Core
 
 type FileStatus =
     | Deleted
@@ -22,7 +23,7 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Name = e.Name
                 Status = status })
 
-let private calcDirsToWatch fileIncludes =
+let private calcDirsToWatch (fileIncludes:IGlobbingPattern) =
     let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
 
     // remove subdirectories from watch list so that we don't get duplicate file watchers running
@@ -52,7 +53,7 @@ let private calcDirsToWatch fileIncludes =
 ///         watcher.Dispose() // if you need to cleanup the watches.
 ///     )
 ///
-let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) =
+let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
     let dirsToWatch = fileIncludes |> calcDirsToWatch
 
     tracefn "dirs to watch: %A" dirsToWatch
@@ -118,4 +119,4 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
               timer.Dispose() }
 
 
-let WatchChanges = WatchChangesWithOptions { IncludeSubdirectories = true }
+let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = WatchChangesWithOptions { IncludeSubdirectories = true } onChange fileIncludes
