@@ -1,4 +1,5 @@
 #### 5.0.0-beta019
+* BUGFIX: Added VS 2017 MSTest location - https://github.com/fsharp/FAKE/pull/1794 and https://github.com/fsharp/FAKE/pull/1604
 
 
 #### 5.0.0-beta018 - 2018-02-19
