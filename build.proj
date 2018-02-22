@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-beta017" />
+    <DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-beta018" />
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
