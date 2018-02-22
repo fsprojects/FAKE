@@ -1,3 +1,6 @@
+#### 5.0.0-beta019
+
+
 #### 5.0.0-beta018 - 2018-02-19
 * BUGFIX: Fix https://github.com/fsharp/FAKE/issues/1776 again for dotnet cli helpers.
 * ENHANCEMENT: Fix chocolatey warning and add VERIFICATION.txt
