@@ -179,6 +179,9 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
+#### 4.64.6 - 21.02.2018
+* ConvertFileFromWin7ToWin8 reads file line by line 
+
 #### 4.64.4 - 17.01.2018
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
 
