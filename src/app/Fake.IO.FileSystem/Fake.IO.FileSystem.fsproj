@@ -16,6 +16,7 @@
     <Compile Include="FileSystemInfo.fs" />
     <Compile Include="Templates.fs" />
     <Compile Include="Shell.fs" />
+    <Compile Include="ChangeWatcher.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
