@@ -25,7 +25,7 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Status = status })
 
 let private calcDirsToWatch (fileIncludes:IGlobbingPattern) =
-    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
+    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.Glob.getRoot fileIncludes.BaseDirectory file)
 
     // remove subdirectories from watch list so that we don't get duplicate file watchers running
     dirsToWatch
