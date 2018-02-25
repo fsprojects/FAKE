@@ -11,11 +11,19 @@ let private yarnFileName =
     | true ->
         System.Environment.GetEnvironmentVariable("PATH")
         |> fun path -> path.Split ';'
-        |> Seq.tryFind (fun p -> p.IndexOf("yarn", StringComparison.OrdinalIgnoreCase) >= 0)
+        |> Seq.tryFind 
+          (fun p -> p.IndexOf("yarn", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    p.IndexOf("npm", StringComparison.OrdinalIgnoreCase) >= 0)
         |> fun res ->
             match res with
             | Some yarn when File.Exists (sprintf @"%s\yarn.cmd" yarn) -> (sprintf @"%s\yarn.cmd" yarn)
-            | _ -> "./packages/Yarnpkg.js/tools/yarn.cmd"
+            | _ ->
+              let pattrn = "yarn.cmd"
+              new DirectoryInfo("packages/")
+              |> FileSystemHelper.filesInDirMatchingRecursive pattrn
+              |> Seq.filter (fun x -> x.Name.Equals(pattrn, StringComparison.InvariantCultureIgnoreCase))
+              |> Seq.map (fun x -> x.FullName)
+              |> Seq.head
     | _ ->
         let info = new ProcessStartInfo("which","yarn")
         info.StandardOutputEncoding <- System.Text.Encoding.UTF8
