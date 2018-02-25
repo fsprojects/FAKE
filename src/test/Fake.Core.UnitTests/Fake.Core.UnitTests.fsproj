@@ -16,7 +16,6 @@
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
-    <Compile Include="Fake.IO.FileSystem.ChangeWatcher.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
