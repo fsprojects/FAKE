@@ -1,5 +1,6 @@
 #### 5.0.0-beta019
-
+* BUGFIX: Added VS 2017 MSTest location - https://github.com/fsharp/FAKE/pull/1794 and https://github.com/fsharp/FAKE/pull/1604
+* BUGFIX: Fix DotNetCompile - https://github.com/fsharp/FAKE/pull/1793
 
 #### 5.0.0-beta018 - 2018-02-19
 * BUGFIX: Fix https://github.com/fsharp/FAKE/issues/1776 again for dotnet cli helpers.
@@ -177,6 +178,9 @@
 * Chocolatey Helper now supports Self-Contained packages
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
+
+#### 4.64.6 - 21.02.2018
+* ConvertFileFromWin7ToWin8 reads file line by line 
 
 #### 4.64.4 - 17.01.2018
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
