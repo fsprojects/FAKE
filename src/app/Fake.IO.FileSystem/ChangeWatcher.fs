@@ -24,16 +24,6 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Name = e.Name
                 Status = status })
 
-let private calcDirsToWatch (fileIncludes:IGlobbingPattern) =
-    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.Glob.getRoot fileIncludes.BaseDirectory file)
-
-    // remove subdirectories from watch list so that we don't get duplicate file watchers running
-    dirsToWatch
-    |> Seq.filter (fun d ->
-                    dirsToWatch
-                    |> Seq.exists (fun p -> d.StartsWith p && p <> d)
-                    |> not)
-    |> Seq.toList
 
 /// Watches the for changes in the matching files.
 /// Returns an IDisposable which allows to dispose all FileSystemWatchers.
@@ -55,7 +45,7 @@ let private calcDirsToWatch (fileIncludes:IGlobbingPattern) =
 ///     )
 ///
 let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
-    let dirsToWatch = fileIncludes |> calcDirsToWatch
+    let dirsToWatch = fileIncludes |> GlobbingPattern.GetBaseDirectoryIncludes
 
     //tracefn "dirs to watch: %A" dirsToWatch
 
@@ -65,10 +55,7 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
     let unNotifiedChanges = ref List.empty<FileChange>
     // when running 'onChange' we ignore all notifications to avoid infinite loops
     let runningHandlers = ref false
-
-    let timer = new System.Timers.Timer(50.0)
-    timer.AutoReset <- false
-    timer.Elapsed.Add(fun _ ->
+    let timerCallback = fun _ ->
         lock unNotifiedChanges (fun () ->
             if not (Seq.isEmpty !unNotifiedChanges) then
                 let changes =
@@ -83,7 +70,9 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
                     runningHandlers := true
                     onChange changes
                 finally
-                    runningHandlers := false ))
+                    runningHandlers := false )
+    // lazy evaluation of timer in order to only start timer once requested
+    let timer = lazy( new System.Threading.Timer(timerCallback, System.Object(), 0, 50) )
 
     let acumChanges (fileChange : FileChange) =
         // only record the changes if we are not currently running 'onChange' handler
@@ -91,7 +80,7 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
             lock unNotifiedChanges (fun () ->
               unNotifiedChanges := fileChange :: !unNotifiedChanges
               // start the timer (ignores repeated calls) to trigger events in 50ms
-              (timer:System.Timers.Timer).Start() )
+              (timer.Value |> ignore) )
 
     let watchers =
         dirsToWatch |> List.map (fun dir ->
@@ -117,7 +106,7 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
               for watcher in watchers do
                   watcher.EnableRaisingEvents <- false
                   watcher.Dispose()
-              timer.Dispose() }
+              timer.Value.Dispose() }
 
 
 let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = WatchChangesWithOptions { IncludeSubdirectories = true } onChange fileIncludes
