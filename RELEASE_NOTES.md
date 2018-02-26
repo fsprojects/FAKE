@@ -1,3 +1,8 @@
+#### 5.0.0-beta020
+* BUGFIX: Fake now works without `.paket` folder - https://github.com/fsharp/FAKE/issues/1778 and https://github.com/fsharp/FAKE/issues/1564
+* BUGFIX: https://github.com/fsharp/FAKE/issues/1744
+* ENHANCEMENT: Fake now supports Credential Providers (like paket, see https://fsprojects.github.io/Paket/credential-providers.html)
+
 #### 5.0.0-beta019
 * BUGFIX: Added VS 2017 MSTest location - https://github.com/fsharp/FAKE/pull/1794 and https://github.com/fsharp/FAKE/pull/1604
 * BUGFIX: Fix DotNetCompile - https://github.com/fsharp/FAKE/pull/1793
