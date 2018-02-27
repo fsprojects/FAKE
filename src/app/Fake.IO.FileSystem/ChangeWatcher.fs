@@ -73,7 +73,13 @@ let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : I
                 finally
                     runningHandlers := false )
     // lazy evaluation of timer in order to only start timer once requested
-    let timer = Lazy<IDisposable>(Func<IDisposable> (fun ()-> new Timer(timerCallback, Object(), 0, 50) :> IDisposable), LazyThreadSafetyMode.ExecutionAndPublication)
+    let timer = Lazy<IDisposable>(Func<IDisposable> (fun ()-> 
+        // NOTE: that the timer starts immidiatelly when constructed
+        // we could delay this by sending it how many ms it should delay
+        // itself
+        // The timer here has a period of 50 ms:
+        new Timer(timerCallback, Object(), 0, 50) :> IDisposable
+        ), LazyThreadSafetyMode.ExecutionAndPublication)
 
     let acumChanges (fileChange : FileChange) =
         // only record the changes if we are not currently running 'onChange' handler
@@ -107,6 +113,7 @@ let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : I
               for watcher in watchers do
                   watcher.EnableRaisingEvents <- false
                   watcher.Dispose()
+              // only dispose the timer if it has been constructed
               if timer.IsValueCreated then timer.Value.Dispose() }
 
 
