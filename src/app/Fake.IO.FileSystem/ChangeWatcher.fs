@@ -4,6 +4,8 @@ module Fake.IO.FileSystem.ChangeWatcher
 open System.IO
 open Fake.Core
 open Fake.IO
+open System.Threading
+open System
 
 type FileStatus =
     | Deleted
@@ -71,7 +73,7 @@ let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : I
                 finally
                     runningHandlers := false )
     // lazy evaluation of timer in order to only start timer once requested
-    let timer = lazy( new System.Threading.Timer(timerCallback, System.Object(), 0, 50) )
+    let timer = Lazy<IDisposable>(Func<IDisposable> (fun ()-> new Timer(timerCallback, Object(), 0, 50) :> IDisposable), LazyThreadSafetyMode.ExecutionAndPublication)
 
     let acumChanges (fileChange : FileChange) =
         // only record the changes if we are not currently running 'onChange' handler
@@ -105,7 +107,7 @@ let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : I
               for watcher in watchers do
                   watcher.EnableRaisingEvents <- false
                   watcher.Dispose()
-              timer.Value.Dispose() }
+              if timer.IsValueCreated then timer.Value.Dispose() }
 
 
 let Run (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = RunWithOptions { IncludeSubdirectories = true } onChange fileIncludes
