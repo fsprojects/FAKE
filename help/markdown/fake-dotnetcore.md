@@ -114,4 +114,6 @@ Get the latest packages from GitHub: https://github.com/fsharp/FAKE/releases
 
 Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
 
-Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)
+Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)
+
+> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-beta020"` (or the current latest non-stable release)
