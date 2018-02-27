@@ -1,4 +1,3 @@
-[<AutoOpen>]
 /// This module contains helpers to react to file system events.
 module Fake.IO.FileSystem.ChangeWatcher
 
@@ -25,8 +24,8 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Status = status })
 
 
-/// Watches the for changes in the matching files.
-/// Returns an IDisposable which allows to dispose all FileSystemWatchers.
+/// Watches for changes in the matching files.
+/// Returns an IDisposable which allows to dispose all internally used FileSystemWatchers.
 ///
 /// ## Parameters
 ///  - `onChange` - function to call when a change is detected.
@@ -34,17 +33,17 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
 ///
 /// ## Sample
 ///
-///     Target "Watch" (fun _ ->
-///         use watcher = !! "c:/projects/watchDir/*.txt" |> WatchChanges (fun changes ->
+///     Target.Create "Watch" (fun _ ->
+///         use watcher = !! "c:/projects/watchDir/*.txt" |> ChangeWatcher.Run (fun changes ->
 ///             // do something
 ///         )
 ///
 ///         System.Console.ReadLine() |> ignore
 ///
-///         watcher.Dispose() // if you need to cleanup the watches.
+///         watcher.Dispose() // if you need to cleanup the watcher.
 ///     )
 ///
-let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
+let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
     let dirsToWatch = fileIncludes |> GlobbingPattern.GetBaseDirectoryIncludes
 
     //tracefn "dirs to watch: %A" dirsToWatch
@@ -109,4 +108,4 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
               timer.Value.Dispose() }
 
 
-let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = WatchChangesWithOptions { IncludeSubdirectories = true } onChange fileIncludes
+let Run (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = RunWithOptions { IncludeSubdirectories = true } onChange fileIncludes
