@@ -763,7 +763,7 @@ let private buildBuildArgs (param: DotNetBuildOptions) =
 /// - 'project' - project to compile
 let DotNetCompile setParams project =    
     use __ = Trace.traceTask "DotNet:build" project
-    let param = DotNetBuildOptions.Create |> setParams    
+    let param = DotNetBuildOptions.Create() |> setParams    
     let args = sprintf "%s %s" project (buildBuildArgs param)
     let result = DotNet (fun _ -> param.Common) "build" args
     if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
