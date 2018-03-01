@@ -1,3 +1,6 @@
+#### 4.64.7 - 01.03.2018
+* Allow REST calls without credentials
+
 #### 4.64.6 - 21.02.2018
 * ConvertFileFromWin7ToWin8 reads file line by line 
 
