@@ -9,7 +9,7 @@ Just install the corresponding package for your system:
 choco install fake -pre
 ```
 
-now you can use 
+now you can use
 
 ```ps
 fake --help
@@ -34,7 +34,7 @@ Travis: [https://github.com/fsharp/FAKE/blob/master/.travis.yml](https://github.
 The goals are:
 
  - Provide a easy to use cross platform way to use FAKE. With a good bootstrapping experience
- - Cleanup 'FakeLib' 
+ - Cleanup 'FakeLib'
  - Extract reusable libraries and make them usable for your projects or the fsi!
  - Make it easier to extend FAKE for your own use-case
  - Provide an easy way for simple scripting, automate everything, everywhere.
@@ -66,7 +66,7 @@ The disadvantage is that you need to have a dotnet sdk installed.
 ## Examples
 
 - See [https://github.com/fsharp/FAKE/blob/master/build.fsx](https://github.com/fsharp/FAKE/blob/master/build.fsx)
-  Note that with the "new" API you should call the modules directly instead of opening them. 
+  Note that with the "new" API you should call the modules directly instead of opening them.
   Therefore this example is actually pretty bad because it just opened everything (for minimal diff to the "normal" build.fsx)
 
 ### Minimal example
@@ -116,4 +116,4 @@ Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
 
 Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)
 
-> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-beta020"` (or the current latest non-stable release)
+> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-*"` to get the latest non-stable release
