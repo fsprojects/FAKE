@@ -1,4 +1,4 @@
-version 5.132.4
+version 5.148
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -52,7 +52,7 @@ nuget Microsoft.DotNet.PlatformAbstractions
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
-group TestAdapter 
+group TestAdapter
     source https://api.nuget.org/v3/index.json
     nuget Expecto.VisualStudio.TestAdapter version_in_path: true
 

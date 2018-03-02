@@ -1,3 +1,6 @@
+#### 5.0.0-beta021
+* BUGFIX: Backslashes in paths wheren't escaped in intellisense.fsx - https://github.com/fsprojects/Paket/issues/3093
+
 #### 5.0.0-beta020
 * BUGFIX: Fake now works without `.paket` folder - https://github.com/fsharp/FAKE/issues/1778 and https://github.com/fsharp/FAKE/issues/1564
 * BUGFIX: https://github.com/fsharp/FAKE/issues/1744
@@ -185,7 +188,7 @@
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
 #### 4.64.6 - 21.02.2018
-* ConvertFileFromWin7ToWin8 reads file line by line 
+* ConvertFileFromWin7ToWin8 reads file line by line
 
 #### 4.64.4 - 17.01.2018
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
@@ -319,7 +322,7 @@
 
 #### 4.44.0 - 2016-11-03
 * Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
-* BUGFIX: Moved process stdout encoding out of is silent check - https://github.com/fsharp/FAKE/pull/1414 
+* BUGFIX: Moved process stdout encoding out of is silent check - https://github.com/fsharp/FAKE/pull/1414
 
 #### 4.43.0 - 2016-10-30
 * Better tracing of tasks in TeamCity - https://github.com/fsharp/FAKE/pull/1408
@@ -329,8 +332,8 @@
 #### 4.42.0 - 2016-10-25
 * Add option to emit SuppressMessage Attributes - https://github.com/fsharp/FAKE/pull/1406
 * Add language in NuGetParams - https://github.com/fsharp/FAKE/pull/1407
-* Change order of Dynamics NAV process killing 
-* New SSH helper - https://github.com/fsharp/FAKE/pull/1405 
+* Change order of Dynamics NAV process killing
+* New SSH helper - https://github.com/fsharp/FAKE/pull/1405
 * BUGFIX: FAKE should work with old and new commit messages
 * BUGFIX: Fixed bug in assembly info variable name suffixes - https://github.com/fsharp/FAKE/pull/1404
 * BUGFIX: Make FAKE fail on failing git push
@@ -388,7 +391,7 @@
 * BREAKING CHANGE: Changed DotNet helper to DotNetCLI - https://github.com/fsharp/FAKE/pull/1332
 * BUGFIX: Fixed exception when dotnet cli is not installed - https://github.com/fsharp/FAKE/pull/1332
 * BUGFIX: Fixed git reset helper to use checkout when file resets are requested - https://github.com/fsharp/FAKE/pull/1326
-* BUGFIX: Masked octo api key when tracing - https://github.com/fsharp/FAKE/pull/1327 
+* BUGFIX: Masked octo api key when tracing - https://github.com/fsharp/FAKE/pull/1327
 
 #### 4.34.5 - 2016-07-21
 * DotNet version support - https://github.com/fsharp/FAKE/pull/1310
@@ -438,7 +441,7 @@
 
 #### 4.27.0 - 2016-05-19
 * New Slack argument for Link_Names - https://github.com/fsharp/FAKE/pull/1245
-* Extended WiXHelper types for supporting creation of 64bit setups - https://github.com/fsharp/FAKE/pull/1244            
+* Extended WiXHelper types for supporting creation of 64bit setups - https://github.com/fsharp/FAKE/pull/1244
 * BUGFIX: Corrected NuGet install verbosity parameter - https://github.com/fsharp/FAKE/pull/1239
 
 #### 4.26.0 - 2016-05-11
@@ -450,9 +453,9 @@
 * MSBuildHelper: Add BuildWebsite(s)Config - https://github.com/fsharp/FAKE/pull/1230
 * BUGFIX: OpenCoverHelper does not assume AppData and ProgramFiles exists by default - https://github.com/fsharp/FAKE/pull/1229
 * BUGFIX: Disable node reuse on Team foundation builds - https://github.com/fsharp/FAKE/pull/1237
-* BUGFIX: Fixed FAKE parameter split - https://github.com/fsharp/FAKE/pull/1228 
-* USABILITY: Look into packages folder for findToolPath 
-* COSMETICS: Added open/close block to teamcity target tracing - https://github.com/fsharp/FAKE/pull/1219 
+* BUGFIX: Fixed FAKE parameter split - https://github.com/fsharp/FAKE/pull/1228
+* USABILITY: Look into packages folder for findToolPath
+* COSMETICS: Added open/close block to teamcity target tracing - https://github.com/fsharp/FAKE/pull/1219
 
 #### 4.25.0 - 2016-04-12
 * Use FSharp.Compiler.Service 3.0
@@ -476,13 +479,13 @@
 * Added HarvestDirectory helper to the WixHelper Library - https://github.com/fsharp/FAKE/pull/1179
 * Added support for SQL DacPac - https://github.com/fsharp/FAKE/pull/1185
 * Provide CurrentTargetOrder for build scripts
-* Added namespace/class/method args for xunit2 - https://github.com/fsharp/FAKE/pull/1180 
+* Added namespace/class/method args for xunit2 - https://github.com/fsharp/FAKE/pull/1180
 * If build failed then kill all created processes at end of build
 * Make DynamicsNAV errors a known FAKE exception
 * BUGFIX: Fixed hard coded path in artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1176
 
 #### 4.22.0 - 2016-03-13
-* Added artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1173 
+* Added artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1173
 * Azure Web Jobs now get created during deploy if they do not already exist - https://github.com/fsharp/FAKE/pull/1174
 * BUGFIX: New Sonar options - https://github.com/fsharp/FAKE/pull/1172
 * BUGFIX: Fixed issue with IDs that did not start with a letter - https://github.com/fsharp/FAKE/pull/1167
@@ -500,7 +503,7 @@
 * Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
 * Added support for Paket's minimum-from-lock-file in pack command - https://github.com/fsharp/FAKE/pull/1149
 * Added support for NUnit3 --labels parameter - https://github.com/fsharp/FAKE/pull/1153
-* BUGFIX: Fixed Issue #1142: Arguments of CombinePaths are switched in WixHelper - https://github.com/fsharp/FAKE/pull/1145 
+* BUGFIX: Fixed Issue #1142: Arguments of CombinePaths are switched in WixHelper - https://github.com/fsharp/FAKE/pull/1145
 * BUGFIX: NuGet auto version bug fix - https://github.com/fsharp/FAKE/pull/1146
 * WORKAROUND: nuget.org changed base url
 
@@ -511,7 +514,7 @@
 
 #### 4.19.0 - 2016-02-02
 * New FSC task - https://github.com/fsharp/FAKE/pull/1122
-* Disable warning from #1082 for now because it created lots of confusion 
+* Disable warning from #1082 for now because it created lots of confusion
 
 #### 4.18.0 - 2016-02-02
 * New helpers which allow to send .NET coverage settings to TeamCity - https://github.com/fsharp/FAKE/pull/1117
@@ -529,7 +532,7 @@
 * BUGFIX: Commit message will be retrieved for older and newer git versions - https://github.com/fsharp/FAKE/pull/1098
 * BUGFIX: Fixed case sensitivity on package name when search references in Paket.lock - https://github.com/fsharp/FAKE/pull/1089
 * COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
- 
+
 #### 4.16.0 - 2016-01-20
 * General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
 * Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
@@ -643,7 +646,7 @@
 * Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
 * Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
 * Added ability to optionally pass in SiteId to configure IIS Site - https://github.com/fsharp/FAKE/pull/905
-* Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906 
+* Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906
 * Add GetDependenciesForReferencesFile
 
 #### 4.1.0 - 2015-08-10
@@ -674,8 +677,8 @@
 * Added BuildConfig/TemplateFile options to PaketHelper's Pack command - https://github.com/fsharp/FAKE/pull/854
 * Add a UserInputHelper to allow interactive input - https://github.com/fsharp/FAKE/pull/858
 * Look for MSTest in VS2015 location - https://github.com/fsharp/FAKE/pull/843
-* Add caching to globbing 
-* BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836 
+* Add caching to globbing
+* BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836
 * BUGFIX: Get package version from nuspec file - https://github.com/fsharp/FAKE/pull/829
 * Report all NuGet errors, even if ExitCode = 0
 
@@ -800,8 +803,8 @@
 * Add OwnerId, type docs, and better error handling for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/661
 * Don't report unit test failure twice to TeamCity - https://github.com/fsharp/FAKE/pull/659
 * New tasks for `paket pack` and `paket push`- http://fsprojects.github.io/Paket/index.html
-* Allow csproj being passed as a NuSpec file - https://github.com/fsharp/FAKE/pull/644 
-* Helper for uploading mobile apps to HockeyApp - https://github.com/fsharp/FAKE/pull/656  
+* Allow csproj being passed as a NuSpec file - https://github.com/fsharp/FAKE/pull/644
+* Helper for uploading mobile apps to HockeyApp - https://github.com/fsharp/FAKE/pull/656
 * SCPHelper does allow copying single files - https://github.com/fsharp/FAKE/issues/671
 * BUGFIX: Paket helper should not submit the endpoint if no endpoint was given - https://github.com/fsharp/FAKE/issues/667
 * BUGFIX: Paket helper should not override version for project packages - https://github.com/fsharp/FAKE/issues/666
@@ -809,7 +812,7 @@
 * BUGFIX: Use correct apikey for paket push - https://github.com/fsharp/FAKE/pull/664
 
 #### 3.17.0 - 2015-02-12
-* Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653    
+* Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653
 * Added MergeByHash option for OpenCover - https://github.com/fsharp/FAKE/pull/650
 * New functions to replace text in one or more files using regular expressions - https://github.com/fsharp/FAKE/pull/649
 * BUGFIX: Fix SpecFlow MSTest integration - https://github.com/fsharp/FAKE/pull/652
@@ -892,7 +895,7 @@
 
 #### 3.3.0 - 2014-08-25
 * Using JSON.NET 6.0.4
-* FAKE.Deploy switched to FCS - https://github.com/fsharp/FAKE/pull/519 
+* FAKE.Deploy switched to FCS - https://github.com/fsharp/FAKE/pull/519
 * FAKE.Deploy WorkDirectory fix - https://github.com/fsharp/FAKE/pull/520
 * HipChat notification helper - https://github.com/fsharp/FAKE/pull/523
 * Don't crash during tool discovery
@@ -999,7 +1002,7 @@
 #### 2.14.0 - 2014-04-22
 * Support for OpenCover - https://github.com/fsharp/FAKE/pull/398
 * Support for ReportsGenerator - https://github.com/fsharp/FAKE/pull/399
-* Adding AppVeyor environment variables 
+* Adding AppVeyor environment variables
 * New BulkReplaceAssemblyInfoVersions task - https://github.com/fsharp/FAKE/pull/394
 * Fixed default nuspec file
 * "Getting started" tutorial uses better folder structure
@@ -1075,7 +1078,7 @@
 * It's possible to add file loggers for MSBuild
 * Fixed path resolution for fsi on *nix
 * BREAKING CHANGE: Removed version normalization from NuGet package creation
-* Fixes for NUNit compatibility on mono 
+* Fixes for NUNit compatibility on mono
 * Fixes in ProcessHelper for mono compatibility
 * Fixes in the mono build
 * Improved error reporting in Fake.exe
