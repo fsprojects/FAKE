@@ -130,7 +130,17 @@ module GlobbingPattern =
     /// Sets a directory as baseDirectory for fileIncludes. 
     let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
 
+    /// Get base include directories. Used to get a smaller set of directories from a globbing pattern.
+    let GetBaseDirectoryIncludes (fileIncludes: IGlobbingPattern) =
+            let directoryIncludes = fileIncludes.Includes |> Seq.map (fun file -> Globbing.Glob.getRoot fileIncludes.BaseDirectory file)
 
+            // remove subdirectories
+            directoryIncludes
+            |> Seq.filter (fun d ->
+                            directoryIncludes
+                            |> Seq.exists (fun p -> d.StartsWith p && p <> d)
+                            |> not)
+            |> Seq.toList
 
 namespace Fake.Core.Globbing
 
