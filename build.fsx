@@ -839,6 +839,12 @@ Target.Create "DotNetCorePushChocolateyPackage" (fun _ ->
             ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" })
 )
 
+Target.Create "CheckReleaseSecrets" (fun _ ->
+    Environment.environVarOrFail "CHOCOLATEY_API_KEY" |> ignore
+    Environment.environVarOrFail "nugetkey" |> ignore
+    Environment.environVarOrFail "github_user" |> ignore
+    Environment.environVarOrFail "github_token" |> ignore
+)
 let executeFPM args =
     printfn "%s %s" "fpm" args
     Process.Shell.Exec("fpm", args=args, dir="bin")
@@ -1035,6 +1041,8 @@ Target.Create "AfterBuild" ignore
 
 open Fake.Core.TargetOperators
 
+"CheckReleaseSecrets"
+    ?=> "Clean"
 
 // DotNet Core Build
 "Clean"
@@ -1103,6 +1111,9 @@ open Fake.Core.TargetOperators
     ==> "Release"
 // A 'Release' includes a 'FastRelease'
 "FastRelease"
+    ==> "Release"
+// A 'Release' includes a 'CheckReleaseSecrets'
+"CheckReleaseSecrets"
     ==> "Release"
 
 // start build
