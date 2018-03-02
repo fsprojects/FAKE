@@ -1,5 +1,5 @@
 #### 5.0.0-beta021
-* BUGFIX: Backslashes in paths wheren't escaped in intellisene.fsx - https://github.com/fsprojects/Paket/issues/3093
+* BUGFIX: Backslashes in paths wheren't escaped in intellisense.fsx - https://github.com/fsprojects/Paket/issues/3093
 
 #### 5.0.0-beta020
 * BUGFIX: Fake now works without `.paket` folder - https://github.com/fsharp/FAKE/issues/1778 and https://github.com/fsharp/FAKE/issues/1564
