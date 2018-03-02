@@ -1,3 +1,6 @@
+#### 5.0.0-beta022
+* FAKE5: New module "ChangeWatcher"
+
 #### 5.0.0-beta021
 * BUGFIX: Backslashes in paths wheren't escaped in intellisense.fsx - https://github.com/fsprojects/Paket/issues/3093
 
