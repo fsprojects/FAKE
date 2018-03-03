@@ -385,19 +385,12 @@ Target.Create "DotNetCoreIntegrationTests" (fun _ ->
     |> NUnit3.NUnit3 id
 )
 
-type DotNetOptions = Cli.DotNetOptions
-let DotNet = Cli.DotNet
-let DotNetCliInstall = Cli.DotNetCliInstall
-let DotNetRestore = Cli.DotNetRestore
-let DotNetInfo = Cli.DotNetInfo
-let DotNetPublish = Cli.DotNetPublish
-
-let withWorkDir wd (cliOpts:DotNetOptions) = { cliOpts with WorkingDirectory = wd }
+let withWorkDir wd (cliOpts:Cli.DotNetOptions) = { cliOpts with WorkingDirectory = wd }
 
 Target.Create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     let processResult =
-        DotNet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
+        Cli.DotNet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed." 
 )
 
@@ -473,7 +466,7 @@ Target.Create "BootstrapTestDotNetCore" (fun _ ->
             let fileName =
                 if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
                 else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
-            Process.ExecProcessWithLambdas (fun info ->
+            Process.ExecProcess (fun info ->
                 { info with
                     FileName = fileName
                     WorkingDirectory = "."
@@ -481,7 +474,7 @@ Target.Create "BootstrapTestDotNetCore" (fun _ ->
                 |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 )
                 timeout
-                true (Trace.traceFAKE "%s") Trace.trace
+                //true (Trace.traceFAKE "%s") Trace.trace
 
 
         let result = executeTarget "PrintColors"
@@ -637,10 +630,8 @@ let LatestTooling options =
         Cli.Version = Cli.Version "2.1.4"
     }
 Target.Create "InstallDotNetCore" (fun _ ->
-    DotNetCliInstall Cli.Release_2_1_4
+    Cli.DotNetCliInstall Cli.Release_2_1_4
 )
-
-
 
 let netCoreProjs =
     !! "src/app/Fake.Core.*/*.fsproj"
@@ -655,83 +646,8 @@ let netCoreProjs =
     ++ "src/app/Fake.Testing.*/*.fsproj"
     ++ "src/app/Fake.Runtime/*.fsproj"
 
-Target.Create "DotNetRestore" (fun _ ->
-
-    Environment.setEnvironVar "Version" release.NugetVersion
-
-    //dotnet root "--info"
-    DotNet (withWorkDir root) "--info" ""
-        |> ignore
-
-    // Workaround bug where paket integration doesn't generate
-    // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
-    let t = Path.GetFullPath "workaround"
-    Directory.ensure t
-    DotNet (withWorkDir t) "new" "console --language f#"
-        |> ignore
-    DotNet (withWorkDir t) "restore" ""
-        |> ignore
-    DotNet (withWorkDir t) "build" ""
-        |> ignore
-    Directory.Delete(t, true)
-
-    // Copy nupkgs to nuget/dotnetcore
-    !! "lib/nupgks/**/*.nupkg"
-    |> Seq.iter (fun file ->
-        let dir = nugetDncDir //@@ "dotnetcore"
-        Directory.ensure dir
-        File.Copy(file, dir @@ Path.GetFileName file, true))
-
-    let result = DotNet (withWorkDir root) "sln" "src/Fake-netcore.sln list"
-    let srcAbsolutePathLength = (Path.GetFullPath "./src").Length + 1
-    let missingNetCoreProj =
-        netCoreProjs
-        |> Seq.toList
-        |> List.map (fun proj ->
-            let relativePath = proj.Substring srcAbsolutePathLength
-            if result.Messages |> Seq.contains relativePath |> not then
-                Trace.traceFAKE "Project '%s' is missing in src/Fake-netcore.sln! Run 'dotnet sln src/Fake-netcore.sln add src/%s'" proj (relativePath.Replace("\\", "/"))
-                true
-            else false)
-        |> Seq.exists id
-    if missingNetCoreProj then failwith "At least one netcore project seems to be missing from the src/Fake-netcore.sln solution!"
-    // dotnet restore
-    DotNetRestore id "src/Fake-netcore.sln"
-)
-
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
-
-// REMOVE ME
-let private argList2 name values =
-    values
-    |> Seq.collect (fun v -> ["--" + name; sprintf @"""%s""" v])
-    |> String.concat " "
-let private argOption name value =
-    match value with
-        | true -> sprintf "--%s" name
-        | false -> ""
-let private buildConfigurationArg (param: Cli.BuildConfiguration) =
-    sprintf "--configuration %s" 
-        (match param with
-        | Cli.Debug -> "Debug"
-        | Cli.Release -> "Release"
-        | Cli.Custom config -> config)
-let buildPackArgs (param: Cli.DotNetPackOptions) =
-    [  
-        buildConfigurationArg param.Configuration
-        param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
-        param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
-        param.OutputPath |> Option.toList |> argList2 "output"
-        param.NoBuild |> argOption "no-build" 
-    ] |> Seq.filter (not << String.isNullOrEmpty) |> String.concat " "
-let DotNetPack setParams project =    
-    use __ = Trace.traceTask "DotNet:pack" project
-    let param = Cli.DotNetPackOptions.Default |> setParams    
-    let args = sprintf "%s %s" project (buildPackArgs param)
-    let result = DotNet (fun _ -> param.Common) "pack" args    
-    if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
-/// --- REMOVE ME
 
 Target.Create "DotNetPackage_" (fun _ ->
     // This line actually ensures we get the correct version checked in
@@ -755,13 +671,13 @@ Target.Create "DotNetPackage_" (fun _ ->
 
 
     // dotnet pack
-    DotNetPack (fun c ->
+    Cli.DotNetPack (fun c ->
         { c with
             Configuration = Cli.Release
             OutputPath = Some nugetDir
         }) "src/Fake-netcore.sln"
 
-    let info = DotNetInfo id
+    let info = Cli.DotNetInfo id
 
     // dotnet publish
     runtimes
@@ -778,7 +694,7 @@ Target.Create "DotNetPackage_" (fun _ ->
 
             //DotNetRestore (fun c -> {c with Runtime = Some runtime}) proj
             let outDir = nugetDir @@ projName @@ runtimeName
-            DotNetPublish (fun c ->
+            Cli.DotNetPublish (fun c ->
                 { c with
                     Runtime = Some runtime
                     Configuration = Cli.Release
@@ -786,6 +702,7 @@ Target.Create "DotNetPackage_" (fun _ ->
                 }) proj
             let source = outDir </> "dotnet"
             if File.Exists source then
+                failwithf "Workaround no longer required?" //TODO: If this is not triggered delete this block
                 Trace.traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
                 let target = outDir </> "fake"
                 if File.Exists target then File.Delete target
@@ -796,7 +713,7 @@ Target.Create "DotNetPackage_" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-    DotNetPublish (fun c ->
+    Cli.DotNetPublish (fun c ->
         { c with
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir

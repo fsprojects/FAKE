@@ -370,6 +370,8 @@ type DotNetOptions =
         Verbosity: DotNetVerbosity option
         /// Restore logging verbosity (--verbosity)
         Diagnostics: bool
+        /// If true the function will redirect the output of the called process (but will disable colors, false by default)
+        RedirectOutput : bool
         /// Gets the environment variables that apply to this process and its child processes.
         /// NOTE: Recommendation is to not use this Field, but instead use the helper function in the Proc module (for example Process.setEnvironmentVariable)
         /// NOTE: This field is ignored when UseShellExecute is true.
@@ -381,6 +383,7 @@ type DotNetOptions =
         CustomParams = None
         Verbosity = None
         Diagnostics = false
+        RedirectOutput = false
         Environment =
             Process.createEnvironmentMap()
             |> Map.remove "MSBUILD_EXE_PATH"
@@ -392,6 +395,10 @@ type DotNetOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Environment = map }
+
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with RedirectOutput = shouldRedirect }
 
 /// [omit]
 let private argList2 name values =
@@ -432,7 +439,7 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
         errors.Add msg 
 
     let messageF msg =
-        Trace.traceImportant msg
+        Trace.trace msg
         messages.Add msg
 
     let options = buildOptions (DotNetOptions.Create())
@@ -440,20 +447,23 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
     let commonOptions = buildCommonArgs options
     let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args 
 
-    let result = 
-        Process.ExecProcessWithLambdas (fun info ->
-        let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
-        let oldPath =
-            match options.Environment |> Map.tryFind "PATH" with
-            | None -> ""
-            | Some s -> s
-        { info with
-            FileName = options.DotNetCliPath
-            WorkingDirectory = options.WorkingDirectory
-            Arguments = cmdArgs }
-        |> Process.setEnvironment options.Environment
-        |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
-        ) timeout true errorF messageF
+    let result =
+        let f (info:Fake.Core.Process.ProcStartInfo) = 
+            let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
+            let oldPath =
+                match options.Environment |> Map.tryFind "PATH" with
+                | None -> ""
+                | Some s -> s
+            { info with
+                FileName = options.DotNetCliPath
+                WorkingDirectory = options.WorkingDirectory
+                Arguments = cmdArgs }
+            |> Process.setEnvironment options.Environment
+            |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
+            
+        if options.RedirectOutput then
+          Process.ExecProcessWithLambdas f timeout true errorF messageF
+        else Process.ExecProcess f timeout
 #if NO_DOTNETCORE_BOOTSTRAP
     Process.ProcessResult.New result messages errors
 #else
@@ -465,21 +475,21 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
 type DotNetRestoreOptions =
     {   
         /// Common tool options
-        Common: DotNetOptions;
+        Common: DotNetOptions
         /// The runtime to restore for (seems added in RC4). Maybe a bug, but works.
-        Runtime: string option;
+        Runtime: string option
         /// Nuget feeds to search updates in. Use default if empty.
-        Sources: string list;
+        Sources: string list
         /// Directory to install packages in (--packages).
-        Packages: string list;
+        Packages: string list
         /// Path to the nuget configuration file (nuget.config).
-        ConfigFile: string option;
+        ConfigFile: string option
         /// No cache flag (--no-cache)
-        NoCache: bool;
+        NoCache: bool
         /// Only warning failed sources if there are packages meeting version requirement (--ignore-failed-sources)
-        IgnoreFailedSources: bool;
+        IgnoreFailedSources: bool
         /// Disables restoring multiple projects in parallel (--disable-parallel)
-        DisableParallel: bool;
+        DisableParallel: bool
     }
 
     /// Parameter default values.
@@ -501,6 +511,10 @@ type DotNetRestoreOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Common = { x.Common with Environment = map } }
+
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with Common = x.Common.WithRedirectOutput shouldRedirect }
 
 /// [omit]
 let private buildRestoreArgs (param: DotNetRestoreOptions) =
@@ -573,6 +587,9 @@ type DotNetPackOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Common = { x.Common with Environment = map } }
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with Common = x.Common.WithRedirectOutput shouldRedirect }
 
 /// [omit]
 let private buildPackArgs (param: DotNetPackOptions) =
@@ -605,7 +622,7 @@ type DotNetInfoOptions =
     }
     /// Parameter default values.
     static member Create() = {
-        Common = DotNetOptions.Create()
+        Common = DotNetOptions.Create().WithRedirectOutput true
     }
     [<Obsolete("Use DotNetInfoOptions.Create instead")>]
     static member Default = DotNetPackOptions.Create()
@@ -614,6 +631,9 @@ type DotNetInfoOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Common = { x.Common with Environment = map } }
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with Common = x.Common.WithRedirectOutput shouldRedirect }
     
 /// dotnet info result
 type DotNetInfoResult =
@@ -680,6 +700,9 @@ type DotNetPublishOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Common = { x.Common with Environment = map } }
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with Common = x.Common.WithRedirectOutput shouldRedirect }
 
 /// [omit]
 let private buildPublishArgs (param: DotNetPublishOptions) =
@@ -742,6 +765,9 @@ type DotNetBuildOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Common = { x.Common with Environment = map } }
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with Common = x.Common.WithRedirectOutput shouldRedirect }
 
 
 /// [omit]
@@ -836,6 +862,9 @@ type DotNetTestOptions =
     /// Sets the current environment variables.
     member x.WithEnvironment map =
         { x with Common = { x.Common with Environment = map } }
+    /// Sets a value indicating whether the output for the given process is redirected.
+    member x.WithRedirectOutput shouldRedirect =
+        { x with Common = x.Common.WithRedirectOutput shouldRedirect }
 
 
 /// [omit]

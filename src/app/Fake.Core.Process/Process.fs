@@ -290,6 +290,14 @@ type ProcStartInfo =
         p.WorkingDirectory <- x.WorkingDirectory
         p
 
+let inline setRedirectOutput (shouldRedirect:bool) (startInfo : ^a) =
+    //let inline getEnv s = ((^a) : (member Environment : unit -> Map<string, string>) (s))
+    let inline setRedirect s e = ((^a) : (member WithRedirectOutput : bool -> ^a) (s, e))
+    setRedirect startInfo shouldRedirect
+
+let inline redirectOutput (startInfo : ^a) = setRedirectOutput true startInfo
+let inline disableRedirectOutput (startInfo : ^a) = setRedirectOutput false startInfo
+
 let inline setEnvironment (map:Map<string, string>) (startInfo : ^a) =
     //let inline getEnv s = ((^a) : (member Environment : unit -> Map<string, string>) (s))
     let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
