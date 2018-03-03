@@ -545,10 +545,17 @@ Target.Create "CreateNuGet" (fun _ ->
         files
         |> Seq.iter (fun file ->
             let args =
+#if BOOTSTRAP
+                { Program = "lib" @@ "corflags.exe"
+                  WorkingDir = Path.GetDirectoryName file
+                  CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
+                  Args = [] }
+#else
                 { Process.Program = "lib" @@ "corflags.exe"
                   Process.WorkingDir = Path.GetDirectoryName file
                   Process.CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
                   Process.Args = [] }
+#endif
             printfn "%A" args
             Process.shellExec args |> ignore)
 
@@ -763,7 +770,11 @@ Target.Create "DotNetCorePushChocolateyPackage" (fun _ ->
 
 let executeFPM args =
     printfn "%s %s" "fpm" args
+#if BOOTSTRAP
+    Shell.Exec("fpm", args=args, dir="bin")
+#else
     Process.Shell.Exec("fpm", args=args, dir="bin")
+#endif
 
 type SourceType =
     | Dir of source:string * target:string

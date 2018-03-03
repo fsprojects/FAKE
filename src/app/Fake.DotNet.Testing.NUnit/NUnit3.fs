@@ -4,9 +4,7 @@ module Fake.DotNet.Testing.NUnit3
 open Fake.Testing.Common
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.StringBuilder
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -271,9 +269,9 @@ let NUnit3Defaults =
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
 let getWorkingDir parameters =
-    Seq.find isNotNullOrEmpty [ parameters.WorkingDir
-                                Environment.environVar ("teamcity.build.workingDir")
-                                "." ]
+    Seq.find String.isNotNullOrEmpty [ parameters.WorkingDir
+                                       Environment.environVar ("teamcity.build.workingDir")
+                                       "." ]
     |> Path.GetFullPath
 
 let buildNUnit3Args parameters assemblies =
@@ -284,35 +282,35 @@ let buildNUnit3Args parameters assemblies =
         | results, sb -> (sb, results) ||> Seq.fold (fun builder str -> append (sprintf "--result=%s" str) builder)
 
     new StringBuilder()
-    |> append "--noheader"
-    |> appendIfNotNullOrEmpty parameters.Testlist "--testlist="
-    |> appendIfNotNullOrEmpty parameters.Where "--where="
-    |> appendIfNotNullOrEmpty parameters.Config "--config="
-    |> appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "--process="
-    |> appendIfSome parameters.Agents (sprintf "--agents=%i")
-    |> appendIfNotNullOrEmpty parameters.Domain.ParamString "--domain="
-    |> appendIfNotNullOrEmpty parameters.Framework.ParamString "--framework="
-    |> appendIfNotNullOrEmpty parameters.Labels.ParamString "--labels="
-    |> appendIfNotNullOrEmpty parameters.TraceLevel.ParamString "--trace="
-    |> appendIfTrue parameters.Force32bit "--x86"
-    |> appendIfTrue parameters.DisposeRunners "--dispose-runners"
-    |> appendIfTrue (parameters.TimeOut <> NUnit3Defaults.TimeOut) (sprintf "--timeout=%i" (int parameters.TimeOut.TotalMilliseconds))
-    |> appendIfTrue (parameters.Seed >= 0) (sprintf "--seed=%i" parameters.Seed)
-    |> appendIfSome parameters.Workers (sprintf "--workers=%i")
-    |> appendIfTrue parameters.StopOnError "--stoponerror"
-    |> appendIfNotNullOrEmpty parameters.WorkingDir "--work="
-    |> appendIfNotNullOrEmpty parameters.OutputDir "--output="
-    |> appendIfNotNullOrEmpty parameters.ErrorDir "--err="
+    |> StringBuilder.append "--noheader"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Testlist "--testlist="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Where "--where="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Config "--config="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "--process="
+    |> StringBuilder.appendIfSome parameters.Agents (sprintf "--agents=%i")
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Domain.ParamString "--domain="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Framework.ParamString "--framework="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Labels.ParamString "--labels="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.TraceLevel.ParamString "--trace="
+    |> StringBuilder.appendIfTrue parameters.Force32bit "--x86"
+    |> StringBuilder.appendIfTrue parameters.DisposeRunners "--dispose-runners"
+    |> StringBuilder.appendIfTrue (parameters.TimeOut <> NUnit3Defaults.TimeOut) (sprintf "--timeout=%i" (int parameters.TimeOut.TotalMilliseconds))
+    |> StringBuilder.appendIfTrue (parameters.Seed >= 0) (sprintf "--seed=%i" parameters.Seed)
+    |> StringBuilder.appendIfSome parameters.Workers (sprintf "--workers=%i")
+    |> StringBuilder.appendIfTrue parameters.StopOnError "--stoponerror"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.WorkingDir "--work="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.OutputDir "--output="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.ErrorDir "--err="
     |> appendResultString parameters.ResultSpecs
-    |> appendIfTrue parameters.ShadowCopy "--shadowcopy"
-    |> appendIfTrue parameters.TeamCity "--teamcity"
-    |> appendIfTrue parameters.SkipNonTestAssemblies "--skipnontestassemblies"
-    |> appendIfNotNullOrEmpty parameters.Params "--params="
-    |> appendFileNamesIfNotNull assemblies
-    |> toText
+    |> StringBuilder.appendIfTrue parameters.ShadowCopy "--shadowcopy"
+    |> StringBuilder.appendIfTrue parameters.TeamCity "--teamcity"
+    |> StringBuilder.appendIfTrue parameters.SkipNonTestAssemblies "--skipnontestassemblies"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Params "--params="
+    |> StringBuilder.appendFileNamesIfNotNull assemblies
+    |> StringBuilder.toText
 
 let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
-    let details = assemblies |> separated ", "
+    let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnit" details
     let parameters = NUnit3Defaults |> setParams
     let assemblies = assemblies |> Seq.toArray
@@ -322,7 +320,7 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     Trace.trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result =
-        ExecProcess ((fun info ->
+        Process.Exec ((fun info ->
         { info with
             FileName = tool
             WorkingDirectory = getWorkingDir parameters

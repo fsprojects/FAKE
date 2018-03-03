@@ -6,9 +6,11 @@ open System.IO
 open Fake.Core
 open Operators
 
+[<RequireQualifiedAccess>]
 module FileFilter =
     let allFiles _ = true
 
+[<RequireQualifiedAccess>]
 module File =
 
     // Detect the encoding, from https://stackoverflow.com/questions/3825390/effective-way-to-find-any-files-encoding

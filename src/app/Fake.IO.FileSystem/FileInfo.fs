@@ -2,6 +2,7 @@ namespace Fake.IO
 
 open System.IO
 
+[<RequireQualifiedAccess>]
 module FileInfo =
     /// Creates a FileInfo for the given path.
     let inline ofPath path = new FileInfo(path)
@@ -25,3 +26,5 @@ module FileInfo =
             while eq && fs1.Read(one, 0, BYTES_TO_READ) <> 0 && fs2.Read(two, 0, BYTES_TO_READ) <> 0 do
                 if one <> two then eq <- false
             eq
+
+    

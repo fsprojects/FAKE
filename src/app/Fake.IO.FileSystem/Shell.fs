@@ -4,8 +4,8 @@ namespace Fake.IO
 open System.IO
 open Fake.Core
 open Fake.IO.FileSystemOperators
-open Fake.IO.FileSystemInfo
 
+[<RequireQualifiedAccess>]
 module Shell =
 
     /// Copies a single file to the target and overwrites the existing file.
@@ -14,16 +14,16 @@ module Shell =
     ///  - `target` - The target directory or file.
     ///  - `fileName` - The FileName.
     let CopyFile target fileName =
-        let fi = ofPath fileName
+        let fi = FileSystemInfo.ofPath fileName
         match fi with
-        | File f ->
+        | FileSystemInfo.File f ->
             let targetName =
-                match ofPath target with
-                | Directory _ -> target @@ fi.Name
-                | File f' -> f'.FullName
+                match FileSystemInfo.ofPath target with
+                | FileSystemInfo.Directory _ -> target @@ fi.Name
+                | FileSystemInfo.File f' -> f'.FullName
             //TODO: logVerbosefn "Copy %s to %s" fileName targetName
             f.CopyTo(targetName, true) |> ignore
-        | Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
+        | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
 
     let private DoCopyFile targetName fileName =
         let fi = FileInfo.ofPath fileName
@@ -308,13 +308,13 @@ module Shell =
     let MoveFile target fileName =
         let fi = FileSystemInfo.ofPath fileName
         match fi with
-        | File f ->
+        | FileSystemInfo.File f ->
             let targetName = target @@ fi.Name
             let targetInfo = FileInfo.ofPath targetName
             if targetInfo.Exists then targetInfo.Delete()
             () //TODO: logVerbosefn "Move %s to %s" fileName targetName
             f.MoveTo(targetName) |> ignore
-        | Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
+        | FileSystemInfo.Directory _ -> () //TODO: logVerbosefn "Ignoring %s, because it is a directory." fileName
 
     /// Creates a config file with the parameters as "key;value" lines
     let WriteConfigFile configFileName parameters =
@@ -331,7 +331,7 @@ module Shell =
     ///
     ///  - `replacements` - A sequence of tuples with the patterns and the replacements.
     ///  - `files` - The files to process.
-    let ReplaceInFiles replacements files = Templates.processTemplates replacements files
+    let ReplaceInFiles replacements files = Templates.replaceInFiles replacements files
 
     /// Replace all occurences of the regex pattern with the given replacement in the specified file
     /// ## Parameters

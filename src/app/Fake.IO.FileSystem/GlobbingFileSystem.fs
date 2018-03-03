@@ -160,7 +160,7 @@ module FileIncludes =
 
     /// Sets a directory as baseDirectory for fileIncludes. 
     [<System.Obsolete("Please use GlobbingPattern instead")>]
-    let SetBaseDir (dir : string) (fileIncludes : FileIncludes) = GlobbingPattern.SetBaseDir dir fileIncludes
+    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.SetBaseDir dir fileIncludes
 
 module Operators =
     /// Add Include operator

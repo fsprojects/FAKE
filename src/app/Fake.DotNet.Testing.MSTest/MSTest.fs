@@ -3,9 +3,7 @@ module Fake.DotNet.Testing.MSTest
 
 open System
 open System.Text
-open Fake.Core.String
 open Fake.Core.StringBuilder
-open Fake.Core.Process
 open Fake.Core
 open Fake.Testing.Common
 
@@ -64,7 +62,7 @@ let MSTestDefaults =
       Tests = []
       TimeOut = TimeSpan.FromMinutes 5.
       ToolPath = 
-          match tryFindFile mstestPaths mstestexe with
+          match Process.tryFindFile mstestPaths mstestexe with
           | Some path -> path
           | None -> ""
       Details = []
@@ -80,15 +78,15 @@ let buildMSTestArgs parameters assembly =
         else null
 
     new StringBuilder()
-    |> appendIfNotNull assembly "/testcontainer:"
-    |> appendIfNotNull parameters.Category "/category:"
-    |> appendIfNotNull parameters.TestMetadataPath "/testmetadata:"
-    |> appendIfNotNull parameters.TestSettingsPath "/testsettings:"
-    |> appendIfNotNull testResultsFile "/resultsfile:"
-    |> appendIfTrue parameters.NoIsolation "/noisolation"
-    |> forEach parameters.Tests appendIfNotNullOrEmpty "/test:"
-    |> forEach parameters.Details appendIfNotNullOrEmpty "/detail:"
-    |> toText
+    |> StringBuilder.appendIfNotNull assembly "/testcontainer:"
+    |> StringBuilder.appendIfNotNull parameters.Category "/category:"
+    |> StringBuilder.appendIfNotNull parameters.TestMetadataPath "/testmetadata:"
+    |> StringBuilder.appendIfNotNull parameters.TestSettingsPath "/testsettings:"
+    |> StringBuilder.appendIfNotNull testResultsFile "/resultsfile:"
+    |> StringBuilder.appendIfTrue parameters.NoIsolation "/noisolation"
+    |> StringBuilder.forEach parameters.Tests appendIfNotNullOrEmpty "/test:"
+    |> StringBuilder.forEach parameters.Details appendIfNotNullOrEmpty "/detail:"
+    |> StringBuilder.toText
 
 /// Runs MSTest command line tool on a group of assemblies.
 /// ## Parameters
@@ -103,7 +101,7 @@ let buildMSTestArgs parameters assembly =
 ///           |> MSTest (fun p -> { p with Category = "group1" })
 ///     )
 let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) = 
-    let details = assemblies |> separated ", "
+    let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "MSTest" details
     let parameters = MSTestDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
@@ -115,7 +113,7 @@ let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) 
             failwith message
     for assembly in assemblies do
         let args = buildMSTestArgs parameters assembly
-        ExecProcess ((fun info ->
+        Process.Exec ((fun info ->
         { info with
             FileName = parameters.ToolPath
             WorkingDirectory = parameters.WorkingDir

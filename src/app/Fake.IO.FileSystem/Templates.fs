@@ -1,9 +1,10 @@
 /// NOTE: Maybe this should be an extra module?
 /// Contains basic templating functions. Used in other helpers.
+[<RequireQualifiedAccess>]
 module Fake.IO.Templates
 
 /// Loads all templates (lazy - line by line!)
-let loadTemplates seq = Seq.map (fun fileName -> fileName, File.read fileName) seq
+let load seq = Seq.map (fun fileName -> fileName, File.read fileName) seq
 
 /// Replaces a bunch of the keywords in all files (lazy - line by line!)
 let replaceKeywords replacements =
@@ -19,8 +20,8 @@ let replaceKeywords replacements =
 let saveFiles = Seq.iter (fun (fileName, file) -> File.write false fileName (Seq.toList file))
 
 /// Replaces the templates with the given replacements
-let processTemplates replacements files =
+let replaceInFiles replacements files =
     files
-    |> loadTemplates
+    |> load
     |> replaceKeywords replacements
     |> saveFiles

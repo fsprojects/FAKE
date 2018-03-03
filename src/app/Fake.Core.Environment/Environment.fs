@@ -121,12 +121,12 @@ module Environment =
     [<Obsolete("Use environVarOrDefault instead")>]
     /// Returns the value of the build parameter with the given name if it was set and otherwise the given default value
     let inline getBuildParamOrDefault name defaultParam = 
-        if hasBuildParam name then environVar name
+        if hasEnvironVar name then environVar name
         else defaultParam
 
     [<Obsolete("Use 'environVarOrDefault name String.Empty' instead")>]
     /// Returns the value of the build parameter with the given name if it was set and otherwise an empty string
-    let inline getBuildParam name = getBuildParamOrDefault name String.Empty
+    let inline getBuildParam name = environVarOrDefault name String.Empty
 
     /// The path of the "Program Files" folder - might be x64 on x64 machine
     let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles

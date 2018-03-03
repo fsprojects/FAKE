@@ -333,7 +333,7 @@ let DotNetCliInstall setParams =
                         installScript 
                         (buildDotNetCliInstallArgs '\'' param)
                 args, "powershell"
-        Process.ExecProcess (fun info ->
+        Process.Exec (fun info ->
         { info with
             FileName = fileName
             WorkingDirectory = Path.GetTempPath()
@@ -448,7 +448,7 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
     let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args 
 
     let result =
-        let f (info:Fake.Core.Process.ProcStartInfo) = 
+        let f (info:ProcStartInfo) = 
             let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
             let oldPath =
                 match options.Environment |> Map.tryFind "PATH" with
@@ -462,14 +462,9 @@ let DotNet (buildOptions: DotNetOptions -> DotNetOptions) command args =
             |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)           
             
         if options.RedirectOutput then
-          Process.ExecProcessWithLambdas f timeout true errorF messageF
-        else Process.ExecProcess f timeout
-#if NO_DOTNETCORE_BOOTSTRAP
-    Process.ProcessResult.New result messages errors
-#else
+          Process.ExecWithLambdas f timeout true errorF messageF
+        else Process.Exec f timeout
     ProcessResult.New result messages errors
-#endif
-
 
 /// dotnet restore command options
 type DotNetRestoreOptions =

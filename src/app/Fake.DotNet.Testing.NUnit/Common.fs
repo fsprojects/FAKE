@@ -3,10 +3,8 @@ module Fake.DotNet.Testing.NUnit.Common
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -179,9 +177,9 @@ let buildNUnitdArgs parameters assemblies =
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
 let getWorkingDir parameters = 
-    Seq.find isNotNullOrEmpty [ parameters.WorkingDir
-                                Fake.Core.Environment.environVar ("teamcity.build.workingDir")
-                                "." ]
+    Seq.find String.isNotNullOrEmpty [ parameters.WorkingDir
+                                       Fake.Core.Environment.environVar ("teamcity.build.workingDir")
+                                       "." ]
     |> Path.GetFullPath
 
 /// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 

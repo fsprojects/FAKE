@@ -1,4 +1,5 @@
 ﻿/// This module contains helper function to create and extract zip archives.
+[<RequireQualifiedAccess>]
 module Fake.IO.Zip
 
 open System.IO
@@ -322,7 +323,7 @@ let MoveToFolder path items =
 ///  - `comment` - A comment for the resulting zip file.
 ///  - `level` - The compression level.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
-let CreateZipOfIncludes fileName comment level (files : (string * Globbing.FileIncludes) seq) =
+let CreateZipOfIncludes fileName comment level (files : (string * IGlobbingPattern) seq) =
     files
     |> Seq.map (fun (wd, glob) ->
         glob

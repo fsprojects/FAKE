@@ -225,12 +225,13 @@ type SemVerInfo =
             | _ -> invalidArg "yobj" "SemVerInfo: cannot compare to values of different types"
 
 ///  Parser which allows to deal with [Semantic Versioning](http://semver.org/) (SemVer).
+[<RequireQualifiedAccess>]
 module SemVer =
     open System.Numerics
     open SemVerActivePattern
   
     /// Returns true if input appears to be a parsable semver string
-    let isValidSemVer version =
+    let isValid version =
         match version with
         | SemVer [ValidVersion major; ValidVersion minor; ValidVersion patch; pre; build] ->
             true

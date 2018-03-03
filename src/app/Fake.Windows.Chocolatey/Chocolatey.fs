@@ -9,9 +9,7 @@ module Fake.Windows.Choco
     open Fake.DotNet.NuGet.NuGet
     open Fake.Core
     open Fake.Core.Environment
-    open Fake.Core.String
     open Fake.Core.StringBuilder
-    open Fake.Core.Process
     open Fake.IO
     open Fake.IO.FileSystemOperators
 
@@ -329,7 +327,7 @@ module Fake.Windows.Choco
 
     let private getPaths =
         let programDataPath = environVar "ProgramData"
-        if programDataPath |> isNotNullOrEmpty
+        if programDataPath |> String.isNotNullOrEmpty
         then
             [
                 Seq.singleton (programDataPath @@ "chocolatey" @@ "bin")
@@ -359,7 +357,7 @@ module Fake.Windows.Choco
     let private callChoco exePath args timeout =
         // Try to find the choco executable if not specified by the user.
         let chocoExe =
-            if not <| isNullOrEmpty exePath then exePath else
+            if not <| String.isNullOrEmpty exePath then exePath else
             let found = FindExe
             if found <> None then found.Value else failwith "Cannot find the choco executable."
 
@@ -368,7 +366,7 @@ module Fake.Windows.Choco
             { info with
                 FileName = chocoExe
                 Arguments = args }
-        let result = ExecProcess (setInfo) timeout
+        let result = Process.Exec (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
 
     let private getTempFolder =
@@ -400,9 +398,9 @@ module Fake.Windows.Choco
         let getFrameworkGroup (frameworkTags : (string * string) seq) =
             frameworkTags
             |> Seq.map (fun (frameworkVersion, tags) ->
-                        if isNullOrEmpty frameworkVersion then sprintf "<group>%s</group>" tags
+                        if String.isNullOrEmpty frameworkVersion then sprintf "<group>%s</group>" tags
                         else sprintf "<group targetFramework=\"%s\">%s</group>" frameworkVersion tags)
-            |> toLines
+            |> String.toLines
 
         let getGroup items toTags =
             if List.isEmpty items then null
@@ -411,7 +409,7 @@ module Fake.Windows.Choco
         let getReferencesTags references =
             references
             |> Seq.map (fun assembly -> sprintf "<reference file=\"%s\" />" assembly)
-            |> toLines
+            |> String.toLines
 
         let references = getGroup parameters.References getReferencesTags
 
@@ -426,8 +424,8 @@ module Fake.Windows.Choco
             references
             |> Seq.map (fun x ->
                         if List.isEmpty x.FrameworkVersions then sprintf "<frameworkAssembly assemblyName=\"%s\" />" x.AssemblyName
-                        else sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName (x.FrameworkVersions |> separated ", "))
-            |> toLines
+                        else sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName (x.FrameworkVersions |> String.separated ", "))
+            |> String.toLines
 
         let frameworkAssembliesXml =
             if List.isEmpty parameters.FrameworkAssemblies then null
@@ -436,7 +434,7 @@ module Fake.Windows.Choco
         let getDependenciesTags dependencies =
             dependencies
             |> Seq.map (fun (package, version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
-            |> toLines
+            |> String.toLines
 
         let dependencies = getGroup parameters.Dependencies getDependenciesTags
 
@@ -457,7 +455,7 @@ module Fake.Windows.Choco
                     if target.IsSome then sprintf " target=\"%s\"" target.Value
                     else String.Empty
                 sprintf "<file src=\"%s\"%s%s />" source targetStr excludeStr)
-            |> toLines
+            |> String.toLines
 
         let filesXml = match filesTags.Length with | 0 -> null | _ -> sprintf "<files>%s</files>" filesTags
 
@@ -472,12 +470,12 @@ module Fake.Windows.Choco
 
         { Version = parameters.Version |> xmlEncode
           Title = parameters.Title |> xmlEncode
-          Authors = parameters.Authors |> separated ", " |> xmlEncode
-          Owners = parameters.Owners |> separated ", " |> xmlEncode
+          Authors = parameters.Authors |> String.separated ", " |> xmlEncode
+          Owners = parameters.Owners |> String.separated ", " |> xmlEncode
           PackageId = parameters.PackageId |> xmlEncode
           Summary = parameters.Summary |> toSingleLine |> xmlEncode
           Description = parameters.Description |> toSingleLine |> xmlEncode
-          Tags = parameters.Tags |> separated " " |> xmlEncode
+          Tags = parameters.Tags |> String.separated " " |> xmlEncode
           ReleaseNotes = parameters.ReleaseNotes |> xmlEncode
           Copyright = parameters.Copyright |> xmlEncode
           ProjectUrl = parameters.ProjectUrl |> xmlEncode
@@ -532,7 +530,7 @@ module Fake.Windows.Choco
               "@frameworkAssemblies@", nuspecData.FrameworkAssembliesXml
               "@files@", nuspecData.FilesXml ]
 
-        Templates.processTemplates replacements [ specFile ]
+        Templates.replaceInFiles replacements [ specFile ]
         Trace.tracefn "Created nuspec file %s" specFile
         specFile
 
@@ -603,7 +601,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyInstall.ps1 at %s" outputPath
 
-        if isNullOrWhiteSpace parameters.Title || isNullOrWhiteSpace parameters.PackageDownloadUrl
+        if String.isNullOrWhiteSpace parameters.Title || String.isNullOrWhiteSpace parameters.PackageDownloadUrl
         then failwith "chocolateyInstall.ps1 need at least Title and PackageDownloadUrl to be created."
 
         let installContent = new StringBuilder()
@@ -617,11 +615,11 @@ module Fake.Windows.Choco
                             |> match parameters.InstallerType with
                                 | ChocolateyInstallerType.Zip -> appendWithoutQuotes "Install-ChocolateyZipPackage $packageName $url $unzipLocation"
                                 | _ -> appendWithoutQuotes "Install-ChocolateyPackage $packageName $installerType $silentArgs $url"
-                            |> appendIfTrue (isNotNullOrEmpty parameters.PackageDownload64Url) " $url64"
-                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum) ("-Checksum " + parameters.Checksum)
-                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum) ("-ChecksumType " + checksumTypeToString parameters.ChecksumType)
-                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Checksum64) ("-Checksum64 " + parameters.Checksum64)
-                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum64) ("-Checksum64Type " + checksumTypeToString parameters.Checksum64Type)
+                            |> appendIfTrue (String.isNotNullOrEmpty parameters.PackageDownload64Url) " $url64"
+                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum) ("-Checksum " + parameters.Checksum)
+                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum) ("-ChecksumType " + checksumTypeToString parameters.ChecksumType)
+                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty parameters.Checksum64) ("-Checksum64 " + parameters.Checksum64)
+                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum64) ("-Checksum64Type " + checksumTypeToString parameters.Checksum64Type)
                             |> toText
 
         File.writeString false outputPath installContent
@@ -648,13 +646,13 @@ module Fake.Windows.Choco
               "@checksum64Type@", (checksumTypeToString parameters.Checksum64Type)
             ]
 
-        Templates.processTemplates replacements [ outputPath ]
+        Templates.replaceInFiles replacements [ outputPath ]
 
         Trace.tracefn "Created chocolateyInstall.ps1 at %sfrom template %s" outputPath templatePath
 
     let private createChocolateyUninstallPs1 (parameters: ChocoPackParams) outputDir =
 
-        if not (isNullOrWhiteSpace parameters.Title) && not (isNullOrWhiteSpace parameters.UninstallPath)
+        if not (String.isNullOrWhiteSpace parameters.Title) && not (String.isNullOrWhiteSpace parameters.UninstallPath)
         then
             let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> Path.getFullName
             Trace.tracefn "Create chocolateyUninstall.ps1 at %s" outputPath
@@ -687,7 +685,7 @@ module Fake.Windows.Choco
               "@uninstallPath@", parameters.UninstallPath
             ]
 
-        Templates.processTemplates replacements [ outputPath ]
+        Templates.replaceInFiles replacements [ outputPath ]
 
         Trace.tracefn "Created chocolateyUninstall.ps1 at %sfrom template %s" outputPath templatePath
 
@@ -717,7 +715,7 @@ module Fake.Windows.Choco
     ///         "pretzel" |> Choco.Install (fun p -> { p with Version = "0.4.0" })
     ///     )
     let Install (setParams: (ChocoInstallParams -> ChocoInstallParams)) (packages: string) =
-        if packages |> isNullOrEmpty then failwith "'packages' must not be empty."
+        if packages |> String.isNullOrEmpty then failwith "'packages' must not be empty."
 
         let parameters = setParams ChocoInstallDefaults
 
@@ -778,7 +776,7 @@ module Fake.Windows.Choco
     ///     )
     let PackFromTemplate setParams nuspecPath =
 
-        if nuspecPath |> isNullOrEmpty then failwith "'nuspecPath' must not be empty."
+        if nuspecPath |> String.isNullOrEmpty then failwith "'nuspecPath' must not be empty."
 
         let parameters = setParams ChocoPackDefaults
 
@@ -818,7 +816,7 @@ module Fake.Windows.Choco
     ///         "pretzel.0.5.0.nupkg" |> Choco.Push (fun p -> { p with ApiKey = "123-123123-123" })
     ///     )
     let Push setParams nupkgPath =
-        if nupkgPath |> isNullOrEmpty then failwith "'nupkgPath' must not be empty."
+        if nupkgPath |> String.isNullOrEmpty then failwith "'nupkgPath' must not be empty."
 
         let parameters = setParams ChocoPushDefaults
 
@@ -853,6 +851,6 @@ module Fake.Windows.Choco
     ///         args |> Choco.CallChoco TimeSpan.FromMinutes 1.
     ///     )
     let Exec args timeout =
-        if args |> isNullOrEmpty then failwith "'args' must not be empty."
+        if args |> String.isNullOrEmpty then failwith "'args' must not be empty."
 
         callChoco null args timeout

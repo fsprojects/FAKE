@@ -1,4 +1,5 @@
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages with [Paket](http://fsprojects.github.io/Paket/index.html).
+[<RequireQualifiedAccess>]
 module Fake.DotNet.Paket
 
 open System
@@ -92,11 +93,11 @@ let PaketRestoreDefaults() : PaketRestoreParams =
       Group = "" }
 
 
-let inline private startPaket toolPath workDir (info:Process.ProcStartInfo) =
+let inline private startPaket toolPath workDir (info:ProcStartInfo) =
     { info with 
         FileName = toolPath
         WorkingDirectory = workDir }
-let inline private withArgs args (info:Process.ProcStartInfo) =
+let inline private withArgs args (info:ProcStartInfo) =
     { info with Arguments = args }
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
@@ -130,7 +131,7 @@ let Pack setParams =
             sprintf "%s%s%s%s%s%s%s%s%s%s%s%s%s"
                 version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates
                 symbols includeReferencedProjects minimumFromLockFile pinProjectReferences projectUrl
-        Process.ExecProcess 
+        Process.Exec 
             (startPaket parameters.ToolPath parameters.WorkingDir
                 >> withArgs (sprintf "pack \"%s\" %s" parameters.OutputPath cmdArgs)
                 >> Process.withFramework)
@@ -172,7 +173,7 @@ let PushFiles setParams files =
                 |> Seq.toArray
                 |> Array.map (fun package -> async {
                         let pushResult =
-                            Process.ExecProcess
+                            Process.Exec
                                 (startPaket parameters.ToolPath parameters.WorkingDir
                                     >> withArgs (sprintf "push %s%s%s%s" url endpoint key (Process.toParam package))
                                     >> Process.withFramework)
@@ -186,7 +187,7 @@ let PushFiles setParams files =
     else
         for package in packages do
             let pushResult =
-                Process.ExecProcess
+                Process.Exec
                     (startPaket parameters.ToolPath parameters.WorkingDir
                         >> withArgs (sprintf "push %s%s%s%s" url endpoint key (Process.toParam package))
                         >> Process.withFramework)
@@ -256,7 +257,7 @@ let Restore setParams =
     use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir
 
     let restoreResult =
-        Process.ExecProcess
+        Process.Exec
             (startPaket parameters.ToolPath parameters.WorkingDir
                 >> withArgs (sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles)
                 >> Process.withFramework)

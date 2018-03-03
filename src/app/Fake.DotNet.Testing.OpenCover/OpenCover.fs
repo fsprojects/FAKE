@@ -5,8 +5,6 @@ module Fake.DotNet.Testing.OpenCover
     open System.IO
     open System.Text
     open Fake.Core
-    open Fake.Core.Process
-    open Fake.Core.String
     open Fake.Core.StringBuilder
     open Fake.IO
     open Fake.IO.FileSystemOperators
@@ -100,12 +98,12 @@ module Fake.DotNet.Testing.OpenCover
             new StringBuilder()
             |> appendWithoutQuotes (printParamWithValue "target" (quote (param.TestRunnerExePath |> Path.getFullName)))
             |> appendWithoutQuotes (printParamWithValue "targetargs" (quote targetArgs))
-            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty param.Output) (printParamWithValue "output" (quote param.Output))
+            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Output) (printParamWithValue "output" (quote param.Output))
             |> appendWithoutQuotes (match param.Register with
                                     | Manual -> String.Empty
                                     | Register -> printParam "register"
                                     | RegisterUser -> printParamWithValue "register" "user")
-            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty param.Filter) (printParamWithValue "filter" (quote param.Filter))
+            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Filter) (printParamWithValue "filter" (quote param.Filter))
             |> appendIfTrueWithoutQuotes param.MergeByHash (printParam "mergebyhash")
             |> appendIfTrueWithoutQuotes (not param.ExcludeByAttribute.IsEmpty) (printParamListAsValuesWithQuote "excludebyattribute" param.ExcludeByAttribute)
             |> appendIfTrueWithoutQuotes (not param.ExcludeByFile.IsEmpty) (printParamListAsValuesWithQuote "excludebyfile" param.ExcludeByFile)
@@ -118,7 +116,7 @@ module Fake.DotNet.Testing.OpenCover
                                     | Offset o -> printParamWithValue "returntargetcode" (string o))
             |> appendIfTrueWithoutQuotes (not param.SearchDirs.IsEmpty) (printParamListAsValuesWithQuote "searchdirs" param.SearchDirs)
             |> appendIfTrueWithoutQuotes param.SkipAutoProps (printParam "skipautoprops")
-            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty param.OptionalArguments) param.OptionalArguments
+            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.OptionalArguments) param.OptionalArguments
             |> toText
 
     /// Runs OpenCover on a group of assemblies.
@@ -138,7 +136,7 @@ module Fake.DotNet.Testing.OpenCover
         let processArgs = buildOpenCoverArgs param targetArgs
         Trace.tracefn "OpenCover command\n%s %s" param.ExePath processArgs
         let ok = 
-            execProcess ((fun info ->
+            Process.exec ((fun info ->
             { info with
                 FileName = param.ExePath
                 WorkingDirectory =
@@ -161,7 +159,7 @@ module Fake.DotNet.Testing.OpenCover
                     | Some setParams -> setParams OpenCoverDefaults
                     | None -> OpenCoverDefaults
 
-        ExecProcess ((fun info ->
+        Process.Exec ((fun info ->
         { info with
             FileName = param.ExePath
             Arguments = "-version" }) >> Process.withFramework) param.TimeOut |> ignore

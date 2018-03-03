@@ -1,13 +1,7 @@
 module Fake.DotNet.NuGet.Version
 
-open Fake.IO.FileSystemOperators
 open Fake.DotNet.NuGet.NuGet
-open Fake.Core.String
-open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
-open Fake.Core.SemVer
-open Fake.DotNet.NuGet.NuGet
 open Newtonsoft.Json
 open System
 open System.Xml.Linq

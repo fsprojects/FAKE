@@ -2,6 +2,7 @@ namespace Fake.IO
 
 open System.IO
 
+[<RequireQualifiedAccess>]
 module FileSystemInfo =
     /// Creates a FileInfo or a DirectoryInfo for the given path
     let inline ofPath path : FileSystemInfo = 

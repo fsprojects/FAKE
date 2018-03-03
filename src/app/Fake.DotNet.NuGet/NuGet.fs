@@ -5,9 +5,7 @@ module Fake.DotNet.NuGet.NuGet
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -165,7 +163,7 @@ let GetPackageVersion deploymentsDir package =
 
 let private replaceAccessKeys parameters (text:string) =
     let replaceKey key (str:string) =
-        if isNullOrEmpty key then str
+        if String.isNullOrEmpty key then str
         else str.Replace(key, "PRIVATEKEY")
 
     text |> (replaceKey parameters.AccessKey >> replaceKey parameters.SymbolAccessKey)
@@ -180,9 +178,9 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let getFrameworkGroup (frameworkTags : (string * string) seq) =
         frameworkTags
         |> Seq.map (fun (frameworkVersion, tags) ->
-                    if isNullOrEmpty frameworkVersion then sprintf "<group>%s</group>" tags
+                    if String.isNullOrEmpty frameworkVersion then sprintf "<group>%s</group>" tags
                     else sprintf "<group targetFramework=\"%s\">%s</group>" frameworkVersion tags)
-        |> toLines
+        |> String.toLines
 
     let getGroup items toTags =
         if items = [] then ""
@@ -191,7 +189,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let getReferencesTags references =
         references
         |> Seq.map (fun assembly -> sprintf "<reference file=\"%s\" />" assembly)
-        |> toLines
+        |> String.toLines
 
     let references = getGroup parameters.References getReferencesTags
 
@@ -206,8 +204,8 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
         references
         |> Seq.map (fun x ->
                     if x.FrameworkVersions = [] then sprintf "<frameworkAssembly assemblyName=\"%s\" />" x.AssemblyName
-                    else sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName (x.FrameworkVersions |> separated ", "))
-        |> toLines
+                    else sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName (x.FrameworkVersions |> String.separated ", "))
+        |> String.toLines
 
     let frameworkAssembliesXml =
         if parameters.FrameworkAssemblies = [] then ""
@@ -216,7 +214,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let getDependenciesTags dependencies =
         dependencies
         |> Seq.map (fun (package, version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
-        |> toLines
+        |> String.toLines
 
     let dependencies = getGroup parameters.Dependencies getDependenciesTags
 
@@ -238,7 +236,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
                 else String.Empty
 
             sprintf "<file src=\"%s\"%s%s />" source targetStr excludeStr)
-        |> toLines
+        |> String.toLines
 
     let filesXml = sprintf "<files>%s</files>" filesTags
 
@@ -253,7 +251,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let replacements =
         [ "@build.number@", parameters.Version
           "@title@", parameters.Title
-          "@authors@", parameters.Authors |> separated ", "
+          "@authors@", parameters.Authors |> String.separated ", "
           "@project@", parameters.Project
           "@summary@", parameters.Summary |> toSingleLine
           "@description@", parameters.Description |> toSingleLine
@@ -268,7 +266,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
                          "@frameworkAssemblies@", frameworkAssembliesXml
                          "@files@", filesXml ]
 
-    Templates.processTemplates replacements [ specFile ]
+    Templates.replaceInFiles replacements [ specFile ]
     Trace.tracefn "Created nuspec file %s" specFile
     specFile
 
@@ -301,16 +299,16 @@ let private pack parameters nuspecFile =
 
     let execute args =
         let result =
-            ExecProcessAndReturnMessages ((fun info ->
+            Process.ExecAndReturnMessages ((fun info ->
             { info with
                 FileName = parameters.ToolPath
                 WorkingDirectory = Path.getFullName parameters.WorkingDir
                 Arguments = args }) >> Process.withFramework) parameters.TimeOut
-        if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
+        if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (String.toLines result.Errors)
 
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
-        if not (isNullOrEmpty parameters.ProjectFile) then
+        if not (String.isNullOrEmpty parameters.ProjectFile) then
             sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s %s"
                 parameters.Version outputPath (Path.getFullName parameters.ProjectFile) packageAnalysis defaultExcludes includeReferencedProjects properties basePath
             |> execute
@@ -330,7 +328,7 @@ let private pack parameters nuspecFile =
 let rec private publish parameters =
     // Newer NuGet requires source to be always specified, so if PublishUrl is empty,
     // ignore symbol source - the produced source is broken anyway.
-    let normalize str = if isNullOrEmpty str then None else Some str
+    let normalize str = if String.isNullOrEmpty str then None else Some str
     let source = match parameters.PublishUrl |> normalize, parameters.SymbolPublishUrl |> normalize with
                  | None, _                     -> ""
                  | Some source, None           -> sprintf "-source %s" source
@@ -343,15 +341,15 @@ let rec private publish parameters =
                                                             (FullName parameters.WorkingDir) parameters.PublishTrials
     try
         let result =
-            let tracing = shouldEnableProcessTracing()
+            let tracing = Process.shouldEnableProcessTracing()
             try
-                setEnableProcessTracing false
-                ExecProcess ((fun info ->
+                Process.setEnableProcessTracing false
+                Process.Exec ((fun info ->
                 { info with
                     FileName = parameters.ToolPath
                     WorkingDirectory = FullName parameters.WorkingDir
                     Arguments = args }) >> Process.withFramework) parameters.TimeOut
-            finally setEnableProcessTracing tracing
+            finally Process.setEnableProcessTracing tracing
         if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
     with exn when parameters.PublishTrials > 0 ->
         publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
@@ -366,15 +364,15 @@ let rec private publishSymbols parameters =
         (FullName parameters.WorkingDir) parameters.PublishTrials
     try
         let result =
-            let tracing = shouldEnableProcessTracing()
+            let tracing = Process.shouldEnableProcessTracing()
             try
-                setEnableProcessTracing false
-                ExecProcess ((fun info ->
+                Process.setEnableProcessTracing false
+                Process.Exec ((fun info ->
                     { info with
                         FileName = parameters.ToolPath
                         WorkingDirectory = FullName parameters.WorkingDir
                         Arguments = args }) >> Process.withFramework) parameters.TimeOut
-            finally setEnableProcessTracing tracing
+            finally Process.setEnableProcessTracing tracing
         if result <> 0 then failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args
     with exn when parameters.PublishTrials > 0->
         publish { parameters with PublishTrials = parameters.PublishTrials - 1 }

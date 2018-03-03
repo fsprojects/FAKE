@@ -4,7 +4,6 @@ module Fake.Tools.Git.Information
 open Fake.Tools.Git.CommandHelper
 open Fake.Tools.Git.Branches
 open Fake.Core
-open Fake.Core.String
 open Fake.Core.String.Operators
 open Fake.Core.Environment
 open Fake.Core.BuildServer
@@ -17,7 +16,7 @@ let internal versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compi
 /// Gets the git version
 let getVersion repositoryDir =
     let ok,msg,errors = runGitCommand repositoryDir "--version"
-    msg |> separated ""
+    msg |> String.separated ""
 
 /// [omit]
 let extractGitVersion version =
@@ -41,7 +40,7 @@ let getBranchName repositoryDir =
         let replaceNoBranchString = "## HEAD ("
         let noBranch = "NoBranch"
 
-        if startsWith replaceNoBranchString s
+        if String.startsWith replaceNoBranchString s
             then noBranch
             else match s.Contains("...") with
                     | true  -> s.Substring(3,s.IndexOf("...")-3)
