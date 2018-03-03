@@ -28,7 +28,11 @@ open Fake.Core
 open Fake.Tools
 open Fake.IO
 open Fake.IO.FileSystemOperators
+#if BOOTSTRAP
+open Fake.IO.Globbing.Operators
+#else
 open Fake.Core.Globbing.Operators
+#endif
 open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
@@ -117,8 +121,11 @@ Target.Create "Clean" (fun _ ->
     //++ "src/*/*/obj"
     |> Shell.CleanDirs
 
-    !! "src/*/*/obj/*.nuspec"
-    -- (sprintf "src/*/*/obj/*%s.nuspec" release.NugetVersion)
+    // Workaround https://github.com/fsprojects/Paket/issues/2830
+    // https://github.com/fsprojects/Paket/issues/2689
+    // Basically paket fails if there is already an existing nuspec in obj/ dir because then MsBuild will call paket with multiple nuspec file arguments separated by ';'
+    !! "src/*/*/obj/**/*.nuspec"
+    -- (sprintf "src/*/*/obj/**/*%s.nuspec" release.NugetVersion)
     //-- "src/*/*/obj/*.references"
     //-- "src/*/*/obj/*.props"
     //-- "src/*/*/obj/*.paket.references.cached"
@@ -187,10 +194,8 @@ let dotnetAssemblyInfos =
     [ "dotnet-fake", "Fake dotnet-cli command line tool"
       "Fake.Api.Slack", "Slack Integration Support"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
-      "Fake.Core.BuildServer", "Buildserver Support"
       "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.Environment", "Environment Detection"
-      "Fake.Core.Globbing", "Filesystem Globbing Support and Operators"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
       "Fake.Core.SemVer", "Parsing and working with SemVer"
@@ -210,7 +215,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
-      "Fake.IO.FileSystem", "Core Filesystem utilities"
+      "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.Net.Http", "HTTP Client"
       "Fake.netcore", "Command line tool"

@@ -7,6 +7,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Globbing.fs" />
+    <Compile Include="GlobbingFileSystem.fs" />
     <Compile Include="Path.fs" />
     <Compile Include="FileInfo.fs" />
     <Compile Include="FileSystemOperators.fs" />
@@ -20,9 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
   </ItemGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD1_5</DefineConstants>

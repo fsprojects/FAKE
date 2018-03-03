@@ -6,7 +6,7 @@ open System.Diagnostics
 open System.IO
 open Fake.Core
 open Fake.Core.String
-open Fake.Core.Globbing
+open Fake.IO.Globbing
 open Fake.Core.Process
 open Fake.IO
 open Fake.IO.FileSystemOperators

@@ -25,13 +25,9 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Tasks\Fake.Core.Tasks.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
-    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>

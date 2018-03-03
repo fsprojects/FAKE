@@ -5,7 +5,7 @@ module Fake.DotNet.NuGet.Restore
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.Core.String
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators
 open Fake.Core.BuildServer
 open Fake.Core.Process
 open Fake.Core

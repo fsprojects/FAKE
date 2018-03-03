@@ -21,6 +21,7 @@
     <Compile Include="Runners.fs" />
     <Compile Include="CompileRunner.fs" />
     <Compile Include="ScriptRunner.fs" />
+    <Compile Include="FSharpParser.fs" />
     <Compile Include="HashGeneration.fs" />
     <Compile Include="CoreCache.fs" />
     <Compile Include="FakeRuntime.fs" />

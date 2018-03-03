@@ -279,7 +279,7 @@ module Shell =
     | ExcludePattern of string
     | Filter of (DirectoryInfo -> FileInfo -> bool)
 
-    open Fake.Core.Globbing.Glob
+    open Fake.IO.Globbing.Glob
     /// Copies the file structure recursively.
     /// ## Parameters
     /// 

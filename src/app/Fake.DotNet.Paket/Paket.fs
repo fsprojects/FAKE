@@ -5,11 +5,11 @@ open System
 open System.IO
 open System.Xml.Linq
 open System.Text.RegularExpressions
-open Fake.Core.Globbing
+open Fake.IO.Globbing
 open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators
 
 /// Paket pack parameter type
 type PaketPackParams =

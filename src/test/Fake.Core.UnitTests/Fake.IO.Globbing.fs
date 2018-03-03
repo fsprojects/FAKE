@@ -2,23 +2,24 @@ module Fake.Core.GlobbingTests
 
 open System.IO
 open Fake.Core
-open Fake.Core.Globbing
+open Fake.IO
+open Fake.IO.Globbing
 open Expecto
-open Fake.Core.Globbing.Glob
+open Fake.IO.Globbing.Glob
 let getFileIncludeWithKnownBaseDir includes : LazyGlobbingPattern=
-    { Fake.Core.Globbing.LazyGlobbingPattern.BaseDirectory = @"C:\Project"
-      Fake.Core.Globbing.LazyGlobbingPattern.Includes = includes
-      Fake.Core.Globbing.LazyGlobbingPattern.Excludes = [] } 
+    { Fake.IO.Globbing.LazyGlobbingPattern.BaseDirectory = @"C:\Project"
+      Fake.IO.Globbing.LazyGlobbingPattern.Includes = includes
+      Fake.IO.Globbing.LazyGlobbingPattern.Excludes = [] } 
 
 [<Tests>]
 let tests = 
   testList "Fake.Core.Globbing.Tests" [
     testCase "Test IsMatch works on relative Paths - #1029" <| fun _ ->
       let globExe = // !! "folder/*.exe"
-          { Fake.Core.Globbing.ResolvedGlobbingPattern.BaseDirectory = Path.GetFullPath "."
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Includes = [ "folder/*.exe" ]
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Excludes = []
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Results = 
+          { Fake.IO.Globbing.ResolvedGlobbingPattern.BaseDirectory = Path.GetFullPath "."
+            Fake.IO.Globbing.ResolvedGlobbingPattern.Includes = [ "folder/*.exe" ]
+            Fake.IO.Globbing.ResolvedGlobbingPattern.Excludes = []
+            Fake.IO.Globbing.ResolvedGlobbingPattern.Results = 
               [ "folder/file1.exe"
                 "folder/file2.exe" ] }
       Expect.equal (globExe.IsMatch "folder/test.exe") true "Glob should match relative paths"

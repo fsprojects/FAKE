@@ -7,7 +7,7 @@ open System.Xml.Linq
 open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators
 
 /// A type to represent MSBuild project files.
 type MSBuildProject = XDocument

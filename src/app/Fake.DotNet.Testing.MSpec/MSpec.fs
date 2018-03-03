@@ -36,7 +36,7 @@ type MSpecParams =
 
 /// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
 let MSpecDefaults =
-    { ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "mspec-clr4.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "MSpec")
+    { ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath "mspec-clr4.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "MSpec")
       HtmlOutputDir = null
       XmlOutputPath = null
       WorkingDir = null

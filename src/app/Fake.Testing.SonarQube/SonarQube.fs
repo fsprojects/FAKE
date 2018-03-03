@@ -3,7 +3,7 @@ module Fake.Testing.SonarQube
 
     open System.IO
     open Fake.Core
-    open Fake.Core.Globbing
+    open Fake.IO.Globbing
     open Fake.Core.Process
     open Fake.IO.FileSystemOperators
 

@@ -241,7 +241,7 @@ type NUnit3Params =
 /// ## Defaults
 let NUnit3Defaults =
     {
-      ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath  "nunit3-console.exe" (Shell.pwd() @@ "tools" @@ "Nunit")
+      ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath  "nunit3-console.exe" (Shell.pwd() @@ "tools" @@ "Nunit")
       Testlist = ""
       Where = ""
       Config = ""

@@ -8,7 +8,7 @@ open System.Xml
 open System.Xml.Linq
 open System.Text
 open Fake.Core
-open Fake.Core.Globbing
+open Fake.IO.Globbing
 open Fake.Core.Process
 open Fake.Core.String
 open Fake.IO

@@ -74,6 +74,9 @@
     <Compile Include="..\Fake.Runtime\ScriptRunner.fs">
       <Link>Fake.Runtime/ScriptRunner.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Runtime\FSharpParser.fs">
+      <Link>Fake.Runtime/FSharpParser.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.Runtime\HashGeneration.fs">
       <Link>Fake.Runtime/HashGeneration.fs</Link>
     </Compile>
@@ -86,14 +89,14 @@
     <Compile Include="..\Fake.Core.Environment\Environment.fs">
       <Link>Fake.Core.Environment/Environment.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Core.Environment\BuildServer.fs">
+      <Link>Fake.Core.Environment/BuildServer.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.Core.String\String.fs">
       <Link>Fake.Core.String/String.fs</Link>
     </Compile>
     <Compile Include="..\Fake.Core.String\StringBuilder.fs">
       <Link>Fake.Core.String/StringBuilder.fs</Link>
-    </Compile>
-    <Compile Include="..\Fake.Core.BuildServer\BuildServer.fs">
-      <Link>Fake.Core.BuildServer/BuildServer.fs</Link>
     </Compile>
     <Compile Include="..\Fake.Core.Trace\TraceListener.fs">
       <Link>Fake.Core.Trace/TraceListener.fs</Link>
@@ -107,11 +110,11 @@
     <Compile Include="..\Fake.Core.Target\TargetOperators.fs">
       <Link>Fake.Core.Target/TargetOperators.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Globbing\Globbing.fs">
-      <Link>Fake.Core.Globbing/Globbing.fs</Link>
+    <Compile Include="..\Fake.IO.FileSystem\Globbing.fs">
+      <Link>Fake.IO.FileSystem/Globbing.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Globbing\GlobbingFileSystem.fs">
-      <Link>Fake.Core.Globbing/GlobbingFileSystem.fs</Link>
+    <Compile Include="..\Fake.IO.FileSystem\GlobbingFileSystem.fs">
+      <Link>Fake.IO.FileSystem/GlobbingFileSystem.fs</Link>
     </Compile>
     <Compile Include="..\Fake.IO.FileSystem\Path.fs">
       <Link>Fake.IO.FileSystem/Path.fs</Link>
