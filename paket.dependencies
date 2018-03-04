@@ -85,7 +85,6 @@ group NetcoreBuild
     nuget Paket.Core prerelease
     nuget Fake.Api.GitHub prerelease
     nuget Fake.Core.Target prerelease
-    nuget Fake.Core.Globbing prerelease
     nuget Fake.Core.SemVer prerelease
     nuget Fake.IO.FileSystem prerelease
     nuget Fake.IO.Zip prerelease
