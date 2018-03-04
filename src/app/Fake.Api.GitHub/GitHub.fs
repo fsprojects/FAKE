@@ -34,7 +34,7 @@ module GitHub =
     type private HttpClientWithTimeout(timeout : TimeSpan) as this =
         inherit HttpClientAdapter(fun () -> HttpMessageHandlerFactory.CreateDefault())
         let setter = lazy(
-            match typeof<HttpClientAdapter>.GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
+            match typeof<HttpClientAdapter>.GetTypeInfo().GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
             | null -> ()
             | f ->
                 match f.GetValue(this) with

@@ -67,7 +67,7 @@ let exceptionAndInnersToString (ex:Exception) =
             bprintf sb "%sType: %s" nl (e.GetType().FullName)
             // Loop through the public properties of the exception object
             // and record their values.
-            e.GetType().GetProperties()
+            e.GetType().GetTypeInfo().GetProperties()
             |> Array.iter (fun p ->
                 // Do not log information for the InnerException or StackTrace.
                 // This information is captured later in the process.
