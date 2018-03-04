@@ -879,12 +879,12 @@ module ProcStartInfoExtensions =
         member x.WithCurrentEnvironmentVariables () =
             Process.setCurrentEnvironmentVariables x
 
-    #if FX_ERROR_DIALOG
+#if FX_ERROR_DIALOG
         /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
         member x.WithErrorDialog errorDialog = { x with ErrorDialog = errorDialog }
         /// Gets or sets the window handle to use when an error dialog box is shown for a process that cannot be started.
         member x.WithErrorDialogParentHandle handle = { x with ErrorDialogParentHandle = handle }
-    #endif  
+#endif  
         /// Gets or sets the application or document to start.
         member x.WithFileName name = { x with FileName = name }
         /// true if the Windows user profile should be loaded; otherwise, false. The default is false.
@@ -892,10 +892,10 @@ module ProcStartInfoExtensions =
         // Note: No SecureString as that one is obsolete anyway and to provide a uniform API across netstandard16.
         /// Gets or sets the user password in clear text to use when starting the process.
         member x.WithPassword password = { x with Password = password }
-    #if FX_WINDOWSTLE
+#if FX_WINDOWSTLE
         /// One of the enumeration values that indicates whether the process is started in a window that is maximized, minimized, normal (neither maximized nor minimized), or not visible. The default is Normal.
         member x.WithWindowStyle style = { x with WindowStyle = style }
-    #endif  
+#endif  
         /// true if error output should be written to Process.StandardError; otherwise, false. The default is false.
         member x.WithRedirectStandardError redirectStdErr = { x with RedirectStandardError = redirectStdErr }
         /// true if input should be read from Process.StandardInput; otherwise, false. The default is false.
@@ -910,9 +910,9 @@ module ProcStartInfoExtensions =
         member x.WithUserName name = { x with UserName = name }
         /// true if the shell should be used when starting the process; false if the process should be created directly from the executable file. The default is true.
         member x.WithUseShellExecute shellExec = { x with UseShellExecute = shellExec }
-    #if FX_VERB
+#if FX_VERB
         /// The action to take with the file that the process opens. The default is an empty string (""), which signifies no action.
         member x.WithVerb name = { x with Verb = name }
-    #endif
+#endif
         /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
         member x.WithWorkingDirectory dir = { x with WorkingDirectory = dir }

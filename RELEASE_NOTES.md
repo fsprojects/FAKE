@@ -1,3 +1,6 @@
+#### 5.0.0-beta023
+* Experiment with new Process API
+
 #### 5.0.0-beta022
 * FAKE5: New module "ChangeWatcher"
 * FAKE5: Reduce number of modules by combining some modules:
