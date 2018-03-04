@@ -57,11 +57,7 @@ open Fake.Core
 open Fake.Tools
 open Fake.IO
 open Fake.IO.FileSystemOperators
-#if BOOTSTRAP
 open Fake.IO.Globbing.Operators
-#else
-open Fake.Core.Globbing.Operators
-#endif
 open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
@@ -127,7 +123,7 @@ let cleanForTests () =
             if Environment.isUnix
             then fileName, args else "cmd", ("/C " + fileName + " " + args)
         let ok =
-            Process.execProcess (fun info ->
+            Process.exec (fun info ->
             { info with
                 FileName = fileName
                 WorkingDirectory = workingDir
@@ -170,7 +166,7 @@ Target.Create "Clean" (fun _ ->
 Target.Create "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
     // for framework in ["net40"; "net45"] do
-    for framework in ["netstandard1.6"; "net45"] do
+    for framework in ["netstandard2.0"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
       File.delete targetFile
@@ -296,7 +292,7 @@ Target.Create "SetAssemblyInfo" (fun _ ->
 )
 
 Target.Create "DownloadPaket" (fun _ ->
-    if 0 <> Process.ExecProcess (fun info ->
+    if 0 <> Process.Exec (fun info ->
             { info with
                 FileName = ".paket/paket.exe"
                 Arguments = "--version" }
@@ -439,14 +435,14 @@ Target.Create "BootstrapTest" (fun _ ->
             if clearCache then clear ()
             if Environment.isUnix then
                 let result =
-                    Process.ExecProcess (fun info ->
+                    Process.Exec (fun info ->
                     { info with
                         FileName = "chmod"
                         WorkingDirectory = "."
                         Arguments = "+x build/FAKE.exe" }
                     ) span
                 if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
             { info with
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
@@ -495,7 +491,7 @@ Target.Create "BootstrapTestDotNetCore" (fun _ ->
             let fileName =
                 if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
                 else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
                 { info with
                     FileName = fileName
                     WorkingDirectory = "."
@@ -551,7 +547,7 @@ Target.Create "ILRepack" (fun _ ->
         let targetFile = buildMergedDir </> filename
 
         let result =
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
             { info with
                 FileName = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
                 Arguments = sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack }
@@ -574,17 +570,10 @@ Target.Create "CreateNuGet" (fun _ ->
         files
         |> Seq.iter (fun file ->
             let args =
-#if BOOTSTRAP
                 { Program = "lib" @@ "corflags.exe"
                   WorkingDir = Path.GetDirectoryName file
                   CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
                   Args = [] }
-#else
-                { Process.Program = "lib" @@ "corflags.exe"
-                  Process.WorkingDir = Path.GetDirectoryName file
-                  Process.CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
-                  Process.Args = [] }
-#endif
             printfn "%A" args
             Process.shellExec args |> ignore)
 
@@ -805,11 +794,7 @@ Target.Create "CheckReleaseSecrets" (fun _ ->
 )
 let executeFPM args =
     printfn "%s %s" "fpm" args
-#if BOOTSTRAP
     Shell.Exec("fpm", args=args, dir="bin")
-#else
-    Process.Shell.Exec("fpm", args=args, dir="bin")
-#endif
 
 type SourceType =
     | Dir of source:string * target:string
@@ -885,7 +870,7 @@ let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nug
 let rec nugetPush tries nugetpackage =
     try
         if not <| System.String.IsNullOrEmpty apikey then
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
             { info with
                 FileName = nuget_exe
                 Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource) }
