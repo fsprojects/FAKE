@@ -86,11 +86,11 @@ let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
 
 #endif
 
-let tryReadPaketDependenciesFromScript cacheDir (scriptPath:string) (scriptText:string) =
+let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scriptText:string) =
   let pRefStr = "paket:"
   let grRefStr = "groupref"
   let groupReferences, paketLines =
-    FSharpParser.findInterestingItems scriptPath scriptText
+    FSharpParser.findInterestingItems defines scriptPath scriptText
     |> Seq.choose (fun item -> 
         match item with
         | FSharpParser.InterestingItem.Reference ref when ref.StartsWith pRefStr ->
@@ -425,14 +425,14 @@ let tryFindGroupFromDepsFile scriptDir =
         | _ -> None
     else None
 
-let prepareFakeScript printDetails script =
+let prepareFakeScript defines printDetails script =
     // read dependencies from the top
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
     let scriptText = File.ReadAllText(script)
     let section =
-        let newSection = tryReadPaketDependenciesFromScript cacheDir script scriptText
+        let newSection = tryReadPaketDependenciesFromScript defines cacheDir script scriptText
         match legacyReadFakeSection scriptText with
         | Some s ->
           Trace.traceFAKE "Legacy header is no longer supported and will be removed soon, please upgrade to '#r \"paket: nuget FakeModule\" in paket syntax (consult the docs)."
@@ -454,8 +454,20 @@ let prepareFakeScript printDetails script =
     | _ ->
         failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 
-let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErrMsg onOutMsg useCache =
-  let provider = prepareFakeScript printDetails scriptPath
+let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
+
+  if printDetails then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
+  let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
+  // TODO: this is duplicated in CoreCache :(
+  let newFsiOptions =
+    { fsiOptionsObj with
+#if !NETSTANDARD1_6
+        Defines = "FAKE" :: fsiOptionsObj.Defines
+#else
+        Defines = "DOTNETCORE" :: "FAKE" :: fsiOptionsObj.Defines
+#endif
+      }
+  let provider = prepareFakeScript newFsiOptions.Defines printDetails scriptPath
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
   let config =

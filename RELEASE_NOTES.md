@@ -5,6 +5,9 @@
   - `Fake.Core.Globbing` moved to `Fake.IO.FileSystem` (includes the namespace change from `Fake.Core` to `Fake.IO`)
 * BREAKING: Refactor Process API according to FAKE5 guidelines
 * BREAKING: Add `RequireQualifiedAccess` to some core modules in order to lead users into the new API-Usage
+* ENHANCEMENT: Refactor `Fake.Core.Target` module and improve summary output and error reporting.
+* BUGFIX: Use "defines" for the `#r "paket:..."`  tokenizer
+* BUGFIX: Fake5 did not properly handle the --fsiargs command line argument.
 
 #### 5.0.0-beta021
 * BUGFIX: Backslashes in paths wheren't escaped in intellisense.fsx - https://github.com/fsprojects/Paket/issues/3093

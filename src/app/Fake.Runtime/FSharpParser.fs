@@ -130,7 +130,7 @@ type AnalyseState =
   | NoAnalysis
   | Reference of string option
 
-let findInterestingItems (scriptFile:string) (scriptText:string) =
+let findInterestingItems defines (scriptFile:string) (scriptText:string) =
   let rec tokenizeLine results (line:string) (tokenizer:FSharpLineTokenizer) state =
       match tokenizer.ScanToken(state) with
       | Some tok, state ->
@@ -167,8 +167,8 @@ let findInterestingItems (scriptFile:string) (scriptText:string) =
         Some (InterestingItem.Reference s), NoAnalysis
       else failwithf "No idea how %A can happen in a string" (tok, text) // None, Reference (Some s)
 
-  let sourceTok = FSharpSourceTokenizer(["FAKE_DEPENDENCIES"], Some scriptFile)            
-  scriptText.Split('\r','\n')
+  let sourceTok = FSharpSourceTokenizer("FAKE_DEPENDENCIES" :: defines, Some scriptFile)            
+  scriptText.Replace("\r\n", "\n").Split('\n')
     |> List.ofSeq
     |> tokenizeLines sourceTok 0L
     |> Seq.scan analyseNextToken (None, NoAnalysis)

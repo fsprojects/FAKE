@@ -35,11 +35,18 @@ type internal RuntimeContextWrapper(t: RuntimeContext) =
 
 #if USE_ASYNC_LOCAL
 open System.Threading
-let private fake_data =
-  let l = new AsyncLocal<System.Collections.Concurrent.ConcurrentDictionary<string, obj>>()
-  l.Value <- new System.Collections.Concurrent.ConcurrentDictionary<string, obj>()
-  l
-let private getDataDict() = fake_data.Value
+let private fake_data = new AsyncLocal<System.Collections.Concurrent.ConcurrentDictionary<string, obj>>()
+
+let private getDataDict() =
+  let value = fake_data.Value
+  if isNull value then
+    let l = new System.Collections.Concurrent.ConcurrentDictionary<string, obj>()
+    fake_data.Value <- l
+    l
+  else
+    value  
+  
+
 #endif
 
 let private setContext (name:string) (o : obj) : unit =

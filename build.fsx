@@ -1,3 +1,32 @@
+#if BOOTSTRAP && DOTNETCORE
+
+#r "paket:
+source nuget/dotnetcore
+source https://api.nuget.org/v3/index.json
+nuget FSharp.Core ~> 4.1.0
+nuget System.AppContext prerelease
+nuget Paket.Core prerelease
+nuget Fake.Api.GitHub prerelease
+nuget Fake.Core.Target prerelease
+nuget Fake.Core.SemVer prerelease
+nuget Fake.IO.FileSystem prerelease
+nuget Fake.IO.Zip prerelease
+nuget Fake.Core.ReleaseNotes prerelease
+nuget Fake.DotNet.AssemblyInfoFile prerelease
+nuget Fake.DotNet.MsBuild prerelease
+nuget Fake.DotNet.Cli prerelease
+nuget Fake.DotNet.NuGet prerelease
+nuget Fake.DotNet.Paket prerelease
+nuget Fake.DotNet.FSFormatting prerelease
+nuget Fake.DotNet.Testing.MSpec prerelease
+nuget Fake.DotNet.Testing.XUnit2 prerelease
+nuget Fake.DotNet.Testing.NUnit prerelease
+nuget Fake.Windows.Chocolatey prerelease
+nuget Fake.Tools.Git prerelease
+nuget Mono.Cecil prerelease
+nuget Octokit //"
+#endif
+
 #if DOTNETCORE
 // We need to use this for now as "regular" Fake breaks when its caching logic cannot find "intellisense.fsx".
 // This is the reason why we need to checkin the "intellisense.fsx" file for now...

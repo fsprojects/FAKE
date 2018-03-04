@@ -2,23 +2,63 @@
 
 open System
 open System.Collections.Generic
-open System.Linq
 open Fake.Core
 
+/// [omit]
+type TargetDescription = string
+
+type TargetResult =
+    { Error : exn option; Time : TimeSpan; Target : Target; WasSkipped : bool }
+
+and TargetContext =
+    { PreviousTargets : TargetResult list }
+    static member Empty = { PreviousTargets = [] }
+    member x.HasError =
+        x.PreviousTargets
+        |> List.exists (fun t -> t.Error.IsSome)
+    member x.TryFindPrevious name =
+        x.PreviousTargets |> List.tryFind (fun t -> t.Target.Name = name)        
+
+and TargetParameter =
+    { TargetInfo : Target
+      Context : TargetContext }
+
+/// [omit]
+and Target =
+    { Name: string;
+      Dependencies: string list;
+      SoftDependencies: string list;
+      Description: TargetDescription option;
+      Function : TargetParameter -> unit}
+
+/// Exception for request errors
+#if !NETSTANDARD1_6
+[<System.Serializable>]
+#endif
+type BuildFailedException =
+    val private info : TargetContext option
+    inherit Exception
+    new (msg:string, inner:exn) = {
+      inherit Exception(msg, inner)
+      info = None }
+    new (info:TargetContext, msg:string, inner:exn) = {
+      inherit Exception(msg, inner)
+      info = Some info }
+#if !NETSTANDARD1_6
+    new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
+      inherit Exception(info, context)
+      info = None
+    }
+#endif
+    member x.Info with get () = x.info
+    member x.Wrap() =
+        match x.info with
+        | Some info ->
+            BuildFailedException(info, x.Message, x:>exn)
+        | None ->
+            BuildFailedException(x.Message, x:>exn)
+
 module Target =
-    /// [omit]
-    type TargetDescription = string
-
-    type TargetParameter =
-        { TargetInfo : Target }
-
-    /// [omit]
-    and Target =
-        { Name: string;
-          Dependencies: string list;
-          SoftDependencies: string list;
-          Description: TargetDescription option;
-          Function : TargetParameter -> unit}
 
     type private DependencyType =
         | Hard = 1
@@ -70,24 +110,12 @@ module Target =
     let internal getBuildFailureTargets =
         getVarWithInit "BuildFailureTargets" (fun () -> new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase))
 
-    /// The executed targets.
-    let internal getExecutedTargets =
-        getVarWithInit "ExecutedTargets" (fun () -> new HashSet<_>(StringComparer.OrdinalIgnoreCase))
-            
-
-    /// The executed target time.
-    /// [omit]
-    let internal getExecutedTargetTimes =
-        getVarWithInit "ExecutedTargetTimes" (fun () -> new List<_>())
-        
 
     /// Resets the state so that a deployment can be invoked multiple times
     /// [omit]
     let internal reset() =
         getTargetDict().Clear()
-        getExecutedTargets().Clear()
         getBuildFailureTargets().Clear()
-        getExecutedTargetTimes().Clear()
         getFinalTargets().Clear()
 
     /// Returns a list with all target names.
@@ -104,10 +132,25 @@ module Target =
                 Trace.traceError  <| sprintf "  - %s" target.Value.Name
             failwithf "Target \"%s\" is not defined." name
     
+    let internal runSimple context target =
+        let name = target.Name
+        let watch = System.Diagnostics.Stopwatch.StartNew()
+        let error =
+            try
+                target.Function { TargetInfo = target; Context = context }
+                None
+            with e -> Some e
+        watch.Stop()
+        { Error = error; Time = watch.Elapsed; Target = target; WasSkipped = false }
+    let internal runSimpleContext target context =
+        let result = runSimple context target
+        { context with PreviousTargets = context.PreviousTargets @ [result] }
+
+
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
     let RunSimple name =
-        let target = Get name
-        target.Function { TargetInfo = target }
+        Get name
+        |> runSimple TargetContext.Empty
 
     /// Returns the DependencyString for the given target.
     let internal dependencyString target =
@@ -216,90 +259,27 @@ module Target =
     /// Creates a Target.
     let Create name body = addTargetWithDependencies [] body name
 
-    /// Represents build errors
-    type BuildError = {
-        Target : string
-        Error : exn }
-
-    //let mutable private errors = []
-    let private errorsVar = "Fake.Core.Targets.errors"
-    let private getErrors, removeErrors, setErrors = 
-        Fake.Core.Context.fakeVar errorsVar
-
-    /// Get Errors - Returns the errors that occured during execution
-    let internal GetErrors() = 
-      match getErrors () with
-      | Some e -> e
-      | None -> []
-
-    /// [omit]
-    let internal targetError targetName (exn:System.Exception) =
-        Trace.closeAllOpenTags()
-        setErrors
-            (match exn with
-                //| BuildException(msg, errs) ->
-                //    let errMsgs = errs |> List.map(fun e -> { Target = targetName; Message = e })
-                //    { Target = targetName; Message = msg } :: (errMsgs @ errors)
-                | _ -> { Target = targetName; Error = exn } :: GetErrors())
-        let error e =
-            match e with
-            //| BuildException(msg, errs) -> msg + (if PrintStackTraceOnError then Environment.NewLine + e.StackTrace.ToString() else "")
-            | _ ->
-                if exn :? Trace.FAKEException then
-                    exn.Message
-                else
-                    exn.ToString()
-
-
-        let msg = sprintf "%s%s" (error exn) (if not <| isNull exn.InnerException then "\n" + (exn.InnerException |> error) else "")
-        Trace.traceError <| sprintf "Running build failed.\nError:\n%s" msg
-
-        //let isFailedTestsException = exn :? UnitTestCommon.FailedTestsException
-        //if not isFailedTestsException  then
-        //    sendTeamCityError <| error exn
-
-    let internal addExecutedTarget target time =
-        let t = getExecutedTargets()
-        let times = getExecutedTargetTimes()
-        lock t (fun () ->
-            t.Add (target) |> ignore
-            times.Add(target,time) |> ignore
-        )
-
     /// Runs all activated final targets (in alphabetically order).
     /// [omit]
-    let internal runFinalTargets() =
+    let internal runFinalTargets context =
         getFinalTargets()
           |> Seq.filter (fun kv -> kv.Value)     // only if activated
           |> Seq.map (fun kv -> kv.Key)
-          |> Seq.iter (fun name ->
-               try
-                   let watch = new System.Diagnostics.Stopwatch()
-                   watch.Start()
-                   Trace.tracefn "Starting FinalTarget: %s" name
-                   let target = Get name
-                   target.Function { TargetInfo = target }
-                   addExecutedTarget name watch.Elapsed
-               with
-               | exn -> targetError name exn)
+          |> Seq.fold (fun context name ->
+               Trace.tracefn "Starting FinalTarget: %s" name
+               let target = Get name
+               runSimpleContext target context) context  
 
     /// Runs all build failure targets.
     /// [omit]
-    let internal runBuildFailureTargets() =
+    let internal runBuildFailureTargets (context) =
         getBuildFailureTargets()
           |> Seq.filter (fun kv -> kv.Value)     // only if activated
           |> Seq.map (fun kv -> kv.Key)
-          |> Seq.iter (fun name ->
-               try
-                   let watch = System.Diagnostics.Stopwatch()
-                   watch.Start()
-                   Trace.tracefn "Starting BuildFailureTarget: %s" name
-                   let target = Get name
-                   target.Function { TargetInfo = target }
-                   addExecutedTarget name watch.Elapsed
-               with
-               | exn -> targetError name exn)
-
+          |> Seq.fold (fun context name ->
+               Trace.tracefn "Starting BuildFailureTarget: %s" name
+               let target = Get name
+               runSimpleContext target context) context
 
     /// List all targets available.
     let ListAvailable() =
@@ -341,8 +321,6 @@ module Target =
         // Now make second pass, adding in soft depencencies if appropriate
         visit getAllDependencies fVisit targetName
 
-
-
     /// <summary>Writes a dependency graph.</summary>
     /// <param name="verbose">Whether to print verbose output or not.</param>
     /// <param name="target">The target for which the dependencies should be printed.</param>
@@ -366,39 +344,42 @@ module Target =
             Trace.log "The resulting target order is:"
             Seq.iter (Trace.logfn " - %s") ordered
 
-    /// Writes a summary of errors reported during build.
-    let internal WriteErrors () =
-        Trace.traceLine()
-        GetErrors()
-        |> Seq.mapi(fun i e -> sprintf "%3d) %s" (i + 1) e.Error.Message)
-        |> Seq.iter Trace.traceError
-
     /// <summary>Writes a build time report.</summary>
     /// <param name="total">The total runtime.</param>
-    let WriteTaskTimeSummary total =
+    let internal WriteTaskTimeSummary total context =
         Trace.traceHeader "Build Time Report"
-        if getExecutedTargets().Count > 0 then
+        let executedTargets = context.PreviousTargets        
+        if executedTargets.Length > 0 then
             let width =
-                getExecutedTargetTimes()
-                  |> Seq.map (fun (a,b) -> a.Length)
+                executedTargets
+                  |> Seq.map (fun (tres) -> tres.Target.Name.Length)
                   |> Seq.max
                   |> max 8
 
-            let aligned (name:string) duration = Trace.tracefn "%s   %O" (name.PadRight width) duration
-            let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> Trace.traceError
+            let alignedString (name:string) (duration) extra =
+                let durString = sprintf "%O" duration
+                if (String.IsNullOrEmpty extra) then
+                    sprintf "%s   %s" (name.PadRight width) durString
+                else sprintf "%s   %s   (%s)" (name.PadRight width) (durString.PadRight "00:00:00.0000824".Length) extra
+            let aligned (name:string) duration extra = alignedString name duration extra |> Trace.trace
+            let alignedWarn (name:string) duration extra = alignedString name duration extra |> Trace.traceFAKE "%s"
+            let alignedError (name:string) duration extra = alignedString name duration extra |> Trace.traceError
 
-            aligned "Target" "Duration"
-            aligned "------" "--------"
-            getExecutedTargetTimes()
-              |> Seq.iter (fun (name,time) ->
-                    let t = Get name
-                    aligned t.Name time)
+            aligned "Target" "Duration" null
+            aligned "------" "--------" null
+            executedTargets
+              |> Seq.iter (fun (tres) ->
+                    let name = tres.Target.Name
+                    let time = tres.Time
+                    match tres.Error with
+                    | None when tres.WasSkipped -> alignedWarn name time "skipped" // Yellow
+                    | None -> aligned name time null
+                    | Some e -> alignedError name time e.Message)
 
-            aligned "Total:" total
-            if List.isEmpty (GetErrors()) then aligned "Status:" "Ok"
+            aligned "Total:" total null
+            if not context.HasError then aligned "Status:" "Ok" null
             else
-                alignedError "Status:" "Failure"
-                WriteErrors()
+                alignedError "Status:" "Failure" null
         else
             Trace.traceError "No target was successfully completed"
 
@@ -439,58 +420,54 @@ module Target =
         // exist. However it yields a "good" execution order in practice.
         result
 
-    /// Runs a single target without its dependencies
-    let internal runSingleTarget (target : Target) =
-        try
-            if List.isEmpty (GetErrors()) then
-                use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
-                let watch = new System.Diagnostics.Stopwatch()
-                watch.Start()
-                target.Function { TargetInfo = target }
-                addExecutedTarget target.Name watch.Elapsed
-        with exn ->
-            targetError target.Name exn
+    /// Runs a single target without its dependencies... only when no error has been detected yet.
+    let internal runSingleTarget (target : Target) (context:TargetContext) =
+        if not context.HasError then
+            use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
+            runSimpleContext target context
+        else
+            { context with PreviousTargets = context.PreviousTargets @ [{ Error = None; Time = TimeSpan.Zero; Target = target; WasSkipped = true }] }
+
 
     /// Runs the given array of targets in parallel using count tasks
-    let internal runTargetsParallel (count : int) (targets : Target[]) =
+    let internal runTargetsParallel (count : int) (targets : Target[]) context =
+        let known =
+            context.PreviousTargets
+            |> Seq.map (fun tres -> tres.Target.Name, tres)
+            |> dict
+        let filterKnown targets =
+            targets
+            |> List.filter (fun tres -> not (known.ContainsKey tres.Target.Name))
         targets
-        |> Array.map (fun t -> async { runSingleTarget t })
+        |> Array.map (fun t -> async { return runSingleTarget t context })
         |> Async.Parallel
-        |> Async.Ignore
         |> Async.RunSynchronously
-        //    .AsParallel()
-        //    .WithDegreeOfParallelism(count)
-        //    .Select()
-        //    .ToArray()
-        |> ignore
-
-    //let mutable CurrentTargetOrder = []
-    
-    let private currentTargetOrderVar = "Fake.Core.Targets.CurrentTargetOrder"
-    let private getCurrentTargetOrder, removeCurrentTargetOrder, setCurrentTargetOrder = 
-        Fake.Core.Context.fakeVar currentTargetOrderVar
+        |> Seq.reduce (fun ctx1 ctx2 ->
+            { PreviousTargets = 
+                context.PreviousTargets @ filterKnown ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets })
 
     /// Runs a target and its dependencies.
     let internal run targetName =
-        if doesTargetMeanListTargets targetName then ListAvailable() else
+        if doesTargetMeanListTargets targetName then ListAvailable(); TargetContext.Empty else
         match getLastDescription() with
         | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
         | None -> ()
 
-        let rec runTargets (targets: Target array) =
+        let rec runTargets (targets: Target array) (context:TargetContext) =
             let lastTarget = targets |> Array.last
-            if List.isEmpty (GetErrors()) && getExecutedTargets().Contains (lastTarget.Name) |> not then
-               let firstTarget = targets |> Array.head
-               if Environment.hasEnvironVar "single-target" then
-                   Trace.traceImportant "Single target mode ==> Skipping dependencies."
-                   runSingleTarget lastTarget
-               else
-                   targets |> Array.iter runSingleTarget
+            //if not context.HasErrors && context.TryFindPrevious(lastTarget.Name).IsNone then
+            if Environment.hasEnvironVar "single-target" then
+                Trace.traceImportant "Single target mode ==> Skipping dependencies."
+                runSingleTarget lastTarget context
+            else
+               targets |> Array.fold (fun context target -> runSingleTarget target context) context
+           // else                
 
         printfn "run %s" targetName
         let watch = new System.Diagnostics.Stopwatch()
         watch.Start()
-        try
+        let context = TargetContext.Empty
+        let context =
             Trace.tracefn "Building project with version: %s" BuildServer.buildVersion
             let parallelJobs = Environment.environVarOrDefault "parallel-jobs" "1" |> int
 
@@ -501,14 +478,9 @@ module Target =
                 // determine a parallel build order
                 let order = determineBuildOrder targetName
 
-                order
-                |> List.map (Array.map (fun t -> t.Name) >> Array.toList)
-                |> setCurrentTargetOrder
-
                 // run every level in parallel
-                for par in order do
-                    runTargetsParallel parallelJobs par
-
+                order
+                    |> Seq.fold (fun context par -> runTargetsParallel parallelJobs par context) context
             else
                 // single threaded build.
                 PrintDependencyGraph false targetName
@@ -518,31 +490,34 @@ module Target =
                 // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
                 let _, ordered = visitDependencies ignore targetName
 
-                ordered
-                |> Seq.map (fun t -> [t]) 
-                |> Seq.toList
-                |> setCurrentTargetOrder
+                runTargets (ordered |> Seq.map Get |> Seq.toArray) context
 
-                runTargets (ordered |> Seq.map Get |> Seq.toArray)
-
-        finally
-            if (GetErrors()) <> [] then
-                runBuildFailureTargets()
-            runFinalTargets()
-            WriteTaskTimeSummary watch.Elapsed
+        let context =        
+            if context.HasError then
+                runBuildFailureTargets context
+            else context            
+        let context = runFinalTargets context
+        WriteTaskTimeSummary watch.Elapsed context
         
-        match GetErrors() with
-        | [] -> ()
-        | errors ->
-            let targets = errors |> Seq.map (fun e -> e.Target) |> Seq.distinct
+        if context.HasError then
+            let errorTargets =
+                context.PreviousTargets
+                |> List.choose (fun tres ->
+                    match tres.Error with
+                    | Some er -> Some (er, tres.Target)
+                    | None -> None)
+            let targets = errorTargets |> Seq.map (fun (er, target) -> target.Name) |> Seq.distinct
             let targetStr = String.Join(", ", targets)
-            AggregateException(
-                (if errors.Length = 1 then
+            let errorMsg =
+                if errorTargets.Length = 1 then
                     sprintf "Target '%s' failed." targetStr
-                 else
-                    sprintf "Targets '%s' failed." targetStr),
-                errors |> Seq.map (fun e -> e.Error))
+                else
+                    sprintf "Targets '%s' failed." targetStr          
+            let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
+            BuildFailedException(context, errorMsg, inner)                
             |> raise
+
+        context
 
     /// Creates a target in case of build failure (not activated).
     let CreateBuildFailure name body =
@@ -564,8 +539,11 @@ module Target =
         let t = Get name // test if target is defined
         getFinalTargets().[name] <- true
 
+    /// Runs a target and its dependencies, used for testing - usually not called in scripts.
+    let RunAndGetContext targetName = run targetName
+
     /// Runs a target and its dependencies
-    let Run targetName = run targetName
+    let Run targetName = run targetName |> ignore
 
     /// Runs the target given by the target parameter or the given default target
     let RunOrDefault defaultTarget = Environment.environVarOrDefault "target" defaultTarget |> Run
