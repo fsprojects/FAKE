@@ -51,6 +51,23 @@ type TraceData =
         | OpenTag _
         | CloseTag _ -> None
 
+module TraceData =
+    let inline mapMessage f (t:TraceData) =
+        match t with
+        | ImportantMessage text -> ImportantMessage (f text) 
+        | ErrorMessage text -> ErrorMessage (f text)
+        | LogMessage (text, d) -> LogMessage (f text, d)
+        | TraceMessage (text, d) -> TraceMessage (f text, d)
+        | StartMessage -> StartMessage
+        | FinishedMessage -> FinishedMessage
+        | OpenTag (t, d) -> OpenTag (t, d)
+        | CloseTag d -> CloseTag d
+
+    let internal repl (oldStr:string) (repl:string) (s:string) =
+        s.Replace(oldStr, repl)
+    let replace oldString replacement (t:TraceData) =
+        mapMessage (repl oldString replacement) t
+
 /// Defines a TraceListener interface
 type ITraceListener = 
     abstract Write : TraceData -> unit
@@ -60,7 +77,6 @@ type ITraceListener =
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap) = 
-    
     let writeText toStdErr color newLine text = 
         let curColor = Console.ForegroundColor
         try
@@ -74,7 +90,7 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
           printer "%s" text
         finally
           if curColor <> color then Console.ForegroundColor <- curColor
-    
+
     interface ITraceListener with
         /// Writes the given message to the Console.
         member this.Write msg = 
@@ -88,6 +104,28 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
             | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
                 writeText false color newLine text
             | FinishedMessage -> ()
+
+type TraceSecret =
+    { Value : string; Replacement : string }
+
+module TraceSecrets =
+
+
+    let private traceSecretsVar = "Fake.Core.Trace.TraceSecrets"
+    let private getTraceSecrets, _, (setTraceSecrets:TraceSecret list -> unit) = 
+        Fake.Core.Context.fakeVar traceSecretsVar
+
+    let getAll () =
+        match getTraceSecrets() with
+        | Some secrets -> secrets
+        | None -> []
+
+    let register replacement secret =
+        setTraceSecrets ({ Value = secret; Replacement = replacement } :: getAll() |> List.filter (fun s -> s.Value <> secret))
+
+    let guardMessage (s:string) =
+        getAll()
+        |> Seq.fold (fun state secret -> TraceData.repl secret.Value secret.Replacement state) s
 
 module CoreTracing =
     /// A default color map which maps TracePriorities to ConsoleColors
@@ -103,16 +141,31 @@ module CoreTracing =
     let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
     /// The default TraceListener for Console.
-    let defaultConsoleTraceListener =
-      ConsoleTraceListener(importantMessagesToStdErr, colorMap)
+    let defaultConsoleTraceListener  =
+      ConsoleTraceListener(importantMessagesToStdErr, colorMap) :> ITraceListener
 
 
     /// A List with all registered listeners
-    let private listeners = new Collections.Generic.List<ITraceListener>()
-    let addListener l = listeners.Add l
+
+    let private traceListenersVar = "Fake.Core.Trace.TraceListeners"
+    let private getTraceListeners, _, (setTraceListenersPrivate:ITraceListener list -> unit) = 
+        Fake.Core.Context.fakeVar traceListenersVar
 
     // register listeners
-    listeners.Add defaultConsoleTraceListener
-    
+    let getListeners () =
+        match getTraceListeners() with
+        | None ->
+            setTraceListenersPrivate [defaultConsoleTraceListener]
+            [defaultConsoleTraceListener]
+        | Some t -> t
+
+    let setTraceListeners l = setTraceListenersPrivate l
+    let addListener l = setTraceListenersPrivate (l :: getListeners())
+
     /// Allows to post messages to all trace listeners
-    let postMessage x = listeners.ForEach(fun listener -> listener.Write x)
+    let postMessage x =
+        let msg =
+            TraceSecrets.getAll()
+            |> Seq.fold (fun state secret -> TraceData.replace secret.Value secret.Replacement state) x
+
+        getListeners() |> Seq.iter (fun listener -> listener.Write msg)

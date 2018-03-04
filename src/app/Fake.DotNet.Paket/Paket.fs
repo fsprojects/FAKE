@@ -145,6 +145,13 @@ let Pack setParams =
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `files` - The files to be pushed to the server.
 let PushFiles setParams files =
+    TraceSecrets.register parameters.ApiKey "<PaketApiKey>"
+    match Environment.environVarOrNone "nugetkey" with
+    | Some k -> TraceSecrets.register k "<PaketApiKey>"
+    | None -> ()
+    match Environment.environVarOrNone "nuget-key" with
+    | Some k -> TraceSecrets.register k "<PaketApiKey>"
+    | None -> ()
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = Seq.toList files
