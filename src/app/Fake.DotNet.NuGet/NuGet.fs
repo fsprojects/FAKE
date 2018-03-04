@@ -356,7 +356,6 @@ let rec private publish parameters =
 
 /// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters =
-
     let args =
         sprintf "push -source %s \"%s\" %s" parameters.PublishUrl (packageFileName parameters) parameters.AccessKey
 
