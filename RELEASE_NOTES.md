@@ -1,5 +1,6 @@
 #### 5.0.0-beta023
-* Experiment with new Process API
+* [CORE-PROCESS] ENHANCEMENT: Experiment with new Process API
+* [CORE-TRACE] ENHANCEMENT: Add `TraceSecrets`-API to prevent FAKE from printing secrets
 
 #### 5.0.0-beta022
 * FAKE5: New module "ChangeWatcher"
