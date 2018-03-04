@@ -161,13 +161,6 @@ let GetPackageVersion deploymentsDir package =
     with
     | exn -> new Exception("Could not detect package version for " + package, exn) |> raise
 
-let private replaceAccessKeys parameters (text:string) =
-    let replaceKey key (str:string) =
-        if String.isNullOrEmpty key then str
-        else str.Replace(key, "PRIVATEKEY")
-
-    text |> (replaceKey parameters.AccessKey >> replaceKey parameters.SymbolAccessKey)
-
 let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let specFile = parameters.WorkingDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
                     |> Path.getFullName
@@ -286,6 +279,8 @@ let private propertiesParam = function
 
 /// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
+    TraceSecrets.register parameters.AccessKey "<NuGetKey>"
+    TraceSecrets.register parameters.SymbolAccessKey "<NuGetSymbolKey>"
     let nuspecFile = Path.getFullName nuspecFile
     let properties = propertiesParam parameters.Properties
     let basePath = parameters.BasePath |> Option.map (sprintf "-BasePath \"%s\"") |> Option.defaultValue ""
@@ -326,6 +321,8 @@ let private pack parameters nuspecFile =
 
 /// push package (and try again if something fails)
 let rec private publish parameters =
+    TraceSecrets.register parameters.AccessKey "<NuGetKey>"
+    TraceSecrets.register parameters.SymbolAccessKey "<NuGetSymbolKey>"
     // Newer NuGet requires source to be always specified, so if PublishUrl is empty,
     // ignore symbol source - the produced source is broken anyway.
     let normalize str = if String.isNullOrEmpty str then None else Some str
@@ -337,7 +334,7 @@ let rec private publish parameters =
 
     let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters |> FullName)
                                            parameters.AccessKey source
-    Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKeys parameters args)
+    Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath args
                                                             (FullName parameters.WorkingDir) parameters.PublishTrials
     try
         let result =
@@ -350,17 +347,19 @@ let rec private publish parameters =
                     WorkingDirectory = FullName parameters.WorkingDir
                     Arguments = args }) >> Process.withFramework) parameters.TimeOut
             finally Process.setEnableProcessTracing tracing
-        if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
+        if result <> 0 then
+            sprintf "Error during NuGet push. %s %s" parameters.ToolPath args
+            |> TraceSecrets.guardMessage
+            |> failwith
     with exn when parameters.PublishTrials > 0 ->
         publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
 
 /// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters =
-
     let args =
         sprintf "push -source %s \"%s\" %s" parameters.PublishUrl (packageFileName parameters) parameters.AccessKey
 
-    Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKeys parameters args)
+    Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath args
         (FullName parameters.WorkingDir) parameters.PublishTrials
     try
         let result =
@@ -373,7 +372,10 @@ let rec private publishSymbols parameters =
                         WorkingDirectory = FullName parameters.WorkingDir
                         Arguments = args }) >> Process.withFramework) parameters.TimeOut
             finally Process.setEnableProcessTracing tracing
-        if result <> 0 then failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args
+        if result <> 0 then
+            sprintf "Error during NuGet symbol push. %s %s" parameters.ToolPath args
+            |> TraceSecrets.guardMessage
+            |> failwith
     with exn when parameters.PublishTrials > 0->
         publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
 
@@ -391,7 +393,7 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
-        |> replaceAccessKeys parameters
+        |> TraceSecrets.guardMessage
         |> failwith
 
 /// Creates a new NuGet package based on the given .nuspec or project file.
@@ -412,7 +414,7 @@ let NuGetPack setParams nuspecOrProjectFile =
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
-        |> replaceAccessKeys parameters
+        |> TraceSecrets.guardMessage
         |> failwith
 
 /// Publishes a NuGet package to the nuget server.
@@ -426,7 +428,7 @@ let NuGetPublish setParams =
         publish parameters
     with exn ->
         if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message
-        |> replaceAccessKeys parameters
+        |> TraceSecrets.guardMessage
         |> failwith
 
 /// Creates a new NuGet package, and optionally publishes it.
@@ -451,7 +453,7 @@ let NuGet setParams nuspecOrProjectFile =
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
-        |> replaceAccessKeys parameters
+        |> TraceSecrets.guardMessage
         |> failwith
 
 /// NuSpec metadata type

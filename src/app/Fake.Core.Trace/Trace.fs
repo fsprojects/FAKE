@@ -67,7 +67,7 @@ let exceptionAndInnersToString (ex:Exception) =
             bprintf sb "%sType: %s" nl (e.GetType().FullName)
             // Loop through the public properties of the exception object
             // and record their values.
-            e.GetType().GetProperties()
+            e.GetType().GetTypeInfo().GetProperties()
             |> Array.iter (fun p ->
                 // Do not log information for the InnerException or StackTrace.
                 // This information is captured later in the process.
@@ -203,8 +203,6 @@ let traceTask name description =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun () -> traceEndTaskUnsafe name)
 
-let console = new ConsoleTraceListener(false, CoreTracing.colorMap) :> ITraceListener
-
 open System.Diagnostics
 #if DOTNETCORE
 type EventLogEntryType =
@@ -214,13 +212,14 @@ type EventLogEntryType =
   | Other
 #endif
 /// Traces the message to the console
-let logToConsole (msg, eventLogEntry : EventLogEntryType) = 
+let logToConsole (msg, eventLogEntry : EventLogEntryType) =
+    let safeMessage = TraceSecrets.guardMessage msg
     match eventLogEntry with
-    | EventLogEntryType.Error -> ErrorMessage msg
-    | EventLogEntryType.Information -> TraceMessage(msg, true)
-    | EventLogEntryType.Warning -> ImportantMessage msg
-    | _ -> LogMessage(msg, true)
-    |> console.Write
+    | EventLogEntryType.Error -> ErrorMessage safeMessage
+    | EventLogEntryType.Information -> TraceMessage(safeMessage, true)
+    | EventLogEntryType.Warning -> ImportantMessage safeMessage
+    | _ -> LogMessage(safeMessage, true)
+    |> CoreTracing.defaultConsoleTraceListener.Write
 
 /// Logs the given files with the message.
 let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)

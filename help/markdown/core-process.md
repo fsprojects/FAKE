@@ -11,7 +11,7 @@
 let fakeToolPath = "known/path/to/fake.exe"
 let directFakeInPath command workingDir target =
     let result =
-        Process.ExecProcessAndReturnMessages (fun (info:Process.ProcStartInfo) ->
+        Process.ExecAndReturnMessages (fun (info:ProcStartInfo) ->
           { info with
                 FileName = fakeToolPath
                 WorkingDirectory = workingDir

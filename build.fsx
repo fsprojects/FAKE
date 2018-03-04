@@ -57,11 +57,7 @@ open Fake.Core
 open Fake.Tools
 open Fake.IO
 open Fake.IO.FileSystemOperators
-#if BOOTSTRAP
 open Fake.IO.Globbing.Operators
-#else
-open Fake.Core.Globbing.Operators
-#endif
 open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
@@ -105,6 +101,7 @@ let buildMergedDir = buildDir </> "merged"
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
+let legacyDir = srcDir</>"legacy"
 
 let additionalFiles = [
     "License.txt"
@@ -127,7 +124,7 @@ let cleanForTests () =
             if Environment.isUnix
             then fileName, args else "cmd", ("/C " + fileName + " " + args)
         let ok =
-            Process.execProcess (fun info ->
+            Process.exec (fun info ->
             { info with
                 FileName = fileName
                 WorkingDirectory = workingDir
@@ -170,7 +167,7 @@ Target.Create "Clean" (fun _ ->
 Target.Create "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
     // for framework in ["net40"; "net45"] do
-    for framework in ["netstandard1.6"; "net45"] do
+    for framework in ["netstandard2.0"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
       File.delete targetFile
@@ -257,34 +254,34 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover" ]
 
 let assemblyInfos =
-  [ "./src/app/FAKE/AssemblyInfo.fs",
+  [ legacyDir </> "FAKE/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Command line tool"
         AssemblyInfo.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
-    "./src/app/Fake.Deploy/AssemblyInfo.fs",
+    legacyDir </> "Fake.Deploy/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Deploy tool"
         AssemblyInfo.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"] @ common
-    "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.fs",
+    legacyDir </> "deploy.web/Fake.Deploy.Web/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Deploy Web"
         AssemblyInfo.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-    "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs",
+    legacyDir </> "Fake.Deploy.Lib/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Deploy Lib"
         AssemblyInfo.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
-    "./src/app/FakeLib/AssemblyInfo.fs",
+    legacyDir </> "FakeLib/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Lib"
         AssemblyInfo.InternalsVisibleTo "Test.FAKECore"
         AssemblyInfo.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
-    "./src/app/Fake.SQL/AssemblyInfo.fs",
+    legacyDir </> "Fake.SQL/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make SQL Lib"
         AssemblyInfo.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"] @ common
-    "./src/app/Fake.Experimental/AssemblyInfo.fs",
+    legacyDir </> "Fake.Experimental/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make Experimental Lib"
         AssemblyInfo.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
-    "./src/app/Fake.FluentMigrator/AssemblyInfo.fs",
+    legacyDir </> "Fake.FluentMigrator/AssemblyInfo.fs",
       [ AssemblyInfo.Title "FAKE - F# Make FluentMigrator Lib"
         AssemblyInfo.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ] @
    (dotnetAssemblyInfos
     |> List.map (fun (project, description) ->
-        sprintf "./src/app/%s/AssemblyInfo.fs" project, [AssemblyInfo.Title (sprintf "FAKE - F# Make %s" description) ] @ common))
+        appDir </> sprintf "%s/AssemblyInfo.fs" project, [AssemblyInfo.Title (sprintf "FAKE - F# Make %s" description) ] @ common))
 
 Target.Create "SetAssemblyInfo" (fun _ ->
     for assemblyFile, attributes in assemblyInfos do
@@ -296,7 +293,7 @@ Target.Create "SetAssemblyInfo" (fun _ ->
 )
 
 Target.Create "DownloadPaket" (fun _ ->
-    if 0 <> Process.ExecProcess (fun info ->
+    if 0 <> Process.Exec (fun info ->
             { info with
                 FileName = ".paket/paket.exe"
                 Arguments = "--version" }
@@ -313,7 +310,7 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
 )
 
 Target.Create "BuildSolution_" (fun _ ->
-    MsBuild.RunWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
+    MsBuild.RunWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
     |> Trace.Log "AppBuild-Output: "
 )
 
@@ -439,14 +436,14 @@ Target.Create "BootstrapTest" (fun _ ->
             if clearCache then clear ()
             if Environment.isUnix then
                 let result =
-                    Process.ExecProcess (fun info ->
+                    Process.Exec (fun info ->
                     { info with
                         FileName = "chmod"
                         WorkingDirectory = "."
                         Arguments = "+x build/FAKE.exe" }
                     ) span
                 if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
             { info with
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
@@ -495,7 +492,7 @@ Target.Create "BootstrapTestDotNetCore" (fun _ ->
             let fileName =
                 if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
                 else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
                 { info with
                     FileName = fileName
                     WorkingDirectory = "."
@@ -551,7 +548,7 @@ Target.Create "ILRepack" (fun _ ->
         let targetFile = buildMergedDir </> filename
 
         let result =
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
             { info with
                 FileName = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
                 Arguments = sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack }
@@ -574,17 +571,10 @@ Target.Create "CreateNuGet" (fun _ ->
         files
         |> Seq.iter (fun file ->
             let args =
-#if BOOTSTRAP
                 { Program = "lib" @@ "corflags.exe"
                   WorkingDir = Path.GetDirectoryName file
                   CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
                   Args = [] }
-#else
-                { Process.Program = "lib" @@ "corflags.exe"
-                  Process.WorkingDir = Path.GetDirectoryName file
-                  Process.CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
-                  Process.Args = [] }
-#endif
             printfn "%A" args
             Process.shellExec args |> ignore)
 
@@ -670,17 +660,7 @@ Target.Create "InstallDotNetCore" (fun _ ->
 )
 
 let netCoreProjs =
-    !! "src/app/Fake.Core.*/*.fsproj"
-    ++ "src/app/dotnet-fake/*.fsproj"
-    ++ "src/app/Fake.Api.*/*.fsproj"
-    ++ "src/app/Fake.DotNet.*/*.fsproj"
-    ++ "src/app/Fake.Windows.*/*.fsproj"
-    ++ "src/app/Fake.IO.*/*.fsproj"
-    ++ "src/app/Fake.Tools.*/*.fsproj"
-    ++ "src/app/Fake.Net.*/*.fsproj"
-    ++ "src/app/Fake.netcore/*.fsproj"
-    ++ "src/app/Fake.Testing.*/*.fsproj"
-    ++ "src/app/Fake.Runtime/*.fsproj"
+    !! (appDir </> "*/*.fsproj")
 
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
@@ -711,7 +691,7 @@ Target.Create "DotNetPackage_" (fun _ ->
         { c with
             Configuration = Cli.Release
             OutputPath = Some nugetDir
-        }) "src/Fake-netcore.sln"
+        }) "Fake.sln"
 
     let info = Cli.DotNetInfo id
 
@@ -720,7 +700,7 @@ Target.Create "DotNetPackage_" (fun _ ->
     |> List.map Some
     |> (fun rs -> None :: rs)
     |> Seq.iter (fun runtime ->
-        !! "src/app/Fake.netcore/Fake.netcore.fsproj"
+        !! (appDir </> "Fake.netcore/Fake.netcore.fsproj")
         |> Seq.iter(fun proj ->
             let projName = Path.GetFileName(Path.GetDirectoryName proj)
             let runtimeName, runtime =
@@ -747,7 +727,7 @@ Target.Create "DotNetPackage_" (fun _ ->
     )
 
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
-    let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
+    let netcoreFsproj = appDir </> "Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
     Cli.DotNetPublish (fun c ->
         { c with
@@ -805,11 +785,7 @@ Target.Create "CheckReleaseSecrets" (fun _ ->
 )
 let executeFPM args =
     printfn "%s %s" "fpm" args
-#if BOOTSTRAP
     Shell.Exec("fpm", args=args, dir="bin")
-#else
-    Process.Shell.Exec("fpm", args=args, dir="bin")
-#endif
 
 type SourceType =
     | Dir of source:string * target:string
@@ -885,7 +861,7 @@ let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nug
 let rec nugetPush tries nugetpackage =
     try
         if not <| System.String.IsNullOrEmpty apikey then
-            Process.ExecProcess (fun info ->
+            Process.Exec (fun info ->
             { info with
                 FileName = nuget_exe
                 Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource) }
@@ -900,7 +876,7 @@ let rec nugetPush tries nugetpackage =
 Target.Create "DotNetCorePushNuGet" (fun _ ->
     // dotnet pack
     netCoreProjs
-    -- "src/app/Fake.netcore/*.fsproj"
+    -- (appDir </> "Fake.netcore/*.fsproj")
     |> Seq.iter(fun proj ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
         !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
@@ -1000,6 +976,7 @@ Target.Create "Release" ignore
 Target.Create "BuildSolution" ignore
 Target.Create "DotNetPackage" ignore
 Target.Create "AfterBuild" ignore
+Target.Create "FullDotNetCore" ignore
 
 open Fake.Core.TargetOperators
 
@@ -1009,21 +986,27 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
-    ==> "InstallDotNetCore"
-    ==> "DownloadPaket"
-    ==> "SetAssemblyInfo"
+    ?=> "InstallDotNetCore"
+    ?=> "DownloadPaket"
+    ?=> "SetAssemblyInfo"
     ==> "DotNetPackage_"
     ==> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
-
+"StartDnc"
+    ==> "DotNetPackage_"
+"InstallDotNetCore"
+    ==> "DotNetPackage_"
+"DownloadPaket"
+    ==> "DotNetPackage_"
 // Full framework build
 "Clean"
     ?=> "RenameFSharpCompilerService"
-    ==> "SetAssemblyInfo"
+    ?=> "SetAssemblyInfo"
     ==> "BuildSolution_"
     ==> "UnskipAndRevertAssemblyInfo"
     ==> "BuildSolution"
-
+"RenameFSharpCompilerService"
+    ==> "BuildSolution_"
 // AfterBuild -> Both Builds completed
 "BuildSolution"
     ==> "AfterBuild"
@@ -1050,6 +1033,7 @@ open Fake.Core.TargetOperators
     ==> "DotNetCoreCreateZipPackages"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     =?> ("BootstrapTestDotNetCore",not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
