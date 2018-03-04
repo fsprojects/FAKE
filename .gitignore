@@ -81,3 +81,6 @@ Samples/WebNpmGrunt/node_modules
 project.lock.json
 
 #src/app/*/any
+
+testbuild.fsx
+testbuild.fsx.lock
