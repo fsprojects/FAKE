@@ -48,268 +48,268 @@
       <Link>paket-files/YaafFSharpScripting.fs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="..\Fake.Core.Context\Context.fs">
+    <Compile Include="..\..\app\Fake.Core.Context\Context.fs">
       <Link>Fake.Core.Context/Context.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\LegacyApiHelper.fs">
+    <Compile Include="..\..\app\Fake.Runtime\LegacyApiHelper.fs">
       <Link>Fake.Runtime/LegacyApiHelper.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\Environment.fs">
+    <Compile Include="..\..\app\Fake.Runtime\Environment.fs">
       <Link>Fake.Runtime/Environment.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\Path.fs">
+    <Compile Include="..\..\app\Fake.Runtime\Path.fs">
       <Link>Fake.Runtime/Path.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\String.fs">
+    <Compile Include="..\..\app\Fake.Runtime\String.fs">
       <Link>Fake.Runtime/String.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\Trace.fs">
+    <Compile Include="..\..\app\Fake.Runtime\Trace.fs">
       <Link>Fake.Runtime/Trace.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\Runners.fs">
+    <Compile Include="..\..\app\Fake.Runtime\Runners.fs">
       <Link>Fake.Runtime\Runners.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\CompileRunner.fs">
+    <Compile Include="..\..\app\Fake.Runtime\CompileRunner.fs">
       <Link>Fake.Runtime\CompileRunner.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\ScriptRunner.fs">
+    <Compile Include="..\..\app\Fake.Runtime\ScriptRunner.fs">
       <Link>Fake.Runtime/ScriptRunner.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\FSharpParser.fs">
+    <Compile Include="..\..\app\Fake.Runtime\FSharpParser.fs">
       <Link>Fake.Runtime/FSharpParser.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\HashGeneration.fs">
+    <Compile Include="..\..\app\Fake.Runtime\HashGeneration.fs">
       <Link>Fake.Runtime/HashGeneration.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\CoreCache.fs">
+    <Compile Include="..\..\app\Fake.Runtime\CoreCache.fs">
       <Link>Fake.Runtime/CoreCache.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Runtime\FakeRuntime.fs">
+    <Compile Include="..\..\app\Fake.Runtime\FakeRuntime.fs">
       <Link>Fake.Runtime/FakeRuntime.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Environment\Environment.fs">
+    <Compile Include="..\..\app\Fake.Core.Environment\Environment.fs">
       <Link>Fake.Core.Environment/Environment.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Environment\BuildServer.fs">
+    <Compile Include="..\..\app\Fake.Core.Environment\BuildServer.fs">
       <Link>Fake.Core.Environment/BuildServer.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.String\String.fs">
+    <Compile Include="..\..\app\Fake.Core.String\String.fs">
       <Link>Fake.Core.String/String.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.String\StringBuilder.fs">
+    <Compile Include="..\..\app\Fake.Core.String\StringBuilder.fs">
       <Link>Fake.Core.String/StringBuilder.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Trace\TraceListener.fs">
+    <Compile Include="..\..\app\Fake.Core.Trace\TraceListener.fs">
       <Link>Fake.Core.Trace/TraceListener.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Trace\Trace.fs">
+    <Compile Include="..\..\app\Fake.Core.Trace\Trace.fs">
       <Link>Fake.Core.Trace/Trace.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Target\Target.fs">
+    <Compile Include="..\..\app\Fake.Core.Target\Target.fs">
       <Link>Fake.Core.Target/Target.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Target\TargetOperators.fs">
+    <Compile Include="..\..\app\Fake.Core.Target\TargetOperators.fs">
       <Link>Fake.Core.Target/TargetOperators.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Globbing.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\Globbing.fs">
       <Link>Fake.IO.FileSystem/Globbing.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\GlobbingFileSystem.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\GlobbingFileSystem.fs">
       <Link>Fake.IO.FileSystem/GlobbingFileSystem.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Path.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\Path.fs">
       <Link>Fake.IO.FileSystem/Path.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\FileInfo.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\FileInfo.fs">
       <Link>Fake.IO.FileSystem/FileInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\FileSystemOperators.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\FileSystemOperators.fs">
       <Link>Fake.IO.FileSystem/Operators.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\DirectoryInfo.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\DirectoryInfo.fs">
       <Link>Fake.IO.FileSystem/DirectoryInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\File.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\File.fs">
       <Link>Fake.IO.FileSystem/File.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Directory.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\Directory.fs">
       <Link>Fake.IO.FileSystem/Directory.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\FileSystemInfo.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\FileSystemInfo.fs">
       <Link>Fake.IO.FileSystem/FileSystemInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Templates.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\Templates.fs">
       <Link>Fake.IO.FileSystem/Templates.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.FileSystem\Shell.fs">
+    <Compile Include="..\..\app\Fake.IO.FileSystem\Shell.fs">
       <Link>Fake.IO.FileSystem/Shell.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
+    <Compile Include="..\..\app\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
       <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.SemVer\SemVer.fs">
+    <Compile Include="..\..\app\Fake.Core.SemVer\SemVer.fs">
       <Link>Fake.Core.SemVer/SemVer.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.ReleaseNotes\ReleaseNotes.fs">
+    <Compile Include="..\..\app\Fake.Core.ReleaseNotes\ReleaseNotes.fs">
       <Link>Fake.Core.ReleaseNotes/ReleaseNotes.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.IO.Zip\Zip.fs">
+    <Compile Include="..\..\app\Fake.IO.Zip\Zip.fs">
       <Link>Fake.IO.Zip/Zip.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Process\GuardedAwaitObservable.fs">
+    <Compile Include="..\..\app\Fake.Core.Process\GuardedAwaitObservable.fs">
       <Link>Fake.Core.Process/GuardedAwaitObservable.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Process\Process.fs">
+    <Compile Include="..\..\app\Fake.Core.Process\Process.fs">
       <Link>Fake.Core.Process/Process.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Process\Mono.fs">
+    <Compile Include="..\..\app\Fake.Core.Process\Mono.fs">
       <Link>Fake.Core.Process/Mono.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.MsBuild\MsBuildLogger.fs">
+    <Compile Include="..\..\app\Fake.DotNet.MsBuild\MsBuildLogger.fs">
       <Link>Fake.DotNet.MsBuild/MsBuildLogger.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.MsBuild\MsBuild.fs">
+    <Compile Include="..\..\app\Fake.DotNet.MsBuild\MsBuild.fs">
       <Link>Fake.DotNet.MsBuild/MsBuild.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.ServiceControl\ServiceControl.fs">
+    <Compile Include="..\..\app\Fake.Tools.ServiceControl\ServiceControl.fs">
       <Link>Fake.Tools.ServiceControl/ServiceControl.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tracing.NAntXml\NAntXmlTraceListener.fs">
+    <Compile Include="..\..\app\Fake.Tracing.NAntXml\NAntXmlTraceListener.fs">
       <Link>Fake.Tracing.NAntXml/NAntXmlTraceListener.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Cli\DotNet.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Cli\DotNet.fs">
       <Link>Fake.DotNet.Cli/DotNet.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Testing.Common\TestingCommon.fs">
+    <Compile Include="..\..\app\Fake.Testing.Common\TestingCommon.fs">
       <Link>Fake.Testing.Common/TestingCommon.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.MSpec\MSpec.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.MSpec\MSpec.fs">
       <Link>Fake.DotNet.Testing.MSpec/MSpec.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.XUnit2\XUnit2.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.XUnit2\XUnit2.fs">
       <Link>Fake.DotNet.Testing.XUnit2/XUnit2.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.NUnit\Xml.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.NUnit\Xml.fs">
       <Link>Fake.DotNet.Testing.NUnit/Xml.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.NUnit\Common.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.NUnit\Common.fs">
       <Link>Fake.DotNet.Testing.NUnit/Common.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.NUnit\Sequential.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.NUnit\Sequential.fs">
       <Link>Fake.DotNet.Testing.NUnit/Sequential.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.NUnit\Parallel.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.NUnit\Parallel.fs">
       <Link>Fake.DotNet.Testing.NUnit/Parallel.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.NUnit\NUnit3.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.NUnit\NUnit3.fs">
       <Link>Fake.DotNet.Testing.NUnit/NUnit3.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.MSTest\MSTest.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.MSTest\MSTest.fs">
       <Link>Fake.DotNet.Testing.MSTest/MSTest.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Xml\Xml.fs">
+    <Compile Include="..\..\app\Fake.Core.Xml\Xml.fs">
       <Link>Fake.Core.Xml/Xml.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Core.Tasks\TaskRunner.fs">
+    <Compile Include="..\..\app\Fake.Core.Tasks\TaskRunner.fs">
       <Link>Fake.Core.Tasks/TaskRunner.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.NuGet\Restore.fs">
+    <Compile Include="..\..\app\Fake.DotNet.NuGet\Restore.fs">
       <Link>Fake.DotNet.NuGet/Restore.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.NuGet\NuGet.fs">
+    <Compile Include="..\..\app\Fake.DotNet.NuGet\NuGet.fs">
       <Link>Fake.DotNet.NuGet/NuGet.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.NuGet\Update.fs">
+    <Compile Include="..\..\app\Fake.DotNet.NuGet\Update.fs">
       <Link>Fake.DotNet.NuGet/Update.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.NuGet\Install.fs">
+    <Compile Include="..\..\app\Fake.DotNet.NuGet\Install.fs">
       <Link>Fake.DotNet.NuGet/Install.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.NuGet\NuGetVersion.fs">
+    <Compile Include="..\..\app\Fake.DotNet.NuGet\NuGetVersion.fs">
       <Link>Fake.DotNet.NuGet/NuGetVersion.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Windows.Chocolatey\Chocolatey.fs">
+    <Compile Include="..\..\app\Fake.Windows.Chocolatey\Chocolatey.fs">
       <Link>Fake.Windows.Chocolatey/Chocolatey.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\CommandHelper.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\CommandHelper.fs">
       <Link>Fake.Tools.Git/CommandHelper.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Sha1.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Sha1.fs">
       <Link>Fake.Tools.Git/Sha1.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Repository.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Repository.fs">
       <Link>Fake.Tools.Git/Repository.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Submodule.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Submodule.fs">
       <Link>Fake.Tools.Git/Submodule.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Branches.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Branches.fs">
       <Link>Fake.Tools.Git/Branches.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Reset.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Reset.fs">
       <Link>Fake.Tools.Git/Reset.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Merge.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Merge.fs">
       <Link>Fake.Tools.Git/Merge.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Stash.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Stash.fs">
       <Link>Fake.Tools.Git/Stash.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\SanityChecks.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\SanityChecks.fs">
       <Link>Fake.Tools.Git/SanityChecks.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Information.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Information.fs">
       <Link>Fake.Tools.Git/Information.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\FileStatus.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\FileStatus.fs">
       <Link>Fake.Tools.Git/FileStatus.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Rebase.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Rebase.fs">
       <Link>Fake.Tools.Git/Rebase.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\CommitMessage.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\CommitMessage.fs">
       <Link>Fake.Tools.Git/CommitMessage.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Staging.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Staging.fs">
       <Link>Fake.Tools.Git/Staging.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Tools.Git\Commit.fs">
+    <Compile Include="..\..\app\Fake.Tools.Git\Commit.fs">
       <Link>Fake.Tools.Git/Commit.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.FSFormatting\FSFormatting.fs">
+    <Compile Include="..\..\app\Fake.DotNet.FSFormatting\FSFormatting.fs">
       <Link>Fake.DotNet.FSFormatting/FSFormatting.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Paket\Paket.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Paket\Paket.fs">
       <Link>Fake.DotNet.Paket/Paket.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Paket\PaketTemplate.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Paket\PaketTemplate.fs">
       <Link>Fake.DotNet.Paket/PaketTemplate.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Testing.SonarQube\SonarQube.fs">
+    <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
       <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Testing.OpenCover\OpenCover.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Testing.OpenCover\OpenCover.fs">
       <Link>Fake.DotNet.Testing.OpenCover/OpenCover.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Api.GitHub\GitHub.fs">
+    <Compile Include="..\..\app\Fake.Api.GitHub\GitHub.fs">
       <Link>Fake.Api.GitHub/GitHub.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Api.Slack\SlackNotification.fs">
+    <Compile Include="..\..\app\Fake.Api.Slack\SlackNotification.fs">
       <Link>Fake.Api.Slack/SlackNotification.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.DotNet.Xamarin\Xamarin.fs">
+    <Compile Include="..\..\app\Fake.DotNet.Xamarin\Xamarin.fs">
       <Link>Fake.DotNet.Xamarin/Xamarin.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Net.Http\Async.fs">
+    <Compile Include="..\..\app\Fake.Net.Http\Async.fs">
       <Link>Fake.Net.Http/Async.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Net.Http\Result.fs">
+    <Compile Include="..\..\app\Fake.Net.Http\Result.fs">
       <Link>Fake.Net.Http/Result.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Net.Http\List.fs">
+    <Compile Include="..\..\app\Fake.Net.Http\List.fs">
       <Link>Fake.Net.Http/List.fs</Link>
     </Compile>
-    <Compile Include="..\Fake.Net.Http\HttpLoader.fs">
+    <Compile Include="..\..\app\Fake.Net.Http\HttpLoader.fs">
       <Link>Fake.Net.Http/HttpLoader.fs</Link>
     </Compile>
     <Compile Include="UserInputHelper.fs" />

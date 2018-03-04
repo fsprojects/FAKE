@@ -50,7 +50,7 @@
     <Compile Include="GitInformationSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
+    <ProjectReference Include="..\..\legacy\FakeLib\FakeLib.fsproj">
       <Project>{13D56521-772A-41DB-9772-1DA1A4AA8E3A}</Project>
       <Name>FakeLib</Name>
     </ProjectReference>

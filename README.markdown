@@ -13,10 +13,21 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 
 # Build the project
 
-* Mono: Run *build.sh*  [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
-* Windows: Run *build.cmd* [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake)
-  Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
-Otherwise the test-suite will fail (However, the build should work)
+* Quick: Download and install the [Dotnet SDK](https://www.microsoft.com/net/learn/get-started) and run `dotnet build build.proj`
+* Fake5: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
+
+[![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake)
+
+> Note: The build of the "legacy" parts (FAKE 4) will most likely fail
+>
+> - when you are on linux and do not have mono installed
+> - when you are on windows and do not have Visual Studio installed
+>
+> Either build only the `netcore` parts via `fake build FullDotNetCore` or install the requirements accoding to the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
+
+Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
+Otherwise the test-suite will fail (However, the compilation should work)
 
 [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/pr)](http://www.issuestats.com/github/fsharp/FAKE) [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/issue)](http://www.issuestats.com/github/fsharp/FAKE)
 

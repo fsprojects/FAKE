@@ -55,17 +55,17 @@
     <Compile Include="WixHelperTests.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
+    <ProjectReference Include="..\..\legacy\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
+    <ProjectReference Include="..\..\legacy\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
       <Name>Fake.Deploy.Web.Abstractions</Name>
       <Project>{b58d394b-deac-4c34-8c2b-cc422d408ae5}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.fsproj">
+    <ProjectReference Include="..\..\legacy\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.fsproj">
       <Name>Fake.Deploy.Web</Name>
       <Project>{329aecd2-ae80-46e8-b486-7d7ba9804b0b}</Project>
       <Private>True</Private>

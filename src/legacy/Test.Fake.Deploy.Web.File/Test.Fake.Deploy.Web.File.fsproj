@@ -44,12 +44,12 @@
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
+    <ProjectReference Include="..\..\legacy\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
       <Name>Fake.Deploy.Web.Abstractions</Name>
       <Project>{b58d394b-deac-4c34-8c2b-cc422d408ae5}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.File\Fake.Deploy.Web.File.fsproj">
+    <ProjectReference Include="..\..\legacy\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.File\Fake.Deploy.Web.File.fsproj">
       <Name>Fake.Deploy.Web.File</Name>
       <Project>{37ff020b-22bd-45dc-9542-a2685ed15553}</Project>
       <Private>True</Private>

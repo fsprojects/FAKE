@@ -24,36 +24,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelpInput", "HelpInput", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy.Web", "Deploy.Web", "{B0DDEAC8-E18F-4DCA-A089-461267507EF8}"
 	ProjectSection(SolutionItems) = preProject
-		src\deploy.web\README.markdown = src\deploy.web\README.markdown
+		legacy\deploy.web\README.markdown = legacy\deploy.web\README.markdown
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{909C4837-F32A-4CAE-952E-7DCB8AAF3C28}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FakeLib", "src\app\FakeLib\FakeLib.fsproj", "{13D56521-772A-41DB-9772-1DA1A4AA8E3A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FakeLib", "legacy\FakeLib\FakeLib.fsproj", "{13D56521-772A-41DB-9772-1DA1A4AA8E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FAKECore", "src\test\Test.FAKECore\Test.FAKECore.csproj", "{98944472-E50A-4771-969D-4C0349D085A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FAKECore", "legacy\Test.FAKECore\Test.FAKECore.csproj", "{98944472-E50A-4771-969D-4C0349D085A4}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "legacy\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.RavenDb", "src\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.RavenDb\Fake.Deploy.Web.RavenDb.fsproj", "{74688080-3591-4A82-AEB7-E94FB7A5C41A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.RavenDb", "legacy\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.RavenDb\Fake.Deploy.Web.RavenDb.fsproj", "{74688080-3591-4A82-AEB7-E94FB7A5C41A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.Abstractions", "src\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj", "{B58D394B-DEAC-4C34-8C2B-CC422D408AE5}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.Abstractions", "legacy\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj", "{B58D394B-DEAC-4C34-8C2B-CC422D408AE5}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.File", "src\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.File\Fake.Deploy.Web.File.fsproj", "{37FF020B-22BD-45DC-9542-A2685ED15553}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.File", "legacy\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.File\Fake.Deploy.Web.File.fsproj", "{37FF020B-22BD-45DC-9542-A2685ED15553}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Fake.Deploy.Web.File", "src\test\Test.Fake.Deploy.Web.File\Test.Fake.Deploy.Web.File.fsproj", "{0FB601C0-4E5B-4FD7-820D-A0B33F1AEB8A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Fake.Deploy.Web.File", "legacy\Test.Fake.Deploy.Web.File\Test.Fake.Deploy.Web.File.fsproj", "{0FB601C0-4E5B-4FD7-820D-A0B33F1AEB8A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Lib", "src\app\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Lib", "legacy\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Fake.Deploy", "src\test\Test.Fake.Deploy\Test.Fake.Deploy.csproj", "{0203A0DD-836B-4F9E-A766-73396DDE8F34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Fake.Deploy", "legacy\Test.Fake.Deploy\Test.Fake.Deploy.csproj", "{0203A0DD-836B-4F9E-A766-73396DDE8F34}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web", "src\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.fsproj", "{329AECD2-AE80-46E8-B486-7D7BA9804B0B}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web", "legacy\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.fsproj", "{329AECD2-AE80-46E8-B486-7D7BA9804B0B}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Fake.Deploy.Web", "src\test\Test.Fake.Deploy.Web\Test.Fake.Deploy.Web.fsproj", "{0227F23A-1CC6-4682-A506-E90C516170C5}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Fake.Deploy.Web", "legacy\Test.Fake.Deploy.Web\Test.Fake.Deploy.Web.fsproj", "{0227F23A-1CC6-4682-A506-E90C516170C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Git", "src\test\Test.Git\Test.Git.csproj", "{AD03BF13-802D-4E5F-A939-24484299E014}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Git", "legacy\Test.Git\Test.Git.csproj", "{AD03BF13-802D-4E5F-A939-24484299E014}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck.Fake", "src\test\FsCheck.Fake\FsCheck.Fake.fsproj", "{791651E4-4422-4A31-8DDE-6B1AD79B377A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck.Fake", "legacy\FsCheck.Fake\FsCheck.Fake.fsproj", "{791651E4-4422-4A31-8DDE-6B1AD79B377A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

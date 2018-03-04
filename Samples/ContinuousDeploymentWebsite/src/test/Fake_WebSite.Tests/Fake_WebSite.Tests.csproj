@@ -47,7 +47,7 @@
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\CalculatorLib\CalculatorLib.fsproj">
+    <ProjectReference Include="..\..\legacy\CalculatorLib\CalculatorLib.fsproj">
       <Project>{39852DCE-EF0E-454A-B2F6-58D57074EEB8}</Project>
       <Name>CalculatorLib</Name>
     </ProjectReference>
