@@ -1,5 +1,5 @@
 /// This module contains a file pattern globbing implementation.
-namespace Fake.Core
+namespace Fake.IO
 open System.Collections.Generic
 
 type IGlobbingPattern =
@@ -8,8 +8,8 @@ type IGlobbingPattern =
     abstract Includes : string list
     abstract Excludes : string list
 
-namespace Fake.Core.Globbing
-open Fake.Core
+namespace Fake.IO.Globbing
+open Fake.IO
 open System.Collections.Generic
 
 type LazyGlobbingPattern =
@@ -61,9 +61,9 @@ type ResolvedGlobbingPattern =
         member this.GetEnumerator() = (this.Results :> IEnumerable<string>).GetEnumerator()
         member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
-namespace Fake.Core
+namespace Fake.IO
 open System.IO
-open Fake.Core.Globbing
+open Fake.IO.Globbing
 
 [<AutoOpen>] // A bit of a hack but we need those extensions for backwards compat.
 module GlobbingPatternExtensions =
@@ -130,11 +130,21 @@ module GlobbingPattern =
     /// Sets a directory as baseDirectory for fileIncludes. 
     let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
 
+    /// Get base include directories. Used to get a smaller set of directories from a globbing pattern.
+    let GetBaseDirectoryIncludes (fileIncludes: IGlobbingPattern) =
+            let directoryIncludes = fileIncludes.Includes |> Seq.map (fun file -> Globbing.Glob.getRoot fileIncludes.BaseDirectory file)
 
+            // remove subdirectories
+            directoryIncludes
+            |> Seq.filter (fun d ->
+                            directoryIncludes
+                            |> Seq.exists (fun p -> d.StartsWith p && p <> d)
+                            |> not)
+            |> Seq.toList
 
-namespace Fake.Core.Globbing
+namespace Fake.IO.Globbing
 
-open Fake.Core
+open Fake.IO
 open System.IO
 
 // Compat
@@ -150,7 +160,7 @@ module FileIncludes =
 
     /// Sets a directory as baseDirectory for fileIncludes. 
     [<System.Obsolete("Please use GlobbingPattern instead")>]
-    let SetBaseDir (dir : string) (fileIncludes : FileIncludes) = GlobbingPattern.SetBaseDir dir fileIncludes
+    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.SetBaseDir dir fileIncludes
 
 module Operators =
     /// Add Include operator

@@ -4,9 +4,7 @@ module Fake.DotNet.Testing.NUnit.Xml
 open Fake.Testing.Common
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO

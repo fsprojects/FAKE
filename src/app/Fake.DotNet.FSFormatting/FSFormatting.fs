@@ -5,9 +5,7 @@ open System
 open System.Diagnostics
 open System.IO
 open Fake.Core
-open Fake.Core.String
-open Fake.Core.Globbing
-open Fake.Core.Process
+open Fake.IO.Globbing
 open Fake.IO
 open Fake.IO.FileSystemOperators
 
@@ -17,7 +15,7 @@ let mutable toolPath =
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
 let private run toolPath command = 
-    if 0 <> ExecProcess ((fun info ->
+    if 0 <> Process.Exec ((fun info ->
             { info with
                 FileName = toolPath
                 Arguments = command }) >> Process.withFramework) System.TimeSpan.MaxValue
@@ -58,7 +56,7 @@ let CreateDocs p =
         |> Seq.map (fun s -> 
                if s.StartsWith "\"" then s
                else sprintf "\"%s\"" s)
-        |> separated " "
+        |> String.separated " "
     run arguments.ToolPath command
     printfn "Successfully generated docs for %s" source
 
@@ -105,7 +103,7 @@ let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFi
         |> Seq.map (fun s -> 
                 if s.StartsWith "\"" then s
                 else sprintf "\"%s\"" s)
-        |> separated " "
+        |> String.separated " "
         |> fun prefix -> sprintf "%s --dllfiles \"%s\"" prefix file
         |> run arguments.ToolPath
 

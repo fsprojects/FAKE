@@ -13,12 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
-    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj" />
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
   </ItemGroup>
   <ItemGroup>

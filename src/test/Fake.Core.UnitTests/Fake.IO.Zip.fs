@@ -11,10 +11,10 @@ let tests =
     testCase "Test simple Zip.FilesAsSpec - #1014" <| fun _ ->
       
       let globExe = // !! "folder/*.exe"
-          { Fake.Core.Globbing.ResolvedGlobbingPattern.BaseDirectory = "."
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Includes = [ "folder/*.exe" ]
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Excludes = []
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Results = 
+          { Globbing.ResolvedGlobbingPattern.BaseDirectory = "."
+            Globbing.ResolvedGlobbingPattern.Includes = [ "folder/*.exe" ]
+            Globbing.ResolvedGlobbingPattern.Excludes = []
+            Globbing.ResolvedGlobbingPattern.Results = 
               [ "folder/file1.exe"
                 "folder/file2.exe" ] }
       let actual =
@@ -29,10 +29,10 @@ let tests =
       
     testCase "Test simple Zip.FilesAsSpec (2) - #1014" <| fun _ ->
       let globSubFolder = // !! "subfolder/*/*.dll"
-          { Fake.Core.Globbing.ResolvedGlobbingPattern.BaseDirectory = "."
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Includes = [ "subfolder/*/*.dll" ]
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Excludes = []
-            Fake.Core.Globbing.ResolvedGlobbingPattern.Results = 
+          { Globbing.ResolvedGlobbingPattern.BaseDirectory = "."
+            Globbing.ResolvedGlobbingPattern.Includes = [ "subfolder/*/*.dll" ]
+            Globbing.ResolvedGlobbingPattern.Excludes = []
+            Globbing.ResolvedGlobbingPattern.Results = 
               [ "subfolder/1/file1.dll"
                 "subfolder/1/file2.dll"
                 "subfolder/2/file2.dll" ] } 

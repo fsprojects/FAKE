@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />

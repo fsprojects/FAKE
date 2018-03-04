@@ -3,10 +3,8 @@ module Fake.DotNet.Testing.MSpec
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -36,7 +34,7 @@ type MSpecParams =
 
 /// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
 let MSpecDefaults =
-    { ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "mspec-clr4.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "MSpec")
+    { ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath "mspec-clr4.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "MSpec")
       HtmlOutputDir = null
       XmlOutputPath = null
       WorkingDir = null
@@ -50,28 +48,28 @@ let MSpecDefaults =
 /// [omit]
 let buildMSpecArgs parameters assemblies =
     let html, htmlText =
-        if isNotNullOrEmpty parameters.HtmlOutputDir then
+        if String.isNotNullOrEmpty parameters.HtmlOutputDir then
             true, sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
         else false, ""
 
     let xml, xmlText =
-        if isNotNullOrEmpty parameters.XmlOutputPath then
+        if String.isNotNullOrEmpty parameters.XmlOutputPath then
             true, sprintf "--xml\" \"%s" <| parameters.XmlOutputPath.TrimEnd Path.DirectorySeparatorChar
         else false, ""
 
-    let includes = parameters.IncludeTags |> separated ","
-    let excludes = parameters.ExcludeTags |> separated ","
+    let includes = parameters.IncludeTags |> String.separated ","
+    let excludes = parameters.ExcludeTags |> String.separated ","
     new StringBuilder()
-    |> appendIfTrue (buildServer = TeamCity) "--teamcity"
-    |> appendIfTrue parameters.Silent "-s"
-    |> appendIfTrue html "-t"
-    |> appendIfTrue html htmlText
-    |> appendIfTrue xml "-t"
-    |> appendIfTrue xml xmlText
-    |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes)
-    |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes)
-    |> appendFileNamesIfNotNull assemblies
-    |> toText
+    |> StringBuilder.appendIfTrue (buildServer = TeamCity) "--teamcity"
+    |> StringBuilder.appendIfTrue parameters.Silent "-s"
+    |> StringBuilder.appendIfTrue html "-t"
+    |> StringBuilder.appendIfTrue html htmlText
+    |> StringBuilder.appendIfTrue xml "-t"
+    |> StringBuilder.appendIfTrue xml xmlText
+    |> StringBuilder.appendIfTrue (String.isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes)
+    |> StringBuilder.appendIfTrue (String.isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes)
+    |> StringBuilder.appendFileNamesIfNotNull assemblies
+    |> StringBuilder.toText
 
 /// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
 /// ## Parameters
@@ -88,12 +86,12 @@ let buildMSpecArgs parameters assemblies =
 ///
 /// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
 let MSpec setParams assemblies =
-    let details = separated ", " assemblies
+    let details = String.separated ", " assemblies
     use __ = Trace.traceTask "MSpec" details
     let parameters = setParams MSpecDefaults
     let args = buildMSpecArgs parameters assemblies
     Trace.trace (parameters.ToolPath + " " + args)
-    if 0 <> ExecProcess ((fun info -> 
+    if 0 <> Process.Exec ((fun info -> 
             { info with
                 FileName = parameters.ToolPath
                 WorkingDirectory = parameters.WorkingDir

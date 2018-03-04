@@ -10,7 +10,6 @@
     <Compile Include="Xamarin.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />

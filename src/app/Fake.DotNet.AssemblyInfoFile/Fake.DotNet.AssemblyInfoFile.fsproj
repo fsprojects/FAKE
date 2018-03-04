@@ -18,9 +18,6 @@
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>
-    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

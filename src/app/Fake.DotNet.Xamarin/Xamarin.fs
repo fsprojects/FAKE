@@ -8,15 +8,13 @@ open System.Xml
 open System.Xml.Linq
 open System.Text
 open Fake.Core
-open Fake.Core.Globbing
-open Fake.Core.Process
-open Fake.Core.String
+open Fake.IO.Globbing
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.DotNet.MsBuild
+open Fake.DotNet
 
 let private executeCommand command args =
-    ExecProcessAndReturnMessages (fun p ->
+    Process.ExecAndReturnMessages (fun p ->
     { p with
          FileName = command
          Arguments = args }
@@ -157,7 +155,7 @@ let iOSBuild setParams =
             }
 
         let msBuildParams =
-            if isNullOrEmpty iOSBuildParams.OutputPath then msBuildParams
+            if String.isNullOrEmpty iOSBuildParams.OutputPath then msBuildParams
             else
                 { msBuildParams with
                     Properties = [ "OutputPath", Path.getFullName iOSBuildParams.OutputPath ] @ msBuildParams.Properties
@@ -166,7 +164,7 @@ let iOSBuild setParams =
         msBuildParams
 
     let buildProject param =
-        build (fun msbuildParam -> applyiOSBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
+        MsBuild.build (fun msbuildParam -> applyiOSBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
 
     iOSBuildDefaults
     |> setParams
@@ -249,7 +247,7 @@ let AndroidBuildPackages setParams =
             }
 
         let msBuildParams =
-            if isNullOrEmpty androidBuildParams.OutputPath then msBuildParams
+            if String.isNullOrEmpty androidBuildParams.OutputPath then msBuildParams
             else
                 { msBuildParams with
                     Properties = [ "OutputPath", Path.getFullName androidBuildParams.OutputPath ] @ msBuildParams.Properties
@@ -274,7 +272,7 @@ let AndroidBuildPackages setParams =
 
             result
 
-        build (fun msbuildParam -> applyBuildParams msbuildParam) param.ProjectPath |> ignore
+        MsBuild.build (fun msbuildParam -> applyBuildParams msbuildParam) param.ProjectPath |> ignore
 
     let rewriteManifestFile (manifestFile:string) outfile (transformVersion:IncrementerVersion) target =
         let manifest = XDocument.Load(manifestFile)
@@ -293,7 +291,7 @@ let AndroidBuildPackages setParams =
         |> Seq.last
 
     let createPackage param =
-        build (fun msbuildParam -> applyAndroidBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
+        MsBuild.build (fun msbuildParam -> applyAndroidBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
 
         [ mostRecentFileInDirMatching param.OutputPath ]
 

@@ -45,6 +45,7 @@ let splitBy f (s:string) =
       if f c then
         yield s.Substring(nextPiece, i - nextPiece)
         nextPiece <- i + 1
+    yield s.Substring(nextPiece)
   }
 let trim (s:string) = s.Trim()
 let trimMatchingQuotes quote (s:string) =
@@ -64,7 +65,7 @@ let splitCommandLine s =
 type RunArguments = {
    Script : string option
    Target : string option
-   FsiArgLine : string
+   FsiArgLine : string list
    EnvironmentVariables : (string * string) list
    Debug : bool
    SingleTarget : bool
@@ -74,6 +75,8 @@ type RunArguments = {
 }
 
 let runOrBuild (args : RunArguments) =
+  if args.PrintDetails then
+    Trace.log (sprintf "runOrBuild (%A)" args)
   if args.Debug then
     Diagnostics.Debugger.Launch() |> ignore
     Diagnostics.Debugger.Break() |> ignore
@@ -87,18 +90,28 @@ let runOrBuild (args : RunArguments) =
     //| None -> ()
 
     //Get our fsiargs from somewhere!
-    
+    let fsiArgs = args.FsiArgLine |> Seq.collect (splitCommandLine) |> Seq.toArray
     let s = args.Script
     let additionalArgs, scriptFile, scriptArgs = 
         match
-            splitCommandLine args.FsiArgLine |> Seq.toList,
             s,
+            fsiArgs |> Array.toList,
             List.isEmpty buildScripts with
 
         //TODO check for presence of --fsiargs with no args?  Make attribute for UAP?
 
         //Use --fsiargs approach.
-        | x::xs, _, _ ->
+        | Some(script), fsArgs, _ ->
+           match fsiArgs |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
+           | Some(i) ->
+              let fsxPath = fsiArgs.[i]
+              if script <> fsxPath then traceFAKE "script specified via fsiargs '%s' does not equal the one we run '%s'." fsxPath script 
+              let fsiOpts = if i > 0 then fsiArgs.[0..i-1] else [||]
+              let scriptArgs = if fsiArgs.Length > (i+1) then fsiArgs.[i+1..] else [||]
+              fsiOpts |> List.ofArray, script, scriptArgs |> List.ofArray
+           | None ->
+              fsArgs, script, []
+        | None, x::xs, _ ->
             let args = x::xs |> Array.ofList
             //Find first arg that does not start with - (as these are fsi options that precede the fsx).
             match args |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
@@ -114,17 +127,14 @@ let runOrBuild (args : RunArguments) =
             | None ->
                   let msg = "Unable to locate the build script path."
                   failwithf "Unable to parse --fsiargs.  %s" msg
-        //Script path is specified.
-        | [], Some(script), _ -> [], script, []
-
         //No explicit script, but have in working directory.
-        | [], None, false -> 
+        | None, [], false -> 
           match buildScripts |> List.tryFind (fun f -> Path.GetFileName f = "build.fsx") with
           | Some find -> [], find, []
           | None -> [], List.head buildScripts, []
 
         //Noooo script anywhere!
-        | [], None, true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
+        | None, [], true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
 
     //Combine the key value pair vars and the flag vars.
     let envVars =
@@ -149,7 +159,7 @@ let runOrBuild (args : RunArguments) =
   | exn ->
       traceError "Script failed with"
       if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
-          Paket.Logging.printErrorExt true true false exn
+          Paket.Logging.printErrorExt true true true exn
       else Paket.Logging.printErrorExt args.PrintDetails args.PrintDetails false exn
 
       //let isKnownException = exn :? FAKEException
@@ -180,7 +190,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
     runarg <- Some {
        Script = if runArgs.Contains <@ Cli.RunArgs.Script @> then Some (runArgs.GetResult <@ Cli.RunArgs.Script @>) else None
        Target = if runArgs.Contains <@ Cli.RunArgs.Target @> then Some (runArgs.GetResult <@ Cli.RunArgs.Target @>) else None
-       FsiArgLine = if runArgs.Contains <@ Cli.RunArgs.FsiArgs @> then runArgs.GetResult <@ Cli.RunArgs.FsiArgs @> else ""
+       FsiArgLine = if runArgs.Contains <@ Cli.RunArgs.FsiArgs @> then runArgs.GetResults <@ Cli.RunArgs.FsiArgs @> else []
        EnvironmentVariables = runArgs.GetResults(<@ Cli.RunArgs.EnvironmentVariable @>)
        Debug = runArgs.Contains <@ Cli.RunArgs.Debug @>
        SingleTarget =  runArgs.Contains <@ Cli.RunArgs.SingleTarget @>
@@ -195,7 +205,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
     runarg <- Some {
        Script = if buildArg.Contains <@ Cli.BuildArgs.Script @> then Some (buildArg.GetResult <@ Cli.BuildArgs.Script @>) else None
        Target = if buildArg.Contains <@ Cli.BuildArgs.Target @> then Some (buildArg.GetResult <@ Cli.BuildArgs.Target @>) else None
-       FsiArgLine = if buildArg.Contains <@ Cli.BuildArgs.FsiArgs @> then buildArg.GetResult <@ Cli.BuildArgs.FsiArgs @> else ""
+       FsiArgLine = if buildArg.Contains <@ Cli.BuildArgs.FsiArgs @> then buildArg.GetResults <@ Cli.BuildArgs.FsiArgs @> else []
        EnvironmentVariables = buildArg.GetResults(<@ Cli.BuildArgs.EnvironmentVariable @>)
        Debug = buildArg.Contains <@ Cli.BuildArgs.Debug @>
        SingleTarget =  buildArg.Contains <@ Cli.BuildArgs.SingleTarget @>

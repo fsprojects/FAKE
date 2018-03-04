@@ -1,7 +1,7 @@
 ﻿/// Contains functions which allow build scripts to interact with a build server.
 module Fake.Core.BuildServer
+open System
 open Fake.Core.Environment
-open Fake.Core.String
 
 /// The server type option.
 type BuildServer = 
@@ -40,7 +40,7 @@ let bambooBuildNumber = environVar "bamboo_buildNumber"
 /// Checks if we are on Bamboo
 /// [omit]
 let isBambooBuild =
-    isNotNullOrEmpty bambooBuildNumber
+    String.IsNullOrEmpty bambooBuildNumber |> not
 
 /// Checks if we are on Team Foundation
 /// [omit]
@@ -84,9 +84,9 @@ let appVeyorBuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 let buildServer = 
     if hasEnvironVar "JENKINS_HOME" then Jenkins
     elif hasEnvironVar "TEAMCITY_VERSION" then TeamCity
-    elif not (isNullOrEmpty ccBuildLabel) then CCNet
-    elif not (isNullOrEmpty travisBuildNumber) then Travis
-    elif not (isNullOrEmpty appVeyorBuildVersion) then AppVeyor
+    elif not (String.IsNullOrEmpty ccBuildLabel) then CCNet
+    elif not (String.IsNullOrEmpty travisBuildNumber) then Travis
+    elif not (String.IsNullOrEmpty appVeyorBuildVersion) then AppVeyor
     elif isGitlabCI then GitLabCI
     elif isTFBuild then TeamFoundation
     elif isBambooBuild then Bamboo

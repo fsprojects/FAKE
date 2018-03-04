@@ -1,7 +1,7 @@
 ﻿/// Contains helper functions which allow to deal with git submodules.
 module Fake.Tools.Git.Submodule
 
-open Fake.Core.String
+open Fake.Core
 open Fake.Tools.Git.CommandHelper
 
 /// This record represents a git submodule binding.
@@ -61,7 +61,7 @@ let getSubModules repositoryDir =
 ///  - `superRepositoryDir` - The super repository.
 ///  - `name` - The name of the new repository.
 let init superRepositoryDir name =
-    if isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
+    if String.isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
       |> gitCommand superRepositoryDir
 
 /// Adds a submodule to the given super repository.
@@ -75,5 +75,5 @@ let add superRepositoryDir remotePath localPath branch =
     sprintf "submodule add \"%s\" \"%s\" %s"
       (remotePath |> fixPath)
       (localPath |> fixPath)
-      (if isNullOrEmpty branch then "" else " \"" + branch.Trim() + "\"")
+      (if String.isNullOrEmpty branch then "" else " \"" + branch.Trim() + "\"")
       |> gitCommand superRepositoryDir

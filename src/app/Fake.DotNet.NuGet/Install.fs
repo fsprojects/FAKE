@@ -3,9 +3,7 @@ module Fake.DotNet.NuGet.Install
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open Fake.DotNet.NuGet.Restore
 open System

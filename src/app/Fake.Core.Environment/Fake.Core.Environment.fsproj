@@ -14,6 +14,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Environment.fs" />
+    <Compile Include="BuildServer.fs" />
     <Compile Include="Operators.fs" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />

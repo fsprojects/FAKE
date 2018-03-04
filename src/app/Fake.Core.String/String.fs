@@ -1,4 +1,5 @@
 ﻿/// Contains basic functions for string manipulation.
+[<RequireQualifiedAccess>]
 module Fake.Core.String
 type String = System.String
 

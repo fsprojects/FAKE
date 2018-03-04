@@ -3,6 +3,7 @@ namespace Fake.IO
 open System.IO
 open Fake.IO.FileSystemOperators
 
+[<RequireQualifiedAccess>]
 module DirectoryInfo =
     /// Creates a DirectoryInfo for the given path.
     let inline ofPath path = DirectoryInfo(path)

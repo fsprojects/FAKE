@@ -1,9 +1,7 @@
 /// Contains functions to read and write XML files.
 module Fake.Core.Xml
 
-open Fake.Core.String
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -108,7 +106,7 @@ let parseSubNode name f = getSubNode name >> parse name f
 
 /// Loads the given text into a XmlDocument
 let Doc text =
-    if isNullOrEmpty text then null
+    if String.isNullOrEmpty text then null
     else
         let xmlDocument = new XmlDocument()
         xmlDocument.LoadXml text
@@ -195,7 +193,7 @@ let PokeInnerTextNS (fileName : string) namespaces xpath innerTextValue =
 /// Loads the given text into a XslCompiledTransform.
 [<System.Obsolete("This API is not yet available on netcore. If you have an alternative please switch. If the API becomes available this warning is removed.")>]
 let XslTransformer text =
-    if isNullOrEmpty text then null
+    if String.isNullOrEmpty text then null
     else
         let xslCompiledTransform = new XslCompiledTransform()
         Doc(text) |> xslCompiledTransform.Load

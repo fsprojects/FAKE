@@ -3,8 +3,7 @@ module Fake.Testing.SonarQube
 
     open System.IO
     open Fake.Core
-    open Fake.Core.Globbing
-    open Fake.Core.Process
+    open Fake.IO.Globbing
     open Fake.IO.FileSystemOperators
 
     /// [omit]
@@ -53,7 +52,7 @@ module Fake.Testing.SonarQube
         | End -> "end " + setArgs + cfgArgs
 
       let result =
-        ExecProcess ((fun info ->
+        Process.Exec ((fun info ->
         { info with
             FileName = sonarPath
             Arguments = args }) >> Process.withFramework) System.TimeSpan.MaxValue

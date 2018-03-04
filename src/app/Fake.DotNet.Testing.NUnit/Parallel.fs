@@ -3,9 +3,7 @@ module Fake.DotNet.Testing.NUnit.Parallel
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -16,7 +14,6 @@ open System.Linq
 open System.Text
 open Fake.DotNet.Testing.NUnit.Xml
 open Fake.DotNet.Testing.NUnit.Common
-open Fake.Core.Process
 open System.Xml.Linq
 
 type private NUnitParallelResult =
@@ -46,7 +43,7 @@ type private AggFailedResult =
 ///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
 let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
-    let details = assemblies |> separated ", "
+    let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
     let tool = parameters.ToolPath @@ parameters.ToolName
@@ -59,7 +56,7 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
         let stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
         let result =
-            ExecProcessWithLambdas ((fun info ->
+            Process.ExecWithLambdas ((fun info ->
             { info with
                 FileName = tool
                 WorkingDirectory = getWorkingDir parameters
@@ -72,13 +69,13 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
           StandardOut = stdout
           ReturnCode = result
           OutputFile = outputFile }
-    let before = shouldEnableProcessTracing()
+    let before = Process.shouldEnableProcessTracing()
     let testRunResults =
         try
-            setEnableProcessTracing false
+            Process.setEnableProcessTracing false
             assemblies.AsParallel().WithDegreeOfParallelism(Environment.ProcessorCount)
                         .Select(fun asm -> runSingleAssembly parameters asm (Path.GetTempFileName())) |> Seq.toList
-        finally setEnableProcessTracing before
+        finally Process.setEnableProcessTracing before
 
     // Read all valid results
     let docs =

@@ -1,4 +1,5 @@
 ﻿/// Contains helper function which allow to deal with files and directories.
+[<RequireQualifiedAccess>]
 module Fake.IO.Path
 
 open Fake.Core

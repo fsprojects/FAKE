@@ -4,10 +4,8 @@ module Fake.DotNet.NuGet.Restore
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -95,7 +93,7 @@ let RestoreSinglePackageDefaults =
 
 /// [omit]
 let runNuGet toolPath timeOut args failWith =
-    if 0 <> ExecProcess ((fun info ->
+    if 0 <> Process.Exec ((fun info ->
             { info with
                 FileName = toolPath |> Path.getFullName
                 Arguments = args }) >> Process.withFramework) timeOut
@@ -111,7 +109,7 @@ let rec runNuGetTrial retries toolPath timeOut args failWith =
 let buildSources sources =
     sources
     |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-    |> separated ""
+    |> String.separated ""
 
 /// [omit]
 let buildNuGetArgs setParams packageId =

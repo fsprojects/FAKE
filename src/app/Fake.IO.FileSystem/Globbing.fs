@@ -1,5 +1,5 @@
 /// This module contains a file pattern globbing implementation.
-module Fake.Core.Globbing.Glob
+module Fake.IO.Globbing.Glob
 
 open System
 open System.Collections.Generic

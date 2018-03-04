@@ -2,7 +2,6 @@
 module Fake.Tools.Git.Merge
 
 open Fake.Core
-open Fake.Core.Process
 open Fake.Tools.Git.CommandHelper
 open Fake.Tools.Git.Branches
 open System.IO

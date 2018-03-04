@@ -3,10 +3,8 @@ module Fake.DotNet.Testing.XUnit2
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.StringBuilder
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -183,7 +181,7 @@ let XUnit2Defaults =
       ExcludeTraits = []
       ShadowCopy = true
       ErrorLevel = Error
-      ToolPath = Fake.Core.Globbing.Tools.findToolInSubPath "xunit.console.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "xunit.runner.console")
+      ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath "xunit.console.exe" (Fake.IO.Shell.pwd() @@ "tools" @@ "xunit.runner.console")
       WorkingDir = None
       TimeOut = TimeSpan.FromMinutes 5.
       ForceTeamCity = false
@@ -228,7 +226,7 @@ let buildXUnit2Args assemblies parameters =
 /// so it does not interfere with older versions.
 let internal discoverNoAppDomainExists parameters =
     let helpText =
-        ExecProcessAndReturnMessages ((fun info ->
+        Process.ExecAndReturnMessages ((fun info ->
             { info with FileName = parameters.ToolPath}) >> Process.withFramework) (TimeSpan.FromMinutes 1.)
     let canSetNoAppDomain = helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
     {parameters with NoAppDomain = canSetNoAppDomain}
@@ -269,7 +267,7 @@ module internal ResultHandling =
 ///         |> xUnit2 (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
 ///     )
 let xUnit2 setParams assemblies =
-    let details = separated ", " assemblies
+    let details = String.separated ", " assemblies
     use __ = Trace.traceTask "xUnit2" details
     let parametersFirst = setParams XUnit2Defaults
 
@@ -279,7 +277,7 @@ let xUnit2 setParams assemblies =
         else parametersFirst
 
     let result =
-        ExecProcess ((fun info ->
+        Process.Exec ((fun info ->
         { info with
             FileName = parameters.ToolPath
             WorkingDirectory = defaultArg parameters.WorkingDir "."

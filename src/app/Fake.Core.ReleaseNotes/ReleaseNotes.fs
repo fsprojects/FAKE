@@ -35,6 +35,7 @@
 ///             Attribute.Version release.AssemblyVersion
 ///             Attribute.FileVersion release.AssemblyVersion]
 ///     )
+[<RequireQualifiedAccess>]
 module Fake.Core.ReleaseNotes
 
 open System

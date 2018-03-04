@@ -2,6 +2,7 @@ namespace Fake.IO
 
 open System.IO
 
+[<RequireQualifiedAccess>]
 module Directory =
 
     /// Checks if the given directory exists. If not then this functions creates the directory.

@@ -161,21 +161,20 @@ In the dependencies section we say that the *Default* target has a dependency on
 
 In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild.
 
-Again we need some new modules for this namely `Fake.DotNet.MsBuild` and `Fake.Core.Globbing`.
+Again we need some new module for this, namely `Fake.DotNet.MsBuild`.
 
-Just like before add the required modules on top via `nuget Fake.DotNet.MsBuild` and `nuget Fake.Core.Globbing`, delete the `build.fsx.lock` file and run the script.
+Just like before add the required module on top via `nuget Fake.DotNet.MsBuild`, delete the `build.fsx.lock` file and run the script.
 Now edit the script like this:
 
 ```fsharp
 #r "paket:
 nuget Fake.IO.FileSystem
 nuget Fake.DotNet.MsBuild
-nuget Fake.Core.Globbing
 nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 
 open Fake.IO
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators //enables !! and globbing
 open Fake.DotNet
 open Fake.Core
 
@@ -209,7 +208,7 @@ Target.RunOrDefault "Default"
 
 We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to `buildDir`.
 
-In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern (the `!!` operator was imported from `Fake.Core.Globbing` via `open Fake.Core.Globbing.Operators`). Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
+In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern (the `!!` operator was imported from `Fake.IO.FileSystem` via `open Fake.IO.Globbing.Operators`). Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
 
 In addition the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs *Clean* as a prerequisite.
 
@@ -225,13 +224,12 @@ Now our main application will be built automatically and it's time to build the 
 #r "paket:
 nuget Fake.IO.FileSystem
 nuget Fake.DotNet.MsBuild
-nuget Fake.Core.Globbing
 nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 
 open Fake
 open Fake.IO
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators
 open Fake.DotNet
 open Fake.Core
 
@@ -280,14 +278,13 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 ```fsharp
 #r "paket:
 nuget Fake.IO.FileSystem
-nuget Fake.Core.Globbing
 nuget Fake.DotNet.MsBuild
 nuget Fake.DotNet.Testing.NUnit
 nuget Fake.Core.Target //"
 #load "./.fake/myscript.fsx/intellisense.fsx"
 
 open Fake.IO
-open Fake.Core.Globbing.Operators
+open Fake.IO.Globbing.Operators
 open Fake.DotNet
 open Fake.DotNet.Testing
 open Fake.Core

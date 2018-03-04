@@ -3,9 +3,7 @@ module Fake.DotNet.Testing.NUnit.Sequential
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.String
 open Fake.Core.BuildServer
-open Fake.Core.Process
 open Fake.Core
 open System
 open System.IO
@@ -30,7 +28,7 @@ open Fake.DotNet.Testing.NUnit.Common
 ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
 let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
-    let details = assemblies |> separated ", "
+    let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnit" details
     let parameters = NUnitDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
@@ -39,7 +37,7 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let args = buildNUnitdArgs parameters assemblies
     Trace.trace (tool + " " + args)
     let result = 
-        ExecProcess ((fun info ->
+        Process.Exec ((fun info ->
         { info with
             FileName = tool
             WorkingDirectory = getWorkingDir parameters

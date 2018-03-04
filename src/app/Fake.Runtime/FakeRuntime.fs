@@ -86,67 +86,11 @@ let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
 
 #endif
 
-module FSharpParser =
-  open Microsoft.FSharp.Compiler.SourceCodeServices
-
-  type InterestingItem =
-    | Reference of string
-   
-  type AnalyseState =
-    | NoAnalysis
-    | Reference of string option
-
-  let rec tokenizeLine results (line:string) (tokenizer:FSharpLineTokenizer) state =
-      match tokenizer.ScanToken(state) with
-      | Some tok, state ->
-          // Print token name
-          let result = Some tok, (line.Substring(tok.LeftColumn, tok.RightColumn - tok.LeftColumn + 1))
-          // Tokenize the rest, in the new state
-          tokenizeLine (result::results) line tokenizer state
-      | None, state -> results |> List.rev, state
-  let rec tokenizeLines (sourceTok : FSharpSourceTokenizer) state lines = seq {
-      match lines with
-      | line::lines ->
-          // Create tokenizer & tokenize single line
-          let tokenizer = sourceTok.CreateLineTokenizer(line)
-          let lineResults, state = tokenizeLine [] line tokenizer state
-          yield! lineResults
-          yield None, "\n" 
-          // Tokenize the rest using new state
-          yield! tokenizeLines sourceTok state lines
-      | [] -> () }
-
-  let rec analyseNextToken (_, state) (tok :FSharpTokenInfo option, text) =
-    match state with
-    | NoAnalysis ->
-      if tok.IsSome && tok.Value.TokenName = "HASH" && text = "#r" then
-        None, Reference None
-      else None, NoAnalysis
-    | Reference None -> // Initial string start
-      if tok.IsSome && tok.Value.TokenName = "STRING_TEXT" then
-        None, Reference (Some "")
-      else None, Reference None
-    | Reference (Some s) -> // read string
-      if tok.IsNone || (tok.IsSome && tok.Value.TokenName = "STRING_TEXT") then
-        None, Reference (Some (s + text))
-      elif tok.IsSome && tok.Value.TokenName = "STRING" then
-        Some (InterestingItem.Reference s), NoAnalysis
-      else failwithf "No idea how %A can happen in a string" (tok, text) // None, Reference (Some s)
-
-  let findInterestingItems (scriptFile:string) (scriptText:string) =
-    let sourceTok = FSharpSourceTokenizer(["FAKE_DEPENDENCIES"], Some scriptFile)            
-    scriptText.Split('\r','\n')
-      |> List.ofSeq
-      |> tokenizeLines sourceTok 0L
-      |> Seq.scan analyseNextToken (None, NoAnalysis)
-      |> Seq.choose fst
-      |> Seq.toList
-
-let tryReadPaketDependenciesFromScript cacheDir (scriptPath:string) (scriptText:string) =
+let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scriptText:string) =
   let pRefStr = "paket:"
   let grRefStr = "groupref"
   let groupReferences, paketLines =
-    FSharpParser.findInterestingItems scriptPath scriptText
+    FSharpParser.findInterestingItems defines scriptPath scriptText
     |> Seq.choose (fun item -> 
         match item with
         | FSharpParser.InterestingItem.Reference ref when ref.StartsWith pRefStr ->
@@ -481,14 +425,14 @@ let tryFindGroupFromDepsFile scriptDir =
         | _ -> None
     else None
 
-let prepareFakeScript printDetails script =
+let prepareFakeScript defines printDetails script =
     // read dependencies from the top
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
     let scriptText = File.ReadAllText(script)
     let section =
-        let newSection = tryReadPaketDependenciesFromScript cacheDir script scriptText
+        let newSection = tryReadPaketDependenciesFromScript defines cacheDir script scriptText
         match legacyReadFakeSection scriptText with
         | Some s ->
           Trace.traceFAKE "Legacy header is no longer supported and will be removed soon, please upgrade to '#r \"paket: nuget FakeModule\" in paket syntax (consult the docs)."
@@ -510,8 +454,20 @@ let prepareFakeScript printDetails script =
     | _ ->
         failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 
-let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErrMsg onOutMsg useCache =
-  let provider = prepareFakeScript printDetails scriptPath
+let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
+
+  if printDetails then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
+  let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
+  // TODO: this is duplicated in CoreCache :(
+  let newFsiOptions =
+    { fsiOptionsObj with
+#if !NETSTANDARD1_6
+        Defines = "FAKE" :: fsiOptionsObj.Defines
+#else
+        Defines = "DOTNETCORE" :: "FAKE" :: fsiOptionsObj.Defines
+#endif
+      }
+  let provider = prepareFakeScript newFsiOptions.Defines printDetails scriptPath
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
   let config =

@@ -9,10 +9,7 @@ open System.Text
 open System.Collections.Generic
 open Fake.Core
 open Fake.Core.Environment
-open Fake.Core.String
 open Fake.Core.String.Operators
-open Fake.Core.Process
-open Fake.IO.Path
 open Fake.IO
 
 
@@ -27,9 +24,9 @@ let gitPath =
         "git"
     else
         let ev = environVar "GIT"
-        if not (isNullOrEmpty ev) then ev else findPath "GitPath" GitPath "git.exe"
+        if not (String.isNullOrEmpty ev) then ev else Process.findPath "GitPath" GitPath "git.exe"
 
-let inline private setInfo gitPath repositoryDir command info =
+let inline private setInfo gitPath repositoryDir command (info:ProcStartInfo) =
     { info with
         FileName = gitPath
         WorkingDirectory = repositoryDir
@@ -38,9 +35,9 @@ let inline private setInfo gitPath repositoryDir command info =
 /// Runs git.exe with the given command in the given repository directory.
 let runGitCommand repositoryDir command =
     let processResult =
-        ExecProcessAndReturnMessages (setInfo gitPath repositoryDir command) gitTimeOut
+        Process.ExecAndReturnMessages (setInfo gitPath repositoryDir command) gitTimeOut
 
-    processResult.OK,processResult.Messages,toLines processResult.Errors
+    processResult.OK,processResult.Messages,String.toLines processResult.Errors
 
 /// [omit]
 let runGitCommandf fmt = Printf.ksprintf runGitCommand fmt
@@ -52,11 +49,11 @@ let getGitResult repositoryDir command =
 
 /// Fires the given git command ind the given repository directory and returns immediatly.
 let fireAndForgetGitCommand repositoryDir command =
-    fireAndForget (setInfo gitPath repositoryDir command)
+    Process.fireAndForget (setInfo gitPath repositoryDir command)
 
 /// Runs the given git command, waits for its completion and returns whether it succeeded.
 let directRunGitCommand repositoryDir command =
-    directExec (setInfo gitPath repositoryDir command)
+    Process.directExec (setInfo gitPath repositoryDir command)
 
 /// Runs the given git command, waits for its completion and fails when it didn't succeeded.
 let directRunGitCommandAndFail repositoryDir command =
@@ -86,7 +83,7 @@ let runSimpleGitCommand repositoryDir command =
     try
         let ok,msg,errors = runGitCommand repositoryDir command
 
-        let errorText = toLines msg + Environment.NewLine + errors
+        let errorText = String.toLines msg + Environment.NewLine + errors
         if errorText.Contains "fatal: " then
             failwith errorText
 
@@ -104,10 +101,10 @@ let fixPath (path:string) =
 /// Searches the .git directory recursivly up to the root.
 let findGitDir repositoryDir =
     let rec findGitDir (dirInfo:DirectoryInfo) =
-        let gitDir = dirInfo.FullName + directorySeparator + ".git" |> DirectoryInfo.ofPath
+        let gitDir = dirInfo.FullName + Path.directorySeparator + ".git" |> DirectoryInfo.ofPath
         if gitDir.Exists then gitDir else findGitDir dirInfo.Parent
 
 
-    if isNullOrEmpty repositoryDir then "." else repositoryDir
+    if String.isNullOrEmpty repositoryDir then "." else repositoryDir
       |> DirectoryInfo.ofPath
       |> findGitDir

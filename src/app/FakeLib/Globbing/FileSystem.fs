@@ -1,6 +1,6 @@
 /// This module contains a file pattern globbing implementation.
 [<AutoOpen>]
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 module Fake.FileSystem
 
 #nowarn "44"
@@ -10,7 +10,7 @@ open System.IO
 open System.Text.RegularExpressions
 
 /// Internal representation of a file set.
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 type FileIncludes = 
     { BaseDirectory : string
       Includes : string list
@@ -73,31 +73,31 @@ type FileIncludes =
 let private defaultBaseDir = Path.GetFullPath "."
 
 /// Include files
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 let Include x = 
     { BaseDirectory = defaultBaseDir
       Includes = [ x ]
       Excludes = [] }
 
 /// Sets a directory as baseDirectory for fileIncludes. 
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 let SetBaseDir (dir : string) (fileIncludes : FileIncludes) = fileIncludes.SetBaseDirectory dir
 
 /// Add Include operator
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 let inline (++) (x : FileIncludes) pattern = x.And pattern
 
 /// Exclude operator
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 let inline (--) (x : FileIncludes) pattern = x.ButNot pattern
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-[<System.Obsolete "Please use Fake.Core.Globbing and Fake.Core.Globbing.Operators instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Operators instead">]
 let inline (!!) x = Include x
 
 /// Looks for a tool first in its default path, if not found the in ./packages/ and then
 /// in all subfolders of the root folder - returns the tool file name.
-[<System.Obsolete "Please use Fake.Core.Globbing.Tools instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Tools instead">]
 let findToolInSubPath toolname defaultPath =
     try
         let tools = !! (defaultPath @@ "/**/" @@ toolname)
@@ -114,7 +114,7 @@ let findToolInSubPath toolname defaultPath =
     | _ -> defaultPath @@ toolname
 
 /// Looks for a tool in all subfolders - returns the folder where the tool was found.
-[<System.Obsolete "Please use Fake.Core.Globbing.Tools instead">]
+[<System.Obsolete "Please use nuget 'Fake.IO.FileSystem' and Fake.IO.Globbing.Tools instead">]
 let findToolFolderInSubPath toolname defaultPath =
     try
         let tools = !! ("./**/" @@ toolname)

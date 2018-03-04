@@ -24,7 +24,7 @@ let replaceKeywords replacements =
 /// Saves all files (lazy - file by file!)
 let saveFiles = Seq.iter (fun (fileName, file) -> WriteFile fileName (Seq.toList file))
 
-[<System.Obsolete("Use Fake.IO.Templates instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Templates.processTemplates)")>]
+[<System.Obsolete("Use Fake.IO.Templates instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Templates.replaceInFiles)")>]
 /// Replaces the templates with the given replacements
 let processTemplates replacements files =
     files

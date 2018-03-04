@@ -7,7 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
   </ItemGroup>
   <ItemGroup>
