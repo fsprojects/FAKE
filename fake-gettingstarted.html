@@ -386,8 +386,8 @@ You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on to
 <p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
 <h3><a name="Compiling-the-application" class="anchor" href="#Compiling-the-application">Compiling the application</a></h3>
 <p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild.</p>
-<p>Again we need some new modules for this namely <code>Fake.DotNet.MsBuild</code> and <code>Fake.Core.Globbing</code>.</p>
-<p>Just like before add the required modules on top via <code>nuget Fake.DotNet.MsBuild</code> and <code>nuget Fake.Core.Globbing</code>, delete the <code>build.fsx.lock</code> file and run the script.
+<p>Again we need some new module for this, namely <code>Fake.DotNet.MsBuild</code>.</p>
+<p>Just like before add the required module on top via <code>nuget Fake.DotNet.MsBuild</code>, delete the <code>build.fsx.lock</code> file and run the script.
 Now edit the script like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -426,17 +426,15 @@ Now edit the script like this:</p>
 <span class="l">35: </span>
 <span class="l">36: </span>
 <span class="l">37: </span>
-<span class="l">38: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
 <span class="s">nuget Fake.DotNet.MsBuild</span>
-<span class="s">nuget Fake.Core.Globbing</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span> <span class="c">//enables !! and globbing</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
@@ -470,7 +468,7 @@ Now edit the script like this:</p>
 </tr>
 </table>
 <p>We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to <code>buildDir</code>.</p>
-<p>In order to find the right project files FAKE scans the folder <em>src/app/</em> and all subfolders with the given pattern (the <code>!!</code> operator was imported from <code>Fake.Core.Globbing</code> via <code>open Fake.Core.Globbing.Operators</code>). Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
+<p>In order to find the right project files FAKE scans the folder <em>src/app/</em> and all subfolders with the given pattern (the <code>!!</code> operator was imported from <code>Fake.IO.FileSystem</code> via <code>open Fake.IO.Globbing.Operators</code>). Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
 <p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
 <p>This means the execution order is: Clean ==&gt; BuildApp ==&gt; Default.</p>
 <p><img src="pics/gettingstarted/aftercompile.png" alt="alt text" title="We introduced a Build target" /></p>
@@ -522,18 +520,16 @@ Now edit the script like this:</p>
 <span class="l">44: </span>
 <span class="l">45: </span>
 <span class="l">46: </span>
-<span class="l">47: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
 <span class="s">nuget Fake.DotNet.MsBuild</span>
-<span class="s">nuget Fake.Core.Globbing</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
@@ -632,18 +628,16 @@ Now edit the script like this:</p>
 <span class="l">53: </span>
 <span class="l">54: </span>
 <span class="l">55: </span>
-<span class="l">56: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
-<span class="s">nuget Fake.Core.Globbing</span>
 <span class="s">nuget Fake.DotNet.MsBuild</span>
 <span class="s">nuget Fake.DotNet.Testing.NUnit</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span>
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span><span class="pn">.</span><span class="id">Globbing</span><span class="pn">.</span><span class="id">Operators</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>

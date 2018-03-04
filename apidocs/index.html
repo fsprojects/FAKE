@@ -1327,6 +1327,22 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-core-buildfailedexception.html">BuildFailedException</a>
+          </td>
+          <td class="xmldoc"><p>Exception for request errors</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-consolemessage.html">ConsoleMessage</a>
+          </td>
+          <td class="xmldoc"><p>A record type which captures console messages</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-consoletracelistener.html">ConsoleTraceListener</a>
           </td>
           <td class="xmldoc"><p>Implements a TraceListener for System.Console.</p>
@@ -1335,9 +1351,11 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
         </tr>
         <tr>
           <td class="type-name">
-            <a href="fake-core-iglobbingpattern.html">IGlobbingPattern</a>
+            <a href="fake-core-execparams.html">ExecParams</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc"><p>Parameter type for process execution.</p>
+
+</td>
         </tr>
         <tr>
           <td class="type-name">
@@ -1369,11 +1387,51 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-procstartinfo.html">ProcStartInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-processresult.html">ProcessResult</a>
+          </td>
+          <td class="xmldoc"><p>A process result including error code, message log and errors.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-semverinfo.html">SemVerInfo</a>
           </td>
           <td class="xmldoc"><p>Contains the version information.</p>
 
 </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-shell.html">Shell</a>
+          </td>
+          <td class="xmldoc"><p>Allows to exec shell operations synchronously and asynchronously.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-targetcontext.html">TargetContext</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-targetparameter.html">TargetParameter</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-targetresult.html">TargetResult</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="type-name">
@@ -1422,19 +1480,13 @@ This allows us to run some modules without any context and change behavior depen
         </tr>
         <tr>
           <td class="module-name">
-            <a href="fake-core-globbingpatternmodule.html">GlobbingPattern</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fake-core-globbingpatternextensions.html">GlobbingPatternExtensions</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="module-name">
             <a href="fake-core-mono.html">Mono</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-procstartinfoextensions.html">ProcStartInfoExtensions</a>
           </td>
           <td class="xmldoc"></td>
         </tr>
@@ -1442,9 +1494,7 @@ This allows us to run some modules without any context and change behavior depen
           <td class="module-name">
             <a href="fake-core-process.html">Process</a>
           </td>
-          <td class="xmldoc"><p>Contains functions which can be used to start other tools.</p>
-
-</td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="module-name">
@@ -1486,7 +1536,7 @@ This allows us to run some modules without any context and change behavior depen
         </tr>
         <tr>
           <td class="module-name">
-            <a href="fake-core-target.html">Target</a>
+            <a href="fake-core-targetmodule.html">Target</a>
           </td>
           <td class="xmldoc"></td>
         </tr>
@@ -1526,68 +1576,6 @@ This allows us to run some modules without any context and change behavior depen
   </table>
 
     </div>
-    <a name="Fake.Core.Globbing" class="anchor" href="#Fake.Core.Globbing"><h2>Fake.Core.Globbing Namespace</h2></a>
-    <div>
-        <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-core-globbing-fileincludes.html">FileIncludes</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-core-globbing-lazyglobbingpattern.html">LazyGlobbingPattern</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-core-globbing-resolvedglobbingpattern.html">ResolvedGlobbingPattern</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-    </tbody>
-  </table>
-  <table class="table table-bordered module-list">
-    <thead>
-      <tr><td>Module</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="module-name">
-            <a href="fake-core-globbing-fileincludesmodule.html">FileIncludes</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fake-core-globbing-glob.html">Glob</a>
-          </td>
-          <td class="xmldoc"><p>This module contains a file pattern globbing implementation.</p>
-
-</td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fake-core-globbing-operators.html">Operators</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fake-core-globbing-tools.html">Tools</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-    </tbody>
-  </table>
-
-    </div>
     <a name="Fake.DotNet" class="anchor" href="#Fake.DotNet"><h2>Fake.DotNet Namespace</h2></a>
     <div>
         <table class="table table-bordered type-list">
@@ -1602,6 +1590,66 @@ This allows us to run some modules without any context and change behavior depen
           <td class="xmldoc"><p>Represents options for configuring the emission of AssemblyInfo</p>
 
 </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-buildexception.html">BuildException</a>
+          </td>
+          <td class="xmldoc"><p>An exception type to signal build errors.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuilddistributedloggerconfig.html">MSBuildDistributedLoggerConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildfileloggerconfig.html">MSBuildFileLoggerConfig</a>
+          </td>
+          <td class="xmldoc"><p>A type for MSBuild configuration</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildlogparameter.html">MSBuildLogParameter</a>
+          </td>
+          <td class="xmldoc"><p>MSBuild log option</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildparams.html">MSBuildParams</a>
+          </td>
+          <td class="xmldoc"><p>A type for MSBuild task parameters</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildproject.html">MSBuildProject</a>
+          </td>
+          <td class="xmldoc"><p>A type to represent MSBuild project files.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildverbosity.html">MSBuildVerbosity</a>
+          </td>
+          <td class="xmldoc"><p>MSBuild verbosity option</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildentry.html">MsBuildEntry</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
     </tbody>
   </table>
@@ -1642,9 +1690,7 @@ This allows us to run some modules without any context and change behavior depen
           <td class="module-name">
             <a href="fake-dotnet-msbuild.html">MsBuild</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks which allow to use MSBuild (or xBuild on Linux/Unix) to build .NET project files or solution files.</p>
-
-</td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="module-name">
@@ -1962,7 +2008,20 @@ All operations assume that the CommandHelper can find git.exe.</p>
     </div>
     <a name="Fake.IO" class="anchor" href="#Fake.IO"><h2>Fake.IO Namespace</h2></a>
     <div>
-        <table class="table table-bordered module-list">
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-io-iglobbingpattern.html">IGlobbingPattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
     <thead>
       <tr><td>Module</td><td>Description</td></tr>
     </thead>
@@ -2011,6 +2070,18 @@ All operations assume that the CommandHelper can find git.exe.</p>
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-io-globbingpatternmodule.html">GlobbingPattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-globbingpatternextensions.html">GlobbingPatternExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-io-path.html">Path</a>
           </td>
           <td class="xmldoc"><p>Contains helper function which allow to deal with files and directories.</p>
@@ -2039,6 +2110,68 @@ Contains basic templating functions. Used in other helpers.</p>
           <td class="xmldoc"><p>This module contains helper function to create and extract zip archives.</p>
 
 </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <a name="Fake.IO.Globbing" class="anchor" href="#Fake.IO.Globbing"><h2>Fake.IO.Globbing Namespace</h2></a>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-io-globbing-fileincludes.html">FileIncludes</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-io-globbing-lazyglobbingpattern.html">LazyGlobbingPattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-io-globbing-resolvedglobbingpattern.html">ResolvedGlobbingPattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-globbing-fileincludesmodule.html">FileIncludes</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-globbing-glob.html">Glob</a>
+          </td>
+          <td class="xmldoc"><p>This module contains a file pattern globbing implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-globbing-operators.html">Operators</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-io-globbing-tools.html">Tools</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
     </tbody>
   </table>
@@ -2147,6 +2280,12 @@ Contains basic templating functions. Used in other helpers.</p>
           <td class="xmldoc"><p>This module contains functions which allow to read and write environment variables and build parameters</p>
 
 </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-fsharpparser.html">FSharpParser</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="module-name">

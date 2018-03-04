@@ -187,6 +187,22 @@
 
 									<!-- Content -->
                       <article>
+<h4><a name="5-0-0-beta022" class="anchor" href="#5-0-0-beta022">5.0.0-beta022</a></h4>
+<ul>
+<li>FAKE5: New module "ChangeWatcher"</li>
+<li>
+FAKE5: Reduce number of modules by combining some modules:
+<ul>
+<li><code>Fake.Core.BuildServer</code> moved to <code>Fake.Core.Environment</code></li>
+<li><code>Fake.Core.Globbing</code> moved to <code>Fake.IO.FileSystem</code> (includes the namespace change from <code>Fake.Core</code> to <code>Fake.IO</code>)</li>
+</ul>
+</li>
+<li>BREAKING: Refactor Process API according to FAKE5 guidelines</li>
+<li>BREAKING: Add <code>RequireQualifiedAccess</code> to some core modules in order to lead users into the new API-Usage</li>
+<li>ENHANCEMENT: Refactor <code>Fake.Core.Target</code> module and improve summary output and error reporting.</li>
+<li>BUGFIX: Use "defines" for the <code>#r "paket:..."</code>  tokenizer</li>
+<li>BUGFIX: Fake5 did not properly handle the --fsiargs command line argument.</li>
+</ul>
 <h4><a name="5-0-0-beta021" class="anchor" href="#5-0-0-beta021">5.0.0-beta021</a></h4>
 <ul>
 <li>BUGFIX: Backslashes in paths wheren't escaped in intellisense.fsx - <a href="https://github.com/fsprojects/Paket/issues/3093">https://github.com/fsprojects/Paket/issues/3093</a></li>
