@@ -35,18 +35,14 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 *.ncrunchsolution
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
-src/deploy.web/Fake.Deploy.Web/App_Data/*
-src/deploy.web/Fake.Deploy.Web/Logs/*
 packages/
 *.orig
 deploy/
 Samples/ContinuousDeploymentWebsite/tools/
-src/deploy.web/Fake.Deploy.Web/Logs/Fake.Deploy.Web.log
 gh-pages/
 tools/FSharp.Formatting
 tools/Microsoft.AspNet.Razor
 tools/RazorEngine
-!src/app/FakeLib/NuGet
 !tools/FAKE/tools/FakeLib.dll
 !tools/FAKE/tools/FakeLib.pdb
 .gitignore
@@ -54,7 +50,7 @@ _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
 tools/SourceLink.Fake
-/testbuild.fsx
+
 /integrationtests/*/temp
 /temp
 
@@ -82,5 +78,5 @@ project.lock.json
 
 #src/app/*/any
 
-testbuild.fsx
-testbuild.fsx.lock
+/testbuild.fsx
+/testbuild.fsx.lock
