@@ -1,10 +1,12 @@
 ﻿[<AutoOpen>]
 /// Defines default listeners for build output traces
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 module Fake.TraceListener
 
 open System
 
 /// Defines Tracing information for TraceListeners
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 type TraceData =
     | StartMessage
     | ImportantMessage of string
@@ -36,10 +38,12 @@ type TraceData =
         | CloseTag _ -> None
 
 /// Defines a TraceListener interface
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 type ITraceListener =
     abstract Write : TraceData -> unit
 
 /// A default color map which maps TracePriorities to ConsoleColors
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let colorMap traceData =
     match traceData with
     | ImportantMessage _ -> ConsoleColor.Yellow
@@ -53,6 +57,7 @@ let colorMap traceData =
 /// ## Parameters
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap, useAnsiColorCodes) =
     let writeTextConsoleColor print color text =
         let curColor = Console.ForegroundColor
@@ -121,21 +126,26 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, useAnsiColorCodes
             | FinishedMessage -> ()
 
 // If we write the stderr on those build servers the build will fail.
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
 // stdout is piped to the logger, so colours are lost. AppVeyor supports ANSI color codes.
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let useAnsiColors = buildServer = AppVeyor
 
 /// The default TraceListener for Console.
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let defaultConsoleTraceListener =
   ConsoleTraceListener(importantMessagesToStdErr, colorMap, useAnsiColors)
 
 /// Specifies if the XmlWriter should close tags automatically
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let mutable AutoCloseXmlWriter = false
 
 /// Implements a TraceListener which writes NAnt like XML files.
 /// ## Parameters
 ///  - `xmlOutputFile` - Defines the xml output file.
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 type NAntXmlTraceListener(xmlOutputFile) =
     let xmlOutputPath = FullName xmlOutputFile
     let getXmlWriter() = new IO.StreamWriter(xmlOutputPath, true, encoding)
@@ -176,9 +186,11 @@ type NAntXmlTraceListener(xmlOutputFile) =
             if AutoCloseXmlWriter || msg = FinishedMessage then closeWriter()
 
 /// A List with all registered listeners
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let listeners = new Collections.Generic.List<ITraceListener>()
 
 /// Allows to register a new Xml listeners
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let addXmlListener xmlOutputFile = listeners.Add(new NAntXmlTraceListener(xmlOutputFile))
 
 // register listeners
@@ -186,4 +198,5 @@ listeners.Add defaultConsoleTraceListener
 if hasBuildParam "logfile" || buildServer = CCNet then addXmlListener xmlOutputFile
 
 /// Allows to post messages to all trace listeners
+[<System.Obsolete("please use nuget 'Fake.Core.Trace' and open FSharp.Core instead")>]
 let postMessage x = listeners.ForEach(fun listener -> listener.Write x)
