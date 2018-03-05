@@ -233,8 +233,28 @@ let ImportFiles connectionInfo importFileName files =
                      with _ -> ())
         raise exn
 
+/// Compiles all filtered uncompiled objects in the Dynamics NAV client.
+let CompileWithFilter filter (connectionInfo:DynamicsNavParams) = 
+    let sw = System.Diagnostics.Stopwatch() 
+    sw.Start()
+    let details = ""
+    use __ = traceStartTaskUsing "CompileAll" details
+    let args = 
+        sprintf "command=compileobjects, filter=\"Compiled=0;%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
+            filter
+            (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- connectionInfo.ToolPath
+                info.WorkingDirectory <- connectionInfo.WorkingDir
+                info.Arguments <- args) connectionInfo.TimeOut
+    then reportError (sprintf "Compile with filter %s failed." filter) connectionInfo.TempLogFile
+    tracefn "Compile with filter %s took %dms" filter sw.ElapsedMilliseconds
+
+
 /// Compiles all uncompiled objects in the Dynamics NAV client.
 let CompileAll connectionInfo = 
+    let sw = System.Diagnostics.Stopwatch() 
+    sw.Start()
     let details = ""
     use __ = traceStartTaskUsing "CompileAll" details
     let args = 
@@ -244,7 +264,8 @@ let CompileAll connectionInfo =
                 info.FileName <- connectionInfo.ToolPath
                 info.WorkingDirectory <- connectionInfo.WorkingDir
                 info.Arguments <- args) connectionInfo.TimeOut
-    then reportError "CompileAll failed" connectionInfo.TempLogFile
+    then reportError "CompileAll failed." connectionInfo.TempLogFile
+    tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
 
 /// The parameter type allows to interact with Dynamics NAV RTC.
 type RTCParams = 
