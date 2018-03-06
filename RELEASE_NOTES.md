@@ -1,3 +1,6 @@
+#### 4.64.10 - 06.03.2018
+* Added RunCodeunitWithSettings for DynamicsNAV - https://github.com/fsharp/FAKE/pull/1811
+
 #### 4.64.9 - 05.03.2018
 * CompileWithFilter for DynamicsNAV
 
