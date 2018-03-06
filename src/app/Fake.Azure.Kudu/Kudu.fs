@@ -84,7 +84,7 @@ let zipDeploy { Url = uri; UserName = username; Password = password; PackageLoca
 
     let statusCode =
 #if NETSTANDARD
-        use client = new HttpClient(Timeout = 300000)
+        use client = new HttpClient(Timeout = TimeSpan.FromMilliseconds 300000.)
         client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue("Basic", authToken)
 
         use fileStream = new FileStream(zipFile, FileMode.Open)

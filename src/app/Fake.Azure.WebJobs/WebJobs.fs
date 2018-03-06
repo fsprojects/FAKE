@@ -82,7 +82,7 @@ let private deployWebJobToWebSite webSite webJob =
     let filePath = webJob.PackageLocation
     tracefn "Deploying %s webjob to %O" filePath uploadUri
 #if NETSTANDARD
-    use client = new HttpClient(Timeout = 600000)
+    use client = new HttpClient(Timeout = TimeSpan.FromMilliseconds 600000.)
     let authToken = Convert.ToBase64String(Text.Encoding.ASCII.GetBytes(webSite.UserName + ":" + webSite.Password))
     client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue("Basic", authToken)
 
@@ -92,7 +92,7 @@ let private deployWebJobToWebSite webSite webJob =
     content.Headers.ContentType <- Headers.MediaTypeHeaderValue("application/zip")
 
     let response = client.PutAsync(uploadUri, content).Result
-    let result = response.ReadAsStringAsync().Result
+    let result = response.Content.ReadAsStringAsync().Result
     tracefn "Response from webjob upload: %s" result
 #else
     use client = new WebClientWithTimeout(Credentials = NetworkCredential(webSite.UserName, webSite.Password))

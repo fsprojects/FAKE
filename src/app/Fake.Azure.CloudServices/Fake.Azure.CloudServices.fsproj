@@ -4,9 +4,6 @@
     <AssemblyName>Fake.Azure.CloudServices</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);FX_NO_REMOTING;USE_ASYNC_LOCAL</DefineConstants>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>

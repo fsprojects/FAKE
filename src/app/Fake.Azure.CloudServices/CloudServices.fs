@@ -43,7 +43,9 @@ let ModifyVMSize (VmSizes.VmSize vmSize) cloudService =
         "/svchost:ServiceDefinition/svchost:WorkerRole/@vmsize"
         vmSize
         [ "svchost", "http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" ]
-    |> fun doc -> doc.Save csdefPath
+    |> fun doc ->
+        use fileStream = new FileStream(csdefPath, FileMode.Create)
+        doc.Save fileStream
 
 /// Packages a cloud service role into a .cspkg, ready for deployment.
 let PackageRole packageCloudServiceParams =
