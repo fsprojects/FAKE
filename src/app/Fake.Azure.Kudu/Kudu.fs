@@ -3,6 +3,11 @@ module Fake.Azure.Kudu
 
 open System
 open System.IO
+#if NETSTANDARD
+open System.Net.Http
+#else
+open System.Net
+#endif
 open Fake.Core
 open Fake.Core.Environment
 open Fake.Core.Trace
@@ -75,28 +80,43 @@ type ZipDeployParams =
 /// Synchronizes contents of the zip package with the target web app using Kudu ZipDeploy.
 /// See https://blogs.msdn.microsoft.com/appserviceteam/2017/10/16/zip-push-deployment-for-web-apps-functions-and-webjobs/
 let zipDeploy { Url = uri; UserName = username; Password = password; PackageLocation = zipFile } =
-    // Create the web request.
-    let request =
-        Net.HttpWebRequest.Create(uri.AbsoluteUri + "api/zipdeploy",
+    let authToken = Convert.ToBase64String(Text.Encoding.ASCII.GetBytes(username + ":" + password))
+
+    let statusCode =
+#if NETSTANDARD
+        use client = new HttpClient(Timeout = 300000)
+        client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue("Basic", authToken)
+
+        use fileStream = new FileStream(zipFile, FileMode.Open)
+        use content = new StreamContent(fileStream)
+        content.Headers.ContentType <- Headers.MediaTypeHeaderValue("multipart/form-data")
+
+        let response = client.PostAsync(uri.AbsoluteUri + "api/zipdeploy", content).Result
+        response.StatusCode
+#else
+        // Create the web request.
+        let request =
+            HttpWebRequest.Create(uri.AbsoluteUri + "api/zipdeploy",
                                   Method = "POST",
                                   ContentType = "multipart/form-data",
-                                  Timeout = 300000) :?> Net.HttpWebRequest
+                                  Timeout = 300000) :?> HttpWebRequest
 
-    // Set the authorization header.
-    let authToken =
-        Convert.ToBase64String(Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" username password))
-    request.Headers.Add("Authorization", sprintf "Basic %s" authToken)
+        // Set the authorization header.
+        request.Headers.Add("Authorization", "Basic " + authToken)
 
-    // Write the zip file to the request stream, then flush and close it to send.
-    do  use fileStream = new FileStream(zipFile, FileMode.Open)
-        use inFile = request.GetRequestStream()
-        fileStream.CopyTo(inFile)
-        inFile.Flush()
-        inFile.Close()
+        // Write the zip file to the request stream, then flush and close it to send.
+        do  use fileStream = new FileStream(zipFile, FileMode.Open)
+            use inFile = request.GetRequestStream()
+            fileStream.CopyTo(inFile)
+            inFile.Flush()
+            inFile.Close()
 
-    // Get the response. If 200 OK, then the deploy succeeded. Otherwise, the deploy failed.
-    use response = request.GetResponse() :?> Net.HttpWebResponse
-    if response.StatusCode = Net.HttpStatusCode.OK then
+        // Get the response. If 200 OK, then the deploy succeeded. Otherwise, the deploy failed.
+        use response = request.GetResponse() :?> Net.HttpWebResponse
+        response.StatusCode
+#endif
+
+    if statusCode = Net.HttpStatusCode.OK then
         tracefn "Deployed %s" uri.AbsoluteUri
     else
-        failwithf "Failed to deploy package with status code %A" response.StatusCode
+        failwithf "Failed to deploy package with status code %A" statusCode

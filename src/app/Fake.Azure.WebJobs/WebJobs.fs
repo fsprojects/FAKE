@@ -3,7 +3,11 @@ module Fake.Azure.WebJobs
 
 open System
 open System.IO
+#if NETSTANDARD
+open System.Net.Http
+#else
 open System.Net
+#endif
 open System.Text
 open Fake.Core.Trace
 open Fake.IO
@@ -14,6 +18,8 @@ type WebJobType =
     | Continuous
     | Triggered
 
+#if NETSTANDARD
+#else
 type WebClientWithTimeout() =
     inherit WebClient()
     member val Timeout = 600000 with get, set
@@ -22,6 +28,7 @@ type WebClientWithTimeout() =
         let r = base.GetWebRequest(uri)
         r.Timeout <- x.Timeout
         r
+#endif
 
 /// WebJob type
 type WebJob =
@@ -74,13 +81,28 @@ let private deployWebJobToWebSite webSite webJob =
     let uploadUri = Uri(webSite.Url, sprintf "api/%swebjobs/%s" (jobTypePath webJob.JobType) webJob.Name)
     let filePath = webJob.PackageLocation
     tracefn "Deploying %s webjob to %O" filePath uploadUri
+#if NETSTANDARD
+    use client = new HttpClient(Timeout = 600000)
+    let authToken = Convert.ToBase64String(Text.Encoding.ASCII.GetBytes(webSite.UserName + ":" + webSite.Password))
+    client.DefaultRequestHeaders.Authorization <- Headers.AuthenticationHeaderValue("Basic", authToken)
+
+    use fileStream = new FileStream(filePath, FileMode.Open)
+    use content = new StreamContent(fileStream)
+    content.Headers.ContentDisposition <- Headers.ContentDispositionHeaderValue("attachment; filename=" + (Path.GetFileName webJob.PackageLocation))
+    content.Headers.ContentType <- Headers.MediaTypeHeaderValue("application/zip")
+
+    let response = client.PutAsync(uploadUri, content).Result
+    let result = response.ReadAsStringAsync().Result
+    tracefn "Response from webjob upload: %s" result
+#else
     use client = new WebClientWithTimeout(Credentials = NetworkCredential(webSite.UserName, webSite.Password))
     
     client.Headers.Add(HttpRequestHeader.ContentType, "application/zip")
-    client.Headers.Add("Content-Disposition", sprintf "attachment; filename=%s" (Path.GetFileName webJob.PackageLocation))
+    client.Headers.Add("Content-Disposition", "attachment; filename=" + (Path.GetFileName webJob.PackageLocation))
     
     let response = client.UploadFile(uploadUri, "PUT", filePath)
     tracefn "Response from webjob upload: %s" (Encoding.ASCII.GetString response)
+#endif
 
 let private deployWebJobsToWebSite webSite =
     webSite.WebJobs |> List.iter (deployWebJobToWebSite webSite)
