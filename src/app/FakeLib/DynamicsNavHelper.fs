@@ -309,6 +309,28 @@ let RunCodeunit connectionInfo (codeunitID : int) =
         reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunitID exitCode) 
             connectionInfo.TempLogFile
 
+/// Runs a codeunit with the given ID on the RTC client and the settings file (full path required)
+let RunCodeunitWithSettings connectionInfo settingsFile (codeunitID : int) = 
+    if not (fileExists settingsFile) then
+        failwithf "Given settings file [%s] could not be found!" (Path.GetFileName settingsFile)
+
+    let details = codeunitID.ToString()
+    use __ = traceStartTaskUsing "Running Codeunit" details
+    let args = 
+        sprintf "-settings:\"%s\" -consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
+            settingsFile
+            connectionInfo.ServerName connectionInfo.Port connectionInfo.ServiceTierName connectionInfo.Company 
+            codeunitID
+    
+    let exitCode = 
+        ExecProcess (fun info -> 
+            info.FileName <- connectionInfo.ToolPath
+            info.WorkingDirectory <- connectionInfo.WorkingDir
+            info.Arguments <- args) connectionInfo.TimeOut
+    if exitCode <> 0 && exitCode <> 255 then 
+        reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunitID exitCode) 
+            connectionInfo.TempLogFile
+
 /// Opens a page with the given ID on the RTC client
 let OpenPage connectionInfo pageNo = 
     let details = sprintf "%d" pageNo
