@@ -103,7 +103,7 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'setParams' - set download installer options
-    let DotNetDownloadInstaller setParams =
+    let DownloadInstaller setParams =
         let param = InstallerOptions.Default |> setParams
 
         let ext = if Environment.isUnix then "sh" else "ps1"
@@ -315,7 +315,7 @@ module DotNet =
     /// - 'setParams' - set installation options
     let Install setParams =
         let param = CliInstallOptions.Default |> setParams
-        let installScript = DotNetDownloadInstaller param.InstallerOptions
+        let installScript = DownloadInstaller param.InstallerOptions
 
         let exitCode =
             let args, fileName =
@@ -346,7 +346,7 @@ module DotNet =
         if exitCode <> 0 then
             // force download new installer script
             Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
-            DotNetDownloadInstaller (param.InstallerOptions >> (fun o ->
+            DownloadInstaller (param.InstallerOptions >> (fun o ->
                 { o with
                     AlwaysDownload = true
                 })) |> ignore
