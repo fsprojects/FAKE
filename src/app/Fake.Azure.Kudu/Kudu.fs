@@ -10,7 +10,6 @@ open System.Net
 #endif
 open Fake.Core
 open Fake.Core.Environment
-open Fake.Core.Trace
 open Fake.IO
 
 /// Location where staged outputs should go before synced up to the site.
@@ -29,8 +28,8 @@ type WebJobType = Scheduled | Continuous
 
 // Some initial cleanup / prep
 do
-    Directory.CreateDirectory deploymentTemp |> ignore
-    Directory.CreateDirectory deploymentTarget |> ignore
+    Directory.ensure deploymentTemp |> ignore
+    Directory.ensure deploymentTarget |> ignore
     Shell.CleanDir deploymentTemp
 
 /// <summary>
@@ -51,7 +50,7 @@ let getWebJobPath webJobType webJobName =
 /// Stages a set of files into a WebJob folder in the temp deployment area, ready for deployment into the website as a webjob.
 let stageWebJob webJobType webJobName files =
     let webJobPath = getWebJobPath webJobType webJobName
-    Directory.CreateDirectory webJobPath |> ignore
+    Directory.ensure webJobPath |> ignore
     files |> Shell.CopyFiles webJobPath
 
 /// Synchronises all staged files from the temporary deployment to the actual deployment, removing
@@ -117,6 +116,6 @@ let zipDeploy { Url = uri; UserName = username; Password = password; PackageLoca
 #endif
 
     if statusCode = Net.HttpStatusCode.OK then
-        tracefn "Deployed %s" uri.AbsoluteUri
+        Trace.tracefn "Deployed %s" uri.AbsoluteUri
     else
         failwithf "Failed to deploy package with status code %A" statusCode
