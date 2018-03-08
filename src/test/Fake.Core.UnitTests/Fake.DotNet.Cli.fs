@@ -1,7 +1,7 @@
 module Fake.DotNet.CliTests
 
 open Fake.Core
-open Fake.DotNet.Cli
+open Fake.DotNet
 open Expecto
 
 [<Tests>]

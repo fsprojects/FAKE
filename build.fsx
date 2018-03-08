@@ -59,12 +59,7 @@ open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
 open Fake.Windows
-#if BOOTSTRAP
 open Fake.DotNet
-open Fake.DotNet.Cli
-#else
-open Fake.DotNet
-#endif
 open Fake.DotNet.Testing
 
 // properties

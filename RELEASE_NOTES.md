@@ -1,3 +1,7 @@
+#### 5.0.0-beta024
+
+* ENHANCEMENT: Refactor Dotnet API - https://github.com/fsharp/FAKE/issues/1808
+
 #### 5.0.0-beta023
 * [CORE-PROCESS] ENHANCEMENT: Experiment with new Process API
 * [CORE-TRACE] ENHANCEMENT: Add `TraceSecrets`-API to prevent FAKE from printing secrets
