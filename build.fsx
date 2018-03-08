@@ -421,7 +421,7 @@ Target.Create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     #if BOOTSTRAP
     let processResult =
-        DotNet.Raw (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
+        DotNet.Exec (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
     #else
     let processResult =
         Cli.DotNet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
