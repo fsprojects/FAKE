@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>DotNetTestOptions - FAKE - F# Make</title>
+		<title>DotNet - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,150 +191,149 @@
 
 
 
-<a name="DotNetTestOptions" class="anchor" href="#DotNetTestOptions" ><h1>DotNetTestOptions</h1></a>
+<a name="DotNet" class="anchor" href="#DotNet"><h1>DotNet</h1></a>
 <div class="xmldoc">
-<p>dotnet build command options</p>
-
 </div>
-  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-buildconfiguration.html">BuildConfiguration</a>
+          </td>
+          <td class="xmldoc"><p>build configuration</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-buildoptions.html">BuildOptions</a>
+          </td>
+          <td class="xmldoc"><p>dotnet build command options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-cliarchitecture.html">CliArchitecture</a>
+          </td>
+          <td class="xmldoc"><p>.NET Core SDK architecture</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-cliinstalloptions.html">CliInstallOptions</a>
+          </td>
+          <td class="xmldoc"><p>.NET Core SDK install options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-cliversion.html">CliVersion</a>
+          </td>
+          <td class="xmldoc"><p>.NET Core SDK version (used to specify version when installing .NET Core SDK)</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-infooptions.html">InfoOptions</a>
+          </td>
+          <td class="xmldoc"><p>dotnet --info command options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-inforesult.html">InfoResult</a>
+          </td>
+          <td class="xmldoc"><p>dotnet info result</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-installeroptions.html">InstallerOptions</a>
+          </td>
+          <td class="xmldoc"><p>.NET Core SDK installer download options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-options.html">Options</a>
+          </td>
+          <td class="xmldoc"><p>dotnet cli command execution options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-packoptions.html">PackOptions</a>
+          </td>
+          <td class="xmldoc"><p>dotnet pack command options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-publishoptions.html">PublishOptions</a>
+          </td>
+          <td class="xmldoc"><p>dotnet publish command options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-restoreoptions.html">RestoreOptions</a>
+          </td>
+          <td class="xmldoc"><p>dotnet restore command options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-testoptions.html">TestOptions</a>
+          </td>
+          <td class="xmldoc"><p>dotnet build command options</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-dotnet-verbosity.html">Verbosity</a>
+          </td>
+          <td class="xmldoc"><p>dotnet restore verbosity</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4194', 4194)" onmouseover="showTip(event, '4194', 4194)">
-            Collect
+          <code onmouseout="hideTip(event, '1451', 1451)" onmouseover="showTip(event, '1451', 1451)">
+            Build
           </code>
-          <div class="tip" id="4194">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L828-828" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Enables data collector for the test run. More info here : <a href="https://aka.ms/vstest-collect">https://aka.ms/vstest-collect</a> (--collect)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4195', 4195)" onmouseover="showTip(event, '4195', 4195)">
-            Common
-          </code>
-          <div class="tip" id="4195">
-            <strong>Signature:</strong> DotNetOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L799-799" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Common tool options</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4196', 4196)" onmouseover="showTip(event, '4196', 4196)">
-            Configuration
-          </code>
-          <div class="tip" id="4196">
-            <strong>Signature:</strong> BuildConfiguration<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L816-816" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Configuration to use for building the project.  Default for most projects is  "Debug". (--configuration)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4197', 4197)" onmouseover="showTip(event, '4197', 4197)">
-            Diag
-          </code>
-          <div class="tip" id="4197">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L822-822" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Enable verbose logs for test platform. Logs are written to the provided file. (--diag)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4198', 4198)" onmouseover="showTip(event, '4198', 4198)">
-            Filter
-          </code>
-          <div class="tip" id="4198">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L810-810" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Run tests that match the given expression. (--filter)
-Examples:
-Run tests with priority set to 1: --filter "Priority = 1"
-Run a test with the specified full name: --filter "FullyQualifiedName=Namespace.ClassName.MethodName"
-Run tests that contain the specified name: --filter "FullyQualifiedName~Namespace.Class"
-More info on filtering support: <a href="https://aka.ms/vstest-filtering">https://aka.ms/vstest-filtering</a></p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4199', 4199)" onmouseover="showTip(event, '4199', 4199)">
-            Framework
-          </code>
-          <div class="tip" id="4199">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L818-818" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Target framework to publish for. The target framework has to be specified in the project file. (--framework)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4200', 4200)" onmouseover="showTip(event, '4200', 4200)">
-            ListTests
-          </code>
-          <div class="tip" id="4200">
-            <strong>Signature:</strong> bool<br />
+          <div class="tip" id="1451">
+            <strong>Signature:</strong> (BuildOptions -&gt; BuildOptions) -&gt; string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -342,27 +341,30 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Lists discovered tests (--list-tests)</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4201', 4201)" onmouseover="showTip(event, '4201', 4201)">
-            Logger
+          <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
+            Compile(setParams project)
           </code>
-          <div class="tip" id="4201">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1452">
+            <strong>Signature:</strong> setParams:(BuildOptions -&gt; BuildOptions) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L814-814" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L796-796" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Specify a logger for test results. (--logger)</p>
+          <p>Execute dotnet build command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set compile command parameters</li>
+<li>'project' - project to compile</li>
+</ul>
 
 
         </td>
@@ -370,19 +372,19 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4202', 4202)" onmouseover="showTip(event, '4202', 4202)">
-            NoBuild
+          <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
+            DefaultDotNetCliDir
           </code>
-          <div class="tip" id="4202">
-            <strong>Signature:</strong> bool<br />
+          <div class="tip" id="1453">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L824-824" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L45-45" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Do not build project before testing. (--no-build)</p>
+          <p>.NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location.</p>
 
 
         </td>
@@ -390,19 +392,23 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4203', 4203)" onmouseover="showTip(event, '4203', 4203)">
-            NoRestore
+          <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
+            DownloadInstaller(setParams)
           </code>
-          <div class="tip" id="4203">
-            <strong>Signature:</strong> bool<br />
+          <div class="tip" id="1454">
+            <strong>Signature:</strong> setParams:(InstallerOptions -&gt; InstallerOptions) -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L830-830" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L114-114" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Does not do an implicit restore when executing the command. (--no-restore)</p>
+          <p>Download .NET Core SDK installer</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set download installer options</li>
+</ul>
 
 
         </td>
@@ -410,19 +416,25 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4204', 4204)" onmouseover="showTip(event, '4204', 4204)">
-            Output
+          <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
+            Exec(buildOptions command args)
           </code>
-          <div class="tip" id="4204">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1455">
+            <strong>Signature:</strong> buildOptions:(Options -&gt; Options) -&gt; command:string -&gt; args:string -&gt; ProcessResult<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L820-820" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L443-443" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Directory in which to find the binaries to be run (--output)</p>
+          <p>Execute raw dotnet cli command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'options' - common execution options</li>
+<li>'command' - the sdk command to execute 'test', 'new', 'build', ...</li>
+<li>'args' - command arguments</li>
+</ul>
 
 
         </td>
@@ -430,19 +442,19 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4205', 4205)" onmouseover="showTip(event, '4205', 4205)">
-            ResultsDirectory
+          <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
+            GetSDKVersionFromGlobalJson()
           </code>
-          <div class="tip" id="4205">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1456">
+            <strong>Signature:</strong> unit -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L826-826" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L910-910" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>The directory where the test results are going to be placed. The specified directory will be created if it does not exist. (--results-directory)</p>
+          <p>Gets the DotNet SDK from the global.json</p>
 
 
         </td>
@@ -450,19 +462,23 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4206', 4206)" onmouseover="showTip(event, '4206', 4206)">
-            RunSettingsArguments
+          <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
+            Info(setParams)
           </code>
-          <div class="tip" id="4206">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1457">
+            <strong>Signature:</strong> setParams:(InfoOptions -&gt; InfoOptions) -&gt; InfoResult<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L832-832" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L654-654" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.</p>
+          <p>Execute dotnet --info command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set info command parameters</li>
+</ul>
 
 
         </td>
@@ -470,19 +486,23 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4207', 4207)" onmouseover="showTip(event, '4207', 4207)">
-            Settings
+          <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
+            Install(setParams)
           </code>
-          <div class="tip" id="4207">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1458">
+            <strong>Signature:</strong> setParams:(CliInstallOptions -&gt; CliInstallOptions) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L801-801" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L324-324" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Settings to use when running tests (--settings)</p>
+          <p>Install .NET Core SDK if required</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set installation options</li>
+</ul>
 
 
         </td>
@@ -490,47 +510,44 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4208', 4208)" onmouseover="showTip(event, '4208', 4208)">
-            TestAdapterPath
+          <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
+            LatestPreview4ToolingOptions(options)
           </code>
-          <div class="tip" id="4208">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1459">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L812-812" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L194-194" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Use custom adapters from the given path in the test run. (--test-adapter-path)</p>
+          <p>.NET Core SDK install options preconfigured for preview4 tooling</p>
 
 
         </td>
       </tr>
-    </tbody>
-  </table>
-  <a name="Instance members" class="anchor" href="#Instance members"><h3>Instance members</h3></a>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4209', 4209)" onmouseover="showTip(event, '4209', 4209)">
-            Environment
+          <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
+            Pack(setParams project)
           </code>
-          <div class="tip" id="4209">
-            <strong>Signature:</strong> Map&lt;string,string&gt;<br />
+          <div class="tip" id="1460">
+            <strong>Signature:</strong> setParams:(PackOptions -&gt; PackOptions) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L856-856" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L616-616" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Gets the current environment</p>
+          <p>Execute dotnet pack command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set pack command parameters</li>
+<li>'project' - project to pack</li>
+</ul>
 
 
         </td>
@@ -538,19 +555,19 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4210', 4210)" onmouseover="showTip(event, '4210', 4210)">
-            WithEnvironment(map)
+          <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
+            Preview2ToolingOptions(options)
           </code>
-          <div class="tip" id="4210">
-            <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; DotNetTestOptions<br />
+          <div class="tip" id="1461">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L858-858" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L183-183" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Sets the current environment variables.</p>
+          <p>.NET Core SDK install options preconfigured for preview2 tooling</p>
 
 
         </td>
@@ -558,47 +575,44 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4211', 4211)" onmouseover="showTip(event, '4211', 4211)">
-            WithRedirectOutput(shouldRedirect)
+          <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
+            Preview4_004233ToolingOptions(options)
           </code>
-          <div class="tip" id="4211">
-            <strong>Signature:</strong> shouldRedirect:bool -&gt; DotNetTestOptions<br />
+          <div class="tip" id="1462">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L861-861" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L204-204" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Sets a value indicating whether the output for the given process is redirected.</p>
+          <p>.NET Core SDK install options preconfigured for preview4 tooling</p>
 
 
         </td>
       </tr>
-    </tbody>
-  </table>
-  <a name="Static members" class="anchor" href="#Static members"><h3>Static members</h3></a>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4212', 4212)" onmouseover="showTip(event, '4212', 4212)">
-            Create()
+          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
+            Publish(setParams project)
           </code>
-          <div class="tip" id="4212">
-            <strong>Signature:</strong> unit -&gt; DotNetTestOptions<br />
+          <div class="tip" id="1463">
+            <strong>Signature:</strong> setParams:(PublishOptions -&gt; PublishOptions) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L836-836" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L731-731" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Parameter default values.</p>
+          <p>Execute dotnet publish command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set publish command parameters</li>
+<li>'project' - project to publish</li>
+</ul>
 
 
         </td>
@@ -606,19 +620,163 @@ More info on filtering support: <a href="https://aka.ms/vstest-filtering">https:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4213', 4213)" onmouseover="showTip(event, '4213', 4213)">
-            Default
+          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
+            RC4_004771ToolingOptions(options)
           </code>
-          <div class="tip" id="4213">
-            <strong>Signature:</strong> DotNetTestOptions<br />
+          <div class="tip" id="1464">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L854-854" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L214-214" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>.NET Core SDK install options preconfigured for preview4 tooling</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
+            RC4_004973ToolingOptions(options)
+          </code>
+          <div class="tip" id="1465">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L225-225" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>.NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1 release of the .NET Core tools</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
+            Release_1_0_4(options)
+          </code>
+          <div class="tip" id="1466">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L235-235" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
           
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1467', 1467)" onmouseover="showTip(event, '1467', 1467)">
+            Release_2_0_0(options)
+          </code>
+          <div class="tip" id="1467">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L245-245" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1468', 1468)" onmouseover="showTip(event, '1468', 1468)">
+            Release_2_0_3(options)
+          </code>
+          <div class="tip" id="1468">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L255-255" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1469', 1469)" onmouseover="showTip(event, '1469', 1469)">
+            Release_2_1_4(options)
+          </code>
+          <div class="tip" id="1469">
+            <strong>Signature:</strong> options:CliInstallOptions -&gt; CliInstallOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L265-265" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1470', 1470)" onmouseover="showTip(event, '1470', 1470)">
+            Restore(setParams project)
+          </code>
+          <div class="tip" id="1470">
+            <strong>Signature:</strong> setParams:(RestoreOptions -&gt; RestoreOptions) -&gt; project:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L542-542" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Execute dotnet restore command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set restore command parameters</li>
+<li>'project' - project to restore packages</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
+            Test(setParams project)
+          </code>
+          <div class="tip" id="1471">
+            <strong>Signature:</strong> setParams:(TestOptions -&gt; TestOptions) -&gt; project:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L900-900" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Execute dotnet build command</p>
+<h2>Parameters</h2>
+<ul>
+<li>'setParams' - set compile command parameters</li>
+<li>'project' - project to compile</li>
+</ul>
+
+
         </td>
       </tr>
     </tbody>

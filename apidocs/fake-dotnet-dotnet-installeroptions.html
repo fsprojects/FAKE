@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>DotNetCliArchitecture - FAKE - F# Make</title>
+		<title>InstallerOptions - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,33 +191,33 @@
 
 
 
-<a name="DotNetCliArchitecture" class="anchor" href="#DotNetCliArchitecture" ><h1>DotNetCliArchitecture</h1></a>
+<a name="InstallerOptions" class="anchor" href="#InstallerOptions" ><h1>InstallerOptions</h1></a>
 <div class="xmldoc">
-<p>.NET Core SDK architecture</p>
+<p>.NET Core SDK installer download options</p>
 
 </div>
-  <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
+  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Union Case</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4121', 4121)" onmouseover="showTip(event, '4121', 4121)">
-            Auto
+          <code onmouseout="hideTip(event, '4148', 4148)" onmouseover="showTip(event, '4148', 4148)">
+            AlwaysDownload
           </code>
-          <div class="tip" id="4121">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4148">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L125-125" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L99-99" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>this value represents currently running OS architecture</p>
+          <p>Always download install script (otherwise install script is cached in temporary folder)</p>
 
 
         </td>
@@ -225,37 +225,49 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4122', 4122)" onmouseover="showTip(event, '4122', 4122)">
-            X64
+          <code onmouseout="hideTip(event, '4149', 4149)" onmouseover="showTip(event, '4149', 4149)">
+            Branch
           </code>
-          <div class="tip" id="4122">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4149">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L127-127" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L101-101" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Download installer from this github branch</p>
+
+
         </td>
       </tr>
+    </tbody>
+  </table>
+  <a name="Static members" class="anchor" href="#Static members"><h3>Static members</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4123', 4123)" onmouseover="showTip(event, '4123', 4123)">
-            X86
+          <code onmouseout="hideTip(event, '4150', 4150)" onmouseover="showTip(event, '4150', 4150)">
+            Default
           </code>
-          <div class="tip" id="4123">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4150">
+            <strong>Signature:</strong> InstallerOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L126-126" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L105-105" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Parameter default values.</p>
+
+
         </td>
       </tr>
     </tbody>

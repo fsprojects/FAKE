@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>DotNetCliInstallOptions - FAKE - F# Make</title>
+		<title>InfoResult - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,9 +191,9 @@
 
 
 
-<a name="DotNetCliInstallOptions" class="anchor" href="#DotNetCliInstallOptions" ><h1>DotNetCliInstallOptions</h1></a>
+<a name="InfoResult" class="anchor" href="#InfoResult" ><h1>InfoResult</h1></a>
 <div class="xmldoc">
-<p>.NET Core SDK install options</p>
+<p>dotnet info result</p>
 
 </div>
   <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
@@ -205,187 +205,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4124', 4124)" onmouseover="showTip(event, '4124', 4124)">
-            Architecture
+          <code onmouseout="hideTip(event, '4147', 4147)" onmouseover="showTip(event, '4147', 4147)">
+            RID
           </code>
-          <div class="tip" id="4124">
-            <strong>Signature:</strong> DotNetCliArchitecture<br />
+          <div class="tip" id="4147">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L150-150" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L648-648" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Architecture</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4125', 4125)" onmouseover="showTip(event, '4125', 4125)">
-            Channel
-          </code>
-          <div class="tip" id="4125">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L144-144" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>.NET Core SDK channel (defaults to normalized installer branch)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4126', 4126)" onmouseover="showTip(event, '4126', 4126)">
-            CustomInstallDir
-          </code>
-          <div class="tip" id="4126">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L148-148" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Custom installation directory (for local build installation)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4127', 4127)" onmouseover="showTip(event, '4127', 4127)">
-            DebugSymbols
-          </code>
-          <div class="tip" id="4127">
-            <strong>Signature:</strong> bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L152-152" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Include symbols in the installation (Switch does not work yet. Symbols zip is not being uploaded yet)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4128', 4128)" onmouseover="showTip(event, '4128', 4128)">
-            DryRun
-          </code>
-          <div class="tip" id="4128">
-            <strong>Signature:</strong> bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L154-154" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>If set it will not perform installation but instead display what command line to use</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4129', 4129)" onmouseover="showTip(event, '4129', 4129)">
-            InstallerOptions
-          </code>
-          <div class="tip" id="4129">
-            <strong>Signature:</strong> DotNetInstallerOptions -&gt; DotNetInstallerOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L142-142" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Custom installer obtain (download) options</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4130', 4130)" onmouseover="showTip(event, '4130', 4130)">
-            NoPath
-          </code>
-          <div class="tip" id="4130">
-            <strong>Signature:</strong> bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L156-156" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Do not update path variable</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4131', 4131)" onmouseover="showTip(event, '4131', 4131)">
-            Version
-          </code>
-          <div class="tip" id="4131">
-            <strong>Signature:</strong> DotNetCliVersion<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L146-146" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>.NET Core SDK version</p>
-
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <a name="Static members" class="anchor" href="#Static members"><h3>Static members</h3></a>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4132', 4132)" onmouseover="showTip(event, '4132', 4132)">
-            Default
-          </code>
-          <div class="tip" id="4132">
-            <strong>Signature:</strong> DotNetCliInstallOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L160-160" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Parameter default values.</p>
+          <p>Common tool options</p>
 
 
         </td>

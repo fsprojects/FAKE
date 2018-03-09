@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>DotNetPublishOptions - FAKE - F# Make</title>
+		<title>CliInstallOptions - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,9 +191,9 @@
 
 
 
-<a name="DotNetPublishOptions" class="anchor" href="#DotNetPublishOptions" ><h1>DotNetPublishOptions</h1></a>
+<a name="CliInstallOptions" class="anchor" href="#CliInstallOptions" ><h1>CliInstallOptions</h1></a>
 <div class="xmldoc">
-<p>dotnet publish command options</p>
+<p>.NET Core SDK install options</p>
 
 </div>
   <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
@@ -205,19 +205,39 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4168', 4168)" onmouseover="showTip(event, '4168', 4168)">
-            BuildBasePath
+          <code onmouseout="hideTip(event, '4129', 4129)" onmouseover="showTip(event, '4129', 4129)">
+            Architecture
           </code>
-          <div class="tip" id="4168">
+          <div class="tip" id="4129">
+            <strong>Signature:</strong> CliArchitecture<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L161-161" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Architecture</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4130', 4130)" onmouseover="showTip(event, '4130', 4130)">
+            Channel
+          </code>
+          <div class="tip" id="4130">
             <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L671-671" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L155-155" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Build base path (--build-base-path)</p>
+          <p>.NET Core SDK channel (defaults to normalized installer branch)</p>
 
 
         </td>
@@ -225,59 +245,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4169', 4169)" onmouseover="showTip(event, '4169', 4169)">
-            Common
+          <code onmouseout="hideTip(event, '4131', 4131)" onmouseover="showTip(event, '4131', 4131)">
+            CustomInstallDir
           </code>
-          <div class="tip" id="4169">
-            <strong>Signature:</strong> DotNetOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L663-663" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Common tool options</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4170', 4170)" onmouseover="showTip(event, '4170', 4170)">
-            Configuration
-          </code>
-          <div class="tip" id="4170">
-            <strong>Signature:</strong> BuildConfiguration<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L665-665" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Pack configuration (--configuration)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4171', 4171)" onmouseover="showTip(event, '4171', 4171)">
-            Framework
-          </code>
-          <div class="tip" id="4171">
+          <div class="tip" id="4131">
             <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L667-667" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L159-159" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Target framework to compile for (--framework)</p>
+          <p>Custom installation directory (for local build installation)</p>
 
 
         </td>
@@ -285,19 +265,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4172', 4172)" onmouseover="showTip(event, '4172', 4172)">
-            NoBuild
+          <code onmouseout="hideTip(event, '4132', 4132)" onmouseover="showTip(event, '4132', 4132)">
+            DebugSymbols
           </code>
-          <div class="tip" id="4172">
+          <div class="tip" id="4132">
             <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L677-677" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L163-163" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>No build flag (--no-build)</p>
+          <p>Include symbols in the installation (Switch does not work yet. Symbols zip is not being uploaded yet)</p>
 
 
         </td>
@@ -305,19 +285,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4173', 4173)" onmouseover="showTip(event, '4173', 4173)">
-            OutputPath
+          <code onmouseout="hideTip(event, '4133', 4133)" onmouseover="showTip(event, '4133', 4133)">
+            DryRun
           </code>
-          <div class="tip" id="4173">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="4133">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L673-673" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L165-165" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Output path (--output)</p>
+          <p>If set it will not perform installation but instead display what command line to use</p>
 
 
         </td>
@@ -325,19 +305,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4174', 4174)" onmouseover="showTip(event, '4174', 4174)">
-            Runtime
+          <code onmouseout="hideTip(event, '4134', 4134)" onmouseover="showTip(event, '4134', 4134)">
+            InstallerOptions
           </code>
-          <div class="tip" id="4174">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="4134">
+            <strong>Signature:</strong> InstallerOptions -&gt; InstallerOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L669-669" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L153-153" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Target runtime to publish for (--runtime)</p>
+          <p>Custom installer obtain (download) options</p>
 
 
         </td>
@@ -345,47 +325,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4175', 4175)" onmouseover="showTip(event, '4175', 4175)">
-            VersionSuffix
+          <code onmouseout="hideTip(event, '4135', 4135)" onmouseover="showTip(event, '4135', 4135)">
+            NoPath
           </code>
-          <div class="tip" id="4175">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="4135">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L675-675" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L167-167" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Defines what <code>*</code> should be replaced with in version field in project.json (--version-suffix)</p>
-
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <a name="Instance members" class="anchor" href="#Instance members"><h3>Instance members</h3></a>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4176', 4176)" onmouseover="showTip(event, '4176', 4176)">
-            Environment
-          </code>
-          <div class="tip" id="4176">
-            <strong>Signature:</strong> Map&lt;string,string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L694-694" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Gets the current environment</p>
+          <p>Do not update path variable</p>
 
 
         </td>
@@ -393,39 +345,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4177', 4177)" onmouseover="showTip(event, '4177', 4177)">
-            WithEnvironment(map)
+          <code onmouseout="hideTip(event, '4136', 4136)" onmouseover="showTip(event, '4136', 4136)">
+            Version
           </code>
-          <div class="tip" id="4177">
-            <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; DotNetPublishOptions<br />
+          <div class="tip" id="4136">
+            <strong>Signature:</strong> CliVersion<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L696-696" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L157-157" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Sets the current environment variables.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4178', 4178)" onmouseover="showTip(event, '4178', 4178)">
-            WithRedirectOutput(shouldRedirect)
-          </code>
-          <div class="tip" id="4178">
-            <strong>Signature:</strong> shouldRedirect:bool -&gt; DotNetPublishOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L699-699" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Sets a value indicating whether the output for the given process is redirected.</p>
+          <p>.NET Core SDK version</p>
 
 
         </td>
@@ -441,39 +373,21 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4179', 4179)" onmouseover="showTip(event, '4179', 4179)">
-            Create()
+          <code onmouseout="hideTip(event, '4137', 4137)" onmouseover="showTip(event, '4137', 4137)">
+            Default
           </code>
-          <div class="tip" id="4179">
-            <strong>Signature:</strong> unit -&gt; DotNetPublishOptions<br />
+          <div class="tip" id="4137">
+            <strong>Signature:</strong> CliInstallOptions<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L681-681" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L171-171" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
           <p>Parameter default values.</p>
 
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '4180', 4180)" onmouseover="showTip(event, '4180', 4180)">
-            Default
-          </code>
-          <div class="tip" id="4180">
-            <strong>Signature:</strong> DotNetPublishOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L692-692" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
         </td>
       </tr>
     </tbody>

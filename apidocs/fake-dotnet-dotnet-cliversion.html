@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>DotNetInfoResult - FAKE - F# Make</title>
+		<title>CliVersion - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,33 +191,73 @@
 
 
 
-<a name="DotNetInfoResult" class="anchor" href="#DotNetInfoResult" ><h1>DotNetInfoResult</h1></a>
+<a name="CliVersion" class="anchor" href="#CliVersion" ><h1>CliVersion</h1></a>
 <div class="xmldoc">
-<p>dotnet info result</p>
+<p>.NET Core SDK version (used to specify version when installing .NET Core SDK)</p>
 
 </div>
-  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
+  <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4142', 4142)" onmouseover="showTip(event, '4142', 4142)">
-            RID
+          <code onmouseout="hideTip(event, '4138', 4138)" onmouseover="showTip(event, '4138', 4138)">
+            Latest
           </code>
-          <div class="tip" id="4142">
+          <div class="tip" id="4138">
+            <strong>Signature:</strong> <br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L143-143" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>most latest build on specific channel</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4139', 4139)" onmouseover="showTip(event, '4139', 4139)">
+            Lkg
+          </code>
+          <div class="tip" id="4139">
+            <strong>Signature:</strong> <br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L145-145" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>last known good version on specific channel (Note: LKG work is in progress. Once the work is finished, this will become new default)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4140', 4140)" onmouseover="showTip(event, '4140', 4140)">
+            Version(string)
+          </code>
+          <div class="tip" id="4140">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L637-637" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L147-147" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Common tool options</p>
+          <p>4-part version in a format A.B.C.D - represents specific version of build</p>
 
 
         </td>
