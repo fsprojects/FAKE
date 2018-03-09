@@ -59,7 +59,7 @@ module DotNet =
             Process.tryFindFileOnPath "dotnet"
                 |> function
                     | Some dotnet when File.Exists dotnet -> dotnet
-    | _ -> failwithf "Can't find dotnet CLI. Looked in %s and on PATH" defaultCliPath
+                    | _ -> failwithf "Can't find dotnet CLI. Looked in %s and on PATH" defaultCliPath
 
     /// Get .NET Core SDK download uri
     let private getGenericDotNetCliInstallerUrl branch installerName =
