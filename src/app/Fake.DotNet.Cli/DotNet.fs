@@ -51,7 +51,15 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'dotnetCliDir' - dotnet cli install directory
-    let private dotnetCliPath dotnetCliDir = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
+    let private dotnetCliPath dotnetCliDir = 
+        let defaultCliPath = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
+        match File.Exists defaultCliPath with
+        | true -> defaultCliPath
+        | _ -> 
+            Process.tryFindFileOnPath "dotnet"
+                |> function
+                    | Some dotnet when File.Exists dotnet -> dotnet
+                    | _ -> failwithf "Can't find dotnet CLI. Looked in %s and on PATH" defaultCliPath
 
     /// Get .NET Core SDK download uri
     let private getGenericDotNetCliInstallerUrl branch installerName =
