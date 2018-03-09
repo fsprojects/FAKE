@@ -415,21 +415,13 @@ Target.Create "DotNetCoreIntegrationTests" (fun _ ->
     |> NUnit3.NUnit3 id
 )
 
-#if BOOTSTRAP
 let withWorkDir wd (cliOpts: DotNet.Options) = { cliOpts with WorkingDirectory = wd }
-#else
-let withWorkDir wd (cliOpts:Cli.DotNetOptions) = { cliOpts with WorkingDirectory = wd }
-#endif
 
 Target.Create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
-    #if BOOTSTRAP
     let processResult =
         DotNet.Exec (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
-    #else
-    let processResult =
-        Cli.DotNet (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
-    #endif
+
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
 )
 
@@ -660,7 +652,6 @@ Target.Create "CreateNuGet" (fun _ ->
 
 
 let LatestTooling options =
-    #if BOOTSTRAP
     { options with
         DotNet.InstallerOptions = (fun io ->
             { io with
@@ -669,27 +660,10 @@ let LatestTooling options =
         DotNet.Channel = None
         DotNet.Version = DotNet.Version "2.1.4"
     }
-    #else
-    { options with
-        Cli.InstallerOptions = (fun io ->
-            { io with
-                Branch = "release/2.1"
-            })
-        Cli.Channel = None
-        Cli.Version = Cli.Version "2.1.4"
-    }
-    #endif
 
-#if BOOTSTRAP
 Target.Create "InstallDotNetCore" (fun _ ->
     DotNet.Install DotNet.Release_2_1_4
 )
-#else
-Target.Create "InstallDotNetCore" (fun _ ->
-
-    Cli.DotNetCliInstall Cli.Release_2_1_4
-)
-#endif
 
 let netCoreProjs =
     !! (appDir </> "*/*.fsproj")
@@ -719,7 +693,6 @@ Target.Create "DotNetPackage_" (fun _ ->
 
 
     // dotnet pack
-    #if BOOTSTRAP
     DotNet.Pack (fun c ->
         { c with
             Configuration = DotNet.Release
@@ -727,15 +700,6 @@ Target.Create "DotNetPackage_" (fun _ ->
         }) "Fake.sln"
 
     let info = DotNet.Info id
-    #else
-    Cli.DotNetPack (fun c ->
-        { c with
-            Configuration = Cli.Release
-            OutputPath = Some nugetDir
-        }) "Fake.sln"
-
-    let info = Cli.DotNetInfo id
-    #endif
 
     // dotnet publish
     runtimes
@@ -752,21 +716,12 @@ Target.Create "DotNetPackage_" (fun _ ->
 
             //DotNetRestore (fun c -> {c with Runtime = Some runtime}) proj
             let outDir = nugetDir @@ projName @@ runtimeName
-            #if BOOTSTRAP
             DotNet.Publish (fun c ->
                 { c with
                     Runtime = Some runtime
                     Configuration = DotNet.Release
                     OutputPath = Some outDir
                 }) proj
-            #else
-            Cli.DotNetPublish (fun c ->
-                { c with
-                    Runtime = Some runtime
-                    Configuration = Cli.Release
-                    OutputPath = Some outDir
-                }) proj
-            #endif
             let source = outDir </> "dotnet"
             if File.Exists source then
                 failwithf "Workaround no longer required?" //TODO: If this is not triggered delete this block
@@ -780,20 +735,11 @@ Target.Create "DotNetPackage_" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = appDir </> "Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-    #if BOOTSTRAP
     DotNet.Publish (fun c ->
         { c with
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
         }) netcoreFsproj
-    #else
-    Cli.DotNetPublish (fun c ->
-        { c with
-            Framework = Some "netcoreapp2.0"
-            OutputPath = Some outDir
-        }) netcoreFsproj
-    #endif
-
 )
 
 Target.Create "DotNetCoreCreateZipPackages" (fun _ ->
