@@ -1,0 +1,8 @@
+group netcore
+
+FSharp.Core
+NETStandard.Library
+System.Diagnostics.FileVersionInfo
+System.Diagnostics.Process
+System.IO.FileSystem.Watcher
+System.Net.Http
