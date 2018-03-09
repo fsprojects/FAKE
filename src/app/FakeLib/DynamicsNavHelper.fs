@@ -7,8 +7,6 @@ open System.IO
 open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
-open System.Runtime.InteropServices
-open System.Runtime.InteropServices
 
 module Replacements =
     let isWin8 = 
@@ -255,9 +253,9 @@ let CompileWithFilter filter (connectionInfo:DynamicsNavParams) =
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
     let args =
         match connectionInfo.SynchronizeSchemaChanges with
-        | SynchronizeSchemaChanges.No -> args
-        | SynchronizeSchemaChanges.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
-        | SynchronizeSchemaChanges.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+        | SynchronizeSchemaChangesOption.No -> args
+        | SynchronizeSchemaChangesOption.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChangesOption.Force -> args + ", SynchronizeSchemaChanges=\"force\""
 
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
@@ -279,9 +277,9 @@ let CompileAll connectionInfo =
 
     let args =
         match connectionInfo.SynchronizeSchemaChanges with
-        | SynchronizeSchemaChanges.No -> args
-        | SynchronizeSchemaChanges.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
-        | SynchronizeSchemaChanges.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+        | SynchronizeSchemaChangesOption.No -> args
+        | SynchronizeSchemaChangesOption.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChangesOption.Force -> args + ", SynchronizeSchemaChanges=\"force\""
                     
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
