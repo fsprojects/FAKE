@@ -7,7 +7,6 @@ open Fake.IO
 open Fake.IO.Globbing.Operators
 
 /// Configuration details for packaging cloud services.
-[<CLIMutable>]
 type PackageCloudServiceParams =
     { /// The name of the Cloud Service.
       CloudService : string
