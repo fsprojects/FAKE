@@ -1,3 +1,6 @@
+#### 4.64.11 - 09.03.2018
+* Added SynchronizeSchemaChanges for DynamicsNAV
+
 #### 4.64.10 - 06.03.2018
 * Added RunCodeunitWithSettings for DynamicsNAV - https://github.com/fsharp/FAKE/pull/1811
 

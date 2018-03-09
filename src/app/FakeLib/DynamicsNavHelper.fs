@@ -7,6 +7,8 @@ open System.IO
 open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
+open System.Runtime.InteropServices
+open System.Runtime.InteropServices
 
 module Replacements =
     let isWin8 = 
@@ -68,6 +70,12 @@ type NavisionServerType =
         | NavisionServerType.SqlServer -> "MSSQL"
         | NavisionServerType.NativeServer -> "NAVISION"
 
+[<RequireQualifiedAccess>]
+type SynchronizeSchemaChangesOption =
+| No
+| Yes
+| Force 
+
 /// A parameter type to interact with Dynamics NAV
 [<CLIMutable>]
 type DynamicsNavParams = 
@@ -76,6 +84,7 @@ type DynamicsNavParams =
       Database : string
       WorkingDir : string
       TempLogFile : string
+      SynchronizeSchemaChanges : SynchronizeSchemaChangesOption
       TimeOut : TimeSpan }
 
 /// Retrieves the the file name of the Dynamics NAV ClassicClient for the given version from the registry.
@@ -132,6 +141,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
       ServerName = serverName
       Database = targetDatabase
       TempLogFile = "./NavErrorMessages.txt"
+      SynchronizeSchemaChanges = SynchronizeSchemaChangesOption.No
       TimeOut = TimeSpan.FromMinutes 20. }
 
 let private reportError text logFile = 
@@ -243,6 +253,12 @@ let CompileWithFilter filter (connectionInfo:DynamicsNavParams) =
         sprintf "command=compileobjects, filter=\"Compiled=0;%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             filter
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+    let args =
+        match connectionInfo.SynchronizeSchemaChanges with
+        | SynchronizeSchemaChanges.No -> args
+        | SynchronizeSchemaChanges.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChanges.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
                 info.WorkingDirectory <- connectionInfo.WorkingDir
@@ -260,6 +276,13 @@ let CompileAll connectionInfo =
     let args = 
         sprintf "command=compileobjects, filter=\"Compiled=0\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+
+    let args =
+        match connectionInfo.SynchronizeSchemaChanges with
+        | SynchronizeSchemaChanges.No -> args
+        | SynchronizeSchemaChanges.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChanges.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+                    
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
                 info.WorkingDirectory <- connectionInfo.WorkingDir
