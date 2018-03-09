@@ -1,0 +1,12 @@
+group netcore
+
+FSharp.Core
+NETStandard.Library
+System.Diagnostics.FileVersionInfo
+System.Diagnostics.Process
+System.IO.FileSystem.Watcher
+System.Xml.XDocument
+System.Xml.XPath
+System.Xml.XPath.XDocument
+System.Xml.XPath.XmlDocument
+System.Xml.ReaderWriter

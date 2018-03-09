@@ -1,3 +1,8 @@
+#### 5.0.0-beta024
+* ENHANCEMENT: Refactor Dotnet API - https://github.com/fsharp/FAKE/pull/1812
+* BUGFIX: Find `dotnet` on `PATH` - https://github.com/fsharp/FAKE/pull/1813
+* FAKE5: New modules `Fake.Azure.CloudServices`, `Fake.Azure.Emulators`, `Fake.Azure.Kudu` and `Fake.Azure.WebJobs` - https://github.com/fsharp/FAKE/pull/1757
+
 #### 5.0.0-beta023
 * [CORE-PROCESS] ENHANCEMENT: Experiment with new Process API
 * [CORE-TRACE] ENHANCEMENT: Add `TraceSecrets`-API to prevent FAKE from printing secrets

@@ -1,0 +1,9 @@
+group netcore
+
+FSharp.Core
+NETStandard.Library
+System.Diagnostics.FileVersionInfo
+System.IO.Compression
+System.IO.Compression.ZipFile
+System.IO.FileSystem.Watcher
+System.Net.Http
