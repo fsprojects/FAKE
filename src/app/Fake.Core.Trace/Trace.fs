@@ -118,12 +118,6 @@ let traceHeader name =
     trace name
     traceLine()
 
-/// Traces the begin of the build
-let traceStartBuild() = CoreTracing.postMessage StartMessage
-
-/// Traces the end of the build
-let traceEndBuild() = CoreTracing.postMessage FinishedMessage
-
 /// Puts an opening tag on the internal tag stack
 let openTagUnsafe tag description =
     openTags.Value <- tag :: openTags.Value

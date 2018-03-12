@@ -1,3 +1,7 @@
+#### 5.0.0-beta025
+* FAKE5: Concept for Build-Server Support
+* FAKE5: New modules `Fake.BuildServer.TeamCity`
+
 #### 5.0.0-beta024
 * ENHANCEMENT: Refactor Dotnet API - https://github.com/fsharp/FAKE/pull/1812
 * BUGFIX: Find `dotnet` on `PATH` - https://github.com/fsharp/FAKE/pull/1813
