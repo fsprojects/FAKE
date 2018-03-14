@@ -4,7 +4,7 @@
 
 * BREAKING: Update ReleaseNotes module to match new API Guidelines.
 * FAKE5: Concept for Build-Server Support
-* FAKE5: New modules `Fake.BuildServer.TeamCity`
+* FAKE5: New module `Fake.BuildServer.TeamCity`
 
 ## 5.0.0-beta024
 

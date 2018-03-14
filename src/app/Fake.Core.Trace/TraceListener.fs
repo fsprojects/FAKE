@@ -59,6 +59,7 @@ type ImportData =
     | Nunit
     member x.Name =
         match x with
+        | BuildArtifact -> "buildArtifact"
         | DotNetCoverage _ -> "dotNetCoverage"
         | DotNetDupFinder -> "DotNetDupFinder"
         | PmdCpd -> "pmdCpd"
@@ -111,9 +112,9 @@ type TraceData =
         | LogMessage (_, newLine)
         | TraceMessage (_, newLine) -> Some newLine
         | BuildNumber _
-        | TestStatus (_,_)
-        | TestOutput (_,_,_)
-        | ImportData (_,_)
+        | TestStatus _
+        | TestOutput _
+        | ImportData _
         | OpenTag _
         | CloseTag _ -> None
     member x.Message =
@@ -123,9 +124,9 @@ type TraceData =
         | LogMessage (text, _)
         | TraceMessage (text, _) -> Some text
         | BuildNumber _
-        | TestStatus (_,_)
-        | TestOutput (_,_,_)
-        | ImportData (_,_)
+        | TestStatus _
+        | TestOutput _
+        | ImportData _
         | OpenTag _
         | CloseTag _ -> None
 
@@ -172,7 +173,6 @@ module ConsoleWriter =
         | ErrorMessage _ -> ConsoleColor.Red
         | LogMessage _ -> ConsoleColor.Gray
         | TraceMessage _ -> ConsoleColor.Green
-        | FinishedMessage -> ConsoleColor.White
         | _ -> ConsoleColor.Gray
 
 /// Implements a TraceListener for System.Console.
@@ -182,17 +182,22 @@ module ConsoleWriter =
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
     interface ITraceListener with
         /// Writes the given message to the Console.
-        member this.Write msg = 
+        member __.Write msg = 
             let color = colorMap msg
             match msg with
-            | StartMessage -> ()
-            | OpenTag _ -> ()
-            | CloseTag _ -> ()
             | ImportantMessage text | ErrorMessage text ->
                 ConsoleWriter.write importantMessagesToStdErr color true text
             | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
                 ConsoleWriter.write false color newLine text
-            | FinishedMessage -> ()
+            | OpenTag (tag, descr) ->
+                ConsoleWriter.write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+            | CloseTag tag ->
+                ConsoleWriter.write false color true (sprintf "Finished '%s'" tag.Name)
+            | ImportData (typ, path) ->
+                ConsoleWriter.write false color true (sprintf "Import data '%O': %s" typ path)
+            | BuildNumber _
+            | TestOutput _
+            | TestStatus _ -> ()
 
 type TraceSecret =
     { Value : string; Replacement : string }
