@@ -4,6 +4,9 @@
 
 This introduction assumes Fake.Deploy.exe is available in the current directory or path.
 
+**Note: Fake.Deploy is no longer part of FAKE 5 and is considered obsolete and fully replaced by modern deployment systems (puppet, chef, PowerShell DSC, ...). [Announcement](https://github.com/fsharp/FAKE/issues/1820)
+**Tipp: You can still use fake scripts on those alternative deployment systems. Just download the fake binaries and run your scripts.
+
 ## Introduction
 
 The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows:
