@@ -224,6 +224,7 @@ let dotnetAssemblyInfos =
       "Fake.Azure.Emulators", "FAKE - F# Make Azure Emulators Support"
       "Fake.Azure.Kudu", "FAKE - F# Make Azure Kudu Support"
       "Fake.Azure.WebJobs", "FAKE - F# Make Azure Web Jobs Support"
+      "Fake.BuildServer.TeamCity", "FAKE - Integration into TeamCity buildserver"
       "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
@@ -292,8 +293,8 @@ Target.Create "SetAssemblyInfo" (fun _ ->
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
         // Quick-fix: git ls-files -v . | grep ^S | cut -c3- | xargs git update-index --no-skip-worktree
-        //Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
-        //attributes |> AssemblyInfoFile.CreateFSharp assemblyFile
+        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
+        attributes |> AssemblyInfoFile.CreateFSharp assemblyFile
         ()
 )
 
@@ -311,7 +312,7 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
         // While the files are skipped in can be hard to switch between branches
         // Therefore we unskip and revert here.
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
-        //Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
+        Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
         ()
 )
 
