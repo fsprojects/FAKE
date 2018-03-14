@@ -2,16 +2,16 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("FAKE - F# Make Running msbuild")>]
+[<assembly: AssemblyTitleAttribute("FAKE - F# Make Running Xamarin builds")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.0.0")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.0.0-beta025")>]
 [<assembly: AssemblyFileVersionAttribute("5.0.0")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "FAKE - F# Make Running msbuild"
+    let [<Literal>] AssemblyTitle = "FAKE - F# Make Running Xamarin builds"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
     let [<Literal>] AssemblyVersion = "5.0.0"
-    let [<Literal>] AssemblyInformationalVersion = "5.0.0"
+    let [<Literal>] AssemblyInformationalVersion = "5.0.0-beta025"
     let [<Literal>] AssemblyFileVersion = "5.0.0"

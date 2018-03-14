@@ -2,16 +2,16 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("FAKE - Integration into TeamCity buildserver")>]
+[<assembly: AssemblyTitleAttribute("FAKE - F# Make Integration into TeamCity buildserver")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.0.0")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.0.0-beta025")>]
 [<assembly: AssemblyFileVersionAttribute("5.0.0")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "FAKE - Integration into TeamCity buildserver"
+    let [<Literal>] AssemblyTitle = "FAKE - F# Make Integration into TeamCity buildserver"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
     let [<Literal>] AssemblyVersion = "5.0.0"
-    let [<Literal>] AssemblyInformationalVersion = "5.0.0"
+    let [<Literal>] AssemblyInformationalVersion = "5.0.0-beta025"
     let [<Literal>] AssemblyFileVersion = "5.0.0"

@@ -75,7 +75,11 @@ let gitHome = "https://github.com/" + gitOwner
 // The name of the project on GitHub
 let gitName = "FAKE"
 
+#if BOOTSTRAP
+let release = ReleaseNotes.load "RELEASE_NOTES.md"
+#else
 let release = ReleaseNotes.LoadReleaseNotes "RELEASE_NOTES.md"
+#endif
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -220,11 +224,11 @@ let dotnetAssemblyInfos =
     [ "dotnet-fake", "Fake dotnet-cli command line tool"
       "Fake.Api.Slack", "Slack Integration Support"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
-      "Fake.Azure.CloudServices", "FAKE - F# Make Azure Cloud Services Support"
-      "Fake.Azure.Emulators", "FAKE - F# Make Azure Emulators Support"
-      "Fake.Azure.Kudu", "FAKE - F# Make Azure Kudu Support"
-      "Fake.Azure.WebJobs", "FAKE - F# Make Azure Web Jobs Support"
-      "Fake.BuildServer.TeamCity", "FAKE - Integration into TeamCity buildserver"
+      "Fake.Azure.CloudServices", "Azure Cloud Services Support"
+      "Fake.Azure.Emulators", "Azure Emulators Support"
+      "Fake.Azure.Kudu", "Azure Kudu Support"
+      "Fake.Azure.WebJobs", "Azure Web Jobs Support"
+      "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
       "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
