@@ -679,6 +679,9 @@ let netCoreProjs =
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
+module CircleCi =
+    let isCircleCi = Environment.environVarAsBool "CIRCLECI"
+
 Target.Create "DotNetPackage_" (fun _ ->
     // This line actually ensures we get the correct version checked in
     // instead of the one previously bundled with 'fake`
@@ -705,7 +708,10 @@ Target.Create "DotNetPackage_" (fun _ ->
         { c with
             Configuration = DotNet.Release
             OutputPath = Some nugetDir
-            Common = { c.Common with CustomParams = Some "/m:1" }
+            Common = 
+                if CircleCi.isCircleCi then
+                    { c.Common with CustomParams = Some "/m:1" }
+                else c.Common                                
         }) "Fake.sln"
 
     let info = DotNet.Info id
