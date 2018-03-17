@@ -21,4 +21,6 @@ jobs:
           command: |
             export TERM=xterm-256color
             export PATH=$PATH:$PWD/fake-dotnetcore/
+            export MSBUILDDISABLENODEREUSE=1
+            export BuildInParallel=false
             fake run build.fsx
