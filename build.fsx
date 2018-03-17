@@ -307,6 +307,7 @@ Target.Create "DownloadPaket" (fun _ ->
             { info with
                 FileName = ".paket/paket.exe"
                 Arguments = "--version" }
+            |> Process.withFramework                        
             ) (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
 )
