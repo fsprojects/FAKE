@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: /build
     docker:
-      - image: matthid/fsharp-docker
+      - image: mono:5.8.0.127
     steps:
       - checkout
       - run:
