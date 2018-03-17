@@ -21,4 +21,4 @@ jobs:
           command: |
             export TERM=xterm-256color
             export PATH=$PATH:$PWD/fake-dotnetcore/
-            fake run build.fsx'
+            fake run build.fsx
