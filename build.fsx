@@ -307,7 +307,7 @@ Target.Create "DownloadPaket" (fun _ ->
             { info with
                 FileName = ".paket/paket.exe"
                 Arguments = "--version" }
-            |> Process.withFramework                        
+            |> Process.withFramework
             ) (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
 )
@@ -454,6 +454,7 @@ Target.Create "BootstrapTest" (fun _ ->
                         FileName = "chmod"
                         WorkingDirectory = "."
                         Arguments = "+x build/FAKE.exe" }
+                    |> Process.withFramework
                     ) span
                 if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
             Process.Exec (fun info ->
@@ -461,6 +462,7 @@ Target.Create "BootstrapTest" (fun _ ->
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
                 Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\"" script target }
+            |> Process.withFramework
             |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 ) span
 
