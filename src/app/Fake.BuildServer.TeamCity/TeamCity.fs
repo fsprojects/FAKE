@@ -6,6 +6,30 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
+[<AutoOpen>]
+module TypeExtensions =
+    type DotNetCoverageTool with
+        member x.TeamCityName =
+            match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
+
+    type ImportData with
+        member x.TeamCityName =
+            match x with
+            | BuildArtifact -> "buildArtifact"
+            | DotNetCoverage _ -> "dotNetCoverage"
+            | DotNetDupFinder -> "DotNetDupFinder"
+            | PmdCpd -> "pmdCpd"
+            | Pmd -> "pmd"
+            | ReSharperInspectCode -> "ReSharperInspectCode"
+            | Jslint -> "jslint"
+            | FindBugs -> "findBugs"
+            | Checkstyle -> "checkstyle"
+            | Gtest -> "gtest"
+            | Mstest -> "mstest"
+            | Surefire -> "surefire"
+            | Junit -> "junit"
+            | FxCop -> "FxCop"
+            | Nunit -> "nunit"
 
 module TeamCity =
 
@@ -20,6 +44,9 @@ module TeamCity =
     let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
     let sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
+
+
+
 
     module Import =
         /// Sends an NUnit results filename to TeamCity
@@ -61,10 +88,9 @@ module TeamCity =
         /// Sends an ReSharper dupfinder.exe results filename to TeamCity
         let sendDotNetDupFinder path = sendTeamCityImportData "DotNetDupFinder" path
 
-        type TeamCityDotNetCoverageTool = | DotCover | PartCover | NCover | NCover3 with override x.ToString() = match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
         /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity
-        let sendDotNetCoverageForTool path (tool : TeamCityDotNetCoverageTool) =
-            sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (string tool |> TeamCityWriter.scrub) (path |> TeamCityWriter.scrub)
+        let sendDotNetCoverageForTool path (tool : DotNetCoverageTool) =
+            sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (tool.TeamCityName |> TeamCityWriter.scrub) (path |> TeamCityWriter.scrub)
             |> TeamCityWriter.sendStrToTeamCity
 
     /// Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity
@@ -115,6 +141,20 @@ module TeamCity =
         sprintf "##teamcity[testIgnored name='%s' message='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
             (TeamCityWriter.EncapsulateSpecialChars message) |> TeamCityWriter.sendStrToTeamCity
 
+
+    /// Report Standard-Output for a given test-case
+    let ReportTestOutput name output =
+        sprintf "##teamcity[testStdOut name='%s' out='%s']" 
+            (TeamCityWriter.EncapsulateSpecialChars name)
+            (TeamCityWriter.EncapsulateSpecialChars output)
+        |> TeamCityWriter.sendStrToTeamCity
+
+    /// Report Standard-Error for a given test-case
+    let ReportTestError name output =
+        sprintf "##teamcity[testStdErr name='%s' out='%s']" 
+            (TeamCityWriter.EncapsulateSpecialChars name)
+            (TeamCityWriter.EncapsulateSpecialChars output)
+        |> TeamCityWriter.sendStrToTeamCity
 
     /// Ignores the test case.
     let IgnoreTestCaseWithDetails name message details =
@@ -203,18 +243,39 @@ module TeamCity =
             member __.Write msg = 
                 let color = colorMap msg
                 match msg with
+                | OpenTag (KnownTags.Test name, _) ->
+                    StartTestCase name
+                | TestOutput (testName,out,false) ->
+                    ReportTestOutput testName out
+                | TestOutput (testName,out,true) ->
+                    ReportTestError testName out
+                | TestStatus (testName,Ignored message) ->
+                    IgnoreTestCase testName message
+                | TestStatus (testName,Failed(message, detail, None)) ->
+                    TestFailed testName message detail
+                | TestStatus (testName,Failed(message, detail, Some (expected, actual))) ->
+                    ComparisonFailure testName message detail expected actual
+                | CloseTag (KnownTags.Test name, time) ->
+                    FinishTestCase name time
+                | OpenTag (KnownTags.TestSuite name, _) ->
+                    StartTestSuite name
+                | CloseTag (KnownTags.TestSuite name, _) ->
+                    FinishTestSuite name
                 | OpenTag (tag, description) ->
                     TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type description)
-                | CloseTag (tag) ->
+                | CloseTag (tag, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | ImportantMessage text | ErrorMessage text ->
                     ConsoleWriter.write importantMessagesToStdErr color true text
                 | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
-                | TestOutput _
-                | TestStatus _
-                | ImportData _
-                | BuildNumber _ -> ()
+                | ImportData (BuildArtifact, path) ->
+                    PublishArtifact path
+                | ImportData (DotNetCoverage tool, path) ->
+                    Import.sendDotNetCoverageForTool path tool
+                | ImportData (typ, path) ->
+                    sendTeamCityImportData typ.TeamCityName path
+                | BuildNumber number -> SetBuildNumber number
 
     let defaultTraceListener =
       TeamCityTraceListener(false, ConsoleWriter.colorMap) :> ITraceListener

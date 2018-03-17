@@ -13,7 +13,7 @@ type FAKEException(msg) =
     inherit System.Exception(msg)
 
 
-let private openTags = new ThreadLocal<list<KnownTags>>(fun _ -> [])
+let private openTags = new ThreadLocal<list<System.Diagnostics.Stopwatch * KnownTags>>(fun _ -> [])
 
 /// Logs the specified string        
 let log message = LogMessage(message, true) |> CoreTracing.postMessage
@@ -120,13 +120,14 @@ let traceHeader name =
 
 /// Puts an opening tag on the internal tag stack
 let openTagUnsafe tag description =
-    openTags.Value <- tag :: openTags.Value
+    let sw = System.Diagnostics.Stopwatch.StartNew()
+    openTags.Value <- (sw, tag) :: openTags.Value
     OpenTag(tag, description) |> CoreTracing.postMessage
 
 let private asSafeDisposable f =
     let mutable isDisposed = false
     { new System.IDisposable with
-        member __.Dispose () = 
+        member __.Dispose () =
             if not isDisposed then
               isDisposed <- true
               f() }
@@ -137,10 +138,13 @@ let openTag tag description = openTagUnsafe tag description
 
 /// Removes an opening tag from the internal tag stack
 let closeTagUnsafe tag =
-    match openTags.Value with
-    | x :: rest when x = tag -> openTags.Value <- rest
-    | _ -> failwithf "Invalid tag structure. Trying to close %A tag but stack is %A" tag openTags
-    CloseTag tag |> CoreTracing.postMessage
+    let time =
+        match openTags.Value with
+        | (sw, x) :: rest when x = tag -> 
+            openTags.Value <- rest
+            sw.Elapsed
+        | _ -> failwithf "Invalid tag structure. Trying to close %A tag but stack is %A" tag openTags
+    CloseTag (tag, time) |> CoreTracing.postMessage
 
 /// Removes an opening tag from the internal tag stack
 [<System.Obsolete("Consider using traceTag instead and 'use' to properly call closeTag in case of exceptions. To remove this warning use 'closeTagUnsafe'.")>]
@@ -151,7 +155,7 @@ let traceTag tag description =
     asSafeDisposable (fun () -> closeTagUnsafe tag)
 
 
-let closeAllOpenTags() = Seq.iter closeTagUnsafe openTags.Value
+let closeAllOpenTags() = Seq.iter (fun (_, tag) -> closeTagUnsafe tag) openTags.Value
 
 /// Traces the begin of a target
 let traceStartTargetUnsafe name description dependencyString =
@@ -175,7 +179,7 @@ let traceEndTarget name = traceEndTargetUnsafe name
 
 let traceTarget name description dependencyString =
     traceStartTargetUnsafe name description dependencyString
-    asSafeDisposable (fun () -> traceEndTargetUnsafe name )
+    asSafeDisposable (fun () -> traceEndTargetUnsafe name)
 
 /// Traces the begin of a task
 let traceStartTaskUnsafe task description = 
@@ -195,7 +199,7 @@ let traceEndTask task = traceEndTaskUnsafe task
      
 let traceTask name description =
     traceStartTaskUnsafe name description
-    asSafeDisposable (fun () -> traceEndTaskUnsafe name)
+    asSafeDisposable (fun _ -> traceEndTaskUnsafe name)
 
 open System.Diagnostics
 #if DOTNETCORE

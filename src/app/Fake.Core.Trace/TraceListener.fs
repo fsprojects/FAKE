@@ -80,7 +80,7 @@ type ImportData =
         | _ -> x.Name
 
 type TestStatus =
-    | Ignored
+    | Ignored of message:string
     | Failed of message:string * details:string * expectedActual:(string * string) option
 
 module TestStatus =
@@ -104,7 +104,7 @@ type TraceData =
     | OpenTag of KnownTags * description:string
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * isStdErr:bool
-    | CloseTag of KnownTags
+    | CloseTag of KnownTags * time:TimeSpan
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -191,8 +191,8 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
                 ConsoleWriter.write false color newLine text
             | OpenTag (tag, descr) ->
                 ConsoleWriter.write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-            | CloseTag tag ->
-                ConsoleWriter.write false color true (sprintf "Finished '%s'" tag.Name)
+            | CloseTag (tag, time) ->
+                ConsoleWriter.write false color true (sprintf "Finished '%s' in %O" tag.Name time)
             | ImportData (typ, path) ->
                 ConsoleWriter.write false color true (sprintf "Import data '%O': %s" typ path)
             | BuildNumber _
