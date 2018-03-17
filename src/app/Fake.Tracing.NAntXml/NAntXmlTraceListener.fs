@@ -48,7 +48,7 @@ type NAntXmlTraceListener(encoding : Encoding, xmlOutputFile) =
         | ImportantMessage text -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text // TODO: Set Level
         | LogMessage(text, _) | TraceMessage(text, _) -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text
         | OpenTag(tag, _) -> sprintf "<%s name=\"%s\">" tag.Type tag.Name
-        | CloseTag tag -> sprintf "</%s>" tag.Type
+        | CloseTag (tag, _) -> sprintf "</%s>" tag.Type
         | ErrorMessage text -> 
             sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" text
         | TestOutput _
