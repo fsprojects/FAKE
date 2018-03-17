@@ -200,7 +200,7 @@ module TeamCity =
 
         interface ITraceListener with
             /// Writes the given message to the Console.
-            member this.Write msg = 
+            member __.Write msg = 
                 let color = colorMap msg
                 match msg with
                 | OpenTag (tag, description) ->
