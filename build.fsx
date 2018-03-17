@@ -705,6 +705,7 @@ Target.Create "DotNetPackage_" (fun _ ->
         { c with
             Configuration = DotNet.Release
             OutputPath = Some nugetDir
+            Common = { c.Common with CustomParams = Some "/m:1" }
         }) "Fake.sln"
 
     let info = DotNet.Info id
