@@ -19,4 +19,4 @@ jobs:
             chmod +x $PWD/fake-dotnetcore/fake
       - run:
           name: build-project
-command: '$PWD/fake-dotnetcore/fake run build.fsx'
+          command: '$PWD/fake-dotnetcore/fake run build.fsx'
