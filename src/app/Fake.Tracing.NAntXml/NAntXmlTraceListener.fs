@@ -2,12 +2,9 @@
 module Fake.Tracing.NAntXml
 open Fake.Core
 open Fake.IO
-open Fake.Core.BuildServer
 
 open System
 open System.IO
-open System.Reflection
-open System.Threading
 open System.Text
 
 /// Specifies if the XmlWriter should close tags automatically
@@ -35,27 +32,44 @@ type NAntXmlTraceListener(encoding : Encoding, xmlOutputFile) =
             xmlWriter.Dispose()
             xmlWriter <- null
     
+    let writeXml (xml:string) =
+        if isNull xmlWriter then xmlWriter <- getXmlWriter()
+        xml
+        |> xmlWriter.WriteLine
+        xmlWriter.Flush()
+        if AutoCloseXmlWriter then closeWriter()
+    
+    do 
+        deleteOldFile()
+        writeXml "<?xml version=\"1.0\"?>\r\n<buildresults>"
+
     let getXml msg = 
         match msg with
-        | StartMessage -> "<?xml version=\"1.0\"?>\r\n<buildresults>"
         | ImportantMessage text -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text // TODO: Set Level
         | LogMessage(text, _) | TraceMessage(text, _) -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text
-        | FinishedMessage -> "</buildresults>"
-        | OpenTag(tag, description) -> sprintf "<%s name=\"%s\">" tag.Type tag.Name
-        | CloseTag tag -> sprintf "</%s>" tag.Type
+        | OpenTag(tag, _) -> sprintf "<%s name=\"%s\">" tag.Type tag.Name
+        | CloseTag (tag, _) -> sprintf "</%s>" tag.Type
         | ErrorMessage text -> 
             sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" text
-    
+        | TestOutput _
+        | TestStatus _
+        | ImportData _
+        | BuildNumber _ -> ""       
+
+    interface System.IDisposable with
+        member __.Dispose () =
+            writeXml "</buildresults>"
+            closeWriter()
+
+    // All Fake variables get disposed at the end of the build script.
+    // As this listeners will be added to the "Fake.Core.Trace.TraceListeners" variable
+    // and we enumerate all collections it should work fine.
     interface ITraceListener with
         /// Writes the given message to the xml file.
-        member this.Write msg = 
-            if msg = StartMessage then deleteOldFile()
-            if isNull xmlWriter then xmlWriter <- getXmlWriter()
-            msg
-            |> getXml
-            |> xmlWriter.WriteLine
-            xmlWriter.Flush()
-            if AutoCloseXmlWriter || msg = FinishedMessage then closeWriter()
+        member __.Write msg =
+            let xml = getXml msg
+            if not (String.IsNullOrWhiteSpace xml) then
+                 writeXml xml
 
 /// Allows to register a new Xml listeners
 let addXmlListener encoding xmlOutputFile = CoreTracing.addListener (new NAntXmlTraceListener(encoding, xmlOutputFile))

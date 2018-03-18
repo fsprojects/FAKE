@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
-    <AssemblyName>Fake.Net.Http</AssemblyName>
+    <AssemblyName>Fake.BuildServer.AppVeyor</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <PropertyGroup>
@@ -12,13 +12,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Async.fs" />
-    <Compile Include="Result.fs" />
-    <Compile Include="List.fs" />
-    <Compile Include="Http.fs" />
+    <Compile Include="AppVeyorInternal.fs" />
+    <Compile Include="AppVeyor.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
+    <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
+    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <ProjectReference Include="..\Fake.Net.Http\Fake.Net.Http.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -12,9 +12,13 @@ type FakeExecutionContext =
       member x.Dispose () =
         let l = x.Context.Values |> Seq.toList
         x.Context.Clear()
-        l |> Seq.iter (function
-          | :? System.IDisposable as d -> d.Dispose()
-          | _ -> ())
+        let rec cleanSeq (s:System.Collections.IEnumerable) =
+          for item in s do
+            match item with
+            | :? System.IDisposable as d -> d.Dispose()
+            | :? System.Collections.IEnumerable as ie -> cleanSeq ie
+            | _ -> ()
+        cleanSeq l
     static member Create (isCached) scriptFile args =
       { IsCached = isCached
         Context = new System.Collections.Concurrent.ConcurrentDictionary<string, obj>()

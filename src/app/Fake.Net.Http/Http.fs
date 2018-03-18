@@ -9,6 +9,7 @@ open Fake.Core
 open Fake.Net.Async
 open Fake.Net.Result
 open Fake.Net.List
+open System.Net.Http.Headers
 
 /// HTTP Client for downloading files
 module Http = 
@@ -141,3 +142,101 @@ module Http =
         |> Async.map List.sequenceResultA
         |> Async.RunSynchronously
         |> processResults
+
+    /// Option type for the HTTP verb
+    type PostMethod = 
+        | GET
+        | POST
+
+    /// Executes an HTTP GET command and retrives the information.
+    /// It returns the response of the request, or null if we got 404 or nothing.
+    /// ## Parameters
+    ///
+    ///  - `userName` - The username to use with the request.
+    ///  - `password` - The password to use with the request.
+    ///  - `url` - The URL to perform the GET operation.
+    let private getAsync (userName : string) (password : string) (url : string) = async {
+        use client = new HttpClient()
+        if not (isNull userName) || not (isNull password) then
+            let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
+            client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+        //try 
+        let! response = client.GetAsync(url) |> Async.AwaitTask
+        response.EnsureSuccessStatusCode () |> ignore
+        use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
+        use reader = new StreamReader(stream)
+        return reader.ReadToEnd()
+        //with exn -> 
+        //    // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
+        //    null
+    }
+
+    /// Executes an HTTP GET command and retrives the information.
+    /// It returns the response of the request, or null if we got 404 or nothing.
+    /// ## Parameters
+    ///
+    ///  - `userName` - The username to use with the request.
+    ///  - `password` - The password to use with the request.
+    ///  - `url` - The URL to perform the GET operation.
+    let get userName password url =
+        getAsync userName password url
+        |> Async.RunSynchronously
+
+    /// Executes an HTTP POST command and retrives the information.    
+    /// This function will automatically include a "source" parameter if the "Source" property is set.
+    /// It returns the response of the request, or null if we got 404 or nothing.
+    /// ## Parameters
+    ///
+    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
+    ///  - `url` - The URL to perform the POST operation.
+    ///  - `userName` - The username to use with the request.
+    ///  - `password` - The password to use with the request.
+    ///  - `data` - The data to post.
+    let internal postCommandAsync headerF (url : string) userName password (data : string) = async {
+        let client = new HttpClient()
+        if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then 
+            invalidArg userName "You have to specify username and password for post operations."
+
+        let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
+        client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+        
+                
+        let request = new HttpRequestMessage(HttpMethod.Post, url)
+        headerF request.Headers
+        let bytes = System.Text.Encoding.UTF8.GetBytes data
+
+        request.Content <- new ByteArrayContent(bytes, 0, bytes.Length)
+        request.Content.Headers.ContentType <- new MediaTypeHeaderValue("application/x-www-form-urlencoded")
+        let! response = client.SendAsync(request) |> Async.AwaitTask
+
+        response.EnsureSuccessStatusCode () |> ignore
+        use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
+        use reader = new StreamReader(stream)
+        return reader.ReadToEnd() }
+
+
+    /// Executes an HTTP POST command and retrives the information.    
+    /// This function will automatically include a "source" parameter if the "Source" property is set.
+    /// It returns the response of the request, or null if we got 404 or nothing.
+    /// ## Parameters
+    ///
+    ///  - `headerF` - A function which allows to manipulate the HTTP headers.
+    ///  - `url` - The URL to perform the POST operation.
+    ///  - `userName` - The username to use with the request.
+    ///  - `password` - The password to use with the request.
+    ///  - `data` - The data to post.
+    let postCommand headerF url userName password data =
+        postCommandAsync headerF url userName password data
+        |> Async.RunSynchronously
+
+
+    /// Executes an HTTP POST command and retrives the information.
+    /// It returns the response of the request, or null if we got 404 or nothing.
+    /// ## Parameters
+    ///
+    ///  - `url` - The URL to perform the POST operation.
+    ///  - `userName` - The username to use with the request.
+    ///  - `password` - The password to use with the request.
+    ///  - `data` - The data to post.
+    let post url userName password data = postCommand ignore url userName password data

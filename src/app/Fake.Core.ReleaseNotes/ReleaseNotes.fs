@@ -64,7 +64,7 @@ type ReleaseNotes =
 
     static member New(assemblyVersion,nugetVersion,notes) = ReleaseNotes.New(assemblyVersion,nugetVersion,None,notes)
 
-let parseVersions =
+let private parseVersions =
     let nugetRegex = String.getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
     let assemblyVersionRegex = String.getRegEx @"([0-9]+.)+[0-9]+"
     fun line ->
@@ -77,7 +77,7 @@ let parseVersions =
         then failwithf "Unable to parse valid NuGet version from release notes (%s)." line
         assemblyVersion, nugetVersion
 
-let parseDate =
+let private parseDate =
     let dateRegex = String.getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
     fun line ->
         let possibleDate = dateRegex.Match line
@@ -89,7 +89,7 @@ let parseDate =
             | true, x -> Some(x)
 
 /// Parse simple release notes sequence
-let private parseSimpleReleaseNotes line =
+let private parseSimple line =
     let assemblyVersion, nugetVersion = parseVersions line
     let trimDot (s:string) = s.TrimEnd('.')
 
@@ -105,7 +105,7 @@ let private parseSimpleReleaseNotes line =
 open Fake.Core.String.Operators
 
 /// Parse "complex" release notes text sequence
-let private parseAllComplexReleaseNotes (text: seq<string>) =
+let private parseAllComplex (text: seq<string>) =
     let rec findNextNotesBlock text =
         let isHeader line = "##" <* line
         let rec findEnd notes text =
@@ -133,7 +133,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
-let parseAllReleaseNotes (data: seq<string>) = 
+let parseAll (data: seq<string>) = 
     let data = data |> Seq.toList |> List.filter (not << String.isNullOrWhiteSpace)
     match data with
     | [] -> failwith "Empty Release file."
@@ -143,9 +143,9 @@ let parseAllReleaseNotes (data: seq<string>) =
         match firstNonEmptyChar with
         | Simple -> 
             data 
-            |> Seq.map parseSimpleReleaseNotes 
+            |> Seq.map parseSimple
             |> Seq.toList
-        | Complex -> parseAllComplexReleaseNotes data
+        | Complex -> parseAllComplex data
         | Invalid -> failwith "Invalid Release Notes format."
         |> List.sortBy (fun x -> x.SemVer)
         |> List.rev
@@ -155,15 +155,15 @@ let parseAllReleaseNotes (data: seq<string>) =
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
-let parseReleaseNotes (data: seq<string>) =
+let parse (data: seq<string>) =
     data
-    |> parseAllReleaseNotes
+    |> parseAll
     |> Seq.head
 
 /// Parses a Release Notes text file and returns the lastest release notes.
 ///
 /// ## Parameters
 ///  - `fileName` - Release notes text file name
-let LoadReleaseNotes fileName =
+let load fileName =
     System.IO.File.ReadLines fileName
-    |> parseReleaseNotes
+    |> parse
