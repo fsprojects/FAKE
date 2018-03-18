@@ -234,8 +234,32 @@
     <Compile Include="..\..\app\Fake.Windows.Chocolatey\Chocolatey.fs">
       <Link>Fake.Windows.Chocolatey/Chocolatey.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Npm\Npm.fs">
-      <Link>Fake.Npm/Npm.fs</Link>
+    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyorInternal.fs">
+      <Link>Fake.BuildServer.AppVeyor/AppVeyorInternal.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyor.fs">
+      <Link>Fake.BuildServer.AppVeyor/AppVeyor.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCityInternal.fs">
+      <Link>Fake.BuildServer.TeamCity/TeamCityInternal.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCity.fs">
+      <Link>Fake.BuildServer.TeamCity/TeamCity.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.CloudServices\CloudServices.fs">
+      <Link>Fake.Azure.CloudServices/CloudServices.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.Emulators\Emulators.fs">
+      <Link>Fake.Azure.Emulators/Emulators.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.Kudu\Kudu.fs">
+      <Link>Fake.Azure.Kudu/Kudu.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.WebJobs\WebJobs.fs">
+      <Link>Fake.Azure.WebJobs/WebJobs.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.JavaScript.Npm\Npm.fs">
+      <Link>Fake.JavaScript.Npm/Npm.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Tools.Git\CommandHelper.fs">
       <Link>Fake.Tools.Git/CommandHelper.fs</Link>

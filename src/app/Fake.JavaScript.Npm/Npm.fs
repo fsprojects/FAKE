@@ -1,4 +1,4 @@
-namespace Fake.Npm
+namespace Fake.JavaScript
 
 open Fake.Core
 open Fake.IO
