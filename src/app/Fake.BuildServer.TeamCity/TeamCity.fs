@@ -7,7 +7,7 @@ open Fake.Core
 open Fake.IO
 
 [<AutoOpen>]
-module TypeExtensions =
+module TeamCityImportExtensions =
     type DotNetCoverageTool with
         member x.TeamCityName =
             match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
