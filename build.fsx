@@ -1040,10 +1040,10 @@ open Fake.Core.TargetOperators
 
 // Create artifacts when build is finished
 "AfterBuild"
-    =?> ("CreateNuGet", not Environment.isLinux)
+    =?> ("CreateNuGet", Environment.isWindows)
     ==> "CopyLicense"
-    =?> ("DotNetCoreCreateChocolateyPackage", not Environment.isLinux)
-    =?> ("GenerateDocs", BuildServer.isLocalBuild && not Environment.isLinux)
+    =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
+    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
 
 // Test the full framework build
@@ -1063,8 +1063,8 @@ open Fake.Core.TargetOperators
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
-    =?> ("DotNetCorePushChocolateyPackage", not Environment.isLinux)
-    =?> ("ReleaseDocs", BuildServer.isLocalBuild && not Environment.isLinux)
+    =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
+    =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "DotNetCorePushNuGet"
     ==> "PublishNuget"
     ==> "FastRelease"
