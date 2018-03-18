@@ -5,6 +5,7 @@ open System
 open System.IO
 open Fake.Core
 open Fake.IO
+open Fake.Net
 open Microsoft.FSharp.Reflection
 open System.Text.RegularExpressions
 
@@ -188,9 +189,8 @@ module internal AppVeyorInternal =
     let UploadTestResultsFile (testResultsType : TestResultsType) file =
         let resultsType = (sprintf "%A" testResultsType).ToLower()
         let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
-        use wc = new System.Net.WebClient()
         try
-            wc.UploadFile(url, file) |> ignore
+            Http.upload url file
             printfn "Successfully uploaded test results %s" file
         with
         | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex

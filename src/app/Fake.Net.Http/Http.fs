@@ -240,3 +240,20 @@ module Http =
     ///  - `password` - The password to use with the request.
     ///  - `data` - The data to post.
     let post url userName password data = postCommand ignore url userName password data
+
+    let internal uploadAsync (url:string) file = async {
+        // See https://stackoverflow.com/questions/16416601/c-sharp-httpclient-4-5-multipart-form-data-upload
+        use client = new HttpClient()
+        let request = new HttpRequestMessage(HttpMethod.Post, url)
+        use content = new MultipartFormDataContent("Upload----" + DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture))
+        use fileStream = File.OpenRead(file)
+        use streamContent = new StreamContent(fileStream)
+        streamContent.Headers.ContentType <- MediaTypeHeaderValue.Parse("application/octet-stream")
+        content.Add(streamContent, "file", file)
+        request.Content <- content
+
+        let! response = client.SendAsync(request) |> Async.AwaitTask
+
+        response.EnsureSuccessStatusCode () |> ignore }
+
+    let upload url file = uploadAsync url file |> Async.RunSynchronously    
