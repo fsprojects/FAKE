@@ -78,6 +78,7 @@ type ImportData =
         | Surefire -> "surefire"
         | Junit -> "junit"
         | FxCop -> "FxCop"
+        | Xunit -> "xunit"
         | Nunit NunitDataVersion.Nunit -> "nunit"
         | Nunit NunitDataVersion.Nunit3 -> "nunit3"
     override x.ToString() =

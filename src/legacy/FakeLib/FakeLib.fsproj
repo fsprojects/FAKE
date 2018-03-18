@@ -465,9 +465,7 @@
     <Compile Include="CscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
     <Compile Include="XDTHelper.fs" />
-    <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
-    <Compile Include="AzureCloudServices.fs" />
     <Compile Include="Sxshelper.fs" />
     <Compile Include="Vb6helper.fs" />
     <Compile Include="AndroidPublisher.fs" />

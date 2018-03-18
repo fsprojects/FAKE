@@ -30,6 +30,7 @@ module TypeExtensions =
             | Junit -> "junit"
             | FxCop -> "FxCop"
             | Nunit _ -> "nunit"
+            | Xunit _ -> "nunit"
 
 module TeamCity =
 
