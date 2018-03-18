@@ -1,5 +1,6 @@
 [<AutoOpen>]
 /// Provides functions and operators to deal with FAKE targets and target dependencies.
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target")>]
 module Fake.AdditionalSyntax
 
 open System.Collections.Generic

@@ -1,4 +1,5 @@
 ﻿/// Contains functions to execute typical HTTP/REST calls.
+[<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
 module Fake.REST
 
 open System
@@ -9,6 +10,7 @@ open System.Xml
 open System.Text
 
 /// Option type for the HTTP verb
+[<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
 type PostMethod = 
     | GET
     | POST
@@ -20,6 +22,7 @@ type PostMethod =
 ///  - `userName` - The username to use with the request.
 ///  - `password` - The password to use with the request.
 ///  - `url` - The URL to perform the GET operation.
+[<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
 let ExecuteGetCommand (userName : string) (password : string) (url : string) = 
     use client = new WebClient()
     if userName <> null || password <> null then client.Credentials <- new NetworkCredential(userName, password)
@@ -41,6 +44,7 @@ let ExecuteGetCommand (userName : string) (password : string) (url : string) =
 ///  - `userName` - The username to use with the request.
 ///  - `password` - The password to use with the request.
 ///  - `data` - The data to post.
+[<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
 let ExecutePostCommand headerF (url : string) userName password (data : string) = 
     System.Net.ServicePointManager.Expect100Continue <- false
     let request = WebRequest.Create url
@@ -66,4 +70,5 @@ let ExecutePostCommand headerF (url : string) userName password (data : string) 
 ///  - `userName` - The username to use with the request.
 ///  - `password` - The password to use with the request.
 ///  - `data` - The data to post.
+[<System.Obsolete("FAKE0001 Use the Fake.Net.Http module instead")>]
 let ExecutePost url userName password data = ExecutePostCommand ignore url userName password data

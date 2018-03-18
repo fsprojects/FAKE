@@ -1,0 +1,53 @@
+/// Contains support for various build servers
+namespace Fake.BuildServer
+
+open System
+open System.IO
+open Fake.Core
+open Fake.IO
+
+
+[<RequireQualifiedAccess>]
+module Travis =
+
+    /// Implements a TraceListener for TeamCity build servers.
+    /// ## Parameters
+    ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
+    ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+    type internal TravisTraceListener() =
+        interface ITraceListener with
+            /// Writes the given message to the Console.
+            member __.Write msg = 
+                let color = ConsoleWriter.colorMap msg
+                let write = ConsoleWriter.writeAnsiColor
+                match msg with
+                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                    write true color true text
+                | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
+                    write false color newLine text
+                | TraceData.OpenTag (tag, descr) ->
+                    write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                | TraceData.CloseTag (tag, time) ->
+                    write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.ImportData (typ, path) ->
+                    write false color true (sprintf "Import data '%O': %s" typ path)
+                | TraceData.TestOutput (test, out, err) ->
+                    write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
+                | TraceData.BuildNumber number ->
+                    write false color true (sprintf "Build Number: %s" number)
+                | TraceData.TestStatus (test, status) ->
+                    write false color true (sprintf "Test '%s' status: %A" test status)
+
+    let defaultTraceListener =
+      TravisTraceListener() :> ITraceListener
+    let detect () =
+        BuildServer.buildServer = BuildServer.Travis
+    let install(force:bool) =
+        if not (detect()) then failwithf "Cannot run 'install()' on a non-Travis environment"
+        if force || not (CoreTracing.areListenersSet()) then
+            CoreTracing.setTraceListeners [defaultTraceListener]
+        () 
+    let Installer =
+        { new BuildServerInstaller() with
+            member __.Install () = install (false)
+            member __.Detect () = detect() }

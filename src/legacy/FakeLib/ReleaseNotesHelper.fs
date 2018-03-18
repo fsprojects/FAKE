@@ -35,6 +35,7 @@
 ///             Attribute.Version release.AssemblyVersion
 ///             Attribute.FileVersion release.AssemblyVersion]
 ///     )
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 module Fake.ReleaseNotesHelper
 
 open System
@@ -42,6 +43,7 @@ open System.Text.RegularExpressions
 open Fake.AssemblyInfoFile
 
 /// Contains the parsed information of the release notes text file.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 type ReleaseNotes =
     { /// The parsed version.
       AssemblyVersion: string
@@ -55,6 +57,7 @@ type ReleaseNotes =
       Notes: string list }
     override x.ToString() = sprintf "%A" x
 
+    [<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
     static member New(assemblyVersion,nugetVersion,date,notes) = { 
         AssemblyVersion = assemblyVersion
         NugetVersion = nugetVersion
@@ -62,8 +65,10 @@ type ReleaseNotes =
         Date = date
         Notes = notes }
 
+    [<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
     static member New(assemblyVersion,nugetVersion,notes) = ReleaseNotes.New(assemblyVersion,nugetVersion,None,notes)
 
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 let parseVersions =
     let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
     fun line ->
@@ -76,6 +81,7 @@ let parseVersions =
         then failwithf "Unable to parse valid NuGet version from release notes (%s)." line
         assemblyVersion, nugetVersion
 
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 let parseDate =
     let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
     fun line ->
@@ -130,6 +136,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 let parseAllReleaseNotes (data: seq<string>) = 
     let data = data |> Seq.toList |> List.filter (not << isNullOrWhiteSpace)
     match data with
@@ -152,6 +159,7 @@ let parseAllReleaseNotes (data: seq<string>) =
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 let parseReleaseNotes (data: seq<string>) =
     data
     |> parseAllReleaseNotes
@@ -161,6 +169,7 @@ let parseReleaseNotes (data: seq<string>) =
 ///
 /// ## Parameters
 ///  - `fileName` - Release notes text file name
+[<System.Obsolete("FAKE0001 Use the Fake.Core.ReleaseNotes module instead")>]
 let LoadReleaseNotes fileName =
     System.IO.File.ReadLines fileName
     |> parseReleaseNotes

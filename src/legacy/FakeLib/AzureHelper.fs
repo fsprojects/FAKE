@@ -1,10 +1,12 @@
 ﻿/// Contains tasks to control the local Azure Emulator
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 module Fake.AzureHelper
 
 open Fake.ProcessHelper
 open System
 
 /// A type for the controlling parameter
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 [<CLIMutable>]
 type private AzureEmulatorParams = {
     StorageEmulatorToolPath:Lazy<string>
@@ -30,6 +32,7 @@ let private (|StorageAlreadyStarted|StorageAlreadyStopped|Ok|OtherError|) = func
     | _ -> OtherError
 
 /// Stops the storage emulator
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 let StopStorageEmulator = (fun _ ->
     match ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.StorageEmulatorToolPath.Value
@@ -39,6 +42,7 @@ let StopStorageEmulator = (fun _ ->
 )
 
 /// Starts the storage emulator
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 let StartStorageEmulator = (fun _ ->
     match ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.StorageEmulatorToolPath.Value
@@ -48,6 +52,7 @@ let StartStorageEmulator = (fun _ ->
 )
 
 /// Stops the compute emulator
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 let StopComputeEmulator = (fun _ ->
     if 0 <> ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.CSRunToolPath
@@ -57,6 +62,7 @@ let StopComputeEmulator = (fun _ ->
 )
 
 /// Starts the compute emulator
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 let StartComputeEmulator = (fun _ ->
     if 0 <> ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.CSRunToolPath
@@ -66,6 +72,7 @@ let StartComputeEmulator = (fun _ ->
 )
 
 /// Resets the devstore (BLOB, Queues and Tables)
+[<System.Obsolete("Please use one of the Fake 5 Fake.Azure.* modules")>]
 let ResetDevStorage = (fun _ ->
     if 0 <> ExecProcess (fun info ->  
         info.FileName <- AzureEmulatorDefaults.StorageEmulatorToolPath.Value

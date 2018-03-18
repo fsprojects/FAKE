@@ -9,6 +9,7 @@ nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
 nuget Fake.BuildServer.AppVeyor prerelease
 nuget Fake.BuildServer.TeamCity prerelease
+nuget Fake.BuildServer.Travis prerelease
 nuget Fake.Core.Target prerelease
 nuget Fake.Core.SemVer prerelease
 nuget Fake.IO.FileSystem prerelease
@@ -124,6 +125,7 @@ let additionalFiles = [
 BuildServer.Install [
     AppVeyor.Installer
     TeamCity.Installer
+    Travis.Installer
 ]
 #endif
 

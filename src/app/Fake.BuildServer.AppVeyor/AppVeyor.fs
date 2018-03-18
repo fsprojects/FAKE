@@ -94,6 +94,8 @@ module AppVeyor =
     /// Update build version. This must be unique for the current project.
     let private updateBuildVersion version =
         updateBuild (fun p -> { p with Version = version })
+    let setVariable name value =
+        AppVeyorInternal.sendToAppVeyor <| sprintf "SetVariable -Name \"%s\" -Value \"%s\"" name value
     let private environVar = Environment.environVar
 
     /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
@@ -227,7 +229,7 @@ module AppVeyor =
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
-    type internal AppVeyorTraceListener(importantMessagesToStdErr, colorMap) =
+    type internal AppVeyorTraceListener() =
         let mutable currentTestSuite = None
         let getCurrentTestSuite() =
             match currentTestSuite with
@@ -241,7 +243,7 @@ module AppVeyor =
         interface ITraceListener with
             /// Writes the given message to the Console.
             member __.Write msg = 
-                let color = colorMap msg
+                let color = ConsoleWriter.colorMap msg
                 match msg with
                 | TraceData.OpenTag (KnownTags.Test name, _) ->
                     AppVeyorInternal.StartTestCase (getCurrentTestSuite()) name 
@@ -268,13 +270,13 @@ module AppVeyor =
                 | TraceData.CloseTag (KnownTags.TestSuite name, _) ->
                     currentTestSuite <- None
                 | TraceData.OpenTag (tag, descr) ->
-                    ConsoleWriter.write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                    ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
                 | TraceData.CloseTag (tag, time) ->
-                    ConsoleWriter.write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                    ConsoleWriter.writeAnsiColor false color true (sprintf "Finished '%s' in %O" tag.Name time)
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
-                    ConsoleWriter.write importantMessagesToStdErr color true text
+                    ConsoleWriter.writeAnsiColor false color true text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
-                    ConsoleWriter.write false color newLine text
+                    ConsoleWriter.writeAnsiColor false color newLine text
                 | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.NUnit path
                 | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit3, path) ->
@@ -293,7 +295,7 @@ module AppVeyor =
                 | TraceData.BuildNumber number -> updateBuildVersion number
 
     let defaultTraceListener =
-      AppVeyorTraceListener(false, ConsoleWriter.colorMap) :> ITraceListener
+      AppVeyorTraceListener() :> ITraceListener
     let detect () =
         BuildServer.buildServer = BuildServer.AppVeyor
     let install(force:bool) =

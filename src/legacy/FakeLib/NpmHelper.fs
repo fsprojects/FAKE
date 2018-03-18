@@ -1,4 +1,5 @@
 ﻿/// Contains function to run npm tasks
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 module Fake.NpmHelper
 open Fake
 open System
@@ -31,13 +32,13 @@ let private npmFileName =
         
 
 
-[<System.Obsolete("FAKE0001 Use the Fake.Npm module instead")>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 /// Arguments for the Npm install command
 type InstallArgs =
 | Standard
 | Forced
 
-[<System.Obsolete("FAKE0001 Use the Fake.Npm module instead")>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 /// The list of supported Npm commands.
 type NpmCommand =
 /// Run `npm install`
@@ -53,7 +54,7 @@ type NpmCommand =
 /// Run `npm <string>`. Can be used for running not implemented commands.
 | Custom of string
 
-[<System.Obsolete("FAKE0001 Use the Fake.Npm module instead")>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 /// The Npm parameter type
 [<CLIMutable>]
 type NpmParams = 
@@ -63,7 +64,7 @@ type NpmParams =
       Command: NpmCommand
       Timeout: TimeSpan }
 
-[<System.Obsolete("FAKE0001 Use the Fake.Npm module instead")>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 /// Npm default parameters
 let defaultNpmParams = 
     { Src = ""
@@ -85,7 +86,7 @@ let private parse = function
     | Test -> "test --silent"
 
 
-[<System.Obsolete("FAKE0001 Use the Fake.Npm module instead")>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 /// Runs the given process and returns the process result.
 let run npmParams =
     let result = ref None
@@ -134,5 +135,5 @@ let run npmParams =
 ///                   })
 ///        )
 
-[<System.Obsolete("FAKE0001 Use the Fake.Npm module instead")>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Npm module instead")>]
 let Npm setParams = defaultNpmParams |> setParams |> run

@@ -1,10 +1,13 @@
 ﻿/// Contains helpers which allow to deal with [Semantic Versioning](http://semver.org/) (SemVer).
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 module Fake.SemVerHelper
 
 open System
 open System.Text.RegularExpressions
 
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 let identRE = Regex("[0-9A-Za-z-]+", RegexOptions.Compiled)
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 [<CustomEquality;CustomComparison>]
 type Ident = 
     | AlphaNumeric of string | Numeric of int64
@@ -31,11 +34,13 @@ type Ident =
                 | Numeric a, Numeric b -> compare a b
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 let parseIdent s = 
     match Int64.TryParse s with 
     | true, i -> Numeric i
     | false, _ -> AlphaNumeric s
 
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 [<CustomEquality; CustomComparison>]
 type PreRelease = 
     { Origin: string
@@ -76,6 +81,7 @@ type PreRelease =
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
 /// Contains the version information.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 [<CustomEquality; CustomComparison>]
 type SemVerInfo =
     { /// MAJOR version when you make incompatible API changes.
@@ -124,6 +130,7 @@ type SemVerInfo =
 let private SemVerPattern = "^(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?(?:\+[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?$"
 
 /// Returns true if input appears to be a parsable semver string
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 let isValidSemVer input =
     let m = Regex.Match(input, SemVerPattern)
     if m.Success then true
@@ -141,6 +148,7 @@ let isValidSemVer input =
 ///     parse "1.5.0-beta.2"   > parse "1.5.0-beta.3"   // true, due to numeric compare of second prerelease identitifer
 ///     parse "1.5.0-0123.001" < parse "1.5.0-0123.002" // true, due to numeric compare of second prerelease identifier
 ///     parse "1.0.0+lol"      = parse "1.0.0"          // true, because build identifiers do not influence comparison
+[<System.Obsolete("FAKE0001 Use the Fake.Core.SemVer module instead")>]
 let parse version =
     let startPos (c : char) (s :string) = match s.IndexOf(c) with | -1 -> None | n -> Some n
     let buildPartStart = startPos '+' version

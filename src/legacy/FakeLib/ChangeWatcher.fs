@@ -1,19 +1,23 @@
 ﻿[<AutoOpen>]
 /// This module contains helpers to react to file system events.
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 module Fake.ChangeWatcher
 
 open System.IO
 
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 type FileStatus =
     | Deleted
     | Created
     | Changed
 
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 type FileChange =
     { FullPath : string
       Name : string
       Status : FileStatus }
 
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 type WatchChangesOption =
     { IncludeSubdirectories: bool }
 
@@ -52,6 +56,7 @@ let private calcDirsToWatch fileIncludes =
 ///         watcher.Dispose() // if you need to cleanup the watches.
 ///     )
 ///
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) =
     let dirsToWatch = fileIncludes |> calcDirsToWatch
 
@@ -118,4 +123,5 @@ let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileInc
               timer.Dispose() }
 
 
+[<System.Obsolete("Use Fake.IO.FileSystem instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let WatchChanges = WatchChangesWithOptions { IncludeSubdirectories = true }

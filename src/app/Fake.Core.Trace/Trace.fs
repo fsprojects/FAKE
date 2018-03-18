@@ -155,6 +155,19 @@ let traceTag tag description =
     asSafeDisposable (fun () -> closeTagUnsafe tag)
 
 
+let testStatus testName testStatus =
+    // TODO: Check if the given test is opened in openTags-stack?
+    TraceData.TestStatus (testName, testStatus) |> CoreTracing.postMessage
+
+let testOutput testName out err =
+    // TODO: Check if the given test is opened in openTags-stack?
+    TraceData.TestOutput (testName, out, err) |> CoreTracing.postMessage
+
+let publish typ path =
+    TraceData.ImportData (typ, path) |> CoreTracing.postMessage
+let setBuildNumber number =
+    TraceData.BuildNumber number |> CoreTracing.postMessage
+
 let closeAllOpenTags() = Seq.iter (fun (_, tag) -> closeTagUnsafe tag) openTags.Value
 
 /// Traces the begin of a target

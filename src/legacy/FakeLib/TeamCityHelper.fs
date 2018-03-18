@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
 /// Contains helper functions which allow FAKE to communicate with a TeamCity agent
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity instead")>]
 module Fake.TeamCityHelper
 
 /// Encapsulates special chars
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the Trace module instead")>]
 let inline EncapsulateSpecialChars text =
     text
     |> replace "|" "||"
@@ -12,9 +14,11 @@ let inline EncapsulateSpecialChars text =
     |> replace "[" "|["
     |> replace "]" "|]"
 
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the Trace module instead")>]
 let scrub = RemoveLineBreaks >> EncapsulateSpecialChars
 
 /// Send message to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the Trace module instead")>]
 let sendToTeamCity format message =
     if buildServer = TeamCity then
         message
@@ -23,73 +27,94 @@ let sendToTeamCity format message =
         |> fun m -> postMessage (LogMessage(m, true))
 
 /// Send message to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the Trace module instead")>]
 let sendStrToTeamCity s =
     if buildServer = TeamCity then postMessage (LogMessage(RemoveLineBreaks s, true))
 
 /// Open Named Block
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the TeamCity.block instead")>]
 let sendOpenBlock = sendToTeamCity "##teamcity[blockOpened name='%s']"
 
 /// Close Named Block
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the TeamCity.block instead")>]
 let sendCloseBlock = sendToTeamCity "##teamcity[blockClosed name='%s']"
 
 /// Open Named Block that will be closed when the block is disposed
 /// Usage: `use __ = teamCityBlock "My Block"`
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the TeamCity.block instead")>]
 let teamCityBlock name =
     sendOpenBlock name
     { new System.IDisposable
         with member __.Dispose() = sendCloseBlock name }
 
 /// Sends an error to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use the TeamCity.<> instead")>]
 let sendTeamCityError error = sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
 /// Sends an NUnit results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityNUnitImport path = sendToTeamCity "##teamcity[importData type='nunit' file='%s']" path
 
 /// Sends an FXCop results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityFXCopImport path = sendToTeamCity "##teamcity[importData type='FxCop' path='%s']" path
 
 /// Sends an JUnit Ant task results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityJUnitImport path = sendToTeamCity "##teamcity[importData type='junit' path='%s']" path
 
 /// Sends an Maven Surefire results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCitySurefireImport path = sendToTeamCity "##teamcity[importData type='surefire' path='%s']" path
 
 /// Sends an MSTest results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityMSTestImport path = sendToTeamCity "##teamcity[importData type='mstest' path='%s']" path
 
 /// Sends an Google Test results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityGTestImport path = sendToTeamCity "##teamcity[importData type='gtest' path='%s']" path
 
 /// Sends an Checkstyle results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityCheckstyleImport path = sendToTeamCity "##teamcity[importData type='checkstyle' path='%s']" path
 
 /// Sends an FindBugs results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityFindBugsImport path = sendToTeamCity "##teamcity[importData type='findBugs' path='%s']" path
 
 /// Sends an JSLint results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityJSLintImport path = sendToTeamCity "##teamcity[importData type='jslint' path='%s']" path
 
 /// Sends an ReSharper inspectCode.exe results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityReSharperInspectCodeImport path = sendToTeamCity "##teamcity[importData type='ReSharperInspectCode' path='%s']" path
 
 /// Sends an FxCop inspection results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityFxCopImport path = sendToTeamCity "##teamcity[importData type='FxCop' path='%s']" path
 
 /// Sends an PMD inspections results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityPmdImport path = sendToTeamCity "##teamcity[importData type='pmd' path='%s']" path
 
 /// Sends an PMD Copy/Paste Detector results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityPmdCpdImport path = sendToTeamCity "##teamcity[importData type='pmdCpd' path='%s']" path
 
 /// Sends an ReSharper dupfinder.exe results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityDotNetDupFinderImport path = sendToTeamCity "##teamcity[importData type='DotNetDupFinder' path='%s']" path
 
 /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity
 [<System.Obsolete("This function does not specify the type of coverage tool used to generate the report.  Use 'sendTeamCityDotNetCoverageImportForTool' instead")>]
 let sendTeamCityDotNetCoverageImport path = sendToTeamCity "##teamcity[importData type='dotNetCoverage' path='%s']" path
 
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 type TeamCityDotNetCoverageTool = | DotCover | PartCover | NCover | NCover3 with override x.ToString() = match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
 /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let sendTeamCityDotNetCoverageImportForTool path (tool : TeamCityDotNetCoverageTool) =
     sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (string tool |> scrub) (path |> scrub)
     |> sendStrToTeamCity
@@ -124,10 +149,12 @@ let sendTeamCityPartCoverReportXslts : seq<string * string> -> unit =
     >> sendStrToTeamCity
 
 /// Starts the test case.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let StartTestCase testCaseName =
     sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
 
 /// Finishes the test case.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let FinishTestCase testCaseName (duration : System.TimeSpan) =
     let duration =
         duration.TotalMilliseconds
@@ -137,6 +164,7 @@ let FinishTestCase testCaseName (duration : System.TimeSpan) =
     |> sendStrToTeamCity
 
 /// Ignores the test case.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let IgnoreTestCase name message =
     StartTestCase name
     sprintf "##teamcity[testIgnored name='%s' message='%s']" (EncapsulateSpecialChars name)
@@ -144,59 +172,73 @@ let IgnoreTestCase name message =
 
 
 /// Ignores the test case.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let IgnoreTestCaseWithDetails name message details =
     IgnoreTestCase name (message + " " + details)
 
 /// Finishes the test suite.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let FinishTestSuite testSuiteName =
     EncapsulateSpecialChars testSuiteName |> sendToTeamCity "##teamcity[testSuiteFinished name='%s']"
 
 /// Starts the test suite.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let StartTestSuite testSuiteName =
     EncapsulateSpecialChars testSuiteName |> sendToTeamCity "##teamcity[testSuiteStarted name='%s']"
 
 /// Reports the progress.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let ReportProgress message = EncapsulateSpecialChars message |> sendToTeamCity "##teamcity[progressMessage '%s']"
 
 /// Reports the progress start.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let ReportProgressStart message = EncapsulateSpecialChars message |> sendToTeamCity "##teamcity[progressStart '%s']"
 
 /// Reports the progress end.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let ReportProgressFinish message = EncapsulateSpecialChars message |> sendToTeamCity "##teamcity[progressFinish '%s']"
 
 /// Create  the build status.
 /// [omit]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let buildStatus status message =
     sprintf "##teamcity[buildStatus status='%s' text='%s']" (EncapsulateSpecialChars status) (EncapsulateSpecialChars message)
 
 /// Reports the build status.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let ReportBuildStatus status message = buildStatus status message |> sendStrToTeamCity
 
 /// Publishes an artifact on the TeamcCity build server.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let PublishArtifact path = EncapsulateSpecialChars path |> sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
-[<System.Obsolete("There was a typo - please use PublishArtifact")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.publish instead")>]
 let PublishArticfact path = PublishArtifact path
 
 /// Sets the TeamCity build number.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.setBuildNumber instead")>]
 let SetBuildNumber buildNumber = EncapsulateSpecialChars buildNumber |> sendToTeamCity "##teamcity[buildNumber '%s']"
 
 /// Reports a build statistic.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let SetBuildStatistic key value =
     sprintf "##teamcity[buildStatisticValue key='%s' value='%s']" (EncapsulateSpecialChars key)
         (EncapsulateSpecialChars value) |> sendStrToTeamCity
 
 /// Reports a parameter value
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.<> instead")>]
 let SetTeamCityParameter name value =
     sprintf "##teamcity[setParameter name='%s' value='%s']" (EncapsulateSpecialChars name)
         (EncapsulateSpecialChars value) |> sendStrToTeamCity
 
 /// Reports a failed test.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let TestFailed name message details =
     sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']" (EncapsulateSpecialChars name)
         (EncapsulateSpecialChars message) (EncapsulateSpecialChars details) |> sendStrToTeamCity
 
 /// Reports a failed comparison.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use Trace.<> instead")>]
 let ComparisonFailure name message details expected actual =
     sprintf
         "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
@@ -204,21 +246,26 @@ let ComparisonFailure name message details expected actual =
         (EncapsulateSpecialChars expected) (EncapsulateSpecialChars actual) |> sendStrToTeamCity
 
 /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
 let TeamCityVersion = environVarOrNone "TEAMCITY_VERSION"
 
 /// The Name of the project the current build belongs to or None if it's not on TeamCity.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
 let TeamCityProjectName = environVarOrNone "TEAMCITY_PROJECT_NAME"
 
 /// The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
 let TeamCityBuildConfigurationName = environVarOrNone "TEAMCITY_BUILDCONF_NAME"
 
 /// Is set to true if the build is a personal one.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
 let TeamCityBuildIsPersonal =
     match environVarOrNone "BUILD_IS_PERSONAL" with
     | Some _ -> true
     | None -> false
 
 /// The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
 let TeamCityBuildNumber = environVarOrNone "BUILD_NUMBER"
 
 module private JavaPropertiesFile =
@@ -380,6 +427,7 @@ module private JavaPropertiesFile =
 
 /// TeamCity build parameters
 /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Parameters) for more information
+[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
 module TeamCityBuildParameters =
     open System
     open System.IO
@@ -457,6 +505,7 @@ module TeamCityBuildParameters =
     let tryGet name = all.Value |> Map.tryFind name
 
 /// Get files changed between builds in TeamCity
+[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
 module TeamCityChangedFiles =
     /// The type of change that occured
     type ModificationType =
@@ -521,19 +570,23 @@ let private recentlyFailedTests = lazy (getRecentlyFailedTests' ())
 
 /// Name of recently failing tests
 /// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
 let getTeamCityRecentlyFailedTests () = recentlyFailedTests.Value
 
 /// Get the branch of the main VCS root
+[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
 let getTeamCityBranch () = TeamCityBuildParameters.tryGetConfiguration "vcsroot.branch"
 
 /// Get the display name of the branch as shown in TeamCity
 /// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
+[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
 let getTeamCityBranchName () =
     match TeamCityBuildParameters.tryGetConfiguration "teamcity.build.branch" with
     | Some _  as branch -> branch
     | None -> TeamCityBuildParameters.tryGetConfiguration "vcsroot.branch"
 
 /// Get if the current branch is the one configured as default
+[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
 let getTeamCityBranchIsDefault () =
     if buildServer = TeamCity then
         match TeamCityBuildParameters.tryGetConfiguration "teamcity.build.branch.is_default" with

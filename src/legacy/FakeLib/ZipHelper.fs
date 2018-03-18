@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// This module contains helper function to create and extract zip archives.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 module Fake.ZipHelper
 
 open System.IO
@@ -8,6 +9,7 @@ open ICSharpCode.SharpZipLib.Core
 open System
 
 /// The default zip level
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let DefaultZipLevel = 7
 
 let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : string) (itemSpec : string) =
@@ -46,6 +48,7 @@ let private createZip fileName comment level (items : (string * string) seq) =
 ///  - `level` - The compression level.
 ///  - `flatten` - If set to true then all subfolders are merged into the root folder.
 ///  - `files` - A sequence with files to zip.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let CreateZip workingDir fileName comment level flatten files =
     let workingDir = 
         let dir = directoryInfo workingDir
@@ -71,12 +74,14 @@ let CreateZip workingDir fileName comment level flatten files =
 ///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `files` - A sequence with files to zip.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let Zip workingDir fileName files = CreateZip workingDir fileName "" DefaultZipLevel false files
 
 /// Creates a zip file with the given file.
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `targetFileName` - The file to zip.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let ZipFile fileName targetFileName = 
     let fi = fileInfo targetFileName
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [ fi.FullName ]
@@ -85,6 +90,7 @@ let ZipFile fileName targetFileName =
 /// ## Parameters
 ///  - `target` - The target directory.
 ///  - `fileName` - The file name of the zip file.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let Unzip target (fileName : string) = 
     use zipFile = new ZipFile(fileName)
     for entry in zipFile do
@@ -106,6 +112,7 @@ let Unzip target (fileName : string) =
 /// ## Parameters
 ///  - `fileToUnzip` - The file inside the archive.
 ///  - `zipFileName` - The file name of the zip file.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) = 
     use zf = new ZipFile(zipFileName)
     let ze = zf.GetEntry fileToUnzip
@@ -118,6 +125,7 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 /// ## Parameters
 ///  - `predicate` - The predictae for the searched file in the archive.
 ///  - `zipFileName` - The file name of the zip file.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) = 
     use zf = new ZipFile(zipFileName)
     
@@ -138,6 +146,7 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
 ///  - `comment` - A comment for the resulting zip file.
 ///  - `level` - The compression level.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) seq) =
     let items = seq {
         for path, incl in files do
@@ -180,4 +189,5 @@ let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) 
 ///         |> ZipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
 ///     )
 ///
+[<System.Obsolete("Use Fake.IO.Zip instead")>]
 let ZipOfIncludes fileName files = CreateZipOfIncludes fileName "" DefaultZipLevel files

@@ -179,6 +179,39 @@ module ConsoleWriter =
         finally
           if curColor <> color then Console.ForegroundColor <- curColor
 
+    let writeAnsiColor toStdErr color newLine text =
+        let printer =
+            match toStdErr, newLine with
+            | true, true -> eprintfn
+            | true, false -> eprintf
+            | false, true -> printfn
+            | false, false -> printf
+        let colorCode = function
+            | ConsoleColor.Black -> [30]
+            | ConsoleColor.Blue -> [34]
+            | ConsoleColor.Cyan -> [36]
+            | ConsoleColor.Gray -> [37;2]
+            | ConsoleColor.Green -> [32]
+            | ConsoleColor.Magenta -> [35]
+            | ConsoleColor.Red -> [31]
+            | ConsoleColor.White -> [37]
+            | ConsoleColor.Yellow -> [33]
+            | ConsoleColor.DarkBlue -> [34;2]
+            | ConsoleColor.DarkCyan -> [36;2]
+            | ConsoleColor.DarkGray -> [37;2]
+            | ConsoleColor.DarkGreen -> [32;2]
+            | ConsoleColor.DarkMagenta -> [35;2]
+            | ConsoleColor.DarkRed -> [31;2]
+            | ConsoleColor.DarkYellow -> [33;2]
+            | _ -> [39]
+
+        let codeStr =
+            colorCode color
+            |> List.map (sprintf "%i")
+            |> String.concat ";"
+
+        printer "\x1b[%sm%s\x1b[0m" codeStr text
+
     /// A default color map which maps TracePriorities to ConsoleColors
     let colorMap traceData = 
         match traceData with
@@ -192,25 +225,30 @@ module ConsoleWriter =
 /// ## Parameters
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
-type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
+type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
     interface ITraceListener with
         /// Writes the given message to the Console.
         member __.Write msg = 
             let color = colorMap msg
+            let write = if ansiColor then ConsoleWriter.writeAnsiColor else ConsoleWriter.write
             match msg with
             | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
-                ConsoleWriter.write importantMessagesToStdErr color true text
+                write importantMessagesToStdErr color true text
             | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
-                ConsoleWriter.write false color newLine text
+                write false color newLine text
             | TraceData.OpenTag (tag, descr) ->
-                ConsoleWriter.write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time) ->
-                ConsoleWriter.write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                write false color true (sprintf "Finished '%s' in %O" tag.Name time)
             | TraceData.ImportData (typ, path) ->
-                ConsoleWriter.write false color true (sprintf "Import data '%O': %s" typ path)
-            | TraceData.BuildNumber _
-            | TraceData.TestOutput _
-            | TraceData.TestStatus _ -> ()
+                write false color true (sprintf "Import data '%O': %s" typ path)
+            | TraceData.TestOutput (test, out, err) ->
+                write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
+            | TraceData.BuildNumber number ->
+                write false color true (sprintf "Build Number: %s" number)
+            | TraceData.TestStatus (test, status) ->
+                write false color true (sprintf "Test '%s' status: %A" test status)
+
 
 type TraceSecret =
     { Value : string; Replacement : string }
@@ -238,7 +276,7 @@ module CoreTracing =
 
     /// The default TraceListener for Console.
     let defaultConsoleTraceListener  =
-      ConsoleTraceListener(importantMessagesToStdErr, ConsoleWriter.colorMap) :> ITraceListener
+      ConsoleTraceListener(importantMessagesToStdErr, ConsoleWriter.colorMap, false) :> ITraceListener
 
 
     /// A List with all registered listeners
