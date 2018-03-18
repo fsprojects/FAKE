@@ -5,6 +5,10 @@
 * BREAKING: Update ReleaseNotes module to match new API Guidelines.
 * FAKE5: Concept for Build-Server Support
 * FAKE5: New module `Fake.BuildServer.TeamCity`
+* FAKE5: New module `Fake.BuildServer.AppVeyor`
+* FAKE5: New module `Fake.BuildServer.Travis`
+* FAKE5: New module `Fake.BuildServer.TeamFoundation`
+* FAKE5: New module `Fake.JavaScript.Npm` - https://github.com/fsharp/FAKE/pull/1822
 
 ## 5.0.0-beta024
 
