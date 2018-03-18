@@ -77,6 +77,9 @@ module internal TeamCityWriter =
     let sendToTeamCity2 (format:PrintfFormat<string -> string -> unit, _, _, unit>) param1 param2 =
         printf format (scrub param1) (scrub param2)
 
+    let sendStrToTeamCity str =
+        printf "%s" str
+
     /// Open Named Block
     let sendOpenBlock name description = sendToTeamCity2 "##teamcity[blockOpened name='%s' description='%s']" name description
 
