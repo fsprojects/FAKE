@@ -28,7 +28,8 @@ module TypeExtensions =
             | Surefire -> "surefire"
             | FxCop -> "FxCop"
             | Mstest -> "mstest"
-            | Nunit -> "nunit"
+            | Nunit NunitDataVersion.Nunit -> "nunit"
+            | Nunit NunitDataVersion.Nunit3 -> "nunit3"
             | Junit -> "junit"
             | Xunit -> "xunit"
 (*
