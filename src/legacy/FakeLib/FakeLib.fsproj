@@ -234,30 +234,6 @@
     <Compile Include="..\..\app\Fake.Windows.Chocolatey\Chocolatey.fs">
       <Link>Fake.Windows.Chocolatey/Chocolatey.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyorInternal.fs">
-      <Link>Fake.BuildServer.AppVeyor/AppVeyorInternal.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyor.fs">
-      <Link>Fake.BuildServer.AppVeyor/AppVeyor.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCityInternal.fs">
-      <Link>Fake.BuildServer.TeamCity/TeamCityInternal.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCity.fs">
-      <Link>Fake.BuildServer.TeamCity/TeamCity.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Azure.CloudServices\CloudServices.fs">
-      <Link>Fake.Azure.CloudServices/CloudServices.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Azure.Emulators\Emulators.fs">
-      <Link>Fake.Azure.Emulators/Emulators.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Azure.Kudu\Kudu.fs">
-      <Link>Fake.Azure.Kudu/Kudu.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Azure.WebJobs\WebJobs.fs">
-      <Link>Fake.Azure.WebJobs/WebJobs.fs</Link>
-    </Compile>
     <Compile Include="..\..\app\Fake.JavaScript.Npm\Npm.fs">
       <Link>Fake.JavaScript.Npm/Npm.fs</Link>
     </Compile>
@@ -306,6 +282,9 @@
     <Compile Include="..\..\app\Fake.Tools.Git\Commit.fs">
       <Link>Fake.Tools.Git/Commit.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
+      <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.FSFormatting\FSFormatting.fs">
       <Link>Fake.DotNet.FSFormatting/FSFormatting.fs</Link>
     </Compile>
@@ -315,17 +294,8 @@
     <Compile Include="..\..\app\Fake.DotNet.Paket\PaketTemplate.fs">
       <Link>Fake.DotNet.Paket/PaketTemplate.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
-      <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
-    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Testing.OpenCover\OpenCover.fs">
       <Link>Fake.DotNet.Testing.OpenCover/OpenCover.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Api.GitHub\GitHub.fs">
-      <Link>Fake.Api.GitHub/GitHub.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Api.Slack\SlackNotification.fs">
-      <Link>Fake.Api.Slack/SlackNotification.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Xamarin\Xamarin.fs">
       <Link>Fake.DotNet.Xamarin/Xamarin.fs</Link>
@@ -341,6 +311,36 @@
     </Compile>
     <Compile Include="..\..\app\Fake.Net.Http\Http.fs">
       <Link>Fake.Net.Http/Http.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Api.GitHub\GitHub.fs">
+      <Link>Fake.Api.GitHub/GitHub.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Api.Slack\SlackNotification.fs">
+      <Link>Fake.Api.Slack/SlackNotification.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.CloudServices\CloudServices.fs">
+      <Link>Fake.Azure.CloudServices/CloudServices.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.Emulators\Emulators.fs">
+      <Link>Fake.Azure.Emulators/Emulators.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.Kudu\Kudu.fs">
+      <Link>Fake.Azure.Kudu/Kudu.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.WebJobs\WebJobs.fs">
+      <Link>Fake.Azure.WebJobs/WebJobs.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyorInternal.fs">
+      <Link>Fake.BuildServer.AppVeyor/AppVeyorInternal.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyor.fs">
+      <Link>Fake.BuildServer.AppVeyor/AppVeyor.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCityInternal.fs">
+      <Link>Fake.BuildServer.TeamCity/TeamCityInternal.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCity.fs">
+      <Link>Fake.BuildServer.TeamCity/TeamCity.fs</Link>
     </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />

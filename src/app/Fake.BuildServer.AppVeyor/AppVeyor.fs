@@ -9,11 +9,11 @@ open Fake.IO
 [<AutoOpen>]
 module TypeExtensions =
     type DotNetCoverageTool with
-        member x.TeamCityName =
+        member x.AppVeyorName =
             match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
 
     type ImportData with
-        member x.TeamCityName =
+        member x.AppVeyorName =
             match x with
             | BuildArtifact -> "buildArtifact"
             | DotNetCoverage _ -> "dotNetCoverage"
@@ -236,7 +236,7 @@ module AppVeyor =
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
-    type internal TeamCityTraceListener(importantMessagesToStdErr, colorMap) =
+    type internal AppVeyorTraceListener(importantMessagesToStdErr, colorMap) =
 
         interface ITraceListener with
             /// Writes the given message to the Console.
@@ -278,11 +278,11 @@ module AppVeyor =
                 | BuildNumber number -> SetBuildNumber number
 
     let defaultTraceListener =
-      TeamCityTraceListener(false, ConsoleWriter.colorMap) :> ITraceListener
+      AppVeyorTraceListener(false, ConsoleWriter.colorMap) :> ITraceListener
     let detect () =
-        BuildServer.buildServer = BuildServer.TeamCity
+        BuildServer.buildServer = BuildServer.AppVeyor
     let install(force:bool) =
-        if not (detect()) then failwithf "Cannot run 'install()' on a non-TeamCity environment"
+        if not (detect()) then failwithf "Cannot run 'install()' on a non-AppVeyor environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
         () 

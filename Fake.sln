@@ -90,9 +90,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{539D7B9A-18A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{901F162F-8925-4390-89C5-9EE2C343F744}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.BuildServer.TeamCity", "src/app/Fake.BuildServer.TeamCity/Fake.BuildServer.TeamCity.fsproj", "{9EA0CFE4-ED50-4CB9-BE93-1AFB9D90C878}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.BuildServer.TeamCity", "src/app/Fake.BuildServer.TeamCity/Fake.BuildServer.TeamCity.fsproj", "{9EA0CFE4-ED50-4CB9-BE93-1AFB9D90C878}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.BuildServer.AppVeyor", "src/app/Fake.BuildServer.AppVeyor/Fake.BuildServer.AppVeyor.fsproj", "{486FA49B-D395-42C5-AFB0-FA85B6D9FDBC}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.BuildServer.AppVeyor", "src/app/Fake.BuildServer.AppVeyor/Fake.BuildServer.AppVeyor.fsproj", "{486FA49B-D395-42C5-AFB0-FA85B6D9FDBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

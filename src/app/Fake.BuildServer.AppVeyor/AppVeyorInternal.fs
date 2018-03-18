@@ -98,7 +98,7 @@ module internal AppVeyorInternal =
         /// true if build has started by pushed tag; otherwise false
         static member RepoTag =
             let rt = environVar "APPVEYOR_REPO_TAG"
-            rt <> null && rt.Equals("true", System.StringComparison.OrdinalIgnoreCase)
+            not (isNull rt) && rt.Equals("true", System.StringComparison.OrdinalIgnoreCase)
 
         /// contains tag name for builds started by tag
         static member RepoTagName = environVar "APPVEYOR_REPO_TAG_NAME"
@@ -143,33 +143,13 @@ module internal AppVeyorInternal =
                 Arguments = args}) (System.TimeSpan.MaxValue)
         |> ignore
 
-(*
     let private add msg category =
         if not <| String.isNullOrEmpty msg then
-            let enableProcessTracingPreviousValue = Process.enableProcessTracing
-            Process.enableProcessTracing <- false
+            //let enableProcessTracingPreviousValue = Process.enableProcessTracing
+            //Process.enableProcessTracing <- false
             sprintf "AddMessage %s -Category %s" (Process.quoteIfNeeded msg) (Process.quoteIfNeeded category) |> sendToAppVeyor
-            Process.enableProcessTracing <- enableProcessTracingPreviousValue
+            //Process.enableProcessTracing <- enableProcessTracingPreviousValue
     let private addNoCategory msg = sprintf "AddMessage %s" (Process.quoteIfNeeded msg) |> sendToAppVeyor
-
-    // Add trace listener to track messages
-    if buildServer = BuildServer.AppVeyor then
-        { new ITraceListener with
-              member this.Write msg =
-                  match msg with
-                  | ErrorMessage x -> add x "Error"
-                  | ImportantMessage x -> add x "Warning"
-                  | LogMessage(x, _) -> add x "Information"
-                  | TraceMessage(x, _) ->
-                      if not enableProcessTracing then addNoCategory x
-                  | StartMessage | FinishedMessage | OpenTag(_, _) | CloseTag _ -> () }
-        |> listeners.Add
-
-    /// Finishes the test suite.
-    let FinishTestSuite testSuiteName = () // Nothing in API yet
-
-    /// Starts the test suite.
-    let StartTestSuite testSuiteName = () // Nothing in API yet
 
     /// Starts the test case.
     let StartTestCase testSuiteName testCaseName =
@@ -177,8 +157,9 @@ module internal AppVeyorInternal =
 
     /// Reports a failed test.
     let TestFailed testSuiteName testCaseName message details =
-        sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s" (testSuiteName + " - " + testCaseName)
-            (EncapsulateSpecialChars message) (EncapsulateSpecialChars details)
+        sendToAppVeyor <| sprintf "UpdateTest %s -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s"
+            (Process.quoteIfNeeded (testSuiteName + " - " + testCaseName))
+            (Process.quoteIfNeeded message) (Process.quoteIfNeeded details)
 
     /// Ignores the test case.
     let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
@@ -205,24 +186,22 @@ module internal AppVeyorInternal =
 
     /// Uploads a test result file to make them visible in Test tab of the build console.
     let UploadTestResultsFile (testResultsType : TestResultsType) file =
-        if buildServer = BuildServer.AppVeyor then
-            let resultsType = (sprintf "%A" testResultsType).ToLower()
-            let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
-            use wc = new System.Net.WebClient()
-            try
-                wc.UploadFile(url, file) |> ignore
-                printfn "Successfully uploaded test results %s" file
-            with
-            | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
+        let resultsType = (sprintf "%A" testResultsType).ToLower()
+        let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
+        use wc = new System.Net.WebClient()
+        try
+            wc.UploadFile(url, file) |> ignore
+            printfn "Successfully uploaded test results %s" file
+        with
+        | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
 
     /// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
     let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
-        if buildServer = BuildServer.AppVeyor then
-            System.IO.Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
-            |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
-            |> Async.Parallel
-            |> Async.RunSynchronously
-            |> ignore
+        System.IO.Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
+        |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
+        |> Async.Parallel
+        |> Async.RunSynchronously
+        |> ignore
 
     /// Set environment variable
     let SetVariable name value =
@@ -232,7 +211,6 @@ module internal AppVeyorInternal =
     type ArtifactType = Auto | WebDeployPackage
 
     /// AppVeyor parameters for artifact push as [described](https://www.appveyor.com/docs/build-worker-api/#push-artifact)
-    [<CLIMutable>]
     type PushArtifactParams =
         {
             /// The full local path to the artifact
@@ -255,32 +233,29 @@ module internal AppVeyorInternal =
         }
 
     let private appendArgIfNotNullOrEmpty value name builder =
-        if (isNotNullOrEmpty value) then
-            appendWithoutQuotes (sprintf "-%s \"%s\"" name value) builder
+        if (String.isNotNullOrEmpty value) then
+            StringBuilder.appendWithoutQuotes (sprintf "-%s \"%s\"" name value) builder
         else
             builder
 
     /// Push an artifact
     let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
-        if buildServer = BuildServer.AppVeyor then
-            let parameters = setParams defaultPushArtifactParams
-            new System.Text.StringBuilder()
-            |> append "PushArtifact"
-            |> append parameters.Path
-            |> appendArgIfNotNullOrEmpty parameters.FileName "FileName"
-            |> appendArgIfNotNullOrEmpty parameters.DeploymentName "DeploymentName"
-            |> appendArgIfNotNullOrEmpty (sprintf "%A" parameters.Type) "Type"
-            |> toText
-            |> sendToAppVeyor
+        let parameters = setParams defaultPushArtifactParams
+        new System.Text.StringBuilder()
+        |> StringBuilder.append "PushArtifact"
+        |> StringBuilder.append parameters.Path
+        |> appendArgIfNotNullOrEmpty parameters.FileName "FileName"
+        |> appendArgIfNotNullOrEmpty parameters.DeploymentName "DeploymentName"
+        |> appendArgIfNotNullOrEmpty (sprintf "%A" parameters.Type) "Type"
+        |> StringBuilder.toText
+        |> sendToAppVeyor
 
     /// Push multiple artifacts
     let PushArtifacts paths =
-        if buildServer = BuildServer.AppVeyor then
-            for path in paths do
-                PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
+        for path in paths do
+            PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
 
     /// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
-    [<CLIMutable>]
     type UpdateBuildParams =
         { /// Build version; must be unique for the current project
           Version : string
@@ -311,28 +286,26 @@ module internal AppVeyorInternal =
 
     /// Update build details
     let UpdateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
-        if buildServer = BuildServer.AppVeyor then
-            let parameters = setParams defaultUpdateBuildParams
+        let parameters = setParams defaultUpdateBuildParams
 
-            let committedStr =
-                match parameters.Committed with
-                | Some x -> x.ToString("o")
-                | None -> ""
+        let committedStr =
+            match parameters.Committed with
+            | Some x -> x.ToString("o")
+            | None -> ""
 
-            System.Text.StringBuilder()
-            |> append "UpdateBuild"
-            |> appendArgIfNotNullOrEmpty parameters.Version "Version"
-            |> appendArgIfNotNullOrEmpty parameters.Message "Message"
-            |> appendArgIfNotNullOrEmpty parameters.CommitId "CommitId"
-            |> appendArgIfNotNullOrEmpty committedStr "Committed"
-            |> appendArgIfNotNullOrEmpty parameters.AuthorName "AuthorName"
-            |> appendArgIfNotNullOrEmpty parameters.AuthorEmail "AuthorEmail"
-            |> appendArgIfNotNullOrEmpty parameters.CommitterName "CommitterName"
-            |> appendArgIfNotNullOrEmpty parameters.CommitterEmail "CommitterEmail"
-            |> toText
-            |> sendToAppVeyor
+        System.Text.StringBuilder()
+        |> StringBuilder.append "UpdateBuild"
+        |> appendArgIfNotNullOrEmpty parameters.Version "Version"
+        |> appendArgIfNotNullOrEmpty parameters.Message "Message"
+        |> appendArgIfNotNullOrEmpty parameters.CommitId "CommitId"
+        |> appendArgIfNotNullOrEmpty committedStr "Committed"
+        |> appendArgIfNotNullOrEmpty parameters.AuthorName "AuthorName"
+        |> appendArgIfNotNullOrEmpty parameters.AuthorEmail "AuthorEmail"
+        |> appendArgIfNotNullOrEmpty parameters.CommitterName "CommitterName"
+        |> appendArgIfNotNullOrEmpty parameters.CommitterEmail "CommitterEmail"
+        |> StringBuilder.toText
+        |> sendToAppVeyor
 
     /// Update build version. This must be unique for the current project.
     let UpdateBuildVersion version =
         UpdateBuild (fun p -> { p with Version = version })
-*)
