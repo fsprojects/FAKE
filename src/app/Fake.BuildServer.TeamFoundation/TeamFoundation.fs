@@ -8,6 +8,8 @@ open Fake.IO
 
 [<RequireQualifiedAccess>]
 module TeamFoundation =
+    // See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md
+    
     let write action properties message =
         let ensureProp (s:string) =
             // TODO: Escaping!

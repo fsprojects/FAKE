@@ -37,6 +37,7 @@ module TeamCityImportExtensions =
             | ImportData.Xunit _ -> "nunit"
 
 module TeamCity =
+    // See https://confluence.jetbrains.com/display/TCD10/Build+Script+Interaction+with+TeamCity
 
     /// Open Named Block that will be closed when the block is disposed
     /// Usage: `use __ = teamCityBlock "My Block"`

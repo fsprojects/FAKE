@@ -39,6 +39,7 @@ module AppVeyorImportExtensions =
 
 [<RequireQualifiedAccess>]
 module AppVeyor =
+    // See https://www.appveyor.com/docs/build-worker-api/#update-tests
 
     /// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
     type UpdateBuildParams =

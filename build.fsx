@@ -126,6 +126,7 @@ BuildServer.Install [
     AppVeyor.Installer
     TeamCity.Installer
     Travis.Installer
+    TeamFoundation.Installer
 ]
 #endif
 
