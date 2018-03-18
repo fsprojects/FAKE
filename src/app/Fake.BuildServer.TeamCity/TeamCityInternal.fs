@@ -77,10 +77,6 @@ module internal TeamCityWriter =
     let sendToTeamCity2 (format:PrintfFormat<string -> string -> unit, _, _, unit>) param1 param2 =
         printf format (scrub param1) (scrub param2)
 
-    /// Send message to TeamCity
-    let sendStrToTeamCity s =
-        if BuildServer.buildServer = BuildServer.TeamCity then CoreTracing.postMessage (LogMessage(String.RemoveLineBreaks s, true))
-
     /// Open Named Block
     let sendOpenBlock name description = sendToTeamCity2 "##teamcity[blockOpened name='%s' description='%s']" name description
 

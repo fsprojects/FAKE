@@ -10,228 +10,217 @@ open Fake.IO
 module AppVeyorImportExtensions =
     type DotNetCoverageTool with
         member x.AppVeyorName =
-            match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
+            match x with
+            | DotNetCoverageTool.DotCover -> "dotcover"
+            | DotNetCoverageTool.PartCover -> "partcover"
+            | DotNetCoverageTool.NCover -> "ncover"
+            | DotNetCoverageTool.NCover3 -> "ncover3"
 
     type ImportData with
         member x.AppVeyorName =
             match x with
-            | BuildArtifact -> "buildArtifact"
-            | DotNetCoverage _ -> "dotNetCoverage"
-            | DotNetDupFinder -> "DotNetDupFinder"
-            | PmdCpd -> "pmdCpd"
-            | Pmd -> "pmd"
-            | ReSharperInspectCode -> "ReSharperInspectCode"
-            | Jslint -> "jslint"
-            | FindBugs -> "findBugs"
-            | Checkstyle -> "checkstyle"
-            | Gtest -> "gtest"
-            | Surefire -> "surefire"
-            | FxCop -> "FxCop"
-            | Mstest -> "mstest"
-            | Nunit NunitDataVersion.Nunit -> "nunit"
-            | Nunit NunitDataVersion.Nunit3 -> "nunit3"
-            | Junit -> "junit"
-            | Xunit -> "xunit"
-(*
+            | ImportData.BuildArtifact -> "buildArtifact"
+            | ImportData.DotNetCoverage _ -> "dotNetCoverage"
+            | ImportData.DotNetDupFinder -> "DotNetDupFinder"
+            | ImportData.PmdCpd -> "pmdCpd"
+            | ImportData.Pmd -> "pmd"
+            | ImportData.ReSharperInspectCode -> "ReSharperInspectCode"
+            | ImportData.Jslint -> "jslint"
+            | ImportData.FindBugs -> "findBugs"
+            | ImportData.Checkstyle -> "checkstyle"
+            | ImportData.Gtest -> "gtest"
+            | ImportData.Surefire -> "surefire"
+            | ImportData.FxCop -> "FxCop"
+            | ImportData.Mstest -> "mstest"
+            | ImportData.Nunit NunitDataVersion.Nunit -> "nunit"
+            | ImportData.Nunit NunitDataVersion.Nunit3 -> "nunit3"
+            | ImportData.Junit -> "junit"
+            | ImportData.Xunit -> "xunit"
+
+[<RequireQualifiedAccess>]
 module AppVeyor =
 
-    /// Open Named Block that will be closed when the block is disposed
-    /// Usage: `use __ = teamCityBlock "My Block"`
-    let teamCityBlock name description =
-        TeamCityWriter.sendOpenBlock name description
-        { new System.IDisposable
-            with member __.Dispose() = TeamCityWriter.sendCloseBlock name }
+    /// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
+    type UpdateBuildParams =
+        { /// Build version; must be unique for the current project
+          Version : string
+          /// Commit message
+          Message : string
+          /// Commit hash
+          CommitId : string
+          /// Commit date
+          Committed : DateTime option
+          /// Commit author name
+          AuthorName : string
+          /// Commit author email address
+          AuthorEmail : string
+          /// Committer name
+          CommitterName : string
+          /// Committer email address
+          CommitterEmail : string }
 
-    /// Sends an error to TeamCity
-    let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
+    let private defaultUpdateBuildParams =
+        { Version = ""
+          Message = ""
+          CommitId = ""
+          Committed = None
+          AuthorName = ""
+          AuthorEmail = ""
+          CommitterName = ""
+          CommitterEmail = "" }
+    let private appendArgIfNotNullOrEmpty = AppVeyorInternal.appendArgIfNotNullOrEmpty
+    /// Update build details
+    let updateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
+        let parameters = setParams defaultUpdateBuildParams
 
-    let sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
+        let committedStr =
+            match parameters.Committed with
+            | Some x -> x.ToString("o")
+            | None -> ""
 
+        System.Text.StringBuilder()
+        |> StringBuilder.append "UpdateBuild"
+        |> appendArgIfNotNullOrEmpty parameters.Version "Version"
+        |> appendArgIfNotNullOrEmpty parameters.Message "Message"
+        |> appendArgIfNotNullOrEmpty parameters.CommitId "CommitId"
+        |> appendArgIfNotNullOrEmpty committedStr "Committed"
+        |> appendArgIfNotNullOrEmpty parameters.AuthorName "AuthorName"
+        |> appendArgIfNotNullOrEmpty parameters.AuthorEmail "AuthorEmail"
+        |> appendArgIfNotNullOrEmpty parameters.CommitterName "CommitterName"
+        |> appendArgIfNotNullOrEmpty parameters.CommitterEmail "CommitterEmail"
+        |> StringBuilder.toText
+        |> AppVeyorInternal.sendToAppVeyor
 
+    /// Update build version. This must be unique for the current project.
+    let private updateBuildVersion version =
+        updateBuild (fun p -> { p with Version = version })
+    let private environVar = Environment.environVar
 
+    /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
+    type Environment =
 
-    module Import =
-        /// Sends an NUnit results filename to TeamCity
-        let sendNUnit path = sendTeamCityImportData "nunit" path
+        /// AppVeyor Build Agent API URL
+        static member ApiUrl = environVar "APPVEYOR_API_URL"
 
-        /// Sends an FXCop results filename to TeamCity
-        let sendFXCop path = sendTeamCityImportData "FxCop" path
+        /// AppVeyor Account Name
+        static member AccountName = environVar "APPVEYOR_ACCOUNT_NAME"
 
-        /// Sends an JUnit Ant task results filename to TeamCity
-        let sendJUnit path = sendTeamCityImportData "junit" path
+        /// AppVeyor unique project ID
+        static member ProjectId = environVar "APPVEYOR_PROJECT_ID"
 
-        /// Sends an Maven Surefire results filename to TeamCity
-        let sendSurefire path = sendTeamCityImportData "surefire" path
+        /// Project name
+        static member ProjectName = environVar "APPVEYOR_PROJECT_NAME"
 
-        /// Sends an MSTest results filename to TeamCity
-        let sendMSTest path = sendTeamCityImportData "mstest" path
+        /// Project slug (as seen in project details URL)
+        static member ProjectSlug = environVar "APPVEYOR_PROJECT_SLUG"
 
-        /// Sends an Google Test results filename to TeamCity
-        let sendGTest path = sendTeamCityImportData "gtest" path
+        /// Path to clone directory
+        static member BuildFolder = environVar "APPVEYOR_BUILD_FOLDER"
 
-        /// Sends an Checkstyle results filename to TeamCity
-        let sendCheckstyle path = sendTeamCityImportData "checkstyle" path
+        /// AppVeyor unique build ID
+        static member BuildId = environVar "APPVEYOR_BUILD_ID"
 
-        /// Sends an FindBugs results filename to TeamCity
-        let sendFindBugs path = sendTeamCityImportData "findBugs" path
+        /// Build number
+        static member BuildNumber = environVar "APPVEYOR_BUILD_NUMBER"
 
-        /// Sends an JSLint results filename to TeamCity
-        let sendJSLint path = sendTeamCityImportData "jslint" path
+        /// Build version
+        static member BuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 
-        /// Sends an ReSharper inspectCode.exe results filename to TeamCity
-        let sendReSharperInspectCode path = sendTeamCityImportData "ReSharperInspectCode" path
+        /// GitHub Pull Request number
+        static member PullRequestNumber = environVar "APPVEYOR_PULL_REQUEST_NUMBER"
 
-        /// Sends an PMD inspections results filename to TeamCity
-        let sendPmd path = sendTeamCityImportData "pmd" path
+        /// GitHub Pull Request title
+        static member PullRequestTitle = environVar "APPVEYOR_PULL_REQUEST_TITLE"
 
-        /// Sends an PMD Copy/Paste Detector results filename to TeamCity
-        let sendPmdCpd path = sendTeamCityImportData "pmdCpd" path
+        /// GitHub Pull Request Repo name
+        static member PullRequestRepoName = environVar "APPVEYOR_PULL_REQUEST_REPO_NAME"
 
-        /// Sends an ReSharper dupfinder.exe results filename to TeamCity
-        let sendDotNetDupFinder path = sendTeamCityImportData "DotNetDupFinder" path
+        /// GitHub Pull Request branch
+        static member PullRequestRepoBranch = environVar "APPVEYOR_PULL_REQUEST_REPO_BRANCH"
 
-        /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity
-        let sendDotNetCoverageForTool path (tool : DotNetCoverageTool) =
-            sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (tool.TeamCityName |> TeamCityWriter.scrub) (path |> TeamCityWriter.scrub)
-            |> TeamCityWriter.sendStrToTeamCity
+        /// AppVeyor unique job ID
+        static member JobId = environVar "APPVEYOR_JOB_ID"
 
-    /// Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity
-    let sendTeamCityDotCoverHome = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage dotcover_home='%s']"
+        /// GitHub, BitBucket or Kiln
+        static member RepoProvider = environVar "APPVEYOR_REPO_PROVIDER"
 
-    /// Sends the full path to NCover installation folder to TeamCity
-    let sendTeamCityNCover3Home = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover3_home='%s']"
+        /// git or mercurial
+        static member RepoScm = environVar "APPVEYOR_REPO_SCM"
 
-    /// Sends arguments for the NCover report generator to TeamCity
-    let sendTeamCityNCover3ReporterArgs = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover3_reporter_args='%s']"
+        /// Repository name in format owner-name/repo-name
+        static member RepoName = environVar "APPVEYOR_REPO_NAME"
 
-    /// Sends the path to NCoverExplorer to TeamCity
-    let sendTeamCityNCoverExplorerTool = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_tool='%s']"
+        /// Build branch
+        static member RepoBranch = environVar "APPVEYOR_REPO_BRANCH"
 
-    /// Sends additional arguments for NCover 1.x to TeamCity
-    let sendTeamCityNCoverExplorerToolArgs = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_tool_args='%s']"
+        /// Commit ID (SHA)
+        static member RepoCommit = environVar "APPVEYOR_REPO_COMMIT"
 
-    /// Sends the value for NCover /report: argument to TeamCity
-    let sendTeamCityNCoverReportType : int -> unit = string >> TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_report_type='%s']"
+        /// Commit author's name
+        static member RepoCommitAuthor = environVar "APPVEYOR_REPO_COMMIT_AUTHOR"
 
-    /// Sends the value for NCover  /sort: argument to TeamCity
-    let sendTeamCityNCoverReportOrder : int -> unit = string >> TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_report_order='%s']"
+        /// Commit author's email address
+        static member RepoCommitAuthorEmail = environVar "APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL"
 
-    /// Send the PartCover xslt transformation rules (Input xlst and output files) to TeamCity
-    let sendTeamCityPartCoverReportXslts : seq<string * string> -> unit =
-        Seq.map (fun (xslt, output) -> sprintf "%s=>%s" xslt output)
-        >> Seq.map TeamCityWriter.EncapsulateSpecialChars
-        >> String.concat "|n"
-        >> sprintf "##teamcity[dotNetCoverage partcover_report_xslts='%s']"
-        >> TeamCityWriter.sendStrToTeamCity
+        /// Commit date/time
+        static member RepoCommitTimestamp = environVar "APPVEYOR_REPO_COMMIT_TIMESTAMP"
 
-    /// Starts the test case.
-    let StartTestCase testCaseName =
-        TeamCityWriter.sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
+        /// Commit message
+        static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
 
-    /// Finishes the test case.
-    let FinishTestCase testCaseName (duration : System.TimeSpan) =
-        let duration =
-            duration.TotalMilliseconds
-            |> round
-            |> string
-        sprintf "##teamcity[testFinished name='%s' duration='%s']" (TeamCityWriter.EncapsulateSpecialChars testCaseName) duration
-        |> TeamCityWriter.sendStrToTeamCity
+        /// The rest of the commit message after line break (if exists)
+        static member RepoCommitMessageExtended = environVar "APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
 
-    /// Ignores the test case.
-    let IgnoreTestCase name message =
-        StartTestCase name
-        sprintf "##teamcity[testIgnored name='%s' message='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars message) |> TeamCityWriter.sendStrToTeamCity
+        /// If the build runs by scheduler;
+        static member IsScheduledBuild = environVar "APPVEYOR_SCHEDULED_BUILD"
 
+        /// If the build has been started by the "New Build" button or from the same API
+        static member IsForcedBuild = environVar "APPVEYOR_FORCED_BUILD"
 
-    /// Report Standard-Output for a given test-case
-    let ReportTestOutput name output =
-        sprintf "##teamcity[testStdOut name='%s' out='%s']" 
-            (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars output)
-        |> TeamCityWriter.sendStrToTeamCity
+        /// If the build has been started by the "Re-Build commit/PR" button or from the same API
+        static member IsReBuild = environVar "APPVEYOR_RE_BUILD"
 
-    /// Report Standard-Error for a given test-case
-    let ReportTestError name output =
-        sprintf "##teamcity[testStdErr name='%s' out='%s']" 
-            (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars output)
-        |> TeamCityWriter.sendStrToTeamCity
+        /// true if build has started by pushed tag; otherwise false
+        static member RepoTag =
+            let rt = environVar "APPVEYOR_REPO_TAG"
+            not (isNull rt) && rt.Equals("true", System.StringComparison.OrdinalIgnoreCase)
 
-    /// Ignores the test case.
-    let IgnoreTestCaseWithDetails name message details =
-        IgnoreTestCase name (message + " " + details)
+        /// contains tag name for builds started by tag
+        static member RepoTagName = environVar "APPVEYOR_REPO_TAG_NAME"
 
-    /// Finishes the test suite.
-    let FinishTestSuite testSuiteName =
-        TeamCityWriter.EncapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteFinished name='%s']"
+        /// Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).
+        static member Platform = environVar "PLATFORM"
 
-    /// Starts the test suite.
-    let StartTestSuite testSuiteName =
-        TeamCityWriter.EncapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteStarted name='%s']"
+        /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).
+        static member Configuration  = environVar "CONFIGURATION"
 
-    /// Reports the progress.
-    let ReportProgress message = TeamCityWriter.EncapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressMessage '%s']"
-
-    /// Reports the progress start.
-    let ReportProgressStart message = TeamCityWriter.EncapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressStart '%s']"
-
-    /// Reports the progress end.
-    let ReportProgressFinish message = TeamCityWriter.EncapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressFinish '%s']"
-
-    /// Create  the build status.
-    /// [omit]
-    let buildStatus status message =
-        sprintf "##teamcity[buildStatus status='%s' text='%s']" (TeamCityWriter.EncapsulateSpecialChars status) (TeamCityWriter.EncapsulateSpecialChars message)
-
-    /// Reports the build status.
-    let ReportBuildStatus status message = buildStatus status message |> TeamCityWriter.sendStrToTeamCity
-
-    /// Publishes an artifact on the TeamcCity build server.
-    let PublishArtifact path = TeamCityWriter.EncapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
-
-    /// Sets the TeamCity build number.
-    let SetBuildNumber buildNumber = TeamCityWriter.EncapsulateSpecialChars buildNumber |> TeamCityWriter.sendToTeamCity "##teamcity[buildNumber '%s']"
-
-    /// Reports a build statistic.
-    let SetBuildStatistic key value =
-        sprintf "##teamcity[buildStatisticValue key='%s' value='%s']" (TeamCityWriter.EncapsulateSpecialChars key)
-            (TeamCityWriter.EncapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
-
-    /// Reports a parameter value
-    let SetTeamCityParameter name value =
-        sprintf "##teamcity[setParameter name='%s' value='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
-
-    /// Reports a failed test.
-    let TestFailed name message details =
-        sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars message) (TeamCityWriter.EncapsulateSpecialChars details) |> TeamCityWriter.sendStrToTeamCity
-
-    /// Reports a failed comparison.
-    let ComparisonFailure name message details expected actual =
-        sprintf
-            "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-            (TeamCityWriter.EncapsulateSpecialChars name) (TeamCityWriter.EncapsulateSpecialChars message) (TeamCityWriter.EncapsulateSpecialChars details)
-            (TeamCityWriter.EncapsulateSpecialChars expected) (TeamCityWriter.EncapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
-
-    /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
-    let TeamCityVersion = Environment.environVarOrNone "TEAMCITY_VERSION"
-
-    /// The Name of the project the current build belongs to or None if it's not on TeamCity.
-    let TeamCityProjectName = Environment.environVarOrNone "TEAMCITY_PROJECT_NAME"
-
-    /// The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.
-    let TeamCityBuildConfigurationName = Environment.environVarOrNone "TEAMCITY_BUILDCONF_NAME"
-
-    /// Is set to true if the build is a personal one.
-    let TeamCityBuildIsPersonal =
-        match Environment.environVarOrNone "BUILD_IS_PERSONAL" with
-        | Some _ -> true
-        | None -> false
-
-    /// The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.
-    let TeamCityBuildNumber = Environment.environVarOrNone "BUILD_NUMBER"
+        /// The job name
+        static member JobName = environVar "APPVEYOR_JOB_NAME"
+        
+        /// The Job Number
+        static member JobNumber = environVar "APPVEYOR_JOB_NUMBER"
+        
+        /// set to true to disable cache restore
+        static member CacheSkipRestore = environVar "APPVEYOR_CACHE_SKIP_RESTORE"
+        
+        /// set to true to disable cache update
+        static member CacheSkipSave = environVar "APPVEYOR_CACHE_SKIP_SAVE"
+        
+        /// Current build worker image the build is running on, e.g. Visual Studio 2015
+        static member BuildWorkerImage = environVar "APPVEYOR_BUILD_WORKER_IMAGE"
+        
+        /// Artifact upload timeout in seconds. Default is 600 (10 minutes)
+        static member ArtifactUploadTimeout = environVar "APPVEYOR_ARTIFACT_UPLOAD_TIMEOUT"
+        
+        /// Timeout in seconds to download arbirtary files using appveyor DownloadFile command. Default is 300 (5 minutes)
+        static member FileDownloadTimeout = environVar "APPVEYOR_FILE_DOWNLOAD_TIMEOUT"
+        
+        /// Timeout in seconds to download repository (GitHub, Bitbucket or VSTS) as zip file (shallow clone). Default is 1800 (30 minutes)
+        static member RepositoryShallowCloneTimeout = environVar "APPVEYOR_REPOSITORY_SHALLOW_CLONE_TIMEOUT"
+        
+        /// Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)
+        static member CacheEntryUploadDownloadTimeout = environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
+        
 
 
     /// Implements a TraceListener for TeamCity build servers.
@@ -239,45 +228,69 @@ module AppVeyor =
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
     type internal AppVeyorTraceListener(importantMessagesToStdErr, colorMap) =
+        let mutable currentTestSuite = None
+        let getCurrentTestSuite() =
+            match currentTestSuite with
+            | None -> "defaultSuite"
+            | Some s -> s
+
+        let mutable currentTestOutput = None        
+
+        let mutable currentTestResult = None
 
         interface ITraceListener with
             /// Writes the given message to the Console.
             member __.Write msg = 
                 let color = colorMap msg
                 match msg with
-                | OpenTag (KnownTags.Test name, _) ->
-                    StartTestCase name
-                | TestOutput (testName,out,false) ->
-                    ReportTestOutput testName out
-                | TestOutput (testName,out,true) ->
-                    ReportTestError testName out
-                | TestStatus (testName,Ignored message) ->
-                    IgnoreTestCase testName message
-                | TestStatus (testName,Failed(message, detail, None)) ->
-                    TestFailed testName message detail
-                | TestStatus (testName,Failed(message, detail, Some (expected, actual))) ->
-                    ComparisonFailure testName message detail expected actual
-                | CloseTag (KnownTags.Test name, time) ->
-                    FinishTestCase name time
-                | OpenTag (KnownTags.TestSuite name, _) ->
-                    StartTestSuite name
-                | CloseTag (KnownTags.TestSuite name, _) ->
-                    FinishTestSuite name
-                | OpenTag (tag, description) ->
-                    TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type description)
-                | CloseTag (tag, _) ->
-                    TeamCityWriter.sendCloseBlock tag.Name
-                | ImportantMessage text | ErrorMessage text ->
+                | TraceData.OpenTag (KnownTags.Test name, _) ->
+                    AppVeyorInternal.StartTestCase (getCurrentTestSuite()) name 
+                | TraceData.TestOutput (testName,out,err) ->
+                    currentTestOutput <- Some(out,err)
+                | TraceData.TestStatus (testName, status) ->
+                    currentTestResult <- Some status
+                | TraceData.CloseTag (KnownTags.Test name, time) ->
+                    let outcome, msg, detail =
+                        match currentTestResult with
+                        | None -> "Passed", "", ""
+                        | Some (TestStatus.Ignored msg) -> "Ignored", msg, ""
+                        | Some (TestStatus.Failed(message, detail, None)) -> "Failed", message, detail
+                        | Some (TestStatus.Failed(message, detail, Some(expected, actual))) ->
+                            "Failed", sprintf "%s: Expected '%s' but was '%s'" message expected actual, detail
+                    let stdOut, stdErr =
+                        match currentTestOutput with
+                        | Some (out, err) -> out, err
+                        | None -> "", ""                    
+                    AppVeyorInternal.UpdateTestEx (getCurrentTestSuite()) name outcome msg detail stdOut stdErr
+                    AppVeyorInternal.FinishTestCase (getCurrentTestSuite()) name time
+                | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
+                    currentTestSuite <- Some name
+                | TraceData.CloseTag (KnownTags.TestSuite name, _) ->
+                    currentTestSuite <- None
+                | TraceData.OpenTag (tag, descr) ->
+                    ConsoleWriter.write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                | TraceData.CloseTag (tag, time) ->
+                    ConsoleWriter.write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                     ConsoleWriter.write importantMessagesToStdErr color true text
-                | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
+                | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
-                | ImportData (BuildArtifact, path) ->
-                    PublishArtifact path
-                | ImportData (DotNetCoverage tool, path) ->
-                    Import.sendDotNetCoverageForTool path tool
-                | ImportData (typ, path) ->
-                    sendTeamCityImportData typ.TeamCityName path
-                | BuildNumber number -> SetBuildNumber number
+                | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit, path) ->
+                    AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.NUnit path
+                | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit3, path) ->
+                    AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.NUnit3 path
+                | TraceData.ImportData (ImportData.Mstest, path) ->
+                    AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.MsTest path
+                | TraceData.ImportData (ImportData.Xunit, path) ->
+                    AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.Xunit path
+                | TraceData.ImportData (ImportData.Junit, path) ->
+                    AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.JUnit path
+                | TraceData.ImportData (ImportData.BuildArtifact, path) ->
+                    AppVeyorInternal.PushArtifact (fun parms -> { parms with Path = path; FileName = Path.GetFileName path })
+                | TraceData.ImportData (typ, path) ->
+                    AppVeyorInternal.PushArtifact (fun parms ->
+                        { parms with Path = path; FileName = Path.GetFileName path; DeploymentName = typ.AppVeyorName })
+                | TraceData.BuildNumber number -> updateBuildVersion number
 
     let defaultTraceListener =
       AppVeyorTraceListener(false, ConsoleWriter.colorMap) :> ITraceListener
@@ -291,4 +304,4 @@ module AppVeyor =
     let Installer =
         { new BuildServerInstaller() with
             member __.Install () = install (false)
-            member __.Detect () = detect() }*)
+            member __.Detect () = detect() }

@@ -10,27 +10,31 @@ open Fake.IO
 module TeamCityImportExtensions =
     type DotNetCoverageTool with
         member x.TeamCityName =
-            match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
+            match x with
+            | DotNetCoverageTool.DotCover -> "dotcover"
+            | DotNetCoverageTool.PartCover -> "partcover"
+            | DotNetCoverageTool.NCover -> "ncover"
+            | DotNetCoverageTool.NCover3 -> "ncover3"
 
     type ImportData with
         member x.TeamCityName =
             match x with
-            | BuildArtifact -> "buildArtifact"
-            | DotNetCoverage _ -> "dotNetCoverage"
-            | DotNetDupFinder -> "DotNetDupFinder"
-            | PmdCpd -> "pmdCpd"
-            | Pmd -> "pmd"
-            | ReSharperInspectCode -> "ReSharperInspectCode"
-            | Jslint -> "jslint"
-            | FindBugs -> "findBugs"
-            | Checkstyle -> "checkstyle"
-            | Gtest -> "gtest"
-            | Mstest -> "mstest"
-            | Surefire -> "surefire"
-            | Junit -> "junit"
-            | FxCop -> "FxCop"
-            | Nunit _ -> "nunit"
-            | Xunit _ -> "nunit"
+            | ImportData.BuildArtifact -> "buildArtifact"
+            | ImportData.DotNetCoverage _ -> "dotNetCoverage"
+            | ImportData.DotNetDupFinder -> "DotNetDupFinder"
+            | ImportData.PmdCpd -> "pmdCpd"
+            | ImportData.Pmd -> "pmd"
+            | ImportData.ReSharperInspectCode -> "ReSharperInspectCode"
+            | ImportData.Jslint -> "jslint"
+            | ImportData.FindBugs -> "findBugs"
+            | ImportData.Checkstyle -> "checkstyle"
+            | ImportData.Gtest -> "gtest"
+            | ImportData.Mstest -> "mstest"
+            | ImportData.Surefire -> "surefire"
+            | ImportData.Junit -> "junit"
+            | ImportData.FxCop -> "FxCop"
+            | ImportData.Nunit _ -> "nunit"
+            | ImportData.Xunit _ -> "nunit"
 
 module TeamCity =
 
@@ -244,39 +248,38 @@ module TeamCity =
             member __.Write msg = 
                 let color = colorMap msg
                 match msg with
-                | OpenTag (KnownTags.Test name, _) ->
+                | TraceData.OpenTag (KnownTags.Test name, _) ->
                     StartTestCase name
-                | TestOutput (testName,out,false) ->
-                    ReportTestOutput testName out
-                | TestOutput (testName,out,true) ->
-                    ReportTestError testName out
-                | TestStatus (testName,Ignored message) ->
+                | TraceData.TestOutput (testName,out,err) ->
+                    if not (String.IsNullOrEmpty out) then ReportTestOutput testName out
+                    if not (String.IsNullOrEmpty err) then ReportTestError testName err
+                | TraceData.TestStatus (testName,TestStatus.Ignored message) ->
                     IgnoreTestCase testName message
-                | TestStatus (testName,Failed(message, detail, None)) ->
+                | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, None)) ->
                     TestFailed testName message detail
-                | TestStatus (testName,Failed(message, detail, Some (expected, actual))) ->
+                | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     ComparisonFailure testName message detail expected actual
-                | CloseTag (KnownTags.Test name, time) ->
+                | TraceData.CloseTag (KnownTags.Test name, time) ->
                     FinishTestCase name time
-                | OpenTag (KnownTags.TestSuite name, _) ->
+                | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
                     StartTestSuite name
-                | CloseTag (KnownTags.TestSuite name, _) ->
+                | TraceData.CloseTag (KnownTags.TestSuite name, _) ->
                     FinishTestSuite name
-                | OpenTag (tag, description) ->
+                | TraceData.OpenTag (tag, description) ->
                     TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type description)
-                | CloseTag (tag, _) ->
+                | TraceData.CloseTag (tag, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
-                | ImportantMessage text | ErrorMessage text ->
+                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                     ConsoleWriter.write importantMessagesToStdErr color true text
-                | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
+                | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
-                | ImportData (BuildArtifact, path) ->
+                | TraceData.ImportData (ImportData.BuildArtifact, path) ->
                     PublishArtifact path
-                | ImportData (DotNetCoverage tool, path) ->
+                | TraceData.ImportData (ImportData.DotNetCoverage tool, path) ->
                     Import.sendDotNetCoverageForTool path tool
-                | ImportData (typ, path) ->
+                | TraceData.ImportData (typ, path) ->
                     sendTeamCityImportData typ.TeamCityName path
-                | BuildNumber number -> SetBuildNumber number
+                | TraceData.BuildNumber number -> SetBuildNumber number
 
     let defaultTraceListener =
       TeamCityTraceListener(false, ConsoleWriter.colorMap) :> ITraceListener

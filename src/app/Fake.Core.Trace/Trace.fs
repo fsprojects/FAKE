@@ -16,13 +16,13 @@ type FAKEException(msg) =
 let private openTags = new ThreadLocal<list<System.Diagnostics.Stopwatch * KnownTags>>(fun _ -> [])
 
 /// Logs the specified string        
-let log message = LogMessage(message, true) |> CoreTracing.postMessage
+let log message = TraceData.LogMessage(message, true) |> CoreTracing.postMessage
 
 /// Logs the specified message
 let logfn fmt = Printf.ksprintf log fmt
 
 /// Logs the specified message (without line break)
-let logf fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (LogMessage(text, false))) fmt
+let logf fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.LogMessage(text, false))) fmt
 
 /// Logs the specified string if the verbose mode is activated.
 let logVerbosefn fmt = 
@@ -30,26 +30,26 @@ let logVerbosefn fmt =
                      else ignore) fmt
 
 /// Writes a trace to the command line (in green)
-let trace message = CoreTracing.postMessage (TraceMessage(message, true))
+let trace message = CoreTracing.postMessage (TraceData.TraceMessage(message, true))
 
 /// Writes a message to the command line (in green)
 let tracefn fmt = Printf.ksprintf trace fmt
 
 /// Writes a message to the command line (in green) and without a line break
-let tracef fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceMessage(text, false))) fmt
+let tracef fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.TraceMessage(text, false))) fmt
 
 /// Writes a trace to the command line (in green) if the verbose mode is activated.
 let traceVerbose s = 
     if verbose then trace s
 
 /// Writes a trace to stderr (in yellow)  
-let traceImportant text = CoreTracing.postMessage (ImportantMessage text)
+let traceImportant text = CoreTracing.postMessage (TraceData.ImportantMessage text)
 
 /// Writes a trace to the command line (in yellow)
-let traceFAKE fmt = Printf.ksprintf (ImportantMessage >> CoreTracing.postMessage) fmt
+let traceFAKE fmt = Printf.ksprintf (TraceData.ImportantMessage >> CoreTracing.postMessage) fmt
 
 /// Traces an error (in red)
-let traceError error = CoreTracing.postMessage (ErrorMessage error)
+let traceError error = CoreTracing.postMessage (TraceData.ErrorMessage error)
 
 open Microsoft.FSharp.Core.Printf
 
@@ -122,7 +122,7 @@ let traceHeader name =
 let openTagUnsafe tag description =
     let sw = System.Diagnostics.Stopwatch.StartNew()
     openTags.Value <- (sw, tag) :: openTags.Value
-    OpenTag(tag, description) |> CoreTracing.postMessage
+    TraceData.OpenTag(tag, description) |> CoreTracing.postMessage
 
 let private asSafeDisposable f =
     let mutable isDisposed = false
@@ -144,7 +144,7 @@ let closeTagUnsafe tag =
             openTags.Value <- rest
             sw.Elapsed
         | _ -> failwithf "Invalid tag structure. Trying to close %A tag but stack is %A" tag openTags
-    CloseTag (tag, time) |> CoreTracing.postMessage
+    TraceData.CloseTag (tag, time) |> CoreTracing.postMessage
 
 /// Removes an opening tag from the internal tag stack
 [<System.Obsolete("Consider using traceTag instead and 'use' to properly call closeTag in case of exceptions. To remove this warning use 'closeTagUnsafe'.")>]
@@ -159,8 +159,7 @@ let closeAllOpenTags() = Seq.iter (fun (_, tag) -> closeTagUnsafe tag) openTags.
 
 /// Traces the begin of a target
 let traceStartTargetUnsafe name description dependencyString =
-    openTagUnsafe (Target name) description
-    tracefn "Starting Target: %s %s" name dependencyString
+    openTagUnsafe (KnownTags.Target name) description
     if not (isNull description) then tracefn "  %s" description
 
 /// Traces the begin of a target
@@ -170,8 +169,7 @@ let traceStartTarget name description dependencyString =
 
 /// Traces the end of a target
 let traceEndTargetUnsafe name = 
-    tracefn "Finished Target: %s" name
-    closeTagUnsafe (Target name)
+    closeTagUnsafe (KnownTags.Target name)
 
 /// Traces the end of a target
 [<System.Obsolete("Consider using traceTarget instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTargetUnsafe'.")>]
@@ -183,7 +181,7 @@ let traceTarget name description dependencyString =
 
 /// Traces the begin of a task
 let traceStartTaskUnsafe task description = 
-    openTagUnsafe (Task task) description
+    openTagUnsafe (KnownTags.Task task) description
 
 /// Traces the begin of a task
 [<System.Obsolete("Consider using traceTask instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceStartTaskUnsafe'.")>]
@@ -191,7 +189,7 @@ let traceStartTask task description = traceStartTaskUnsafe task description
 
 /// Traces the end of a task
 let traceEndTaskUnsafe task = 
-    closeTagUnsafe (Task task)
+    closeTagUnsafe (KnownTags.Task task)
    
 /// Traces the end of a task
 [<System.Obsolete("Consider using traceTask instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTask'.")>]
@@ -213,10 +211,10 @@ type EventLogEntryType =
 let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     let safeMessage = TraceSecrets.guardMessage msg
     match eventLogEntry with
-    | EventLogEntryType.Error -> ErrorMessage safeMessage
-    | EventLogEntryType.Information -> TraceMessage(safeMessage, true)
-    | EventLogEntryType.Warning -> ImportantMessage safeMessage
-    | _ -> LogMessage(safeMessage, true)
+    | EventLogEntryType.Error -> TraceData.ErrorMessage safeMessage
+    | EventLogEntryType.Information -> TraceData.TraceMessage(safeMessage, true)
+    | EventLogEntryType.Warning -> TraceData.ImportantMessage safeMessage
+    | _ -> TraceData.LogMessage(safeMessage, true)
     |> CoreTracing.defaultConsoleTraceListener.Write
 
 /// Logs the given files with the message.

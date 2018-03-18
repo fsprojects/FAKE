@@ -7,6 +7,8 @@ nuget FSharp.Core ~> 4.1.0
 nuget System.AppContext prerelease
 nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
+nuget Fake.BuildServer.AppVeyor prerelease
+nuget Fake.BuildServer.TeamCity prerelease
 nuget Fake.Core.Target prerelease
 nuget Fake.Core.SemVer prerelease
 nuget Fake.IO.FileSystem prerelease
@@ -54,6 +56,9 @@ open System.Reflection
 open System.IO
 open Fake.Api
 open Fake.Core
+#if BOOTSTRAP
+open Fake.BuildServer
+#endif
 open Fake.Tools
 open Fake.IO
 open Fake.IO.FileSystemOperators
@@ -61,6 +66,7 @@ open Fake.IO.Globbing.Operators
 open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
+
 
 // properties
 let projectName = "FAKE"
@@ -113,6 +119,13 @@ let additionalFiles = [
     "RELEASE_NOTES.md"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
+
+#if BOOTSTRAP
+BuildServer.Install [
+    AppVeyor.Installer
+    TeamCity.Installer
+]
+#endif
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)

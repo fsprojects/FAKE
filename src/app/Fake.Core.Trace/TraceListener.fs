@@ -5,6 +5,7 @@ open Fake.Core.BuildServer
 
 open System
 
+[<RequireQualifiedAccess>]
 type KnownTags =
     | Task of name:string
     | Target of name:string
@@ -29,6 +30,7 @@ type KnownTags =
         | Test _ -> "test"
         | Other (t, _) -> t
 
+[<RequireQualifiedAccess>]
 type DotNetCoverageTool =
     | DotCover
     | PartCover
@@ -41,10 +43,12 @@ type DotNetCoverageTool =
         | NCover -> "ncover"
         | NCover3 -> "ncover3"
 
+[<RequireQualifiedAccess>]
 type NunitDataVersion =
     | Nunit
     | Nunit3
 
+[<RequireQualifiedAccess>]
 type ImportData =
     | BuildArtifact
     | DotNetCoverage of DotNetCoverageTool
@@ -86,6 +90,7 @@ type ImportData =
         | DotNetCoverage tool -> sprintf "dotNetCoverage (%O)" tool
         | _ -> x.Name
 
+[<RequireQualifiedAccess>]
 type TestStatus =
     | Ignored of message:string
     | Failed of message:string * details:string * expectedActual:(string * string) option
@@ -93,14 +98,15 @@ type TestStatus =
 module TestStatus =
     let inline mapMessage f (t:TestStatus) =
         match t with
-        | Failed (message, details, Some (expected, actual)) ->
-            Failed (f message, f details, Some (f expected, f actual))
-        | Failed (message, details, None) ->
-            Failed (f message, f details, None)
+        | TestStatus.Failed (message, details, Some (expected, actual)) ->
+            TestStatus.Failed (f message, f details, Some (f expected, f actual))
+        | TestStatus.Failed (message, details, None) ->
+            TestStatus.Failed (f message, f details, None)
         | _ -> t        
 
 
 /// Defines Tracing information for TraceListeners
+[<RequireQualifiedAccess>]
 type TraceData = 
     | ImportData of typ:ImportData * path:string
     | BuildNumber of text:string
@@ -110,7 +116,7 @@ type TraceData =
     | TraceMessage of text:string * newLine:bool
     | OpenTag of KnownTags * description:string
     | TestStatus of testName:string * status:TestStatus
-    | TestOutput of testName:string * out:string * isStdErr:bool
+    | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan
     member x.NewLine =
         match x with
@@ -140,12 +146,12 @@ type TraceData =
 module TraceData =
     let inline mapMessage f (t:TraceData) =
         match t with
-        | ImportantMessage text -> ImportantMessage (f text) 
-        | ErrorMessage text -> ErrorMessage (f text)
-        | LogMessage (text, d) -> LogMessage (f text, d)
-        | TraceMessage (text, d) -> TraceMessage (f text, d)
-        | TestStatus (testName,status) -> TestStatus(testName, TestStatus.mapMessage f status)
-        | TestOutput (testName,out,isStdErr) -> TestOutput (testName,f out,isStdErr)
+        | TraceData.ImportantMessage text -> TraceData.ImportantMessage (f text) 
+        | TraceData.ErrorMessage text -> TraceData.ErrorMessage (f text)
+        | TraceData.LogMessage (text, d) -> TraceData.LogMessage (f text, d)
+        | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
+        | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
+        | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
         | _ -> t
 
     let internal repl (oldStr:string) (repl:string) (s:string) =
@@ -176,10 +182,10 @@ module ConsoleWriter =
     /// A default color map which maps TracePriorities to ConsoleColors
     let colorMap traceData = 
         match traceData with
-        | ImportantMessage _ -> ConsoleColor.Yellow
-        | ErrorMessage _ -> ConsoleColor.Red
-        | LogMessage _ -> ConsoleColor.Gray
-        | TraceMessage _ -> ConsoleColor.Green
+        | TraceData.ImportantMessage _ -> ConsoleColor.Yellow
+        | TraceData.ErrorMessage _ -> ConsoleColor.Red
+        | TraceData.LogMessage _ -> ConsoleColor.Gray
+        | TraceData.TraceMessage _ -> ConsoleColor.Green
         | _ -> ConsoleColor.Gray
 
 /// Implements a TraceListener for System.Console.
@@ -192,19 +198,19 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
         member __.Write msg = 
             let color = colorMap msg
             match msg with
-            | ImportantMessage text | ErrorMessage text ->
+            | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                 ConsoleWriter.write importantMessagesToStdErr color true text
-            | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
+            | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                 ConsoleWriter.write false color newLine text
-            | OpenTag (tag, descr) ->
+            | TraceData.OpenTag (tag, descr) ->
                 ConsoleWriter.write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-            | CloseTag (tag, time) ->
+            | TraceData.CloseTag (tag, time) ->
                 ConsoleWriter.write false color true (sprintf "Finished '%s' in %O" tag.Name time)
-            | ImportData (typ, path) ->
+            | TraceData.ImportData (typ, path) ->
                 ConsoleWriter.write false color true (sprintf "Import data '%O': %s" typ path)
-            | BuildNumber _
-            | TestOutput _
-            | TestStatus _ -> ()
+            | TraceData.BuildNumber _
+            | TraceData.TestOutput _
+            | TraceData.TestStatus _ -> ()
 
 type TraceSecret =
     { Value : string; Replacement : string }

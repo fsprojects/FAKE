@@ -45,16 +45,16 @@ type NAntXmlTraceListener(encoding : Encoding, xmlOutputFile) =
 
     let getXml msg = 
         match msg with
-        | ImportantMessage text -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text // TODO: Set Level
-        | LogMessage(text, _) | TraceMessage(text, _) -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text
-        | OpenTag(tag, _) -> sprintf "<%s name=\"%s\">" tag.Type tag.Name
-        | CloseTag (tag, _) -> sprintf "</%s>" tag.Type
-        | ErrorMessage text -> 
+        | TraceData.ImportantMessage text -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text // TODO: Set Level
+        | TraceData.LogMessage(text, _) | TraceData.TraceMessage(text, _) -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text
+        | TraceData.OpenTag(tag, _) -> sprintf "<%s name=\"%s\">" tag.Type tag.Name
+        | TraceData.CloseTag (tag, _) -> sprintf "</%s>" tag.Type
+        | TraceData.ErrorMessage text -> 
             sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" text
-        | TestOutput _
-        | TestStatus _
-        | ImportData _
-        | BuildNumber _ -> ""       
+        | TraceData.TestOutput _
+        | TraceData.TestStatus _
+        | TraceData.ImportData _
+        | TraceData.BuildNumber _ -> ""       
 
     interface System.IDisposable with
         member __.Dispose () =
