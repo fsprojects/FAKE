@@ -483,7 +483,6 @@
     <Compile Include="ChocoHelper.fs" />
     <Compile Include="SlackNotificationHelper.fs" />
     <Compile Include="SonarQubeHelper.fs" />
-    <Compile Include="AzureKudu.fs" />
     <Compile Include="DocFxHelper.fs" />
     <Compile Include="GitVersionHelper.fs" />
     <Compile Include="Checksum.fs" />

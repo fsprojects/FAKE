@@ -25,11 +25,12 @@ module TypeExtensions =
             | FindBugs -> "findBugs"
             | Checkstyle -> "checkstyle"
             | Gtest -> "gtest"
-            | Mstest -> "mstest"
             | Surefire -> "surefire"
-            | Junit -> "junit"
             | FxCop -> "FxCop"
+            | Mstest -> "mstest"
             | Nunit -> "nunit"
+            | Junit -> "junit"
+            | Xunit -> "xunit"
 (*
 module AppVeyor =
 

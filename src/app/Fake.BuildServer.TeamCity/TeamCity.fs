@@ -29,7 +29,7 @@ module TypeExtensions =
             | Surefire -> "surefire"
             | Junit -> "junit"
             | FxCop -> "FxCop"
-            | Nunit -> "nunit"
+            | Nunit _ -> "nunit"
 
 module TeamCity =
 

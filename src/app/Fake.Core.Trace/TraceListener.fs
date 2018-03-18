@@ -41,6 +41,10 @@ type DotNetCoverageTool =
         | NCover -> "ncover"
         | NCover3 -> "ncover3"
 
+type NunitDataVersion =
+    | Nunit
+    | Nunit3
+
 type ImportData =
     | BuildArtifact
     | DotNetCoverage of DotNetCoverageTool
@@ -56,7 +60,8 @@ type ImportData =
     | Mstest
     | Surefire
     | Junit
-    | Nunit
+    | Xunit
+    | Nunit of NunitDataVersion
     member x.Name =
         match x with
         | BuildArtifact -> "buildArtifact"
@@ -73,7 +78,8 @@ type ImportData =
         | Surefire -> "surefire"
         | Junit -> "junit"
         | FxCop -> "FxCop"
-        | Nunit -> "nunit"
+        | Nunit NunitDataVersion.Nunit -> "nunit"
+        | Nunit NunitDataVersion.Nunit3 -> "nunit3"
     override x.ToString() =
         match x with
         | DotNetCoverage tool -> sprintf "dotNetCoverage (%O)" tool
