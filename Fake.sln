@@ -96,6 +96,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.BuildServer.AppVeyor",
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.BuildServer.Travis", "src/app/Fake.BuildServer.Travis/Fake.BuildServer.Travis.fsproj", "{31F61589-E899-4C58-AF91-371AC6149032}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.BuildServer.TeamFoundation", "src/app/Fake.BuildServer.TeamFoundation/Fake.BuildServer.TeamFoundation.fsproj", "{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -622,6 +624,18 @@ Global
 		{31F61589-E899-4C58-AF91-371AC6149032}.Release|x64.Build.0 = Release|x64
 		{31F61589-E899-4C58-AF91-371AC6149032}.Release|x86.ActiveCfg = Release|x86
 		{31F61589-E899-4C58-AF91-371AC6149032}.Release|x86.Build.0 = Release|x86
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Debug|x64.ActiveCfg = Debug|x64
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Debug|x64.Build.0 = Debug|x64
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Debug|x86.ActiveCfg = Debug|x86
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Debug|x86.Build.0 = Debug|x86
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Release|x64.ActiveCfg = Release|x64
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Release|x64.Build.0 = Release|x64
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Release|x86.ActiveCfg = Release|x86
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -671,6 +685,7 @@ Global
 		{9EA0CFE4-ED50-4CB9-BE93-1AFB9D90C878} = {901F162F-8925-4390-89C5-9EE2C343F744}
 		{486FA49B-D395-42C5-AFB0-FA85B6D9FDBC} = {901F162F-8925-4390-89C5-9EE2C343F744}
 		{31F61589-E899-4C58-AF91-371AC6149032} = {901F162F-8925-4390-89C5-9EE2C343F744}
+		{5E1B10FE-3F7A-4D10-A804-3C11EC82C21D} = {901F162F-8925-4390-89C5-9EE2C343F744}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {058A0C5E-2216-4306-8AFB-0AE28320C26A}
