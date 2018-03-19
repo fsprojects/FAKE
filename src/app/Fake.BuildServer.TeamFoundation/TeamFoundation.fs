@@ -99,14 +99,17 @@ module TeamFoundation =
                     let parentId =
                         match openTags with
                         | [] -> None
-                        | (id) :: _ -> Some id
+                        | (_, id) :: _ -> Some id
+                    openTags <- (tag,id) :: openTags               
                     createLogDetail id parentId tag.Type tag.Name order descr
-                | TraceData.CloseTag (_, time) ->
+                | TraceData.CloseTag (tag, time) ->
                     ignore time
                     let id, rest =
                         match openTags with
-                        | [] -> failwithf "Cannot close tag, as it was not opened before!"
-                        | (id) :: rest -> id, rest
+                        | [] -> failwithf "Cannot close tag, as it was not opened before! (Expected %A)" tag
+                        | (savedTag, id) :: rest ->
+                            ignore savedTag // TODO: Check if tag = savedTag
+                            id, rest
                     openTags <- rest                
                     setLogDetailFinished id Succeeded
                 | TraceData.ImportData (typ, path) ->
