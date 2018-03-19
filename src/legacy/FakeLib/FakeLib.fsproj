@@ -345,6 +345,9 @@
     <Compile Include="..\..\app\Fake.BuildServer.Travis\Travis.fs">
       <Link>Fake.BuildServer.Travis/Travis.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamFoundation\TeamFoundation.fs">
+      <Link>Fake.BuildServer.TeamFoundation/TeamFoundation.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
