@@ -15,7 +15,7 @@
     <Compile Include="Async.fs" />
     <Compile Include="Result.fs" />
     <Compile Include="List.fs" />
-    <Compile Include="HttpLoader.fs" />
+    <Compile Include="Http.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />

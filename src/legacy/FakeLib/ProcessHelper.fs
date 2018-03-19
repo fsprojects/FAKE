@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains functions which can be used to start other tools.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 module Fake.ProcessHelper
 
 open System
@@ -16,10 +17,12 @@ open Fake.Core.GuardedAwaitObservable
 
 /// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
 /// If set to false (default) only mono processes will be changed.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let mutable AlwaysSetProcessEncoding = false
 
 /// The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
 /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let mutable ProcessEncoding = Encoding.UTF8
 
 /// [omit]
@@ -29,9 +32,11 @@ type internal ConcurrentBag<'T> with
             this.TryTake() |> ignore
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let startedProcesses = ConcurrentBag()
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let start (proc : Process) =
     if isMono || AlwaysSetProcessEncoding then
         try
@@ -47,18 +52,22 @@ let start (proc : Process) =
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let mutable redirectOutputToTrace = false
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let mutable enableProcessTracing = true
 
 /// A record type which captures console messages
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 type ConsoleMessage =
     { IsError : bool
       Message : string
       Timestamp : DateTimeOffset }
 
 /// A process result including error code, message log and errors.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 type ProcessResult =
     { ExitCode : int
       Messages : List<string>
@@ -78,6 +87,7 @@ type ProcessResult =
 ///  - `silent` - If this flag is set then the process output is redirected to the given output functions `errorF` and `messageF`.
 ///  - `errorF` - A function which will be called with the error log.
 ///  - `messageF` - A function which will be called with the message log.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
@@ -124,6 +134,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let ExecProcessAndReturnMessages configProcessStartInfoF timeOut =
     let errors = new List<_>()
     let messages = new List<_>()
@@ -135,6 +146,7 @@ let ExecProcessAndReturnMessages configProcessStartInfoF timeOut =
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let ExecProcessRedirected configProcessStartInfoF timeOut =
     let messages = ref []
 
@@ -157,7 +169,7 @@ let ExecProcessRedirected configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 ///  - `silent` - If this flag is set then the process output is redicted to the trace.
 /// [omit]
-[<Obsolete("Please use the new ExecProcess.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let execProcess2 configProcessStartInfoF timeOut silent =
     ExecProcessWithLambdas configProcessStartInfoF timeOut silent traceError trace
 
@@ -167,7 +179,7 @@ let execProcess2 configProcessStartInfoF timeOut silent =
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-[<Obsolete("Please use the new ExecProcess.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let execProcessAndReturnExitCode configProcessStartInfoF timeOut =
     ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace
 
@@ -177,7 +189,7 @@ let execProcessAndReturnExitCode configProcessStartInfoF timeOut =
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-[<Obsolete("Please use the new ExecProcess.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let execProcess3 configProcessStartInfoF timeOut =
     ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace = 0
 
@@ -194,6 +206,7 @@ let execProcess3 configProcessStartInfoF timeOut =
 ///                       info.Arguments <- "-v") (TimeSpan.FromMinutes 5.0)
 ///
 ///     if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let ExecProcess configProcessStartInfoF timeOut =
     ExecProcessWithLambdas configProcessStartInfoF timeOut redirectOutputToTrace traceError trace
 
@@ -203,6 +216,7 @@ let ExecProcess configProcessStartInfoF timeOut =
 ///  - `cmd` - The command which should be run in elavated context.
 ///  - `args` - The process arguments.
 ///  - `timeOut` - The timeout for the process.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let ExecProcessElevated cmd args timeOut =
     ExecProcess (fun si ->
         si.Verb <- "runas"
@@ -211,6 +225,7 @@ let ExecProcessElevated cmd args timeOut =
         si.UseShellExecute <- true) timeOut
 
 /// Gets the list of valid directories included in the PATH environment variable.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let pathDirectories =
     splitEnvironVar "PATH"
     |> Seq.map (fun value -> value.Trim())
@@ -220,6 +235,7 @@ let pathDirectories =
 /// Sets the environment Settings for the given startInfo.
 /// Existing values will be overriden.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let setEnvironmentVariables (startInfo : ProcessStartInfo) environmentSettings =
     for key, value in environmentSettings do
         if startInfo.EnvironmentVariables.ContainsKey key then startInfo.EnvironmentVariables.[key] <- value
@@ -227,9 +243,11 @@ let setEnvironmentVariables (startInfo : ProcessStartInfo) environmentSettings =
 
 /// Runs the given process and returns true if the exit code was 0.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let execProcess configProcessStartInfoF timeOut = ExecProcess configProcessStartInfoF timeOut = 0
 
 /// Starts the given process and returns immediatly.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let fireAndForget configProcessStartInfoF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
@@ -239,6 +257,7 @@ let fireAndForget configProcessStartInfoF =
     with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
 
 /// Runs the given process, waits for its completion and returns if it succeeded.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let directExec configProcessStartInfoF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
@@ -250,6 +269,7 @@ let directExec configProcessStartInfoF =
     proc.ExitCode = 0
 
 /// Starts the given process and forgets about it.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let StartProcess configProcessStartInfoF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
@@ -257,6 +277,7 @@ let StartProcess configProcessStartInfoF =
     start proc
 
 /// Sends a command to a remote windows service.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let RunRemoteService command host serviceName =
     let host, address =
         match host with
@@ -270,35 +291,42 @@ let RunRemoteService command host serviceName =
     ) then failwith "Failed to send command to service."
 
 /// Sends a command to a local windows service.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let RunService command serviceName =
     RunRemoteService command "." serviceName
 
 /// Stops a local windows service. Waits up to two minutes for a response.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let StopService serviceName =
     stopService serviceName
     ensureServiceHasStopped serviceName (TimeSpan.FromMinutes 2.)
 
 /// Stops a remote windows service. Waits up to two minutes for a response.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let StopRemoteService host serviceName =
     stopRemoteService host serviceName
     ensureRemoteServiceHasStopped host serviceName (TimeSpan.FromMinutes 2.)
 
 /// Starts a local windows service. Waits up to two minutes for a response.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let StartService serviceName =
     startService serviceName
     ensureServiceHasStarted serviceName (TimeSpan.FromMinutes 2.)
 
 /// Starts a remote windows service. Waits up to two minutes for a response.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let StartRemoteService host serviceName =
     startRemoteService host serviceName
     ensureRemoteServiceHasStarted host serviceName (TimeSpan.FromMinutes 2.)
 
 /// Adds quotes around the string
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
 
 /// Adds quotes around the string if needed
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let quoteIfNeeded str =
     if isNullOrEmpty str then ""
     elif str.Contains " " then quote str
@@ -306,32 +334,39 @@ let quoteIfNeeded str =
 
 /// Adds quotes and a blank around the string´.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let toParam x = " " + quoteIfNeeded x
 
 /// Use default Parameters
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let UseDefaults = id
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let stringParam (paramName, paramValue) =
     if isNullOrEmpty paramValue then None
     else Some(paramName, quote paramValue)
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let multipleStringParams paramName = Seq.map (fun x -> stringParam (paramName, x)) >> Seq.toList
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let optionParam (paramName, paramValue) =
     match paramValue with
     | Some x -> Some(paramName, x.ToString())
     | None -> None
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let boolParam (paramName, paramValue) =
     if paramValue then Some(paramName, null)
     else None
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let parametersToString flagPrefix delimiter parameters =
     parameters
     |> Seq.choose id
@@ -342,6 +377,7 @@ let parametersToString flagPrefix delimiter parameters =
 
 /// Searches the given directories for all occurrences of the given file name
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let tryFindFile dirs file =
     let files =
         dirs
@@ -365,6 +401,7 @@ let tryFindFile dirs file =
 
 /// Searches the given directories for the given file, failing if not found.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let findFile dirs file =
     match tryFindFile dirs file with
     | Some found -> found
@@ -375,6 +412,7 @@ let findFile dirs file =
 /// path to the file.
 /// ## Parameters
 ///  - `file` - The file to locate
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let tryFindFileOnPath (file : string) : string option =
     pathDirectories
     |> Seq.append [ "." ]
@@ -382,6 +420,7 @@ let tryFindFileOnPath (file : string) : string option =
 
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let appSettings (key : string) (fallbackValue : string) =
     let value =
         let setting =
@@ -394,6 +433,7 @@ let appSettings (key : string) (fallbackValue : string) =
 
 /// tries to find the tool on the paths given. If not found then try on the system PATH.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let tryFindFileInDirsThenPath paths tool =
     match tryFindFile paths tool with
     | Some path -> Some path
@@ -401,18 +441,21 @@ let tryFindFileInDirsThenPath paths tool =
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let tryFindPath settingsName fallbackValue tool =
     let paths = appSettings settingsName fallbackValue
     tryFindFileInDirsThenPath paths tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let findPath settingsName fallbackValue tool =
     match tryFindPath settingsName fallbackValue tool with
     | Some file -> file
     | None -> tool
 
 /// Parameter type for process execution.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 [<CLIMutable>]
 type ExecParams =
     { /// The path to the executable, without arguments.
@@ -428,6 +471,7 @@ type ExecParams =
       Args : (string * string) list }
 
 /// Default parameters for process execution.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let defaultParams =
     { Program = ""
       WorkingDirectory = ""
@@ -446,6 +490,7 @@ let private formatArgs args =
 /// logging output and error messages to FAKE output. You can compose the result
 /// with Async.Parallel to run multiple external programs at once, but be
 /// sure that none of them depend on the output of another.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let asyncShellExec (args : ExecParams) =
     async {
         if isNullOrEmpty args.Program then invalidArg "args" "You must specify a program to run!"
@@ -479,6 +524,7 @@ let asyncShellExec (args : ExecParams) =
     }
 
 /// Kills the given process
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let kill (proc : Process) =
     tracefn "Trying to kill process %s (Id = %d)" proc.ProcessName proc.Id
     try
@@ -486,9 +532,11 @@ let kill (proc : Process) =
     with exn -> tracefn "Could not kill process %s (Id = %d).%sMessage: %s" proc.ProcessName proc.Id Environment.NewLine exn.Message
 
 /// Kills all processes with the given id
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let killProcessById id = Process.GetProcessById id |> kill
 
 /// Returns all processes with the given name
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let getProcessesByName (name : string) =
     Process.GetProcesses()
     |> Seq.filter (fun p ->
@@ -501,6 +549,7 @@ let getProcessesByName (name : string) =
            with exn -> false)
 
 /// Kills all processes with the given name
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let killProcess name =
     tracefn "Searching for processes with name = %s" name
     Process.GetProcesses()
@@ -511,15 +560,19 @@ let killProcess name =
     |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let killFSI() = killProcess "fsi.exe"
 
 /// Kills the MSBuild process.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let killMSBuild() = killProcess "msbuild"
 
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let mutable killCreatedProcesses = true
 
 /// Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let killAllCreatedProcesses() =
     if not killCreatedProcesses then ()
     else
@@ -547,6 +600,7 @@ let killAllCreatedProcesses() =
 /// ## Parameters
 ///  - `name` - The name of the processes in question.
 ///  - `timeout` - The timespan to time out after.
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let ensureProcessesHaveStopped name timeout =
     let endTime = DateTime.Now.Add timeout
     while DateTime.Now <= endTime && not (getProcessesByName name |> Seq.isEmpty) do
@@ -557,6 +611,7 @@ let ensureProcessesHaveStopped name timeout =
 
 /// Execute an external program and return the exit code.
 /// [omit]
+[<System.Obsolete("FAKE0001 Use the Fake.Core.Process module instead")>]
 let shellExec args = args |> asyncShellExec |> Async.RunSynchronously
 
 /// Allows to exec shell operations synchronously and asynchronously.

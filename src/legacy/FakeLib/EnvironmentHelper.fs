@@ -1,5 +1,6 @@
 [<AutoOpen>]
 /// This module contains functions which allow to read and write environment variables and build parameters
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 module Fake.EnvironmentHelper
 
 open System
@@ -12,62 +13,79 @@ open System.Text.RegularExpressions
 open Microsoft.Win32
 
 /// Type alias for System.EnvironmentVariableTarget
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 type EnvironTarget = EnvironmentVariableTarget
 
 /// Retrieves the environment variable with the given name
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let environVar name = Environment.GetEnvironmentVariable name
 
 /// Combines two path strings using Path.Combine after removing leading slashes from the second path
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let inline combinePaths path1 (path2 : string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
 /// Combines two path strings using Path.Combine
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let inline combinePathsNoTrim path1 path2 = Path.Combine(path1, path2)
 
 /// Combines two path strings using Path.Combine after removing leading slashes from the second path
+[<System.Obsolete("Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let inline (@@) path1 path2 = combinePaths path1 path2
 /// Combines two path strings using Path.Combine
+[<System.Obsolete("Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let inline (</>) path1 path2 = combinePathsNoTrim path1 path2
 
 // Normalizes path for different OS
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 let inline normalizePath (path : string) =
     path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
 
 /// Retrieves all environment variables from the given target
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let environVars target =
     [ for e in Environment.GetEnvironmentVariables target ->
           let e1 = e :?> Collections.DictionaryEntry
           e1.Key, e1.Value ]
 
 /// Sets the environment variable with the given name
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
 
 /// Sets the environment variable with the given name for the current user.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let setUserEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.User)
 
 /// Sets the environment variable with the given name for the current machine.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let setMachineEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Machine)
 
 /// Sets the environment variable with the given name for the current process.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let setProcessEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Process)
 
 /// Clears the environment variable with the given name for the current process.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let clearProcessEnvironVar name = Environment.SetEnvironmentVariable(name, null, EnvironmentVariableTarget.Process)
 
 /// Sets the build parameter with the given name for the current process.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let setBuildParam name value = setProcessEnvironVar name value
 
 /// Retrieves the environment variable with the given name or returns the default if no value was set
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let environVarOrDefault name defaultValue =
     let var = environVar name
     if String.IsNullOrEmpty var then defaultValue
     else var
 
 /// Retrieves the environment variable with the given name or fails if not found
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let environVarOrFail name =
     let var = environVar name
     if String.IsNullOrEmpty var then failwith <| sprintf "Environment variable '%s' not found" name
     else var
 
 /// Retrieves the environment variable with the given name or returns the default value if no value was set
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getEnvironmentVarAsBoolOrDefault varName defaultValue =
     try
         (environVar varName).ToUpper() = "TRUE"
@@ -75,37 +93,45 @@ let getEnvironmentVarAsBoolOrDefault varName defaultValue =
     | _ ->  defaultValue
 
 /// Retrieves the environment variable with the given name or returns false if no value was set
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getEnvironmentVarAsBool varName = getEnvironmentVarAsBoolOrDefault varName false
 
 /// Retrieves the environment variable or None if no value was set
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let environVarOrNone name =
     let var = environVar name
     if String.IsNullOrEmpty var then None
     else Some var
 
 /// Splits the entries of an environment variable and removes the empty ones.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let splitEnvironVar name =
     let var = environVarOrNone name
     if var = None then [ ]
     else var.Value.Split([| Path.PathSeparator |]) |> Array.toList
 
 /// Retrieves the application settings variable with the given name
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let appSetting (name : string) = ConfigurationManager.AppSettings.[name]
 
 /// Returns if the build parameter with the given name was set
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let inline hasBuildParam name = environVar name <> null
 
 /// Returns the value of the build parameter with the given name if it was set and otherwise the given default value
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let inline getBuildParamOrDefault name defaultParam =
     if hasBuildParam name then environVar name
     else defaultParam
 
 /// Returns the value of the build parameter with the given name if it was set and otherwise an empty string
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 
 /// The path of the "Program Files" folder - might be x64 on x64 machine
 /// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable
 /// PROCESSOR\_ARCHITEW6432 can be null
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let ProgramFiles =
     let wow64 = environVar "PROCESSOR_ARCHITEW6432"
     let globalArch = environVar "PROCESSOR_ARCHITECTURE"
@@ -122,18 +148,23 @@ let ProgramFiles =
     |> fun detected -> if detected = null then @"C:\Program Files\" else detected
 
 /// The path of Program Files (x86)
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let ProgramFilesX86 = Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86
 
 /// The system root environment variable. Typically "C:\Windows"
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let SystemRoot = environVar "SystemRoot"
 
 /// Determines if the current system is a Windows system
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let isWindows = Environment.OSVersion.Platform = PlatformID.Win32NT
 
 /// Determines if the current system is an Unix system
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 /// Determines if the current system is a MacOs system
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let isMacOS =
     (Environment.OSVersion.Platform = PlatformID.MacOSX) ||
       // Running on OSX with mono, Environment.OSVersion.Platform returns Unix
@@ -145,14 +176,17 @@ let isMacOS =
       (Environment.OSVersion.Platform = PlatformID.Unix && (File.Exists "/usr/bin/osascript"))
 
 /// Determines if the current system is a Linux system
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let isLinux = (not isMacOS) && (int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128))
 
 /// Determines if the current system is a mono system
 /// Todo: Detect mono on windows
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let isMono = isLinux || isUnix || isMacOS
 
 /// required sometimes to workaround mono crashes
 /// http://stackoverflow.com/a/8414517/1269722
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let monoVersion =
     let t = Type.GetType("Mono.Runtime")
     if (not (isNull t)) then
@@ -173,6 +207,7 @@ let monoVersion =
         Some (displayName, version)
     else None
 
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let monoPath =
     if isMacOS && File.Exists "/Library/Frameworks/Mono.framework/Commands/mono" then
         "/Library/Frameworks/Mono.framework/Commands/mono"
@@ -180,15 +215,18 @@ let monoPath =
         "mono"
 
 /// Arguments on the Mono executable
+[<System.Obsolete("Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)")>]
 let mutable monoArguments = ""
 
 /// Modifies the ProcessStartInfo according to the platform semantics
+[<System.Obsolete("Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)")>]
 let platformInfoAction (psi : ProcessStartInfo) =
     if isMono && psi.FileName.EndsWith ".exe" then
         psi.Arguments <- monoArguments + " \"" + psi.FileName + "\" " + psi.Arguments
         psi.FileName <- monoPath
 
 /// The path of the current target platform
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let mutable TargetPlatformPrefix =
     let (<|>) a b =
         match a with
@@ -201,13 +239,16 @@ let mutable TargetPlatformPrefix =
     |> Option.get
 
 /// Base path for getting tools from Microsoft SDKs
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let msSdkBasePath = ProgramFilesX86 @@ "Microsoft SDKs"
 
 /// Base path for getting tools from Windows SDKs
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let sdkBasePath = msSdkBasePath @@ "Windows"
 
 /// Helper function to help find framework or sdk tools from the
 /// newest toolkit available
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getNewestTool possibleToolPaths =
        possibleToolPaths
        |> Seq.sortBy (fun p -> p)
@@ -217,28 +258,34 @@ let getNewestTool possibleToolPaths =
        |> Seq.head
 
 /// Gets the local directory for the given target platform
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getTargetPlatformDir platformVersion =
     if Directory.Exists(TargetPlatformPrefix + "64") then (TargetPlatformPrefix + "64") @@ platformVersion
     else TargetPlatformPrefix @@ platformVersion
 
 /// The path to the personal documents
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
 /// The directory separator string. On most systems / or \
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
 /// Convert the given windows path to a path in the current system
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let convertWindowsToCurrentPath (windowsPath : string) =
     if (windowsPath.Length > 2 && windowsPath.[1] = ':' && windowsPath.[2] = '\\') then windowsPath
     else windowsPath.Replace(@"\", directorySeparator)
 
 /// Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let encoding =
     match getBuildParamOrDefault "encoding" "default" with
     | "default" -> Text.Encoding.Default
     | enc -> Text.Encoding.GetEncoding(enc)
 
 /// Returns a sequence with all installed .NET framework versions
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getInstalledDotNetFrameworks() =
     let frameworks = new ResizeArray<_>()
     try
@@ -263,6 +310,7 @@ let getInstalledDotNetFrameworks() =
     with e -> frameworks :> seq<_> //Probably a new unrecognisable version
 
 /// A record which allows to display lots of machine specific information like machine name, processor count etc.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 type MachineDetails =
     { ProcessorCount : int
       Is64bit : bool
@@ -274,6 +322,7 @@ type MachineDetails =
       DriveInfo : seq<string> }
 
 /// Retrieves information about the hard drives
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getDrivesInfo() =
     Environment.GetLogicalDrives()
     |> Seq.map (fun d -> IO.DriveInfo(d))
@@ -285,6 +334,7 @@ let getDrivesInfo() =
                (Convert.ToDouble(d.TotalSize) / (1024. * 1024. * 1024.)))
 
 /// Retrieves lots of machine specific information like machine name, processor count etc.
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let getMachineEnvironment() =
     { ProcessorCount = Environment.ProcessorCount
       Is64bit = Environment.Is64BitOperatingSystem

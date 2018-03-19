@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains helper function which allow to deal with files and directories.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)")>]
 module Fake.FileHelper
 
 open System.IO

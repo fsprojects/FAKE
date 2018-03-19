@@ -3,6 +3,7 @@
 /// download dependencies with NuGet and do other preparatory work in
 /// the first stage, and have these dependencies available in the
 /// second stage.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 module Fake.Boot
 
 open System
@@ -14,6 +15,7 @@ open System.Text
 open NuGet
 
 /// Specifies which version of the NuGet package to install.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 type NuGetVersion =
 /// Pick the latest available version.
 | Latest
@@ -23,6 +25,7 @@ type NuGetVersion =
 | SemanticVersion of string
 
 /// Specifies NuGet package dependencies.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 type NuGetDependency =
     {
         /// The identifer of the package, such as "FAKE".
@@ -40,6 +43,7 @@ type NuGetDependency =
         }
 
 /// Configures the boostrapping process.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 type Config =
     {
         /// Framework name for assembly resolution.
@@ -78,11 +82,13 @@ type Config =
         }
 
 /// Stage of execution for a boot system.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 type Stage =
 | BuildStage
 | ConfigureStage
 
 /// Abstracts over command-line environment features.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 [<AbstractClass>]
 type CommandEnvironment() =
     abstract SendMessage : message: string -> unit
@@ -99,6 +105,7 @@ type CommandEnvironment() =
         }
 
 /// Represents a command line handler.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 type CommandHandler =
     {
         Run : CommandEnvironment -> bool
@@ -110,9 +117,11 @@ type CommandHandler =
             Environment.ExitCode <- 1
 
 [<AutoOpen>]
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 module private Implementation =
 
     [<Sealed>]
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     type CustomHttpClient(uri, cred: option<ICredentials>) =
         inherit HttpClient(uri)
 
@@ -123,6 +132,7 @@ module private Implementation =
                 | None -> ()
                 | Some c -> req.Credentials <- c
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let GetManager (config: Config) =
         let factory = PackageRepositoryFactory.Default
         let old = factory.HttpClientFactory
@@ -131,6 +141,7 @@ module private Implementation =
         let repo = factory.CreateRepository(config.NuGetSourceUrl)
         PackageManager(repo, config.NuGetPackagesDirectory)
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let Install (mgr: PackageManager) (dep: NuGetDependency) : unit =
         match dep.Version with
         | Latest ->
@@ -140,6 +151,7 @@ module private Implementation =
         | SemanticVersion v ->
             mgr.InstallPackage(dep.PackageId, SemanticVersion.Parse v)
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let TopologicalSort<'K,'T when 'K : equality>
             (getKey: 'T -> 'K)
             (getPreceding: 'T -> seq<'T>)
@@ -154,6 +166,7 @@ module private Implementation =
         Seq.iter visit roots
         trace.ToArray() :> seq<_>
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let Memoize (f: 'A -> 'B) : ('A -> 'B) =
         let d = Dictionary()
         fun k ->
@@ -164,6 +177,7 @@ module private Implementation =
                 d.[k] <- v
                 v
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let SortAssemblyFilesByReferenceOrder (paths: seq<string>) : seq<string> =
         let getDefn =
             Memoize (fun (path: string) ->
@@ -183,6 +197,7 @@ module private Implementation =
             else Seq.empty
         TopologicalSort getFullName getPreceding paths
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let MostRecent (pkgs: seq<IPackage>) : seq<IPackage> =
         pkgs
         |> Seq.groupBy (fun pkg -> pkg.Id)
@@ -190,6 +205,7 @@ module private Implementation =
             packages
             |> Seq.maxBy (fun pkg -> pkg.Version))
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let CompleteAndSortPackages
             (config: Config)
             (mgr: PackageManager)
@@ -206,6 +222,7 @@ module private Implementation =
             |> MostRecent
         TopologicalSort getKey getPreceding pkgs
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let IsRequiredPackage (config: Config) (pkg: IPackage) : bool =
         config.NuGetDependencies
         |> List.exists (fun dep ->
@@ -216,9 +233,11 @@ module private Implementation =
             | LatestPreRelease -> true
             | SemanticVersion v -> SemanticVersion.Parse(v) = pkg.Version)
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let IsSupported (config: Config) (frameworks: seq<FrameworkName>) =
         VersionUtility.IsCompatible(config.FrameworkName, frameworks)
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let ComputeRefs (config: Config) (mgr: PackageManager) : seq<string> =
         let assemblyRefs = HashSet()
         let pkgRefs = Queue()
@@ -238,6 +257,7 @@ module private Implementation =
             |> Seq.iter pkgRefs.Enqueue)
         Seq.append assemblyRefs pkgRefs
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let GenerateBootScriptText (refs: seq<string>) : string =
         let fakeDir = Path.GetDirectoryName(typeof<Config>.Assembly.Location)
         use w = new StringWriter()
@@ -257,14 +277,17 @@ module private Implementation =
             writeRef r
         w.ToString()
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let UTF8 = UTF8Encoding(false)
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let MakeBootScriptFile (config: Config) (refs: seq<string>) : unit =
         let dir = Path.GetDirectoryName(config.IncludesFile)
         if not (Directory.Exists dir) then
             Directory.CreateDirectory dir |> ignore
         File.WriteAllText(config.IncludesFile, GenerateBootScriptText refs, UTF8)
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     type Command =
         | ConfigureAndRun
         | ConfigureOnly
@@ -272,6 +295,7 @@ module private Implementation =
         | InitSingle
         | RunOnly
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let ParseCommand (args: seq<string>) : option<Command> =
         match Seq.toList args with
         | [] -> Some RunOnly
@@ -282,6 +306,7 @@ module private Implementation =
         | _ -> None
 
     /// Computes extra command-line arguments to enable bootstrapping FAKE scripts.
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let FsiArgs (env: CommandEnvironment) (stage: Stage) : list<string> =
         let quote (s: string) : string =
             String.Format(@"""{0}""", s.Replace(@"""", @"\"""))
@@ -295,15 +320,18 @@ module private Implementation =
             yield "FakeLib"
         ]
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let Fsi (env: CommandEnvironment) stage script =
         FSIHelper.executeFSIWithArgs env.CurrentDirectory script
             (FsiArgs env stage) []
 
     /// Checks if the F# script file is a bootstrapping script.
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let IsBootScript (fullPath: string) : bool =
         File.ReadAllLines(fullPath)
         |> Array.exists (fun x -> x.StartsWith("#if BOOT"))
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let DoConfigureOnly (env: CommandEnvironment) =
         let bootScript = env.CurrentDirectory @@ "conf.fsx"
         let buildScript = env.CurrentDirectory @@ "build.fsx"
@@ -315,6 +343,7 @@ module private Implementation =
             env.SendMessage("Could not find conf.fsx or boot-aware build.fsx")
             false
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let DoRunOnly (env: CommandEnvironment) =
         let buildScript = env.CurrentDirectory @@ "build.fsx"
         if File.Exists buildScript then
@@ -323,9 +352,11 @@ module private Implementation =
             env.SendMessage("Could not find build.fsx")
             false
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let DoConfigureAndRun (env: CommandEnvironment) =
         DoConfigureOnly env && DoRunOnly env
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let DoInit (env: CommandEnvironment) =
         let bootScript = env.CurrentDirectory @@ "conf.fsx"
         let buildScript = env.CurrentDirectory @@ "build.fsx"
@@ -355,6 +386,7 @@ module private Implementation =
             env.SendMessage("Generated conf.fsx and build.fsx")
             true
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let DoInitSingle (env: CommandEnvironment) =
         let buildScript = env.CurrentDirectory @@ "build.fsx"
         if File.Exists buildScript then
@@ -382,6 +414,7 @@ module private Implementation =
             env.SendMessage("Generated a boot-aware build.fsx")
             true
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let DoHelp (env: CommandEnvironment) =
         use w = new StringWriter()
         w.WriteLine("FAKE boot module: bootstrapping builds. Commands: ")
@@ -393,6 +426,7 @@ module private Implementation =
         env.SendMessage (w.ToString())
         true
 
+    [<System.Obsolete("Fake.Boot is no longer supported)")>]
     let RunCommandLine (args: list<string>) (env: CommandEnvironment) : bool =
         match ParseCommand args with
         | Some ConfigureAndRun -> DoConfigureAndRun env
@@ -403,9 +437,11 @@ module private Implementation =
         | None -> DoHelp env
 
 /// Creates the CommandHandler from the 
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 let HandlerForArgs args = { Run = RunCommandLine args }
 
 /// Detects boot-specific commands.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 let ParseCommandLine (args: seq<string>) : option<CommandHandler> =
     match Seq.toList args with
     | "boot" :: xs
@@ -415,6 +451,7 @@ let ParseCommandLine (args: seq<string>) : option<CommandHandler> =
 
 /// The main function intended to be executed in the BOOT phase of
 /// boostrapping scripts.
+[<System.Obsolete("Fake.Boot is no longer supported)")>]
 let Prepare (config: Config) : unit =
     let mgr = GetManager config
     List.iter (Install mgr) config.NuGetDependencies

@@ -1,4 +1,5 @@
 ﻿/// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
+[<System.Obsolete("Use Fake.Api.Slack instead")>]
 module Fake.SlackNotificationHelper
 
 open System.Net

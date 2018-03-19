@@ -228,8 +228,14 @@
     <Compile Include="..\..\app\Fake.DotNet.NuGet\NuGetVersion.fs">
       <Link>Fake.DotNet.NuGet/NuGetVersion.fs</Link>
     </Compile>
+        <Compile Include="..\..\app\Fake.DotNet.NuGet\NuGetVersion.fs">
+      <Link>Fake.DotNet.NuGet/NuGetVersion.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Windows.Chocolatey\Chocolatey.fs">
       <Link>Fake.Windows.Chocolatey/Chocolatey.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.JavaScript.Npm\Npm.fs">
+      <Link>Fake.JavaScript.Npm/Npm.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Tools.Git\CommandHelper.fs">
       <Link>Fake.Tools.Git/CommandHelper.fs</Link>
@@ -276,6 +282,9 @@
     <Compile Include="..\..\app\Fake.Tools.Git\Commit.fs">
       <Link>Fake.Tools.Git/Commit.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
+      <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.FSFormatting\FSFormatting.fs">
       <Link>Fake.DotNet.FSFormatting/FSFormatting.fs</Link>
     </Compile>
@@ -285,17 +294,8 @@
     <Compile Include="..\..\app\Fake.DotNet.Paket\PaketTemplate.fs">
       <Link>Fake.DotNet.Paket/PaketTemplate.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
-      <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
-    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Testing.OpenCover\OpenCover.fs">
       <Link>Fake.DotNet.Testing.OpenCover/OpenCover.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Api.GitHub\GitHub.fs">
-      <Link>Fake.Api.GitHub/GitHub.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Api.Slack\SlackNotification.fs">
-      <Link>Fake.Api.Slack/SlackNotification.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Xamarin\Xamarin.fs">
       <Link>Fake.DotNet.Xamarin/Xamarin.fs</Link>
@@ -309,8 +309,44 @@
     <Compile Include="..\..\app\Fake.Net.Http\List.fs">
       <Link>Fake.Net.Http/List.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Net.Http\HttpLoader.fs">
-      <Link>Fake.Net.Http/HttpLoader.fs</Link>
+    <Compile Include="..\..\app\Fake.Net.Http\Http.fs">
+      <Link>Fake.Net.Http/Http.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Api.GitHub\GitHub.fs">
+      <Link>Fake.Api.GitHub/GitHub.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Api.Slack\SlackNotification.fs">
+      <Link>Fake.Api.Slack/SlackNotification.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.CloudServices\CloudServices.fs">
+      <Link>Fake.Azure.CloudServices/CloudServices.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.Emulators\Emulators.fs">
+      <Link>Fake.Azure.Emulators/Emulators.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.Kudu\Kudu.fs">
+      <Link>Fake.Azure.Kudu/Kudu.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Azure.WebJobs\WebJobs.fs">
+      <Link>Fake.Azure.WebJobs/WebJobs.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyorInternal.fs">
+      <Link>Fake.BuildServer.AppVeyor/AppVeyorInternal.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.AppVeyor\AppVeyor.fs">
+      <Link>Fake.BuildServer.AppVeyor/AppVeyor.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCityInternal.fs">
+      <Link>Fake.BuildServer.TeamCity/TeamCityInternal.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamCity\TeamCity.fs">
+      <Link>Fake.BuildServer.TeamCity/TeamCity.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.Travis\Travis.fs">
+      <Link>Fake.BuildServer.Travis/Travis.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.BuildServer.TeamFoundation\TeamFoundation.fs">
+      <Link>Fake.BuildServer.TeamFoundation/TeamFoundation.fs</Link>
     </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
@@ -435,9 +471,7 @@
     <Compile Include="CscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
     <Compile Include="XDTHelper.fs" />
-    <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
-    <Compile Include="AzureCloudServices.fs" />
     <Compile Include="Sxshelper.fs" />
     <Compile Include="Vb6helper.fs" />
     <Compile Include="AndroidPublisher.fs" />
@@ -453,7 +487,6 @@
     <Compile Include="ChocoHelper.fs" />
     <Compile Include="SlackNotificationHelper.fs" />
     <Compile Include="SonarQubeHelper.fs" />
-    <Compile Include="AzureKudu.fs" />
     <Compile Include="DocFxHelper.fs" />
     <Compile Include="GitVersionHelper.fs" />
     <Compile Include="Checksum.fs" />

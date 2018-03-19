@@ -1,10 +1,12 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("Use Fake.Core.SemVer instead")>]
 module Fake.VersionHelper
 
 open System
 open System.Reflection
 
 /// Contains the version information.
+[<System.Obsolete("Use Fake.Core.SemVer instead")>]
 [<CustomEquality; CustomComparison>]
 type VerInfo =
     { /// MAJOR version when you make incompatible API changes.
@@ -32,6 +34,7 @@ type VerInfo =
                     0
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
+[<System.Obsolete("Use Fake.Core.SemVer instead")>]
 let parseVersion version =
     let splitted = split '.' version
     let l = splitted.Length
@@ -44,12 +47,14 @@ let parseVersion version =
 /// Gets file assembly version.
 /// ## Parameters
 ///  - `assemblyFile` - The assembly file path.
+[<System.Obsolete("Use Fake.Core.SemVer instead")>]
 let GetAssemblyVersion (assemblyFile: string) = 
     AssemblyName.GetAssemblyName(assemblyFile).Version
 
 /// Gets file assembly version in form of major.minor.build.revision.
 /// ## Parameters
 ///  - `assemblyFile` - The assembly file path.
+[<System.Obsolete("Use Fake.Core.SemVer instead")>]
 let GetAssemblyVersionString (assemblyFile: string) = 
     GetAssemblyVersion(assemblyFile).ToString()
 

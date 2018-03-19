@@ -213,18 +213,8 @@ module Process =
             proc.Kill()
         with ex -> Trace.logfn "Killing %s failed with %s" proc.ProcessName ex.Message
 
-    let private killCreatedProcessesVar = "Fake.Core.Process.killCreatedProcesses"
-    let private getKillCreatedProcesses, _, public setKillCreatedProcesses = 
-        Fake.Core.Context.fakeVarAllowNoContext killCreatedProcessesVar
-    let shouldKillCreatedProcesses () =
-        match getKillCreatedProcesses() with
-        | Some v -> v
-        | None ->
-          let shouldEnable = Fake.Core.Context.isFakeContext()
-          setKillCreatedProcesses shouldEnable
-          shouldEnable
-
     type ProcessList() =
+        let mutable shouldKillProcesses = true 
         let startedProcesses = HashSet()
         let killProcesses () = 
             let traced = ref false
@@ -244,29 +234,43 @@ module Process =
                             Trace.logfn "Trying to kill %s" proc.ProcessName
                             kill proc
                         with exn -> Trace.logfn "Killing %s failed with %s" proc.ProcessName exn.Message
-                with exn -> ()
+                with exn -> Trace.logfn "Killing %d failed with %s" pid exn.Message
             startedProcesses.Clear()
         member x.KillAll() = killProcesses()
         member x.Add (pid, startTime) = startedProcesses.Add(pid, startTime)
-        
+        member x.SetShouldKill (enable) = shouldKillProcesses <- enable
+        member x.GetShouldKill = shouldKillProcesses
+
         interface IDisposable with
             member x.Dispose() =
-                if shouldKillCreatedProcesses() then killProcesses()
+                if shouldKillProcesses then killProcesses()
 
     /// [omit]
     //let startedProcesses = HashSet()
     let private startedProcessesVar = "Fake.Core.Process.startedProcesses"
     let private getStartedProcesses, _, private setStartedProcesses = 
         Fake.Core.Context.fakeVar startedProcessesVar
-    let private addStartedProcess (id:int, startTime:System.DateTime) =
+
+    let private doWithProcessList f =
         if Fake.Core.Context.isFakeContext () then
             match getStartedProcesses () with
-            | Some (h:ProcessList) -> h.Add(id, startTime)
+            | Some (h:ProcessList) -> Some(f h)
             | None -> 
                 let h = new ProcessList()
                 setStartedProcesses (h)
-                h.Add(id, startTime)
-            |> ignore
+                Some (f h)
+        else None        
+
+    let private addStartedProcess (id:int, startTime:System.DateTime) =
+        doWithProcessList (fun h -> h.Add(id, startTime)) |> ignore
+
+    let setKillCreatedProcesses (enable) =
+        doWithProcessList (fun h -> h.SetShouldKill enable) |> ignore
+
+    let shouldKillCreatedProcesses () =
+        match doWithProcessList (fun h -> h.GetShouldKill) with
+        | Some v -> v
+        | None -> false
 
     //let private monoArgumentsVar = "Fake.Core.Process.monoArguments"
     //let private tryGetMonoArguments, _, public setMonoArguments = 

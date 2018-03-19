@@ -7,6 +7,10 @@ nuget FSharp.Core ~> 4.1.0
 nuget System.AppContext prerelease
 nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
+nuget Fake.BuildServer.AppVeyor prerelease
+nuget Fake.BuildServer.TeamCity prerelease
+nuget Fake.BuildServer.Travis prerelease
+nuget Fake.BuildServer.TeamFoundation prerelease
 nuget Fake.Core.Target prerelease
 nuget Fake.Core.SemVer prerelease
 nuget Fake.IO.FileSystem prerelease
@@ -54,6 +58,9 @@ open System.Reflection
 open System.IO
 open Fake.Api
 open Fake.Core
+#if BOOTSTRAP
+open Fake.BuildServer
+#endif
 open Fake.Tools
 open Fake.IO
 open Fake.IO.FileSystemOperators
@@ -61,6 +68,7 @@ open Fake.IO.Globbing.Operators
 open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
+
 
 // properties
 let projectName = "FAKE"
@@ -75,7 +83,11 @@ let gitHome = "https://github.com/" + gitOwner
 // The name of the project on GitHub
 let gitName = "FAKE"
 
+#if BOOTSTRAP
+let release = ReleaseNotes.load "RELEASE_NOTES.md"
+#else
 let release = ReleaseNotes.LoadReleaseNotes "RELEASE_NOTES.md"
+#endif
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -109,6 +121,15 @@ let additionalFiles = [
     "RELEASE_NOTES.md"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
+
+#if BOOTSTRAP
+BuildServer.Install [
+    AppVeyor.Installer
+    TeamCity.Installer
+    Travis.Installer
+    TeamFoundation.Installer
+]
+#endif
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
@@ -220,10 +241,14 @@ let dotnetAssemblyInfos =
     [ "dotnet-fake", "Fake dotnet-cli command line tool"
       "Fake.Api.Slack", "Slack Integration Support"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
-      "Fake.Azure.CloudServices", "FAKE - F# Make Azure Cloud Services Support"
-      "Fake.Azure.Emulators", "FAKE - F# Make Azure Emulators Support"
-      "Fake.Azure.Kudu", "FAKE - F# Make Azure Kudu Support"
-      "Fake.Azure.WebJobs", "FAKE - F# Make Azure Web Jobs Support"
+      "Fake.Azure.CloudServices", "Azure Cloud Services Support"
+      "Fake.Azure.Emulators", "Azure Emulators Support"
+      "Fake.Azure.Kudu", "Azure Kudu Support"
+      "Fake.Azure.WebJobs", "Azure Web Jobs Support"
+      "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
+      "Fake.BuildServer.AppVeyor", "Integration into AppVeyor buildserver"
+      "Fake.BuildServer.Travis", "Integration into Travis buildserver"
+      "Fake.BuildServer.TeamFoundation", "Integration into TeamFoundation buildserver"
       "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
@@ -245,6 +270,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
+      "Fake.JavaScript.Npm", "Running npm commands"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.Net.Http", "HTTP Client"
@@ -294,6 +320,7 @@ Target.Create "SetAssemblyInfo" (fun _ ->
         // Quick-fix: git ls-files -v . | grep ^S | cut -c3- | xargs git update-index --no-skip-worktree
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> AssemblyInfoFile.CreateFSharp assemblyFile
+        ()
 )
 
 Target.Create "DownloadPaket" (fun _ ->
@@ -301,6 +328,7 @@ Target.Create "DownloadPaket" (fun _ ->
             { info with
                 FileName = ".paket/paket.exe"
                 Arguments = "--version" }
+            |> Process.withFramework
             ) (System.TimeSpan.FromMinutes 5.0) then
         failwith "paket failed to start"
 )
@@ -311,6 +339,7 @@ Target.Create "UnskipAndRevertAssemblyInfo" (fun _ ->
         // Therefore we unskip and revert here.
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
+        ()
 )
 
 Target.Create "BuildSolution_" (fun _ ->
@@ -446,6 +475,7 @@ Target.Create "BootstrapTest" (fun _ ->
                         FileName = "chmod"
                         WorkingDirectory = "."
                         Arguments = "+x build/FAKE.exe" }
+                    |> Process.withFramework
                     ) span
                 if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
             Process.Exec (fun info ->
@@ -453,6 +483,7 @@ Target.Create "BootstrapTest" (fun _ ->
                 FileName = "build/FAKE.exe"
                 WorkingDirectory = "."
                 Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\"" script target }
+            |> Process.withFramework
             |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 ) span
 
@@ -671,6 +702,9 @@ let netCoreProjs =
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
+module CircleCi =
+    let isCircleCi = Environment.environVarAsBool "CIRCLECI"
+
 Target.Create "DotNetPackage_" (fun _ ->
     // This line actually ensures we get the correct version checked in
     // instead of the one previously bundled with 'fake`
@@ -697,6 +731,10 @@ Target.Create "DotNetPackage_" (fun _ ->
         { c with
             Configuration = DotNet.Release
             OutputPath = Some nugetDir
+            Common = 
+                if CircleCi.isCircleCi then
+                    { c.Common with CustomParams = Some "/m:1" }
+                else c.Common                                
         }) "Fake.sln"
 
     let info = DotNet.Info id
@@ -928,7 +966,6 @@ Target.Create "FastRelease" (fun _ ->
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
 
-// #if BOOTSTRAP
     let files = 
         runtimes @ [ "portable"; "packages" ]
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
@@ -938,20 +975,6 @@ Target.Create "FastRelease" (fun _ ->
     |> GitHub.UploadFiles files    
     |> GitHub.PublishDraft
     |> Async.RunSynchronously
-// #else
-//     let draft =
-//         GitHub.createClientWithToken token
-//         |> GitHub.createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-//     let draftWithFiles =
-//         runtimes @ [ "portable"; "packages" ]
-//         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-//         |> List.fold (fun state item ->
-//             state
-//             |> GitHub.uploadFile item) draft
-//     draftWithFiles
-//     |> GitHub.releaseDraft
-//     |> Async.RunSynchronously
-// #endif
 )
 
 open System
@@ -1020,10 +1043,10 @@ open Fake.Core.TargetOperators
 
 // Create artifacts when build is finished
 "AfterBuild"
-    =?> ("CreateNuGet", not Environment.isLinux)
+    =?> ("CreateNuGet", Environment.isWindows)
     ==> "CopyLicense"
-    =?> ("DotNetCoreCreateChocolateyPackage", not Environment.isLinux)
-    =?> ("GenerateDocs", BuildServer.isLocalBuild && not Environment.isLinux)
+    =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
+    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
 
 // Test the full framework build
@@ -1043,8 +1066,8 @@ open Fake.Core.TargetOperators
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
-    =?> ("DotNetCorePushChocolateyPackage", not Environment.isLinux)
-    =?> ("ReleaseDocs", BuildServer.isLocalBuild && not Environment.isLinux)
+    =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
+    =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "DotNetCorePushNuGet"
     ==> "PublishNuget"
     ==> "FastRelease"
