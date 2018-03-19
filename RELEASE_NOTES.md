@@ -9,6 +9,8 @@
 * FAKE5: New module `Fake.BuildServer.Travis`
 * FAKE5: New module `Fake.BuildServer.TeamFoundation`
 * FAKE5: New module `Fake.JavaScript.Npm` - https://github.com/fsharp/FAKE/pull/1822
+* BUGFIX: setKillCreatedProcesses was not working as expected - https://github.com/fsharp/FAKE/issues/1814
+* ANNOUNCEMENT: Fake.Deploy is obsolete.
 
 ## 5.0.0-beta024
 
