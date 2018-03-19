@@ -3,7 +3,7 @@
 #r "paket:
 source nuget/dotnetcore
 source https://api.nuget.org/v3/index.json
-nuget FSharp.Core ~> 4.1.0
+nuget FSharp.Core ~> 4.1
 nuget System.AppContext prerelease
 nuget Paket.Core prerelease
 nuget Fake.Api.GitHub prerelease
