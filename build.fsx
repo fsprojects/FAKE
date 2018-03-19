@@ -58,9 +58,7 @@ open System.Reflection
 open System.IO
 open Fake.Api
 open Fake.Core
-#if BOOTSTRAP
 open Fake.BuildServer
-#endif
 open Fake.Tools
 open Fake.IO
 open Fake.IO.FileSystemOperators
@@ -83,11 +81,7 @@ let gitHome = "https://github.com/" + gitOwner
 // The name of the project on GitHub
 let gitName = "FAKE"
 
-#if BOOTSTRAP
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
-#else
-let release = ReleaseNotes.LoadReleaseNotes "RELEASE_NOTES.md"
-#endif
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -122,14 +116,12 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
-#if BOOTSTRAP
 BuildServer.Install [
     AppVeyor.Installer
     TeamCity.Installer
     Travis.Installer
     TeamFoundation.Installer
 ]
-#endif
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
