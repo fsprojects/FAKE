@@ -133,6 +133,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="../apidocs/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -1241,6 +1247,14 @@ functions from the Side-by-side helper module</p>
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-azure-emulators.html">Emulators</a>
+          </td>
+          <td class="xmldoc"><p>Contains tasks to control the local Azure Emulator</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-azure-kudu.html">Kudu</a>
           </td>
           <td class="xmldoc"><p>Contains tasks to stage and deploy Azure website and webjobs using source code deployment with Kudu Sync.</p>
@@ -1254,6 +1268,53 @@ functions from the Side-by-side helper module</p>
           <td class="xmldoc"><p>Contains tasks to package and deploy <a href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</a> via the <a href="https://github.com/projectkudu/kudu">Kudu</a> Zip controller</p>
 
 </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <a name="Fake.BuildServer" class="anchor" href="#Fake.BuildServer"><h2>Fake.BuildServer Namespace</h2></a>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-appveyor.html">AppVeyor</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-appveyorimportextensions.html">AppVeyorImportExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-teamcity.html">TeamCity</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-teamcityimportextensions.html">TeamCityImportExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-teamfoundation.html">TeamFoundation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-travis.html">Travis</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
     </tbody>
   </table>
@@ -1335,6 +1396,20 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-buildserver.html">BuildServer</a>
+          </td>
+          <td class="xmldoc"><p>The server type option.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-buildserverinstaller.html">BuildServerInstaller</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-consolemessage.html">ConsoleMessage</a>
           </td>
           <td class="xmldoc"><p>A record type which captures console messages</p>
@@ -1348,6 +1423,12 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
           <td class="xmldoc"><p>Implements a TraceListener for System.Console.</p>
 
 </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-dotnetcoveragetool.html">DotNetCoverageTool</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="type-name">
@@ -1367,7 +1448,19 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-importdata.html">ImportData</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-knowntags.html">KnownTags</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-nunitdataversion.html">NunitDataVersion</a>
           </td>
           <td class="xmldoc"></td>
         </tr>
@@ -1435,9 +1528,23 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-core-teststatus.html">TestStatus</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-core-tracedata.html">TraceData</a>
           </td>
           <td class="xmldoc"><p>Defines Tracing information for TraceListeners</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-tracemode.html">TraceMode</a>
+          </td>
+          <td class="xmldoc"><p>The trace mode option.</p>
 
 </td>
         </tr>
@@ -1456,11 +1563,15 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
     <tbody>
         <tr>
           <td class="module-name">
-            <a href="fake-core-buildserver.html">BuildServer</a>
+            <a href="fake-core-buildservermodule.html">BuildServer</a>
           </td>
-          <td class="xmldoc"><p>Contains functions which allow build scripts to interact with a build server.</p>
-
-</td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-consolewriter.html">ConsoleWriter</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="module-name">
@@ -1561,6 +1672,12 @@ This allows us to run some modules without any context and change behavior depen
           <td class="xmldoc"><p>Contains a helper which can be used to implement timeouts and retries.</p>
 
 </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-teststatusmodule.html">TestStatus</a>
+          </td>
+          <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="module-name">
@@ -2186,6 +2303,23 @@ Contains basic templating functions. Used in other helpers.</p>
         <tr>
           <td class="module-name">
             <a href="fake-io-globbing-tools.html">Tools</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <a name="Fake.JavaScript" class="anchor" href="#Fake.JavaScript"><h2>Fake.JavaScript Namespace</h2></a>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-javascript-npm.html">Npm</a>
           </td>
           <td class="xmldoc"></td>
         </tr>

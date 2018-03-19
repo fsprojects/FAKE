@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>TraceMode - FAKE - F# Make</title>
+		<title>Environment - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -133,6 +133,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="../apidocs/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -191,51 +197,113 @@
 
 
 
-<a name="TraceMode" class="anchor" href="#TraceMode" ><h1>TraceMode</h1></a>
+<a name="Environment" class="anchor" href="#Environment" ><h1>Environment</h1></a>
 <div class="xmldoc">
-<p>The trace mode option.</p>
-
 </div>
-  <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
+  <a name="Static members" class="anchor" href="#Static members"><h3>Static members</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Union Case</td><td>Description</td></tr>
+      <tr><td>Static member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3967', 3967)" onmouseover="showTip(event, '3967', 3967)">
-            Console
+          <code onmouseout="hideTip(event, '4040', 4040)" onmouseover="showTip(event, '4040', 4040)">
+            BuildConfigurationName
           </code>
-          <div class="tip" id="3967">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4040">
+            <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L21-21" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L230-230" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3968', 3968)" onmouseover="showTip(event, '3968', 3968)">
-            Xml
+          <code onmouseout="hideTip(event, '4041', 4041)" onmouseover="showTip(event, '4041', 4041)">
+            BuildIsPersonal
           </code>
-          <div class="tip" id="3968">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4041">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L22-22" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L233-233" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Is set to true if the build is a personal one.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4042', 4042)" onmouseover="showTip(event, '4042', 4042)">
+            BuildNumber
+          </code>
+          <div class="tip" id="4042">
+            <strong>Signature:</strong> string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L239-239" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4043', 4043)" onmouseover="showTip(event, '4043', 4043)">
+            ProjectName
+          </code>
+          <div class="tip" id="4043">
+            <strong>Signature:</strong> string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L227-227" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The Name of the project the current build belongs to or None if it's not on TeamCity.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4044', 4044)" onmouseover="showTip(event, '4044', 4044)">
+            Version
+          </code>
+          <div class="tip" id="4044">
+            <strong>Signature:</strong> string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L224-224" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.</p>
+
+
         </td>
       </tr>
     </tbody>

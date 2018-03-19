@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>BuildServer - FAKE - F# Make</title>
+		<title>NpmCommand - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -133,6 +133,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="../apidocs/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -191,9 +197,9 @@
 
 
 
-<a name="BuildServer" class="anchor" href="#BuildServer" ><h1>BuildServer</h1></a>
+<a name="NpmCommand" class="anchor" href="#NpmCommand" ><h1>NpmCommand</h1></a>
 <div class="xmldoc">
-<p>The server type option.</p>
+<p>The list of supported Npm commands.</p>
 
 </div>
   <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
@@ -205,15 +211,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3957', 3957)" onmouseover="showTip(event, '3957', 3957)">
-            AppVeyor
+          <code onmouseout="hideTip(event, '4931', 4931)" onmouseover="showTip(event, '4931', 4931)">
+            Custom(string)
           </code>
-          <div class="tip" id="3957">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4931">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L13-13" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L34-34" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -223,15 +229,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3958', 3958)" onmouseover="showTip(event, '3958', 3958)">
-            Bamboo
+          <code onmouseout="hideTip(event, '4932', 4932)" onmouseover="showTip(event, '4932', 4932)">
+            Install(InstallArgs)
           </code>
-          <div class="tip" id="3958">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4932">
+            <strong>Signature:</strong> InstallArgs<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L15-15" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L29-29" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -241,15 +247,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3959', 3959)" onmouseover="showTip(event, '3959', 3959)">
-            BitbucketPipelines
+          <code onmouseout="hideTip(event, '4933', 4933)" onmouseover="showTip(event, '4933', 4933)">
+            Run(string)
           </code>
-          <div class="tip" id="3959">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4933">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L16-16" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L30-30" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -259,15 +265,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3960', 3960)" onmouseover="showTip(event, '3960', 3960)">
-            CCNet
+          <code onmouseout="hideTip(event, '4934', 4934)" onmouseover="showTip(event, '4934', 4934)">
+            RunSilent(string)
           </code>
-          <div class="tip" id="3960">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4934">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L10-10" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L31-31" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -277,15 +283,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3961', 3961)" onmouseover="showTip(event, '3961', 3961)">
-            GitLabCI
+          <code onmouseout="hideTip(event, '4935', 4935)" onmouseover="showTip(event, '4935', 4935)">
+            RunTest(string)
           </code>
-          <div class="tip" id="3961">
-            <strong>Signature:</strong> <br />
+          <div class="tip" id="4935">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L14-14" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L32-32" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -295,87 +301,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3962', 3962)" onmouseover="showTip(event, '3962', 3962)">
-            Jenkins
+          <code onmouseout="hideTip(event, '4936', 4936)" onmouseover="showTip(event, '4936', 4936)">
+            Test
           </code>
-          <div class="tip" id="3962">
+          <div class="tip" id="4936">
             <strong>Signature:</strong> <br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L11-11" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3963', 3963)" onmouseover="showTip(event, '3963', 3963)">
-            LocalBuild
-          </code>
-          <div class="tip" id="3963">
-            <strong>Signature:</strong> <br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L17-17" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3964', 3964)" onmouseover="showTip(event, '3964', 3964)">
-            TeamCity
-          </code>
-          <div class="tip" id="3964">
-            <strong>Signature:</strong> <br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L9-9" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3965', 3965)" onmouseover="showTip(event, '3965', 3965)">
-            TeamFoundation
-          </code>
-          <div class="tip" id="3965">
-            <strong>Signature:</strong> <br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L8-8" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '3966', 3966)" onmouseover="showTip(event, '3966', 3966)">
-            Travis
-          </code>
-          <div class="tip" id="3966">
-            <strong>Signature:</strong> <br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/BuildServer.fs#L12-12" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L33-33" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>

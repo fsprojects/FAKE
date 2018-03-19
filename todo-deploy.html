@@ -134,6 +134,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="apidocs/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
@@ -191,6 +197,8 @@
 <h1><a name="Deployment-using-FAKE" class="anchor" href="#Deployment-using-FAKE">Deployment using FAKE</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>This introduction assumes Fake.Deploy.exe is available in the current directory or path.</p>
+<p><strong>Note: Fake.Deploy is no longer part of FAKE 5 and is considered obsolete and fully replaced by modern deployment systems (puppet, chef, PowerShell DSC, ...). <a href="https://github.com/fsharp/FAKE/issues/1820">Announcement</a>
+</strong>Tipp: You can still use fake scripts on those alternative deployment systems. Just download the fake binaries and run your scripts.</p>
 <h2><a name="Introduction" class="anchor" href="#Introduction">Introduction</a></h2>
 <p>The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows:</p>
 <ul>
