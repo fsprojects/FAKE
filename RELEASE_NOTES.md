@@ -1,6 +1,9 @@
 # Release Notes
 
 ## 5.0.0-beta025
+* vNext
+
+## 5.0.0-beta025
 
 * BREAKING: Update ReleaseNotes module to match new API Guidelines.
 * FAKE5: Concept for Build-Server Support
