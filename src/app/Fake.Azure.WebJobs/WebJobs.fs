@@ -78,7 +78,7 @@ let PackageWebJobs webSites =
     webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob webSite))
 
 let private deployWebJobToWebSite webSite webJob =
-    let uploadUri = Uri(webSite.Url, sprintf "api/%swebjobs/%s" (jobTypePath webJob.JobType) webJob.Name)
+    let uploadUri = Uri(webSite.Url, sprintf "api/zip/site/wwwroot/App_Data/jobs/%s/%s" (jobTypePath webJob.JobType) webJob.Name)
     let filePath = webJob.PackageLocation
     tracefn "Deploying %s webjob to %O" filePath uploadUri
 #if NETSTANDARD
