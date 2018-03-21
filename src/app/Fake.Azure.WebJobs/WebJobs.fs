@@ -88,7 +88,6 @@ let private deployWebJobToWebSite webSite webJob =
 
     use fileStream = new FileStream(filePath, FileMode.Open)
     use content = new StreamContent(fileStream)
-    content.Headers.ContentDisposition <- Headers.ContentDispositionHeaderValue("attachment; filename=" + (Path.GetFileName webJob.PackageLocation))
     content.Headers.ContentType <- Headers.MediaTypeHeaderValue("application/zip")
 
     let response = client.PutAsync(uploadUri, content).Result
