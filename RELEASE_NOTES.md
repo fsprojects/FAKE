@@ -1,7 +1,7 @@
 # Release Notes
 
 ## 5.0.0-beta025
-* vNext
+* vNex
 
 ## 5.0.0-beta025
 
