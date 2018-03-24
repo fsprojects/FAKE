@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.0.0-beta026
+## 5.0.0-beta027
 
 * ENHANCEMENT: Allow to wire `DotNet.Install` and `DotNet.<Command>` such that they work together, see https://fake.build/dotnet-cli.html
 * DOCS: Document how to run fake 5 scripts via `fsi`, see https://fake.build/fake-debugging.html
