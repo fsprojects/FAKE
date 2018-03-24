@@ -42,7 +42,7 @@ module DotNet =
     open System
 
     /// .NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location.
-    let mutable DefaultDotNetCliDir =
+    let internal defaultDotNetCliDir =
         if Environment.isUnix
         then Environment.environVar "HOME" @@ ".dotnet"
         else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
@@ -51,15 +51,20 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'dotnetCliDir' - dotnet cli install directory
-    let private dotnetCliPath dotnetCliDir = 
+
+    let private tryDotnetCliPath dotnetCliDir = 
         let defaultCliPath = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
         match File.Exists defaultCliPath with
-        | true -> defaultCliPath
+        | true -> Some defaultCliPath
         | _ -> 
             Process.tryFindFileOnPath "dotnet"
                 |> function
-                    | Some dotnet when File.Exists dotnet -> dotnet
-                    | _ -> failwithf "Can't find dotnet CLI. Looked in %s and on PATH" defaultCliPath
+                    | Some dotnet when File.Exists dotnet -> Some dotnet
+                    | _ -> None
+    let private dotnetCliPath dotnetCliDir =
+        match tryDotnetCliPath dotnetCliDir with
+        | Some dotnet -> dotnet
+        | _ -> failwithf "Can't find dotnet CLI. Looked in %s and on PATH" dotnetCliDir
 
     /// Get .NET Core SDK download uri
     let private getGenericDotNetCliInstallerUrl branch installerName =
@@ -317,49 +322,6 @@ module DotNet =
         ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
 
-    /// Install .NET Core SDK if required
-    /// ## Parameters
-    ///
-    /// - 'setParams' - set installation options
-    let Install setParams =
-        let param = CliInstallOptions.Default |> setParams
-        let installScript = DownloadInstaller param.InstallerOptions
-
-        let exitCode =
-            let args, fileName =
-                if Environment.isUnix then
-                    // Problem is that argument parsing works differently on dotnetcore than on mono...
-                    // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
-    #if NO_DOTNETCORE_BOOTSTRAP
-                    let quoteChar = '"'
-    #else
-                    let quoteChar = '\''
-    #endif
-                    let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs quoteChar param)
-                    args, "bash" // Otherwise we need to set the executable flag!
-                else
-                    let args =
-                        sprintf
-                            "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\""
-                            installScript
-                            (buildDotNetCliInstallArgs '\'' param)
-                    args, "powershell"
-            Process.Exec (fun info ->
-            { info with
-                FileName = fileName
-                WorkingDirectory = Path.GetTempPath()
-                Arguments = args }
-            ) TimeSpan.MaxValue
-
-        if exitCode <> 0 then
-            // force download new installer script
-            Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
-            DownloadInstaller (param.InstallerOptions >> (fun o ->
-                { o with
-                    AlwaysDownload = true
-                })) |> ignore
-            failwithf ".NET Core SDK install failed with code %i" exitCode
-
     /// dotnet restore verbosity
     type Verbosity =
         | Quiet
@@ -379,7 +341,7 @@ module DotNet =
             CustomParams: string option
             /// Logging verbosity (--verbosity)
             Verbosity: Verbosity option
-            /// Restore logging verbosity (--verbosity)
+            /// Restore logging verbosity (--diagnostics)
             Diagnostics: bool
             /// If true the function will redirect the output of the called process (but will disable colors, false by default)
             RedirectOutput : bool
@@ -389,7 +351,7 @@ module DotNet =
             Environment : Map<string, string>
         }
         static member Create() = {
-            DotNetCliPath = dotnetCliPath DefaultDotNetCliDir
+            DotNetCliPath = dotnetCliPath defaultDotNetCliDir
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
             Verbosity = None
@@ -410,6 +372,31 @@ module DotNet =
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
             { x with RedirectOutput = shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f = f x
+
+    module Options =
+        let inline lift (f:Options -> Options) (x : ^a) =
+            let inline withCommon s e = ((^a) : (member WithCommon : (Options -> Options) -> ^a) (s, e))
+            withCommon x f
+
+        let inline withEnvironment map x =
+            lift (fun o -> o.WithEnvironment map) x
+
+        let inline withRedirectOutput shouldRedirect x =
+            lift (fun o -> o.WithRedirectOutput shouldRedirect) x
+
+        let inline withWorkingDirectory wd x =
+            lift (fun o -> { o with WorkingDirectory = wd}) x
+        let inline withDiagnostics diag x =
+            lift (fun o -> { o with Diagnostics = diag}) x
+        let inline withVerbosity verb x =
+            lift (fun o -> { o with Verbosity = verb}) x
+        let inline withCustomParams args x =
+            lift (fun o -> { o with CustomParams = args}) x
+        let inline withDotNetCliPath path x =
+            lift (fun o -> { o with DotNetCliPath = path}) x
 
     /// [omit]
     let private argList2 name values =
@@ -477,6 +464,177 @@ module DotNet =
             else Process.Exec f timeout
         ProcessResult.New result messages errors
 
+
+    /// dotnet --info command options
+    type InfoOptions =
+        {
+            /// Common tool options
+            Common: Options;
+        }
+        /// Parameter default values.
+        static member Create() = {
+            Common = Options.Create().WithRedirectOutput true
+        }
+        [<Obsolete("Use InfoOptions.Create instead")>]
+        static member Default = InfoOptions.Create()
+        /// Gets the current environment
+        member x.Environment = x.Common.Environment
+        /// Sets the current environment variables.
+        member x.WithEnvironment map =
+            { x with Common = { x.Common with Environment = map } }
+        /// Sets a value indicating whether the output for the given process is redirected.
+        member x.WithRedirectOutput shouldRedirect =
+            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
+
+    /// dotnet info result
+    type InfoResult =
+        {
+            /// Common tool options
+            RID: string;
+        }
+
+    /// Execute dotnet --info command
+    /// ## Parameters
+    ///
+    /// - 'setParams' - set info command parameters
+    let Info setParams =
+        use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
+        let param = InfoOptions.Create() |> setParams
+        let args = "--info" // project (buildPackArgs param)
+        let result = Exec (fun _ -> param.Common) "" args
+        if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
+
+        let rid =
+            result.Messages
+            |> Seq.tryFind (fun m -> m.Contains "RID:")
+            |> Option.map (fun line -> line.Split([|':'|]).[1].Trim())
+
+        if rid.IsNone then failwithf "could not read rid from output: \n%s" (System.String.Join("\n", result.Messages))
+
+        { RID = rid.Value }
+
+
+    /// dotnet --version command options
+    type VersionOptions =
+        {
+            /// Common tool options
+            Common: Options;
+        }
+        /// Parameter default values.
+        static member Create() = {
+            Common = Options.Create().WithRedirectOutput true
+        }
+        /// Gets the current environment
+        member x.Environment = x.Common.Environment
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
+        /// Sets the current environment variables.
+        member x.WithEnvironment map =
+            x.WithCommon (fun c -> { c with Environment = map })
+        /// Sets a value indicating whether the output for the given process is redirected.
+        member x.WithRedirectOutput shouldRedirect =
+            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+
+    /// dotnet info result
+    type VersionResult = string
+
+    /// Execute dotnet --info command
+    /// ## Parameters
+    ///
+    /// - 'setParams' - set info command parameters
+    let Version setParams =
+        use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
+        let param = VersionOptions.Create() |> setParams
+        let args = "--version"
+        let result = Exec (fun _ -> param.Common) "" args
+        if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
+
+        let version =
+            result.Messages
+            |> String.separated "\n"
+            |> String.trim
+
+        if String.isNullOrWhiteSpace version then failwithf "could not read version from output: \n%s" (System.String.Join("\n", result.Messages))
+
+        version
+
+    /// Install .NET Core SDK if required
+    /// ## Parameters
+    ///
+    /// - 'setParams' - set installation options
+    let Install setParams : Options -> Options =
+        let param = CliInstallOptions.Default |> setParams
+
+        let dir = defaultArg param.CustomInstallDir defaultDotNetCliDir
+        let existingDotNet =
+            match tryDotnetCliPath dir with
+            | Some dotnet ->
+                match param.Version with
+                | Version version -> 
+                    let result = Version (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet}))
+                    if result = version then Some dotnet
+                    else None
+                | CliVersion.Lkg -> Some dotnet
+                | CliVersion.Latest -> None
+            | None -> None
+
+        match existingDotNet with
+        | Some dotnet ->
+            Trace.traceVerbose "Suitable dotnet installation found, skipping .NET SDK installer."
+            (fun opt -> { opt with DotNetCliPath = dotnet})
+        | _ ->
+
+        let installScript = DownloadInstaller param.InstallerOptions
+
+        let exitCode =
+            let args, fileName =
+                if Environment.isUnix then
+                    // Problem is that argument parsing works differently on dotnetcore than on mono...
+                    // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
+    #if NO_DOTNETCORE_BOOTSTRAP
+                    let quoteChar = '"'
+    #else
+                    let quoteChar = '\''
+    #endif
+                    let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs quoteChar param)
+                    args, "bash" // Otherwise we need to set the executable flag!
+                else
+                    let args =
+                        sprintf
+                            "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\""
+                            installScript
+                            (buildDotNetCliInstallArgs '\'' param)
+                    args, "powershell"
+            Process.Exec (fun info ->
+            { info with
+                FileName = fileName
+                WorkingDirectory = Path.GetTempPath()
+                Arguments = args }
+            ) TimeSpan.MaxValue
+
+        if exitCode <> 0 then
+            // force download new installer script
+            Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
+            DownloadInstaller (param.InstallerOptions >> (fun o ->
+                { o with
+                    AlwaysDownload = true
+                })) |> ignore
+            failwithf ".NET Core SDK install failed with code %i" exitCode
+    
+        let dir =
+            match param.CustomInstallDir with
+            | Some installDir -> installDir
+            | None -> defaultDotNetCliDir
+        let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")              
+        (fun opt -> { opt with DotNetCliPath = exe})
+
     /// dotnet restore command options
     type RestoreOptions =
         {
@@ -521,6 +679,10 @@ module DotNet =
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
             { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
 
     /// [omit]
     let private buildRestoreArgs (param: RestoreOptions) =
@@ -597,6 +759,10 @@ module DotNet =
         member x.WithRedirectOutput shouldRedirect =
             { x with Common = x.Common.WithRedirectOutput shouldRedirect }
 
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
+
     /// [omit]
     let private buildPackArgs (param: PackOptions) =
         [
@@ -619,53 +785,6 @@ module DotNet =
         let args = sprintf "%s %s" project (buildPackArgs param)
         let result = Exec (fun _ -> param.Common) "pack" args
         if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
-
-    /// dotnet --info command options
-    type InfoOptions =
-        {
-            /// Common tool options
-            Common: Options;
-        }
-        /// Parameter default values.
-        static member Create() = {
-            Common = Options.Create().WithRedirectOutput true
-        }
-        [<Obsolete("Use InfoOptions.Create instead")>]
-        static member Default = PackOptions.Create()
-        /// Gets the current environment
-        member x.Environment = x.Common.Environment
-        /// Sets the current environment variables.
-        member x.WithEnvironment map =
-            { x with Common = { x.Common with Environment = map } }
-        /// Sets a value indicating whether the output for the given process is redirected.
-        member x.WithRedirectOutput shouldRedirect =
-            { x with Common = x.Common.WithRedirectOutput shouldRedirect }
-
-    /// dotnet info result
-    type InfoResult =
-        {
-            /// Common tool options
-            RID: string;
-        }
-    /// Execute dotnet --info command
-    /// ## Parameters
-    ///
-    /// - 'setParams' - set info command parameters
-    let Info setParams =
-        use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
-        let param = InfoOptions.Create() |> setParams
-        let args = "--info" // project (buildPackArgs param)
-        let result = Exec (fun _ -> param.Common) "" args
-        if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
-
-        let rid =
-            result.Messages
-            |> Seq.tryFind (fun m -> m.Contains "RID:")
-            |> Option.map (fun line -> line.Split([|':'|]).[1].Trim())
-
-        if rid.IsNone then failwithf "could not read rid from output: \n%s" (System.String.Join("\n", result.Messages))
-
-        { RID = rid.Value }
 
     /// dotnet publish command options
     type PublishOptions =
@@ -709,6 +828,10 @@ module DotNet =
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
             { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
 
     /// [omit]
     let private buildPublishArgs (param: PublishOptions) =
@@ -774,6 +897,10 @@ module DotNet =
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
             { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
 
 
     /// [omit]
@@ -871,6 +998,10 @@ module DotNet =
         /// Sets a value indicating whether the output for the given process is redirected.
         member x.WithRedirectOutput shouldRedirect =
             { x with Common = x.Common.WithRedirectOutput shouldRedirect }
+
+        /// Changes the "Common" properties according to the given function
+        member inline x.WithCommon f =
+            { x with Common = f x.Common }
 
 
     /// [omit]
