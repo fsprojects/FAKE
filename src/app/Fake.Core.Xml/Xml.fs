@@ -196,7 +196,7 @@ let XslTransformer text =
     if String.isNullOrEmpty text then null
     else
         let xslCompiledTransform = new XslCompiledTransform()
-        Doc(text) |> xslCompiledTransform.Load
+        createDoc(text) |> xslCompiledTransform.Load
         xslCompiledTransform
 /// Transforms a XmlDocument using a XslCompiledTransform.
 /// ## Parameters
