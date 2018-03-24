@@ -165,7 +165,7 @@ module GitHub =
             { p with 
                 Body = String.Join(Environment.NewLine, notes) 
                 Prerelease = prerelease }
-        CreateRelease owner repoName tagName setParams client
+        createRelease owner repoName tagName setParams client
 
     /// Uploads and attaches the specified file to the specified release
     let uploadFile fileName (release : Async<Release>) =
@@ -182,7 +182,7 @@ module GitHub =
     let uploadFiles fileNames (release : Async<Release>) = async {
         let! release' = release
         let releaseW = async { return release' }
-        let! _ = Async.Parallel [for f in fileNames -> UploadFile f releaseW ]
+        let! _ = Async.Parallel [for f in fileNames -> uploadFile f releaseW ]
         return release'
     }
 
@@ -252,7 +252,7 @@ module GitHub =
         let! release' = release
         let releaseW = async { return release' }
 
-        let! _ = Async.Parallel [for f in release'.Release.Assets -> DownloadAsset f.Id destination releaseW ]
+        let! _ = Async.Parallel [for f in release'.Release.Assets -> downloadAsset f.Id destination releaseW ]
 
         ()
     }

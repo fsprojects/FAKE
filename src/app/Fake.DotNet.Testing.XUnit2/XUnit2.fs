@@ -277,7 +277,7 @@ let run setParams assemblies =
         else parametersFirst
 
     let result =
-        Process.Exec ((fun info ->
+        Process.execSimple ((fun info ->
         { info with
             FileName = parameters.ToolPath
             WorkingDirectory = defaultArg parameters.WorkingDir "."

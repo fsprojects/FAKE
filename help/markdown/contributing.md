@@ -120,6 +120,8 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
 * We replace `<verb><module>` functions with `<module>.<verb>`
   * Use Verbs as much as possible for functions
   * In order, to have a more consistent API we propose to always use camelCase naming for functions
+  * For historic reasons we allow constants and values in PascalCase (they will not have a "verb" as they don't do anything)
+  * If we provide optional parameters (via `static member`) we use PascalCase as well (Example: `Shell`-module)
 * We assume the caller is not opening the module but only the global namespaces `Fake.Core`, `Fake.IO`, ...
   and make sure the code looks nice and structured on the caller side.
 * For compatibility reasons (migration from legacy). We assume the user doesn't open the global `Fake` namespace.

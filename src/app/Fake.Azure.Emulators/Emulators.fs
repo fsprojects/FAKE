@@ -36,7 +36,7 @@ let private (|StorageAlreadyStarted|StorageAlreadyStopped|Ok|OtherError|) = func
 
 /// Stops the storage emulator
 let stopStorageEmulator = (fun _ ->
-    match Process.Exec (fun info ->
+    match Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
             Arguments = "stop" }) AzureEmulatorDefaults.TimeOut with
@@ -46,7 +46,7 @@ let stopStorageEmulator = (fun _ ->
 
 /// Starts the storage emulator
 let startStorageEmulator = (fun _ ->
-    match Process.Exec (fun info ->
+    match Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
             Arguments = "start" }) AzureEmulatorDefaults.TimeOut with
@@ -56,7 +56,7 @@ let startStorageEmulator = (fun _ ->
 
 /// Stops the compute emulator
 let stopComputeEmulator = (fun _ ->
-    if 0 <> Process.Exec (fun info ->
+    if 0 <> Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.CSRunToolPath
             Arguments = "/devfabric:shutdown" }) AzureEmulatorDefaults.TimeOut
@@ -66,7 +66,7 @@ let stopComputeEmulator = (fun _ ->
 
 /// Starts the compute emulator
 let startComputeEmulator = (fun _ ->
-    if 0 <> Process.Exec (fun info ->
+    if 0 <> Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.CSRunToolPath
             Arguments = "/devfabric:start" }) AzureEmulatorDefaults.TimeOut
@@ -76,7 +76,7 @@ let startComputeEmulator = (fun _ ->
 
 /// Resets the devstore (BLOB, Queues and Tables)
 let resetDevStorage = (fun _ ->
-    if 0 <> Process.Exec (fun info ->
+    if 0 <> Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
             Arguments = "clear all" }) AzureEmulatorDefaults.TimeOut

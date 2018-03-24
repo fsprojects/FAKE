@@ -7,7 +7,7 @@ open Expecto
 open Expecto.Flip
 
 let run targetName =
-    try Target.RunAndGetContext targetName
+    try Target.runAndGetContext targetName
     with | :? BuildFailedException as bfe ->
         match bfe.Info with
         | Some context -> context
@@ -23,8 +23,8 @@ let tests =
       use execContext = Fake.Core.Context.FakeExecutionContext.Create false "text.fsx" []
       Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 
-      Target.Create "SimpleTest" ignore
-      Target.Create "Dependency" ignore
+      Target.create "SimpleTest" ignore
+      Target.create "Dependency" ignore
       
       "Dependency" ==> "SimpleTest" |> ignore
       let context = run "SimpleTest"
@@ -36,8 +36,8 @@ let tests =
       use execContext = Fake.Core.Context.FakeExecutionContext.Create false "text.fsx" []
       Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 
-      Target.Create "SimpleTest" ignore
-      Target.Create "Dependency" (fun _ -> failwith "failed dependency")
+      Target.create "SimpleTest" ignore
+      Target.create "Dependency" (fun _ -> failwith "failed dependency")
       
       "Dependency" ==> "SimpleTest" |> ignore
       let context = run "SimpleTest"

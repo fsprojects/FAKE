@@ -46,7 +46,7 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
 ///     )
 ///
 let runWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
-    let dirsToWatch = fileIncludes |> GlobbingPattern.GetBaseDirectoryIncludes
+    let dirsToWatch = fileIncludes |> GlobbingPattern.getBaseDirectoryIncludes
 
     //tracefn "dirs to watch: %A" dirsToWatch
 

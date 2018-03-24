@@ -59,7 +59,7 @@ module internal TeamCityWriter =
 *)
 
     /// Encapsulates special chars
-    let inline EncapsulateSpecialChars text =
+    let inline encapsulateSpecialChars text =
         text
         |> String.replace "|" "||"
         |> String.replace "'" "|'"
@@ -68,7 +68,7 @@ module internal TeamCityWriter =
         |> String.replace "[" "|["
         |> String.replace "]" "|]"
 
-    let scrub = String.RemoveLineBreaks >> EncapsulateSpecialChars
+    let scrub = String.removeLineBreaks >> encapsulateSpecialChars
 
     /// Send message to TeamCity
     let sendToTeamCity (format:PrintfFormat<string -> unit, _, _, unit>) message =
@@ -461,8 +461,8 @@ module internal TeamCityRest =
         serverURL
         |> prepareURL url
         |> Http.get username password
-        |> Xml.Doc
-        |> Xml.DocElement
+        |> Xml.createDoc
+        |> Xml.getDocElement
 
     let private parseBooleanOrFalse s =
         let ok, parsed = System.Boolean.TryParse s

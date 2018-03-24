@@ -37,8 +37,8 @@ let modifyVMSize (VmSizes.VmSize vmSize) cloudService =
     let csdefPath = sprintf @"%s\ServiceDefinition.csdef" cloudService
     csdefPath
     |> File.ReadAllText
-    |> Xml.Doc
-    |> Xml.XPathReplaceNS
+    |> Xml.createDoc
+    |> Xml.replaceXPathNS
         "/svchost:ServiceDefinition/svchost:WorkerRole/@vmsize"
         vmSize
         [ "svchost", "http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" ]

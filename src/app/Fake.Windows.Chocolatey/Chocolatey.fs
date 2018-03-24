@@ -358,7 +358,7 @@ module Fake.Windows.Choco
         // Try to find the choco executable if not specified by the user.
         let chocoExe =
             if not <| String.isNullOrEmpty exePath then exePath else
-            let found = FindExe
+            let found = findExe
             if found <> None then found.Value else failwith "Cannot find the choco executable."
 
         use __ = Trace.traceTask "choco" args
@@ -703,7 +703,7 @@ module Fake.Windows.Choco
     /// True if choco is available (only on windows)
     /// ## Sample usage
     ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
-    let IsAvailable = not isUnix && FindExe <> None
+    let IsAvailable = not isUnix && findExe <> None
 
     /// Call choco to [install](https://github.com/chocolatey/choco/wiki/CommandsInstall) a package
     /// ## Parameters
