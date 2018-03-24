@@ -122,7 +122,7 @@ module Target =
     let internal getAllTargetsNames() = getTargetDict() |> Seq.map (fun t -> t.Key) |> Seq.toList
 
     /// Gets a target with the given name from the target dictionary.
-    let Get name =
+    let get name =
         let d = getTargetDict()
         match d.TryGetValue (name) with
         | true, target -> target
@@ -132,7 +132,7 @@ module Target =
                 Trace.traceError  <| sprintf "  - %s" target.Value.Name
             failwithf "Target \"%s\" is not defined." name
     
-    let internal runSimple context target =
+    let internal runSimpleInternal context target =
         let name = target.Name
         let watch = System.Diagnostics.Stopwatch.StartNew()
         let error =
@@ -142,21 +142,21 @@ module Target =
             with e -> Some e
         watch.Stop()
         { Error = error; Time = watch.Elapsed; Target = target; WasSkipped = false }
-    let internal runSimpleContext target context =
-        let result = runSimple context target
+    let internal runSimpleContextInternal target context =
+        let result = runSimpleInternal context target
         { context with PreviousTargets = context.PreviousTargets @ [result] }
 
 
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
-    let RunSimple name =
-        Get name
-        |> runSimple TargetContext.Empty
+    let runSimple name =
+        get name
+        |> runSimpleInternal TargetContext.Empty
 
     /// Returns the DependencyString for the given target.
     let internal dependencyString target =
         if target.Dependencies.IsEmpty then String.Empty else
         target.Dependencies
-          |> Seq.map (fun d -> (Get d).Name)
+          |> Seq.map (fun d -> (get d).Name)
           |> String.separated ", "
           |> sprintf "(==> %s)"
 
@@ -164,7 +164,7 @@ module Target =
     let internal softDependencyString target =
         if target.SoftDependencies.IsEmpty then String.Empty else
         target.SoftDependencies
-          |> Seq.map (fun d -> (Get d).Name)
+          |> Seq.map (fun d -> (get d).Name)
           |> String.separated ", "
           |> sprintf "(?=> %s)"
 
@@ -174,15 +174,15 @@ module Target =
     /// Checks whether the dependency (soft or normal) can be added.
     /// [omit]
     let internal checkIfDependencyCanBeAddedCore fGetDependencies targetName dependentTargetName =
-        let target = Get targetName
-        let dependentTarget = Get dependentTargetName
+        let target = get targetName
+        let dependentTarget = get dependentTargetName
 
         let rec checkDependencies dependentTarget =
               fGetDependencies dependentTarget
               |> List.iter (fun dep ->
                    if String.toLower dep = String.toLower targetName then
                       failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
-                   checkDependencies (Get dep))
+                   checkDependencies (get dep))
 
         checkDependencies dependentTarget
         target,dependentTarget
@@ -257,7 +257,7 @@ module Target =
         addTarget template name
 
     /// Creates a Target.
-    let Create name body = addTargetWithDependencies [] body name
+    let create name body = addTargetWithDependencies [] body name
 
     /// Runs all activated final targets (in alphabetically order).
     /// [omit]
@@ -267,8 +267,8 @@ module Target =
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.fold (fun context name ->
                Trace.tracefn "Starting FinalTarget: %s" name
-               let target = Get name
-               runSimpleContext target context) context  
+               let target = get name
+               runSimpleContextInternal target context) context  
 
     /// Runs all build failure targets.
     /// [omit]
@@ -278,11 +278,11 @@ module Target =
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.fold (fun context name ->
                Trace.tracefn "Starting BuildFailureTarget: %s" name
-               let target = Get name
-               runSimpleContext target context) context
+               let target = get name
+               runSimpleContextInternal target context) context
 
     /// List all targets available.
-    let ListAvailable() =
+    let listAvailable() =
         Trace.log "The following targets are available:"
         for t in getTargetDict().Values do
             Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
@@ -300,7 +300,7 @@ module Target =
             let visited = new HashSet<_>()
             let ordered = new List<_>()
             let rec visitDependenciesAux level (depType,targetName) =
-                let target = Get targetName
+                let target = get targetName
                 let isVisited = visited.Contains targetName
                 visited.Add targetName |> ignore
                 fVisit (target, depType, level, isVisited)
@@ -324,9 +324,9 @@ module Target =
     /// <summary>Writes a dependency graph.</summary>
     /// <param name="verbose">Whether to print verbose output or not.</param>
     /// <param name="target">The target for which the dependencies should be printed.</param>
-    let PrintDependencyGraph verbose target =
+    let printDependencyGraph verbose target =
         match getTargetDict().TryGetValue (target) with
-        | false,_ -> ListAvailable()
+        | false,_ -> listAvailable()
         | true,target ->
             Trace.logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
 
@@ -346,7 +346,7 @@ module Target =
 
     /// <summary>Writes a build time report.</summary>
     /// <param name="total">The total runtime.</param>
-    let internal WriteTaskTimeSummary total context =
+    let internal writeTaskTimeSummary total context =
         Trace.traceHeader "Build Time Report"
         let executedTargets = context.PreviousTargets        
         if executedTargets.Length > 0 then
@@ -395,7 +395,7 @@ module Target =
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
 
-        let t = Get target
+        let t = get target
 
         let targetLevels = new Dictionary<_,_>()
         let addTargetLevel ((target: Target), _, level, _ ) =
@@ -412,7 +412,7 @@ module Target =
             |> Seq.map (fun pair -> pair.Key, pair.Value)
             |> Seq.groupBy snd
             |> Seq.sortBy (fun (l,_) -> -l)
-            |> Seq.map (snd >> Seq.map fst >> Seq.distinct >> Seq.map Get >> Seq.toArray)
+            |> Seq.map (snd >> Seq.map fst >> Seq.distinct >> Seq.map get >> Seq.toArray)
             |> Seq.toList
 
         // Note that this build order cannot be considered "optimal"
@@ -424,7 +424,7 @@ module Target =
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
             use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
-            runSimpleContext target context
+            runSimpleContextInternal target context
         else
             { context with PreviousTargets = context.PreviousTargets @ [{ Error = None; Time = TimeSpan.Zero; Target = target; WasSkipped = true }] }
 
@@ -447,8 +447,8 @@ module Target =
                 context.PreviousTargets @ filterKnown ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets })
 
     /// Runs a target and its dependencies.
-    let internal run targetName =
-        if doesTargetMeanListTargets targetName then ListAvailable(); TargetContext.Empty else
+    let internal runInternal targetName =
+        if doesTargetMeanListTargets targetName then listAvailable(); TargetContext.Empty else
         match getLastDescription() with
         | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
         | None -> ()
@@ -483,21 +483,21 @@ module Target =
                     |> Seq.fold (fun context par -> runTargetsParallel parallelJobs par context) context
             else
                 // single threaded build.
-                PrintDependencyGraph false targetName
+                printDependencyGraph false targetName
 
                 // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
                 // for a single threaded build (thereby centralizing the algorithm for build order), but that
                 // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
                 let _, ordered = visitDependencies ignore targetName
 
-                runTargets (ordered |> Seq.map Get |> Seq.toArray) context
+                runTargets (ordered |> Seq.map get |> Seq.toArray) context
 
         let context =        
             if context.HasError then
                 runBuildFailureTargets context
             else context            
         let context = runFinalTargets context
-        WriteTaskTimeSummary watch.Elapsed context
+        writeTaskTimeSummary watch.Elapsed context
         
         if context.HasError then
             let errorTargets =
@@ -520,35 +520,35 @@ module Target =
         context
 
     /// Creates a target in case of build failure (not activated).
-    let CreateBuildFailure name body =
-        Create name body
+    let createBuildFailure name body =
+        create name body
         getBuildFailureTargets().Add(name,false)
 
     /// Activates the build failure target.
-    let ActivateBuildFailure name =
-        let t = Get name // test if target is defined
+    let activateBuildFailure name =
+        let t = get name // test if target is defined
         getBuildFailureTargets().[name] <- true
 
     /// Creates a final target (not activated).
-    let CreateFinal name body =
-        Create name body
+    let createFinal name body =
+        create name body
         getFinalTargets().Add(name,false)
 
     /// Activates the final target.
-    let ActivateFinal name =
-        let t = Get name // test if target is defined
+    let activateFinal name =
+        let t = get name // test if target is defined
         getFinalTargets().[name] <- true
 
     /// Runs a target and its dependencies, used for testing - usually not called in scripts.
-    let RunAndGetContext targetName = run targetName
+    let runAndGetContext targetName = runInternal targetName
 
     /// Runs a target and its dependencies
-    let Run targetName = run targetName |> ignore
+    let run targetName = runInternal targetName |> ignore
 
     /// Runs the target given by the target parameter or the given default target
-    let RunOrDefault defaultTarget = Environment.environVarOrDefault "target" defaultTarget |> Run
+    let runOrDefault defaultTarget = Environment.environVarOrDefault "target" defaultTarget |> run
 
     /// Runs the target given by the target parameter or lists the available targets
-    let RunOrList() =
-        if Environment.hasEnvironVar "target" then Environment.environVar "target" |> Run
-        else ListAvailable()
+    let runOrList() =
+        if Environment.hasEnvironVar "target" then Environment.environVar "target" |> run
+        else listAvailable()

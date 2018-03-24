@@ -14,7 +14,7 @@ open Fake.IO.FileSystemOperators
 open Fake.DotNet
 
 let private executeCommand command args =
-    Process.ExecAndReturnMessages (fun p ->
+    Process.execWithResult (fun p ->
     { p with
          FileName = command
          Arguments = args }

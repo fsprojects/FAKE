@@ -1,13 +1,16 @@
 
 // Copyright (c) Microsoft Corporation.  All Rights Reserved.  See License.txt in the project root for license information.
 
+// WIP to check if we can have a safe printf with automatic quoting of arguments...
+// Probably not ...
+
 namespace Fake.Core.Printf
 
 open System.Reflection
 
 /// These are a typical set of options used to control structured formatting.
 [<NoEquality; NoComparison>]
-type FormatOptions =
+type internal FormatOptions =
     { FloatingPointFormat: string;
       AttributeProcessor: (string -> (string * string) list -> bool -> unit);
 #if COMPILER // This is the PrintIntercepts extensibility point currently revealed by fsi.exe's AddPrinter
@@ -48,14 +51,14 @@ type FormatOptions =
 
 
 
-type PrintfFormat<'Printer,'State,'Residue,'Result>(value:string) =
+type internal PrintfFormat<'Printer,'State,'Residue,'Result>(value:string) =
         member x.Value = value
     
-type PrintfFormat<'Printer,'State,'Residue,'Result,'Tuple>(value:string) = 
+type internal PrintfFormat<'Printer,'State,'Residue,'Result,'Tuple>(value:string) = 
     inherit PrintfFormat<'Printer,'State,'Residue,'Result>(value)
 
-type Format<'Printer,'State,'Residue,'Result> = PrintfFormat<'Printer,'State,'Residue,'Result>
-type Format<'Printer,'State,'Residue,'Result,'Tuple> = PrintfFormat<'Printer,'State,'Residue,'Result,'Tuple>
+type internal Format<'Printer,'State,'Residue,'Result> = PrintfFormat<'Printer,'State,'Residue,'Result>
+type internal Format<'Printer,'State,'Residue,'Result,'Tuple> = PrintfFormat<'Printer,'State,'Residue,'Result,'Tuple>
 
 module internal PrintfImpl =
 
@@ -1350,7 +1353,7 @@ module internal PrintfImpl =
         formatter env
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-module Printf =
+module internal Printf =
 
     open PrintfImpl
 

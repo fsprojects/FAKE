@@ -74,7 +74,7 @@ let private zipWebJob webSite webJob =
 /// ## Parameters
 ///
 ///  - `webSites` - The websites and webjobs to build zips from.
-let PackageWebJobs webSites =
+let packageWebJobs webSites =
     webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob webSite))
 
 let private deployWebJobToWebSite webSite webJob =
@@ -110,5 +110,5 @@ let private deployWebJobsToWebSite webSite =
 /// ## Parameters
 ///
 ///  - `webSites` - The websites and webjobs to deploy.
-let DeployWebJobs webSites =
+let deployWebJobs webSites =
     webSites |> List.iter deployWebJobsToWebSite

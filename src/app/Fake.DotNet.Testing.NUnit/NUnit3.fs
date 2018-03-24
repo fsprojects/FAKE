@@ -274,7 +274,7 @@ let getWorkingDir parameters =
                                        "." ]
     |> Path.GetFullPath
 
-let buildNUnit3Args parameters assemblies =
+let internal buildNUnit3Args parameters assemblies =
     let appendResultString results sb =
         match results, sb with
         | [], sb -> append "--noresult" sb
@@ -309,7 +309,7 @@ let buildNUnit3Args parameters assemblies =
     |> StringBuilder.appendFileNamesIfNotNull assemblies
     |> StringBuilder.toText
 
-let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
+let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnit" details
     let parameters = NUnit3Defaults |> setParams
@@ -320,7 +320,7 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     Trace.trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result =
-        Process.Exec ((fun info ->
+        Process.execSimple ((fun info ->
         { info with
             FileName = tool
             WorkingDirectory = getWorkingDir parameters

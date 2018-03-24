@@ -10,7 +10,7 @@ module FileSystemInfo =
         else upcast FileInfo.ofPath path
     
     /// Sets all given files or directories readonly.
-    let SetReadOnly readOnly (items : string seq) = 
+    let setReadOnly readOnly (items : string seq) = 
         items |> Seq.iter (fun item ->
             let fi = FileInfo.ofPath item
             if fi.Exists then fi.IsReadOnly <- readOnly

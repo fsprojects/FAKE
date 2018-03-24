@@ -93,7 +93,7 @@ let RestoreSinglePackageDefaults =
 
 /// [omit]
 let runNuGet toolPath timeOut args failWith =
-    if 0 <> Process.Exec ((fun info ->
+    if 0 <> Process.execSimple ((fun info ->
             { info with
                 FileName = toolPath |> Path.getFullName
                 Arguments = args }) >> Process.withFramework) timeOut

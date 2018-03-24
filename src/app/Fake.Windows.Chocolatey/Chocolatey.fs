@@ -343,7 +343,7 @@ module Fake.Windows.Choco
     ///
     /// 1. In the `<ProgramData>\chocolatey\bin` directory
     /// 2. In the `PATH` environment variable.
-    let FindExe =
+    let findExe =
         getPaths |> Seq.concat
             |> Seq.map (fun directory -> directory @@ "choco.exe")
             |> Seq.tryFind File.Exists
@@ -366,7 +366,7 @@ module Fake.Windows.Choco
             { info with
                 FileName = chocoExe
                 Arguments = args }
-        let result = Process.Exec (setInfo) timeout
+        let result = Process.execSimple (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
 
     let private getTempFolder =
@@ -714,7 +714,7 @@ module Fake.Windows.Choco
     ///     Target "ChocoInstall" (fun _ ->
     ///         "pretzel" |> Choco.Install (fun p -> { p with Version = "0.4.0" })
     ///     )
-    let Install (setParams: (ChocoInstallParams -> ChocoInstallParams)) (packages: string) =
+    let install (setParams: (ChocoInstallParams -> ChocoInstallParams)) (packages: string) =
         if packages |> String.isNullOrEmpty then failwith "'packages' must not be empty."
 
         let parameters = setParams ChocoInstallDefaults
@@ -746,7 +746,7 @@ module Fake.Windows.Choco
     ///     Target "ChocoPack" (fun _ ->
     ///         Choco.Pack (fun p -> { p with Version = "0.5.0"; ... })
     ///     )
-    let Pack setParams =
+    let pack setParams =
 
         let parameters = setParams ChocoPackDefaults
 
@@ -774,7 +774,7 @@ module Fake.Windows.Choco
     ///     Target "ChocoPack" (fun _ ->
     ///         "pretzel.nuspec" |> Choco.Pack (fun p -> { p with Version = "0.5.0" })
     ///     )
-    let PackFromTemplate setParams nuspecPath =
+    let packFromTemplate setParams nuspecPath =
 
         if nuspecPath |> String.isNullOrEmpty then failwith "'nuspecPath' must not be empty."
 
@@ -815,7 +815,7 @@ module Fake.Windows.Choco
     ///     Target "ChocoPush" (fun _ ->
     ///         "pretzel.0.5.0.nupkg" |> Choco.Push (fun p -> { p with ApiKey = "123-123123-123" })
     ///     )
-    let Push setParams nupkgPath =
+    let push setParams nupkgPath =
         if nupkgPath |> String.isNullOrEmpty then failwith "'nupkgPath' must not be empty."
 
         let parameters = setParams ChocoPushDefaults
@@ -850,7 +850,7 @@ module Fake.Windows.Choco
     ///        
     ///         args |> Choco.CallChoco TimeSpan.FromMinutes 1.
     ///     )
-    let Exec args timeout =
+    let exec args timeout =
         if args |> String.isNullOrEmpty then failwith "'args' must not be empty."
 
         callChoco null args timeout

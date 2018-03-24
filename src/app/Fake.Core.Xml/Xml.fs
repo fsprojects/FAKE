@@ -14,7 +14,7 @@ open System.Xml.Xsl
 #endif
 
 /// Reads a value from a XML document using a XPath
-let Read failOnError (xmlFileName : string) nameSpace prefix xPath =
+let read failOnError (xmlFileName : string) nameSpace prefix xPath =
     try
         let document = new XPathDocument(xmlFileName)
         let navigator = document.CreateNavigator()
@@ -37,47 +37,47 @@ let Read failOnError (xmlFileName : string) nameSpace prefix xPath =
 
 /// Reads a value from a XML document using a XPath
 /// Returns if the value is an int and the value
-let Read_Int failOnError xmlFileName nameSpace prefix xPath =
+let read_Int failOnError xmlFileName nameSpace prefix xPath =
     let headOrDefault def seq =
         if Seq.isEmpty seq then def
         else Seq.head seq
-    Read failOnError xmlFileName nameSpace prefix xPath
+    read failOnError xmlFileName nameSpace prefix xPath
     |> Seq.map Int32.TryParse
     |> (fun seq ->
     if failOnError then Seq.head seq
     else headOrDefault (false, 0) seq)
 
 /// Creates a XmlWriter which writes to the given file name
-let Writer(fileName : string) =
+let getWriter(fileName : string) =
     let writer = XmlWriter.Create(File.OpenWrite(fileName), null)
     writer.WriteStartDocument()
     writer
 
 /// Writes an XML comment to the given XmlTextWriter
-let Comment comment (writer : XmlWriter) =
+let writeComment comment (writer : XmlWriter) =
     writer.WriteComment comment
     writer
 
 /// Writes an XML start element to the given XmlTextWriter
-let StartElement name (writer : XmlWriter) =
+let startElement name (writer : XmlWriter) =
     writer.WriteStartElement name
     writer
 
 /// Writes an XML end element to the given XmlTextWriter
-let EndElement(writer : XmlWriter) =
+let endElement(writer : XmlWriter) =
     writer.WriteEndElement()
     writer
 
 /// Writes an XML attribute to current element of the given XmlTextWriter
-let Attribute name value (writer : XmlWriter) =
+let writeAttribute name value (writer : XmlWriter) =
     writer.WriteAttributeString(name, value.ToString())
     writer
 
 /// Writes an CData element to the given XmlTextWriter
-let CDataElement elementName data (writer : XmlWriter) =
-    StartElement elementName writer |> ignore
+let writeCDataElement elementName data (writer : XmlWriter) =
+    startElement elementName writer |> ignore
     writer.WriteCData data
-    EndElement writer
+    endElement writer
 
 /// Gets the attribute with the given name from the given XmlNode
 let getAttribute (name : string) (node : #XmlNode) =
@@ -105,7 +105,7 @@ let parse name f (node : #XmlNode) =
 let parseSubNode name f = getSubNode name >> parse name f
 
 /// Loads the given text into a XmlDocument
-let Doc text =
+let createDoc text =
     if String.isNullOrEmpty text then null
     else
         let xmlDocument = new XmlDocument()
@@ -113,10 +113,10 @@ let Doc text =
         xmlDocument
 
 /// Gets the DocumentElement of the XmlDocument
-let DocElement(doc : XmlDocument) = doc.DocumentElement
+let getDocElement(doc : XmlDocument) = doc.DocumentElement
 
 /// Replaces text in the XML document specified by a XPath expression.
-let XPathReplace xpath value (doc : XmlDocument) =
+let replaceXPath xpath value (doc : XmlDocument) =
     let node = doc.SelectSingleNode xpath
     if node = null then failwithf "XML node '%s' not found" xpath
     else
@@ -124,7 +124,7 @@ let XPathReplace xpath value (doc : XmlDocument) =
         doc
 
 /// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
-let XPathReplaceInnerText xpath innerTextValue (doc : XmlDocument) =
+let replaceXPathInnerText xpath innerTextValue (doc : XmlDocument) =
     let node = doc.SelectSingleNode xpath
     if isNull node then failwithf "XML node '%s' not found" xpath
     else
@@ -132,7 +132,7 @@ let XPathReplaceInnerText xpath innerTextValue (doc : XmlDocument) =
         doc
 
 /// Selects a xml node value via XPath from the given document
-let XPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocument) =
+let selectXPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
@@ -147,18 +147,18 @@ let private save (fileName:string) (doc:XmlDocument) =
     doc.Save fs
 
 /// Replaces text in a XML file at the location specified by a XPath expression.
-let Poke (fileName : string) xpath value =
+let poke (fileName : string) xpath value =
     let doc = new XmlDocument()
-    XPathReplace xpath value doc |> save fileName
+    replaceXPath xpath value doc |> save fileName
 
 /// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.
-let PokeInnerText (fileName : string) xpath innerTextValue =
+let pokeInnerText (fileName : string) xpath innerTextValue =
     let doc = new XmlDocument()
     load fileName doc
-    XPathReplaceInnerText xpath innerTextValue doc |> save fileName
+    replaceXPathInnerText xpath innerTextValue doc |> save fileName
 
 /// Replaces text in a XML document specified by a XPath expression, with support for namespaces.
-let XPathReplaceNS xpath value (namespaces : #seq<string * string>) (doc : XmlDocument) =
+let replaceXPathNS xpath value (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.SelectSingleNode(xpath, nsmgr)
@@ -168,7 +168,7 @@ let XPathReplaceNS xpath value (namespaces : #seq<string * string>) (doc : XmlDo
         doc
 
 /// Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.
-let XPathReplaceInnerTextNS xpath innerTextValue (namespaces : #seq<string * string>) (doc : XmlDocument) =
+let replaceXPathInnerTextNS xpath innerTextValue (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.SelectSingleNode(xpath, nsmgr)
@@ -178,16 +178,16 @@ let XPathReplaceInnerTextNS xpath innerTextValue (namespaces : #seq<string * str
         doc
 
 /// Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.
-let PokeNS (fileName : string) namespaces xpath value =
+let pokeNS (fileName : string) namespaces xpath value =
     let doc = new XmlDocument()
     load fileName doc
-    XPathReplaceNS xpath value namespaces doc |> save fileName
+    replaceXPathNS xpath value namespaces doc |> save fileName
 
 /// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.
-let PokeInnerTextNS (fileName : string) namespaces xpath innerTextValue =
+let pokeInnerTextNS (fileName : string) namespaces xpath innerTextValue =
     let doc = new XmlDocument()
     load fileName doc
-    XPathReplaceInnerTextNS xpath innerTextValue namespaces doc |> save fileName
+    replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> save fileName
 
 #if !NETSTANDARD
 /// Loads the given text into a XslCompiledTransform.

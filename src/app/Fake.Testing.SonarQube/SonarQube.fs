@@ -73,7 +73,7 @@ module Fake.Testing.SonarQube
     ///      Name = "MainTool"
     ///      Version = "1.0 })
     ///
-    let Begin setParams = 
+    let begin setParams = 
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
         SonarQubeCall Begin parameters
@@ -93,7 +93,7 @@ module Fake.Testing.SonarQube
     ///    {p with
     ///      Settings = ["sonar.login=login"; "sonar.password=password"] }))
     ///
-    let End setParams = 
+    let end setParams = 
         use __ = Trace.traceTask "SonarQube" "End"
         let parameters = match setParams with
                          | Some setParams -> setParams SonarQubeDefaults

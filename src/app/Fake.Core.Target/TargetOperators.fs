@@ -73,7 +73,7 @@ let (<=?) y x = x ?=> y
 
 /// Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
 let (<=>) x y =   
-    let target_x = Get x
+    let target_x = get x
     Dependencies y target_x.Dependencies
     targetsAreOnSameLevel x y
     y

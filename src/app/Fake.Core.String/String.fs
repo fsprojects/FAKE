@@ -140,7 +140,7 @@ let WindowsLineBreaks = "\r\n"
 let MacLineBreaks = "\r"
 
 /// Converts all line breaks in a text to windows line breaks
-let ConvertTextToWindowsLineBreaks text = 
+let convertTextToWindowsLineBreaks text = 
     text
     |> replace WindowsLineBreaks LinuxLineBreaks
     |> replace MacLineBreaks LinuxLineBreaks
@@ -148,7 +148,7 @@ let ConvertTextToWindowsLineBreaks text =
 
 /// Reads a file line by line and replaces all line breaks to windows line breaks
 ///   - uses a temp file to store the contents in order to prevent OutOfMemory exceptions
-let ConvertFileToWindowsLineBreaksWithEncoding (encoding:System.Text.Encoding) (fileName : string) =
+let convertFileToWindowsLineBreaksWithEncoding (encoding:System.Text.Encoding) (fileName : string) =
     let tempFileName = Path.GetTempFileName()
     ( use file = File.OpenRead fileName 
       use reader = new StreamReader(file, encoding)
@@ -156,25 +156,25 @@ let ConvertFileToWindowsLineBreaksWithEncoding (encoding:System.Text.Encoding) (
         use writer = new StreamWriter(tempFile, encoding)
         while not reader.EndOfStream do
             reader.ReadLine()
-            |> ConvertTextToWindowsLineBreaks
+            |> convertTextToWindowsLineBreaks
             |> writer.WriteLine))
     File.Delete(fileName)
     File.Move(tempFileName, fileName)
     
-let ConvertFileToWindowsLineBreak (encoding:System.Text.Encoding) (fileName : string) =
-  ConvertFileToWindowsLineBreaksWithEncoding Encoding.UTF8 fileName
+let convertFileToWindowsLineBreak (encoding:System.Text.Encoding) (fileName : string) =
+  convertFileToWindowsLineBreaksWithEncoding Encoding.UTF8 fileName
 
 /// Removes linebreaks from the given string
-let inline RemoveLineBreaks text = 
+let inline removeLineBreaks text = 
     text
     |> replace "\r" String.Empty
     |> replace "\n" String.Empty
 
 /// Encapsulates the Apostrophe
-let inline EncapsulateApostrophe text = replace "'" "`" text
+let inline encapsulateApostrophe text = replace "'" "`" text
 
 /// Decodes a Base64-encoded UTF-8-encoded string
-let DecodeBase64Utf8String(text : string) = 
+let decodeBase64Utf8String(text : string) = 
     text
     |> Convert.FromBase64String
     |> Encoding.UTF8.GetString

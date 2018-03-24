@@ -35,7 +35,7 @@ let private (|StorageAlreadyStarted|StorageAlreadyStopped|Ok|OtherError|) = func
     | _ -> OtherError
 
 /// Stops the storage emulator
-let StopStorageEmulator = (fun _ ->
+let stopStorageEmulator = (fun _ ->
     match Process.Exec (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
@@ -45,7 +45,7 @@ let StopStorageEmulator = (fun _ ->
 )
 
 /// Starts the storage emulator
-let StartStorageEmulator = (fun _ ->
+let startStorageEmulator = (fun _ ->
     match Process.Exec (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
@@ -55,7 +55,7 @@ let StartStorageEmulator = (fun _ ->
 )
 
 /// Stops the compute emulator
-let StopComputeEmulator = (fun _ ->
+let stopComputeEmulator = (fun _ ->
     if 0 <> Process.Exec (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.CSRunToolPath
@@ -65,7 +65,7 @@ let StopComputeEmulator = (fun _ ->
 )
 
 /// Starts the compute emulator
-let StartComputeEmulator = (fun _ ->
+let startComputeEmulator = (fun _ ->
     if 0 <> Process.Exec (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.CSRunToolPath
@@ -75,7 +75,7 @@ let StartComputeEmulator = (fun _ ->
 )
 
 /// Resets the devstore (BLOB, Queues and Tables)
-let ResetDevStorage = (fun _ ->
+let resetDevStorage = (fun _ ->
     if 0 <> Process.Exec (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value

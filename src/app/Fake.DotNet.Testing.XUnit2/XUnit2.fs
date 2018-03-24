@@ -192,7 +192,7 @@ let XUnit2Defaults =
       Class = None
       Method = None }
 
-let buildXUnit2Args assemblies parameters =
+let internal buildXUnit2Args assemblies parameters =
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
     let appendTraits traitsList traitFlag sb =
@@ -226,7 +226,7 @@ let buildXUnit2Args assemblies parameters =
 /// so it does not interfere with older versions.
 let internal discoverNoAppDomainExists parameters =
     let helpText =
-        Process.ExecAndReturnMessages ((fun info ->
+        Process.execWithResult ((fun info ->
             { info with FileName = parameters.ToolPath}) >> Process.withFramework) (TimeSpan.FromMinutes 1.)
     let canSetNoAppDomain = helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
     {parameters with NoAppDomain = canSetNoAppDomain}
@@ -266,7 +266,7 @@ module internal ResultHandling =
 ///         !! (testDir @@ "xUnit.Test.*.dll")
 ///         |> xUnit2 (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
 ///     )
-let xUnit2 setParams assemblies =
+let run setParams assemblies =
     let details = String.separated ", " assemblies
     use __ = Trace.traceTask "xUnit2" details
     let parametersFirst = setParams XUnit2Defaults

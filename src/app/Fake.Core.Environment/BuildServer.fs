@@ -118,7 +118,7 @@ module BuildServer =
     let isLocalBuild = LocalBuild = buildServer
 
 
-    let Install (servers: BuildServerInstaller list) =
+    let install (servers: BuildServerInstaller list) =
         servers
         |> List.iter (fun f -> 
             if f.Detect() then

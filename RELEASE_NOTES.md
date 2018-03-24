@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.0.0-beta028
+
+* ENHANCEMENT: Fix API Guidelines on various modules
+* BREAKING: API changes, cleanup and redesign Process module slightly
+
 ## 5.0.0-beta027
 
 * ENHANCEMENT: Allow to wire `DotNet.Install` and `DotNet.<Command>` such that they work together, see https://fake.build/dotnet-cli.html

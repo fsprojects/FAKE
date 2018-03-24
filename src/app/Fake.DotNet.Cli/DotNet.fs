@@ -116,7 +116,7 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'setParams' - set download installer options
-    let DownloadInstaller setParams =
+    let downloadInstaller setParams =
         let param = InstallerOptions.Default |> setParams
 
         let ext = if Environment.isUnix then "sh" else "ps1"
@@ -427,18 +427,17 @@ module DotNet =
     /// - 'options' - common execution options
     /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
     /// - 'args' - command arguments
-    let Exec (buildOptions: Options -> Options) command args =
-        let errors = new System.Collections.Generic.List<string>()
-        let messages = new System.Collections.Generic.List<string>()
+    let exec (buildOptions: Options -> Options) command args =
+        let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
         let timeout = TimeSpan.MaxValue
 
         let errorF msg =
             Trace.traceError msg
-            errors.Add msg
+            results.Add (ConsoleMessage.CreateError msg)
 
         let messageF msg =
             Trace.trace msg
-            messages.Add msg
+            results.Add (ConsoleMessage.CreateOut msg)
 
         let options = buildOptions (Options.Create())
         let sdkOptions = buildSdkOptionsArgs options
@@ -460,9 +459,9 @@ module DotNet =
                 |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
 
             if options.RedirectOutput then
-              Process.ExecWithLambdas f timeout true errorF messageF
-            else Process.Exec f timeout
-        ProcessResult.New result messages errors
+              Process.execRaw f timeout true errorF messageF
+            else Process.execSimple f timeout
+        ProcessResult.New result (results |> List.ofSeq)
 
 
     /// dotnet --info command options
@@ -501,11 +500,11 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'setParams' - set info command parameters
-    let Info setParams =
+    let info setParams =
         use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
         let param = InfoOptions.Create() |> setParams
         let args = "--info" // project (buildPackArgs param)
-        let result = Exec (fun _ -> param.Common) "" args
+        let result = exec (fun _ -> param.Common) "" args
         if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
 
         let rid =
@@ -549,11 +548,11 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'setParams' - set info command parameters
-    let Version setParams =
+    let getVersion setParams =
         use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
         let param = VersionOptions.Create() |> setParams
         let args = "--version"
-        let result = Exec (fun _ -> param.Common) "" args
+        let result = exec (fun _ -> param.Common) "" args
         if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
 
         let version =
@@ -569,7 +568,7 @@ module DotNet =
     /// ## Parameters
     ///
     /// - 'setParams' - set installation options
-    let Install setParams : Options -> Options =
+    let install setParams : Options -> Options =
         let param = CliInstallOptions.Default |> setParams
 
         let dir = defaultArg param.CustomInstallDir defaultDotNetCliDir
@@ -578,7 +577,7 @@ module DotNet =
             | Some dotnet ->
                 match param.Version with
                 | Version version -> 
-                    let result = Version (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet}))
+                    let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet}))
                     if result = version then Some dotnet
                     else None
                 | CliVersion.Lkg -> Some dotnet
@@ -591,7 +590,7 @@ module DotNet =
             (fun opt -> { opt with DotNetCliPath = dotnet})
         | _ ->
 
-        let installScript = DownloadInstaller param.InstallerOptions
+        let installScript = downloadInstaller param.InstallerOptions
 
         let exitCode =
             let args, fileName =
@@ -612,7 +611,7 @@ module DotNet =
                             installScript
                             (buildDotNetCliInstallArgs '\'' param)
                     args, "powershell"
-            Process.Exec (fun info ->
+            Process.execSimple (fun info ->
             { info with
                 FileName = fileName
                 WorkingDirectory = Path.GetTempPath()
@@ -622,7 +621,7 @@ module DotNet =
         if exitCode <> 0 then
             // force download new installer script
             Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
-            DownloadInstaller (param.InstallerOptions >> (fun o ->
+            downloadInstaller (param.InstallerOptions >> (fun o ->
                 { o with
                     AlwaysDownload = true
                 })) |> ignore
@@ -701,11 +700,11 @@ module DotNet =
     ///
     /// - 'setParams' - set restore command parameters
     /// - 'project' - project to restore packages
-    let Restore setParams project =
+    let restore setParams project =
         use __ = Trace.traceTask "DotNet:restore" project
         let param = RestoreOptions.Create() |> setParams
         let args = sprintf "%s %s" project (buildRestoreArgs param)
-        let result = Exec (fun _ -> param.Common) "restore" args
+        let result = exec (fun _ -> param.Common) "restore" args
         if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
 
     /// build configuration
@@ -779,11 +778,11 @@ module DotNet =
     ///
     /// - 'setParams' - set pack command parameters
     /// - 'project' - project to pack
-    let Pack setParams project =
+    let pack setParams project =
         use __ = Trace.traceTask "DotNet:pack" project
         let param = PackOptions.Create() |> setParams
         let args = sprintf "%s %s" project (buildPackArgs param)
-        let result = Exec (fun _ -> param.Common) "pack" args
+        let result = exec (fun _ -> param.Common) "pack" args
         if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 
     /// dotnet publish command options
@@ -851,11 +850,11 @@ module DotNet =
     ///
     /// - 'setParams' - set publish command parameters
     /// - 'project' - project to publish
-    let Publish setParams project =
+    let publish setParams project =
         use __ = Trace.traceTask "DotNet:publish" project
         let param = PublishOptions.Create() |> setParams
         let args = sprintf "%s %s" project (buildPublishArgs param)
-        let result = Exec (fun _ -> param.Common) "publish" args
+        let result = exec (fun _ -> param.Common) "publish" args
         if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
 
     /// dotnet build command options
@@ -920,15 +919,12 @@ module DotNet =
     ///
     /// - 'setParams' - set compile command parameters
     /// - 'project' - project to compile
-    let Compile setParams project =
+    let build setParams project =
         use __ = Trace.traceTask "DotNet:build" project
         let param = BuildOptions.Create() |> setParams
         let args = sprintf "%s %s" project (buildBuildArgs param)
-        let result = Exec (fun _ -> param.Common) "build" args
+        let result = exec (fun _ -> param.Common) "build" args
         if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
-
-    let Build = Compile
-
 
     /// dotnet build command options
     type TestOptions =
@@ -1028,17 +1024,15 @@ module DotNet =
     ///
     /// - 'setParams' - set compile command parameters
     /// - 'project' - project to compile
-    let Test setParams project =
+    let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
         let args = sprintf "%s %s" project (buildTestArgs param)
-        let result = Exec (fun _ -> param.Common) "test" args
+        let result = exec (fun _ -> param.Common) "test" args
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
 
-
-
     /// Gets the DotNet SDK from the global.json
-    let GetSDKVersionFromGlobalJson() : string =
+    let getSDKVersionFromGlobalJson() : string =
         if not (File.Exists "global.json") then
             failwithf "global.json not found"
         try

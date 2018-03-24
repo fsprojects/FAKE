@@ -129,20 +129,20 @@ module Fake.DotNet.Testing.OpenCover
     ///
     ///      OpenCover.Run (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" }) 
     ///         "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
-    let Run setParams targetArgs =
+    let run setParams targetArgs =
         use __ = Trace.traceTask "OpenCover" "Gathering coverage statistics"
         let param = setParams OpenCoverDefaults
     
         let processArgs = buildOpenCoverArgs param targetArgs
         Trace.tracefn "OpenCover command\n%s %s" param.ExePath processArgs
         let ok = 
-            Process.exec ((fun info ->
+            Process.execSimple ((fun info ->
             { info with
                 FileName = param.ExePath
                 WorkingDirectory =
                     if param.WorkingDir <> String.Empty then param.WorkingDir else info.WorkingDirectory
                 Arguments = processArgs }) >> Process.withFramework) param.TimeOut
-        if not ok then failwithf "OpenCover reported errors."
+        if ok <> 0 then failwithf "OpenCover reported errors."
 
     /// Show version OpenCover
     /// ## Parameters
@@ -153,13 +153,13 @@ module Fake.DotNet.Testing.OpenCover
     ///
     ///      OpenCover.Version None
     ///      OpenCover.Version (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" })
-    let Version setParams =
+    let getVersion setParams =
         use __ = Trace.traceTask "OpenCover" "Version"
         let param = match setParams with
                     | Some setParams -> setParams OpenCoverDefaults
                     | None -> OpenCoverDefaults
 
-        Process.Exec ((fun info ->
+        Process.execSimple ((fun info ->
         { info with
             FileName = param.ExePath
             Arguments = "-version" }) >> Process.withFramework) param.TimeOut |> ignore

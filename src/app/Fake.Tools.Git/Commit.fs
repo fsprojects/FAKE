@@ -5,7 +5,7 @@ open Fake.Tools.Git.CommandHelper
 open Fake.Core
 
 /// Commits all files in the given repository with the given message
-let Commit repositoryDir message =
+let exec repositoryDir message =
     sprintf "commit -m \"%s\"" message
     |> runSimpleGitCommand repositoryDir
     |> Trace.trace

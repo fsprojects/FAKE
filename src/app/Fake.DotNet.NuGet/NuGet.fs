@@ -294,12 +294,12 @@ let private pack parameters nuspecFile =
 
     let execute args =
         let result =
-            Process.ExecAndReturnMessages ((fun info ->
+            Process.execWithResult ((fun info ->
             { info with
                 FileName = parameters.ToolPath
                 WorkingDirectory = Path.getFullName parameters.WorkingDir
                 Arguments = args }) >> Process.withFramework) parameters.TimeOut
-        if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (String.toLines result.Errors)
+        if result.ExitCode <> 0 || result.Errors.Length > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (String.toLines result.Errors)
 
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
@@ -341,7 +341,7 @@ let rec private publish parameters =
             let tracing = Process.shouldEnableProcessTracing()
             try
                 Process.setEnableProcessTracing false
-                Process.Exec ((fun info ->
+                Process.execSimple ((fun info ->
                 { info with
                     FileName = parameters.ToolPath
                     WorkingDirectory = FullName parameters.WorkingDir
@@ -366,7 +366,7 @@ let rec private publishSymbols parameters =
             let tracing = Process.shouldEnableProcessTracing()
             try
                 Process.setEnableProcessTracing false
-                Process.Exec ((fun info ->
+                Process.execSimple ((fun info ->
                     { info with
                         FileName = parameters.ToolPath
                         WorkingDirectory = FullName parameters.WorkingDir
@@ -485,7 +485,7 @@ type NuSpecPackage =
 ///
 ///  - `nuspec` - The .nuspec file content.
 let getNuspecProperties (nuspec : string) =
-    let doc = Xml.Doc nuspec
+    let doc = Xml.createDoc nuspec
 
     let namespaces =
         [ "x", "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
@@ -498,7 +498,7 @@ let getNuspecProperties (nuspec : string) =
         let getWith ns =
             try
                 doc
-                |> Xml.XPathValue (sprintf "%s:metadata/%s:%s" ns ns name) namespaces
+                |> Xml.selectXPathValue (sprintf "%s:metadata/%s:%s" ns ns name) namespaces
                 |> Some
             with exn -> None
         namespaces
@@ -666,7 +666,7 @@ let private webClient = new WebClient()
 /// [omit]
 let discoverRepoUrl =
     lazy (let resp = webClient.DownloadString(feedUrl)
-          let doc = Xml.Doc resp
+          let doc = Xml.createDoc resp
           doc.["service"].GetAttribute("xml:base"))
 
 /// [omit]
@@ -703,13 +703,13 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
 let getPackage (repoUrl:string) packageName version =
     let url : string = repoUrl.TrimEnd('/') + "/Packages(Id='" + packageName + "',Version='" + version + "')"
     let resp = webClient.DownloadString(url)
-    let doc = Xml.Doc resp
+    let doc = Xml.createDoc resp
     extractFeedPackageFromXml doc.["entry"]
 
 /// [omit]
 let getFeedPackagesFromUrl (url : string) =
     let resp = webClient.DownloadString(url)
-    let doc = Xml.Doc resp
+    let doc = Xml.createDoc resp
     [ for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry ]
 
 /// [omit]

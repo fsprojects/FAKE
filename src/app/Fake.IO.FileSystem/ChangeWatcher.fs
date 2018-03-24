@@ -45,7 +45,7 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
 ///         watcher.Dispose() // if you need to cleanup the watcher.
 ///     )
 ///
-let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
+let runWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
     let dirsToWatch = fileIncludes |> GlobbingPattern.GetBaseDirectoryIncludes
 
     //tracefn "dirs to watch: %A" dirsToWatch
@@ -117,4 +117,4 @@ let RunWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : I
               if timer.IsValueCreated then timer.Value.Dispose() }
 
 
-let Run (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = RunWithOptions { IncludeSubdirectories = true } onChange fileIncludes
+let run (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) = runWithOptions { IncludeSubdirectories = true } onChange fileIncludes
