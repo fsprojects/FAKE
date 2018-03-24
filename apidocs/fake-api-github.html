@@ -239,7 +239,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1072', 1072)" onmouseover="showTip(event, '1072', 1072)">
-            CreateClient user password
+            createClient user password
           </code>
           <div class="tip" id="1072">
             <strong>Signature:</strong> user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
@@ -259,7 +259,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1073', 1073)" onmouseover="showTip(event, '1073', 1073)">
-            CreateClientWithToken token
+            createClientWithToken token
           </code>
           <div class="tip" id="1073">
             <strong>Signature:</strong> token:string -&gt; Async&lt;GitHubClient&gt;<br />
@@ -279,7 +279,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
-            CreateGHEClient url user password
+            createGHEClient url user password
           </code>
           <div class="tip" id="1074">
             <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
@@ -299,7 +299,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
-            CreateGHEClientWithToken url token
+            createGHEClientWithToken url token
           </code>
           <div class="tip" id="1075">
             <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;GitHubClient&gt;<br />
@@ -319,7 +319,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
-            CreateRelease (...)
+            createRelease (...)
           </code>
           <div class="tip" id="1076">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; setParams:(CreateReleaseParams -&gt; CreateReleaseParams) -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
@@ -347,7 +347,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
-            DownloadAsset id destination release
+            downloadAsset id destination release
           </code>
           <div class="tip" id="1077">
             <strong>Signature:</strong> id:int -&gt; destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
@@ -367,7 +367,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
-            DownloadAssets destination release
+            downloadAssets destination release
           </code>
           <div class="tip" id="1078">
             <strong>Signature:</strong> destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
@@ -387,7 +387,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1079', 1079)" onmouseover="showTip(event, '1079', 1079)">
-            DraftNewRelease (...)
+            draftNewRelease (...)
           </code>
           <div class="tip" id="1079">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
@@ -416,7 +416,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1080', 1080)" onmouseover="showTip(event, '1080', 1080)">
-            GetLastRelease owner repoName client
+            getLastRelease owner repoName client
           </code>
           <div class="tip" id="1080">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
@@ -436,7 +436,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1081', 1081)" onmouseover="showTip(event, '1081', 1081)">
-            GetReleaseByTag (...)
+            getReleaseByTag (...)
           </code>
           <div class="tip" id="1081">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
@@ -456,7 +456,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1082', 1082)" onmouseover="showTip(event, '1082', 1082)">
-            PublishDraft release
+            publishDraft release
           </code>
           <div class="tip" id="1082">
             <strong>Signature:</strong> release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
@@ -476,7 +476,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1083', 1083)" onmouseover="showTip(event, '1083', 1083)">
-            UploadFile fileName release
+            uploadFile fileName release
           </code>
           <div class="tip" id="1083">
             <strong>Signature:</strong> fileName:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
@@ -496,7 +496,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1084', 1084)" onmouseover="showTip(event, '1084', 1084)">
-            UploadFiles fileNames release
+            uploadFiles fileNames release
           </code>
           <div class="tip" id="1084">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />

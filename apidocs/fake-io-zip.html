@@ -215,10 +215,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1827', 1827)" onmouseover="showTip(event, '1827', 1827)">
-            CreateZip(...)
+          <code onmouseout="hideTip(event, '1815', 1815)" onmouseover="showTip(event, '1815', 1815)">
+            createZip(...)
           </code>
-          <div class="tip" id="1827">
+          <div class="tip" id="1815">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -244,10 +244,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1828', 1828)" onmouseover="showTip(event, '1828', 1828)">
-            CreateZipOfIncludes(...)
+          <code onmouseout="hideTip(event, '1816', 1816)" onmouseover="showTip(event, '1816', 1816)">
+            createZipOfIncludes(...)
           </code>
-          <div class="tip" id="1828">
+          <div class="tip" id="1816">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; files:seq&lt;string * IGlobbingPattern&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -271,10 +271,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1829', 1829)" onmouseover="showTip(event, '1829', 1829)">
-            CreateZipSpec(...)
+          <code onmouseout="hideTip(event, '1817', 1817)" onmouseover="showTip(event, '1817', 1817)">
+            createZipSpec(...)
           </code>
-          <div class="tip" id="1829">
+          <div class="tip" id="1817">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -298,10 +298,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1830', 1830)" onmouseover="showTip(event, '1830', 1830)">
+          <code onmouseout="hideTip(event, '1818', 1818)" onmouseover="showTip(event, '1818', 1818)">
             DefaultZipLevel
           </code>
-          <div class="tip" id="1830">
+          <div class="tip" id="1818">
             <strong>Signature:</strong> int<br />
                       </div>
         </td>
@@ -318,10 +318,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1831', 1831)" onmouseover="showTip(event, '1831', 1831)">
-            FilesAsSpecs(workingDir files)
+          <code onmouseout="hideTip(event, '1819', 1819)" onmouseover="showTip(event, '1819', 1819)">
+            filesAsSpecs(workingDir files)
           </code>
-          <div class="tip" id="1831">
+          <div class="tip" id="1819">
             <strong>Signature:</strong> workingDir:string -&gt; files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
                       </div>
         </td>
@@ -356,17 +356,17 @@ This method will convert a given glob pattern with the given workingDir to a seq
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Zip&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="pn">[</span>   <span class="o">!!</span> <span class="s">&quot;ci/build/project1/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project1&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project1&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecs</span> <span class="s">&quot;ci/build/project1&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project1&quot;</span>
         <span class="o">!!</span> <span class="s">&quot;ci/build/project2/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project2&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project2&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecs</span> <span class="s">&quot;ci/build/project2&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project2&quot;</span>
         <span class="o">!!</span> <span class="s">&quot;ci/build/project3/sub/dir/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project3&quot;</span>
     <span class="pn">]</span>
     <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">concat</span>
-    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">ZipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span> <span class="s">&quot;&quot;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">DefaultZipLevel</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">zipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span> <span class="s">&quot;&quot;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">DefaultZipLevel</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -381,10 +381,10 @@ This method will convert a given glob pattern with the given workingDir to a seq
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1832', 1832)" onmouseover="showTip(event, '1832', 1832)">
-            FilesAsSpecsFlatten(files)
+          <code onmouseout="hideTip(event, '1820', 1820)" onmouseover="showTip(event, '1820', 1820)">
+            filesAsSpecsFlatten(files)
           </code>
-          <div class="tip" id="1832">
+          <div class="tip" id="1820">
             <strong>Signature:</strong> files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
                       </div>
         </td>
@@ -418,17 +418,17 @@ This method will convert a given glob pattern with the given workingDir to a seq
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Zip&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="pn">[</span>   <span class="o">!!</span> <span class="s">&quot;ci/build/project1/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project1&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project1&quot;</span>
         <span class="o">!!</span> <span class="s">&quot;ci/build/project2/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project2&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project2&quot;</span>
         <span class="o">!!</span> <span class="s">&quot;ci/build/project3/sub/dir/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project3&quot;</span>
     <span class="pn">]</span>
     <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">concat</span>
-    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">ZipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">zipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -443,10 +443,10 @@ This method will convert a given glob pattern with the given workingDir to a seq
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1833', 1833)" onmouseover="showTip(event, '1833', 1833)">
-            MoveToFolder(path items)
+          <code onmouseout="hideTip(event, '1821', 1821)" onmouseover="showTip(event, '1821', 1821)">
+            moveToFolder(path items)
           </code>
-          <div class="tip" id="1833">
+          <div class="tip" id="1821">
             <strong>Signature:</strong> path:string -&gt; items:seq&lt;string * string&gt; -&gt; seq&lt;string * string&gt;<br />
                       </div>
         </td>
@@ -481,17 +481,17 @@ This function will move a given list of zip specifications to the given folder (
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Zip&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="pn">[</span>   <span class="o">!!</span> <span class="s">&quot;ci/build/project1/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project1&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project1&quot;</span>
         <span class="o">!!</span> <span class="s">&quot;ci/build/project2/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecsFlatten</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project2&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecsFlatten</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project2&quot;</span>
         <span class="o">!!</span> <span class="s">&quot;ci/build/project3/sub/dir/**/*&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">FilesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
-            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">MoveToFolder</span> <span class="s">&quot;project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">filesAsSpecs</span> <span class="s">&quot;ci/build/project3&quot;</span>
+            <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">moveToFolder</span> <span class="s">&quot;project3&quot;</span>
     <span class="pn">]</span>
     <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">concat</span>
-    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">ZipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">zipSpec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">sprintf</span> <span class="s">@&quot;ci/deploy/project.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -506,10 +506,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1834', 1834)" onmouseover="showTip(event, '1834', 1834)">
-            Unzip(target fileName)
+          <code onmouseout="hideTip(event, '1822', 1822)" onmouseover="showTip(event, '1822', 1822)">
+            unzip(target fileName)
           </code>
-          <div class="tip" id="1834">
+          <div class="tip" id="1822">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -531,10 +531,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1835', 1835)" onmouseover="showTip(event, '1835', 1835)">
-            UnzipFirstMatchingFileInMemory(...)
+          <code onmouseout="hideTip(event, '1823', 1823)" onmouseover="showTip(event, '1823', 1823)">
+            unzipFirstMatchingFileInMemory(...)
           </code>
-          <div class="tip" id="1835">
+          <div class="tip" id="1823">
             <strong>Signature:</strong> predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
@@ -556,10 +556,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1836', 1836)" onmouseover="showTip(event, '1836', 1836)">
-            UnzipSingleFileInMemory(...)
+          <code onmouseout="hideTip(event, '1824', 1824)" onmouseover="showTip(event, '1824', 1824)">
+            unzipSingleFileInMemory(...)
           </code>
-          <div class="tip" id="1836">
+          <div class="tip" id="1824">
             <strong>Signature:</strong> fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
@@ -581,10 +581,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1837', 1837)" onmouseover="showTip(event, '1837', 1837)">
-            Zip(workingDir fileName files)
+          <code onmouseout="hideTip(event, '1825', 1825)" onmouseover="showTip(event, '1825', 1825)">
+            zip(workingDir fileName files)
           </code>
-          <div class="tip" id="1837">
+          <div class="tip" id="1825">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -607,10 +607,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1838', 1838)" onmouseover="showTip(event, '1838', 1838)">
-            ZipFile(fileName targetFileName)
+          <code onmouseout="hideTip(event, '1826', 1826)" onmouseover="showTip(event, '1826', 1826)">
+            zipFile(fileName targetFileName)
           </code>
-          <div class="tip" id="1838">
+          <div class="tip" id="1826">
             <strong>Signature:</strong> fileName:string -&gt; targetFileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -632,10 +632,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1839', 1839)" onmouseover="showTip(event, '1839', 1839)">
-            ZipOfIncludes(fileName files)
+          <code onmouseout="hideTip(event, '1827', 1827)" onmouseover="showTip(event, '1827', 1827)">
+            zipOfIncludes(fileName files)
           </code>
-          <div class="tip" id="1839">
+          <div class="tip" id="1827">
             <strong>Signature:</strong> fileName:string -&gt; files:seq&lt;string * IGlobbingPattern&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -681,7 +681,7 @@ This function will move a given list of zip specifications to the given folder (
             <span class="o">++</span> <span class="s">&quot;MyWebApp/web.config&quot;</span>
         <span class="s">@&quot;app_data\jobs\continuous\MyWebJob&quot;</span><span class="pn">,</span> <span class="o">!!</span> <span class="s">&quot;MyWebJob/bin/Release/*.*&quot;</span>
     <span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="id">ZipOfIncludes</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">sprintf</span> <span class="s">@&quot;bin\MyWebApp.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
+    <span class="o">|&gt;</span> <span class="id">Zip</span><span class="pn">.</span><span class="id">zipOfIncludes</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">sprintf</span> <span class="s">@&quot;bin\MyWebApp.%s.zip&quot;</span> <span class="id">buildVersion</span><span class="pn">)</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -694,10 +694,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1840', 1840)" onmouseover="showTip(event, '1840', 1840)">
-            ZipSpec(fileName items)
+          <code onmouseout="hideTip(event, '1828', 1828)" onmouseover="showTip(event, '1828', 1828)">
+            zipSpec(fileName items)
           </code>
-          <div class="tip" id="1840">
+          <div class="tip" id="1828">
             <strong>Signature:</strong> fileName:string -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
                       </div>
         </td>

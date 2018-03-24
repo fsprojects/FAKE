@@ -252,64 +252,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1605', 1605)" onmouseover="showTip(event, '1605', 1605)">
-            OpenCoverDefaults 
+          <code onmouseout="hideTip(event, '1594', 1594)" onmouseover="showTip(event, '1594', 1594)">
+            getVersion setParams
           </code>
-          <div class="tip" id="1605">
-            <strong>Signature:</strong> OpenCoverParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L68-68" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>OpenCover default parameters</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1606', 1606)" onmouseover="showTip(event, '1606', 1606)">
-            Run setParams targetArgs
-          </code>
-          <div class="tip" id="1606">
-            <strong>Signature:</strong> setParams:(OpenCoverParams -&gt; OpenCoverParams) -&gt; targetArgs:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L132-132" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Runs OpenCover on a group of assemblies.</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>setParams</code> - Function used to overwrite the default OpenCover parameters.</li>
-<li><code>targetArgs</code> - Test runner arguments.</li>
-</ul>
-<h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">OpenCover</span><span class="pn">.</span><span class="id">Run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">TestRunnerExePath</span> <span class="o">=</span> <span class="s">&quot;./Tools/NUnit/nunit-console.exe&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
-    <span class="s">&quot;project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1607', 1607)" onmouseover="showTip(event, '1607', 1607)">
-            Version setParams
-          </code>
-          <div class="tip" id="1607">
+          <div class="tip" id="1594">
             <strong>Signature:</strong> setParams:(OpenCoverParams -&gt; OpenCoverParams) option -&gt; unit<br />
                       </div>
         </td>
@@ -333,6 +279,60 @@
 </tr>
 </table>
 <div class="tip" id="fs1">union case Option.None: Option&lt;&#39;T&gt;</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1595', 1595)" onmouseover="showTip(event, '1595', 1595)">
+            OpenCoverDefaults 
+          </code>
+          <div class="tip" id="1595">
+            <strong>Signature:</strong> OpenCoverParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L68-68" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>OpenCover default parameters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1596', 1596)" onmouseover="showTip(event, '1596', 1596)">
+            run setParams targetArgs
+          </code>
+          <div class="tip" id="1596">
+            <strong>Signature:</strong> setParams:(OpenCoverParams -&gt; OpenCoverParams) -&gt; targetArgs:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.OpenCover/OpenCover.fs#L132-132" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs OpenCover on a group of assemblies.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the default OpenCover parameters.</li>
+<li><code>targetArgs</code> - Test runner arguments.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">OpenCover</span><span class="pn">.</span><span class="id">Run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">TestRunnerExePath</span> <span class="o">=</span> <span class="s">&quot;./Tools/NUnit/nunit-console.exe&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
+    <span class="s">&quot;project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 
 
         </td>

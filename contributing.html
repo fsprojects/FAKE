@@ -206,11 +206,7 @@
 <li><p><a href="https://gitter.im/fsharp/FAKE">Gitter room</a></p></li>
 </ul>
 </li>
-<li>
-<p>Unless you explicitly state otherwise, any contribution intentionally
-submitted for inclusion in the Project shall be under the terms and
-conditions of the Apache 2.0 license. See License.txt for details.</p>
-</li>
+<li>Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the Apache 2.0 license. See License.txt for details.</li>
 </ul>
 <h2><a name="Documentation" class="anchor" href="#Documentation">Documentation</a></h2>
 <p>The documentation for FAKE is automatically generated using the amazing <a href="https://github.com/tpetricek/FSharp.Formatting">F# Formatting</a> library.
@@ -341,6 +337,8 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 <ul>
 <li>Use Verbs as much as possible for functions</li>
 <li>In order, to have a more consistent API we propose to always use camelCase naming for functions</li>
+<li>For historic reasons we allow constants and values in PascalCase (they will not have a "verb" as they don't do anything)</li>
+<li><p>If we provide optional parameters (via <code>static member</code>) we use PascalCase as well (Example: <code>Shell</code>-module)</p></li>
 </ul>
 </li>
 <li>
@@ -378,10 +376,12 @@ and make sure the code looks nice and structured on the caller side.</p>
 <blockquote>
 <p>Note that <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that yet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.</p>
 </blockquote>
-<p>These steps will ensure:
-- People using the NuGet package will get the warnings to update the new API
-- The new API is part of FakeLib (deprecated)
-- The new API is available as separate module</p>
+<p>These steps will ensure:</p>
+<ul>
+<li>People using the NuGet package will get the warnings to update the new API</li>
+<li>The new API is part of FakeLib (deprecated)</li>
+<li>The new API is available as separate module</li>
+</ul>
 
 
                       </article>

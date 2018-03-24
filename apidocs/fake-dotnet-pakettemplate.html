@@ -265,10 +265,53 @@ file for <a href="http://fsprojects.github.io/Paket/index.html">Paket</a></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1554', 1554)" onmouseover="showTip(event, '1554', 1554)">
+          <code onmouseout="hideTip(event, '1544', 1544)" onmouseover="showTip(event, '1544', 1544)">
+            create setParams
+          </code>
+          <div class="tip" id="1544">
+            <strong>Signature:</strong> setParams:(PaketTemplateParams -&gt; PaketTemplateParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/PaketTemplate.fs#L276-276" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a paket.template file with the given filename
+Will fail if the file could not be written</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the default <code>PaketTemplateParams</code> value</li>
+</ul>
+<h2>Sample usage</h2>
+<p>Target "Create Paket Template" (fun _ -&gt;
+PaketTemplate (fun p -&gt;
+{ p with
+TemplateFilePath = Some "./deploytemp/paket.template"
+Id = Some "My.New.Package"
+Version = Some "0.0.1-alpha"
+Authors = ["Me"; "You"; "Someone Other"]
+Files = [ Include ("./<em></em>/<em>.dll", "/lib/dlls")
+Exclude "./Foo/bar.dll"
+Include ("./</em>.jpg", "/images") ]
+Dependencies = [ "Paket1.FOO", AnyVersion
+"Paket2.BAR", GreaterOrEqual CURRENTVERSION
+"Paket3.BAZ", GreaterOrEqualSafe LOCKEDVERSION
+"Paket4.BOO", GreaterOrEqual (Version "1.2.3") ]
+}
+)
+)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1545', 1545)" onmouseover="showTip(event, '1545', 1545)">
             DefaultPaketTemplateParams 
           </code>
-          <div class="tip" id="1554">
+          <div class="tip" id="1545">
             <strong>Signature:</strong> PaketTemplateParams<br />
                       </div>
         </td>
@@ -305,49 +348,6 @@ file for <a href="http://fsprojects.github.io/Paket/index.html">Paket</a></p>
 <li>DevelopmentDependency - <code>None</code></li>
 <li>IncludePDBs - <code>None</code></li>
 </ul>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1555', 1555)" onmouseover="showTip(event, '1555', 1555)">
-            PaketTemplate setParams
-          </code>
-          <div class="tip" id="1555">
-            <strong>Signature:</strong> setParams:(PaketTemplateParams -&gt; PaketTemplateParams) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Paket/PaketTemplate.fs#L276-276" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>Creates a paket.template file with the given filename
-Will fail if the file could not be written</p>
-<h2>Parameters</h2>
-<ul>
-<li><code>setParams</code> - Function used to manipulate the default <code>PaketTemplateParams</code> value</li>
-</ul>
-<h2>Sample usage</h2>
-<p>Target "Create Paket Template" (fun _ -&gt;
-PaketTemplate (fun p -&gt;
-{ p with
-TemplateFilePath = Some "./deploytemp/paket.template"
-Id = Some "My.New.Package"
-Version = Some "0.0.1-alpha"
-Authors = ["Me"; "You"; "Someone Other"]
-Files = [ Include ("./<em></em>/<em>.dll", "/lib/dlls")
-Exclude "./Foo/bar.dll"
-Include ("./</em>.jpg", "/images") ]
-Dependencies = [ "Paket1.FOO", AnyVersion
-"Paket2.BAR", GreaterOrEqual CURRENTVERSION
-"Paket3.BAZ", GreaterOrEqualSafe LOCKEDVERSION
-"Paket4.BOO", GreaterOrEqual (Version "1.2.3") ]
-}
-)
-)</p>
 
 
         </td>

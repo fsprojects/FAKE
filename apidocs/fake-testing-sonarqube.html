@@ -234,35 +234,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1960', 1960)" onmouseover="showTip(event, '1960', 1960)">
-            Begin setParams
+          <code onmouseout="hideTip(event, '1948', 1948)" onmouseover="showTip(event, '1948', 1948)">
+            finish setParams
           </code>
-          <div class="tip" id="1960">
-            <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L76-76" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          <p>open Fake.Testing</p>
-<p>SonarQube.Begin (fun p -&gt;
-{p with
-Key = "MyProject"
-Name = "MainTool"
-Version = "1.0 })</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1961', 1961)" onmouseover="showTip(event, '1961', 1961)">
-            End setParams
-          </code>
-          <div class="tip" id="1961">
+          <div class="tip" id="1948">
             <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) option -&gt; unit<br />
                       </div>
         </td>
@@ -272,8 +247,8 @@ Version = "1.0 })</p>
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
           <p>open Fake.Testing</p>
-<p>SonarQube.End None</p>
-<p>SonarQube.End (Some (fun p -&gt;
+<p>SonarQube.finish None</p>
+<p>SonarQube.finish (Some (fun p -&gt;
 {p with
 Settings = ["sonar.login=login"; "sonar.password=password"] }))</p>
 
@@ -283,10 +258,10 @@ Settings = ["sonar.login=login"; "sonar.password=password"] }))</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1962', 1962)" onmouseover="showTip(event, '1962', 1962)">
+          <code onmouseout="hideTip(event, '1949', 1949)" onmouseover="showTip(event, '1949', 1949)">
             SonarQubeDefaults 
           </code>
-          <div class="tip" id="1962">
+          <div class="tip" id="1949">
             <strong>Signature:</strong> SonarQubeParams<br />
                       </div>
         </td>
@@ -296,6 +271,31 @@ Settings = ["sonar.login=login"; "sonar.password=password"] }))</p>
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
           <p>SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1950', 1950)" onmouseover="showTip(event, '1950', 1950)">
+            start setParams
+          </code>
+          <div class="tip" id="1950">
+            <strong>Signature:</strong> setParams:(SonarQubeParams -&gt; SonarQubeParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Testing.SonarQube/SonarQube.fs#L76-76" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>open Fake.Testing</p>
+<p>SonarQube.start (fun p -&gt;
+{p with
+Key = "MyProject"
+Name = "MainTool"
+Version = "1.0 })</p>
 
 
         </td>
