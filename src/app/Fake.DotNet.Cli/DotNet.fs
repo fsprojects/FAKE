@@ -351,7 +351,10 @@ module DotNet =
             Environment : Map<string, string>
         }
         static member Create() = {
-            DotNetCliPath = dotnetCliPath defaultDotNetCliDir
+            DotNetCliPath = 
+                match tryDotnetCliPath defaultDotNetCliDir with
+                | Some dotNet -> dotNet
+                | None -> if Environment.isUnix then "dotnet" else "dotnet.exe"
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
             Verbosity = None
