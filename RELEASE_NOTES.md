@@ -4,6 +4,7 @@
 
 * ENHANCEMENT: Fix API Guidelines on various modules
 * BREAKING: API changes, cleanup and redesign Process module slightly
+* BUGFIX: Crash on `DotNet.Install` when no dotnet was found.
 
 ## 5.0.0-beta027
 
