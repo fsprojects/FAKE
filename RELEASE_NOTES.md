@@ -1,5 +1,11 @@
 # Release Notes
 
+## 5.0.0-beta026
+
+* BUGFIX: remove `Killing <id> failed with Process...` messages after Build
+* BUGFIX: change the upload uri for AzureWebJobs - https://github.com/fsharp/FAKE/pull/1826
+* BUGFIX: `fake run build.fsx --fsiargs "--debug:portable --optimize-"` will now actually create a pdb file and enable debugging
+
 ## 5.0.0-beta025
 
 * BREAKING: Update ReleaseNotes module to match new API Guidelines.

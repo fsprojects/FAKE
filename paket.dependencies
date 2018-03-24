@@ -4,7 +4,7 @@ content: none
 //source https://ci.appveyor.com/nuget/paket
 source https://api.nuget.org/v3/index.json
 
-nuget FSharp.Core ~> 4.1.0 redirects: force
+nuget FSharp.Core ~> 4.1 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
 nuget Paket.Core prerelease
@@ -63,7 +63,7 @@ group Build
     source https://ci.appveyor.com/nuget/fsharp-formatting
     source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
-    nuget FSharp.Core ~> 4.1.0
+    nuget FSharp.Core ~> 4.1
     nuget Nuget.CommandLine
     nuget FAKE prerelease
     nuget FSharp.Formatting prerelease
@@ -80,12 +80,16 @@ group NetcoreBuild
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
-    nuget FSharp.Core ~> 4.1.0
+    nuget FSharp.Core ~> 4.1
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
     nuget Fake.Api.GitHub prerelease
     nuget Fake.Core.Target prerelease
     nuget Fake.Core.SemVer prerelease
+    nuget Fake.BuildServer.AppVeyor prerelease
+    nuget Fake.BuildServer.TeamCity prerelease
+    nuget Fake.BuildServer.Travis prerelease
+    nuget Fake.BuildServer.TeamFoundation prerelease
     nuget Fake.IO.FileSystem prerelease
     nuget Fake.IO.Zip prerelease
     nuget Fake.Core.ReleaseNotes prerelease
@@ -114,7 +118,7 @@ group netcore
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
     nuget NETStandard.Library ~> 2.0
-    nuget FSharp.Core ~> 4.1.2
+    nuget FSharp.Core ~> 4.1
     nuget Argu
     nuget Octokit
     nuget Newtonsoft.Json

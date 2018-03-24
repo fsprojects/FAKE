@@ -218,14 +218,13 @@ module Process =
         let startedProcesses = HashSet()
         let killProcesses () = 
             let traced = ref false
-            
+            let processList = Process.GetProcesses()
             for pid, startTime in startedProcesses do
                 try
-                    let proc = Process.GetProcessById pid
-                    
+                    match processList |> Seq.tryFind (fun p -> p.Id = pid) with
                     // process IDs may be reused by the operating system so we need
                     // to make sure the process is indeed the one we started
-                    if proc.StartTime = startTime && not proc.HasExited then
+                    | Some proc when proc.StartTime = startTime && not proc.HasExited ->
                         try 
                             if not !traced then
                               Trace.tracefn "Killing all processes that are created by FAKE and are still running."
@@ -234,6 +233,7 @@ module Process =
                             Trace.logfn "Trying to kill %s" proc.ProcessName
                             kill proc
                         with exn -> Trace.logfn "Killing %s failed with %s" proc.ProcessName exn.Message
+                    | _ -> ()                    
                 with exn -> Trace.logfn "Killing %d failed with %s" pid exn.Message
             startedProcesses.Clear()
         member x.KillAll() = killProcesses()

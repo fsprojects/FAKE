@@ -109,10 +109,10 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let formatErrors errors =
         System.String.Join("\n", errors |> Seq.map formatError)
     if context.Config.PrintDetails then
-      Trace.tracefn "FSC Args: [%s]" (String.Join("\";\n\"", args))
+      Trace.tracefn "FSC Args: [\"%s\"]" (String.Join("\";\n\"", args))
 
     let fsc = FSharpChecker.Create()
-    let errors, returnCode = fsc.Compile (args |> List.toArray) |> Async.RunSynchronously
+    let errors, returnCode = fsc.Compile (("fake.exe" :: args) |> List.toArray) |> Async.RunSynchronously
     let errors =
         errors
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
