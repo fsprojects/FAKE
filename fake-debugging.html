@@ -197,6 +197,9 @@
                       <article>
 <h1><a name="Debugging-of-FAKE-5-build-scripts" class="anchor" href="#Debugging-of-FAKE-5-build-scripts">Debugging of FAKE 5 build scripts</a></h1>
 <p>Currently debugging support (and documentation around it) is limited. Please help to improve the situation by improving the code and the docs!</p>
+<blockquote>
+<p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
+</blockquote>
 <h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
 <ul>
 <li>Run with more verbose logging <code>-v</code></li>
@@ -254,6 +257,41 @@
 <li>Select ".NET Core Attach" in the Visual Studio Code Debugger View</li>
 <li>Press play and select the <code>dotnet exec --depsfile ".../fake..."</code> process.</li>
 </ul>
+<h2><a name="Run-script-without-fake-exe-via-fsi" class="anchor" href="#Run-script-without-fake-exe-via-fsi">Run script without fake.exe (via fsi)</a></h2>
+<p>FAKE 5 scripts are not hardwired to the new FAKE 5 runner (even if they look like with the new header). To make them work with FSI all you need to do is to setup a "FAKE-Context":</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Regular header and `#load &quot;.fake/build.fsx/intellisense.fsx&quot;`</span>
+
+<span class="pp">#if</span> <span class="id">!FAKE</span>
+<span class="k">let</span> <span class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
+<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span class="id">execContext</span><span class="pn">)</span>
+<span class="pp">#endif</span>
+
+<span class="c">// Your Script code...</span>
+</code></pre></td>
+</tr>
+</table>
+<p>With these lines you can just run <code>fsi build.fsx</code></p>
+<p>You can use this "trick" to run the script via the regular IDE buttons.</p>
+<p>To start a new context or cleanup the old one you can use (execute interactively):</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">execContext</span><span class="pn">.</span><span class="id">Dispose</span><span class="pn">(</span><span class="pn">)</span>
+<span class="k">let</span> <span class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
+<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span class="id">execContext</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
 
 <div class="tip" id="fs1">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
 <div class="tip" id="fs2">namespace System</div>

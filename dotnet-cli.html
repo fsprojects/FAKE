@@ -198,27 +198,87 @@
 <h1><a name="Run-the-dotnet-sdk-command-line-tool" class="anchor" href="#Run-the-dotnet-sdk-command-line-tool">Run the 'dotnet' sdk command line tool</a></h1>
 <p>The <code>dotnet</code> command line tool can build and publish projects.</p>
 <h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.DotNet.Cli //&quot;</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
 
-<span class="id">Cli</span><span class="pn">.</span><span class="id">DotNet</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">id</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;&quot;</span>
-<span class="id">Cli</span><span class="pn">.</span><span class="id">DotNet</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">id</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;myproject.fsproj&quot;</span>
-<span class="id">Cli</span><span class="pn">.</span><span class="id">DotNet</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">id</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;mysolution.sln&quot;</span>
+<span class="c">// Lazily install DotNet SDK in the correct version if not available</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">install</span> <span class="o">=</span> <span class="k">lazy</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">Install</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">Release_2_1_4</span>
+
+<span class="c">// Define general properties across various commands (with arguments)</span>
+<span class="k">let</span> <span class="k">inline</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="fn">withWorkDir</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">wd</span> <span class="o">=</span>
+    <span class="id">DotNet</span><span class="pn">.</span><span class="id">Options</span><span class="pn">.</span><span class="id">lift</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">install</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">Value</span>
+    <span class="o">&gt;</span><span class="pn">&gt;</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">Options</span><span class="pn">.</span><span class="id">withWorkingDirectory</span> <span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="id">wd</span>
+
+<span class="c">// Set general properties without arguments</span>
+<span class="k">let</span> <span class="k">inline</span> <span onmouseout="hideTip(event, 'fs5', 7)" onmouseover="showTip(event, 'fs5', 7)" class="fn">dotnetSimple</span> <span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="id">arg</span> <span class="o">=</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">Options</span><span class="pn">.</span><span class="id">lift</span> <span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="id">install</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="id">Value</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="id">arg</span>
+
+<span class="c">// Use defined properties on &quot;DotNet.Exec&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">Exec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="id">withWorkDir</span> <span class="s">&quot;./test&quot;</span><span class="pn">)</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">Exec</span> <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">dotnetSimple</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;myproject.fsproj&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">Exec</span> <span onmouseout="hideTip(event, 'fs5', 14)" onmouseover="showTip(event, 'fs5', 14)" class="id">dotnetSimple</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;mysolution.sln&quot;</span>
+
+<span class="c">// Use defined properties on more generalized functions like &quot;DotNet.Restore&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">Restore</span> <span onmouseout="hideTip(event, 'fs5', 15)" onmouseover="showTip(event, 'fs5', 15)" class="id">dotnetSimple</span> <span class="s">&quot;mysolution.sln&quot;</span>
+
+<span class="c">// Define more general properties in addition to the general ones</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">Restore</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span>
+        <span class="id">NoCache</span> <span class="o">=</span> <span class="k">true</span>
+    <span class="pn">}</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 16)" onmouseover="showTip(event, 'fs5', 16)" class="id">dotnetSimple</span><span class="pn">)</span> <span class="s">&quot;mysolution.sln&quot;</span>
+
+<span class="c">// Define more general properties in addition to the general ones, with arugments</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">Restore</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span>
+    <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span>
+        <span class="id">Runtime</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs7', 17)" onmouseover="showTip(event, 'fs7', 17)" class="id">Some</span> <span class="s">&quot;win7-x86&quot;</span>
+    <span class="pn">}</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="id">withWorkDir</span> <span class="s">&quot;./test&quot;</span> <span class="pn">)</span> <span class="s">&quot;mysolution.sln&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <p>More <a href="apidocs/fake-dotnet-cli.html">API Documentation</a></p>
 
-<div class="tip" id="fs1">val id : x:&#39;T -&gt; &#39;T</div>
+<div class="tip" id="fs1">val install : Lazy&lt;obj&gt;</div>
+<div class="tip" id="fs2">val withWorkDir : wd:&#39;a -&gt; (&#39;b -&gt; &#39;c)</div>
+<div class="tip" id="fs3">val wd : &#39;a</div>
+<div class="tip" id="fs4">property System.Lazy.Value: obj</div>
+<div class="tip" id="fs5">val dotnetSimple : arg:&#39;a -&gt; &#39;b</div>
+<div class="tip" id="fs6">val arg : &#39;a</div>
+<div class="tip" id="fs7">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
 
                       </article>
 								</div>
