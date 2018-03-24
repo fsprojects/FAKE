@@ -2,6 +2,10 @@
 
 ## 5.0.0-beta026
 
+* vnext
+
+## 5.0.0-beta026
+
 * BUGFIX: remove `Killing <id> failed with Process...` messages after Build
 * BUGFIX: change the upload uri for AzureWebJobs - https://github.com/fsharp/FAKE/pull/1826
 * BUGFIX: `fake run build.fsx --fsiargs "--debug:portable --optimize-"` will now actually create a pdb file and enable debugging

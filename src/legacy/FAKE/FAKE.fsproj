@@ -16,6 +16,7 @@
     <Name>FAKE</Name>
     <TargetFrameworkProfile />
     <NoWarn>44</NoWarn>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
