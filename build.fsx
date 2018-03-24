@@ -131,16 +131,11 @@ BuildServer.Install [
     TeamFoundation.Installer
 ]
 
-#if BOOTSTRAP
 let dotnetSdk = lazy DotNet.Install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
-#else
-let dtntWorkDir wd (cliOpts: DotNet.Options) = { cliOpts with WorkingDirectory = wd }
-let dtntSmpl = id
-#endif
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
@@ -691,12 +686,6 @@ Target.Create "CreateNuGet" (fun _ ->
         NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
-#if !BOOTSTRAP
-Target.Create "InstallDotNetCore" (fun _ ->
-    DotNet.Install DotNet.Release_2_1_4
-)
-#endif
-
 let netCoreProjs =
     !! (appDir </> "*/*.fsproj")
 
@@ -1015,9 +1004,6 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
-#if !BOOTSTRAP
-    ?=> "InstallDotNetCore"
-#endif
     ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "DotNetPackage_"
@@ -1025,10 +1011,6 @@ open Fake.Core.TargetOperators
     ==> "DotNetPackage"
 "StartDnc"
     ==> "DotNetPackage_"
-#if !BOOTSTRAP
-"InstallDotNetCore"
-    ==> "DotNetPackage_"
-#endif
 "DownloadPaket"
     ==> "DotNetPackage_"
 // Full framework build
