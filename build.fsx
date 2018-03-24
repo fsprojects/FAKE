@@ -73,6 +73,8 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
+// Set this to true if you have lots of breaking changes, for small breaking changes use #if BOOTSTRAP, setting this flag will not be accepted
+let disableBootstrap = true
 
 // properties
 let projectName = "FAKE"
@@ -1055,7 +1057,7 @@ open Fake.Core.TargetOperators
 // Test the full framework build
 "BuildSolution"
     =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTest",not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
 // Test the dotnetcore build
@@ -1063,7 +1065,7 @@ open Fake.Core.TargetOperators
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
     ==> "DotNetCoreCreateZipPackages"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTestDotNetCore",not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
     ==> "Default"
 
