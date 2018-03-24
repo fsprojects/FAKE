@@ -31,6 +31,7 @@ nuget Mono.Cecil prerelease
 nuget Octokit //"
 #endif
 
+
 #if DOTNETCORE
 // We need to use this for now as "regular" Fake breaks when its caching logic cannot find "intellisense.fsx".
 // This is the reason why we need to checkin the "intellisense.fsx" file for now...
@@ -53,6 +54,11 @@ open System.Reflection
 #I "packages/build/SourceLink.Fake/tools/"
 //#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
+#endif
+
+#if !FAKE
+let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
+Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 #endif
 
 open System.IO
@@ -122,6 +128,17 @@ BuildServer.Install [
     Travis.Installer
     TeamFoundation.Installer
 ]
+
+#if BOOTSTRAP
+let dotnetSdk = lazy DotNet.Install DotNet.Release_2_1_4
+let inline dtntWorkDir wd =
+    DotNet.Options.lift dotnetSdk.Value
+    >> DotNet.Options.withWorkingDirectory wd
+let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
+#else
+let dtntWorkDir wd (cliOpts: DotNet.Options) = { cliOpts with WorkingDirectory = wd }
+let dtntSmpl = id
+#endif
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
@@ -436,12 +453,11 @@ Target.Create "DotNetCoreIntegrationTests" (fun _ ->
     |> NUnit3.NUnit3 id
 )
 
-let withWorkDir wd (cliOpts: DotNet.Options) = { cliOpts with WorkingDirectory = wd }
 
 Target.Create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     let processResult =
-        DotNet.Exec (withWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
+        DotNet.Exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
 )
@@ -673,20 +689,11 @@ Target.Create "CreateNuGet" (fun _ ->
         NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
-
-let LatestTooling options =
-    { options with
-        DotNet.InstallerOptions = (fun io ->
-            { io with
-                Branch = "release/2.1"
-            })
-        DotNet.Channel = None
-        DotNet.Version = DotNet.Version "2.1.4"
-    }
-
+#if !BOOTSTRAP
 Target.Create "InstallDotNetCore" (fun _ ->
     DotNet.Install DotNet.Release_2_1_4
 )
+#endif
 
 let netCoreProjs =
     !! (appDir </> "*/*.fsproj")
@@ -727,9 +734,9 @@ Target.Create "DotNetPackage_" (fun _ ->
                 if CircleCi.isCircleCi then
                     { c.Common with CustomParams = Some "/m:1" }
                 else c.Common                                
-        }) "Fake.sln"
+        } |> dtntSmpl) "Fake.sln"
 
-    let info = DotNet.Info id
+    let info = DotNet.Info dtntSmpl
 
     // dotnet publish
     runtimes
@@ -751,7 +758,7 @@ Target.Create "DotNetPackage_" (fun _ ->
                     Runtime = Some runtime
                     Configuration = DotNet.Release
                     OutputPath = Some outDir
-                }) proj
+                } |> dtntSmpl) proj
             let source = outDir </> "dotnet"
             if File.Exists source then
                 failwithf "Workaround no longer required?" //TODO: If this is not triggered delete this block
@@ -769,7 +776,7 @@ Target.Create "DotNetPackage_" (fun _ ->
         { c with
             Framework = Some "netcoreapp2.0"
             OutputPath = Some outDir
-        }) netcoreFsproj
+        } |> dtntSmpl) netcoreFsproj
 )
 
 Target.Create "DotNetCoreCreateZipPackages" (fun _ ->
@@ -1006,7 +1013,9 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
+#if !BOOTSTRAP
     ?=> "InstallDotNetCore"
+#endif
     ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "DotNetPackage_"
@@ -1014,8 +1023,10 @@ open Fake.Core.TargetOperators
     ==> "DotNetPackage"
 "StartDnc"
     ==> "DotNetPackage_"
+#if !BOOTSTRAP
 "InstallDotNetCore"
     ==> "DotNetPackage_"
+#endif
 "DownloadPaket"
     ==> "DotNetPackage_"
 // Full framework build
