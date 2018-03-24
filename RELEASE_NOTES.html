@@ -49,6 +49,7 @@
                                                         <li><a href="fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="fake-dotnetcore.html">FAKE 5 quickstart</a></li>
                                                         <li><a href="fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
                                                 </li>
 												<li >
@@ -195,6 +196,12 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-0-0-beta026" class="anchor" href="#5-0-0-beta026">5.0.0-beta026</a></h2>
+<ul>
+<li>BUGFIX: remove <code>Killing &lt;id&gt; failed with Process...</code> messages after Build</li>
+<li>BUGFIX: change the upload uri for AzureWebJobs - <a href="https://github.com/fsharp/FAKE/pull/1826">https://github.com/fsharp/FAKE/pull/1826</a></li>
+<li>BUGFIX: <code>fake run build.fsx --fsiargs "--debug:portable --optimize-"</code> will now actually create a pdb file and enable debugging</li>
+</ul>
 <h2><a name="5-0-0-beta025" class="anchor" href="#5-0-0-beta025">5.0.0-beta025</a></h2>
 <ul>
 <li>BREAKING: Update ReleaseNotes module to match new API Guidelines.</li>
