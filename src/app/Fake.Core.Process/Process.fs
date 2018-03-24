@@ -5,23 +5,37 @@ namespace Fake.Core
 open System
 open System.Diagnostics
 open System.Collections.Generic
+open System.Collections.Generic
+open System
 
 /// A record type which captures console messages
 type ConsoleMessage = 
     { IsError : bool
       Message : string
       Timestamp : DateTimeOffset }
+    static member Create isError msg =
+        { IsError = isError; Message = msg; Timestamp = DateTimeOffset.UtcNow }
+    static member CreateError msg = ConsoleMessage.Create true msg
+    static member CreateOut msg = ConsoleMessage.Create false msg
 
 /// A process result including error code, message log and errors.
 type ProcessResult = 
     { ExitCode : int
-      Messages : List<string>
-      Errors : List<string> }
+      Results : ConsoleMessage list}
     member x.OK = x.ExitCode = 0
-    static member New exitCode messages errors = 
+    member x.Messages =
+        x.Results
+        |> List.choose (function
+            | { IsError = false } as m -> Some m.Message
+            | _ -> None)
+    member x.Errors =
+        x.Results
+        |> List.choose (function
+            | { IsError = true } as m -> Some m.Message
+            | _ -> None)
+    static member New exitCode results = 
         { ExitCode = exitCode
-          Messages = messages
-          Errors = errors }
+          Results = results }
 
 module private ProcStartInfoData =
     let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
@@ -296,10 +310,11 @@ module Process =
     let mutable ProcessEncoding = Encoding.UTF8
 
     /// [omit]
-    let start (proc : Process) = 
+    let startProcess (proc : Process) = 
         //platformInfoAction proc.StartInfo
-        proc.Start() |> ignore
+        let result = proc.Start()
         addStartedProcess(proc.Id, proc.StartTime) |> ignore
+        result
 
     /// [omit]
     //let mutable redirectOutputToTrace = false
@@ -394,7 +409,7 @@ module Process =
     ///  - `silent` - If this flag is set then the process output is redirected to the given output functions `errorF` and `messageF`.
     ///  - `errorF` - A function which will be called with the error log.
     ///  - `messageF` - A function which will be called with the message log.
-    let ExecWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
+    let execRaw configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
         use proc = getProc configProcessStartInfoF
         
         //platformInfoAction proc.StartInfo
@@ -415,7 +430,7 @@ module Process =
         try 
             if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
                 Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
-            start proc
+            startProcess proc
         with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
         if silent then 
             proc.BeginErrorReadLine()
@@ -434,30 +449,12 @@ module Process =
         proc.WaitForExit()
         proc.ExitCode
 
-    [<System.Obsolete("use Process.ExecWithLambdas instead.")>]
-    let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
-        ExecWithLambdas configProcessStartInfoF timeOut silent errorF messageF
     /// Runs the given process and returns the process result.
     /// ## Parameters
     ///
     ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
     ///  - `timeOut` - The timeout for the process.
-    let ExecAndReturnMessages configProcessStartInfoF timeOut = 
-        let errors = new List<_>()
-        let messages = new List<_>()
-        let exitCode = ExecWithLambdas configProcessStartInfoF timeOut true (errors.Add) (messages.Add)
-        ProcessResult.New exitCode messages errors
-
-    [<System.Obsolete("use Process.ExecAndReturnMessages instead.")>]
-    let ExecProcessAndReturnMessages configProcessStartInfoF timeOut =
-        ExecAndReturnMessages configProcessStartInfoF timeOut
-
-    /// Runs the given process and returns the process result.
-    /// ## Parameters
-    ///
-    ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
-    ///  - `timeOut` - The timeout for the process.
-    let ExecRedirected configProcessStartInfoF timeOut = 
+    let execWithResult configProcessStartInfoF timeOut = 
         let messages = ref []
         
         let appendMessage isError msg = 
@@ -466,15 +463,8 @@ module Process =
                           Timestamp = DateTimeOffset.UtcNow } :: !messages
         
         let exitCode = 
-            ExecWithLambdas configProcessStartInfoF timeOut true (appendMessage true) (appendMessage false)
-        exitCode = 0, 
-        (!messages
-         |> List.rev
-         |> Seq.ofList)
-
-    [<System.Obsolete("use Process.ExecRedirected instead.")>]
-    let ExecProcessRedirected configProcessStartInfoF timeOut =
-        ExecRedirected configProcessStartInfoF timeOut
+            execRaw configProcessStartInfoF timeOut true (appendMessage true) (appendMessage false)
+        ProcessResult.New exitCode !messages
 
     /// Runs the given process and returns the exit code.
     /// ## Parameters
@@ -489,17 +479,13 @@ module Process =
     ///                       info.Arguments <- "-v") (TimeSpan.FromMinutes 5.0)
     ///     
     ///     if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"
-    let Exec configProcessStartInfoF timeOut = 
-        ExecWithLambdas configProcessStartInfoF timeOut (getRedirectOutputToTrace()) Trace.traceError Trace.trace
-
-    [<System.Obsolete("use Process.Exec instead.")>]
-    let ExecProcess configProcessStartInfoF timeOut =
-        Exec configProcessStartInfoF timeOut
+    let execSimple configProcessStartInfoF timeOut = 
+        execRaw configProcessStartInfoF timeOut (getRedirectOutputToTrace()) Trace.traceError Trace.trace
 
     // workaround to remove warning
     let private myExecElevated cmd args timeout =
     #if FX_VERB
-        Exec (fun si ->
+        execSimple (fun si ->
             { si with
                 Verb = "runas"
                 Arguments = args
@@ -516,46 +502,30 @@ module Process =
     ///  - `args` - The process arguments.
     ///  - `timeOut` - The timeout for the process.
     [<Obsolete("This is currently not possible in dotnetcore")>]
-    let ExecElevated cmd args timeOut = 
+    let execElevated cmd args timeOut = 
         myExecElevated cmd args timeOut
-
-    [<System.Obsolete("use Process.ExecElevated instead.")>]
-    let ExecProcessElevated cmd args timeOut =
-        myExecElevated cmd args timeOut
-
-    /// Runs the given process and returns true if the exit code was 0.
-    /// [omit]
-    let exec configProcessStartInfoF timeOut = Exec configProcessStartInfoF timeOut = 0
-
-    [<System.Obsolete("use Process.exec instead.")>]
-    let execProcess configProcessStartInfoF timeOut =
-        exec configProcessStartInfoF timeOut
 
     /// Starts the given process and returns immediatly.
     let fireAndForget configProcessStartInfoF =
         use proc = getProc configProcessStartInfoF
         try 
-            start proc
+            startProcess proc
         with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
 
     /// Runs the given process, waits for its completion and returns if it succeeded.
     let directExec configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
         try 
-            start proc
+            startProcess proc
         with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
         proc.WaitForExit()
         proc.ExitCode = 0
 
     /// Starts the given process and forgets about it.
-    let Start configProcessStartInfoF = 
+    let start configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
-        start proc
+        startProcess proc
 
-    [<System.Obsolete("use Process.Start instead.")>]
-    let StartProcess configProcessStartInfoF = 
-        Start configProcessStartInfoF
-        
     /// Adds quotes around the string
     /// [omit]
     let quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
@@ -720,7 +690,7 @@ module Process =
                 if not (isNull e.Data) then Trace.traceError e.Data)
             proc.OutputDataReceived.Add(fun e -> 
                 if not (isNull e.Data) then Trace.log e.Data)
-            start proc
+            startProcess proc
             proc.BeginOutputReadLine()
             proc.BeginErrorReadLine()
             proc.StandardInput.Dispose()
@@ -792,20 +762,20 @@ module Process =
     let internal monoPath, monoVersion =
         match tryFindTool "MONO" "mono" with
         | Some path ->
-            let success, messages =
-                try ExecRedirected(fun proc ->
+            let result =
+                try execWithResult(fun proc ->
                         { proc with
                             FileName = path
                             Arguments = "--version" }) (TimeSpan.FromMinutes 1.)
                 with e ->
-                    false,
-                    [{ ConsoleMessage.IsError = true; ConsoleMessage.Message = e.ToString(); ConsoleMessage.Timestamp = DateTimeOffset.Now }]
-                    |> List.toSeq
+                    ProcessResult.New 1
+                        [{ ConsoleMessage.IsError = true; ConsoleMessage.Message = e.ToString(); ConsoleMessage.Timestamp = DateTimeOffset.Now }]
+
             let out =
-                let outStr = String.Join("\n", messages |> Seq.map (fun m -> m.Message))
-                sprintf "Success: %b, Out: %s" success outStr
+                let outStr = String.Join("\n", result.Results |> Seq.map (fun m -> m.Message))
+                sprintf "Success: %b (%d), Out: %s" result.OK result.ExitCode outStr
             let ver =
-                match success, messages |> Seq.tryHead with
+                match result.OK, result.Results |> Seq.tryHead with
                 | true, Some firstLine ->
                     Some (out, Environment.Internal.parseMonoDisplayName firstLine.Message)
                 | _ ->

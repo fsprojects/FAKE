@@ -35,7 +35,7 @@ let inline private setInfo gitPath repositoryDir command (info:ProcStartInfo) =
 /// Runs git.exe with the given command in the given repository directory.
 let runGitCommand repositoryDir command =
     let processResult =
-        Process.ExecAndReturnMessages (setInfo gitPath repositoryDir command) gitTimeOut
+        Process.execWithResult (setInfo gitPath repositoryDir command) gitTimeOut
 
     processResult.OK,processResult.Messages,String.toLines processResult.Errors
 
@@ -87,7 +87,7 @@ let runSimpleGitCommand repositoryDir command =
         if errorText.Contains "fatal: " then
             failwith errorText
 
-        if msg.Count = 0 then "" else
+        if msg.Length = 0 then "" else
         msg |> Seq.iter (Trace.logfn "%s")
         msg.[0]
     with

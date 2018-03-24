@@ -44,6 +44,17 @@ try
 
         let cmdArgs = System.Environment.GetCommandLineArgs()
 
+
+        let hasRemoveWarning, cmdArgs =
+            if cmdArgs |> Seq.contains "--removeLegacyFakeWarning" then
+                true, Array.filter (fun arg -> arg <> "--removeLegacyFakeWarning") cmdArgs
+            else false, cmdArgs
+
+        let hasRemoveWarningEnvVar = System.Environment.GetEnvironmentVariable("FAKE_NO_LEGACY_WARNING") = "true"
+        if not hasRemoveWarning && not hasRemoveWarningEnvVar then
+            eprintfn "This runner is now obsolete with FAKE 5, please upgrade to the new .Net Core runner. See https://fake.build/fake-migrate-to-fake-5.html"
+            eprintfn "To remove this warning you can append the '--removeLegacyFakeWarning' argument or set the 'FAKE_NO_LEGACY_WARNING' environment variable to 'true'"
+
         let args = Cli.parsePositionalArgs cmdArgs
 
         match Cli.parsedArgsOrEx args.Rest with

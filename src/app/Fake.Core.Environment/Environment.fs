@@ -258,7 +258,7 @@ module Environment =
             "mono"
 
     /// The path of the current target platform
-    let mutable TargetPlatformPrefix = 
+    let internal TargetPlatformPrefix = 
         let (<|>) a b = 
             match a with
             | None -> b

@@ -195,7 +195,7 @@ module AssemblyInfoFile =
 
     /// Creates a C# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateCSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let createCSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace, emitResharperSupressions = config.GenerateClass, config.UseNamespace, config.EmitResharperSuppressions
 
@@ -241,7 +241,7 @@ module AssemblyInfoFile =
 
     /// Creates a F# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateFSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let createFSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
 
@@ -271,7 +271,7 @@ module AssemblyInfoFile =
 
     /// Creates a VB AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateVisualBasicWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let createVisualBasicWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, _ = config.GenerateClass, config.UseNamespace
 
@@ -297,7 +297,7 @@ module AssemblyInfoFile =
 
     /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
     /// Does not generate an AssemblyVersionInformation class.
-    let CreateCppCliWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
+    let createCppCliWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let _, _ = config.GenerateClass, config.UseNamespace
         //C++/CLI namespaces cannot be fully qualified; you must
@@ -315,22 +315,22 @@ module AssemblyInfoFile =
 
     /// Creates a C# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateCSharp outputFileName attributes =
-        CreateCSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let createCSharp outputFileName attributes =
+        createCSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a F# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateFSharp outputFileName attributes =
-        CreateFSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let createFSharp outputFileName attributes =
+        createFSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a VB AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    let CreateVisualBasic outputFileName attributes =
-        CreateVisualBasicWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let createVisualBasic outputFileName attributes =
+        createVisualBasicWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
-    let CreateCppCli outputFileName attributes =
-        CreateCppCliWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+    let createCppCli outputFileName attributes =
+        createCppCliWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     let private removeAtEnd (textToRemove:string) (text:string) =
         if text.EndsWith(textToRemove) then
@@ -341,7 +341,7 @@ module AssemblyInfoFile =
     /// Read attributes from an AssemblyInfo file and return as a sequence of Attribute.
     /// ## Parameters
     ///  - `assemblyInfoFile` - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.
-    let GetAttributes assemblyInfoFile =
+    let getAttributes assemblyInfoFile =
         let text = File.ReadAllText assemblyInfoFile
 
         // VB.NET is case-insensitive. Handle assembly attributes accordingly
@@ -368,15 +368,15 @@ module AssemblyInfoFile =
     /// ## Parameters
     ///  - `attrName` - Name of the attribute without "Attribute" at the end.
     ///  - `assemblyInfoFile` - The file to read from. Language C#, F#, VB or C++ is determined from the extension.
-    let GetAttribute attrName assemblyInfoFile =
-        assemblyInfoFile |> GetAttributes |> Seq.tryFind (fun a -> a.Name = attrName)
+    let getAttribute attrName assemblyInfoFile =
+        assemblyInfoFile |> getAttributes |> Seq.tryFind (fun a -> a.Name = attrName)
 
     /// Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".
     /// ## Parameters
     ///  - `attrName` - Name of the attribute without "Attribute" at the end.
     ///  - `assemblyInfoFile` - The file to read from. Language C#, F#, VB or C++ is determined from the extension.
-    let GetAttributeValue attrName assemblyInfoFile =
-        match GetAttribute attrName assemblyInfoFile with
+    let getAttributeValue attrName assemblyInfoFile =
+        match getAttribute attrName assemblyInfoFile with
         | Some attr -> Some attr.Value
         | None -> None
 
@@ -403,7 +403,7 @@ module AssemblyInfoFile =
     /// ## Parameters
     ///  - `assemblyInfoFile` - The file to update. Language C#, F#, VB or C++ is determined from the extension.
     ///  - `attributes` - The Attributes that should be updated matched on Name (Namespace is not used).
-    let UpdateAttributes assemblyInfoFile (attributes: seq<Attribute>) =
+    let updateAttributes assemblyInfoFile (attributes: seq<Attribute>) =
         Trace.tracefn "Updating attributes in: %s" assemblyInfoFile
 
         // VB.NET is case-insensitive. Handle assembly attributes accordingly

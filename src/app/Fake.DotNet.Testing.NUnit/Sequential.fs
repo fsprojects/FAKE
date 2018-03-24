@@ -27,7 +27,7 @@ open Fake.DotNet.Testing.NUnit.Common
 ///         !! (testDir + @"\Test.*.dll") 
 ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
-let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
+let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnit" details
     let parameters = NUnitDefaults |> setParams
@@ -37,7 +37,7 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let args = buildNUnitdArgs parameters assemblies
     Trace.trace (tool + " " + args)
     let result = 
-        Process.Exec ((fun info ->
+        Process.execSimple ((fun info ->
         { info with
             FileName = tool
             WorkingDirectory = getWorkingDir parameters

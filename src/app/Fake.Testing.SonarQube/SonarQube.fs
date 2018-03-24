@@ -52,7 +52,7 @@ module Fake.Testing.SonarQube
         | End -> "end " + setArgs + cfgArgs
 
       let result =
-        Process.Exec ((fun info ->
+        Process.execSimple ((fun info ->
         { info with
             FileName = sonarPath
             Arguments = args }) >> Process.withFramework) System.TimeSpan.MaxValue
@@ -67,13 +67,13 @@ module Fake.Testing.SonarQube
 
     ///   open Fake.Testing
     ///
-    ///   SonarQube.Begin (fun p ->
+    ///   SonarQube.start (fun p ->
     ///    {p with
     ///      Key = "MyProject"
     ///      Name = "MainTool"
     ///      Version = "1.0 })
     ///
-    let Begin setParams = 
+    let start setParams = 
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
         SonarQubeCall Begin parameters
@@ -87,13 +87,13 @@ module Fake.Testing.SonarQube
     
     ///   open Fake.Testing
     ///
-    ///   SonarQube.End None
+    ///   SonarQube.finish None
     ///
-    ///   SonarQube.End (Some (fun p ->
+    ///   SonarQube.finish (Some (fun p ->
     ///    {p with
     ///      Settings = ["sonar.login=login"; "sonar.password=password"] }))
     ///
-    let End setParams = 
+    let finish setParams = 
         use __ = Trace.traceTask "SonarQube" "End"
         let parameters = match setParams with
                          | Some setParams -> setParams SonarQubeDefaults

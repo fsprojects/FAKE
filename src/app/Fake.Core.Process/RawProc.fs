@@ -109,7 +109,7 @@ module RawProc =
     open System.IO
     let mutable processStarter = 
         { new IProcessStarter with
-            member x.Start c = async {
+            member __.Start c = async {
                 let p = c.ToStartInfo
                 let commandLine = 
                     sprintf "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
@@ -127,7 +127,7 @@ module RawProc =
                     if not <| !isStarted then
                         toolProcess.EnableRaisingEvents <- true
                         setEcho true |> ignore
-                        if not <| toolProcess.Start() then
+                        if not <| Process.startProcess toolProcess then
                             failwithf "could not start process: %s" commandLine
                         isStarted := true
                         

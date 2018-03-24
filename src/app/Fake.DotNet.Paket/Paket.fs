@@ -104,7 +104,7 @@ let inline private withArgs args (info:ProcStartInfo) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Pack setParams =
+let pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
     use __ = Trace.traceTask "PaketPack" parameters.WorkingDir
 
@@ -131,7 +131,7 @@ let Pack setParams =
             sprintf "%s%s%s%s%s%s%s%s%s%s%s%s%s"
                 version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates
                 symbols includeReferencedProjects minimumFromLockFile pinProjectReferences projectUrl
-        Process.Exec 
+        Process.execSimple 
             (startPaket parameters.ToolPath parameters.WorkingDir
                 >> withArgs (sprintf "pack \"%s\" %s" parameters.OutputPath cmdArgs)
                 >> Process.withFramework)
@@ -144,7 +144,7 @@ let Pack setParams =
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `files` - The files to be pushed to the server.
-let PushFiles setParams files =
+let pushFiles setParams files =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     TraceSecrets.register parameters.ApiKey "<PaketApiKey>"
@@ -181,7 +181,7 @@ let PushFiles setParams files =
                 |> Seq.toArray
                 |> Array.map (fun package -> async {
                         let pushResult =
-                            Process.Exec
+                            Process.execSimple
                                 (startPaket parameters.ToolPath parameters.WorkingDir
                                     >> withArgs (sprintf "push %s%s%s%s" url endpoint key (Process.toParam package))
                                     >> Process.withFramework)
@@ -195,7 +195,7 @@ let PushFiles setParams files =
     else
         for package in packages do
             let pushResult =
-                Process.Exec
+                Process.execSimple
                     (startPaket parameters.ToolPath parameters.WorkingDir
                         >> withArgs (sprintf "push %s%s%s%s" url endpoint key (Process.toParam package))
                         >> Process.withFramework)
@@ -206,14 +206,14 @@ let PushFiles setParams files =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Push setParams =
+let push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     !! (parameters.WorkingDir @@ "/**/*.nupkg")
-    |> PushFiles (fun _ -> parameters)
+    |> pushFiles (fun _ -> parameters)
 
 /// Returns the dependencies from specified paket.references file
-let GetDependenciesForReferencesFile (referencesFile:string) =
+let getDependenciesForReferencesFile (referencesFile:string) =
     let getReferenceFilePackages =
         let isSingleFile (line: string) = line.StartsWith "File:"
         let isGroupLine (line: string) = line.StartsWith "group "
@@ -252,7 +252,7 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Restore setParams =
+let restore setParams =
     let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
     let forceRestore = if parameters.ForceDownloadOfPackages then " --force " else ""
     let onlyReferenced = if parameters.OnlyReferencedFiles then " --only-referenced " else ""
@@ -265,7 +265,7 @@ let Restore setParams =
     use __ = Trace.traceTask "PaketRestore" parameters.WorkingDir
 
     let restoreResult =
-        Process.Exec
+        Process.execSimple
             (startPaket parameters.ToolPath parameters.WorkingDir
                 >> withArgs (sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles)
                 >> Process.withFramework)

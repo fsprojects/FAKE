@@ -35,8 +35,8 @@ let private (|StorageAlreadyStarted|StorageAlreadyStopped|Ok|OtherError|) = func
     | _ -> OtherError
 
 /// Stops the storage emulator
-let StopStorageEmulator = (fun _ ->
-    match Process.Exec (fun info ->
+let stopStorageEmulator = (fun _ ->
+    match Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
             Arguments = "stop" }) AzureEmulatorDefaults.TimeOut with
@@ -45,8 +45,8 @@ let StopStorageEmulator = (fun _ ->
 )
 
 /// Starts the storage emulator
-let StartStorageEmulator = (fun _ ->
-    match Process.Exec (fun info ->
+let startStorageEmulator = (fun _ ->
+    match Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
             Arguments = "start" }) AzureEmulatorDefaults.TimeOut with
@@ -55,8 +55,8 @@ let StartStorageEmulator = (fun _ ->
 )
 
 /// Stops the compute emulator
-let StopComputeEmulator = (fun _ ->
-    if 0 <> Process.Exec (fun info ->
+let stopComputeEmulator = (fun _ ->
+    if 0 <> Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.CSRunToolPath
             Arguments = "/devfabric:shutdown" }) AzureEmulatorDefaults.TimeOut
@@ -65,8 +65,8 @@ let StopComputeEmulator = (fun _ ->
 )
 
 /// Starts the compute emulator
-let StartComputeEmulator = (fun _ ->
-    if 0 <> Process.Exec (fun info ->
+let startComputeEmulator = (fun _ ->
+    if 0 <> Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.CSRunToolPath
             Arguments = "/devfabric:start" }) AzureEmulatorDefaults.TimeOut
@@ -75,8 +75,8 @@ let StartComputeEmulator = (fun _ ->
 )
 
 /// Resets the devstore (BLOB, Queues and Tables)
-let ResetDevStorage = (fun _ ->
-    if 0 <> Process.Exec (fun info ->
+let resetDevStorage = (fun _ ->
+    if 0 <> Process.execSimple (fun info ->
         { info with
             FileName = AzureEmulatorDefaults.StorageEmulatorToolPath.Value
             Arguments = "clear all" }) AzureEmulatorDefaults.TimeOut

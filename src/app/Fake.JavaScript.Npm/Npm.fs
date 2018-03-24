@@ -66,7 +66,7 @@ module Npm =
         let args = command |> parse
         try 
             let exitCode = 
-                Process.Exec (fun info -> 
+                Process.execSimple (fun info -> 
                     { info with
                          WorkingDirectory = npmParams.WorkingDirectory
                          FileName = npmPath
@@ -76,7 +76,7 @@ module Npm =
             if exitCode <> 0 then result := Some(sprintf "exit code: %d" exitCode)
         with exn ->
             let message = ref exn.Message
-            if exn.InnerException <> null then message := !message + Environment.NewLine + exn.InnerException.Message
+            if not (isNull exn.InnerException) then message := !message + Environment.NewLine + exn.InnerException.Message
             result := Some(!message)
         match !result with
         | None -> ()

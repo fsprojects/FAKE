@@ -73,6 +73,8 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
+// Set this to true if you have lots of breaking changes, for small breaking changes use #if BOOTSTRAP, setting this flag will not be accepted
+let disableBootstrap = true
 
 // properties
 let projectName = "FAKE"
@@ -129,16 +131,11 @@ BuildServer.Install [
     TeamFoundation.Installer
 ]
 
-#if BOOTSTRAP
 let dotnetSdk = lazy DotNet.Install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
-#else
-let dtntWorkDir wd (cliOpts: DotNet.Options) = { cliOpts with WorkingDirectory = wd }
-let dtntSmpl = id
-#endif
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
@@ -689,12 +686,6 @@ Target.Create "CreateNuGet" (fun _ ->
         NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
-#if !BOOTSTRAP
-Target.Create "InstallDotNetCore" (fun _ ->
-    DotNet.Install DotNet.Release_2_1_4
-)
-#endif
-
 let netCoreProjs =
     !! (appDir </> "*/*.fsproj")
 
@@ -1013,9 +1004,6 @@ open Fake.Core.TargetOperators
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
-#if !BOOTSTRAP
-    ?=> "InstallDotNetCore"
-#endif
     ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "DotNetPackage_"
@@ -1023,10 +1011,6 @@ open Fake.Core.TargetOperators
     ==> "DotNetPackage"
 "StartDnc"
     ==> "DotNetPackage_"
-#if !BOOTSTRAP
-"InstallDotNetCore"
-    ==> "DotNetPackage_"
-#endif
 "DownloadPaket"
     ==> "DotNetPackage_"
 // Full framework build
@@ -1055,7 +1039,7 @@ open Fake.Core.TargetOperators
 // Test the full framework build
 "BuildSolution"
     =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTest",not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
 // Test the dotnetcore build
@@ -1063,7 +1047,7 @@ open Fake.Core.TargetOperators
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
     ==> "DotNetCoreCreateZipPackages"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
-    =?> ("BootstrapTestDotNetCore",not <| Environment.hasEnvironVar "SkipTests")
+    =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
     ==> "Default"
 

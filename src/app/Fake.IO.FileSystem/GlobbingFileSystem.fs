@@ -122,16 +122,16 @@ module GlobbingPattern =
     let private defaultBaseDir = Path.GetFullPath "."
 
     /// Include files
-    let Include x = 
+    let create x = 
         { BaseDirectory = defaultBaseDir
           Includes = [ x ]
           Excludes = [] } :> IGlobbingPattern
 
     /// Sets a directory as baseDirectory for fileIncludes. 
-    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
+    let setBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
 
     /// Get base include directories. Used to get a smaller set of directories from a globbing pattern.
-    let GetBaseDirectoryIncludes (fileIncludes: IGlobbingPattern) =
+    let getBaseDirectoryIncludes (fileIncludes: IGlobbingPattern) =
             let directoryIncludes = fileIncludes.Includes |> Seq.map (fun file -> Globbing.Glob.getRoot fileIncludes.BaseDirectory file)
 
             // remove subdirectories
@@ -155,12 +155,12 @@ type FileIncludes = IGlobbingPattern
 [<System.Obsolete("Please use GlobbingPattern instead")>]
 module FileIncludes =
     /// Include files
-    [<System.Obsolete("Please use GlobbingPattern instead")>]
-    let Include x = GlobbingPattern.Include x
+    [<System.Obsolete("Please use GlobbingPattern.create instead")>]
+    let Include x = GlobbingPattern.create x
 
     /// Sets a directory as baseDirectory for fileIncludes. 
     [<System.Obsolete("Please use GlobbingPattern instead")>]
-    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.SetBaseDir dir fileIncludes
+    let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.setBaseDir dir fileIncludes
 
 module Operators =
     /// Add Include operator
@@ -170,7 +170,7 @@ module Operators =
     let inline (--) (x : IGlobbingPattern) pattern = x.ButNot pattern
 
     /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-    let inline (!!) x = GlobbingPattern.Include x
+    let inline (!!) x = GlobbingPattern.create x
 
 module Tools =
     open Operators

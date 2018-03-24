@@ -32,9 +32,9 @@
     <Compile Include="Event.fs" />
     <Compile Include="Async.fs" />
     <Compile Include="CmdLineParsing.fs" />
+    <Compile Include="Process.fs" />
     <Compile Include="RawProc.fs" />
     <Compile Include="Proc.fs" />
-    <Compile Include="Process.fs" />
     <Compile Include="Mono.fs" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
