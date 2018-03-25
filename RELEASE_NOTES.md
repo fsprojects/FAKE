@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.0.0-rc001
+
+* vNext
+
 ## 5.0.0-beta029
 
 * BUGFIX: Fix mono version detection on netcore.
