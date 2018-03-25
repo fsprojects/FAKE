@@ -370,6 +370,12 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     match result with
     | Some err ->
+        use logPaket =
+          // Required when 'silent' because we use paket API for error printing
+          if config.VerboseLevel = Trace.Silent then
+            Paket.Logging.event.Publish
+            |> Observable.subscribe Paket.Logging.traceToConsole
+          else { new IDisposable with member __.Dispose () = () }
         let printDetails = config.VerboseLevel.PrintVerbose
         if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
             Paket.Logging.printErrorExt true true false err
