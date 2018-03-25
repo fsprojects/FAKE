@@ -54,10 +54,7 @@ let fake command scenario =
     prepare scenario
 
     directFake command scenario
-#if DEBUG
-let fakeVerboseFlag = "--verbose"
-#else
-let fakeVerboseFlag = ""
-#endif
+//let fakeFlags = "--verbose"
+let fakeFlags = "--silent"
 let fakeRun scriptName scenario =
-    fake (sprintf "%s run %s" fakeVerboseFlag scriptName) scenario
+    fake (sprintf "%s run %s" fakeFlags scriptName) scenario

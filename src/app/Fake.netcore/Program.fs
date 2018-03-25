@@ -70,19 +70,19 @@ type RunArguments = {
    Debug : bool
    SingleTarget : bool
    NoCache : bool
-   PrintDetails : bool
+   VerboseLevel : VerboseLevel
    IsBuild : bool // Did the user call `fake build` or `fake run`?
 }
 
 let runOrBuild (args : RunArguments) =
-  if args.PrintDetails then
+  if args.VerboseLevel.PrintVerbose then
     Trace.log (sprintf "runOrBuild (%A)" args)
   if args.Debug then
     Diagnostics.Debugger.Launch() |> ignore
     Diagnostics.Debugger.Break() |> ignore
 
   try
-    if args.PrintDetails then printVersion()
+    if args.VerboseLevel.PrintVerbose then printVersion()
 
     //Maybe log.
     //match fakeArgs.TryGetResult <@ Cli.LogFile @> with
@@ -151,16 +151,22 @@ let runOrBuild (args : RunArguments) =
         }
 
     let useCache = not args.NoCache
-    if not (FakeRuntime.prepareAndRunScript args.PrintDetails additionalArgs scriptFile envVars useCache) then false
+    if not (FakeRuntime.prepareAndRunScript args.VerboseLevel additionalArgs scriptFile envVars useCache) then false
     else 
-        if args.PrintDetails then log "Ready."
+        if args.VerboseLevel.PrintVerbose then log "Ready."
         true
   with
   | exn ->
-      traceError "Script failed with"
+      use logPaket =
+        // Required when 'silent' because we use paket API for error printing
+        if args.VerboseLevel = Trace.Silent then
+          Paket.Logging.event.Publish
+          |> Observable.subscribe Paket.Logging.traceToConsole
+        else { new IDisposable with member __.Dispose () = () }      
+      traceError "Script failed"
       if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
           Paket.Logging.printErrorExt true true true exn
-      else Paket.Logging.printErrorExt args.PrintDetails args.PrintDetails false exn
+      else Paket.Logging.printErrorExt args.VerboseLevel.PrintVerbose args.VerboseLevel.PrintVerbose false exn
 
       //let isKnownException = exn :? FAKEException
       //if not isKnownException then
@@ -174,13 +180,25 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
   let mutable exitCode = 0
   let mutable runarg = None
   let verbLevel = (results.GetResults <@ Cli.FakeArgs.Verbose @>) |> List.length
-  let printDetails = verbLevel > 0
-  if verbLevel > 1 then
+  let isSilent = (results.Contains <@ Cli.FakeArgs.Silent @>)
+  let verboseLevel =
+    match isSilent, verbLevel with
+    | true, _ -> VerboseLevel.Silent
+    | _, 0 -> VerboseLevel.Normal
+    | _, 1 -> VerboseLevel.Verbose
+    | _ -> VerboseLevel.VerbosePaket  
+  if verboseLevel.PrintPaket then
     Paket.Logging.verbose <- true
     Paket.Logging.verboseWarnings <- true
   Paket.Utils.autoAnswer <- Some true
-  use consoleTrace = Paket.Logging.event.Publish |> Observable.subscribe Paket.Logging.traceToConsole
-
+  use consoleTrace =
+    // When silent we don't want Paket output
+    if verboseLevel.PrintNormal then
+      Paket.Logging.event.Publish
+      |> Observable.subscribe Paket.Logging.traceToConsole
+    else
+      { new System.IDisposable with 
+          member __.Dispose() = () }
   if results.Contains <@ Cli.FakeArgs.Version @> then
     didSomething <- true
     printVersion()
@@ -195,7 +213,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
        Debug = runArgs.Contains <@ Cli.RunArgs.Debug @>
        SingleTarget =  runArgs.Contains <@ Cli.RunArgs.SingleTarget @>
        NoCache = runArgs.Contains <@ Cli.RunArgs.NoCache @>
-       PrintDetails = printDetails
+       VerboseLevel = verboseLevel
        IsBuild = false // Did the user call `fake build` or `fake run`?
     }
   )
@@ -210,7 +228,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
        Debug = buildArg.Contains <@ Cli.BuildArgs.Debug @>
        SingleTarget =  buildArg.Contains <@ Cli.BuildArgs.SingleTarget @>
        NoCache = buildArg.Contains <@ Cli.BuildArgs.NoCache @>
-       PrintDetails = printDetails
+       VerboseLevel = verboseLevel
        IsBuild = true // Did the user call `fake build` or `fake run`?
     }
   )

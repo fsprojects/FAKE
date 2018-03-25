@@ -24,8 +24,9 @@ let ``simple failed to compile``() =
         Assert.Fail ("Expected an compilation error and a nonzero exit code!")
     with 
     | FakeExecutionFailed(result) ->
+        let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
-        Assert.IsTrue(stdErr.Contains("klajsdhgfasjkhd"), sprintf "Standard Error Output should contain 'klajsdhgfasjkhd', but was: %s" stdErr)
+        Assert.IsTrue(stdErr.Contains("klajsdhgfasjkhd"), sprintf "Standard Error Output should contain 'klajsdhgfasjkhd', but was: '%s', Out: '%s'" stdErr stdOut)
         ()
 
 [<Test>]
@@ -35,8 +36,9 @@ let ``simple runtime error``() =
         Assert.Fail ("Expected an runtime error and a nonzero exit code!")
     with
     | FakeExecutionFailed(result) ->
+        let stdOut = String.Join("\n", result.Messages)
         let stdErr = String.Join("\n", result.Errors)
-        Assert.IsTrue(stdErr.Contains("runtime error"), sprintf "Standard Error Output should contain 'runtime error', but was: %s" stdErr)
+        Assert.IsTrue(stdErr.Contains("runtime error"), sprintf "Standard Error Output should contain 'runtime error', but was: '%s', Out: '%s'" stdErr stdOut)
         ()
 
 [<Test>]

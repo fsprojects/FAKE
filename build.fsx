@@ -1013,7 +1013,7 @@ open Fake.Core.TargetOperators
     ==> "DotNetPackage_"
 "DownloadPaket"
     ==> "DotNetPackage_"
-"UnskipAndRevertAssemblyInfo"
+"DotNetPackage_"
     ==> "DotNetPackage"
 // Full framework build
 "Clean"
@@ -1024,7 +1024,7 @@ open Fake.Core.TargetOperators
     ==> "BuildSolution"
 "RenameFSharpCompilerService"
     ==> "BuildSolution_"
-"UnskipAndRevertAssemblyInfo"
+"BuildSolution_"
     ==> "BuildSolution"
 // AfterBuild -> Both Builds completed
 "BuildSolution"

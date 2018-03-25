@@ -40,7 +40,7 @@ type ScriptCompileOptions =
     AdditionalArguments : string list }
 
 type FakeConfig =
-  { PrintDetails : bool
+  { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
     CompileOptions : ScriptCompileOptions
     UseCache : bool
