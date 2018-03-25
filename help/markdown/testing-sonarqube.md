@@ -22,8 +22,8 @@ open Fake.Core
 open Fake.Core.TargetOperators
 open Fake.Testing
 
-Target.Create "BeginSonarQube" (fun _ ->
-  SonarQube.Begin (fun p ->
+Target.create "BeginSonarQube" (fun _ ->
+  SonarQube.start (fun p ->
     {p with
       Key = "MyProject"
       Name = "Main solution"
@@ -31,11 +31,11 @@ Target.Create "BeginSonarQube" (fun _ ->
     )
   )
 
-Target.Create "EndSonarQube" (fun _ ->
-  SonarQube.End None
+Target.create "EndSonarQube" (fun _ ->
+  SonarQube.finish None
 )
 
-Target.Create "Default" DoNothing
+Target.create "Default" DoNothing
 
 "Clean"
   ==> "SetAssemblyInfo"
@@ -46,7 +46,7 @@ Target.Create "Default" DoNothing
   ==> "Deploy"
   ==> "Default"
 
-Target.RunOrDefault "Default"
+Target.runOrDefault "Default"
 ```
 
 By default, the SonarQube module looks for the MSBuild runner in the 'tools/SonarQube' directory. This can be overwritten using the ToolsPath property of the parameters.
@@ -57,7 +57,7 @@ By default, the SonarQube module looks for the MSBuild runner in the 'tools/Sona
 In the SonarQubeParams, this is the new field Settings:
 
 ```fsharp
-SonarQube.Begin (fun p ->
+SonarQube.start (fun p ->
   {p with
     Key = "MyProject"
     Name = "Main solution"
@@ -70,7 +70,7 @@ SonarQube.Begin (fun p ->
 This can be done with the new field Config:
 
 ```fsharp
-SonarQube.Begin (fun p ->
+SonarQube.start (fun p ->
   {p with
     Key = "MyProject"
     Name = "Main solution"
@@ -78,4 +78,3 @@ SonarQube.Begin (fun p ->
     Config = Some("myconfig.cfg") }
   )
 ```
-

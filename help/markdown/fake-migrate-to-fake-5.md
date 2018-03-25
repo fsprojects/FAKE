@@ -19,22 +19,22 @@ Therefore you have the FAKE 5 timeframe to update your build scripts to the new 
 
 Upgrading to FAKE 5 is a multi step process and has various manual steps in between. **If you do these steps out of order it will be a lot harder for you to migrate the script successfully**. Here are the steps:
 
-- Update to legacy FAKE 5. This should not be breaking. If it breaks you please open an issue.
+* Update to legacy FAKE 5. This should not be breaking. If it breaks you please open an issue.
 
-  - With Paket: add `prerelease` after `nuget FAKE` in paket.dependencies file then `.paket/paket.exe update`, check that paket.lock references FAKE version 5 
+  * With Paket: add `prerelease` after `nuget FAKE` in paket.dependencies file then `.paket/paket.exe update`, check that paket.lock references FAKE version 5 
 
-- Fix all the (obsolete) warnings in your build-script to use the new API (see the [Use the new FAKE-API](#Use-the-new-FAKE-API) section).
+* Fix all the (obsolete) warnings in your build-script to use the new API (see the [Use the new FAKE-API](#Use-the-new-FAKE-API) section).
   This should still not break your build. If things break here or you have difficulties after reading the 'Use the new FAKE-API' section
   please open an issue.
-  - Becareful if you update only some warning, it could break. For example, if you use `Target.Create`, but continue to use old operators definition, you will probably experiment some errors like "Target [...] is not defined".  
-- Change to the new version of FAKE 5.
-  
-  - This is for example done by installing FAKE as dependency on your build infrastructure.
+  * Becareful if you update only some warning, it could break. For example, if you use `Target.Create`, but continue to use old operators definition, you will probably experiment some errors like "Target [...] is not defined".  
+* Change to the new version of FAKE 5.
+
+  * This is for example done by installing FAKE as dependency on your build infrastructure.
     There are a variety of [installing options](fake-gettingstarted.html#Install-FAKE) available.
-  - Tell FAKE which [modules](fake-fake5-modules.html) you need.
+  * Tell FAKE which [modules](fake-fake5-modules.html) you need.
     See the [Adding FAKE dependencies](#Adding-FAKE-dependencies) section below.
-  - Run the build with the new version of FAKE :). You might want to read the [CLI migration](#CLI-Migration) section
-  
+  * Run the build with the new version of FAKE :). You might want to read the [CLI migration](#CLI-Migration) section
+
   If things break in the last step please let us know as well.
 
 ### Use the new FAKE-API
@@ -46,13 +46,13 @@ The most important part to know is that basically every feature/function changes
 as the old API was growing several years now and we never could do breaking changes.
 
 > IMPORTANT NOTE: If you feel like an API is still in the wrong place. Please let us know and open an issue.
-  We can make breaking changes as long as we are in the alpha/beta phase.
+> We can make breaking changes as long as we are in the alpha/beta phase.
 
-> IMPORTANT NODE: It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
-  So things might break in the alpha phase. However this doesn't mean you should be afraid to use the new FAKE version.
-  In fact due to the modular design we hopefully can make breaking changes a lot more often, without breaking your builds!
-  So please try it out and if stuff breaks let us know :).
-  The good thing is you can always "lock" the versions of the FAKE modules until you are ready to upgrade.
+> IMPORTANT NOTE: It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
+> So things might break in the alpha phase. However this doesn't mean you should be afraid to use the new FAKE version.
+> In fact due to the modular design we hopefully can make breaking changes a lot more often, without breaking your builds!
+> So please try it out and if stuff breaks let us know :).
+> The good thing is you can always "lock" the versions of the FAKE modules until you are ready to upgrade.
 
 In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
 "ReadFile argument" (the module probably even opened via `[<AutoOpen>]`), which is considered bad style now.
@@ -69,9 +69,10 @@ stuff you are using was not migrated yet (let us know or send a PR, TODO: Add li
 ### Add FAKE dependencies
 
 All your dependencies no longer are bundled with the FAKE nuget package (or the FAKE distribution for that matter). This has some advantages:
-- You can extend the build with your own packages easily
-- You only pay what you use
-- You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).
+
+* You can extend the build with your own packages easily
+* You only pay what you use
+* You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).
 
 The drawback however is that you now need to know where stuff lives and add those packages to your build.
 
@@ -110,4 +111,3 @@ However your changes should only be minimal in the most cases. I'd say in 80% it
 For a full reference use `--help` or the [documentation](fake-commandline.html).
 
 If you used special cases which aren't mentioned here please edit this page or open an issue.
-

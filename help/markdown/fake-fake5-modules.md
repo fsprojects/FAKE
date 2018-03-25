@@ -28,11 +28,11 @@ For example create a new file `build.fsx` with
 
 open Fake.Core
 
-Target.Create "MyBuild" (fun _ ->
+Target.create "MyBuild" (fun _ ->
     printfn "message from MyBuild target"
 )
 
-Target.RunOrDefault "MyBuild"
+Target.runOrDefault "MyBuild"
 
 ```
 
@@ -42,12 +42,11 @@ Please read introduction about [Paket](https://fsprojects.github.io/Paket/) for 
 
 > Note: This works because by default FAKE 5 searches for a group annotated with the `// [ FAKE GROUP ]` comment.
 
-
 ## Declaring FAKE 5 dependencies within the script
 
 To be more independent from paket infrastructure (stand-alone-scripts and similar situations) there is a way to specify dependencies from within the script itself.
 
-> We use the new syntax specified in [FST-1027](https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md). 
+> We use the new syntax specified in [FST-1027](https://github.com/fsharp/fslang-design/blob/master/tooling/FST-1027-fsi-references.md).
 > However, to be fully compatible with existing tooling and infrastructure make sure to add `//` at the end of the `#r` string.
 > See https://github.com/fsharp/FAKE/pull/1770 for details.
 
@@ -59,7 +58,6 @@ To reference a FAKE group explicitely you can put the following at the top of yo
 #r "paket: groupref netcorebuild //"
 #load "./.fake/build.fsx/intellisense.fsx"
 ```
-    
 
 This header will reference the `paket.dependencies` file and the `netcorebuild` group within.
 
@@ -89,5 +87,6 @@ If you need to update your dependencies just delete the `build.fsx.lock` file an
 You use the modules as documented in their corresponding help section.
 
 But usually it's:
- - `open Fake.<Namespace>` for example `open Fake.Core`
- - Using the features
+
+* `open Fake.<Namespace>` for example `open Fake.Core`
+* Using the features

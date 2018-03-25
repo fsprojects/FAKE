@@ -22,27 +22,27 @@ nuget Fake.Core.Target //"
 open Fake.Core
 
 // *** Define Targets ***
-Target.Create "Clean" (fun _ -> 
-	Trace.trace " --- Cleaning stuff --- "
+Target.create "Clean" (fun _ -> 
+    Trace.trace " --- Cleaning stuff --- "
 )
 
-Target.Create "Build" (fun _ -> 
-	Trace.trace " --- Building the app --- "
+Target.create "Build" (fun _ -> 
+    Trace.trace " --- Building the app --- "
 )
 
-Target.Create "Deploy" (fun _ -> 
-	Trace.trace " --- Deploying app --- "
+Target.create "Deploy" (fun _ -> 
+    Trace.trace " --- Deploying app --- "
 )
 
 open Fake.Core.TargetOperators
 
 // *** Define Dependencies ***
 "Clean"
-	==> "Build"
-	==> "Deploy"
+    ==> "Build"
+    ==> "Deploy"
 
 // *** Start Build ***
-Target.RunOrDefault "Deploy"
+Target.runOrDefault "Deploy"
 ```
 
 > Warning: Previous versions of FAKE 5 used `(fun () -> ...)` instead of `(fun _ -> ...)`.
@@ -62,28 +62,28 @@ Final targets can be used for TearDown functionality.
 These targets will be executed even if the build fails but have to be activated via Target.ActivateFinal().
 
 ```fsharp
-Target.CreateFinal "CloseSomePrograms" (fun _ ->
-	// close stuff and release resources
-	()
+Target.createFinal "CloseSomePrograms" (fun _ ->
+    // close stuff and release resources
+    ()
 )
 
 // Activate Final target somewhere during build
-Target.ActivateFinal "CloseSomePrograms"
+Target.activateFinal "CloseSomePrograms"
 ```
 
 ## Build failure targets
 
 Build failure targets can be used to execute tasks after a build failure.
-These targets will be executed only after a build failure but have to be activated via ActivateBuildFailure().
+These targets will be executed only after a build failure but have to be activated via `activateBuildFailure()`.
 
 ```fsharp
-Target.CreateBuildFailure "ReportErrorViaMail" (fun _ ->
-	// send mail about the failure
-	()
+Target.createBuildFailure "ReportErrorViaMail" (fun _ ->
+    // send mail about the failure
+    ()
 )
 
 // Activate Build Failure Target somewhere during build
-Target.ActivateBuildFailure "ReportErrorViaMail"
+Target.activateBuildFailure "ReportErrorViaMail"
 ```
 
 ## Using FAKE's parallel option
@@ -93,8 +93,8 @@ number of threads used for traversing the dependency tree.
 This option of course only affects independent targets whereas dependent targets will
 still be exectued in order.
 
-
 ### Setting the number of threads
+
 The number of threads used can be set using the environment variable ``parallel-jobs``.
 This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
 setting environment variables:
@@ -104,6 +104,7 @@ setting environment variables:
 Note that the dependency tree will be traversed as usual whenever setting ``parallel-jobs`` to a value ``<= 1`` or omiting it entirely.
 
 ## Issues
+
 * Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.
 * Parallel execution may also cause races on stdout and build-logs may therefore be quite obfuscated.
 * Error detection may suffer since it's not possible to determine a first error when targets are running in parallel
@@ -115,25 +116,26 @@ However when a fast build is desired (and the project is e.g. known to build suc
 
 When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
 For example this dependency tree:
-	
+
 ```fsharp
 "Task 1"
-	==> "Task A2"
-	==> "Task 3"
+    ==> "Task A2"
+    ==> "Task 3"
 
 "Task 1"
-	==> "Task B2"
-	==> "Task 3"
+    ==> "Task B2"
+    ==> "Task 3"
 
 "Task C2"
-	==> "Task 3"
+    ==> "Task 3"
 
 "Task 3"
-	==> "Task A4"
+    ==> "Task A4"
 
 "Task 3"
-	==> "Task B4"
+    ==> "Task B4"
 ```
+
 ...would be treated as follows:
 
 ![](pics/parallel/ParallelExample.png)
@@ -142,7 +144,7 @@ This is in addition to that that MsBuild may use multiple threads when building 
 
 # Soft dependencies
 
-Typically you will define dependencies among your targets using the `==>` and `<==` operators, and these 
+Typically you will define dependencies among your targets using the `==>` and `<==` operators, and these
 dependencies define the order in which the targets are executed during a build.
 
 You can also define soft dependencies among targets using the  `?=>` and `<=?` operators.  For example, you might
@@ -161,15 +163,15 @@ With this soft dependency, running B will not require that A be run first. Howev
 
 ```fsharp
 // *** Define Targets ***
-Target.Create "Clean" (fun _ -> 
-	Trace.trace " --- Cleaning stuff --- "
+Target.create "Clean" (fun _ -> 
+    Trace.trace " --- Cleaning stuff --- "
 )
 
-Target.Create "Build" (fun _ -> 
-	Trace.trace " --- Building the app --- "
+Target.create "Build" (fun _ -> 
+    Trace.trace " --- Building the app --- "
 )
 
-Target.Create "Rebuild" Target.DoNothing
+Target.create "Rebuild" Target.DoNothing
 
 // *** Define Dependencies ***
 "Build" ==> "Rebuild"

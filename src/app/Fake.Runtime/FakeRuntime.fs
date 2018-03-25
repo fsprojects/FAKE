@@ -100,7 +100,7 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
     |> Seq.toList
     |> List.partition (fun ref -> ref.StartsWith(grRefStr, System.StringComparison.OrdinalIgnoreCase))
   let paketCode =
-    paketLines 
+    paketLines
     |> String.concat "\n"
   let paketGroupReferences =
     groupReferences
@@ -446,11 +446,11 @@ let prepareFakeScript defines printDetails script =
               tryFindGroupFromDepsFile scriptDir
 
     match section, Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" with
+    | Some section, _ ->
+        restoreDependencies script printDetails cacheDir section
     | _, true ->
         Trace.traceFAKE "NetCore hack (FAKE_UNDOCUMENTED_NETCORE_HACK) is activated: %s" script
         CoreCache.Cache.defaultProvider
-    | Some section, _ ->
-        restoreDependencies script printDetails cacheDir section
     | _ ->
         failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 
