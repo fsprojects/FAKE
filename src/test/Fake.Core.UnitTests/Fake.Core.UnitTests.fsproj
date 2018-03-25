@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Target\Fake.Core.Target.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
@@ -18,6 +19,7 @@
     <Compile Include="Fake.DotNet.Cli.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
+    <Compile Include="Fake.Core.Process.fs" />
     <Compile Include="Fake.Core.Target.fs" />
     <Compile Include="Fake.Core.ReleaseNotes.fs" />
     <Compile Include="Fake.Runtime.fs" />

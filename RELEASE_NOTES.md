@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.0.0-beta029
+
+* BUGFIX: Fix mono version detection on netcore.
+
 ## 5.0.0-beta028
 
 * ENHANCEMENT: Fix API Guidelines on various modules

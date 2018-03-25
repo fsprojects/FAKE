@@ -430,7 +430,8 @@ module Process =
         try 
             if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
                 Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
-            startProcess proc
+            if not (startProcess proc) then
+                failwithf "Could not start process (start returned false)."
         with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
         if silent then 
             proc.BeginErrorReadLine()
@@ -440,10 +441,10 @@ module Process =
             if not <| proc.WaitForExit(int timeOut.TotalMilliseconds) then 
                 try 
                     proc.Kill()
-                with exn -> 
+                with exn ->
                     Trace.traceError 
-                    <| sprintf "Could not kill process %s  %s after timeout." proc.StartInfo.FileName 
-                           proc.StartInfo.Arguments
+                    <| sprintf "Could not kill process %s  %s after timeout: %O" proc.StartInfo.FileName 
+                           proc.StartInfo.Arguments exn
                 failwithf "Process %s %s timed out." proc.StartInfo.FileName proc.StartInfo.Arguments
         // See http://stackoverflow.com/a/16095658/1149924 why WaitForExit must be called twice.
         proc.WaitForExit()
@@ -464,7 +465,7 @@ module Process =
         
         let exitCode = 
             execRaw configProcessStartInfoF timeOut true (appendMessage true) (appendMessage false)
-        ProcessResult.New exitCode !messages
+        ProcessResult.New exitCode (!messages |> List.rev)
 
     /// Runs the given process and returns the exit code.
     /// ## Parameters
@@ -516,7 +517,8 @@ module Process =
     let directExec configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
         try 
-            startProcess proc
+            if not (startProcess proc) then
+                failwithf "Could not start process (start returned false)."
         with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
         proc.WaitForExit()
         proc.ExitCode = 0
@@ -690,7 +692,8 @@ module Process =
                 if not (isNull e.Data) then Trace.traceError e.Data)
             proc.OutputDataReceived.Add(fun e -> 
                 if not (isNull e.Data) then Trace.log e.Data)
-            startProcess proc
+            if not (startProcess proc) then
+                failwithf "Could not start process (start returned false)."
             proc.BeginOutputReadLine()
             proc.BeginErrorReadLine()
             proc.StandardInput.Dispose()

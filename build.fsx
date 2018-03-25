@@ -131,8 +131,6 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
-Trace.traceFAKE "MsBuild: %s" MsBuild.msBuildExe
-
 let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
