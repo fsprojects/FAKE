@@ -461,6 +461,7 @@ If you know what you are doing you can silence this warning by setting the envir
         let section =
           { Header = "paket-inline"
             Section = defaultPaketCode }
+          |> legacyParseHeader cacheDir        
         restoreDependencies script printDetails cacheDir section
 
 let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
