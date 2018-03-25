@@ -56,10 +56,10 @@ open System.Reflection
 
 #endif
 
-#if !FAKE
-let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
-Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-#endif
+//#if !FAKE
+//let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
+//Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
+//#endif
 
 open System.IO
 open Fake.Api
