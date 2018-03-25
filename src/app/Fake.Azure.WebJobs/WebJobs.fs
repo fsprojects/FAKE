@@ -67,14 +67,14 @@ let private zipWebJob webSite webJob =
     let zipName = webJob.PackageLocation
     let filesToZip = Directory.GetFiles(webJob.DirectoryToPackage, "*.*", SearchOption.AllDirectories)
     tracefn "Zipping %s webjob to %s" webJob.Project webJob.PackageLocation
-    Zip.CreateZip webJob.DirectoryToPackage zipName "" 0 false filesToZip
+    Zip.createZip webJob.DirectoryToPackage zipName "" 0 false filesToZip
 
 /// This task to can be used create a zip for each webjob to deploy to a website
 /// The output structure is: `outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip`
 /// ## Parameters
 ///
 ///  - `webSites` - The websites and webjobs to build zips from.
-let PackageWebJobs webSites =
+let packageWebJobs webSites =
     webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob webSite))
 
 let private deployWebJobToWebSite webSite webJob =
@@ -110,5 +110,5 @@ let private deployWebJobsToWebSite webSite =
 /// ## Parameters
 ///
 ///  - `webSites` - The websites and webjobs to deploy.
-let DeployWebJobs webSites =
+let deployWebJobs webSites =
     webSites |> List.iter deployWebJobsToWebSite

@@ -493,7 +493,7 @@ module MsBuild =
     let args = Process.toParam project + " " + argsString + " " + errorLoggerParam
     Trace.tracefn "Building project: %s\n  %s %s" project msBuildParams.ToolPath args
     let exitCode =
-        Process.Exec (fun info ->
+        Process.execSimple (fun info ->
         { info with
             FileName = msBuildParams.ToolPath
             Arguments = args }
@@ -518,7 +518,7 @@ module MsBuild =
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `properties` - A list with tuples of property name and property values.
   ///  - `projects` - A list of project or solution files.
-  let RunWithProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
+  let runWithProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
     let projects = projects |> Seq.toList
 
     let output =
@@ -553,27 +553,27 @@ module MsBuild =
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `properties` - A list with tuples of property name and property values.
   ///  - `projects` - A list of project or solution files.
-  let Run outputPath targets properties projects = RunWithProperties outputPath targets (fun _ -> properties) projects
+  let run outputPath targets properties projects = runWithProperties outputPath targets (fun _ -> properties) projects
 
   /// Builds the given project files or solution files and collects the output files.
   /// ## Parameters
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let RunDebug outputPath targets projects = Run outputPath targets [ "Configuration", "Debug" ] projects
+  let runDebug outputPath targets projects = run outputPath targets [ "Configuration", "Debug" ] projects
 
   /// Builds the given project files or solution files and collects the output files.
   /// ## Parameters
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let RunRelease outputPath targets projects = Run outputPath targets [ "Configuration", "Release" ] projects
+  let runRelease outputPath targets projects = run outputPath targets [ "Configuration", "Release" ] projects
 
   /// Builds the given project files or solution files in release mode to the default outputs.
   /// ## Parameters
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let RunWithDefaults targets projects = Run null targets [ "Configuration", "Release" ] projects
+  let runWithDefaults targets projects = run null targets [ "Configuration", "Release" ] projects
 
   /// Builds the given project files or solution files in release mode and collects the output files.
   /// ## Parameters
@@ -581,16 +581,16 @@ module MsBuild =
   ///  - `properties` - A list with tuples of property name and property values.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let RunReleaseExt outputPath properties targets projects =
+  let runReleaseExt outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
-    Run outputPath targets properties projects
+    run outputPath targets properties projects
 
   /// Builds the given web project file in the specified configuration and copies it to the given outputPath.
   /// ## Parameters
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
   ///  - `projectFile` - The project file path.
-  let BuildWebsiteConfig outputPath configuration projectFile  =
+  let buildWebsiteConfig outputPath configuration projectFile  =
     use t = Trace.traceTask "BuildWebsite" projectFile
     let projectName = (FileInfo.ofPath projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
 
@@ -607,8 +607,8 @@ module MsBuild =
                  then ""
                  else (String.replicate diff "../")
 
-    Run null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
-    Run null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
+    run null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
+    run null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
         [ "Configuration", configuration
           "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
@@ -619,17 +619,17 @@ module MsBuild =
   /// ## Parameters
   ///  - `outputPath` - The output path.
   ///  - `projectFile` - The project file path.
-  let BuildWebsite outputPath projectFile = BuildWebsiteConfig outputPath "Debug" projectFile
+  let buildWebsite outputPath projectFile = buildWebsiteConfig outputPath "Debug" projectFile
 
   /// Builds the given web project files in specified configuration and copies them to the given outputPath.
   /// ## Parameters
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
   ///  - `projectFiles` - The project file paths.
-  let BuildWebsitesConfig outputPath configuration projectFiles = Seq.iter (BuildWebsiteConfig outputPath configuration) projectFiles
+  let buildWebsitesConfig outputPath configuration projectFiles = Seq.iter (buildWebsiteConfig outputPath configuration) projectFiles
   
   /// Builds the given web project files with debug configuration and copies them to the given websiteDir.
   /// ## Parameters
   ///  - `outputPath` - The output path.
   ///  - `projectFiles` - The project file paths.
-  let BuildWebsites outputPath projectFiles = BuildWebsitesConfig outputPath "Debug" projectFiles
+  let buildWebsites outputPath projectFiles = buildWebsitesConfig outputPath "Debug" projectFiles

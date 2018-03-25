@@ -10,7 +10,7 @@ module internal AppVeyorInternal =
     let environVar = Environment.environVar
     let getJobId () = environVar "APPVEYOR_JOB_ID"
     let internal sendToAppVeyor args =
-        Process.Exec (fun info ->
+        Process.execSimple (fun info ->
             { info with 
                 FileName = "appveyor"
                 Arguments = args}) (System.TimeSpan.MaxValue)

@@ -19,8 +19,8 @@ let tests =
                 "folder/file2.exe" ] }
       let actual =
           globExe
-          |> Zip.FilesAsSpecs "folder"
-          |> Zip.MoveToFolder "renamedfolder"
+          |> Zip.filesAsSpecs "folder"
+          |> Zip.moveToFolder "renamedfolder"
           |> Seq.toList
       
       let expected = [ @"folder/file1.exe", @"renamedfolder"</>"file1.exe";
@@ -38,7 +38,7 @@ let tests =
                 "subfolder/2/file2.dll" ] } 
       let actual =
           globSubFolder
-          |> Zip.FilesAsSpecs "subfolder"
+          |> Zip.filesAsSpecs "subfolder"
           |> Seq.toList
       
       let expected =

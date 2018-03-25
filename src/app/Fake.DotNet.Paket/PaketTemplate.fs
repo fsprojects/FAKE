@@ -273,7 +273,7 @@ module internal Rendering =
 ///            }
 ///        )
 ///    )
-let PaketTemplate setParams =
+let create setParams =
     use __ = Trace.traceTask "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams
     let filePath = match parameters.TemplateFilePath with

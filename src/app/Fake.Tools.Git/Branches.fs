@@ -52,7 +52,7 @@ let revisionsBetween repositoryDir commit1 commit2 =
     let _,msg,_ =
       sprintf "rev-list %s..%s" commit1 commit2
         |> runGitCommand repositoryDir
-    msg.Count
+    msg.Length
 
 /// Performs a checkout of the given branch to the working copy.
 /// ## Parameters

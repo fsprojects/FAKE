@@ -115,7 +115,7 @@ module Slack =
     /// ## Parameters
     ///  - `webhookURL` - The Slack webhook URL
     ///  - `setParams` - Function used to override the default notification parameters
-    let SendNotification (webhookURL : string) (setParams: NotificationParams -> NotificationParams) =
+    let sendNotification (webhookURL : string) (setParams: NotificationParams -> NotificationParams) =
         let sendNotification param =
 #if NETSTANDARD
             use client = (new HttpClient())

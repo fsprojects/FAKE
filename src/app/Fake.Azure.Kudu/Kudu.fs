@@ -52,14 +52,14 @@ let stageWebJob webJobType webJobName files =
 /// Synchronises all staged files from the temporary deployment to the actual deployment, removing
 /// any obsolete files, updating changed files and adding new files.
 let kuduSync() =
-    let succeeded, output =
-        Process.ExecRedirected(fun psi ->
+    let result =
+        Process.execWithResult(fun psi ->
             { psi with
                 FileName = Path.Combine(kuduPath.FullName, "kudusync.cmd")
                 Arguments = sprintf """-v 50 -f "%s" -t "%s" -n "%s" -p "%s" -i ".git;.hg;.deployment;deploy.cmd""" deploymentTemp deploymentTarget nextManifestPath previousManifestPath })
             (TimeSpan.FromMinutes 5.)
-    output |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
-    if not succeeded then failwith "Error occurred during Kudu Sync deployment."
+    result.Results |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
+    if not result.OK then failwith "Error occurred during Kudu Sync deployment."
 
 /// Kudu ZipDeploy parameters
 type ZipDeployParams =

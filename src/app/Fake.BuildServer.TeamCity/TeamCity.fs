@@ -123,7 +123,7 @@ module TeamCity =
     /// Send the PartCover xslt transformation rules (Input xlst and output files) to TeamCity
     let internal sendTeamCityPartCoverReportXslts : seq<string * string> -> unit =
         Seq.map (fun (xslt, output) -> sprintf "%s=>%s" xslt output)
-        >> Seq.map TeamCityWriter.EncapsulateSpecialChars
+        >> Seq.map TeamCityWriter.encapsulateSpecialChars
         >> String.concat "|n"
         >> sprintf "##teamcity[dotNetCoverage partcover_report_xslts='%s']"
         >> TeamCityWriter.sendStrToTeamCity
@@ -138,28 +138,28 @@ module TeamCity =
             duration.TotalMilliseconds
             |> round
             |> string
-        sprintf "##teamcity[testFinished name='%s' duration='%s']" (TeamCityWriter.EncapsulateSpecialChars testCaseName) duration
+        sprintf "##teamcity[testFinished name='%s' duration='%s']" (TeamCityWriter.encapsulateSpecialChars testCaseName) duration
         |> TeamCityWriter.sendStrToTeamCity
 
     /// Ignores the test case.
     let internal ignoreTestCase name message =
         startTestCase name
-        sprintf "##teamcity[testIgnored name='%s' message='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars message) |> TeamCityWriter.sendStrToTeamCity
+        sprintf "##teamcity[testIgnored name='%s' message='%s']" (TeamCityWriter.encapsulateSpecialChars name)
+            (TeamCityWriter.encapsulateSpecialChars message) |> TeamCityWriter.sendStrToTeamCity
 
 
     /// Report Standard-Output for a given test-case
     let internal reportTestOutput name output =
         sprintf "##teamcity[testStdOut name='%s' out='%s']" 
-            (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars output)
+            (TeamCityWriter.encapsulateSpecialChars name)
+            (TeamCityWriter.encapsulateSpecialChars output)
         |> TeamCityWriter.sendStrToTeamCity
 
     /// Report Standard-Error for a given test-case
     let internal reportTestError name output =
         sprintf "##teamcity[testStdErr name='%s' out='%s']" 
-            (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars output)
+            (TeamCityWriter.encapsulateSpecialChars name)
+            (TeamCityWriter.encapsulateSpecialChars output)
         |> TeamCityWriter.sendStrToTeamCity
 
     /// Ignores the test case.
@@ -168,56 +168,56 @@ module TeamCity =
 
     /// Finishes the test suite.
     let internal finishTestSuite testSuiteName =
-        TeamCityWriter.EncapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteFinished name='%s']"
+        TeamCityWriter.encapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteFinished name='%s']"
 
     /// Starts the test suite.
     let internal startTestSuite testSuiteName =
-        TeamCityWriter.EncapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteStarted name='%s']"
+        TeamCityWriter.encapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteStarted name='%s']"
 
     /// Reports the progress.
-    let reportProgress message = TeamCityWriter.EncapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressMessage '%s']"
+    let reportProgress message = TeamCityWriter.encapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressMessage '%s']"
 
     /// Reports the progress start.
-    let reportProgressStart message = TeamCityWriter.EncapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressStart '%s']"
+    let reportProgressStart message = TeamCityWriter.encapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressStart '%s']"
 
     /// Reports the progress end.
-    let reportProgressFinish message = TeamCityWriter.EncapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressFinish '%s']"
+    let reportProgressFinish message = TeamCityWriter.encapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressFinish '%s']"
 
     /// Create  the build status.
     /// [omit]
     let buildStatus status message =
-        sprintf "##teamcity[buildStatus status='%s' text='%s']" (TeamCityWriter.EncapsulateSpecialChars status) (TeamCityWriter.EncapsulateSpecialChars message)
+        sprintf "##teamcity[buildStatus status='%s' text='%s']" (TeamCityWriter.encapsulateSpecialChars status) (TeamCityWriter.encapsulateSpecialChars message)
 
     /// Reports the build status.
     let reportBuildStatus status message = buildStatus status message |> TeamCityWriter.sendStrToTeamCity
 
     /// Publishes an artifact on the TeamcCity build server.
-    let internal publishArtifact path = TeamCityWriter.EncapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
+    let internal publishArtifact path = TeamCityWriter.encapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
     /// Sets the TeamCity build number.
-    let internal setBuildNumber buildNumber = TeamCityWriter.EncapsulateSpecialChars buildNumber |> TeamCityWriter.sendToTeamCity "##teamcity[buildNumber '%s']"
+    let internal setBuildNumber buildNumber = TeamCityWriter.encapsulateSpecialChars buildNumber |> TeamCityWriter.sendToTeamCity "##teamcity[buildNumber '%s']"
 
     /// Reports a build statistic.
     let setBuildStatistic key value =
-        sprintf "##teamcity[buildStatisticValue key='%s' value='%s']" (TeamCityWriter.EncapsulateSpecialChars key)
-            (TeamCityWriter.EncapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
+        sprintf "##teamcity[buildStatisticValue key='%s' value='%s']" (TeamCityWriter.encapsulateSpecialChars key)
+            (TeamCityWriter.encapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
 
     /// Reports a parameter value
     let setParameter name value =
-        sprintf "##teamcity[setParameter name='%s' value='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
+        sprintf "##teamcity[setParameter name='%s' value='%s']" (TeamCityWriter.encapsulateSpecialChars name)
+            (TeamCityWriter.encapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
 
     /// Reports a failed test.
     let internal testFailed name message details =
-        sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']" (TeamCityWriter.EncapsulateSpecialChars name)
-            (TeamCityWriter.EncapsulateSpecialChars message) (TeamCityWriter.EncapsulateSpecialChars details) |> TeamCityWriter.sendStrToTeamCity
+        sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']" (TeamCityWriter.encapsulateSpecialChars name)
+            (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details) |> TeamCityWriter.sendStrToTeamCity
 
     /// Reports a failed comparison.
     let internal comparisonFailure name message details expected actual =
         sprintf
             "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-            (TeamCityWriter.EncapsulateSpecialChars name) (TeamCityWriter.EncapsulateSpecialChars message) (TeamCityWriter.EncapsulateSpecialChars details)
-            (TeamCityWriter.EncapsulateSpecialChars expected) (TeamCityWriter.EncapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
+            (TeamCityWriter.encapsulateSpecialChars name) (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details)
+            (TeamCityWriter.encapsulateSpecialChars expected) (TeamCityWriter.encapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
 
     type Environment =
         /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.

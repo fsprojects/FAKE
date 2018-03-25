@@ -33,12 +33,12 @@ module VmSizes =
     let A9 = VmSize "A9"
 
 /// Modifies the size of the Worker Role in the csdef.
-let ModifyVMSize (VmSizes.VmSize vmSize) cloudService =
+let modifyVMSize (VmSizes.VmSize vmSize) cloudService =
     let csdefPath = sprintf @"%s\ServiceDefinition.csdef" cloudService
     csdefPath
     |> File.ReadAllText
-    |> Xml.Doc
-    |> Xml.XPathReplaceNS
+    |> Xml.createDoc
+    |> Xml.replaceXPathNS
         "/svchost:ServiceDefinition/svchost:WorkerRole/@vmsize"
         vmSize
         [ "svchost", "http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" ]
@@ -47,7 +47,7 @@ let ModifyVMSize (VmSizes.VmSize vmSize) cloudService =
         doc.Save fileStream
 
 /// Packages a cloud service role into a .cspkg, ready for deployment.
-let PackageRole packageCloudServiceParams =
+let packageRole packageCloudServiceParams =
     let csPack =
         let sdkRoots =
             [ @"C:\Program Files\Microsoft SDKs\Windows Azure\.NET SDK\"

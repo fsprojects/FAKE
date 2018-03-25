@@ -46,7 +46,7 @@ let MSpecDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let buildMSpecArgs parameters assemblies =
+let internal buildMSpecArgs parameters assemblies =
     let html, htmlText =
         if String.isNotNullOrEmpty parameters.HtmlOutputDir then
             true, sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
@@ -85,13 +85,13 @@ let buildMSpecArgs parameters assemblies =
 /// ## Hint
 ///
 /// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
-let MSpec setParams assemblies =
+let exec setParams assemblies =
     let details = String.separated ", " assemblies
     use __ = Trace.traceTask "MSpec" details
     let parameters = setParams MSpecDefaults
     let args = buildMSpecArgs parameters assemblies
     Trace.trace (parameters.ToolPath + " " + args)
-    if 0 <> Process.Exec ((fun info -> 
+    if 0 <> Process.execSimple ((fun info -> 
             { info with
                 FileName = parameters.ToolPath
                 WorkingDirectory = parameters.WorkingDir

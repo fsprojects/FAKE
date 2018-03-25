@@ -70,7 +70,7 @@ let isCleanWorkingCopy repositoryDir =
 /// Returns a friendly name from a SHA1
 let showName repositoryDir sha1 =
     let ok,msg,errors = runGitCommand repositoryDir <| sprintf "name-rev %s" sha1
-    if msg.Count = 0 then sha1 else msg.[0]
+    if msg.Length = 0 then sha1 else msg.[0]
 
 /// Returns true if rev1 is ahead of rev2
 let isAheadOf repositoryDir rev1 rev2 =

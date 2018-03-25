@@ -23,7 +23,7 @@ let DefaultZipLevel = 7
 
 #if DOTNETCORE // Wait for SharpZipLib to become available for netcore
 
-let private createZip fileName comment level (items: (string * string) seq) =
+let private createZipInternal fileName comment level (items: (string * string) seq) =
     use stream = new ZipArchive (File.Create(fileName), ZipArchiveMode.Create)
     let zipLevel = min (max 0 level) 9
     let buffer = Array.create 32768 0uy
@@ -50,7 +50,7 @@ let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : str
         length := !length - (int64 count)
 
 
-let private createZip fileName comment level (items : (string * string) seq) =
+let private createZipInternal fileName comment level (items : (string * string) seq) =
     use stream = new ZipOutputStream(File.Create(fileName))
     let zipLevel = min (max 0 level) 9
     stream.SetLevel zipLevel
@@ -70,7 +70,7 @@ let private createZip fileName comment level (items : (string * string) seq) =
 ///  - `level` - The compression level.
 ///  - `flatten` - If set to true then all subfolders are merged into the root folder.
 ///  - `files` - A sequence with files to zip.
-let CreateZip workingDir fileName comment level flatten files =
+let createZip workingDir fileName comment level flatten files =
     let workingDir = 
         let dir = DirectoryInfo.ofPath workingDir
         if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
@@ -88,14 +88,14 @@ let CreateZip workingDir fileName comment level flatten files =
                     else info.FullName
                 yield item, itemSpec }
 
-    createZip fileName comment level items
+    createZipInternal fileName comment level items
 
 /// Creates a zip file with the given files.
 /// ## Parameters
 ///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `files` - A sequence with files to zip.
-let Zip workingDir fileName files = CreateZip workingDir fileName "" DefaultZipLevel false files
+let zip workingDir fileName files = createZip workingDir fileName "" DefaultZipLevel false files
 
 /// Creates a zip file with the given files and specs.
 /// ## Parameters
@@ -103,7 +103,7 @@ let Zip workingDir fileName files = CreateZip workingDir fileName "" DefaultZipL
 ///  - `comment` - A comment for the resulting zip file.
 ///  - `level` - The compression level.
 ///  - `items` - A sequence with files and their target location in the zip.
-let CreateZipSpec fileName comment level items = createZip fileName comment level items
+let createZipSpec fileName comment level items = createZipInternal fileName comment level items
 
 /// Creates a zip file with the given files and specs.
 /// ## Parameters
@@ -111,22 +111,22 @@ let CreateZipSpec fileName comment level items = createZip fileName comment leve
 ///  - `comment` - A comment for the resulting zip file.
 ///  - `level` - The compression level.
 ///  - `items` - A sequence with files and their target location in the zip.
-let ZipSpec fileName items = CreateZipSpec fileName "" DefaultZipLevel items
+let zipSpec fileName items = createZipSpec fileName "" DefaultZipLevel items
 
 /// Creates a zip file with the given file.
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `targetFileName` - The file to zip.
-let ZipFile fileName targetFileName = 
+let zipFile fileName targetFileName = 
     let fi = FileInfo.ofPath targetFileName
-    CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [ fi.FullName ]
+    createZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [ fi.FullName ]
 
 
 /// Unzips a file with the given file name.
 /// ## Parameters
 ///  - `target` - The target directory.
 ///  - `fileName` - The file name of the zip file.
-let Unzip target (fileName : string) =
+let unzip target (fileName : string) =
 #if DOTNETCORE
     use stream = new FileStream(fileName, FileMode.Open)
     use zipFile = new ZipArchive(stream)
@@ -163,7 +163,7 @@ let Unzip target (fileName : string) =
 /// ## Parameters
 ///  - `fileToUnzip` - The file inside the archive.
 ///  - `zipFileName` - The file name of the zip file.
-let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) =
+let unzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 #if DOTNETCORE
     use stream = new FileStream(zipFileName, FileMode.Open)
     use zf = new ZipArchive(stream)
@@ -185,7 +185,7 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName : string) =
 /// ## Parameters
 ///  - `predicate` - The predictae for the searched file in the archive.
 ///  - `zipFileName` - The file name of the zip file.
-let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
+let unzipFirstMatchingFileInMemory predicate (zipFileName : string) =
 #if DOTNETCORE
     use st = new FileStream(zipFileName, FileMode.Open)
     use zf = new ZipArchive(st)
@@ -237,20 +237,20 @@ let internal filesAsSpecsExt flatten workingDir (files:IGlobbingPattern) =
 ///
 ///     Target "Zip" (fun _ ->
 ///         [   !! "ci/build/project1/**/*"
-///                 |> Zip.FilesAsSpecs "ci/build/project1"
-///                 |> Zip.MoveToFolder "project1"
+///                 |> Zip.filesAsSpecs "ci/build/project1"
+///                 |> Zip.moveToFolder "project1"
 ///             !! "ci/build/project2/**/*"
-///                 |> Zip.FilesAsSpecs "ci/build/project2"
-///                 |> Zip.MoveToFolder "project2"
+///                 |> Zip.filesAsSpecs "ci/build/project2"
+///                 |> Zip.moveToFolder "project2"
 ///             !! "ci/build/project3/sub/dir/**/*"
-///                 |> Zip.FilesAsSpecs "ci/build/project3"
-///                 |> Zip.MoveToFolder "project3"
+///                 |> Zip.filesAsSpecs "ci/build/project3"
+///                 |> Zip.moveToFolder "project3"
 ///         ]
 ///         |> Seq.concat
-///         |> Zip.ZipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion) "" Zip.DefaultZipLevel
+///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion) "" Zip.DefaultZipLevel
 ///     )
 ///
-let FilesAsSpecs workingDir files = filesAsSpecsExt false workingDir files
+let filesAsSpecs workingDir files = filesAsSpecsExt false workingDir files
 
 /// This helper helps with creating complex zip file with multiple include patterns.
 /// ## Parameters
@@ -264,20 +264,20 @@ let FilesAsSpecs workingDir files = filesAsSpecsExt false workingDir files
 ///
 ///     Target "Zip" (fun _ ->
 ///         [   !! "ci/build/project1/**/*"
-///                 |> Zip.FilesAsSpecsFlatten
-///                 |> Zip.MoveToFolder "project1"
+///                 |> Zip.filesAsSpecsFlatten
+///                 |> Zip.moveToFolder "project1"
 ///             !! "ci/build/project2/**/*"
-///                 |> Zip.FilesAsSpecsFlatten
-///                 |> Zip.MoveToFolder "project2"
+///                 |> Zip.filesAsSpecsFlatten
+///                 |> Zip.moveToFolder "project2"
 ///             !! "ci/build/project3/sub/dir/**/*"
-///                 |> Zip.FilesAsSpecs "ci/build/project3"
-///                 |> Zip.MoveToFolder "project3"
+///                 |> Zip.filesAsSpecs "ci/build/project3"
+///                 |> Zip.moveToFolder "project3"
 ///         ]
 ///         |> Seq.concat
-///         |> Zip.ZipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
+///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
 ///     )
 ///
-let FilesAsSpecsFlatten files = filesAsSpecsExt true "" files
+let filesAsSpecsFlatten files = filesAsSpecsExt true "" files
 
 /// This helper helps with creating complex zip file with multiple include patterns.
 /// This function will move a given list of zip specifications to the given folder (while keeping original folder structure intact).
@@ -292,20 +292,20 @@ let FilesAsSpecsFlatten files = filesAsSpecsExt true "" files
 ///
 ///     Target "Zip" (fun _ ->
 ///         [   !! "ci/build/project1/**/*"
-///                 |> Zip.FilesAsSpecsFlatten
-///                 |> Zip.MoveToFolder "project1"
+///                 |> Zip.filesAsSpecsFlatten
+///                 |> Zip.moveToFolder "project1"
 ///             !! "ci/build/project2/**/*"
-///                 |> Zip.FilesAsSpecsFlatten
-///                 |> Zip.MoveToFolder "project2"
+///                 |> Zip.filesAsSpecsFlatten
+///                 |> Zip.moveToFolder "project2"
 ///             !! "ci/build/project3/sub/dir/**/*"
-///                 |> Zip.FilesAsSpecs "ci/build/project3"
-///                 |> Zip.MoveToFolder "project3"
+///                 |> Zip.filesAsSpecs "ci/build/project3"
+///                 |> Zip.moveToFolder "project3"
 ///         ]
 ///         |> Seq.concat
-///         |> Zip.ZipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
+///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
 ///     )
 ///
-let MoveToFolder path items =
+let moveToFolder path items =
     seq {
         for file, oldSpec in items do
             let info = FileInfo.ofPath file
@@ -323,14 +323,14 @@ let MoveToFolder path items =
 ///  - `comment` - A comment for the resulting zip file.
 ///  - `level` - The compression level.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
-let CreateZipOfIncludes fileName comment level (files : (string * IGlobbingPattern) seq) =
+let createZipOfIncludes fileName comment level (files : (string * IGlobbingPattern) seq) =
     files
     |> Seq.map (fun (wd, glob) ->
         glob
-        |> FilesAsSpecs ""
-        |> MoveToFolder wd)
+        |> filesAsSpecs ""
+        |> moveToFolder wd)
     |> Seq.concat
-    |> CreateZipSpec fileName comment level
+    |> createZipSpec fileName comment level
     //let items = seq {
     //    for path, incl in files do
     //        for file in incl do
@@ -368,7 +368,7 @@ let CreateZipOfIncludes fileName comment level (files : (string * IGlobbingPatte
 ///                 ++ "MyWebApp/web.config"
 ///             @"app_data\jobs\continuous\MyWebJob", !! "MyWebJob/bin/Release/*.*"
 ///         ]
-///         |> ZipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
+///         |> Zip.zipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
 ///     )
 ///
-let ZipOfIncludes fileName files = CreateZipOfIncludes fileName "" DefaultZipLevel files
+let zipOfIncludes fileName files = createZipOfIncludes fileName "" DefaultZipLevel files

@@ -15,7 +15,7 @@ let mutable toolPath =
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
 let private run toolPath command = 
-    if 0 <> Process.Exec ((fun info ->
+    if 0 <> Process.execSimple ((fun info ->
             { info with
                 FileName = toolPath
                 Arguments = command }) >> Process.withFramework) System.TimeSpan.MaxValue
@@ -37,7 +37,7 @@ let defaultLiterateArguments =
       ProjectParameters = []
       LayoutRoots = [] }
 
-let CreateDocs p =
+let createDocs p =
     let arguments = (p:LiterateArguments->LiterateArguments) defaultLiterateArguments
     let layoutroots =
         if arguments.LayoutRoots.IsEmpty then []
@@ -80,7 +80,7 @@ let defaultMetadataFormatArguments =
       LayoutRoots = []
       LibDirs = [] }
 
-let CreateDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
+let createDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFiles = 
     let arguments = p defaultMetadataFormatArguments
     let outputDir = arguments.OutputDirectory
     let projectParameters = arguments.ProjectParameters

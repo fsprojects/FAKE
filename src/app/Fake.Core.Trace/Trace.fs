@@ -92,7 +92,7 @@ let exceptionAndInnersToString (ex:Exception) =
 let traceException (ex:Exception) = exceptionAndInnersToString ex |> traceError
 
 /// Traces the EnvironmentVariables
-let TraceEnvironmentVariables() = 
+let traceEnvironmentVariables() = 
 #if !DOTNETCORE
     // [ EnvironTarget.Machine; EnvironTarget.Process; EnvironTarget.User ] 
     // |> Seq.iter (fun mode -> 
@@ -231,4 +231,4 @@ let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     |> CoreTracing.defaultConsoleTraceListener.Write
 
 /// Logs the given files with the message.
-let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
+let logItems message items = items |> Seq.iter (log << sprintf "%s%s" message)

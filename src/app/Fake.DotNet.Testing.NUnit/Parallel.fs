@@ -42,7 +42,7 @@ type private AggFailedResult =
 ///         !! (testDir + @"\Test.*.dll")
 ///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
-let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
+let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
@@ -56,7 +56,7 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
         let stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
         let result =
-            Process.ExecWithLambdas ((fun info ->
+            Process.execRaw ((fun info ->
             { info with
                 FileName = tool
                 WorkingDirectory = getWorkingDir parameters
