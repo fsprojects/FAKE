@@ -12,7 +12,8 @@ open System.IO
 exception FakeExecutionFailed of ProcessResult
   with
     override x.ToString() =
-        let stdErr = String.Join(Environment.NewLine,result.Messages)
+        let result = x.Data0
+        let stdErr = String.Join(Environment.NewLine,result.Errors)
         let stdOut = String.Join(Environment.NewLine,result.Messages)
         sprintf "FAKE Process exited with %d:\n%s\nStdout: \n%s" result.ExitCode stdErr stdOut
 
@@ -44,7 +45,7 @@ let directFakeInPath command scenarioPath target =
           |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true") (System.TimeSpan.FromMinutes 15.)
     if result.ExitCode <> 0 then
         raise <| FakeExecutionFailed(result)
-    ProcessResult
+    result
 
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null
