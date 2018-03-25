@@ -454,16 +454,14 @@ source https://api.nuget.org/v3/index.json
 storage: none
 nuget FSharp.Core
         """
-        if not (Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" = "true") then
+        if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
           Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r \"nuget FSharp.Core //\"'.
 See https://fake.build/fake-fake5-modules.html for details. 
 If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
         let section =
           { Header = "paket-inline"
             Section = defaultPaketCode }
-        restoreDependencies script printDetails cacheDir 
-    | _ ->
-        failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
+        restoreDependencies script printDetails cacheDir section
 
 let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
 
