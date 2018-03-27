@@ -18,7 +18,7 @@ exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + "\r\n" + (String.separated "\r\n" x.Data1)
 
-type MsBuildEntry = {
+type MSBuildEntry = {
     Version: string;
     Paths: string list;
 }
@@ -62,8 +62,8 @@ type MSBuildDistributedLoggerConfig =
         AssemblyPath : string
         Parameters : (string * string) list option }
 
-module private MsBuildExe =
-  let knownMsBuildEntries =
+module private MSBuildExe =
+  let knownMSBuildEntries =
     [
         { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
                                      @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin"
@@ -74,7 +74,7 @@ module private MsBuildExe =
         { Version = "12.0"; Paths = [@"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64"] }
     ]
 
-  let oldMsBuildLocations =
+  let oldMSBuildLocations =
     [ @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\";
       @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\";
       @"c:\Windows\Microsoft.NET\Framework\v3.5\"
@@ -84,7 +84,7 @@ module private MsBuildExe =
     items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
 
   let private getAllKnownPaths =
-    (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
+    (knownMSBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMSBuildLocations
 
   /// Versions of Mono prior to this one have faulty implementations of MSBuild
   /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
@@ -120,20 +120,20 @@ module private MsBuildExe =
     let which tool = Process.tryFindFileOnPath tool
     let msbuildEnvironVar = Environment.environVarOrNone "MSBuild"
 
-    let preferMsBuildOnNetCore =
+    let preferMSBuildOnNetCore =
         if not Environment.isUnix || Environment.isMono then false
         else
             match Mono.monoVersion with
             | Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> true
             | _ -> false
 
-    let preferMsBuildOnMono =
+    let preferMSBuildOnMono =
         match Environment.monoVersion with
         | Some(_, Some(version)) when version >= monoVersionToUseMSBuildOn -> true
         | _ -> false
 
     let foundExe =
-        match Environment.isUnix, preferMsBuildOnNetCore || preferMsBuildOnMono with
+        match Environment.isUnix, preferMSBuildOnNetCore || preferMSBuildOnMono with
         | true, true ->
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "msbuild")
@@ -160,7 +160,7 @@ module private MsBuildExe =
 #endif
                     None
             let findOnVSPathsThenSystemPath =
-                let dict = toDict knownMsBuildEntries
+                let dict = toDict knownMSBuildEntries
                 let vsVersionPaths =
                     defaultArg (Environment.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
                     |> List.map ((@@) Environment.ProgramFilesX86)
@@ -209,7 +209,7 @@ type MSBuildParams =
       Environment : Map<string, string> }
     /// Defines a default for MSBuild task parameters
     static member Create() =
-        { ToolPath = MsBuildExe.msBuildExe
+        { ToolPath = MSBuildExe.msBuildExe
           Targets = []
           Properties = []
           MaxCpuCount = Some None
@@ -227,7 +227,7 @@ type MSBuildParams =
             Process.createEnvironmentMap()
             |> Map.remove "MSBUILD_EXE_PATH"
             |> Map.remove "MSBuildExtensionsPath" }
-    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
+    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]
     static member Empty = MSBuildParams.Create()
 
     /// Sets the current environment variables.
@@ -235,16 +235,16 @@ type MSBuildParams =
         { x with Environment = map }
 
 [<RequireQualifiedAccess>]
-module MsBuild =
+module MSBuild =
 
-  let msBuildExe = MsBuildExe.msBuildExe
+  let msBuildExe = MSBuildExe.msBuildExe
 
   /// [omit]
   let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
 
   /// [omit]
   let xname name = XName.Get(name, msbuildNamespace)
-  
+
   /// [omit]
   let loadProject (projectFileName : string) : MSBuildProject =
     MSBuildProject.Load(projectFileName, LoadOptions.PreserveWhitespace)
@@ -394,7 +394,7 @@ module MsBuild =
                 | None -> ""
                 | Some ps ->
                     ps
-                    |> List.map (fun p -> sprintf "%s;" (logParams p))
+                    |> List.map (logParams >> (sprintf "%s"))
                     |> String.concat "")
 
         match p.FileLoggers with
@@ -438,8 +438,8 @@ module MsBuild =
 
 #if !NO_MSBUILD_AVAILABLE
   /// [omit]
-  let ErrorLoggerName = typedefof<MsBuildLogger.ErrorLogger>.FullName
-  
+  let ErrorLoggerName = typedefof<MSBuildLogger.ErrorLogger>.FullName
+
   let private pathToLogger = typedefof<MSBuildParams>.Assembly.Location
 #endif
 
@@ -459,7 +459,7 @@ module MsBuild =
 
   /// Runs a MSBuild project
   /// ## Parameters
-  ///  - `setParams` - A function that overwrites the default MsBuildParams
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `project` - A string with the path to the project file to build.
   ///
   /// ## Sample
@@ -477,7 +477,7 @@ module MsBuild =
   ///                         "Configuration", buildMode
   ///                     ]
   ///              }
-  ///     MsBuild.build setParams "./MySolution.sln"
+  ///     MSBuild.build setParams "./MySolution.sln"
   let build setParams project =
     use __ = Trace.traceTask "MSBuild" project
     let msBuildParams =
@@ -502,8 +502,8 @@ module MsBuild =
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
 #if !NO_MSBUILD_AVAILABLE
-            if File.Exists MsBuildLogger.ErrorLoggerFile then
-                File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
+            if File.Exists MSBuildLogger.ErrorLoggerFile then
+                File.ReadAllLines(MSBuildLogger.ErrorLoggerFile) |> List.ofArray
             else []
 #else
             []
@@ -514,19 +514,20 @@ module MsBuild =
 
   /// Builds the given project files and collects the output files.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `properties` - A list with tuples of property name and property values.
   ///  - `projects` - A list of project or solution files.
-  let runWithProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
+  let runWithProperties setParams outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
     let projects = projects |> Seq.toList
 
     let output =
         if String.isNullOrEmpty outputPath then ""
         else
-        outputPath
-          |> Path.getFullName
-          |> String.trimSeparator
+            outputPath
+            |> Path.getFullName
+            |> String.trimSeparator
 
     let properties =
         if String.isNullOrEmpty output then properties
@@ -534,11 +535,15 @@ module MsBuild =
 
     let dependencies =
         projects
-            |> List.map getProjectReferences
-            |> Set.unionMany
+        |> List.map getProjectReferences
+        |> Set.unionMany
 
-    let setBuildParam project projectParams =
-        { projectParams with Targets = targets |> String.split ';' |> List.filter ((<>) ""); Properties = projectParams.Properties @ properties project }
+    let setBuildParam project defaultParams =
+        let projectParams = setParams defaultParams
+        let targets = targets |> String.split ';' |> List.filter String.isNotNullOrEmpty
+        { projectParams with
+            Targets = projectParams.Targets @ targets
+            Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
@@ -549,48 +554,53 @@ module MsBuild =
 
   /// Builds the given project files or solution files and collects the output files.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `properties` - A list with tuples of property name and property values.
   ///  - `projects` - A list of project or solution files.
-  let run outputPath targets properties projects = runWithProperties outputPath targets (fun _ -> properties) projects
+  let run setParams outputPath targets properties projects = runWithProperties setParams outputPath targets (fun _ -> properties) projects
 
   /// Builds the given project files or solution files and collects the output files.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let runDebug outputPath targets projects = run outputPath targets [ "Configuration", "Debug" ] projects
+  let runDebug setParams outputPath targets projects = run setParams outputPath targets [ "Configuration", "Debug" ] projects
 
   /// Builds the given project files or solution files and collects the output files.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let runRelease outputPath targets projects = run outputPath targets [ "Configuration", "Release" ] projects
+  let runRelease setParams outputPath targets projects = run setParams outputPath targets [ "Configuration", "Release" ] projects
 
   /// Builds the given project files or solution files in release mode to the default outputs.
   /// ## Parameters
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let runWithDefaults targets projects = run null targets [ "Configuration", "Release" ] projects
+  let runWithDefaults targets projects = run id null targets [ "Configuration", "Release" ] projects
 
   /// Builds the given project files or solution files in release mode and collects the output files.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - If it is null or empty then the project settings are used.
   ///  - `properties` - A list with tuples of property name and property values.
   ///  - `targets` - A string with the target names which should be run by MSBuild.
   ///  - `projects` - A list of project or solution files.
-  let runReleaseExt outputPath properties targets projects =
+  let runReleaseExt setParams outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
-    run outputPath targets properties projects
+    run setParams outputPath targets properties projects
 
   /// Builds the given web project file in the specified configuration and copies it to the given outputPath.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
   ///  - `projectFile` - The project file path.
-  let buildWebsiteConfig outputPath configuration projectFile  =
+  let buildWebsiteConfig setParams outputPath configuration projectFile  =
     use t = Trace.traceTask "BuildWebsite" projectFile
     let projectName = (FileInfo.ofPath projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
 
@@ -607,8 +617,8 @@ module MsBuild =
                  then ""
                  else (String.replicate diff "../")
 
-    run null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
-    run null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
+    run setParams null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
+    run setParams null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
         [ "Configuration", configuration
           "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
@@ -619,15 +629,16 @@ module MsBuild =
   /// ## Parameters
   ///  - `outputPath` - The output path.
   ///  - `projectFile` - The project file path.
-  let buildWebsite outputPath projectFile = buildWebsiteConfig outputPath "Debug" projectFile
+  let buildWebsite outputPath projectFile = buildWebsiteConfig id outputPath "Debug" projectFile
 
   /// Builds the given web project files in specified configuration and copies them to the given outputPath.
   /// ## Parameters
+  ///  - `setParams` - A function that overwrites the default MSBuildParams
   ///  - `outputPath` - The output path.
   ///  - `configuration` - MSBuild configuration.
   ///  - `projectFiles` - The project file paths.
-  let buildWebsitesConfig outputPath configuration projectFiles = Seq.iter (buildWebsiteConfig outputPath configuration) projectFiles
-  
+  let buildWebsitesConfig setParams outputPath configuration projectFiles = Seq.iter (buildWebsiteConfig setParams outputPath configuration) projectFiles
+
   /// Builds the given web project files with debug configuration and copies them to the given websiteDir.
   /// ## Parameters
   ///  - `outputPath` - The output path.
