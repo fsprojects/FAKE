@@ -176,7 +176,7 @@ Target.create "Clean" (fun _ ->
 
     // Workaround https://github.com/fsprojects/Paket/issues/2830
     // https://github.com/fsprojects/Paket/issues/2689
-    // Basically paket fails if there is already an existing nuspec in obj/ dir because then MsBuild will call paket with multiple nuspec file arguments separated by ';'
+    // Basically paket fails if there is already an existing nuspec in obj/ dir because then MSBuild will call paket with multiple nuspec file arguments separated by ';'
     !! "src/*/*/obj/**/*.nuspec"
     -- (sprintf "src/*/*/obj/**/*%s.nuspec" release.NugetVersion)
     //-- "src/*/*/obj/*.references"
@@ -267,7 +267,7 @@ let dotnetAssemblyInfos =
       "Fake.Core.Xml", "Core Xml functionality"
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
       "Fake.DotNet.Cli", "Running the dotnet cli"
-      "Fake.DotNet.MsBuild", "Running msbuild"
+      "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
       "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
@@ -721,10 +721,10 @@ Target.create "DotNetPackage_" (fun _ ->
         { c with
             Configuration = DotNet.Release
             OutputPath = Some nugetDir
-            Common = 
+            Common =
                 if CircleCi.isCircleCi then
                     { c.Common with CustomParams = Some "/m:1" }
-                else c.Common                                
+                else c.Common
         } |> dtntSmpl) "Fake.sln"
 
     let info = DotNet.info dtntSmpl
@@ -956,13 +956,13 @@ Target.create "FastRelease" (fun _ ->
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
 
-    let files = 
+    let files =
         runtimes @ [ "portable"; "packages" ]
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-    
+
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    |> GitHub.uploadFiles files    
+    |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
 )

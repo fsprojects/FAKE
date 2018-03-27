@@ -7,6 +7,7 @@ open Microsoft.Build.Framework
 open System
 open System.Collections.Generic
 open System.IO
+open Fake.IO
 
 /// [omit]
 let errToStr (a : BuildErrorEventArgs) = sprintf "%s: %s(%d,%d): %s" a.Code a.File a.LineNumber a.ColumnNumber a.Message
