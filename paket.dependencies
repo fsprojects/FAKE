@@ -119,7 +119,7 @@ group netcore
 
     nuget NETStandard.Library ~> 2.0
     nuget FSharp.Core ~> 4.1
-    nuget Argu
+    nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
     nuget Paket.Core prerelease

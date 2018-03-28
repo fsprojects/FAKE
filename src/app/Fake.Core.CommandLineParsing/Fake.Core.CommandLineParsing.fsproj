@@ -1,0 +1,20 @@
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Fake.Core.CommandLineParsing</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="docopt.fs/Docopt/Options.fs" />
+    <Compile Include="docopt.fs/Docopt/OptionsParser.fs" />
+    <Compile Include="docopt.fs/Docopt/Args.fs" />
+    <Compile Include="docopt.fs/Docopt/Ast.fs" />
+    <Compile Include="docopt.fs/Docopt/UsageParser.fs" />
+    <Compile Include="docopt.fs/Docopt/Docopt.fs" />
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>

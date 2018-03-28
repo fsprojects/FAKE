@@ -1,14 +1,11 @@
 ﻿namespace Docopt
 #nowarn "62"
-#light "off"
 
 open System
 
 type HelpCallback = unit -> string
-;;
 
-module internal DocHelper =
-  begin
+module DocHelper =
     type private Last =
       | Usage = 0
       | Options = 1
@@ -25,29 +22,48 @@ module internal DocHelper =
       else let idx = line'.IndexOf("usage:", OrdinalIgnoreCase) in
            if idx <> -1
            then Usage(line'.Substring(idx + 6))
-           else let idx = line'.IndexOf("options:", OrdinalIgnoreCase) in
-                if idx <> -1
-                then Options(line'.Substring(idx + 8))
+           else let idx = line'.IndexOf("options", OrdinalIgnoreCase)
+                let idxCol = line'.IndexOf(":", OrdinalIgnoreCase)
+                if idx <> -1 && idxCol <> -1
+                then 
+                  let title = line'.Substring(0, idxCol)
+                  let sectionName =
+                    let startIdx = title.IndexOf("[")
+                    let endIdx = title.IndexOf("]")
+                    if startIdx <> -1 && endIdx > startIdx
+                    then title.Substring(startIdx + 1, endIdx - startIdx - 1)
+                    else "options"
+                  Options(sectionName, line'.Substring(idxCol + 1))
                 else Other(line')
-
+    type OptionBuilder =
+      { mutable Lines : string list
+        Title : string }
+      member x.AddLine line = { x with Lines = line :: x.Lines }
+      member x.Build() = { OptionSection.Title = x.Title; OptionSection.Lines = x.Lines }
+      static member Build (x:OptionBuilder) = x.Build()
     let cut (doc':string) =
-      let folder (usages', options', last') = function
-      | Usage(ustr)   -> (ustr::usages', options', Last.Usage)
-      | Options(ostr) -> (usages', ostr::options', Last.Options)
-      | Newline       -> (usages', options', Last.Nothing)
+      let folder (usages', (sections':OptionBuilder list), last') = function
+      | Usage(ustr)   -> (ustr::usages', sections', Last.Usage)
+      | Options(sectionName, ostr) -> (usages', { Title = sectionName; Lines = [ostr] } :: sections', Last.Options)
+        //match sections' with
+        //| options' :: sections' -> (usages', (ostr::options')::sections', Last.Options)
+        //| [] -> (usages', [{ Title = sectionName; Lines = [ostr] }], Last.Options)
+      | Newline       -> (usages', sections', Last.Nothing)
       | Other(line)   -> match last' with
-                         | Last.Usage   -> (line::usages', options', Last.Usage)
-                         | Last.Options -> (usages', line::options', Last.Options)
-                         | _            -> (usages', options', Last.Nothing)
+                         | Last.Usage   -> (line::usages', sections', Last.Usage)
+                         | Last.Options -> 
+                            match sections' with
+                            | options' :: sections' -> (usages', (options'.AddLine line) :: sections', Last.Options)
+                            | [] -> (usages', [{ Title = "options"; Lines = [line] }], Last.Options)
+                         | _            -> (usages', sections', Last.Nothing)
       in doc'.Split([|"\r\n";"\n";"\r"|], StringSplitOptions.None)
       |> Array.fold folder ([], [], Last.Nothing)
       |> fun (ustr', ostrs', _) ->
            let ustrsArray = List.toArray ustr' in
-           let ostrsArray = List.toArray ostrs' in
+           let ostrsArray = List.toArray (ostrs' |> List.map OptionBuilder.Build) in
            Array.Reverse(ostrsArray);
+           Array.Reverse(ustrsArray);
            (ustrsArray, ostrsArray)
-  end
-;;
 
 type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
             ?soptChars':string) =
@@ -59,13 +75,26 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     let help = defaultArg help' (fun () -> doc')
     let version = defaultArg version' noVersionObject
     let soptChars = defaultArg soptChars' "?"
-    let (uStrs, oStrs) = DocHelper.cut doc'
-    let options = OptionsParser(soptChars).Parse(oStrs)
-    let pusage = UsageParser(uStrs, options)
+    let (uStrs, sections) = DocHelper.cut doc'
+    let sectionsParsers =
+      sections
+      |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser(soptChars).Parse(oStrs.Lines)))
+      |> dict
+    let pusage = UsageParser(uStrs, sectionsParsers)
     member __.Parse(?argv':string array, ?args':Arguments.Dictionary) =
       let args = defaultArg args' (Arguments.Dictionary()) in
       let argv = defaultArg argv' argv in
-      pusage.Parse(argv, args)
+      let result = pusage.ParseCommandLine(argv)
+      result |> Map.iter (fun key i ->
+        match i with
+        | Arguments.Argument cmd -> args.AddArg(key, cmd)
+        | Arguments.Arguments cmds -> cmds |> Seq.iter (fun cmd -> args.AddArg(key, cmd))
+        | Arguments.Command -> args.AddCmd(key)
+        | Arguments.Flag -> args.AddString(key)
+        | Arguments.Flags i -> [1..i] |> Seq.iter (fun _ -> args.AddString(key))
+        | Arguments.None -> args.AddString(key))
+
+      args
     member __.Usage = String.Join("\n", uStrs)
     member __.UsageParser = pusage
   end

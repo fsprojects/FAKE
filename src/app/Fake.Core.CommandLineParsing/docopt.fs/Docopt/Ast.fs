@@ -1,12 +1,12 @@
 ﻿namespace Docopt
 #nowarn "62"
-#light "off"
 
 open System
 open System.Collections.Generic
 
 type private 'a GList = System.Collections.Generic.List<'a>
 
+[<RequireQualifiedAccess>]
 type Tag =
   | Eps = 0b00000000
   | Ano = 0b00000001
@@ -21,6 +21,90 @@ type Tag =
   | Ell = 0b00001010
   | Sdh = 0b00001011
 
+[<RequireQualifiedAccess>]
+type UsageAst =
+  /// matches nothing?
+  | Eps
+  /// Matches an option annotation [options]
+  | Ano of title:string * o':SafeOptions
+  /// Short options
+  | Sop of o':SafeOptions
+  /// long option
+  | Lop of o':SafeOption
+  /// Marks the given item as optional
+  | Sqb of ast':UsageAst
+  /// Requires the given item
+  | Req of ast':UsageAst
+  /// Named/Positional argument
+  | Arg of name':string
+  | XorEmpty
+  /// Either the one or the other
+  | Xor of l':UsageAst * r':UsageAst
+  /// Sequence of items
+  | Seq of asts':UsageAst list
+  /// Fixed command, like "push" in "git push"
+  | Cmd of cmd':string
+  /// Marks that the given item can be given multiple times 
+  | Ell of ast':UsageAst
+  /// matches the stdin [-]
+  | Sdh
+  member x.InstanceOfSop = match x with UsageAst.Sop _ -> true | _ -> false
+
+
+[<RequireQualifiedAccess>]
+type UsageAstBuilder =
+  | Eps
+  | Ano of title:string * o':SafeOptions
+  | Sop of o':SafeOptions
+  | Lop of o':SafeOption
+  | Sqb of ast':UsageAstCell
+  | Req of ast':UsageAstCell
+  | Arg of name':string
+  | XorEmpty
+  | Xor of l':UsageAstCell * r':UsageAstCell
+  | Seq of asts':UsageAstCell list
+  | Cmd of cmd':string
+  | Ell of ast':UsageAstCell
+  | Sdh
+  static member ToCell x = { Content = Some x }
+  member x.UsageTag =
+    match x with
+    | UsageAstBuilder.Eps _ -> Tag.Eps
+    | UsageAstBuilder.Ano _ -> Tag.Ano
+    | UsageAstBuilder.Sop _ -> Tag.Sop
+    | UsageAstBuilder.Lop _ -> Tag.Lop
+    | UsageAstBuilder.Sqb _ -> Tag.Sqb
+    | UsageAstBuilder.Req _ -> Tag.Req
+    | UsageAstBuilder.Arg _ -> Tag.Arg
+    | UsageAstBuilder.XorEmpty _ -> Tag.Xor
+    | UsageAstBuilder.Xor _ -> Tag.Xor
+    | UsageAstBuilder.Seq _ -> Tag.Seq
+    | UsageAstBuilder.Cmd _ -> Tag.Cmd
+    | UsageAstBuilder.Ell _ -> Tag.Ell
+    | UsageAstBuilder.Sdh _ -> Tag.Sdh
+
+and UsageAstCell =
+  { mutable Content : UsageAstBuilder option }
+  static member FromBuilder x = { Content = Some x }  
+  member x.Build () =
+    match x.Content with
+    | None -> failwithf "Nullref"
+    | Some c ->
+    match c with
+    | UsageAstBuilder.Eps -> UsageAst.Eps
+    | UsageAstBuilder.Ano (title, o') -> UsageAst.Ano (title, o')
+    | UsageAstBuilder.Sop o' -> UsageAst.Sop o'
+    | UsageAstBuilder.Lop o' -> UsageAst.Lop o'
+    | UsageAstBuilder.Sqb ast' -> UsageAst.Sqb (ast'.Build())
+    | UsageAstBuilder.Req ast' -> UsageAst.Req (ast'.Build())
+    | UsageAstBuilder.Arg name' -> UsageAst.Arg name'
+    | UsageAstBuilder.XorEmpty -> UsageAst.XorEmpty
+    | UsageAstBuilder.Xor (l', r') -> UsageAst.Xor(l'.Build(), r'.Build())
+    | UsageAstBuilder.Seq asts' -> UsageAst.Seq(asts' |> Seq.map (fun ast -> ast.Build()) |> Seq.toList)
+    | UsageAstBuilder.Cmd cmd' -> UsageAst.Cmd cmd'
+    | UsageAstBuilder.Ell ast' -> UsageAst.Ell (ast'.Build())
+    | UsageAstBuilder.Sdh -> UsageAst.Sdh
+
 [<AllowNullLiteral>]
 type IAst =
   interface
@@ -30,13 +114,44 @@ type IAst =
     abstract MatchArg : arg:string -> bool
     abstract TryFill : args:Arguments.Dictionary -> bool
     abstract DeepCopy : unit -> IAst
+    abstract Instance : IAst
+  end
+
+type DebugAst private (ast : IAst) =
+  class
+    static member Create(ast:IAst) =
+      //DebugAst(ast) :> IAst
+      ast
+    interface IAst with
+      member __.Tag = ast.Tag
+      member __.Instance = ast
+      member __.MatchSopt(s', getArg) = 
+        let res = ast.MatchSopt(s', getArg)
+        printfn "DEBUGAST: %O MatchSopt(%O, _) -> %s" ast s' res
+        res
+      member __.MatchLopt(l', getArg) =
+        let res = ast.MatchLopt(l', getArg)
+        printfn "DEBUGAST: %O MatchLopt(%O, _) -> %b" ast l' res
+        res
+      member __.MatchArg(arg) =
+        let res = ast.MatchArg(arg)
+        printfn "DEBUGAST: %O MatchArg(%O) -> %b" ast arg res
+        res
+      member __.TryFill(args) =
+        let res = ast.TryFill(args)
+        printfn "DEBUGAST: %O MatchArg(%O) -> %b" ast args res
+        res
+      member __.DeepCopy() = DebugAst(ast.DeepCopy()) :> IAst
+    end
+    override __.ToString() = ast.ToString()
   end
 
 type Eps private () =
   class
-    static member Instance = Eps() :> IAst
+    static member Instance = DebugAst.Create(Eps())
     interface IAst with
       member __.Tag = Tag.Eps
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
@@ -46,12 +161,14 @@ type Eps private () =
     override __.ToString() = "Eps"
   end
 
-type Sop(o':Options) =
+type Sop private (o':Options) =
   class
     let matched = GList<Option * string option>(o'.Count)
     static member Success = ( = ) ""
+    static member Create (o':Options) = DebugAst.Create(Sop(o'))
     interface IAst with
       member __.Tag = Tag.Sop
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', getArg') =
         let rec loop i = function
         | s when String.IsNullOrEmpty(s) || i >= s.Length -> s
@@ -82,12 +199,14 @@ type Sop(o':Options) =
     member __.Option = o'.[o'.Count - 1]
   end
 
-type Lop(o':Option) =
+type Lop private(o':Option) =
   class
     let mutable matched = false
     let mutable arg = None
+    static member Create (o':Option) = DebugAst.Create(Lop(o'))
     interface IAst with
       member __.Tag = Tag.Lop
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', _) = s'
       member __.MatchLopt(l', getArg') =
         if matched
@@ -108,11 +227,13 @@ type Lop(o':Option) =
     member __.Option = o'
   end
 
-type Ano(o':Options) =
+type Ano private(o':Options) =
   class
     let matched = GList<Option * string option>(o'.Count)
+    static member Create (o':Options) = DebugAst.Create(Ano(o'))
     interface IAst with
       member __.Tag = Tag.Ano
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', getArg') =
         let rec loop i = function
         | s when String.IsNullOrEmpty(s) || i >= s.Length -> s
@@ -149,14 +270,16 @@ type Ano(o':Options) =
     override __.ToString() = "Ano"
   end
 
-type Sqb(ast':IAst) =
+type Sqb private(ast':IAst) =
   class
     let mutable matched = false
     let hasMatched = function
     | true -> matched <- true; true
     | _    -> false
+    static member Create (ast':IAst) = DebugAst.Create(Sqb(ast'))
     interface IAst with
       member __.Tag = Tag.Sqb
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', a') =
         let res = ast'.MatchSopt(s', a') in
         res <> s' |> hasMatched |> ignore;
@@ -171,10 +294,12 @@ type Sqb(ast':IAst) =
     override __.ToString() = sprintf "Sqb (%A)" ast'
   end
 
-type Req(ast':IAst) =
+type Req private(ast':IAst) =
   class
+    static member Create (ast':IAst) = DebugAst.Create(Req(ast'))
     interface IAst with
       member __.Tag = Tag.Req
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', a') = ast'.MatchSopt(s', a')
       member __.MatchLopt(l', a') = ast'.MatchLopt(l', a')
       member __.MatchArg(a') = ast'.MatchArg(a')
@@ -184,19 +309,21 @@ type Req(ast':IAst) =
     override __.ToString() = sprintf "Req (%A)" ast'
   end
 
-type Arg(name':string) =
+type Arg private(name':string) =
   class
     let mutable value = null
+    static member Create (name':string) = DebugAst.Create(Arg(name'))
     interface IAst with
       member __.Tag = Tag.Arg
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(value') =
-        if value = null
+        if isNull value
         then (value <- value'; true)
         else false
       member __.TryFill(args') =
-        if value = null
+        if isNull value
         then false
         else (args'.AddArg(name', value); true)
       member __.DeepCopy() = Arg(name') :> IAst
@@ -204,13 +331,15 @@ type Arg(name':string) =
     override __.ToString() = "Arg " + name'
   end
 
-type Xor(l':IAst, r':IAst) =
+type Xor private(l':IAst, r':IAst) =
   class
     let mutable lOk = true
     let mutable rOk = true
-    new() = Xor(Eps.Instance, Eps.Instance)
+    static member Create(l':IAst, r':IAst) = DebugAst.Create(Xor(l', r'))
+    static member Create() = Xor.Create(Eps.Instance, Eps.Instance)
     interface IAst with
       member __.Tag = Tag.Xor
+      member x.Instance = x :> IAst
       member __.MatchSopt(sopt', getArg') =
         let lres = lazy l'.MatchSopt(sopt', getArg') in
         let rres = lazy r'.MatchSopt(sopt', getArg') in
@@ -255,10 +384,12 @@ type Xor(l':IAst, r':IAst) =
     override __.ToString() = sprintf "Xor (%A | %A)" l' r'
   end
 
-type Seq(asts':GList<IAst>) =
+type Seq private(asts':GList<IAst>) =
   class
+    static member Create (ast':GList<IAst>) = DebugAst.Create(Seq(ast'))
     interface IAst with
       member __.Tag = Tag.Seq
+      member x.Instance = x :> IAst
       member __.MatchSopt(shorts', a') =
         asts'
         |> Seq.fold (fun shorts' ast' -> ast'.MatchSopt(shorts', a')) shorts'
@@ -279,8 +410,10 @@ type Seq(asts':GList<IAst>) =
 type Cmd(cmd':string) =
   class
     let mutable matched = false
+    static member Create (cmd':string) = DebugAst.Create(Cmd(cmd'))
     interface IAst with
       member __.Tag = Tag.Cmd
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(a') =
@@ -301,8 +434,10 @@ type Ell(ast':IAst) =
     let mutable hasMatched = false
     let mutable currentAst = ast'.DeepCopy()
     let matched = GList<IAst>()
+    static member Create (ast':IAst) = DebugAst.Create(Ell(ast'))
     interface IAst with
       member __.Tag = Tag.Ell
+      member x.Instance = x :> IAst
       member xx.MatchSopt(s', a') =
         let res = currentAst.MatchSopt(s', a') in
         match res <> s' with
@@ -348,9 +483,10 @@ type Ell(ast':IAst) =
 type Sdh private () =
   class
     let mutable matched = false
-    static member Instance = Sdh() :> IAst
+    static member Instance = DebugAst.Create(Sdh())
     interface IAst with
       member __.Tag = Tag.Sdh
+      member x.Instance = x :> IAst
       member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(a') =
