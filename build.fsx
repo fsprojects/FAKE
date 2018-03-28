@@ -17,7 +17,7 @@ nuget Fake.IO.FileSystem prerelease
 nuget Fake.IO.Zip prerelease
 nuget Fake.Core.ReleaseNotes prerelease
 nuget Fake.DotNet.AssemblyInfoFile prerelease
-nuget Fake.DotNet.MsBuild prerelease
+nuget Fake.DotNet.MSBuild prerelease
 nuget Fake.DotNet.Cli prerelease
 nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Paket prerelease
@@ -349,7 +349,11 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
 )
 
 Target.create "BuildSolution_" (fun _ ->
+#if BOOTSTRAP
+    MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
+#else
     MsBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
+#endif
     |> Trace.logItems "AppBuild-Output: "
 )
 
