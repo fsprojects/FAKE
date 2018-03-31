@@ -72,13 +72,16 @@ type ArgumentStream<'item, 'TUserState>(argv:'item array, initState:'TUserState)
     let va = current()
     inc()
     va
-type ArgumentParser<'TItem, 'TResult, 'TUserState> = ArgumentStream<'TItem, 'TUserState> -> Reply<'TResult>
+
+  override x.ToString() =
+    sprintf "Pos: %d, %A, state: %A" pos argv state
+type ArgumentParser<'TItem, 'TUserState, 'TResult> = ArgumentStream<'TItem, 'TUserState> -> Reply<'TResult>
 
 module ArgParser =
   let preturn x : ArgumentParser<_,_,_> = fun stream -> Reply(x)
   let pzero : ArgumentParser<_,_,_> = fun stream -> Reply(Error, FParsec.Error.NoErrorMessages)
 
-  let (>>=) (p: ArgumentParser<_, 'a,'u>) (f: 'a -> ArgumentParser<_, 'b,'u>) =
+  let (>>=) (p: ArgumentParser<'i, 'u, 'a>) (f: 'a -> ArgumentParser<'i, 'u, 'b>) : ArgumentParser<_,_,_> =
     fun stream ->
         let reply1 = p stream
         if reply1.Status = Ok then
@@ -91,15 +94,15 @@ module ArgParser =
         else
             Reply(reply1.Status, reply1.Error)
   let (>>%) p x = p >>= fun _ -> preturn x          
-  let (.>>) p1 p2 = p1 >>= fun _ -> p2
-  let (>>.) p1 p2 = p1 >>= fun x -> p2 >>% x
+  let (>>.) p1 p2 = p1 >>= fun _ -> p2
+  let (.>>) p1 p2 = p1 >>= fun x -> p2 >>% x
   let (.>>.) p1 p2 = p1 >>= fun a -> p2 >>= fun b -> preturn (a, b)
-  let between (popen: ArgumentParser<_,_,'u>) (pclose: ArgumentParser<_, _,'u>) (p: ArgumentParser<_, _,'u>) =
+  let between (popen: ArgumentParser<_,_,'u>) (pclose: ArgumentParser<_, 'u,_>) (p: ArgumentParser<_, 'u,_>) =
      popen >>. p .>> pclose
   let (|>>) p f = p >>= fun x -> preturn (f x)  
 
 
-  let (<?>) (p: ArgumentParser<_,'a,'u>) label  : ArgumentParser<_,'a,'u> =
+  let (<?>) (p: ArgumentParser<_,'u,'a>) label  : ArgumentParser<_,'u,'a> =
       let error = expected label
       fun stream ->
           let stateTag = stream.StateTag
@@ -108,7 +111,7 @@ module ArgParser =
               reply.Error <- error
           reply
 
-  let choice (ps : seq<ArgumentParser<_, 'a, 'u>>) : ArgumentParser<_, _, _> =
+  let choice (ps : seq<ArgumentParser<_, 'u, 'a>>) : ArgumentParser<_, _, _> =
     fun (stream:ArgumentStream<_,_>) ->
        use iter = ps.GetEnumerator()
        if iter.MoveNext() then
@@ -209,6 +212,12 @@ module ArgParser =
         | _ -> None
       chooseParser (sprintf "Flag '%s'" flag.FullLong) chooseCmd
 
+  let pLongFlagWithArg (flag:SafeOption) =
+      let chooseCmd arg =
+        match arg with
+        | Some (arg:string) when arg.StartsWith (flag.FullLong + "=") -> Some (arg.Substring (flag.FullLong.Length + 1))
+        | _ -> None
+      chooseParser (sprintf "Flag '%s='" flag.FullLong) chooseCmd
   let parg argName = chooseParser (sprintf "Argument for  '%s'" argName) id
 
   let updateUserState (map':'a -> ResultMap -> ResultMap) : 'a -> ArgumentParser<_, ResultMap, ResultMap> =
@@ -218,54 +227,95 @@ module ArgParser =
           stream'.UserState <- res
           Reply(res)
 
+  let debug (map':'a -> ArgumentStream<'item,'state> -> unit) : 'a -> ArgumentParser<'item, 'state, 'a> =
+      fun arg' ->
+        fun stream' ->
+          map' arg' stream'
+          Reply(arg')
+
   let saveInMap key f = 
-    updateUserState (fun item map -> Map.add key (f item) map)
+    updateUserState (fun item map ->
+      let newItem = f item
+      match Map.tryFind key map, newItem with
+      | None, _
+      | Some Docopt.Arguments.Result.None, _ -> Map.add key newItem map
+      | _, Docopt.Arguments.Result.None -> map
+      | Some (Docopt.Arguments.Result.Argument arg1), Docopt.Arguments.Result.Argument arg2 ->
+          Map.add key (Docopt.Arguments.Result.Arguments [arg1; arg2]) map
+      | Some (Docopt.Arguments.Result.Argument arg1), Docopt.Arguments.Result.Arguments argList ->
+          Map.add key (Docopt.Arguments.Result.Arguments (arg1 :: argList)) map
+      | Some (Docopt.Arguments.Result.Arguments argList1), Docopt.Arguments.Result.Argument arg2 ->
+          Map.add key (Docopt.Arguments.Result.Arguments (argList1 @ [arg2])) map
+      | Some (Docopt.Arguments.Result.Arguments argList1),  Docopt.Arguments.Result.Arguments argList2 ->
+          Map.add key (Docopt.Arguments.Result.Arguments (argList1 @ argList2)) map
+      | Some (Docopt.Arguments.Result.Flag), Docopt.Arguments.Result.Flag ->
+          Map.add key (Docopt.Arguments.Result.Flags 2) map
+      | Some (Docopt.Arguments.Result.Flags n1), Docopt.Arguments.Result.Flag ->
+          Map.add key (Docopt.Arguments.Result.Flags (n1 + 1)) map
+      | Some (Docopt.Arguments.Result.Flag), Docopt.Arguments.Result.Flags n2 ->
+          Map.add key (Docopt.Arguments.Result.Flags (n2 + 1)) map
+      | Some (Docopt.Arguments.Result.Flags n1), Docopt.Arguments.Result.Flags n2 ->
+          Map.add key (Docopt.Arguments.Result.Flags (n1 + n2)) map
+      | Some v, _ -> failwithf "Cannot add value %A as %s -> %A already exists in the result map" newItem key v)
   let mergeMap m1 m2 =
     Map.fold (fun s k v -> Map.add k v s) m1 m2
   let mergeMaps maps =
     Seq.fold mergeMap Map.empty maps      
   let rec getParser (ast:UsageAst) : ArgumentParser<string, _, _> =
-    match ast with
-    | UsageAst.Eps -> preturn Map.empty
-    | UsageAst.Ano (title, o') ->
-      pzero <?> "Option annotation is not supported yet"
-      //CharParsers.
-    | UsageAst.Sop o' ->
-      //o'.
-      pzero <?> "Short options are not supported yet"
-    | UsageAst.Lop o' ->
-      pLongFlag o'
-      >>. parg o'.FullLong
-      >>= saveInMap o'.FullLong (Arguments.Result.Argument)
-    | UsageAst.Sqb ast' ->
-      getParser ast' <|> preturn Map.empty
-    | UsageAst.Req ast' ->
-      getParser ast'
-    | UsageAst.Arg name' ->
-      parg name'
-      >>= saveInMap (sprintf "<%s>" name') (Arguments.Result.Argument)
-    | UsageAst.XorEmpty -> preturn Map.empty
-    | UsageAst.Xor (l', r') ->
-      getParser l' <|> getParser r'
-    | UsageAst.Seq asts' ->
-      asts'
-      |> Seq.map getParser
-      |> pseq
-    | UsageAst.Cmd cmd' -> 
-      pcmd cmd'
-      >>= saveInMap cmd' (fun _ -> Arguments.Result.Command)
-    | UsageAst.Ell (UsageAst.Sqb ast') ->
-      // Allow zero matches
-      many (getParser ast')
-      >>= (mergeMaps >> preturn)
-    | UsageAst.Ell ast' ->
-      // One or more
-      many1 (getParser ast')
-      >>= (mergeMaps >> preturn)
-    | UsageAst.Sdh ->
-      pcmd "-"
-      >>= saveInMap "-" (fun _ -> Arguments.Result.Command)
-
+    let p = 
+      match ast with
+      | UsageAst.Eps -> preturn Map.empty
+      | UsageAst.Ano (title, o') ->
+        pzero <?> "Option annotation is not supported yet"
+        //CharParsers.
+      | UsageAst.Sop o' ->
+        //o'.
+        pzero <?> "Short options are not supported yet"
+      | UsageAst.Lop o' ->
+        if o'.HasArgument then
+          (pLongFlag o'
+           >>. parg o'.FullLong) <|> pLongFlagWithArg o'
+          >>= saveInMap o'.FullLong (Arguments.Result.Argument)
+        else
+          pLongFlag o'
+          >>= saveInMap o'.FullLong (fun _ -> Arguments.Result.Flag)
+      | UsageAst.Sqb ast' ->
+        getParser ast' <|> preturn Map.empty
+      | UsageAst.Req ast' ->
+        getParser ast'
+      | UsageAst.Arg name' ->
+        parg name'
+        >>= saveInMap (name') (Arguments.Result.Argument)
+      | UsageAst.XorEmpty -> preturn Map.empty
+      | UsageAst.Xor (l', r') ->
+        getParser l' <|> getParser r'
+      | UsageAst.Seq asts' ->
+        asts'
+        |> Seq.map getParser
+        |> pseq
+      | UsageAst.Cmd cmd' -> 
+        pcmd cmd'
+        >>= saveInMap cmd' (fun _ -> Arguments.Result.Command)
+      | UsageAst.Ell (UsageAst.Sqb ast') ->
+        // Allow zero matches
+        many (getParser ast')
+        >>= updateUserState (fun st state ->
+          printfn "many state: %A ||| %A" state st
+          state)
+      | UsageAst.Ell ast' ->
+        // One or more
+        many1 (getParser ast')
+        >>= updateUserState (fun st state ->
+          printfn "many1 state: %A ||| %A" state st
+          state)
+      | UsageAst.Sdh ->
+        pcmd "-"
+        >>= saveInMap "-" (fun _ -> Arguments.Result.Command)
+    (debug (fun _ stream ->
+      printfn ">>>> STARTING ast %A, state: %A" ast stream) ())
+    >>. p      
+    >>= debug (fun result stream ->
+      printfn ">>>> FINISHED ast %A, state: %A, result: %A" ast stream result)
 type UsageParser(usageStrings':string array, sections:Collections.Generic.IDictionary<string, SafeOptions>) =
     //let opts' = sections.["options"]
     //let mutable isAno = false
@@ -445,24 +495,30 @@ type UsageParser(usageStrings':string array, sections:Collections.Generic.IDicti
 *)
     let getAstParser =
       let (>>.) = ArgParser.(>>.)
+      let (>>=) = ArgParser.(>>=)  
       asts
       |> Seq.map ArgParser.getParser
       |> ArgParser.choice
-      >>. ArgParser.updateUserState (fun _ state -> state) ()
-
+      >>= ArgParser.updateUserState (fun _ state -> state)
+      
     member __.ParseCommandLine (argv) =
       let state = ArgumentStream(argv, Map.empty)
       let reply = getAstParser state
       let errors = ErrorMessageList.ToSortedArray(reply.Error)
+      let parseError = ParserError(Position("argv", int64 state.Position,0L,int64 state.Position), state.UserState, reply.Error)
+      let errorText =
+        use sw = new System.IO.StringWriter()
+        parseError.WriteTo(sw)
+        sw.ToString()
       match reply.Status = ReplyStatus.Ok, errors, state.IsEnd with
       | true, [||], true -> reply.Result
-      | _, _ , true -> raise <| ArgvException (sprintf "errors %A: %A" reply.Status errors)
+      | _, _ , true -> raise <| ArgvException (sprintf "errors %A: %s" reply.Status errorText)
       | _, [||], false ->
           let unparsed = argv.[state.Position..argv.Length - 1]
           raise <| ArgvException (sprintf "'%A' could not be parsed" unparsed)
       | _ ->
           let unparsed = argv.[state.Position..argv.Length - 1]
-          raise <| ArgvException (sprintf "errors: %A, ('%A' could not be parsed)" errors unparsed)
+          raise <| ArgvException (sprintf "errors: %s, ('%A' could not be parsed)" errorText unparsed)
 
 (*
     member __.Parse(argv':string array, args':Arguments.Dictionary) =

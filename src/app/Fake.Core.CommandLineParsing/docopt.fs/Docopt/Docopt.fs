@@ -43,14 +43,16 @@ module DocHelper =
       static member Build (x:OptionBuilder) = x.Build()
     let cut (doc':string) =
       let folder (usages', (sections':OptionBuilder list), last') = function
-      | Usage(ustr)   -> (ustr::usages', sections', Last.Usage)
+      | Usage(ustr) when String.IsNullOrWhiteSpace ustr  -> (usages', sections', Last.Usage)
+      | Usage(ustr) -> (ustr::usages', sections', Last.Usage)
       | Options(sectionName, ostr) -> (usages', { Title = sectionName; Lines = [ostr] } :: sections', Last.Options)
         //match sections' with
         //| options' :: sections' -> (usages', (ostr::options')::sections', Last.Options)
         //| [] -> (usages', [{ Title = sectionName; Lines = [ostr] }], Last.Options)
       | Newline       -> (usages', sections', Last.Nothing)
       | Other(line)   -> match last' with
-                         | Last.Usage   -> (line::usages', sections', Last.Usage)
+                         | Last.Usage when String.IsNullOrWhiteSpace line -> (usages', sections', Last.Usage)
+                         | Last.Usage -> (line::usages', sections', Last.Usage)
                          | Last.Options -> 
                             match sections' with
                             | options' :: sections' -> (usages', (options'.AddLine line) :: sections', Last.Options)
@@ -84,17 +86,7 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     member __.Parse(?argv':string array, ?args':Arguments.Dictionary) =
       let args = defaultArg args' (Arguments.Dictionary()) in
       let argv = defaultArg argv' argv in
-      let result = pusage.ParseCommandLine(argv)
-      result |> Map.iter (fun key i ->
-        match i with
-        | Arguments.Argument cmd -> args.AddArg(key, cmd)
-        | Arguments.Arguments cmds -> cmds |> Seq.iter (fun cmd -> args.AddArg(key, cmd))
-        | Arguments.Command -> args.AddCmd(key)
-        | Arguments.Flag -> args.AddString(key)
-        | Arguments.Flags i -> [1..i] |> Seq.iter (fun _ -> args.AddString(key))
-        | Arguments.None -> args.AddString(key))
-
-      args
+      pusage.ParseCommandLine(argv)
     member __.Usage = String.Join("\n", uStrs)
     member __.UsageParser = pusage
   end

@@ -32,14 +32,16 @@ type TestCaseHelper =
                 reraise ()
 let ( ->= ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
-  let args = doc'.Parse(argv).AsList()
-  let res = List.sort args = List.sort val'
-  if not res then printfn "Got args = %A" args
-  (sprintf "%A ->= %A" argv' val'), res
+  let args = doc'.Parse(argv) |> Seq.map (fun kv -> kv.Key, kv.Value) |> Seq.toList |> List.sort
+  let expt = List.sort val'
+  let res = args = expt
+  if not res then
+    printfn "Got args = %A" args
+  (sprintf "%A ->= %A" argv' expt), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
   let msg, res =
-    try let _ = doc'.Parse(argv).AsList() in (box "<NO EXN>", false)
+    try let _ = doc'.Parse(argv) |> Seq.map (fun kv -> kv.Key, kv.Value) |> Seq.toList in (box "<NO EXN>", false)
     with e -> (box e, e.GetType() = val')
   (sprintf "%A ->! %A" argv' msg), res
 // END HELPER FUNCTIONS FOR ASSERTIONS
@@ -48,45 +50,15 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
 let tests = 
   testList "Fake.Core.CommandLineParsing.Tests" [
 
-    TestCaseHelper.Create("Big Bertha: command, multiple usage and --long=arg", """
-Naval Fate.
-
-Usage:
-  prog ship new <name>...
-  prog ship [<name>] move <x> <y> [--speed=<kn>]
-  prog ship shoot <x> <y>
-  prog mine (set|remove) <x> <y> [--moored|--drifting]
-  prog -h | --help
-  prog --version
-
-Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --speed=<kn>  Speed in knots [default: 10].
-  --moored      Mored (anchored) mine.
-  --drifting    Drifting mine.
-
-""",
-      "ship Guardian move 150 300 --speed=20" ->= [
-        "--speed", Argument("20");
-        "<name>", Argument("Guardian");
-        "<x>", Argument("150");
-        "<y>", Argument("300");
-        "move", Flag;
-        "ship", Flag;
-      ]
-    )
-    
-    (*
-    
+(*
     testCase ("Test Option parser") <| fun _ ->
       printfn "Starting test '%s'" "Test Option parser"
       let testString = """
 Usage:
-  fake.exe --version
-  fake.exe --help | -h
   fake.exe [fake_opts] run [run_opts] [<script.fsx>] [run_opts] -- [<scriptargs>...]
   fake.exe [fake_opts] build [build_opts] -- [<scriptargs>...]
+  fake.exe --version
+  fake.exe --help | -h
 
 Fake Options [fake_opts]:
   -v, --verbose [*]     Verbose (can be used multiple times)
@@ -117,15 +89,15 @@ Fake Build Options [build_opts]:
 
       
       ()
-
-    TestCaseHelper.Create("FAKE 5 usage", """
+    TestCaseHelper.Create("FAKE 5 usage (simple)", """
 Usage:
   fake.exe file -- [<moreargs>...]
 
 Options:
     """,
-      "file -- wtf" ->= ["file", Flag;"<moreargs>", Arguments ["wtf"]]
-    )
+      "file -- wtf" ->= ["file", Flag;"<moreargs>", Argument "wtf";"--", Flag],
+      "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
+    )*)
 
     TestCaseHelper.Create("FAKE 5 usage", """
 Usage:
@@ -144,15 +116,14 @@ Options:
 
 Note: Further information can be retrieved via `fake run <script> -- --help`
 """,
-      "" ->= [],
-      //"" ->! typeof<ArgvException>,
-      "run"      ->= [("run", Flag)],
-      "build"      ->= [("build", Flag)],
-      "run build.fsx -- -s -e t1 t2"      ->= [("run", Command true);("script", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])],
-      "run build.fsx -s -e t1 t2"      ->= [("run", Command true);("script", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])]
+      "" ->! typeof<ArgvException>,
+      "run"      ->= [("run", Command)],
+      "build"      ->= [("build", Command)],
+      "run build.fsx -- -s -e t1 t2"      ->= [("run", Command);("--", Flag);("<script>", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])],
+      "run build.fsx -s -e t1 t2"      ->= [("run", Command);("<script>", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])],
+      "run build.fsx -d -s -e t1 t2"      ->= [("run", Command);("--debug", Flag);("<script>", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])]
       //"run -d -- --help" ->! typeof<ArgvException>
     )
-
     TestCaseHelper.Create("Empty usage", """
 Usage: prog
 
@@ -881,5 +852,5 @@ other options:
 """,
       "--baz --egg" ->= [("--baz", Flag);("--egg", Flag)]
     )
-    *)
+    
   ]
