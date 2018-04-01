@@ -166,11 +166,11 @@
     <Compile Include="..\..\app\Fake.Core.Process\Mono.fs">
       <Link>Fake.Core.Process/Mono.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.DotNet.MsBuild\MsBuildLogger.fs">
-      <Link>Fake.DotNet.MsBuild/MsBuildLogger.fs</Link>
+    <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuildLogger.fs">
+      <Link>Fake.DotNet.MSBuild/MSBuildLogger.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.DotNet.MsBuild\MsBuild.fs">
-      <Link>Fake.DotNet.MsBuild/MsBuild.fs</Link>
+    <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuild.fs">
+      <Link>Fake.DotNet.MSBuild/MSBuild.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Tools.ServiceControl\ServiceControl.fs">
       <Link>Fake.Tools.ServiceControl/ServiceControl.fs</Link>

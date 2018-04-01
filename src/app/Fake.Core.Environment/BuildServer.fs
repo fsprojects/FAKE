@@ -17,7 +17,7 @@ type BuildServer =
     | LocalBuild
 
 /// The trace mode option.
-type TraceMode = 
+type TraceMode =
     | Console
     | Xml
 
@@ -32,7 +32,7 @@ module BuildServer =
     let mutable verbose = hasEnvironVar "verbose"
 
     /// A constant label for local builds
-    /// [omit]            
+    /// [omit]
     let localBuildLabel = "LocalBuild"
 
     /// Defines the XML output file - used for build servers like CruiseControl.NET.
@@ -87,7 +87,7 @@ module BuildServer =
     let appVeyorBuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 
     /// The current build server
-    let buildServer = 
+    let buildServer =
         if hasEnvironVar "JENKINS_HOME" then Jenkins
         elif hasEnvironVar "TEAMCITY_VERSION" then TeamCity
         elif not (String.IsNullOrEmpty ccBuildLabel) then CCNet
@@ -100,7 +100,7 @@ module BuildServer =
         else LocalBuild
 
     /// The current build version as detected from the current build server.
-    let buildVersion = 
+    let buildVersion =
         let getVersion = environVarOrDefault "buildVersion"
         match buildServer with
         | Jenkins -> getVersion jenkinsBuildNumber
@@ -120,12 +120,6 @@ module BuildServer =
 
     let install (servers: BuildServerInstaller list) =
         servers
-        |> List.iter (fun f -> 
+        |> List.iter (fun f ->
             if f.Detect() then
                 f.Install())
-
-
-
-//open Fake.Core
-
-//BuildServer.Configure [ TeamCity.Configuration; AppVeyor.Configuration; Travis.Configuration ]

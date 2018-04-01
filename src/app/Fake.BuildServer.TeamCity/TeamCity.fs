@@ -2,9 +2,7 @@
 namespace Fake.BuildServer
 
 open System
-open System.IO
 open Fake.Core
-open Fake.IO
 
 [<AutoOpen>]
 module TeamCityImportExtensions =
@@ -50,9 +48,6 @@ module TeamCity =
     let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
     let internal sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
-
-
-
 
     module internal Import =
         /// Sends an NUnit results filename to TeamCity
@@ -150,14 +145,14 @@ module TeamCity =
 
     /// Report Standard-Output for a given test-case
     let internal reportTestOutput name output =
-        sprintf "##teamcity[testStdOut name='%s' out='%s']" 
+        sprintf "##teamcity[testStdOut name='%s' out='%s']"
             (TeamCityWriter.encapsulateSpecialChars name)
             (TeamCityWriter.encapsulateSpecialChars output)
         |> TeamCityWriter.sendStrToTeamCity
 
     /// Report Standard-Error for a given test-case
     let internal reportTestError name output =
-        sprintf "##teamcity[testStdErr name='%s' out='%s']" 
+        sprintf "##teamcity[testStdErr name='%s' out='%s']"
             (TeamCityWriter.encapsulateSpecialChars name)
             (TeamCityWriter.encapsulateSpecialChars output)
         |> TeamCityWriter.sendStrToTeamCity
@@ -247,7 +242,7 @@ module TeamCity =
 
         interface ITraceListener with
             /// Writes the given message to the Console.
-            member __.Write msg = 
+            member __.Write msg =
                 let color = ConsoleWriter.colorMap msg
                 match msg with
                 | TraceData.OpenTag (KnownTags.Test name, _) ->
@@ -291,7 +286,7 @@ module TeamCity =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-TeamCity environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
-        () 
+        ()
     let Installer =
         { new BuildServerInstaller() with
             member __.Install () = install (false)
