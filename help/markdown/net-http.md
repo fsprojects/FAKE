@@ -32,7 +32,7 @@ nuget Fake.Net.Http //"
 open Fake.Net
 open Fake.Core
 
-Target.Create "DownloadFile" (fun _ ->
+Target.create "DownloadFile" (fun _ ->
     let absoluteFilePath = Http.downloadFile "/tmp/5.zip" @"http://ipv4.download.thinkbroadband.com/5MB.zip"
     printfn "File path: %s" absoluteFilePath
 )
@@ -55,7 +55,7 @@ nuget Fake.Net.Http //"
 open Fake.Net
 open Fake.Core
 
-Target.Create "DownloadFiles" (fun _ ->
+Target.create "DownloadFiles" (fun _ ->
     let files: Http.DownloadParameters list = [
                 {Path = "/tmp/5.zip"; Uri = "http://ipv4.download.thinkbroadband.com/5MB.zip"};
                 {Path = "/tmp/10.zip"; Uri = "http://ipv4.download.thinkbroadband.com/10MB.zip"}]
@@ -63,7 +63,7 @@ Target.Create "DownloadFiles" (fun _ ->
     printfn "File paths: %A" filePaths
 )
 ```
-    
+
 A console output should be:
 
     Downloading [http://ipv4.download.thinkbroadband.com/5MB.zip] ...

@@ -15,7 +15,6 @@ now you can use
 fake --help
 ```
 
-
 This is basically it. You can now execute fake commands.
 
 For unix we don't have packages yet (please contribute!), but you can use the manual install process (see [Contributing](contributing.html))
@@ -33,11 +32,11 @@ Travis: [https://github.com/fsharp/FAKE/blob/master/.travis.yml](https://github.
 
 The goals are:
 
- - Provide a easy to use cross platform way to use FAKE. With a good bootstrapping experience
- - Cleanup 'FakeLib'
- - Extract reusable libraries and make them usable for your projects or the fsi!
- - Make it easier to extend FAKE for your own use-case
- - Provide an easy way for simple scripting, automate everything, everywhere.
+* Provide a easy to use cross platform way to use FAKE. With a good bootstrapping experience
+* Cleanup 'FakeLib'
+* Extract reusable libraries and make them usable for your projects or the fsi!
+* Make it easier to extend FAKE for your own use-case
+* Provide an easy way for simple scripting, automate everything, everywhere.
 
 Please read https://github.com/fsharp/FAKE/issues/1232
 
@@ -65,7 +64,7 @@ The disadvantage is that you need to have a dotnet sdk installed.
 
 ## Examples
 
-- See [https://github.com/fsharp/FAKE/blob/master/build.fsx](https://github.com/fsharp/FAKE/blob/master/build.fsx)
+* See [https://github.com/fsharp/FAKE/blob/master/build.fsx](https://github.com/fsharp/FAKE/blob/master/build.fsx)
   Note that with the "new" API you should call the modules directly instead of opening them.
   Therefore this example is actually pretty bad because it just opened everything (for minimal diff to the "normal" build.fsx)
 
@@ -80,15 +79,15 @@ nuget Fake.Core.Target //"
 open Fake.Core
 
 // *** Define Targets ***
-Target.Create "Clean" (fun _ ->
+Target.create "Clean" (fun _ ->
   Trace.log " --- Cleaning stuff --- "
 )
 
-Target.Create "Build" (fun _ ->
+Target.create "Build" (fun _ ->
   Trace.log " --- Building the app --- "
 )
 
-Target.Create "Deploy" (fun _ ->
+Target.create "Deploy" (fun _ ->
   Trace.log " --- Deploying app --- "
 )
 
@@ -100,7 +99,7 @@ open Fake.Core.TargetOperators
   ==> "Deploy"
 
 // *** Start Build ***
-Target.RunOrDefault "Deploy"
+Target.runOrDefault "Deploy"
 ```
 
 Run this file by executing

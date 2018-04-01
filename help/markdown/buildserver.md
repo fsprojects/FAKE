@@ -27,12 +27,12 @@ open System.IO
 open Fake.Core
 open Fake.BuildServer
 
-BuildServer.Install [
+BuildServer.install [
     TeamCity.Installer
     TeamFoundation.Installer
 ]
 
-Target.Create "Test" (fun _ ->
+Target.create "Test" (fun _ ->
     File.WriteAllText("myfile.txt", "some content")
 
     // traceTag can be used to open scopes/blocks. They will be shown in the build-server visualization supported.

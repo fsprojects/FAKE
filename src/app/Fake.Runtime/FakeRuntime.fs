@@ -100,7 +100,7 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
     |> Seq.toList
     |> List.partition (fun ref -> ref.StartsWith(grRefStr, System.StringComparison.OrdinalIgnoreCase))
   let paketCode =
-    paketLines 
+    paketLines
     |> String.concat "\n"
   let paketGroupReferences =
     groupReferences
@@ -145,7 +145,7 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider (script:string) printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
+let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -197,7 +197,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
   let writeIntellisenseFile cacheDir (context : Paket.LoadingScripts.ScriptGeneration.PaketContext) =
     // Write loadDependencies file (basically only for editor support)
     let intellisenseFile = Path.Combine (cacheDir, "intellisense.fsx")
-    if printDetails then Trace.log <| sprintf "Writing '%s'" intellisenseFile
+    if logLevel.PrintVerbose then Trace.log <| sprintf "Writing '%s'" intellisenseFile
     let groupScripts = Paket.LoadingScripts.ScriptGeneration.generateScriptContent context
     let scripts, groupScript =
       match groupScripts with
@@ -226,7 +226,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
     File.WriteAllLines (intellisenseFile, intellisenseContents)
 
   let restoreOrUpdate () =
-    if printDetails then Trace.log "Restoring with paket..."
+    if logLevel.PrintVerbose then Trace.log "Restoring with paket..."
 
     // Update
     let localLock = script + ".lock" // the primary lockfile-path </> lockFilePath.FullName is implementation detail
@@ -238,7 +238,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
       File.Delete lockFilePath.FullName
 
     if not <| File.Exists lockFilePath.FullName then
-      if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
+      if logLevel.PrintVerbose then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
       try
         paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
         |> ignore
@@ -257,7 +257,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
     let lockFile = paketDependencies.GetLockFile()
     //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
     let (cache:DependencyCache) = DependencyCache(lockFile)
-    if printDetails then Trace.log "Setup DependencyCache..."
+    if logLevel.PrintVerbose then Trace.log "Setup DependencyCache..."
     try
       cache.SetupGroup groupName |> ignore
     with e when e.Message.Contains "doesn't exist. Did you restore" ->
@@ -286,7 +286,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
         Paket.Rid.Of(ridString)
 
     // get runtime graph
-    if printDetails then Trace.log <| sprintf "Calculating the runtime graph..."
+    if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
         orderedGroup
         |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p.Resolved)
@@ -301,7 +301,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
       }
 
     // Retrieve assemblies
-    if printDetails then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
+    if logLevel.PrintVerbose then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
     orderedGroup
     |> Seq.filter (fun p ->
       if p.Name.ToString() = "Microsoft.FSharp.Core.netcore" then
@@ -340,7 +340,7 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
               { Runners.AssemblyInfo.FullName = assembly.Name.FullName
                 Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
                 Runners.AssemblyInfo.Location = fullName } } |> Some
-      with e -> (if printDetails then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
+      with e -> (if logLevel.PrintVerbose then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
     // If we have multiple select one
     |> Seq.groupBy (fun ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name)
     |> Seq.map (fun (_, group) -> group |> Seq.maxBy(fun ass -> ass.Info.Version))
@@ -349,11 +349,11 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
   // Restore or update immediatly, because or everything might be OK -> cached path.
   let knownAssemblies = restoreOrUpdate()
 
-  if printDetails then
+  if logLevel.PrintVerbose then
     Trace.tracefn "Known assemblies: \n\t%s" (System.String.Join("\n\t", knownAssemblies |> Seq.map (fun a -> sprintf " - %s: %s (%s)" (if a.IsReferenceAssembly then "ref" else "lib") a.Info.Location a.Info.Version)))
   { new CoreCache.ICachingProvider with
       member x.CleanCache context =
-        if printDetails then Trace.log "Invalidating cache..."
+        if logLevel.PrintVerbose then Trace.log "Invalidating cache..."
         let assemblyPath, warningsFile = context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
         try File.Delete warningsFile; File.Delete assemblyPath
         with e -> Trace.traceError (sprintf "Failed to delete cached files: %O" e)
@@ -389,13 +389,13 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
               Some { CompiledAssembly = assemblyPath; Warnings = File.ReadAllText(warningsFile) }
           else None
       member x.SaveCache (context, cache) =
-          if printDetails then Trace.log "saving cache..."
+          if logLevel.PrintVerbose then Trace.log "saving cache..."
           File.WriteAllText (context.CachedAssemblyFilePath + ".warnings", cache.Warnings) }
 
-let restoreDependencies script printDetails cacheDir section =
+let restoreDependencies script logLevel cacheDir section =
   match section with
   | PaketDependencies (paketDependencies, group) ->
-    paketCachingProvider script printDetails cacheDir paketDependencies group
+    paketCachingProvider script logLevel cacheDir paketDependencies group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -425,7 +425,7 @@ let tryFindGroupFromDepsFile scriptDir =
         | _ -> None
     else None
 
-let prepareFakeScript defines printDetails script =
+let prepareFakeScript defines logLevel script =
     // read dependencies from the top
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
@@ -445,18 +445,28 @@ let prepareFakeScript defines printDetails script =
             | None ->
               tryFindGroupFromDepsFile scriptDir
 
-    match section, Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" with
-    | _, true ->
-        Trace.traceFAKE "NetCore hack (FAKE_UNDOCUMENTED_NETCORE_HACK) is activated: %s" script
-        CoreCache.Cache.defaultProvider
-    | Some section, _ ->
-        restoreDependencies script printDetails cacheDir section
-    | _ ->
-        failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
+    match section with
+    | Some section ->
+        restoreDependencies script logLevel cacheDir section
+    | None ->
+        let defaultPaketCode = """
+source https://api.nuget.org/v3/index.json
+storage: none
+nuget FSharp.Core
+        """
+        if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
+          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r \"nuget FSharp.Core //\"'.
+See https://fake.build/fake-fake5-modules.html for details. 
+If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
+        let section =
+          { Header = "paket-inline"
+            Section = defaultPaketCode }
+          |> legacyParseHeader cacheDir        
+        restoreDependencies script logLevel cacheDir section
 
-let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
+let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
 
-  if printDetails then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
+  if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
   // TODO: this is duplicated in CoreCache :(
   let newFsiOptions =
@@ -467,11 +477,11 @@ let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath
         Defines = "DOTNETCORE" :: "FAKE" :: fsiOptionsObj.Defines
 #endif
       }
-  let provider = prepareFakeScript newFsiOptions.Defines printDetails scriptPath
+  let provider = prepareFakeScript newFsiOptions.Defines logLevel scriptPath
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
   let config =
-    { Runners.FakeConfig.PrintDetails = printDetails
+    { Runners.FakeConfig.VerboseLevel = logLevel
       Runners.FakeConfig.ScriptFilePath = scriptPath
       Runners.FakeConfig.CompileOptions =
         { CompileReferences = []
@@ -483,6 +493,6 @@ let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath
       Runners.FakeConfig.Environment = envVars }
   CoreCache.runScriptWithCacheProvider config provider
 
-let prepareAndRunScript printDetails fsiOptions scriptPath envVars useCache =
-  prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars (printf "%s") (printf "%s") useCache
+let prepareAndRunScript logLevel fsiOptions scriptPath envVars useCache =
+  prepareAndRunScriptRedirect logLevel fsiOptions scriptPath envVars (printf "%s") (printf "%s") useCache
 

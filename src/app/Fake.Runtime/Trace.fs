@@ -7,6 +7,27 @@ open System.IO
 open System.Reflection
 open System.Threading
 
+type VerboseLevel =
+    | Silent // For scripting and pipelining
+    | Normal // Regular use
+    | Verbose // Verbose FAKE
+    | VerbosePaket // Verbose FAKE & Paket
+    member x.PrintPaket =
+        match x with
+        | VerbosePaket -> true
+        | _ -> false
+    member x.PrintVerbose =
+        match x with
+        | Verbose
+        | VerbosePaket -> true
+        | _ -> false
+    member x.PrintNormal =
+        match x with
+        | Normal
+        | Verbose
+        | VerbosePaket -> true
+        | _ -> false
+
 /// Defines Tracing information for TraceListeners
 type TraceData =
     | ImportantMessage of string

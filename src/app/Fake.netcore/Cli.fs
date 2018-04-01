@@ -48,6 +48,7 @@ with
 type FakeArgs =
   | Version
   | (*[<Inherit>]*) [<AltCommandLine("-v")>] Verbose
+  | [<AltCommandLine("-s")>] Silent
   | [<CliPrefix(CliPrefix.None)>] Run of Argu.ParseResults<RunArgs>
   | [<CliPrefix(CliPrefix.None)>] Build of Argu.ParseResults<BuildArgs>
 with
@@ -56,5 +57,6 @@ with
       match s with
       | Version _ -> "Prints the version."
       | Verbose _ -> "More verbose output. Can be used more than once."
+      | Silent _ -> "Hide all output from the fake runner (output from script is still shown)."
       | Run _ -> "Runs a script."
       | Build _ -> "Build a target via build.fsx script."

@@ -26,13 +26,12 @@ For now fake only supports the `run` and `build` subcommands which are basically
 
 ## `--verbose [-v]`
 
-
 Print details of FAKE's activity. Note that `-v` was used for `--version` in previous versions of Fake.
 Currently Fake supports 3 verbosity levels:
 
- - None is warnings only and regular output from the script
- - a single `--verbose` means verbose output from Fake
- - two `--verbose --verbose` mean to set other projects (like paket) to verbose mode as well.
+* None is warnings only and regular output from the script
+* a single `--verbose` means verbose output from Fake
+* two `--verbose --verbose` mean to set other projects (like paket) to verbose mode as well.
 
 ### `--version`
 
@@ -84,8 +83,8 @@ Optional.  The name of the build script target you wish to run.  This will any t
 
 #### `--environmentvariable [-e] <name:string> <value:string>`
 
-Set environment variable name value pair. Supports multiple. 
-                                                   
+Set environment variable name value pair. Supports multiple.
+
 #### `--fsiargs <string>`
 
 Pass an single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
@@ -93,7 +92,7 @@ Pass an single argument after this switch to FSI when running the build script. 
 #### `--help [-h|/h|/help|/?]`
 
 Display CLI help.
-                                                                                                         
+
 ### Build
 
 ```
@@ -118,9 +117,9 @@ OPTIONS:
 Very similar to `run`. The difference is that with `build` the `--target` is optional and `build.fsx` is assumed where in `run` the `--script` is optional.
 Examples:
 
- - `fake build` to run the default target and `build.fsx`
- - `fake build Build -s` to run the `Build` target without dependencies
- - `fake build Build` to run the `Build` target with all dependencies
+* `fake build` to run the default target and `build.fsx`
+* `fake build Build -s` to run the `Build` target without dependencies
+* `fake build Build` to run the `Build` target with all dependencies
 
 The recommendation is to use `fake build` if you have a single `build.fsx` and `fake run` for scripting (or multiple `.fsx` files). 
 
@@ -147,12 +146,11 @@ open Fake.Core.TargetOperators
 Target.RunOrDefault "Deploy"
 ```
 
-
 Now you can just execute
 
- - `fake run build.fsx` to run the default target (`Deploy`)
- - `fake build` same as above
- - `fake run build.fsx -s -t Build` to run the `Build` target without dependencies
- - `fake build Build -s` same as above
- - `fake run build.fsx -t Build` to run the `Build` target with the `Clean` dependency
- - `fake build Build` same as above
+* `fake run build.fsx` to run the default target (`Deploy`)
+* `fake build` same as above
+* `fake run build.fsx -s -t Build` to run the `Build` target without dependencies
+* `fake build Build -s` same as above
+* `fake run build.fsx -t Build` to run the `Build` target with the `Clean` dependency
+* `fake build Build` same as above

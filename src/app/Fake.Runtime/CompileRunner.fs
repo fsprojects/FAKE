@@ -42,7 +42,7 @@ let nameParser cachedAssemblyFileName scriptFileName =
     className, parseName
 
 let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
-    if context.Config.PrintDetails then trace "Using cache"
+    if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
@@ -55,7 +55,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
             with :? ReflectionTypeLoadException as ref ->
                 traceFAKE "Could not load types of compiled script:"
                 for err in ref.LoaderExceptions do
-                    if context.Config.PrintDetails then
+                    if context.Config.VerboseLevel.PrintVerbose then
                         traceFAKE " - %O" err
                     else
                         traceFAKE " - %s" err.Message
@@ -108,7 +108,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
          sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
     let formatErrors errors =
         System.String.Join("\n", errors |> Seq.map formatError)
-    if context.Config.PrintDetails then
+    if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSC Args: [\"%s\"]" (String.Join("\";\n\"", args))
 
     let fsc = FSharpChecker.Create()
