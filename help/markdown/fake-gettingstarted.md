@@ -159,15 +159,15 @@ In the dependencies section we say that the *Default* target has a dependency on
 
 In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild.
 
-Again we need some new module for this, namely `Fake.DotNet.MsBuild`.
+Again we need some new module for this, namely `Fake.DotNet.MSBuild`.
 
-Just like before add the required module on top via `nuget Fake.DotNet.MsBuild`, delete the `build.fsx.lock` file and run the script.
+Just like before add the required module on top via `nuget Fake.DotNet.MSBuild`, delete the `build.fsx.lock` file and run the script.
 Now edit the script like this:
 
 ```fsharp
 #r "paket:
 nuget Fake.IO.FileSystem
-nuget Fake.DotNet.MsBuild
+nuget Fake.DotNet.MSBuild
 nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 
@@ -186,7 +186,7 @@ Target.create "Clean" (fun _ ->
 
 Target.create "BuildApp" (fun _ ->
   !! "src/app/**/*.csproj"
-    |> MsBuild.runRelease buildDir "Build"
+    |> MSBuild.runRelease buildDir "Build"
     |> Trace.Log "AppBuild-Output: "
 )
 
@@ -221,7 +221,7 @@ Now our main application will be built automatically and it's time to build the 
 ```fsharp
 #r "paket:
 nuget Fake.IO.FileSystem
-nuget Fake.DotNet.MsBuild
+nuget Fake.DotNet.MSBuild
 nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 
@@ -243,13 +243,13 @@ Target.create "Clean" (fun _ ->
 
 Target.create "BuildApp" (fun _ ->
     !! "src/app/**/*.csproj"
-    |> MsBuild.runRelease buildDir "Build"
+    |> MSBuild.runRelease buildDir "Build"
     |> Trace.logItems "AppBuild-Output: "
 )
 
 Target.create "BuildTest" (fun _ ->
   !! "src/test/**/*.csproj"
-    |> MsBuild.runDebug testDir "Build"
+    |> MSBuild.runDebug testDir "Build"
     |> Trace.logItems "TestBuild-Output: "
 )
 
@@ -276,7 +276,7 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 ```fsharp
 #r "paket:
 nuget Fake.IO.FileSystem
-nuget Fake.DotNet.MsBuild
+nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.NUnit
 nuget Fake.Core.Target //"
 #load "./.fake/myscript.fsx/intellisense.fsx"
@@ -298,13 +298,13 @@ Target.create "Clean" (fun _ ->
 
 Target.create "BuildApp" (fun _ ->
    !! "src/app/**/*.csproj"
-     |> MsBuild.runRelease buildDir "Build"
+     |> MSBuild.runRelease buildDir "Build"
      |> Trace.logItems "AppBuild-Output: "
 )
 
 Target.create "BuildTest" (fun _ ->
     !! "src/test/**/*.csproj"
-      |> MsBuild.runDebug testDir "Build"
+      |> MSBuild.runDebug testDir "Build"
       |> Trace.logItems "TestBuild-Output: "
 )
 

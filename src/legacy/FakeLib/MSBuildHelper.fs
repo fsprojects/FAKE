@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 /// Contains tasks which allow to use MSBuild (or xBuild on Linux/Unix) to build .NET project files or solution files.
 module Fake.MSBuildHelper
 
@@ -10,22 +10,22 @@ open System.Xml.Linq
 open BuildServerHelper
 
 /// A type to represent MSBuild project files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + "\r\n" + (separated "\r\n" x.Data1)
 
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 type MsBuildEntry = {
     Version: string;
     Paths: string list;
 }
 
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let knownMsBuildEntries =
     [
         { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"
@@ -37,24 +37,24 @@ let knownMsBuildEntries =
         { Version = "12.0"; Paths = [@"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64"] }
     ]
 
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let oldMsBuildLocations =
     [ @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\";
       @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\";
       @"c:\Windows\Microsoft.NET\Framework\v3.5\"
     ]
 
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let toDict items =
     items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
 
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths)) @ oldMsBuildLocations
 
 /// Versions of Mono prior to this one have faulty implementations of MSBuild
 /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let monoVersionToUseMSBuildOn = System.Version("5.0")
 
 /// Tries to detect the right version of MSBuild.
@@ -72,7 +72,7 @@ let monoVersionToUseMSBuildOn = System.Version("5.0")
 ///   - In addition, on Windows systems we
 ///     * try to read the MSBuild tool location from the AppSettings file using a parameter named `MSBuild`, and finally
 ///     * if a `VisualStudioVersion` environment variable is specified, we try to use the specific MSBuild version, matching that Visual Studio version.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let msBuildExe =
     /// the value we're given can be a:
     ///     * full path to a file or
@@ -133,15 +133,15 @@ let msBuildExe =
     foundExe
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let xname name = XName.Get(name, msbuildNamespace)
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let loadProject (projectFileName : string) : MSBuildProject =
     MSBuildProject.Load(projectFileName, LoadOptions.PreserveWhitespace)
 
@@ -169,7 +169,7 @@ let internal getReferenceElements elementName projectFileName (doc : XDocument) 
         a, fileName |> FullName)
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let processReferences elementName f projectFileName (doc : XDocument) =
     let fi = fileInfo projectFileName
     doc
@@ -178,7 +178,7 @@ let processReferences elementName f projectFileName (doc : XDocument) =
     doc
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let rec getProjectReferences (projectFileName : string) =
     if projectFileName.EndsWith ".sln" then Set.empty
     else // exclude .sln-files since the are not XML
@@ -192,7 +192,7 @@ let rec getProjectReferences (projectFileName : string) =
       |> Set.ofSeq
 
 /// MSBuild verbosity option
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 type MSBuildVerbosity =
     | Quiet
     | Minimal
@@ -201,7 +201,7 @@ type MSBuildVerbosity =
     | Diagnostic
 
 /// MSBuild log option
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 type MSBuildLogParameter =
     | Append
     | PerformanceSummary
@@ -219,14 +219,14 @@ type MSBuildLogParameter =
     | EnableMPLogging
 
 /// A type for MSBuild configuration
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 type MSBuildFileLoggerConfig =
     { Number : int
       Filename : string option
       Verbosity : MSBuildVerbosity option
       Parameters : MSBuildLogParameter list option }
 
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 type MSBuildDistributedLoggerConfig =
     {
         ClassName : string option
@@ -234,7 +234,7 @@ type MSBuildDistributedLoggerConfig =
         Parameters : (string * string) list option }
 
 /// A type for MSBuild task parameters
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 [<CLIMutable>]
 type MSBuildParams =
     {
@@ -262,7 +262,7 @@ type MSBuildParams =
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
 
 /// Defines a default for MSBuild task parameters
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let mutable MSBuildDefaults =
     { ToolPath = msBuildExe
       Targets = []
@@ -280,7 +280,7 @@ let mutable MSBuildDefaults =
       DistributedLoggers = None }
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
     if isUnix then [ targets; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
     else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
@@ -295,7 +295,7 @@ let private serializeArgs args =
     |> separated " "
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let serializeMSBuildParams (p : MSBuildParams) =
     let verbosityName v =
         match v with
@@ -421,17 +421,17 @@ let serializeMSBuildParams (p : MSBuildParams) =
     |> serializeArgs
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
 
 /// [omit]
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
 let private pathToLogger = typedefof<MSBuildParams>.Assembly.Location
 
 /// Defines the loggers to use for MSBuild task
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let mutable MSBuildLoggers =
     [ ErrorLoggerName ]
     |> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
@@ -464,7 +464,7 @@ match buildServer with
 ///              }
 ///     build setParams "./MySolution.sln"
 ///           |> DoNothing
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let build setParams project =
     use __ = traceStartTaskUsing "MSBuild" project
     let msBuildParams =
@@ -503,7 +503,7 @@ let build setParams project =
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `projects` - A list of project or solution files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild.RunWithProjectProperties instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild.RunWithProjectProperties instead")>]
 let MSBuildWithProjectProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
     let projects = projects |> Seq.toList
 
@@ -541,7 +541,7 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `projects` - A list of project or solution files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild.Run instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild.Run instead")>]
 let MSBuild outputPath targets properties projects = MSBuildWithProjectProperties outputPath targets (fun _ -> properties) projects
 
 /// Builds the given project files or solution files and collects the output files.
@@ -549,7 +549,7 @@ let MSBuild outputPath targets properties projects = MSBuildWithProjectPropertie
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild.RunDebug instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild.RunDebug instead")>]
 let MSBuildDebug outputPath targets projects = MSBuild outputPath targets [ "Configuration", "Debug" ] projects
 
 /// Builds the given project files or solution files and collects the output files.
@@ -557,14 +557,14 @@ let MSBuildDebug outputPath targets projects = MSBuild outputPath targets [ "Con
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild.RunRelease instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild.RunRelease instead")>]
 let MSBuildRelease outputPath targets projects = MSBuild outputPath targets [ "Configuration", "Release" ] projects
 
 /// Builds the given project files or solution files in release mode to the default outputs.
 /// ## Parameters
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild.RunWithDefaults instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild.RunWithDefaults instead")>]
 let MSBuildWithDefaults targets projects = MSBuild null targets [ "Configuration", "Release" ] projects
 
 /// Builds the given project files or solution files in release mode and collects the output files.
@@ -573,7 +573,7 @@ let MSBuildWithDefaults targets projects = MSBuild null targets [ "Configuration
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-[<System.Obsolete("Use Fake.DotNet.MsBuild.RunReleaseExt instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild.RunReleaseExt instead")>]
 let MSBuildReleaseExt outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
     MSBuild outputPath targets properties projects
@@ -583,7 +583,7 @@ let MSBuildReleaseExt outputPath properties targets projects =
 ///  - `outputPath` - The output path.
 ///  - `configuration` - MSBuild configuration.
 ///  - `projectFile` - The project file path.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let BuildWebsiteConfig outputPath configuration projectFile  =
     use __ = traceStartTaskUsing "BuildWebsite" projectFile
     let projectName = (fileInfo projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
@@ -613,7 +613,7 @@ let BuildWebsiteConfig outputPath configuration projectFile  =
 /// ## Parameters
 ///  - `outputPath` - The output path.
 ///  - `projectFile` - The project file path.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let BuildWebsite outputPath projectFile = BuildWebsiteConfig outputPath "Debug" projectFile
 
 /// Builds the given web project files in specified configuration and copies them to the given outputPath.
@@ -621,12 +621,12 @@ let BuildWebsite outputPath projectFile = BuildWebsiteConfig outputPath "Debug" 
 ///  - `outputPath` - The output path.
 ///  - `configuration` - MSBuild configuration.
 ///  - `projectFiles` - The project file paths.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let BuildWebsitesConfig outputPath configuration projectFiles = Seq.iter (BuildWebsiteConfig outputPath configuration) projectFiles
 
 /// Builds the given web project files with debug configuration and copies them to the given websiteDir.
 /// ## Parameters
 ///  - `outputPath` - The output path.
 ///  - `projectFiles` - The project file paths.
-[<System.Obsolete("Use Fake.DotNet.MsBuild instead")>]
+[<System.Obsolete("Use Fake.DotNet.MSBuild instead")>]
 let BuildWebsites outputPath projectFiles = BuildWebsitesConfig outputPath "Debug" projectFiles

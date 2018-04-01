@@ -164,7 +164,7 @@ let iOSBuild setParams =
         msBuildParams
 
     let buildProject param =
-        MsBuild.build (fun msbuildParam -> applyiOSBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
+        MSBuild.build (fun msbuildParam -> applyiOSBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
 
     iOSBuildDefaults
     |> setParams
@@ -272,7 +272,7 @@ let AndroidBuildPackages setParams =
 
             result
 
-        MsBuild.build (fun msbuildParam -> applyBuildParams msbuildParam) param.ProjectPath |> ignore
+        MSBuild.build (fun msbuildParam -> applyBuildParams msbuildParam) param.ProjectPath |> ignore
 
     let rewriteManifestFile (manifestFile:string) outfile (transformVersion:IncrementerVersion) target =
         let manifest = XDocument.Load(manifestFile)
@@ -291,7 +291,7 @@ let AndroidBuildPackages setParams =
         |> Seq.last
 
     let createPackage param =
-        MsBuild.build (fun msbuildParam -> applyAndroidBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
+        MSBuild.build (fun msbuildParam -> applyAndroidBuildParamsToMSBuildParams param msbuildParam) param.ProjectPath |> ignore
 
         [ mostRecentFileInDirMatching param.OutputPath ]
 

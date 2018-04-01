@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
-    <AssemblyName>Fake.DotNet.MsBuild</AssemblyName>
+    <AssemblyName>Fake.DotNet.MSBuild</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <PropertyGroup>
@@ -21,8 +21,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="MsBuild.fs" />
-    <Compile Include="MsBuildLogger.fs" />
+    <Compile Include="MSBuild.fs" />
+    <Compile Include="MSBuildLogger.fs" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

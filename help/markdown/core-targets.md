@@ -22,15 +22,15 @@ nuget Fake.Core.Target //"
 open Fake.Core
 
 // *** Define Targets ***
-Target.create "Clean" (fun _ -> 
+Target.create "Clean" (fun _ ->
     Trace.trace " --- Cleaning stuff --- "
 )
 
-Target.create "Build" (fun _ -> 
+Target.create "Build" (fun _ ->
     Trace.trace " --- Building the app --- "
 )
 
-Target.create "Deploy" (fun _ -> 
+Target.create "Deploy" (fun _ ->
     Trace.trace " --- Deploying app --- "
 )
 
@@ -58,7 +58,7 @@ Now we have the following options:
 
 ## Final targets
 
-Final targets can be used for TearDown functionality. 
+Final targets can be used for TearDown functionality.
 These targets will be executed even if the build fails but have to be activated via Target.ActivateFinal().
 
 ```fsharp
@@ -96,7 +96,7 @@ still be exectued in order.
 ### Setting the number of threads
 
 The number of threads used can be set using the environment variable ``parallel-jobs``.
-This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
+This can be achieved in various ways where the easiest one is to use FAKE's built-in support for
 setting environment variables:
 
 ``fake *YourBuildScript* -e parallel-jobs 8``
@@ -140,7 +140,7 @@ For example this dependency tree:
 
 ![](pics/parallel/ParallelExample.png)
 
-This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.
+This is in addition to that that MSBuild may use multiple threads when building one solution having multiple independent project-files.
 
 # Soft dependencies
 
@@ -148,7 +148,7 @@ Typically you will define dependencies among your targets using the `==>` and `<
 dependencies define the order in which the targets are executed during a build.
 
 You can also define soft dependencies among targets using the  `?=>` and `<=?` operators.  For example, you might
-say that target B has a soft dependency on target A: 
+say that target B has a soft dependency on target A:
 
 ```fsharp
 "A" ?=> "B"
@@ -156,18 +156,18 @@ say that target B has a soft dependency on target A:
 "B" <=? "A"
 ```
 
-With this soft dependency, running B will not require that A be run first. However it does mean that *if* A is run 
+With this soft dependency, running B will not require that A be run first. However it does mean that *if* A is run
 (due to other dependencies) it must be run before B.
 
 ## Example
 
 ```fsharp
 // *** Define Targets ***
-Target.create "Clean" (fun _ -> 
+Target.create "Clean" (fun _ ->
     Trace.trace " --- Cleaning stuff --- "
 )
 
-Target.create "Build" (fun _ -> 
+Target.create "Build" (fun _ ->
     Trace.trace " --- Building the app --- "
 )
 
