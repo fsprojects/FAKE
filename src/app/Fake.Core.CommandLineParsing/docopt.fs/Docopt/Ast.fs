@@ -40,7 +40,7 @@ type UsageAst =
   | XorEmpty
   /// Either the one or the other
   | Xor of l':UsageAst * r':UsageAst
-  /// Sequence of items
+  /// Sequence of items, if the items are only options then order is ignored.
   | Seq of asts':UsageAst list
   /// Fixed command, like "push" in "git push"
   | Cmd of cmd':string
@@ -49,7 +49,22 @@ type UsageAst =
   /// matches the stdin [-]
   | Sdh
   member x.InstanceOfSop = match x with UsageAst.Sop _ -> true | _ -> false
-
+  member x.ContainsOnlyOptions =
+    match x with
+    | Eps -> true
+    | Ano _ -> true
+    | Sop _ -> true
+    | Lop _ -> true
+    | Sqb ast -> ast.ContainsOnlyOptions
+    | Req ast -> ast.ContainsOnlyOptions
+    | Arg _ -> false
+    | XorEmpty -> true
+    | Xor (l, r) -> l.ContainsOnlyOptions && r.ContainsOnlyOptions
+    | Seq asts ->
+      asts |> Seq.forall (fun t -> t.ContainsOnlyOptions)
+    | Cmd _ -> false
+    | Ell ast -> ast.ContainsOnlyOptions
+    | Sdh -> true
 
 [<RequireQualifiedAccess>]
 type UsageAstBuilder =

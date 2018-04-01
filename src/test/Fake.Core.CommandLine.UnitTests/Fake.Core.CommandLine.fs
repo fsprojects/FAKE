@@ -22,7 +22,7 @@ type TestCaseHelper =
           let mutable doc = Docopt(usage')
           printf "%s\n{" test'
           Console.WriteLine(usage')
-          printfn "  Asts: %A" doc.UsageParser.Asts
+          //printfn "  Asts: %A" doc.UsageParser.Asts
         Array.iter (fun assertion' -> let doc = Docopt(usage')
                                       let msg, res = assertion' doc
                                       if debug then printfn "    %s . . . %A" msg res
@@ -40,8 +40,11 @@ let ( ->= ) (argv':string) val' (doc':Docopt) =
   (sprintf "%A ->= %A" argv' expt), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
+  
   let msg, res =
-    try let _ = doc'.Parse(argv) |> Seq.map (fun kv -> kv.Key, kv.Value) |> Seq.toList in (box "<NO EXN>", false)
+    try let args = doc'.Parse(argv) |> Seq.map (fun kv -> kv.Key, kv.Value) |> Seq.toList |> List.sort 
+        printfn "Got args = %A" args
+        (box "<NO EXN>", false)
     with e -> (box e, e.GetType() = val')
   (sprintf "%A ->! %A" argv' msg), res
 // END HELPER FUNCTIONS FOR ASSERTIONS
@@ -49,8 +52,6 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
 [<Tests>]
 let tests = 
   testList "Fake.Core.CommandLineParsing.Tests" [
-
-(*
     testCase ("Test Option parser") <| fun _ ->
       printfn "Starting test '%s'" "Test Option parser"
       let testString = """
@@ -97,33 +98,8 @@ Options:
     """,
       "file -- wtf" ->= ["file", Flag;"<moreargs>", Argument "wtf";"--", Flag],
       "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
-    )*)
-
-    TestCaseHelper.Create("FAKE 5 usage", """
-Usage:
-  fake.exe run [-dn --fsiargs <args>] [<script>] [--] [<scriptarg>...]
-  fake.exe build [-dnf --fsiargs <args>] [--] [<scriptarg>...]
-  fake.exe -h | --help
-  fake.exe --version
-
-Options:
-  --version                    Show version.
-  -h, --help                    Show this screen.
-  -d, --debug                  Debug the script (set a breakpoint at the start).
-  -n, --nocache                Disable caching of the compiled script.
-  -f, --script                 Specify the script to run.
-  --fsiargs <args>             Arguments passed to the f# interactive / f# compiler.
-
-Note: Further information can be retrieved via `fake run <script> -- --help`
-""",
-      "" ->! typeof<ArgvException>,
-      "run"      ->= [("run", Command)],
-      "build"      ->= [("build", Command)],
-      "run build.fsx -- -s -e t1 t2"      ->= [("run", Command);("--", Flag);("<script>", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])],
-      "run build.fsx -s -e t1 t2"      ->= [("run", Command);("<script>", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])],
-      "run build.fsx -d -s -e t1 t2"      ->= [("run", Command);("--debug", Flag);("<script>", Argument "build.fsx");("<scriptarg>", Arguments["-s";"-e";"t1";"t2"])]
-      //"run -d -- --help" ->! typeof<ArgvException>
     )
+
     TestCaseHelper.Create("Empty usage", """
 Usage: prog
 
@@ -160,7 +136,8 @@ Options: -v, --verbose  Verbose.
 
 """,
       "--verbose" ->= [("-v", Flag);("--verbose", Flag)],
-      "--ver"     ->= [("-v", Flag);("--verbose", Flag)],
+      // Not supported
+      //"--ver"     ->= [("-v", Flag);("--verbose", Flag)],
       "-v"        ->= [("-v", Flag);("--verbose", Flag)]
     )
 
@@ -183,8 +160,9 @@ Options: --path <path>
 """,
       "--path home/" ->= [("--path", Argument("home/"))],
       "--path=home/" ->= [("--path", Argument("home/"))],
-      "--pa home/"   ->= [("--path", Argument("home/"))],
-      "--pa=home/"   ->= [("--path", Argument("home/"))],
+      // Not supported
+      //"--pa home/"   ->= [("--path", Argument("home/"))],
+      //"--pa=home/"   ->= [("--path", Argument("home/"))],
       "--path"       ->! typeof<ArgvException>
     )
 
@@ -243,18 +221,19 @@ options:
       "-a -r"          ->= [("-a", Flag);("-r", Flag)]
     )
 
-    TestCaseHelper.Create("Truncated long option disambiguation", """
-Usage: prog [options]
-
-Options: --version
-         --verbose
-
-""",
-      "--version" ->= [("--version", Flag)],
-      "--verbose" ->= [("--verbose", Flag)],
-      "--ver"     ->! typeof<ArgvException>,
-      "--verb"    ->= [("--verbose", Flag)]
-    )
+// Not supported
+//    TestCaseHelper.Create("Truncated long option disambiguation", """
+//Usage: prog [options]
+//
+//Options: --version
+//         --verbose
+//
+//""",
+//      "--version" ->= [("--version", Flag)],
+//      "--verbose" ->= [("--verbose", Flag)],
+//      "--ver"     ->! typeof<ArgvException>,
+//      "--verb"    ->= [("--verbose", Flag)]
+//    )
 
     TestCaseHelper.Create("Short options in square brackets", """
 usage: prog [-a -r -m <msg>]
@@ -314,7 +293,10 @@ options: -a
 
 """,
       "-a -b" ->= [("-a", Flag);("-b", Flag)],
-      "-b -a" ->= [("-a", Flag);("-b", Flag)],
+      // !!!!!!!!!!!!! Different from SPEC! 
+      // order matters!
+      //"-b -a" ->= [("-a", Flag);("-b", Flag)],
+      "-b -a" ->! typeof<ArgvException>,
       "-a"    ->! typeof<ArgvException>,
       "-b"    ->= [("-b", Flag)],
       ""      ->! typeof<ArgvException>
@@ -384,7 +366,10 @@ usage: prog <kind> <name> <type>""",
     TestCaseHelper.Create("Multiple arguments, two optional", """
 usage: prog <kind> [<name> <type>]""",
       "10 20 40" ->= [("<kind>", Argument("10"));("<name>", Argument("20"));("<type>", Argument("40"))],
-      "10 20"    ->= [("<kind>", Argument("10"));("<name>", Argument("20"))],
+      
+      // !!!!!!!!!!!!! Different from SPEC! 
+      // "10 20"    ->= [("<kind>", Argument("10"));("<name>", Argument("20"))],
+      "10 20"    ->! typeof<ArgvException>,
       ""         ->! typeof<ArgvException>
     )
 
@@ -409,42 +394,53 @@ options:
 
     TestCaseHelper.Create("Stacked argument", """
 usage: prog [<name> <name>]""",
-      "10 20" ->= [("<name>", Arguments(["20";"10"]))],
+      "10 20" ->= [("<name>", Arguments(["10";"20"]))],
+      
+      // !!!!!!!!!!!!! Different from SPEC! 
+      // Both needs to be given or none (different from [<name>] [<name>])
+      //"10"    ->= [("<name>", Argument("10"))],
+      "10"    ->! typeof<ArgvException>,
+      ""      ->= []
+    )
+
+    TestCaseHelper.Create("Stacked argument (2)", """
+usage: prog [<name>] [<name>]""",
+      "10 20" ->= [("<name>", Arguments(["10";"20"]))],
       "10"    ->= [("<name>", Argument("10"))],
       ""      ->= []
     )
 
     TestCaseHelper.Create("Same, but both arguments must be present", """
 usage: prog [(<name> <name>)]""",
-      "10 20" ->= [("<name>", Arguments(["20";"10"]))],
+      "10 20" ->= [("<name>", Arguments(["10";"20"]))],
       "10"    ->! typeof<ArgvException>,
       ""      ->= []
     )
 
     TestCaseHelper.Create("Ellipsis (one or more (also, ALL-CAPS argument name))", """
 usage: prog NAME...""",
-      "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+      "10 20" ->= [("NAME", Arguments(["10";"20"]))],
       "10"    ->= [("NAME", Argument("10"))],
       ""      ->! typeof<ArgvException>
     )
 
     TestCaseHelper.Create("Optional in ellipsis", """
 usage: prog [NAME]...""",
-      "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+      "10 20" ->= [("NAME", Arguments(["10";"20"]))],
       "10"    ->= [("NAME", Argument("10"))],
       ""      ->= []
     )
 
     TestCaseHelper.Create("Ellipsis in optional", """
 usage: prog [NAME...]""",
-      "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+      "10 20" ->= [("NAME", Arguments(["10";"20"]))],
       "10"    ->= [("NAME", Argument("10"))],
       ""      ->= []
     )
 
-    TestCaseHelper.Create("", """
+    TestCaseHelper.Create("multiple named arguments", """
 usage: prog [NAME [NAME ...]]""",
-      "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+      "10 20" ->= [("NAME", Arguments(["10";"20"]))],
       "10"    ->= [("NAME", Argument("10"))],
       ""      ->= []
     )
@@ -457,7 +453,12 @@ options: --foo
 """,
       "10"       ->= [("NAME", Argument("10"))],
       "--foo 10" ->= [("NAME", Argument("10"));("--foo", Flag)],
-      "--foo=10" ->! typeof<ArgvException>
+      
+      // !!!!!!!!!!!!! Different from SPEC! 
+      // We allow arguments that look like options when they are the only way to parse them
+      //"--foo=10" ->! typeof<ArgvException>
+      "--foo=10"       ->= [("NAME", Argument("--foo=10"))]
+
     )
 
     TestCaseHelper.Create("Multiple “options:” statements", """
@@ -468,7 +469,24 @@ options: --bar
 
 """,
       "10"          ->= [("NAME", Argument("10"))],
-      "10 20"       ->= [("NAME", Arguments(["20";"10"]))],
+      "10 20"       ->= [("NAME", Arguments(["10";"20"]))],
+      // !!!!!!!!!!!!! Different from SPEC! 
+      // For us ordering matters for parsing! (see new test below!)
+      //"--foo --bar" ->= [("--foo", Flag);("--bar", Flag)]
+      "--foo --bar" ->= [("NAME", Argument "--foo");("--bar", Flag)]
+    )
+
+    
+    TestCaseHelper.Create("Multiple “options:” statements (2)", """
+usage: prog (--foo | NAME) [--bar | NAME]
+
+options: --foo
+options: --bar
+
+""",
+      "10"          ->= [("NAME", Argument("10"))],
+      "10 20"       ->= [("NAME", Arguments(["10";"20"]))],
+      // see test above
       "--foo --bar" ->= [("--foo", Flag);("--bar", Flag)]
     )
 
@@ -568,7 +586,10 @@ usage: prog [go]""",
     TestCaseHelper.Create("2 commands", """
 usage: prog [go go]""",
       ""         ->= [],
-      "go"       ->= [("go", Flag)],
+      // !!!!!!!!!!!!! Different from SPEC! 
+      // only group is optional!
+      //"go"       ->= [("go", Flag)],
+      "go" ->! typeof<ArgvException>,
       "go go"    ->= [("go", Flags(2))],
       "go go go" ->! typeof<ArgvException>
     )
@@ -585,7 +606,9 @@ options: -a
          -b
 """,
       "-a"  ->= [("-a", Flag)],
-      "-aa" ->! typeof<ArgvException>
+      // !!!!!!!!!!!! Different from SPEC!
+      //"-aa" ->! typeof<ArgvException> // SPEC
+      "-aa"  ->= [("-a", Flags 2)] // Not SPEC
     )
 
     TestCaseHelper.Create("[options] shortcut", """
@@ -726,19 +749,21 @@ Options: -a, --address <host:port>  TCP address [default: localhost:6283].
 usage: prog (go <direction> --speed=<km/h>)...""",
       "go left --speed=5  go right --speed=9" ->= [
         "go", Flags(2);
-        "<direction>", Arguments(["right";"left"]);
-        "--speed", Arguments(["9";"5"])
+        "<direction>", Arguments(["left"; "right"]);
+        "--speed", Arguments(["5";"9"])
       ]
     )
-
-    TestCaseHelper.Create("Required options should work with option shortcut", """
-usage: prog [options] -a
-
-options: -a
-
-""",
-      "-a" ->= [("-a", Flag)]
-    )
+      
+    // !!!!!!!!!!!!! Different from SPEC! 
+    // No, not supported
+//    TestCaseHelper.Create("Required options should work with option shortcut", """
+//usage: prog [options] -a
+//
+//options: -a
+//
+//""",
+//      "-a" ->= [("-a", Flag)]
+//    )
 
     ////
     //// If option could be repeated its defaults should be split into a list
@@ -787,7 +812,7 @@ usage: prog [<input file>]""",
 
     TestCaseHelper.Create("POSIXly correct indentation (2)", """
 usage: prog [--input=<file name>]...""",
-      "--input a.txt --input=b.txt" ->= [("--input", Arguments(["b.txt";"a.txt"]))]
+      "--input a.txt --input=b.txt" ->= [("--input", Arguments(["a.txt";"b.txt"]))]
     )
 
     TestCaseHelper.Create("Issue 85: `[options]` shortcut with multiple subcommands", """
@@ -852,5 +877,4 @@ other options:
 """,
       "--baz --egg" ->= [("--baz", Flag);("--egg", Flag)]
     )
-    
   ]

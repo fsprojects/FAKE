@@ -36,10 +36,11 @@ module DocHelper =
                   Options(sectionName, line'.Substring(idxCol + 1))
                 else Other(line')
     type OptionBuilder =
-      { mutable Lines : string list
+      { /// The lines in reversed order
+        mutable Lines : string list
         Title : string }
       member x.AddLine line = { x with Lines = line :: x.Lines }
-      member x.Build() = { OptionSection.Title = x.Title; OptionSection.Lines = x.Lines }
+      member x.Build() = { OptionSection.Title = x.Title; OptionSection.Lines = x.Lines |> List.rev }
       static member Build (x:OptionBuilder) = x.Build()
     let cut (doc':string) =
       let folder (usages', (sections':OptionBuilder list), last') = function
@@ -61,11 +62,19 @@ module DocHelper =
       in doc'.Split([|"\r\n";"\n";"\r"|], StringSplitOptions.None)
       |> Array.fold folder ([], [], Last.Nothing)
       |> fun (ustr', ostrs', _) ->
-           let ustrsArray = List.toArray ustr' in
-           let ostrsArray = List.toArray (ostrs' |> List.map OptionBuilder.Build) in
-           Array.Reverse(ostrsArray);
-           Array.Reverse(ustrsArray);
-           (ustrsArray, ostrsArray)
+           let ustrsArray = List.toArray ustr'
+           let ostrsArray =
+              ostrs'
+              |> List.map OptionBuilder.Build
+              |> List.toArray
+           Array.Reverse(ostrsArray)
+           Array.Reverse(ustrsArray)
+           let groupedResults =
+             ostrsArray
+             |> Array.groupBy (fun sec -> sec.Title)
+             |> Array.map (fun (title, group) ->
+              { OptionSection.Title = title; OptionSection.Lines = group |> Seq.map (fun item -> item.Lines) |> Seq.concat |> Seq.toList })
+           (ustrsArray, groupedResults)
 
 type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
             ?soptChars':string) =
@@ -81,12 +90,48 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     let sectionsParsers =
       sections
       |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser(soptChars).Parse(oStrs.Lines)))
-      |> dict
+      |> Seq.toList
     let pusage = UsageParser(uStrs, sectionsParsers)
-    member __.Parse(?argv':string array, ?args':Arguments.Dictionary) =
-      let args = defaultArg args' (Arguments.Dictionary()) in
-      let argv = defaultArg argv' argv in
-      pusage.ParseCommandLine(argv)
+    member __.Parse(?argv':string array) =
+
+      let argv =
+        defaultArg argv' argv
+        |> Array.collect (fun argument ->
+          if argument.StartsWith ("-") && not (argument.StartsWith "--") && argument <> "-" then
+            // Split up short arguments
+            let str = argument.Substring(1)
+            let results = ResizeArray<_>() in
+            let mutable i = -1 in
+            while (i <- i + 1; i < str.Length) do
+              match sectionsParsers |> Seq.tryPick (fun (_, opts) -> opts.Find(str.[i])) with
+              | None -> results.Add("-" + string str.[i])
+              | Some opt ->
+                if opt.HasArgument && i + 1 < str.Length
+                then let res = str.Substring(i + 1) in i <- str.Length; results.Add(opt.FullShort + res)
+                else results.Add(opt.FullShort)
+            results.ToArray()
+          else [|argument|]          
+          )
+
+      let result = pusage.ParseCommandLine(argv)
+      // fill defaults
+      sectionsParsers
+      |> Seq.fold (fun map (_, section) ->
+        section
+        |> Seq.fold (fun map opt ->
+          let addKey def key =
+            if not (String.IsNullOrEmpty key) then // opt.FullShort else opt.FullLong
+              match def, Map.tryFind key map with
+              | Some defVal, None ->
+                Map.add key (Docopt.Arguments.Result.Argument defVal)
+              | _ -> id
+            else id
+
+          map
+          |> addKey opt.DefaultValue opt.FullLong
+          |> addKey opt.DefaultValue opt.FullShort
+        ) map) result
+
     member __.Usage = String.Join("\n", uStrs)
     member __.UsageParser = pusage
   end

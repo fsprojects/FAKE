@@ -64,6 +64,10 @@ type SafeOptions(list:SafeOption list) =
       |> List.tryFind(fun o' -> o'.Long = Some l')
       |> Option.orElseWith (fun _ -> List.tryFind(fun o' -> o'.Long.IsSome && o'.Long.Value.StartsWith(l')) list)
 
+    interface System.Collections.IEnumerable with
+      member x.GetEnumerator () = (list :> System.Collections.IEnumerable).GetEnumerator()
+    interface IEnumerable<SafeOption> with
+      member x.GetEnumerator () = (list :> IEnumerable<SafeOption>).GetEnumerator()
     member __.Find(s':char) =
       list |> List.tryFind(fun o' -> o'.Short = Some s')
     member __.AddRange(opts:SafeOption list) =

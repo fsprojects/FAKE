@@ -152,7 +152,7 @@ type OptionsParser(soptChars':string) =
       let reply = ``start`` stream' in
       Reply(reply.Status,
             (if reply.Status = Ok
-             then reply.Result
+             then { reply.Result with DefaultValue = dflt }
              else Unchecked.defaultof<OptionsParserState>),
             reply.Error)
 
@@ -177,10 +177,14 @@ type OptionsParser(soptChars':string) =
       let lastOpt = ref None in
       let action = function
       | Nil      -> ()
-      | Opt(opt) -> let () = lastOpt := Some opt in options.Add(opt)
-      | Val(str) -> match !lastOpt with // In order to parse defaults from follow-up lines...
-                    | Some lastOptCopy -> lastOptCopy.DefaultValue <- Some str
-                    | None -> ()
+      | Opt(opt) ->
+        lastOpt := Some opt
+        options.Add(opt)
+      | Val(str) -> 
+          match !lastOpt with // In order to parse defaults from follow-up lines...
+          | Some lastOptCopy ->
+            lastOptCopy.DefaultValue <- Some str
+          | None -> ()
       in optionStrings'
       |> Seq.map parseAsync
       |> Async.Parallel

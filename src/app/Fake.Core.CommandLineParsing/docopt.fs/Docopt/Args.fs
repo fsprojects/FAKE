@@ -9,7 +9,6 @@ type Result =
   | None
   | Flag
   | Flags of int
-  | Command
   | Argument of string
   | Arguments of string list
 
