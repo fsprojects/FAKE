@@ -256,6 +256,7 @@ let dotnetAssemblyInfos =
       "Fake.BuildServer.Travis", "Integration into Travis buildserver"
       "Fake.BuildServer.TeamFoundation", "Integration into TeamFoundation buildserver"
       "Fake.Core.Context", "Core Context Infrastructure"
+      "Fake.Core.CommandLineParsing", "Core commandline parsing support via docopt like syntax"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
@@ -457,6 +458,12 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
+
+    // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
+    let processResult =
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.CommandLine.UnitTests.dll" "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
 )
 
 Target.create "BootstrapTest" (fun _ ->
