@@ -18,6 +18,10 @@ NUGET
     FluentMigrator (1.6.2)
     FluentMigrator.Runner (1.6.2)
       FluentMigrator (>= 1.6.2)
+    FParsec (1.0.3)
+      FSharp.Core (>= 4.0.0.1) - restriction: >= net40
+      FSharp.Core (>= 4.2.3) - restriction: && (< net40) (>= netstandard1.6)
+      NETStandard.Library (>= 1.6.1) - restriction: && (< net40) (>= netstandard1.6)
     FsCheck (2.10.8)
       FSharp.Core (>= 4.0.0.1) - restriction: || (>= net452) (&& (< netstandard1.6) (>= portable-net45+win8+wp8) (< win8)) (&& (< netstandard1.6) (>= win8)) (&& (< portable-net45+win8+wp8) (>= portable-net45+win8+wp8+wpa81))
       FSharp.Core (>= 4.2.3) - restriction: && (< net452) (>= netstandard1.6)

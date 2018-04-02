@@ -1,6 +1,7 @@
 FSharp.Core
 Paket.Core
 Mono.Web.Xdt
+FParsec
 Mono.Cecil
 Octokit
 Nuget.Core
