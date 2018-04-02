@@ -90,6 +90,7 @@ Fake Build Options [build_opts]:
 
       
       ()
+
     TestCaseHelper.Create("FAKE 5 usage (simple)", """
 Usage:
   fake.exe file -- [<moreargs>...]
@@ -99,6 +100,82 @@ Options:
       "file -- wtf" ->= ["file", Flag;"<moreargs>", Argument "wtf";"--", Flag],
       "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
     )
+
+(*  
+    TestCaseHelper.Create("Paket use-cases", """
+Usage:
+  paket.exe [global_opts] show-installed-packages [show_installed_opts]
+  paket.exe [global_opts] show-groups
+  paket.exe [global_opts] find-packages [find_opts] <nuget> [find_opts]
+  paket.exe [global_opts] find-package-versions [find_opts] <nuget> [find_opts]
+  paket.exe [global_opts] pack [pack_opts] <package> [pack_opts]
+  paket.exe [global_opts] push [push_opts] <package> [push_opts]
+  paket.exe [global_opts] generate-include-scripts [loadscript_opts]
+  paket.exe [global_opts] generate-load-scripts [loadscript_opts]
+  paket.exe [global_opts] why [why_opts] <nuget> [why_opts]
+  paket.exe [global_opts] restriction <restriction>
+
+
+Global Options [global_opts]:
+  --from-bootstrapper          mark the command to be called from the bootstrapper
+  -s, --silent                 suppress console output
+  -v, --verbose                print detailed information to the console
+  --log-file                   print output to a file
+
+Why Options [why_opts]:
+  -g, --group <group>  specify dependency group [default: Main]
+  --details                    display detailed information with all paths, versions and framework restrictions
+
+GenerateLoadScript Options [loadscript_opts]:
+  -g, --group <group> [*]      groups to generate scripts for (default: all groups); may be repeated
+  -f, --framework <fw> [*]     framework identifier to generate scripts for, such as net45 or netstandard1.6; may be repeated
+  -f, --type <lang> [*]        language to generate scripts for; may be repeated
+
+
+Push Options [push_opts]:
+  --url <url>                  URL of the NuGet feed
+  --api-key <key>              API key for the URL (default: value of the NUGET_KEY environment variable)
+  --endpoint <endpoint>        API endpoint to push to [default: /api/v2/package]
+
+
+Pack Options [pack_opts]:
+  --build-config <configuration>
+                        build configuration that should be packaged (default: Release)
+  --build-platform <platform>
+                        build platform that should be packaged (default: check all known platform targets)
+  --version <version>   version of the package
+  --template <path>     pack a single paket.template file
+  --exclude <package ID>
+                        exclude paket.template file by package ID; may be repeated
+  --specific-version <package ID> <version>
+                        version number to use for package ID; may be repeated
+  --release-notes <text>
+                        release notes
+  --lock-dependencies   use version constraints from paket.lock instead of paket.dependencies
+  --minimum-from-lock-file
+                        use version constraints from paket.lock instead of paket.dependencies and add them as a minimum version; --lock-dependencies overrides this option
+  --pin-project-references
+                        pin dependencies generated from project references to exact versions (=) instead of using minimum versions (>=); with --lock-dependencies project references will be pinned even if this
+                        option is not specified
+  --symbols             create symbol and source packages in addition to library and content packages
+  --include-referenced-projects
+                        include symbols and source from referenced projects
+  --project-url <URL>   homepage URL for the package
+
+Pack Options [find_opts]:
+  --source <source URL> 
+                        specify source URL
+  --max <int>           limit maximum number of results
+
+Show installed packages [show_installed_opts]:
+  --all, -a             include transitive dependencies
+  --project, -p <path>  specify project to show dependencies for
+ 
+    """,
+      "file -- wtf" ->= ["file", Flag;"<moreargs>", Argument "wtf";"--", Flag],
+      "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
+    )
+*)
 
     TestCaseHelper.Create("Empty usage", """
 Usage: prog
