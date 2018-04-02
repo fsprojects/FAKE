@@ -23,7 +23,8 @@ module ParseResult =
 
   let tryGetArgument flag (map:ResultMap) =
     match Map.tryFind flag map with
-    | Some (Argument arg) -> Some arg
+    | Some (Argument arg)
+    | Some (Arguments [arg]) -> Some arg
     | Some (Arguments args) -> failwithf "Expected argument %s only a single time, but got %A" flag args
     | _ -> None
 

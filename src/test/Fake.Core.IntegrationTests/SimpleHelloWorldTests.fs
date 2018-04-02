@@ -55,4 +55,9 @@ let ``use external paket.dependencies``() =
 
 [<Test>]
 let ``reference fake core targets``() = 
-    fakeRun "reference_fake-targets.fsx" "core-reference-fake-core-targets" |> ignore
+    let result = fakeRun "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
+    let stdOut = String.Join("\n", result.Messages).Trim()
+    let stdErr = String.Join("\n", result.Errors)
+
+    let expected = "Arguments: [\"--test\"]"
+    Assert.IsTrue(stdOut.Contains expected, sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)

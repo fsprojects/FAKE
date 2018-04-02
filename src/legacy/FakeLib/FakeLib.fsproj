@@ -52,6 +52,24 @@
     <Compile Include="..\..\app\Fake.Core.Context\Context.fs">
       <Link>Fake.Core.Context/Context.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Options.fs">
+      <Link>Fake.Core.CommandLineParsing/Options.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\OptionsParser.fs">
+      <Link>Fake.Core.CommandLineParsing/OptionsParser.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Args.fs">
+      <Link>Fake.Core.CommandLineParsing/Args.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Ast.fs">
+      <Link>Fake.Core.CommandLineParsing/Ast.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\UsageParser.fs">
+      <Link>Fake.Core.CommandLineParsing/UsageParser.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Docopt.fs">
+      <Link>Fake.Core.CommandLineParsing/Docopt.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Runtime\LegacyApiHelper.fs">
       <Link>Fake.Runtime/LegacyApiHelper.fs</Link>
     </Compile>

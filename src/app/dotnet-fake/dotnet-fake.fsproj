@@ -18,6 +18,7 @@
     <EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj" />
     <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>

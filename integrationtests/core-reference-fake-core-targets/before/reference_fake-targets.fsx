@@ -19,9 +19,10 @@ open Fake.Core.TargetOperators
 printfn "test_before targets"
 Target.create "Start" (fun _ -> ())
 
-Target.create "TestTarget" (fun _ ->
+Target.create "TestTarget" (fun p ->
     printfn "Starting Build."
     Trace.traceFAKE "Some Info from FAKE"
+    printfn "Arguments: %A" p.Context.Arugments
     printfn "Ending Build."
 )
 
