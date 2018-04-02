@@ -22,7 +22,7 @@ Target.create "Start" (fun _ -> ())
 Target.create "TestTarget" (fun p ->
     printfn "Starting Build."
     Trace.traceFAKE "Some Info from FAKE"
-    printfn "Arguments: %A" p.Context.Arugments
+    printfn "Arguments: %A" p.Context.Arguments
     printfn "Ending Build."
 )
 

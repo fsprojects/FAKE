@@ -10,9 +10,9 @@ module internal TargetCli =
         """
 Usage:
   fake-run --list
-  fake-run [target <target>] [target_opts] [--] [<targetargs>...]
   fake-run --version
   fake-run --help | -h
+  fake-run [target <target>] [target_opts] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
     --environmentvariable, -e <string> <string> [*]
@@ -571,6 +571,7 @@ module Target =
                 listAvailable()
             elif ParseResult.hasFlag "-h" results || ParseResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
+                printf "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
             elif ParseResult.hasFlag "--version" results then
                 printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
             else

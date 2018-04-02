@@ -197,6 +197,7 @@ let handleCli (results:Map<string, ParseResult>) =
   if ParseResult.hasFlag "--help" results || ParseResult.hasFlag "--help" results then
     didSomething <- true
     printf "%s" Cli.fakeUsage
+    printf "Hint: Run 'fake run <script.fsx> --help' to get help from your script."
 
   let isRun = ParseResult.hasFlag "run" results
   let isBuild = ParseResult.hasFlag "build" results
