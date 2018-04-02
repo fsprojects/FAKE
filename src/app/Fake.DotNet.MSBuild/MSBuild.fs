@@ -200,6 +200,7 @@ type MSBuildParams =
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
       WarnAsError: string list option
+      NoWarn: string list option
       /// corresponds to the msbuild option '/fl'
       FileLoggers : MSBuildFileLoggerConfig list option
       /// corresponds to the msbuild option '/bl'
@@ -219,6 +220,7 @@ type MSBuildParams =
           Verbosity = None
           NoConsoleLogger = false
           WarnAsError = None
+          NoWarn = None
           RestorePackagesFlag = false
           FileLoggers = None
           BinaryLoggers = None
@@ -294,9 +296,9 @@ module MSBuild =
 
 
   /// [omit]
-  let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties =
-    if Environment.isUnix then [ targets; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
-    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger; warnAsError ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
+  let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError nowarn fileLoggers binaryLoggers distributedFileLoggers properties =
+    if Environment.isUnix then [ targets; tools; verbosity; noconsolelogger; warnAsError; nowarn ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger; warnAsError; nowarn ] @ fileLoggers @ binaryLoggers @ distributedFileLoggers @ properties
 
   let private serializeArgs args =
     args
@@ -363,6 +365,11 @@ module MSBuild =
         match p.WarnAsError with
         | None -> None
         | Some w -> Some("warnaserror", w |> String.concat ";")
+
+    let nowarn =
+        match p.NoWarn with
+        | None -> None
+        | Some w -> Some("nowarn", w |> String.concat ";")
 
     let fileLoggers =
         let serializeLogger fl =
@@ -433,7 +440,7 @@ module MSBuild =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError fileLoggers binaryLoggers distributedFileLoggers properties
+    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError nowarn fileLoggers binaryLoggers distributedFileLoggers properties
     |> serializeArgs
 
 #if !NO_MSBUILD_AVAILABLE
