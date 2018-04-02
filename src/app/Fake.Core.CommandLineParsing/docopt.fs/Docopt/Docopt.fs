@@ -1,9 +1,8 @@
-﻿namespace Docopt
-#nowarn "62"
+﻿namespace Fake.Core.CommandLineParsing
 
 open System
 
-type HelpCallback = unit -> string
+//type HelpCallback = unit -> string
 
 module DocHelper =
     type private Last =
@@ -12,9 +11,9 @@ module DocHelper =
       | Nothing = 2
 
     [<Literal>]
-    let OrdinalIgnoreCase = StringComparison.OrdinalIgnoreCase
+    let internal OrdinalIgnoreCase = StringComparison.OrdinalIgnoreCase
 
-    let (|Usage|Options|Other|Newline|) (line':string) =
+    let internal (|Usage|Options|Other|Newline|) (line':string) =
       if String.IsNullOrEmpty(line')
       then Newline
       elif line'.[0] = ' ' || line'.[0] = '\t'
@@ -35,7 +34,7 @@ module DocHelper =
                     else "options"
                   Options(sectionName, line'.Substring(idxCol + 1))
                 else Other(line')
-    type OptionBuilder =
+    type internal OptionBuilder =
       { /// The lines in reversed order
         mutable Lines : string list
         Title : string }
@@ -76,15 +75,7 @@ module DocHelper =
               { OptionSection.Title = title; OptionSection.Lines = group |> Seq.map (fun item -> item.Lines) |> Seq.concat |> Seq.toList })
            (ustrsArray, groupedResults)
 
-type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
-            ?soptChars':string) =
-  class
-    static let noVersionObject =
-      { new Object() with member __.ToString() = "<ERROR: NO VERSION GIVEN>" }
-    let argv = defaultArg argv' (Environment.GetCommandLineArgs().[1..])
-               |> Array.copy
-    let help = defaultArg help' (fun () -> doc')
-    let version = defaultArg version' noVersionObject
+type Docopt(doc', ?soptChars':string) =
     let soptChars = defaultArg soptChars' "?"
     let (uStrs, sections) = DocHelper.cut doc'
     let sectionsParsers =
@@ -92,10 +83,10 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
       |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser(soptChars).Parse(oStrs.Lines)))
       |> Seq.toList
     let pusage = UsageParser(uStrs, sectionsParsers)
-    member __.Parse(?argv':string array) =
+    member __.Parse(argv':string array) =
 
       let argv =
-        defaultArg argv' argv
+        argv'
         |> Array.collect (fun argument ->
           if argument.StartsWith ("-") && not (argument.StartsWith "--") && argument <> "-" then
             // Split up short arguments
@@ -123,7 +114,7 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
             if not (String.IsNullOrEmpty key) then // opt.FullShort else opt.FullLong
               match def, Map.tryFind key map with
               | Some defVal, None ->
-                Map.add key (Docopt.Arguments.Result.Argument defVal)
+                Map.add key (ParseResult.Argument defVal)
               | _ -> id
             else id
 
@@ -134,5 +125,3 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
 
     member __.Usage = String.Join("\n", uStrs)
     member __.UsageParser = pusage
-  end
-;;

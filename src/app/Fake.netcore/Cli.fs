@@ -3,60 +3,32 @@
 module Cli
 
 open System
-open Argu
+open Fake.Core.CommandLineParsing
 
-type RunArgs =
-  | [<UniqueAttribute>][<AltCommandLine("-f")>][<GatherUnrecognized>] Script of string
-  | [<AltCommandLine("-t")>] Target of string
-  | [<AltCommandLine("-e")>] EnvironmentVariable of string * string
-  | [<AltCommandLine("-d")>] Debug
-  | [<AltCommandLine("-s")>] SingleTarget
-  | [<AltCommandLine("-n")>] NoCache
-  | FsiArgs of string
-with
-  interface IArgParserTemplate with
-    member s.Usage =
-      match s with
-      | Script _ -> "Specify the script to run. (--script or -f is optional)"
-      | EnvironmentVariable _ -> "Set an environment variable."
-      | FsiArgs _ -> "Arguments passed to the f# interactive."
-      | Debug _ -> "Debug the script (set a breakpoint at the start)."
-      | SingleTarget _ -> "Run only the specified target."
-      | Target _ -> "The target to run."
-      | NoCache _ -> "Disable caching of the compiled script."
+let fakeUsage =
+  """
+Usage:
+  fake.exe [fake_opts] run [run_opts] [<script.fsx>] [run_opts] [--] [<scriptargs>...]
+  fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
+  fake.exe --version
+  fake.exe --help | -h
 
-type BuildArgs =
-  | [<UniqueAttribute>][<AltCommandLine("-t")>][<GatherUnrecognized>] Target of string
-  | [<AltCommandLine("-f")>] Script of string
-  | [<AltCommandLine("-e")>] EnvironmentVariable of string * string
-  | [<AltCommandLine("-d")>] Debug
-  | [<AltCommandLine("-s")>] SingleTarget
-  | [<AltCommandLine("-n")>] NoCache
-  | FsiArgs of string
-with
-  interface IArgParserTemplate with
-    member s.Usage =
-      match s with
-      | Target _ -> "The target to run (--target or -t is optional when running 'build')."
-      | Script _ -> "Specify the script to run. "
-      | EnvironmentVariable _ -> "Set an environment variable."
-      | FsiArgs _ -> "Arguments passed to the f# interactive."
-      | Debug _ -> "Debug the script (set a breakpoint at the start)."
-      | SingleTarget _ -> "Run only the specified target."
-      | NoCache _ -> "Disable caching of the compiled script."
+Fake Options [fake_opts]:
+  -v, --verbose [*]     Verbose (can be used multiple times)
+                        Is ignored if -s is used.
+                        * -v: Log verbose but only for FAKE
+                        * -vv: Log verbose for Paket as well
+  -s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.                  
 
-type FakeArgs =
-  | Version
-  | (*[<Inherit>]*) [<AltCommandLine("-v")>] Verbose
-  | [<AltCommandLine("-s")>] Silent
-  | [<CliPrefix(CliPrefix.None)>] Run of Argu.ParseResults<RunArgs>
-  | [<CliPrefix(CliPrefix.None)>] Build of Argu.ParseResults<BuildArgs>
-with
-  interface IArgParserTemplate with
-    member s.Usage =
-      match s with
-      | Version _ -> "Prints the version."
-      | Verbose _ -> "More verbose output. Can be used more than once."
-      | Silent _ -> "Hide all output from the fake runner (output from script is still shown)."
-      | Run _ -> "Runs a script."
-      | Build _ -> "Build a target via build.fsx script."
+Fake Run Options [run_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+
+Fake Build Options [build_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+  -f, --script <script.fsx>
+                        The script to execute (defaults to `build.fsx`).
+  """

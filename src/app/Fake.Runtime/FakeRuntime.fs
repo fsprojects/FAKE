@@ -464,7 +464,7 @@ If you know what you are doing you can silence this warning by setting the envir
           |> legacyParseHeader cacheDir        
         restoreDependencies script logLevel cacheDir section
 
-let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
+let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache =
 
   if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
@@ -490,9 +490,9 @@ let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string
       Runners.FakeConfig.UseCache = useCache
       Runners.FakeConfig.Out = out
       Runners.FakeConfig.Err = err
-      Runners.FakeConfig.Environment = envVars }
+      Runners.FakeConfig.ScriptArgs = scriptArgs }
   CoreCache.runScriptWithCacheProvider config provider
 
-let prepareAndRunScript logLevel fsiOptions scriptPath envVars useCache =
-  prepareAndRunScriptRedirect logLevel fsiOptions scriptPath envVars (printf "%s") (printf "%s") useCache
+let prepareAndRunScript logLevel fsiOptions scriptPath scriptArgs useCache =
+  prepareAndRunScriptRedirect logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache
 

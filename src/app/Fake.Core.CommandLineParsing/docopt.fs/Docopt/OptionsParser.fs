@@ -1,5 +1,4 @@
-﻿namespace Docopt
-#nowarn "62"
+﻿namespace Fake.Core.CommandLineParsing
 
 open FParsec
 open System
@@ -30,7 +29,6 @@ type internal PoptLineResult =
   | Nil
 
 type OptionsParser(soptChars':string) =
-  class
     let pupperArg =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
@@ -76,14 +74,17 @@ type OptionsParser(soptChars':string) =
         | _   -> Reply(state)
     and ``expecting arg (short)`` stream' (state) =
       let () = stream'.Skip() in
-      let r = parg stream' in match r.Status with
-        | Ok -> ``short option plus arg`` stream' { state with ArgName = Some(r.Result)}
-        | _  -> Reply(Error, r.Error)
+      let r = parg stream' 
+      match r.Status with
+      | Ok -> ``short option plus arg`` stream' { state with ArgName = Some(r.Result)}
+      | _  -> Reply(Error, r.Error)
     and ``argument or hyphens or space`` stream' (state) =
       match stream'.SkipAndPeek() with
         | '-' -> ``expecting hyphen 2`` stream' (state)
         | ' ' -> Reply(state)
-        | _   -> let r = parg stream' in match r.Status with
+        | _   ->
+          let r = parg stream'
+          match r.Status with
           | Ok -> ``short option plus arg`` stream' { state with ArgName =  Some(r.Result)}
           | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
     and ``short option plus arg`` stream' state =
@@ -119,14 +120,16 @@ type OptionsParser(soptChars':string) =
       | ' ' -> Reply (state)
       | '[' -> ``parameters and end`` stream' state
       | _ ->
-        let r = parg stream' in match r.Status with
+        let r = parg stream'
+        match r.Status with
         | Ok -> ``long option plus arg (+short?)`` state (Some(r.Result))
         | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
     and ``expecting arg (long)`` stream' state =
       let () = stream'.Skip() in
-      let r = parg stream' in match r.Status with
-        | Ok -> ``long option plus arg (+short?)`` state (Some(r.Result))
-        | _  -> Reply(Error, r.Error)
+      let r = parg stream'
+      match r.Status with
+      | Ok -> ``long option plus arg (+short?)`` state (Some(r.Result))
+      | _  -> Reply(Error, r.Error)
     and ``long option plus arg (+short?)`` state newa' =
       match state.ArgName, newa' with
         | _, None          -> Reply(state)
@@ -136,14 +139,14 @@ type OptionsParser(soptChars':string) =
     and ``parameters and end`` stream' state =
       match stream'.Peek() with
         | '[' -> 
-          let r = pParam stream' in match r.Status with
+          let r = pParam stream'
+          match r.Status with
           | Ok ->
-            let newState =
-              match r.Result with
-              | "[!]" -> { state with IsRequired = true; AllowMultiple = false }
-              | "[*]" -> { state with IsRequired = false; AllowMultiple = true }
-              | "[+]" -> { state with IsRequired = true; AllowMultiple = true }
-            Reply(newState)
+            match r.Result with
+            | "[!]" -> Reply { state with IsRequired = true; AllowMultiple = false }
+            | "[*]" -> Reply { state with IsRequired = false; AllowMultiple = true }
+            | "[+]" -> Reply { state with IsRequired = true; AllowMultiple = true }
+            | _ -> Reply(Error, ErrorMessageList(ExpectedString "[!], [*] or [+]"))
           | _  -> Reply(Error, r.Error)
           //``expecting hyphen 1`` stream' state
         | _   -> Reply(state)
@@ -191,5 +194,4 @@ type OptionsParser(soptChars':string) =
       |> Async.RunSynchronously
       |> Seq.iter action
       |> (fun _ -> options |> Seq.map OptionsParserState.Build |> Seq.toList)
-  end
-;;
+

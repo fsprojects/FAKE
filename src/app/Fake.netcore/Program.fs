@@ -8,7 +8,8 @@ open Fake.Runtime.HashGeneration
 open Fake.Runtime.CoreCache
 open Fake.Runtime.FakeRuntime
 open System.IO
-open Argu
+open Fake.Core.CommandLineParsing
+open Paket.FolderScanner
 
 let printVersion() =
     traceFAKE "%s" fakeVersionStr
@@ -64,11 +65,12 @@ let splitCommandLine s =
 
 type RunArguments = {
    Script : string option
-   Target : string option
+   ScriptArguments : string list
+   //Target : string option
    FsiArgLine : string list
-   EnvironmentVariables : (string * string) list
+   //EnvironmentVariables : (string * string) list
    Debug : bool
-   SingleTarget : bool
+   //SingleTarget : bool
    NoCache : bool
    VerboseLevel : VerboseLevel
    IsBuild : bool // Did the user call `fake build` or `fake run`?
@@ -136,22 +138,8 @@ let runOrBuild (args : RunArguments) =
         //Noooo script anywhere!
         | None, [], true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
 
-    //Combine the key value pair vars and the flag vars.
-    let envVars =
-        seq {
-          yield! args.EnvironmentVariables
-            //|> Seq.map (fun s -> let split = s.Split(':') in split.[0], split.[1])
-          if args.SingleTarget
-          then yield "single-target", "true"
-          else yield "single-target", "" // we don't allow that this is set from outside, it is an implementation detail
-          if args.Target.IsSome 
-          then yield "target", args.Target.Value
-          else yield "target", "" // we don't allow that this is set from outside, it is an implementation detail
-          yield "fsiargs-buildscriptargs", String.Join(" ", scriptArgs)
-        }
-
     let useCache = not args.NoCache
-    if not (FakeRuntime.prepareAndRunScript args.VerboseLevel additionalArgs scriptFile envVars useCache) then false
+    if not (FakeRuntime.prepareAndRunScript args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache) then false
     else 
         if args.VerboseLevel.PrintVerbose then log "Ready."
         true
@@ -174,13 +162,15 @@ let runOrBuild (args : RunArguments) =
 
       false
 
-let handleCli (results:ParseResults<Cli.FakeArgs>) =
+let handleCli (results:Map<string, ParseResult>) =
 
   let mutable didSomething = false
   let mutable exitCode = 0
   let mutable runarg = None
-  let verbLevel = (results.GetResults <@ Cli.FakeArgs.Verbose @>) |> List.length
-  let isSilent = (results.Contains <@ Cli.FakeArgs.Silent @>)
+  let verbLevel =
+    ParseResult.getFlagCount "--verbose" results
+  let isSilent =
+    ParseResult.hasFlag "--silent" results
   let verboseLevel =
     match isSilent, verbLevel with
     | true, _ -> VerboseLevel.Silent
@@ -199,47 +189,43 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
     else
       { new System.IDisposable with 
           member __.Dispose() = () }
-  if results.Contains <@ Cli.FakeArgs.Version @> then
+  if ParseResult.hasFlag "--version" results then
     didSomething <- true
     printVersion()
     printFakePath()
-    
-  results.IterResult (<@ Cli.FakeArgs.Run @>, fun runArgs ->
-    runarg <- Some {
-       Script = if runArgs.Contains <@ Cli.RunArgs.Script @> then Some (runArgs.GetResult <@ Cli.RunArgs.Script @>) else None
-       Target = if runArgs.Contains <@ Cli.RunArgs.Target @> then Some (runArgs.GetResult <@ Cli.RunArgs.Target @>) else None
-       FsiArgLine = if runArgs.Contains <@ Cli.RunArgs.FsiArgs @> then runArgs.GetResults <@ Cli.RunArgs.FsiArgs @> else []
-       EnvironmentVariables = runArgs.GetResults(<@ Cli.RunArgs.EnvironmentVariable @>)
-       Debug = runArgs.Contains <@ Cli.RunArgs.Debug @>
-       SingleTarget =  runArgs.Contains <@ Cli.RunArgs.SingleTarget @>
-       NoCache = runArgs.Contains <@ Cli.RunArgs.NoCache @>
-       VerboseLevel = verboseLevel
-       IsBuild = false // Did the user call `fake build` or `fake run`?
-    }
-  )
 
-  results.IterResult (<@ Cli.FakeArgs.Build @>, fun buildArg ->
-    if runarg.IsSome then failwithf "`fake run` was already executed, executing `fake build` at the same time is impossible!"
-    runarg <- Some {
-       Script = if buildArg.Contains <@ Cli.BuildArgs.Script @> then Some (buildArg.GetResult <@ Cli.BuildArgs.Script @>) else None
-       Target = if buildArg.Contains <@ Cli.BuildArgs.Target @> then Some (buildArg.GetResult <@ Cli.BuildArgs.Target @>) else None
-       FsiArgLine = if buildArg.Contains <@ Cli.BuildArgs.FsiArgs @> then buildArg.GetResults <@ Cli.BuildArgs.FsiArgs @> else []
-       EnvironmentVariables = buildArg.GetResults(<@ Cli.BuildArgs.EnvironmentVariable @>)
-       Debug = buildArg.Contains <@ Cli.BuildArgs.Debug @>
-       SingleTarget =  buildArg.Contains <@ Cli.BuildArgs.SingleTarget @>
-       NoCache = buildArg.Contains <@ Cli.BuildArgs.NoCache @>
-       VerboseLevel = verboseLevel
-       IsBuild = true // Did the user call `fake build` or `fake run`?
-    }
-  )
+  if ParseResult.hasFlag "--help" results || ParseResult.hasFlag "--help" results then
+    didSomething <- true
+    printf "%s" Cli.fakeUsage
 
-  match runarg with
-  | Some arg ->
+  let isRun = ParseResult.hasFlag "run" results
+  let isBuild = ParseResult.hasFlag "build" results
+  if isRun || isBuild then
+    let arg = {
+       Script =
+          if isRun then ParseResult.tryGetArgument "<script.fsx>" results
+          else ParseResult.tryGetArgument "--script" results
+       ScriptArguments =
+          match ParseResult.tryGetArguments "<scriptargs>" results with
+          | Some args -> args
+          | None -> []
+       FsiArgLine =
+         match ParseResult.tryGetArguments "<script.fsx>" results with
+         | Some args -> args
+         | None -> []
+
+       Debug = ParseResult.hasFlag "--debug" results
+       NoCache = ParseResult.hasFlag "--nocache" results
+       VerboseLevel = verboseLevel
+       IsBuild = not isRun // Did the user call `fake build` or `fake run`?
+    }
     let success = runOrBuild arg
     if not success then exitCode <- 1
-  | None when not didSomething ->
-    results.Raise ("Please specify what you want to do!", showUsage = true)
-  | None -> ()  
+  else
+    if not didSomething then
+      exitCode <- 1
+      eprintfn ("Please specify what you want to do!")
+      printfn "%s" Cli.fakeUsage
 
   exitCode
 
@@ -251,13 +237,14 @@ let main (args:string[]) =
 
   let mutable exitCode = 0
   let encoding = Console.OutputEncoding
-  let parser = ArgumentParser.Create<Cli.FakeArgs>("fake")
   try
+    let parser = Docopt(Cli.fakeUsage)
     let results = parser.Parse(args)
     exitCode <- handleCli results
   with
-  | :? ArguParseException as e ->
-    printfn "%s" e.Message
+  | :? ArgvException as e ->
+    printfn "Usage error: %s" e.Message
+    printfn "%s" Cli.fakeUsage
     exitCode <- 1
   Console.OutputEncoding <- encoding
 #if !NETSTANDARD1_6

@@ -46,7 +46,7 @@ type FakeConfig =
     UseCache : bool
     Out: TextWriter
     Err: TextWriter
-    Environment: seq<string * string> }
+    ScriptArgs: string list }
 
 let fsiAssemblyName = "removeme"
 let cachedAssemblyPrefix = "FAKE_CACHE_"

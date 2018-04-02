@@ -3,8 +3,7 @@ module Fake.Core.CommandLineParsingTests
 
 open System
 
-open Docopt
-open Docopt.Arguments
+open Fake.Core.CommandLineParsing
 open System
 open System.Diagnostics
 open Expecto
@@ -88,7 +87,7 @@ Fake Build Options [build_opts]:
         |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
         |> dict
 
-      
+      // TODO test '-include'
       ()
 
     TestCaseHelper.Create("FAKE 5 usage (simple)", """

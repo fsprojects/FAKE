@@ -45,7 +45,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
     if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
 
-    use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
+    use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath context.Config.ScriptArgs
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
     Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
         let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
