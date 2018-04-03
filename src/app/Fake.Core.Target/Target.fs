@@ -12,15 +12,15 @@ Usage:
   fake-run --list
   fake-run --version
   fake-run --help | -h
-  fake-run [target <target>] [target_opts] [--] [<targetargs>...]
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
-    --environmentvariable, -e <string> <string> [*]
-                          Set an environment variable.
-    --singletarget, -s    Run only the specified target.
-    --parallel, -p <num>  Run parallel with the given number of tasks.
+    -e, --environmentvariable <keyval> [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --singletarget    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args

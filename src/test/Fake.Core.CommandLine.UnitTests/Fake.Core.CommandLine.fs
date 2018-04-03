@@ -51,6 +51,181 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
 [<Tests>]
 let tests = 
   testList "Fake.Core.CommandLineParsing.Tests" [
+
+// TODO: FIXME!
+//    TestCaseHelper.Create("Split Arguments should not be observable", """
+//Usage:
+//  test.exe -- [<moreargs>...]
+//
+//Options:
+//    """,
+//      "-- -ald" ->= ["<moreargs>", Argument "-ald";"--", Flag]
+//    )
+
+    TestCaseHelper.Create("Do not allow flags from another context", """
+Usage:
+  test.exe [fake_opts] run [run_opts] [--]
+
+Fake Options [fake_opts]:
+  -v, --verbose [*]     Verbose (can be used multiple times)
+                        Is ignored if -s is used.
+                        * -v: Log verbose but only for FAKE
+                        * -vv: Log verbose for Paket as well
+
+Fake Run Options [run_opts]:
+  -d, --debug           Debug the script.
+    """,
+      "run -v" ->! typeof<ArgvException>,
+      "run" ->= ["run", Flag],
+      "run -d" ->= ["run", Flag;"-d", Flag;"--debug", Flag],
+      "-v run -d" ->= ["--verbose", Flag; "-v", Flag; "run", Flag;"-d", Flag;"--debug", Flag],
+      "-v run" ->= ["--verbose", Flag; "-v", Flag; "run", Flag]
+      
+    )
+
+    TestCaseHelper.Create("FAKE 5 tests", """
+Usage:
+  fake.exe [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
+  fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
+  fake.exe --version
+  fake.exe --help | -h
+
+Fake Options [fake_opts]:
+  -v, --verbose [*]     Verbose (can be used multiple times)
+                        Is ignored if -s is used.
+                        * -v: Log verbose but only for FAKE
+                        * -vv: Log verbose for Paket as well
+  -s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.                  
+
+Fake Run Options [run_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+
+Fake Build Options [build_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+  -f, --script <script.fsx>
+                        The script to execute (defaults to `build.fsx`).
+    """,
+      "run --fsiargs --define:BOOTSTRAP testbuild.fsx --target PrintColors"
+        ->= ["run", Flag;"--fsiargs", Argument "--define:BOOTSTRAP";"<script.fsx>", Argument "testbuild.fsx"; "<scriptargs>", Arguments ["--target"; "PrintColors"]],
+      "-vv run testbuild.fsx --fsiargs --define:BOOTSTRAP --target PrintColors"
+        ->= ["-v", Flags 2; "--verbose", Flags 2;"run", Flag;"<script.fsx>", Argument "testbuild.fsx"; "<scriptargs>", Arguments ["--fsiargs";"--define:BOOTSTRAP";"--target"; "PrintColors"]]
+    )
+    testCase ("Test option section parser fake-run (targets)") <| fun _ ->
+      printfn "Starting test '%s'" "Test option section parser fake-run (targets)"
+      let testString = """
+Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
+
+Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional argument 'target' is given)
+    -e, --environmentvariable <keyval> [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --singletarget    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
+          """
+      let usage, optSections = DocHelper.cut testString
+
+      let titles = optSections |> Seq.map (fun s -> s.Title) |> Seq.toList
+      Expect.equal "Titles" ["target_opts"] titles
+
+      let sectionsParsers =
+        optSections
+        |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
+        |> dict
+      let section = sectionsParsers.["target_opts"]
+      let envVar = section.Find('e')
+      Expect.isSome "Expected to find -e" envVar
+      Expect.isTrue "Expected to have allowMultiple" envVar.Value.AllowMultiple
+      Expect.isFalse "Expected to be not required" envVar.Value.IsRequired
+
+
+    testCase ("Test option section parser fake") <| fun _ ->
+      printfn "Starting test '%s'" "Test option section parser fake"
+      let testString = """
+Usage:
+  fake.exe [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
+  fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
+  fake.exe --version
+  fake.exe --help | -h
+
+Fake Options [fake_opts]:
+  -v, --verbose [*]     Verbose (can be used multiple times)
+                        Is ignored if -s is used.
+                        * -v: Log verbose but only for FAKE
+                        * -vv: Log verbose for Paket as well
+  -s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.                  
+
+Fake Run Options [run_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+
+Fake Build Options [build_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+  -f, --script <script.fsx>
+                        The script to execute (defaults to `build.fsx`).
+          """
+      let usage, optSections = DocHelper.cut testString
+
+      let titles = optSections |> Seq.map (fun s -> s.Title) |> Seq.toList
+      Expect.equal "Titles" ["fake_opts";"run_opts";"build_opts"] titles
+
+      let sectionsParsers =
+        optSections
+        |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
+        |> dict
+      let section = sectionsParsers.["fake_opts"]
+      let verbose = section.Find('v')
+      Expect.isSome "Expected to find -v" verbose
+      Expect.isTrue "Expected to have allowMultiple" verbose.Value.AllowMultiple
+      Expect.isFalse "Expected to be not required" verbose.Value.IsRequired
+      Expect.isFalse "Expected to have no argument" verbose.Value.HasArgument
+      let section = sectionsParsers.["run_opts"]
+      let fsiArgs = section.Find("fsiargs")
+      Expect.isSome "Expected to find --fsiargs" fsiArgs
+      Expect.isTrue "Expected to have allowMultiple" fsiArgs.Value.AllowMultiple
+      Expect.isFalse "Expected to be not required" fsiArgs.Value.IsRequired
+      Expect.isTrue "Expected to have argument" fsiArgs.Value.HasArgument
+
+    TestCaseHelper.Create("FAKE 5 target CLI tests", """
+Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
+
+Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional argument 'target' is given)
+    -e, --environmentvariable <keyval> [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --singletarget    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
+    """,
+      "--target PrintColors"
+        ->= ["--target", Argument "PrintColors"; "-t", Argument "PrintColors"],
+      "--target PrintColors --help"
+        ->= ["--target", Argument "PrintColors"; "-t", Argument "PrintColors"; "<targetargs>", Argument "--help"],
+      "target PrintColors"
+        ->= ["target", Flag; "<target>", Argument "PrintColors"],
+      "-e key=val"
+        ->= ["-e", Argument "key=val"; "--environmentvariable", Argument "key=val"],
+      "-e key=val -e key2=val2"
+        ->= ["-e", Arguments ["key=val"; "key2=val2"]; "--environmentvariable", Arguments ["key=val"; "key2=val2"]],
+      "-e key=val -e key2=val2 --test"
+        ->= ["-e", Arguments ["key=val"; "key2=val2"]; "--environmentvariable", Arguments ["key=val"; "key2=val2"]; "<targetargs>", Argument "--test"]
+    )
+
     testCase ("Test Option parser") <| fun _ ->
       printfn "Starting test '%s'" "Test Option parser"
       let testString = """
@@ -87,8 +262,41 @@ Fake Build Options [build_opts]:
         |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser("?").Parse(oStrs.Lines)))
         |> dict
 
-      // TODO test '-include'
+      // TODO implement&test '-include'
       ()
+
+    TestCaseHelper.Create("FAKE 5 tests (twice run_opts)", """
+Usage:
+  fake.exe [fake_opts] run [run_opts] [<script.fsx>] [run_opts] [--] [<scriptargs>...]
+  fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
+  fake.exe --version
+  fake.exe --help | -h
+
+Fake Options [fake_opts]:
+  -v, --verbose [*]     Verbose (can be used multiple times)
+                        Is ignored if -s is used.
+                        * -v: Log verbose but only for FAKE
+                        * -vv: Log verbose for Paket as well
+  -s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.                  
+
+Fake Run Options [run_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+
+Fake Build Options [build_opts]:
+  -d, --debug           Debug the script.
+  -n, --nocache         Disable fake cache for this run.
+  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+  -f, --script <script.fsx>
+                        The script to execute (defaults to `build.fsx`).
+    """,
+      "run --fsiargs --define:BOOTSTRAP testbuild.fsx --target PrintColors"
+        ->= ["run", Flag;"--fsiargs", Argument "--define:BOOTSTRAP";"<script.fsx>", Argument "testbuild.fsx"; "<scriptargs>", Arguments ["--target"; "PrintColors"]],
+      "run testbuild.fsx --fsiargs --define:BOOTSTRAP --target PrintColors"
+        ->= ["run", Flag;"--fsiargs", Argument "--define:BOOTSTRAP";"<script.fsx>", Argument "testbuild.fsx"; "<scriptargs>", Arguments ["--target"; "PrintColors"]]
+    )
+
 
     TestCaseHelper.Create("FAKE 5 usage (simple)", """
 Usage:
@@ -100,81 +308,80 @@ Options:
       "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
     )
 
-(*  
-    TestCaseHelper.Create("Paket use-cases", """
-Usage:
-  paket.exe [global_opts] show-installed-packages [show_installed_opts]
-  paket.exe [global_opts] show-groups
-  paket.exe [global_opts] find-packages [find_opts] <nuget> [find_opts]
-  paket.exe [global_opts] find-package-versions [find_opts] <nuget> [find_opts]
-  paket.exe [global_opts] pack [pack_opts] <package> [pack_opts]
-  paket.exe [global_opts] push [push_opts] <package> [push_opts]
-  paket.exe [global_opts] generate-include-scripts [loadscript_opts]
-  paket.exe [global_opts] generate-load-scripts [loadscript_opts]
-  paket.exe [global_opts] why [why_opts] <nuget> [why_opts]
-  paket.exe [global_opts] restriction <restriction>
+//    TestCaseHelper.Create("Paket use-cases", """
+//Usage:
+//  paket.exe [global_opts] show-installed-packages [show_installed_opts]
+//  paket.exe [global_opts] show-groups
+//  paket.exe [global_opts] find-packages [find_opts] <nuget> [find_opts]
+//  paket.exe [global_opts] find-package-versions [find_opts] <nuget> [find_opts]
+//  paket.exe [global_opts] pack [pack_opts] <package> [pack_opts]
+//  paket.exe [global_opts] push [push_opts] <package> [push_opts]
+//  paket.exe [global_opts] generate-include-scripts [loadscript_opts]
+//  paket.exe [global_opts] generate-load-scripts [loadscript_opts]
+//  paket.exe [global_opts] why [why_opts] <nuget> [why_opts]
+//  paket.exe [global_opts] restriction <restriction>
+//
+//
+//Global Options [global_opts]:
+//  --from-bootstrapper          mark the command to be called from the bootstrapper
+//  -s, --silent                 suppress console output
+//  -v, --verbose                print detailed information to the console
+//  --log-file                   print output to a file
+//
+//Why Options [why_opts]:
+//  -g, --group <group>  specify dependency group [default: Main]
+//  --details                    display detailed information with all paths, versions and framework restrictions
+//
+//GenerateLoadScript Options [loadscript_opts]:
+//  -g, --group <group> [*]      groups to generate scripts for (default: all groups); may be repeated
+//  -f, --framework <fw> [*]     framework identifier to generate scripts for, such as net45 or netstandard1.6; may be repeated
+//  -f, --type <lang> [*]        language to generate scripts for; may be repeated
+//
+//
+//Push Options [push_opts]:
+//  --url <url>                  URL of the NuGet feed
+//  --api-key <key>              API key for the URL (default: value of the NUGET_KEY environment variable)
+//  --endpoint <endpoint>        API endpoint to push to [default: /api/v2/package]
+//
+//
+//Pack Options [pack_opts]:
+//  --build-config <configuration>
+//                        build configuration that should be packaged (default: Release)
+//  --build-platform <platform>
+//                        build platform that should be packaged (default: check all known platform targets)
+//  --version <version>   version of the package
+//  --template <path>     pack a single paket.template file
+//  --exclude <package ID>
+//                        exclude paket.template file by package ID; may be repeated
+//  --specific-version <package ID> <version>
+//                        version number to use for package ID; may be repeated
+//  --release-notes <text>
+//                        release notes
+//  --lock-dependencies   use version constraints from paket.lock instead of paket.dependencies
+//  --minimum-from-lock-file
+//                        use version constraints from paket.lock instead of paket.dependencies and add them as a minimum version; --lock-dependencies overrides this option
+//  --pin-project-references
+//                        pin dependencies generated from project references to exact versions (=) instead of using minimum versions (>=); with --lock-dependencies project references will be pinned even if this
+//                        option is not specified
+//  --symbols             create symbol and source packages in addition to library and content packages
+//  --include-referenced-projects
+//                        include symbols and source from referenced projects
+//  --project-url <URL>   homepage URL for the package
+//
+//Pack Options [find_opts]:
+//  --source <source URL> 
+//                        specify source URL
+//  --max <int>           limit maximum number of results
+//
+//Show installed packages [show_installed_opts]:
+//  --all, -a             include transitive dependencies
+//  --project, -p <path>  specify project to show dependencies for
+// 
+//    """,
+//      "file -- wtf" ->= ["file", Flag;"<moreargs>", Argument "wtf";"--", Flag],
+//      "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
+//    )
 
-
-Global Options [global_opts]:
-  --from-bootstrapper          mark the command to be called from the bootstrapper
-  -s, --silent                 suppress console output
-  -v, --verbose                print detailed information to the console
-  --log-file                   print output to a file
-
-Why Options [why_opts]:
-  -g, --group <group>  specify dependency group [default: Main]
-  --details                    display detailed information with all paths, versions and framework restrictions
-
-GenerateLoadScript Options [loadscript_opts]:
-  -g, --group <group> [*]      groups to generate scripts for (default: all groups); may be repeated
-  -f, --framework <fw> [*]     framework identifier to generate scripts for, such as net45 or netstandard1.6; may be repeated
-  -f, --type <lang> [*]        language to generate scripts for; may be repeated
-
-
-Push Options [push_opts]:
-  --url <url>                  URL of the NuGet feed
-  --api-key <key>              API key for the URL (default: value of the NUGET_KEY environment variable)
-  --endpoint <endpoint>        API endpoint to push to [default: /api/v2/package]
-
-
-Pack Options [pack_opts]:
-  --build-config <configuration>
-                        build configuration that should be packaged (default: Release)
-  --build-platform <platform>
-                        build platform that should be packaged (default: check all known platform targets)
-  --version <version>   version of the package
-  --template <path>     pack a single paket.template file
-  --exclude <package ID>
-                        exclude paket.template file by package ID; may be repeated
-  --specific-version <package ID> <version>
-                        version number to use for package ID; may be repeated
-  --release-notes <text>
-                        release notes
-  --lock-dependencies   use version constraints from paket.lock instead of paket.dependencies
-  --minimum-from-lock-file
-                        use version constraints from paket.lock instead of paket.dependencies and add them as a minimum version; --lock-dependencies overrides this option
-  --pin-project-references
-                        pin dependencies generated from project references to exact versions (=) instead of using minimum versions (>=); with --lock-dependencies project references will be pinned even if this
-                        option is not specified
-  --symbols             create symbol and source packages in addition to library and content packages
-  --include-referenced-projects
-                        include symbols and source from referenced projects
-  --project-url <URL>   homepage URL for the package
-
-Pack Options [find_opts]:
-  --source <source URL> 
-                        specify source URL
-  --max <int>           limit maximum number of results
-
-Show installed packages [show_installed_opts]:
-  --all, -a             include transitive dependencies
-  --project, -p <path>  specify project to show dependencies for
- 
-    """,
-      "file -- wtf" ->= ["file", Flag;"<moreargs>", Argument "wtf";"--", Flag],
-      "file -- --wtf --test" ->= ["--", Flag;"file", Flag;"<moreargs>", Arguments["--wtf"; "--test"]]
-    )
-*)
 
     TestCaseHelper.Create("Empty usage", """
 Usage: prog

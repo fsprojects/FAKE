@@ -30,7 +30,6 @@ type SafeOptions(list:SafeOption list) =
     let findIn (l':string) (list:SafeOption list) =
       list
       |> List.tryFind(fun o' -> o'.Long = Some l')
-      |> Option.orElseWith (fun _ -> List.tryFind(fun o' -> o'.Long.IsSome && o'.Long.Value.StartsWith(l')) list)
 
     interface System.Collections.IEnumerable with
       member x.GetEnumerator () = (list :> System.Collections.IEnumerable).GetEnumerator()

@@ -122,19 +122,24 @@ type OptionsParser(soptChars':string) =
       | _ ->
         let r = parg stream'
         match r.Status with
-        | Ok -> ``long option plus arg (+short?)`` state (Some(r.Result))
+        | Ok -> ``long option plus arg (+short?)`` stream' state (Some(r.Result))
         | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
     and ``expecting arg (long)`` stream' state =
-      let () = stream'.Skip() in
+      stream'.Skip()
       let r = parg stream'
       match r.Status with
-      | Ok -> ``long option plus arg (+short?)`` state (Some(r.Result))
+      | Ok -> ``long option plus arg (+short?)`` stream' state (Some(r.Result))
       | _  -> Reply(Error, r.Error)
-    and ``long option plus arg (+short?)`` state newa' =
-      match state.ArgName, newa' with
-        | _, None          -> Reply(state)
-        | None, _          -> Reply({ state with ArgName = newa'})
-        | Some(l), Some(r) -> Reply({ state with ArgName = Some(String.Concat(l, " or ", r))})
+    and ``long option plus arg (+short?)`` stream state newa' =
+      let newState =
+        match state.ArgName, newa' with
+        | _, None          -> state
+        | None, _          -> { state with ArgName = newa'}
+        | Some(l), Some(r) -> { state with ArgName = Some(String.Concat(l, " or ", r))}
+      match stream.Peek() with
+      | ' ' -> stream.Skip()
+      | _ -> ()
+      ``parameters and end`` stream newState
 
     and ``parameters and end`` stream' state =
       match stream'.Peek() with

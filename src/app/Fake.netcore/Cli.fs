@@ -8,7 +8,7 @@ open Fake.Core.CommandLineParsing
 let fakeUsage =
   """
 Usage:
-  fake.exe [fake_opts] run [run_opts] [<script.fsx>] [run_opts] [--] [<scriptargs>...]
+  fake.exe [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
   fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
   fake.exe --version
   fake.exe --help | -h

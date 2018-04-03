@@ -273,11 +273,11 @@ module ArgParser =
 
   let pseq (ps : seq<ArgumentParser<_, _, _>>) : ArgumentParser<_, _, _> =
     Seq.fold (>>.) (preturn Map.empty) ps
-  type UnorderedState<'i, 'u, 'a> =
+  type internal UnorderedState<'i, 'u, 'a> =
     { InnerState : 'u 
       AppliedParsers : int list }
  
-  let mapParserToUnorderedState i (p:ArgumentParser<'i,'u, _>) : ArgumentParser<'i, UnorderedState<'i, 'u, _>, _> =
+  let internal mapParserToUnorderedState i (p:ArgumentParser<'i,'u, _>) : ArgumentParser<'i, UnorderedState<'i, 'u, _>, _> =
     fun innerStream ->
        let oldStream = 
          ArgumentStream.map 
@@ -287,7 +287,7 @@ module ArgParser =
        let reply = p oldStream
        if reply.Status = Ok then innerStream.UserState <- { innerStream.UserState with AppliedParsers = i :: innerStream.UserState.AppliedParsers }
        reply
-  let punorderedseq allowEmpty allowMissing (ps : seq<ArgumentParser<'i, 'u, 'a>>) : ArgumentParser<_, 'u, _> =
+  let punorderedseqWithMany allowEmpty allowMissing (ps : seq<bool * ArgumentParser<'i, 'u, 'a>>) : ArgumentParser<_, 'u, _> =
     fun (stream:IArgumentStream<_,_>) ->
        let newStream =
          ArgumentStream.map 
@@ -296,19 +296,19 @@ module ArgParser =
            stream   
        let allParsers =
           ps
-          |> Seq.mapi mapParserToUnorderedState
+          |> Seq.mapi (fun i (allowMultiple, p) -> allowMultiple, mapParserToUnorderedState i p)
           |> Seq.toList
        let mutable availableParsers = allParsers
        let mutable reply = Reply(Unchecked.defaultof<'a>)
        let mutable results = []
        while reply.Status = ReplyStatus.Ok && availableParsers.Length > 0 do
-          reply <- choice availableParsers newStream
+          reply <- choice (availableParsers |> Seq.map snd) newStream
           if (reply.Status = ReplyStatus.Ok) then
             results <- reply.Result :: results
           availableParsers <-
             allParsers
             |> List.mapi (fun i p -> i, p)
-            |> List.filter(fun (i, _) -> not (List.exists (fun applied -> applied = i) newStream.UserState.AppliedParsers))
+            |> List.filter(fun (i, (allowMultiple, _)) -> allowMultiple || not (List.exists (fun applied -> applied = i) newStream.UserState.AppliedParsers))
             |> List.map snd
        
        if reply.Status = Error && not allowMissing then
@@ -319,6 +319,8 @@ module ArgParser =
          else
            Reply(results)
 
+  let punorderedseq allowEmpty allowMissing (ps : seq<ArgumentParser<'i, 'u, 'a>>) : ArgumentParser<_, 'u, _> =
+    punorderedseqWithMany allowEmpty allowMissing (ps |> Seq.map (fun p -> false, p))
   let chooseParser itemType chooser =
     fun (stream:IArgumentStream<_,_>) ->
         match chooser (stream.Peek()) with
@@ -471,9 +473,9 @@ module ArgParser =
     else longArg
 
   let pOptions allowMissing (flags : SafeOptions) =
-    let optionParsers = flags |> Seq.map (fun flag -> pOption true flag) |> Seq.toList
-    optionParsers 
-    |> punorderedseq false allowMissing
+    let optionParsers = flags |> Seq.map (fun flag -> flag.AllowMultiple, pOption true flag) |> Seq.toList
+    optionParsers
+    |> punorderedseqWithMany false allowMissing
     >>= updateUserState (fun _ state -> state)
 
   let rec getParser (ast:UsageAst) : ArgumentParser<string, _, _> =
@@ -671,6 +673,8 @@ type UsageParser(usageStrings':string array, sections:(string * SafeOptions) lis
                     | Success(ast, _, _) -> ast.Build()
                     | Failure(err, _, _) -> raise (UsageException(err))
       }
+
+    do if usageStrings'.Length = 0 || usageStrings' |> Seq.forall (String.IsNullOrWhiteSpace) then failwithf "Not given any usage-formats"
     let asts =
       usageStrings'
       |> Array.map parseAsync
