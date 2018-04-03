@@ -97,7 +97,6 @@ let private deployWebJobToWebSite webSite webJob =
     use client = new WebClientWithTimeout(Credentials = NetworkCredential(webSite.UserName, webSite.Password))
     
     client.Headers.Add(HttpRequestHeader.ContentType, "application/zip")
-    client.Headers.Add("Content-Disposition", "attachment; filename=" + (Path.GetFileName webJob.PackageLocation))
     
     let response = client.UploadFile(uploadUri, "PUT", filePath)
     tracefn "Response from webjob upload: %s" (Encoding.ASCII.GetString response)
