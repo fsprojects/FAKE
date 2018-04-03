@@ -15,6 +15,8 @@ Usage:
   fake-run [target <target>] [target_opts] [--] [<targetargs>...]
 
 Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional argument 'target' is given)
     --environmentvariable, -e <string> <string> [*]
                           Set an environment variable.
     --singletarget, -s    Run only the specified target.
@@ -577,8 +579,17 @@ module Target =
             else
                 let target =
                     match ParseResult.tryGetArgument "<target>" results with
-                    | None -> Environment.environVarOrNone "target"
-                    | Some arg -> Some arg
+                    | None ->
+                        match ParseResult.tryGetArgument "--target" results with
+                        | None -> Environment.environVarOrNone "target"
+                        | Some arg -> Some arg
+                    | Some arg ->
+                        match ParseResult.tryGetArgument "--target" results with
+                        | None -> ()
+                        | Some innerArg ->
+                            Trace.traceImportant
+                                <| sprintf "--target '%s' is ignored when 'target %s' is given" innerArg arg
+                        Some arg
                 let parallelJobs =
                     match ParseResult.tryGetArgument "--parallel" results with
                     | Some arg ->
