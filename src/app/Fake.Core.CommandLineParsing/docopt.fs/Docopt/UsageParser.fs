@@ -33,37 +33,131 @@ module private Helpers =
 
 open Helpers
 
+module ArgumentArray =
+  let isShortArgument (arg:string)=
+    arg.StartsWith "-" && not (arg.StartsWith "--") && arg <> "-"
+
+
+type ArgumentStreamPosition =
+  // The position of the argument
+  | ArgumentPos of int
+  // For short options like -adf we iterate over every letter
+  | ShortArgumentPartialPos of int * int
+  member x.ArgIndex =
+    match x with
+    | ShortArgumentPartialPos (p, _)
+    | ArgumentPos p -> p
+  member x.InnerIndex =
+    match x with
+    | ShortArgumentPartialPos (_, i) -> i
+    | ArgumentPos _ -> 0
+
+  member x.IsEndOf (argv:string array) =
+    match x with
+    | ArgumentPos x -> x >= argv.Length
+    | ShortArgumentPartialPos (x, innerPos) ->
+      if x >= argv.Length then true
+      else
+        if x = argv.Length - 1 then
+          let arg = argv.[x]
+          innerPos >= arg.Length
+        else false
+
+  member x.Next (argv:string array) =
+    let res =
+      match x with
+      | ArgumentPos x ->
+        assert (x >= argv.Length || not (ArgumentArray.isShortArgument argv.[x]))
+        if x + 1 < argv.Length then
+          let next = argv.[x+1]
+          if not (ArgumentArray.isShortArgument next) then
+            ArgumentPos (x + 1)
+          else
+            ShortArgumentPartialPos(x + 1, 1)
+        else ArgumentPos (argv.Length)
+      | ShortArgumentPartialPos (x, i) ->
+        let c = argv.[x]
+        if i + 1 < c.Length then
+          ShortArgumentPartialPos (x, i + 1)
+        else
+          if x + 1 < argv.Length then
+            let next = argv.[x+1]
+            if not (ArgumentArray.isShortArgument next) then
+              ArgumentPos (x + 1)
+            else
+              ShortArgumentPartialPos(x + 1, 1)
+          else ArgumentPos (argv.Length)
+    //printfn "%A -> Next(%A) -> %A" x argv res
+    res
+
+  member x.NextArg (argv: string array) =
+    let res =
+      match x with
+      | ArgumentPos x
+      | ShortArgumentPartialPos (x, _) ->
+        if x + 1 < argv.Length then
+          let next = argv.[x+1]
+          if not (ArgumentArray.isShortArgument next) then
+            ArgumentPos (x + 1)
+          else
+            ShortArgumentPartialPos(x + 1, 1)
+        else ArgumentPos (argv.Length)
+    //printfn "%A -> NextArg(%A) -> %A" x argv res
+    res
+
 type IArgumentStreamState<'TUserState> = interface end // { Pos : int; StateTag : int64; UserState : 'TUserState }
-type IArgumentStream<'item, 'TUserState> =
+type IArgumentStream<'TUserState> =
   abstract CurrentState : IArgumentStreamState<'TUserState>
-  abstract Position : int
+  abstract Position : ArgumentStreamPosition
   abstract RestoreState : IArgumentStreamState<'TUserState> -> unit
   abstract StateTag : int64
   abstract UserState :  'TUserState with get, set
   abstract UpdateStateTag : unit -> unit
-  abstract Seek : int -> unit
-  abstract Peek : unit -> 'item option
+  abstract Seek : ArgumentStreamPosition -> unit
+  abstract Peek : unit -> string option
+  abstract PeekFull : unit -> string option
   abstract IsEnd : bool
   abstract Skip : unit -> unit
-  abstract SkipAndPeek : unit -> 'item option
-  abstract Read : unit -> 'item option
-  abstract Argv : 'item array
+  abstract SkipFull : unit -> unit
+  abstract SkipAndPeek : unit -> string option
+  abstract SkipAndPeekFull : unit -> string option
+  abstract Read : unit -> string option
+  abstract ReadFull : unit -> string option
+  abstract Argv : string array
+
 
 type ArgumentStreamState<'TUserState> =
-  { Pos : int; StateTag : int64; UserState : 'TUserState }
+  { Pos : ArgumentStreamPosition; StateTag : int64; UserState : 'TUserState }
   with interface IArgumentStreamState<'TUserState>
-type ArgumentStream<'item, 'TUserState> private (argv:'item array, initState:'TUserState) =
-  let mutable pos = 0
+type ArgumentStream<'TUserState> private (argv:string array, initState:'TUserState) =
+  let mutable pos =
+    if argv.Length > 0 && ArgumentArray.isShortArgument argv.[0]
+    then ShortArgumentPartialPos(0, 1)
+    else ArgumentPos 0
   let mutable stateTag = 0L
   let mutable state = initState
   let markChange () =
     stateTag <- stateTag + 1L
   let inc () =
     markChange()
-    if pos < argv.Length then pos <- pos + 1
+    pos <- pos.Next(argv)
+  let incFull () =
+    markChange()
+    pos <- pos.NextArg(argv)
+    //if pos.ArgumentPosition < argv.Length then pos <- pos + 1
   let current () =
-    if pos < argv.Length then Some argv.[pos] else None
-  interface IArgumentStream<'item, 'TUserState> with  
+    match pos with
+    | ArgumentPos x -> 
+      if x < argv.Length then Some argv.[x] else None
+    | ShortArgumentPartialPos (x, i) ->
+      if x < argv.Length then Some (sprintf "-%c" argv.[x].[i])
+      else None  
+  let currentFull () =
+    match pos with
+    | ShortArgumentPartialPos (x, _)
+    | ArgumentPos x ->
+      if x < argv.Length then Some argv.[x] else None
+  interface IArgumentStream<'TUserState> with  
     member x.CurrentState = { Pos = pos; StateTag = stateTag; UserState = state} :> IArgumentStreamState<'TUserState>
     member x.Position = pos
     member x.RestoreState (oldState:IArgumentStreamState<'TUserState>) =
@@ -84,26 +178,35 @@ type ArgumentStream<'item, 'TUserState> private (argv:'item array, initState:'TU
       markChange()
       pos <- newPos
     member x.Peek () = current()
-    member x.IsEnd = pos = argv.Length
+    member x.PeekFull () = currentFull()
+    member x.IsEnd = pos.IsEndOf argv
     member x.Skip () = inc()
+    member x.SkipFull () = incFull()
     member x.SkipAndPeek () =
-      let xx = x :> IArgumentStream<_,_>
+      let xx = x :> IArgumentStream<_>
       xx.Skip(); xx.Peek()
+    member x.SkipAndPeekFull () =
+      let xx = x :> IArgumentStream<_>
+      xx.SkipFull(); xx.PeekFull()
     member x.Read () =
       let va = current()
       inc()
       va
+    member x.ReadFull () =
+      let va = currentFull()
+      incFull()
+      va
     member x.Argv = argv
-  static member Create(argv:'item array, initState:'TUserState) =
-    new ArgumentStream<'item, 'TUserState>(argv, initState)
+  static member Create(argv:string array, initState:'TUserState) =
+    new ArgumentStream<'TUserState>(argv, initState)
   override x.ToString() =
-    sprintf "Pos: %d, %A, state: %A" pos argv state
+    sprintf "Pos: %A, %A, state: %A" pos argv state
 
 module ArgumentStream =
-  let create (argv:'item array) (initState:'TUserState) =
-    ArgumentStream<'item, 'TUserState>.Create(argv, initState) :> IArgumentStream<_,_>
-  let clone (stream:IArgumentStream<_,_>) =
-    let clone = ArgumentStream<'item, 'TUserState>.Create(stream.Argv, stream.UserState) :> IArgumentStream<_,_>
+  let create (argv:string array) (initState:'TUserState) =
+    ArgumentStream<'TUserState>.Create(argv, initState) :> IArgumentStream<_>
+  let clone (stream:IArgumentStream<_>) =
+    let clone = ArgumentStream<'TUserState>.Create(stream.Argv, stream.UserState) :> IArgumentStream<_>
     clone.RestoreState ({ Pos = stream.Position; StateTag = stream.StateTag; UserState = stream.UserState} :> IArgumentStreamState<'TUserState>)
     clone
 
@@ -111,9 +214,9 @@ module ArgumentStream =
     { Inner : IArgumentStreamState<'tinner>
       State : 'u }
     with interface IArgumentStreamState<'t>
-  let map (newState:'un) map (inner:IArgumentStream<'item, 'uo>) =
+  let map (newState:'un) map (inner:IArgumentStream<'uo>) =
     let mutable newState = newState
-    { new IArgumentStream<'item, 'un> with
+    { new IArgumentStream<'un> with
         member x.CurrentState = 
           let innerState = inner.CurrentState
           { Inner = innerState; State = newState } :> IArgumentStreamState<'un>
@@ -136,19 +239,23 @@ module ArgumentStream =
         member x.UpdateStateTag () = inner.UpdateStateTag()
         member x.Seek newPos = inner.Seek newPos
         member x.Peek () = inner.Peek ()
+        member x.PeekFull () = inner.PeekFull ()
         member x.IsEnd = inner.IsEnd
         member x.Skip () = inner.Skip()
+        member x.SkipFull () = inner.SkipFull()
         member x.SkipAndPeek () = inner.SkipAndPeek()
+        member x.SkipAndPeekFull () = inner.SkipAndPeekFull()
         member x.Read () = inner.Read()
+        member x.ReadFull () = inner.ReadFull()
         member x.Argv = inner.Argv } 
 
-type ArgumentParser<'TItem, 'TUserState, 'TResult> = IArgumentStream<'TItem, 'TUserState> -> Reply<'TResult>
+type ArgumentParser<'TUserState, 'TResult> = IArgumentStream<'TUserState> -> Reply<'TResult>
 
 module ArgParser =
-  let preturn x : ArgumentParser<_,_,_> = fun stream -> Reply(x)
-  let pzero : ArgumentParser<_,_,_> = fun stream -> Reply(Error, FParsec.Error.NoErrorMessages)
+  let preturn x : ArgumentParser<_,_> = fun stream -> Reply(x)
+  let pzero : ArgumentParser<_,_> = fun stream -> Reply(Error, FParsec.Error.NoErrorMessages)
 
-  let (>>=) (p: ArgumentParser<'i, 'u, 'a>) (f: 'a -> ArgumentParser<'i, 'u, 'b>) : ArgumentParser<_,_,_> =
+  let (>>=) (p: ArgumentParser<'u, 'a>) (f: 'a -> ArgumentParser<'u, 'b>) : ArgumentParser<_,_> =
     fun stream ->
         let reply1 = p stream
         if reply1.Status = Ok then
@@ -164,12 +271,12 @@ module ArgParser =
   let (>>.) p1 p2 = p1 >>= fun _ -> p2
   let (.>>) p1 p2 = p1 >>= fun x -> p2 >>% x
   let (.>>.) p1 p2 = p1 >>= fun a -> p2 >>= fun b -> preturn (a, b)
-  let between (popen: ArgumentParser<_,_,'u>) (pclose: ArgumentParser<_, 'u,_>) (p: ArgumentParser<_, 'u,_>) =
+  let between (popen: ArgumentParser<_,'u>) (pclose: ArgumentParser<'u,_>) (p: ArgumentParser<'u,_>) =
      popen >>. p .>> pclose
   let (|>>) p f = p >>= fun x -> preturn (f x)  
 
 
-  let (<?>) (p: ArgumentParser<_,'u,'a>) label  : ArgumentParser<_,'u,'a> =
+  let (<?>) (p: ArgumentParser<'u,'a>) label  : ArgumentParser<'u,'a> =
       let error = expected label
       fun stream ->
           let stateTag = stream.StateTag
@@ -178,8 +285,8 @@ module ArgParser =
               reply.Error <- error
           reply
 
-  let choiceBest (ps : seq<ArgumentParser<_, 'u, 'a>>) : ArgumentParser<_, _, _> =
-    fun (stream:IArgumentStream<_,_>) ->
+  let choiceBest (ps : seq<ArgumentParser<'u, 'a>>) : ArgumentParser<_, _> =
+    fun (stream:IArgumentStream<_>) ->
        let results =
          ps
          |> Seq.map (fun p -> async {
@@ -189,8 +296,13 @@ module ArgParser =
          })
          |> Async.Parallel
          |> Async.RunSynchronously
+       let maxArgLength = (Seq.append stream.Argv [""] |> Seq.maxBy (fun (arg:string) -> arg.Length)).Length
        let mutable (bestStream, bestResult) =
-          results |> Seq.maxBy (fun (stream, reply) -> if reply.Status <> Ok then -stream.Argv.Length - 1 + stream.Position else stream.Position)
+          results
+          |> Seq.maxBy (fun (stream, reply) ->
+            if reply.Status <> Ok
+            then -stream.Argv.Length - 1 + stream.Position.ArgIndex, -maxArgLength - 1 + stream.Position.InnerIndex
+            else stream.Position.ArgIndex, stream.Position.InnerIndex)   
        let reply =
          if bestResult.Status <> Ok then
             let errors =
@@ -205,8 +317,8 @@ module ArgParser =
        stream.UserState <- bestStream.UserState
        reply
 
-  let choice (ps : seq<ArgumentParser<_, 'u, 'a>>) : ArgumentParser<_, _, _> =
-    fun (stream:IArgumentStream<_,_>) ->
+  let choice (ps : seq<ArgumentParser<'u, 'a>>) : ArgumentParser<_, _> =
+    fun (stream:IArgumentStream<_>) ->
        use iter = ps.GetEnumerator()
        if iter.MoveNext() then
            let state = stream.CurrentState 
@@ -234,9 +346,9 @@ module ArgParser =
                        Many(stateFromFirstElement,
                             foldState,
                             resultFromState,
-                            elementParser: ArgumentParser<_,_,_>,
-                            ?firstElementParser: ArgumentParser<_,_,_>,
-                            ?resultForEmptySequence) : ArgumentParser<_,_,_> =
+                            elementParser: ArgumentParser<_,_>,
+                            ?firstElementParser: ArgumentParser<_,_>,
+                            ?resultForEmptySequence) : ArgumentParser<_,_> =
       fun stream ->
         let mutable stateTag = stream.StateTag
         let firstElementParser = match firstElementParser with Some p -> p | _ -> elementParser
@@ -271,13 +383,13 @@ module ArgParser =
   let many p = Inline.Many((fun x -> [x]), (fun xs x -> x::xs), List.rev, p, resultForEmptySequence = fun () -> [])
   let many1 p = Inline.Many((fun x -> [x]), (fun xs x -> x::xs), List.rev, p)
 
-  let pseq (ps : seq<ArgumentParser<_, _, _>>) : ArgumentParser<_, _, _> =
+  let pseq (ps : seq<ArgumentParser<_, _>>) : ArgumentParser<_, _> =
     Seq.fold (>>.) (preturn Map.empty) ps
-  type internal UnorderedState<'i, 'u, 'a> =
+  type internal UnorderedState<'u, 'a> =
     { InnerState : 'u 
       AppliedParsers : int list }
  
-  let internal mapParserToUnorderedState i (p:ArgumentParser<'i,'u, _>) : ArgumentParser<'i, UnorderedState<'i, 'u, _>, _> =
+  let internal mapParserToUnorderedState i (p:ArgumentParser<'u, _>) : ArgumentParser<UnorderedState<'u, _>, _> =
     fun innerStream ->
        let oldStream = 
          ArgumentStream.map 
@@ -287,8 +399,8 @@ module ArgParser =
        let reply = p oldStream
        if reply.Status = Ok then innerStream.UserState <- { innerStream.UserState with AppliedParsers = i :: innerStream.UserState.AppliedParsers }
        reply
-  let punorderedseqWithMany allowEmpty allowMissing (ps : seq<bool * ArgumentParser<'i, 'u, 'a>>) : ArgumentParser<_, 'u, _> =
-    fun (stream:IArgumentStream<_,_>) ->
+  let punorderedseqWithMany allowEmpty allowMissing (ps : seq<bool * ArgumentParser<'u, 'a>>) : ArgumentParser<'u, _> =
+    fun (stream:IArgumentStream<_>) ->
        let newStream =
          ArgumentStream.map 
            { InnerState = stream.UserState; AppliedParsers = [] }
@@ -319,17 +431,29 @@ module ArgParser =
          else
            Reply(results)
 
-  let punorderedseq allowEmpty allowMissing (ps : seq<ArgumentParser<'i, 'u, 'a>>) : ArgumentParser<_, 'u, _> =
+  let punorderedseq allowEmpty allowMissing (ps : seq<ArgumentParser<'u, 'a>>) : ArgumentParser<'u, _> =
     punorderedseqWithMany allowEmpty allowMissing (ps |> Seq.map (fun p -> false, p))
   let chooseParser itemType chooser =
-    fun (stream:IArgumentStream<_,_>) ->
+    fun (stream:IArgumentStream<_>) ->
         match chooser (stream.Peek()) with
         | Some result ->
           stream.Skip()
           Reply(result)
         | None ->
           let e1 = expected itemType
-          let e2 = unexpected (sprintf "%A" (stream.Peek()))
+          let e2 = unexpected (sprintf "%A" (stream.PeekFull()))
+          let error = mergeErrors e1 e2
+          Reply(ReplyStatus.Error, error)
+
+  let chooseParserFull itemType chooser =
+    fun (stream:IArgumentStream<_>) ->
+        match chooser (stream.PeekFull()) with
+        | Some result ->
+          stream.SkipFull()
+          Reply(result)
+        | None ->
+          let e1 = expected itemType
+          let e2 = unexpected (sprintf "%A" (stream.PeekFull()))
           let error = mergeErrors e1 e2
           Reply(ReplyStatus.Error, error)
 
@@ -339,31 +463,29 @@ module ArgParser =
       | Some a -> chooser a
       | None -> None
     chooseParser itemType choose
+  let chooseParserFull' itemType chooser =
+    let choose arg =
+      match arg with
+      | Some a -> chooser a
+      | None -> None
+    chooseParserFull itemType choose
 
 
   let pcmd cmd =
       let chooseCmd arg =
         if arg = cmd then Some cmd else None
-      chooseParser' (sprintf "Command '%s'" cmd) chooseCmd
+      chooseParserFull' (sprintf "Command '%s'" cmd) chooseCmd
 
-  let parg argName = chooseParser (sprintf "Argument for  '%s'" argName) id
+  let parg argName = chooseParserFull (sprintf "Argument for  '%s'" argName) id
 
-
-  let pShortFlagWithArg (flag:SafeOption) =
-      let chooseCmd arg =
-        match arg with
-        | Some (arg:string) when arg.StartsWith (flag.FullLong + "=") -> Some (arg.Substring (flag.FullLong.Length + 1))
-        | _ -> None
-      chooseParser (sprintf "Flag '%s='" flag.FullLong) chooseCmd
-
-  let updateUserState (map':'a -> ResultMap -> ResultMap) : 'a -> ArgumentParser<_, ResultMap, ResultMap> =
+  let updateUserState (map':'a -> ResultMap -> ResultMap) : 'a -> ArgumentParser<ResultMap, ResultMap> =
       fun arg' ->
         fun stream' ->
           let res = map' arg' stream'.UserState
           stream'.UserState <- res
           Reply(res)
 
-  let debug (map':'a -> IArgumentStream<'item,'state> -> unit) : 'a -> ArgumentParser<'item, 'state, 'a> =
+  let debug (map':'a -> IArgumentStream<'state> -> unit) : 'a -> ArgumentParser<'state, 'a> =
       fun arg' ->
         fun stream' ->
           map' arg' stream'
@@ -423,13 +545,13 @@ module ArgParser =
         match arg with
         | Some arg when arg = flag.FullLong -> Some arg
         | _ -> None
-      chooseParser (sprintf "Flag '%s'" flag.FullLong) chooseCmd
+      chooseParserFull (sprintf "Flag '%s'" flag.FullLong) chooseCmd
     if flag.HasArgument then
       let chooseCmd arg =
         match arg with
         | Some (arg:string) when arg.StartsWith (flag.FullLong + "=") -> Some (arg.Substring (flag.FullLong.Length + 1))
         | _ -> None
-      chooseParser (sprintf "Flag '%s='" flag.FullLong) chooseCmd <|> (single >>. parg flag.FullLong)
+      chooseParserFull (sprintf "Flag '%s='" flag.FullLong) chooseCmd <|> (single >>. parg flag.FullLong)
       >>= saveInMapM keys (ParseResult.Argument)
     else
       single
@@ -441,15 +563,32 @@ module ArgParser =
       [ if flag.IsShort then yield flag.FullShort
         if flag.IsLong then yield flag.FullLong ]
     if flag.HasArgument then
-      let chooseCmd arg =
-        match arg with
-        | Some (arg:string) when arg.StartsWith flag.FullShort ->
-          if arg = flag.FullShort then
-            Some (None)
-          else Some (Some (arg.Substring (flag.FullShort.Length)))
-        | _ -> None
+      // When we have a argument we know we can consume the complete argument
+      let chooseCmd (stream:IArgumentStream<_>) =
+        match stream.Peek(), stream.PeekFull() with
+        | Some (arg:string), Some (fullarg) when arg.StartsWith flag.FullShort ->
+          let oldPos = stream.Position
+          stream.SkipFull()
+          let result =            
+            match oldPos with
+            | ShortArgumentPartialPos(_, i) when i + 1 < fullarg.Length ->
+               // Parameter for short switch is in current argument
+               Some (fullarg.Substring(i + 1))
+            | _ -> None
+          Reply(result)
+        | _ ->
+          let e1 = expected (sprintf "ShortFlag '%s'" flag.FullShort)
+          let e2 = unexpected (sprintf "%A" (stream.PeekFull()))
+          let error = mergeErrors e1 e2
+          Reply(ReplyStatus.Error, error)
+        //match arg with
+        //| Some (arg:string) when arg.StartsWith flag.FullShort ->
+        //  if arg = flag.FullShort then
+        //    Some (None)
+        //  else Some (Some (arg.Substring (flag.FullShort.Length)))
+        //| _ -> None
        
-      chooseParser (sprintf "ShortFlag '%s'" flag.FullShort) chooseCmd
+      chooseCmd
       >>= (function
           | Some arg -> preturn arg
           | None -> parg flag.FullShort)
@@ -478,7 +617,7 @@ module ArgParser =
     |> punorderedseqWithMany false allowMissing
     >>= updateUserState (fun _ state -> state)
 
-  let rec getParser (ast:UsageAst) : ArgumentParser<string, _, _> =
+  let rec getParser (ast:UsageAst) : ArgumentParser<_, _> =
     let p = 
       match ast with
       | UsageAst.Eps -> preturn Map.empty
@@ -693,7 +832,7 @@ type UsageParser(usageStrings':string array, sections:(string * SafeOptions) lis
       let state = ArgumentStream.create argv Map.empty
       let reply = pAstParser state
       let errors = ErrorMessageList.ToSortedArray(reply.Error)
-      let parseError = ParserError(Position("argv", int64 state.Position,0L,int64 state.Position), state.UserState, reply.Error)
+      let parseError = ParserError(Position("argv", int64 state.Position.ArgIndex,0L,int64 state.Position.ArgIndex), state.UserState, reply.Error)
       let errorText =
         use sw = new System.IO.StringWriter()
         parseError.WriteTo(sw)
@@ -702,10 +841,10 @@ type UsageParser(usageStrings':string array, sections:(string * SafeOptions) lis
       | true, [||], true -> reply.Result
       | _, _ , true -> raise <| ArgvException (sprintf "errors %A: %s" reply.Status errorText)
       | _, [||], false ->
-          let unparsed = argv.[state.Position..argv.Length - 1]
+          let unparsed = argv.[state.Position.ArgIndex..argv.Length - 1]
           raise <| ArgvException (sprintf "'%A' could not be parsed" unparsed)
       | _ ->
-          let unparsed = argv.[state.Position..argv.Length - 1]
+          let unparsed = argv.[state.Position.ArgIndex..argv.Length - 1]
           raise <| ArgvException (sprintf "errors: %s, ('%A' could not be parsed)" errorText unparsed)
 
     member __.Asts = asts

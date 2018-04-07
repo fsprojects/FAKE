@@ -52,15 +52,22 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
 let tests = 
   testList "Fake.Core.CommandLineParsing.Tests" [
 
-// TODO: FIXME!
-//    TestCaseHelper.Create("Split Arguments should not be observable", """
-//Usage:
-//  test.exe -- [<moreargs>...]
-//
-//Options:
-//    """,
-//      "-- -ald" ->= ["<moreargs>", Argument "-ald";"--", Flag]
-//    )
+    testCase ("ArgumentPosition -> Next") <| fun _ ->
+      let pos = ArgumentStreamPosition.ShortArgumentPartialPos(0, 1)
+      
+      pos.NextArg [|"-a"; "-r"; "-m"; "Hello"|]
+      |> Expect.equal "Expected ArgumentPos to work" (ArgumentStreamPosition.ShortArgumentPartialPos(1, 1))
+      pos.Next [|"-a"; "-r"; "-m"; "Hello"|]
+      |> Expect.equal "Expected ArgumentPos to work" (ArgumentStreamPosition.ShortArgumentPartialPos(1, 1))
+
+    TestCaseHelper.Create("Split Arguments should not be observable", """
+Usage:
+  test.exe -- [<moreargs>...]
+
+Options:
+    """,
+      "-- -ald" ->= ["<moreargs>", Argument "-ald";"--", Flag]
+    )
 
     TestCaseHelper.Create("Do not allow flags from another context", """
 Usage:

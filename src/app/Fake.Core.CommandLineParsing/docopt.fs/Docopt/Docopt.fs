@@ -83,28 +83,9 @@ type Docopt(doc', ?soptChars':string) =
       |> Seq.map (fun oStrs -> oStrs.Title, SafeOptions(OptionsParser(soptChars).Parse(oStrs.Lines)))
       |> Seq.toList
     let pusage = UsageParser(uStrs, sectionsParsers)
-    member __.Parse(argv':string array) =
+    member __.Parse(argv':string array) =      
 
-      let argv =
-        argv'
-        |> Array.collect (fun argument ->
-          if argument.StartsWith ("-") && not (argument.StartsWith "--") && argument <> "-" then
-            // Split up short arguments
-            let str = argument.Substring(1)
-            let results = ResizeArray<_>() in
-            let mutable i = -1 in
-            while (i <- i + 1; i < str.Length) do
-              match sectionsParsers |> Seq.tryPick (fun (_, opts) -> opts.Find(str.[i])) with
-              | None -> results.Add("-" + string str.[i])
-              | Some opt ->
-                if opt.HasArgument && i + 1 < str.Length
-                then let res = str.Substring(i + 1) in i <- str.Length; results.Add(opt.FullShort + res)
-                else results.Add(opt.FullShort)
-            results.ToArray()
-          else [|argument|]          
-          )
-
-      let result = pusage.ParseCommandLine(argv)
+      let result = pusage.ParseCommandLine(argv')
       // fill defaults
       sectionsParsers
       |> Seq.fold (fun map (_, section) ->
