@@ -273,6 +273,7 @@ let CopyDir target source filterFile =
     |> ignore
 
 /// Cleans a directory by removing all files and sub-directories.
+[<System.Obsolete("Use Fake.IO.Shell.CleanDir instead (FAKE0001 - package: Fake.IO - member: Fake.IO.Shell.CleanDir)")>]
 let CleanDir path = 
     let di = directoryInfo path
     if di.Exists then 
@@ -292,9 +293,11 @@ let CleanDir path =
     File.SetAttributes(path, FileAttributes.Normal)
 
 /// Cleans multiple directories
+[<System.Obsolete("Use Fake.IO.Shell.CleanDirs instead (FAKE0001 - package: Fake.IO - member: Fake.IO.Shell.CleanDirs)")>]
 let CleanDirs dirs = Seq.iter CleanDir dirs
 
 /// Deletes multiple directories
+[<System.Obsolete("Use Fake.IO.Shell.DeleteDirs instead (FAKE0001 - package: Fake.IO - member: Fake.IO.Shell.DeleteDirs)")>]
 let DeleteDirs dirs = Seq.iter DeleteDir dirs
 
 /// Reads a csv file line by line
