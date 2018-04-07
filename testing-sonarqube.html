@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -245,8 +245,8 @@ compilation has finished. The result is then collected and sent to the SonarQube
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Testing</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BeginSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BeginSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">SonarQube</span><span class="pn">.</span><span class="id">start</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
     <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
       <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
       <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
@@ -254,11 +254,11 @@ compilation has finished. The result is then collected and sent to the SonarQube
     <span class="pn">)</span>
   <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;EndSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">SonarQube</span><span class="pn">.</span><span class="id">End</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;EndSonarQube&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+  <span class="id">SonarQube</span><span class="pn">.</span><span class="id">finish</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="id">DoNothing</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="id">DoNothing</span>
 
 <span class="s">&quot;Clean&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;SetAssemblyInfo&quot;</span>
@@ -269,7 +269,7 @@ compilation has finished. The result is then collected and sent to the SonarQube
   <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -289,7 +289,7 @@ In the SonarQubeParams, this is the new field Settings:
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">start</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
   <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
     <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
     <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
@@ -313,7 +313,7 @@ This can be done with the new field Config:
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">Begin</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">SonarQube</span><span class="pn">.</span><span class="id">start</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
   <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
     <span class="id">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
     <span class="id">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
@@ -367,7 +367,7 @@ This can be done with the new field Config:
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -429,7 +429,9 @@ This can be done with the new field Config:
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

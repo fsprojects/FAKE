@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -198,11 +198,49 @@
 <h1><a name="Running-targets-in-FAKE-F-Make" class="anchor" href="#Running-targets-in-FAKE-F-Make">Running targets in "FAKE - F# Make"</a></h1>
 <p><strong>Note:  This documentation is for FAKE 5. The old documentation can be found <a href="legacy-core-targets.html">here</a>! </strong></p>
 <p><a href="apidocs/fake-core-target.html">API-Reference</a>, <a href="apidocs/fake-core-targetoperators.html">Operators</a></p>
-<h2><a name="Listing-targets" class="anchor" href="#Listing-targets">Listing targets</a></h2>
-<p>Not yet available in FAKE 5</p>
+<h2><a name="Command-line-interface-for-the-target-module" class="anchor" href="#Command-line-interface-for-the-target-module">Command line interface for the target module</a></h2>
+<p>If you use the <code>Fake.Core.Target</code> module and call <code>Target.runOrDefault</code> or <code>Target.runOrList</code> in your build script you will have the following CLI options:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="help">Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target &lt;target&gt;] [--] [&lt;targetargs&gt;...]
+
+Target Module Options [target_opts]:
+    -t, --target &lt;target&gt;
+                          Run the given target (ignored if positional argument 'target' is given)
+    -e, --environmentvariable &lt;keyval&gt; [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --singletarget    Run only the specified target.
+    -p, --parallel &lt;num&gt;  Run parallel with the given number of tasks.
+</code></pre></td></tr></table>
 <blockquote>
-<p>Note: This feature still makes sense, but a good CLI has not been found yet, please propose one.
-For not you can run the target with name '--listTargets' or '-lt'. <code>fake run build.fsx -t '--list-Targets'</code></p>
+<p>please refer to the general <a href="fake-commandline.html">FAKE 5 runner command line interface</a> or the <a href="core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a> for details.</p>
+</blockquote>
+<p>This means you can - for example - run <code>fake run build.fsx --list</code>
+or <code>fake build --list</code> to list your targets.</p>
+<p>To run a target <code>MyTarget</code> you could use  <code>fake run build.fsx -t MyTarget</code> or <code>fake build target MyTarget</code> (or the other way around <code>fake run build.fsx target MyTarget</code>)</p>
+<p>All parameters after <code>--</code> or <code>target &lt;target&gt;</code> are given to the target as paramters.</p>
+<blockquote>
+<p>Note that the ordering of the paramters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
+- <code>fake run -t Target build.fsx</code> - because of ordering fake will assume <code>-t</code> to be the script name
+- <code>fake build -v</code> - It will not run FAKE in verbose mode but give the parameter <code>-v</code> to the target parameters. This is because there is no <code>-v</code> in the above CLI.</p>
+<p>In general you should use the command-line in a way to not be broken when new parameters are added.
+Use longer forms in your scripts and shorter forms on your shell!</p>
 </blockquote>
 <h2><a name="Running-specific-targets" class="anchor" href="#Running-specific-targets">Running specific targets</a></h2>
 <p>FAKE has a special param "target" which can be used to run specific targets in a build. We assume the following build script (<code>build.fsx</code>):</p>
@@ -233,6 +271,8 @@ For not you can run the target with name '--listTargets' or '-lt'. <code>fake ru
 <span class="l">25: </span>
 <span class="l">26: </span>
 <span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
@@ -240,27 +280,29 @@ For not you can run the target with name '--listTargets' or '-lt'. <code>fake ru
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
 <span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">c</span> <span class="k">-&gt;</span>
+    <span class="c">// Access arguments given by command-line</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;Arguments: %A&quot;</span> <span class="id">p</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">Arguments</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
 <span class="pn">)</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Clean&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="c">// *** Start Build ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -273,7 +315,7 @@ Using the current parameter object is not supported yet.</p>
 <ul>
 <li><code>fake run build.fsx -t "Build"</code> --&gt; starts the <em>Build</em> target and runs the dependency <em>Clean</em></li>
 <li><code>fake run build.fsx -t "Build"</code> --single-target --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
-<li><code>fake run build.fsx -st -t Build</code> --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
+<li><code>fake run build.fsx -s -t Build</code> --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
 <li><code>fake run build.fsx</code> --&gt; starts the Deploy target (and runs the dependencies <em>Clean</em> and <em>Build</em>)</li>
 </ul>
 <h2><a name="Final-targets" class="anchor" href="#Final-targets">Final targets</a></h2>
@@ -287,19 +329,19 @@ These targets will be executed even if the build fails but have to be activated 
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">CreateFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-	<span class="c">// close stuff and release resources</span>
-	<span class="pn">(</span><span class="pn">)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">createFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="c">// close stuff and release resources</span>
+    <span class="pn">(</span><span class="pn">)</span>
 <span class="pn">)</span>
 
 <span class="c">// Activate Final target somewhere during build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">ActivateFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">activateFinal</span> <span class="s">&quot;CloseSomePrograms&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <h2><a name="Build-failure-targets" class="anchor" href="#Build-failure-targets">Build failure targets</a></h2>
 <p>Build failure targets can be used to execute tasks after a build failure.
-These targets will be executed only after a build failure but have to be activated via ActivateBuildFailure().</p>
+These targets will be executed only after a build failure but have to be activated via <code>activateBuildFailure()</code>.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -308,13 +350,13 @@ These targets will be executed only after a build failure but have to be activat
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">CreateBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-	<span class="c">// send mail about the failure</span>
-	<span class="pn">(</span><span class="pn">)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">createBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="c">// send mail about the failure</span>
+    <span class="pn">(</span><span class="pn">)</span>
 <span class="pn">)</span>
 
 <span class="c">// Activate Build Failure Target somewhere during build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">ActivateBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">activateBuildFailure</span> <span class="s">&quot;ReportErrorViaMail&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -324,10 +366,9 @@ number of threads used for traversing the dependency tree.
 This option of course only affects independent targets whereas dependent targets will
 still be exectued in order.</p>
 <h3><a name="Setting-the-number-of-threads" class="anchor" href="#Setting-the-number-of-threads">Setting the number of threads</a></h3>
-<p>The number of threads used can be set using the environment variable <code>parallel-jobs</code>.
-This can be achieved in various ways where the easiest one is to use FAKE's built-in support for
-setting environment variables:</p>
-<p><code>fake *YourBuildScript* -e parallel-jobs 8</code></p>
+<p>The number of threads used can be set using the environment variable <code>parallel-jobs</code> or using the <code>--parallel</code> parameter.
+This can be achieved in various ways where the easiest one is to use the parameter:</p>
+<p><code>fake run *YourBuildScript* --parallel 8</code></p>
 <p>Note that the dependency tree will be traversed as usual whenever setting <code>parallel-jobs</code> to a value <code>&lt;= 1</code> or omiting it entirely.</p>
 <h2><a name="Issues" class="anchor" href="#Issues">Issues</a></h2>
 <ul>
@@ -358,27 +399,27 @@ For example this dependency tree:</p>
 <span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Task 1&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task A2&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task A2&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
 
 <span class="s">&quot;Task 1&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task B2&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task B2&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
 
 <span class="s">&quot;Task C2&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
 
 <span class="s">&quot;Task 3&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task A4&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task A4&quot;</span>
 
 <span class="s">&quot;Task 3&quot;</span>
-	<span class="o">==&gt;</span> <span class="s">&quot;Task B4&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Task B4&quot;</span>
 </code></pre></td>
 </tr>
 </table>
 <p>...would be treated as follows:</p>
 <p><img src="pics/parallel/ParallelExample.png" alt="" /></p>
-<p>This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.</p>
+<p>This is in addition to that that MSBuild may use multiple threads when building one solution having multiple independent project-files.</p>
 <h1><a name="Soft-dependencies" class="anchor" href="#Soft-dependencies">Soft dependencies</a></h1>
 <p>Typically you will define dependencies among your targets using the <code>==&gt;</code> and <code>&lt;==</code> operators, and these
 dependencies define the order in which the targets are executed during a build.</p>
@@ -415,15 +456,15 @@ say that target B has a soft dependency on target A:</p>
 <span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> 
-	<span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Rebuild&quot;</span> <span class="id">Target</span><span class="pn">.</span><span class="id">DoNothing</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Rebuild&quot;</span> <span class="id">Target</span><span class="pn">.</span><span class="id">DoNothing</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Build&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
@@ -475,7 +516,7 @@ say that target B has a soft dependency on target A:</p>
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -537,7 +578,9 @@ say that target B has a soft dependency on target A:</p>
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -235,18 +235,18 @@ FAKE can list all the avaiable targets including the dependencies by running the
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake libs</span>
 <span class="pp">#I</span> <span class="s">@&quot;tools\FAKE&quot;</span>
 <span class="pp">#r</span> <span class="s">&quot;FakeLib.dll&quot;</span>
-<span class="k">open</span> <span class="id">Fake</span> 
+<span class="k">open</span> <span class="id">Fake</span>
 
 <span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>
 	<span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>
 	<span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+<span class="id">Target</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>
 	<span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
 <span class="pn">)</span>
 
@@ -403,7 +403,7 @@ For example this dependency tree:</p>
 </table>
 <p>...would be treated as follows:</p>
 <p><img src="pics/parallel/ParallelExample.png" alt="" /></p>
-<p>This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.</p>
+<p>This is in addition to that that MSBuild may use multiple threads when building one solution having multiple independent project-files.</p>
 <h1><a name="Writing-custom-C-tasks-for-FAKE" class="anchor" href="#Writing-custom-C-tasks-for-FAKE">Writing custom C# tasks for FAKE</a></h1>
 <p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <p>"FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks.
@@ -461,7 +461,7 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 
 <span class="c">// include CustomTask</span>
 <span class="pp">#r</span> <span class="s">&quot;MyCustomTask.dll&quot;</span>
-<span class="k">open</span> <span class="id">Fake</span> 
+<span class="k">open</span> <span class="id">Fake</span>
 
 <span class="c">// open CustomNamespace</span>
 <span class="k">open</span> <span class="id">MyCustomTask</span>
@@ -509,11 +509,11 @@ say that target B has a soft dependency on target A:</p>
 <span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+<span class="id">Target</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>
 	<span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> 
+<span class="id">Target</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span>
 	<span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
@@ -569,7 +569,7 @@ say that target B has a soft dependency on target A:</p>
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -631,7 +631,9 @@ say that target B has a soft dependency on target A:</p>
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -196,6 +196,22 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-0-0-rc001" class="anchor" href="#5-0-0-rc001">5.0.0-rc001</a></h2>
+<ul>
+<li>[BREAKING] New runner is not compatible with old <code>Fake.Core.Target</code> package. Make sure to upgrade your packages before updating the runner!</li>
+<li>[BREAKING] Fix inconsistent naming of MSBuild package (MsBuild -&gt; MSBuild), add setParams to run* methods - <a href="https://github.com/fsharp/FAKE/pull/1837">https://github.com/fsharp/FAKE/pull/1837</a></li>
+<li>[BREAKING] Update to the CLI, see <a href="https://fake.build/fake-commandline.html">https://fake.build/fake-commandline.html</a></li>
+<li>[FAKE 5] Implement MSBuild /nowarn command line option (<a href="https://github.com/fsharp/FAKE/pull/1840)">https://github.com/fsharp/FAKE/pull/1840)</a></li>
+<li>[FAKE 5] Target Parameters (closes <a href="https://github.com/fsharp/FAKE/issues/1830)">https://github.com/fsharp/FAKE/issues/1830)</a></li>
+<li>[FAKE 5] Scripts can now have/use their own CLI.</li>
+<li>[FAKE 5] Performance numbers (closes <a href="https://github.com/fsharp/FAKE/issues/1831)">https://github.com/fsharp/FAKE/issues/1831)</a></li>
+<li>[FAKE 5] new module <code>Fake.Core.CommandLineParsing</code>, see <a href="https://fake.build/core-commandlineparsing.html">https://fake.build/core-commandlineparsing.html</a></li>
+<li>[DOCS] fixes <a href="https://github.com/fsharp/FAKE/issues/1845">https://github.com/fsharp/FAKE/issues/1845</a></li>
+<li>[BUGFIX] fix various migration messages and fix ChangeWatcher according to API-Guideline</li>
+<li>[BUGFIX] Remove content-disposition from Azure.Webjobs - <a href="https://github.com/fsharp/FAKE/pull/1844">https://github.com/fsharp/FAKE/pull/1844</a></li>
+<li>[BUGFIX] Don't alter global shell var $cur - <a href="https://github.com/fsharp/FAKE/pull/1844">https://github.com/fsharp/FAKE/pull/1844</a></li>
+<li>[BUGFIX] Fix docs and traces for dotnet version (<a href="https://github.com/fsharp/FAKE/pull/1835)">https://github.com/fsharp/FAKE/pull/1835)</a></li>
+</ul>
 <h2><a name="5-0-0-beta029" class="anchor" href="#5-0-0-beta029">5.0.0-beta029</a></h2>
 <ul>
 <li>BUGFIX: Fix mono version detection on netcore.</li>
@@ -1625,7 +1641,7 @@ New tasks:
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -1687,7 +1703,9 @@ New tasks:
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

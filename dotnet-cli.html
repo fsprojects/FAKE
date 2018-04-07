@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -249,21 +249,21 @@
 <span class="k">let</span> <span class="k">inline</span> <span onmouseout="hideTip(event, 'fs5', 7)" onmouseover="showTip(event, 'fs5', 7)" class="fn">dotnetSimple</span> <span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="id">arg</span> <span class="o">=</span> <span class="id">DotNet</span><span class="pn">.</span><span class="id">Options</span><span class="pn">.</span><span class="id">lift</span> <span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="id">install</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="id">Value</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="id">arg</span>
 
 <span class="c">// Use defined properties on &quot;DotNet.Exec&quot;</span>
-<span class="id">DotNet</span><span class="pn">.</span><span class="id">Exec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="id">withWorkDir</span> <span class="s">&quot;./test&quot;</span><span class="pn">)</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;&quot;</span>
-<span class="id">DotNet</span><span class="pn">.</span><span class="id">Exec</span> <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">dotnetSimple</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;myproject.fsproj&quot;</span>
-<span class="id">DotNet</span><span class="pn">.</span><span class="id">Exec</span> <span onmouseout="hideTip(event, 'fs5', 14)" onmouseover="showTip(event, 'fs5', 14)" class="id">dotnetSimple</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;mysolution.sln&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">exec</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="id">withWorkDir</span> <span class="s">&quot;./test&quot;</span><span class="pn">)</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">exec</span> <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">dotnetSimple</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;myproject.fsproj&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">exec</span> <span onmouseout="hideTip(event, 'fs5', 14)" onmouseover="showTip(event, 'fs5', 14)" class="id">dotnetSimple</span> <span class="s">&quot;build&quot;</span> <span class="s">&quot;mysolution.sln&quot;</span>
 
 <span class="c">// Use defined properties on more generalized functions like &quot;DotNet.Restore&quot;</span>
-<span class="id">DotNet</span><span class="pn">.</span><span class="id">Restore</span> <span onmouseout="hideTip(event, 'fs5', 15)" onmouseover="showTip(event, 'fs5', 15)" class="id">dotnetSimple</span> <span class="s">&quot;mysolution.sln&quot;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">restore</span> <span onmouseout="hideTip(event, 'fs5', 15)" onmouseover="showTip(event, 'fs5', 15)" class="id">dotnetSimple</span> <span class="s">&quot;mysolution.sln&quot;</span>
 
 <span class="c">// Define more general properties in addition to the general ones</span>
-<span class="id">DotNet</span><span class="pn">.</span><span class="id">Restore</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">restore</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span>
     <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span>
         <span class="id">NoCache</span> <span class="o">=</span> <span class="k">true</span>
     <span class="pn">}</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 16)" onmouseover="showTip(event, 'fs5', 16)" class="id">dotnetSimple</span><span class="pn">)</span> <span class="s">&quot;mysolution.sln&quot;</span>
 
 <span class="c">// Define more general properties in addition to the general ones, with arugments</span>
-<span class="id">DotNet</span><span class="pn">.</span><span class="id">Restore</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span>
+<span class="id">DotNet</span><span class="pn">.</span><span class="id">restore</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span>
     <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span>
         <span class="id">Runtime</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs7', 17)" onmouseover="showTip(event, 'fs7', 17)" class="id">Some</span> <span class="s">&quot;win7-x86&quot;</span>
     <span class="pn">}</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="id">withWorkDir</span> <span class="s">&quot;./test&quot;</span> <span class="pn">)</span> <span class="s">&quot;mysolution.sln&quot;</span>
@@ -320,7 +320,7 @@
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -382,7 +382,9 @@
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

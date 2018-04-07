@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -219,13 +219,13 @@
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">fakeToolPath</span> <span class="o">=</span> <span class="s">&quot;known/path/to/fake.exe&quot;</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="fn">directFakeInPath</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">command</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">workingDir</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">target</span> <span class="o">=</span>
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">result</span> <span class="o">=</span>
-        <span class="id">Process</span><span class="pn">.</span><span class="id">ExecAndReturnMessages</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="id">info</span><span class="pn">:</span><span class="id">ProcStartInfo</span><span class="pn">)</span> <span class="k">-&gt;</span>
+        <span class="id">Process</span><span class="pn">.</span><span class="id">execWithResult</span> <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="id">info</span><span class="pn">:</span><span class="id">ProcStartInfo</span><span class="pn">)</span> <span class="k">-&gt;</span>
           <span class="pn">{</span> <span class="id">info</span> <span class="k">with</span>
                 <span class="id">FileName</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="id">fakeToolPath</span>
                 <span class="id">WorkingDirectory</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="id">workingDir</span>
                 <span class="id">Arguments</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 9)" onmouseover="showTip(event, 'fs3', 9)" class="id">command</span> <span class="pn">}</span>
           <span class="o">|&gt;</span> <span class="id">Process</span><span class="pn">.</span><span class="id">setEnvironmentVariable</span> <span class="s">&quot;target&quot;</span> <span onmouseout="hideTip(event, 'fs5', 10)" onmouseover="showTip(event, 'fs5', 10)" class="id">target</span><span class="pn">)</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs8', 12)" onmouseover="showTip(event, 'fs8', 12)" class="id">TimeSpan</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs9', 13)" onmouseover="showTip(event, 'fs9', 13)" class="id">FromMinutes</span> <span class="n">15.</span><span class="pn">)</span>
-    <span class="k">if</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> 
+    <span class="k">if</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span>
         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="id">errors</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="id">String</span><span class="pn">.</span><span class="id">Join</span><span class="pn">(</span><span class="id">Environment</span><span class="pn">.</span><span class="id">NewLine</span><span class="pn">,</span><span onmouseout="hideTip(event, 'fs6', 17)" onmouseover="showTip(event, 'fs6', 17)" class="id">result</span><span class="pn">.</span><span class="id">Errors</span><span class="pn">)</span>
         <span onmouseout="hideTip(event, 'fs12', 18)" onmouseover="showTip(event, 'fs12', 18)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%s</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="id">String</span><span class="pn">.</span><span class="id">Join</span><span class="pn">(</span><span class="id">Environment</span><span class="pn">.</span><span class="id">NewLine</span><span class="pn">,</span><span onmouseout="hideTip(event, 'fs6', 20)" onmouseover="showTip(event, 'fs6', 20)" class="id">result</span><span class="pn">.</span><span class="id">Messages</span><span class="pn">)</span>
         <span onmouseout="hideTip(event, 'fs13', 21)" onmouseover="showTip(event, 'fs13', 21)" class="fn">failwithf</span> <span class="s">&quot;FAKE Process exited with </span><span class="pf">%d</span><span class="s">: </span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs6', 22)" onmouseover="showTip(event, 'fs6', 22)" class="id">result</span><span class="pn">.</span><span class="id">ExitCode</span> <span onmouseout="hideTip(event, 'fs10', 23)" onmouseover="showTip(event, 'fs10', 23)" class="id">errors</span>
@@ -291,7 +291,7 @@
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -353,7 +353,9 @@
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -228,29 +228,29 @@
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.DotNet.AssemblyInfo</span>
-<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.DotNet.MSBuild</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-	<span class="id">AssemblyInfoFile</span><span class="pn">.</span><span class="id">CreateCSharp</span> <span class="s">&quot;./src/app/Calculator/Properties/AssemblyInfo.cs&quot;</span>
-		<span class="pn">[</span><span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator Command line tool&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Version</span> <span class="id">version</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">FileVersion</span> <span class="id">version</span><span class="pn">]</span>
+    <span class="id">AssemblyInfoFile</span><span class="pn">.</span><span class="id">CreateCSharp</span> <span class="s">&quot;./src/app/Calculator/Properties/AssemblyInfo.cs&quot;</span>
+        <span class="pn">[</span><span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator Command line tool&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Version</span> <span class="id">version</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">FileVersion</span> <span class="id">version</span><span class="pn">]</span>
 
-	<span class="id">AssemblyInfoFile</span><span class="pn">.</span><span class="id">CreateFSharp</span> <span class="s">&quot;./src/app/CalculatorLib/Properties/AssemblyInfo.fs&quot;</span>
-		<span class="pn">[</span><span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator library&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;EE5621DB-B86B-44eb-987F-9C94BCC98441&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Version</span> <span class="id">version</span>
-			<span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">FileVersion</span> <span class="id">version</span><span class="pn">]</span>
+    <span class="id">AssemblyInfoFile</span><span class="pn">.</span><span class="id">CreateFSharp</span> <span class="s">&quot;./src/app/CalculatorLib/Properties/AssemblyInfo.fs&quot;</span>
+        <span class="pn">[</span><span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Title</span> <span class="s">&quot;Calculator library&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Description</span> <span class="s">&quot;Sample project for FAKE - F# MAKE&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Guid</span> <span class="s">&quot;EE5621DB-B86B-44eb-987F-9C94BCC98441&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Product</span> <span class="s">&quot;Calculator&quot;</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">Version</span> <span class="id">version</span>
+            <span class="id">AssemblyInfo</span><span class="pn">.</span><span class="id">FileVersion</span> <span class="id">version</span><span class="pn">]</span>
 
-	<span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span class="id">buildDir</span> <span class="s">&quot;Build&quot;</span> <span class="id">appReferences</span>
-		<span class="o">|&gt;</span> <span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+    <span class="id">MSBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span class="id">buildDir</span> <span class="s">&quot;Build&quot;</span> <span class="id">appReferences</span>
+        <span class="o">|&gt;</span> <span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -341,7 +341,7 @@ All versioning data is generated by the AssemblyInfo task into the SolutionInfo.
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -403,7 +403,9 @@ All versioning data is generated by the AssemblyInfo task into the SolutionInfo.
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

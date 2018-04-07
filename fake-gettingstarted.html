@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -293,12 +293,12 @@ Create a new file with Visual Studio or Visual Studio Code (with ionide) and pas
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
 <span class="c">// Default target</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 <span class="pn">)</span>
 
 <span class="c">// start build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -368,11 +368,11 @@ You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on to
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
 
 <span class="c">// Targets</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">buildDir</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 <span class="pn">)</span>
 
@@ -383,7 +383,7 @@ You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on to
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
 <span class="c">// start build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -393,8 +393,8 @@ You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on to
 <p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
 <h3><a name="Compiling-the-application" class="anchor" href="#Compiling-the-application">Compiling the application</a></h3>
 <p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild.</p>
-<p>Again we need some new module for this, namely <code>Fake.DotNet.MsBuild</code>.</p>
-<p>Just like before add the required module on top via <code>nuget Fake.DotNet.MsBuild</code>, delete the <code>build.fsx.lock</code> file and run the script.
+<p>Again we need some new module for this, namely <code>Fake.DotNet.MSBuild</code>.</p>
+<p>Just like before add the required module on top via <code>nuget Fake.DotNet.MSBuild</code>, delete the <code>build.fsx.lock</code> file and run the script.
 Now edit the script like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -436,7 +436,7 @@ Now edit the script like this:</p>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
-<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.DotNet.MSBuild</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
@@ -449,13 +449,13 @@ Now edit the script like this:</p>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
 
 <span class="c">// Targets</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">buildDir</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MSBuild</span><span class="pn">.</span><span class="id">runRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
@@ -470,7 +470,7 @@ Now edit the script like this:</p>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
 <span class="c">// start build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -530,7 +530,7 @@ Now edit the script like this:</p>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
-<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.DotNet.MSBuild</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
@@ -546,23 +546,23 @@ Now edit the script like this:</p>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="id">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
 
 <span class="c">// Targets</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="id">testDir</span><span class="pn">]</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MSBuild</span><span class="pn">.</span><span class="id">runRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">logItems</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
-    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+    <span class="o">|&gt;</span> <span class="id">MSBuild</span><span class="pn">.</span><span class="id">runDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">logItems</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
   <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 <span class="pn">)</span>
 
@@ -573,7 +573,7 @@ Now edit the script like this:</p>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
 <span class="c">// start build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -638,7 +638,7 @@ Now edit the script like this:</p>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
-<span class="s">nuget Fake.DotNet.MsBuild</span>
+<span class="s">nuget Fake.DotNet.MSBuild</span>
 <span class="s">nuget Fake.DotNet.Testing.NUnit</span>
 <span class="s">nuget Fake.Core.Target //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
@@ -654,30 +654,30 @@ Now edit the script like this:</p>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 13)" onmouseover="showTip(event, 'fs2', 13)" class="id">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
 
 <span class="c">// Targets</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs1', 14)" onmouseover="showTip(event, 'fs1', 14)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs2', 15)" onmouseover="showTip(event, 'fs2', 15)" class="id">testDir</span><span class="pn">]</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunRelease</span> <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
-     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+     <span class="o">|&gt;</span> <span class="id">MSBuild</span><span class="pn">.</span><span class="id">runRelease</span> <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="id">buildDir</span> <span class="s">&quot;Build&quot;</span>
+     <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">logItems</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildTest&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="id">MsBuild</span><span class="pn">.</span><span class="id">RunDebug</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
-      <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+      <span class="o">|&gt;</span> <span class="id">MSBuild</span><span class="pn">.</span><span class="id">runDebug</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="id">testDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">logItems</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="id">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span><span class="pn">)</span>
-      <span class="o">|&gt;</span> <span class="id">NUnit3</span><span class="pn">.</span><span class="id">NUnit3</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+      <span class="o">|&gt;</span> <span class="id">NUnit3</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
           <span class="pn">{</span><span class="id">p</span> <span class="k">with</span>
                 <span class="id">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span> <span class="pn">}</span><span class="pn">)</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 <span class="pn">)</span>
 
@@ -690,7 +690,7 @@ Now edit the script like this:</p>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
 <span class="c">// start build</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;Default&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -750,7 +750,7 @@ Now edit the script like this:</p>
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -812,7 +812,9 @@ Now edit the script like this:</p>
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

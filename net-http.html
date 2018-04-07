@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -239,7 +239,7 @@
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Net</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;DownloadFile&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;DownloadFile&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="k">let</span> <span class="id">absoluteFilePath</span> <span class="o">=</span> <span class="id">Http</span><span class="pn">.</span><span class="id">downloadFile</span> <span class="s">&quot;/tmp/5.zip&quot;</span> <span class="s">@&quot;http://ipv4.download.thinkbroadband.com/5MB.zip&quot;</span>
     <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">printfn</span> <span class="s">&quot;File path: %s&quot;</span> <span class="id">absoluteFilePath</span>
 <span class="pn">)</span>
@@ -279,7 +279,7 @@
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Net</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;DownloadFiles&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;DownloadFiles&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="k">let</span> <span class="id">files</span><span class="pn">:</span> <span class="id">Http</span><span class="pn">.</span><span class="id">DownloadParameters</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">list</span> <span class="o">=</span> <span class="pn">[</span>
                 <span class="pn">{</span><span class="id">Path</span> <span class="o">=</span> <span class="s">&quot;/tmp/5.zip&quot;</span><span class="pn">;</span> <span class="id">Uri</span> <span class="o">=</span> <span class="s">&quot;http://ipv4.download.thinkbroadband.com/5MB.zip&quot;</span><span class="pn">}</span><span class="pn">;</span>
                 <span class="pn">{</span><span class="id">Path</span> <span class="o">=</span> <span class="s">&quot;/tmp/10.zip&quot;</span><span class="pn">;</span> <span class="id">Uri</span> <span class="o">=</span> <span class="s">&quot;http://ipv4.download.thinkbroadband.com/10MB.zip&quot;</span><span class="pn">}</span><span class="pn">]</span>
@@ -354,7 +354,7 @@ path/permissions, etc.)</p>
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -416,7 +416,9 @@ path/permissions, etc.)</p>
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

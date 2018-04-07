@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -251,7 +251,7 @@ as the old API was growing several years now and we never could do breaking chan
 <blockquote>
 <p>IMPORTANT NOTE: If you feel like an API is still in the wrong place. Please let us know and open an issue.
 We can make breaking changes as long as we are in the alpha/beta phase.
-IMPORTANT NODE: It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
+IMPORTANT NOTE: It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
 So things might break in the alpha phase. However this doesn't mean you should be afraid to use the new FAKE version.
 In fact due to the modular design we hopefully can make breaking changes a lot more often, without breaking your builds!
 So please try it out and if stuff breaks let us know :).
@@ -269,10 +269,12 @@ We urge you to finish your API-Migration (after fixing all warnings) by removing
 This removes a lot of automatically opened stuff and if your build fails you have probably stuff where we forgot to add the obsolete warning (let us know) or that
 stuff you are using was not migrated yet (let us know or send a PR, TODO: Add link to guideline).</p>
 <h3><a name="Add-FAKE-dependencies" class="anchor" href="#Add-FAKE-dependencies">Add FAKE dependencies</a></h3>
-<p>All your dependencies no longer are bundled with the FAKE nuget package (or the FAKE distribution for that matter). This has some advantages:
-- You can extend the build with your own packages easily
-- You only pay what you use
-- You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).</p>
+<p>All your dependencies no longer are bundled with the FAKE nuget package (or the FAKE distribution for that matter). This has some advantages:</p>
+<ul>
+<li>You can extend the build with your own packages easily</li>
+<li>You only pay what you use</li>
+<li>You can use the FAKE libries in your regular scripts (as all FAKE modules are regular NuGet packages you can use in your projects as well).</li>
+</ul>
 <p>The drawback however is that you now need to know where stuff lives and add those packages to your build.</p>
 <p>Already a paket user?</p>
 <p>For now its quite simple: The namespace or module name is used as the package name, just search for the package and then
@@ -351,7 +353,7 @@ For a full reference use <code>--help</code> or the <a href="fake-commandline.ht
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -413,7 +415,9 @@ For a full reference use <code>--help</code> or the <a href="fake-commandline.ht
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>

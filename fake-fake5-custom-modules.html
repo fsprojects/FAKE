@@ -101,7 +101,7 @@
 															<ul>
 																<li><a href="dotnet-cli.html">Cli</a></li>
 																<li><a href="dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
-																<li><a href="apidocs/fake-dotnet-msbuild.html">MsBuild</a></li>
+																<li><a href="apidocs/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
@@ -213,20 +213,18 @@ This tutorial shows how to create a (very simple) custom task in C#. The same wo
 <span class="l">10: </span>
 <span class="l">11: </span>
 <span class="l">12: </span>
-<span class="l">13: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="csharp"><span class="k">using</span> System;
-
 <span class="k">namespace</span> MyCustomTask
 {
-  <span class="k">public</span> <span class="k">class</span> RandomNumberTask
-  {
-    <span class="k">public</span> <span class="k">static</span> <span class="k">int</span> RandomNumber(<span class="k">int</span> min, <span class="k">int</span> max)
+    <span class="k">public</span> <span class="k">class</span> RandomNumberTask
     {
-      <span class="k">var</span> random <span class="o">=</span> <span class="k">new</span> Random();
-      <span class="k">return</span> random.Next(min, max);
+        <span class="k">public</span> <span class="k">static</span> <span class="k">int</span> RandomNumber(<span class="k">int</span> min, <span class="k">int</span> max)
+        {
+            <span class="k">var</span> random <span class="o">=</span> <span class="k">new</span> Random();
+            <span class="k">return</span> random.Next(min, max);
+        }
     }
-  }
 }
 </code></pre></td></tr></table>
 <p>Now you can build, package and upload your build task to a NuGet feed.
@@ -273,10 +271,10 @@ One example would be:</p>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 <span class="k">open</span> <span class="id">MyCustomTask</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;GenerateNumber&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-	<span class="c">// use custom functionality</span>
-	<span class="id">RandomNumberTask</span><span class="pn">.</span><span class="id">RandomNumber</span><span class="pn">(</span><span class="n">2</span><span class="pn">,</span><span class="n">13</span><span class="pn">)</span>
-		<span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;GenerateNumber&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="c">// use custom functionality</span>
+    <span class="id">RandomNumberTask</span><span class="pn">.</span><span class="id">RandomNumber</span><span class="pn">(</span><span class="n">2</span><span class="pn">,</span><span class="n">13</span><span class="pn">)</span>
+        <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;GenerateNumber&quot;</span>
@@ -325,7 +323,7 @@ One example would be:</p>
 										</ul>
 									</section>
 
-								<!-- Links 
+								<!-- Links
 									<section>
 										<h2>Learn F#</h2>
 										<ul class="divided">
@@ -387,7 +385,9 @@ One example would be:</p>
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; FAKE. All rights reserved</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
 									</ul>
 								</div>
 							</div>
