@@ -23,12 +23,12 @@ Fake Options [fake_opts]:
 Fake Run Options [run_opts]:
   -d, --debug           Debug the script.
   -n, --nocache         Disable fake cache for this run.
-  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+  --fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
 
 Fake Build Options [build_opts]:
   -d, --debug           Debug the script.
   -n, --nocache         Disable fake cache for this run.
-  --fsiargs <args> [*]  Arguments passed to the f# interactive.
+  --fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
   -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).
   """

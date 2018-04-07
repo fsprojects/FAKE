@@ -104,7 +104,7 @@ let runOrBuild (args : RunArguments) =
 
         //Use --fsiargs approach.
         | Some(script), fsArgs, _ ->
-           match fsiArgs |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
+           match fsiArgs |> Array.tryFindIndex (fun arg -> not (arg.StartsWith "-")) with
            | Some(i) ->
               let fsxPath = fsiArgs.[i]
               if script <> fsxPath then traceFAKE "script specified via fsiargs '%s' does not equal the one we run '%s'." fsxPath script 
@@ -116,7 +116,7 @@ let runOrBuild (args : RunArguments) =
         | None, x::xs, _ ->
             let args = x::xs |> Array.ofList
             //Find first arg that does not start with - (as these are fsi options that precede the fsx).
-            match args |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
+            match args |> Array.tryFindIndex (fun arg -> not (arg.StartsWith "-")) with
             | Some(i) ->
                 let fsxPath = args.[i]
                 if fsxPath.EndsWith(".fsx", StringComparison.OrdinalIgnoreCase) then
@@ -211,7 +211,7 @@ let handleCli (results:Map<string, ParseResult>) =
           | Some args -> args
           | None -> []
        FsiArgLine =
-         match ParseResult.tryGetArguments "<script.fsx>" results with
+         match ParseResult.tryGetArguments "--fsiargs" results with
          | Some args -> args
          | None -> []
 
