@@ -1,6 +1,6 @@
 # Fake.Core.CommandLineParsing
 
-This module is a re-implementation from https://github.com/docopt/docopt.fs/ but with strong ordering.
+This module is a fork from https://github.com/docopt/docopt.fs/ but with strong ordering.
 The strong ordering enables you to have a nice CLI on your script or to write your own fake 5 modules with a CLI.
 
 Example `script.fsx`:
@@ -22,7 +22,7 @@ options:
 """
 
 // retrieve the fake 5 context information
-let ctx = Fake.Core.Context.forceFakeContext ()
+let ctx = Context.forceFakeContext ()
 // get the arguments
 let args = ctx.Arguments
 let parser = Docopt(cli)
@@ -35,6 +35,17 @@ match DocoptResult.tryGetArgument "-m" results with
 | None -> printfn "Printing generic message"
 | Some arg -> printfn "%s" arg
 ```
+
+A more sophisticated example can be in the fake runner: https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259
+
+Or the target module:
+
+- https://github.com/fsharp/FAKE/blob/rc_1/src/app/Fake.Core.Target/Target.fs#L9-L26
+- https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.Core.Target/Target.fs#L564-L619
+
+You can also take a look at the test-suite:
+
+- https://github.com/fsharp/FAKE/blob/rc_1/src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.fs
 
 ## Differences to the python reference Docopt implementation
 

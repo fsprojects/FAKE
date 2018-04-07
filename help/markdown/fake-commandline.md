@@ -41,8 +41,8 @@ Ordering of arguments does MATTER. This is a change in behavior from FAKE versio
 
 Examples:
 
-- `fake run -v build.fsx` - This will not run fake in verbose mode. Instead it will try to run the script named `-v`.
-- `fake --fsiargs "--define:BOOTSTRAP" build.fsx` - This will not run `build.fsx` and define BOOTSTRAP, because `--fsiargs` needs to follow after the script-name
+- `fake run -v build.fsx` - This will not run fake in verbose mode. Instead it will try to run the script named `-v`. (But we might support that in the future)
+- `fake build.fsx --fsiargs "--define:BOOTSTRAP"` - This will not run `build.fsx` and define BOOTSTRAP, because `--fsiargs` needs to be before the script-name.
 - `fake build -s` - This will run fake in single-target mode and not in silent mode, you need to use `fake -s build` as described in the above usage description.
 
 ## `--verbose [-v]`
