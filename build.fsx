@@ -369,6 +369,7 @@ Target.create "GenerateDocs" (fun _ ->
         "page-author", String.separated ", " authors
         "project-author", String.separated ", " authors
         "github-link", githubLink
+        "version", release.NugetVersion
         "project-github", "http://github.com/fsharp/fake"
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
