@@ -1,7 +1,7 @@
 _fake_completion()
 {
     COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
+    local cur="${COMP_WORDS[COMP_CWORD]}"
 
     if [ -f build.fsx ] ; then
         # egrep doesn't have the -P switch to match group on OSX
