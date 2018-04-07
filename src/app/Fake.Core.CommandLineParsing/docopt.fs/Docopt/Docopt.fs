@@ -1,6 +1,7 @@
-﻿namespace Fake.Core.CommandLineParsing
+﻿namespace Fake.Core
 
 open System
+open Fake.Core.CommandLineParsing
 
 //type HelpCallback = unit -> string
 
@@ -95,7 +96,7 @@ type Docopt(doc', ?soptChars':string) =
             if not (String.IsNullOrEmpty key) then // opt.FullShort else opt.FullLong
               match def, Map.tryFind key map with
               | Some defVal, None ->
-                Map.add key (ParseResult.Argument defVal)
+                Map.add key (DocoptResult.Argument defVal)
               | _ -> id
             else id
 

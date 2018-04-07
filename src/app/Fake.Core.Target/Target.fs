@@ -566,32 +566,32 @@ module Target =
 
         let results =
             try TargetCli.parseArgs (ctx.Arguments |> List.toArray) |> Choice1Of2
-            with :? ArgvException as e -> Choice2Of2 e
+            with :? DocoptException as e -> Choice2Of2 e
         match results with
         | Choice1Of2 results ->
-            if ParseResult.hasFlag "--list" results then
+            if DocoptResult.hasFlag "--list" results then
                 listAvailable()
-            elif ParseResult.hasFlag "-h" results || ParseResult.hasFlag "--help" results then
+            elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
                 printf "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
-            elif ParseResult.hasFlag "--version" results then
+            elif DocoptResult.hasFlag "--version" results then
                 printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
             else
                 let target =
-                    match ParseResult.tryGetArgument "<target>" results with
+                    match DocoptResult.tryGetArgument "<target>" results with
                     | None ->
-                        match ParseResult.tryGetArgument "--target" results with
+                        match DocoptResult.tryGetArgument "--target" results with
                         | None -> Environment.environVarOrNone "target"
                         | Some arg -> Some arg
                     | Some arg ->
-                        match ParseResult.tryGetArgument "--target" results with
+                        match DocoptResult.tryGetArgument "--target" results with
                         | None -> ()
                         | Some innerArg ->
                             Trace.traceImportant
                                 <| sprintf "--target '%s' is ignored when 'target %s' is given" innerArg arg
                         Some arg
                 let parallelJobs =
-                    match ParseResult.tryGetArgument "--parallel" results with
+                    match DocoptResult.tryGetArgument "--parallel" results with
                     | Some arg ->
                         match System.Int32.TryParse(arg) with
                         | true, i -> i
@@ -599,11 +599,11 @@ module Target =
                     | None ->
                         Environment.environVarOrDefault "parallel-jobs" "1" |> int
                 let singleTarget =
-                    match ParseResult.hasFlag "--singletarget" results with
+                    match DocoptResult.hasFlag "--singletarget" results with
                     | true -> true
                     | false -> Environment.hasEnvironVar "single-target"
                 let arguments =
-                    match ParseResult.tryGetArguments "<targetargs>" results with
+                    match DocoptResult.tryGetArguments "<targetargs>" results with
                     | Some args -> args
                     | None -> []
                 match target with

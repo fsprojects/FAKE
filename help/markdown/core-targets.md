@@ -4,12 +4,41 @@
 
 [API-Reference](apidocs/fake-core-target.html), [Operators](apidocs/fake-core-targetoperators.html)
 
-## Listing targets
+## Command line interface for the target module
 
-Not yet available in FAKE 5
+If you use the `Fake.Core.Target` module and call `Target.runOrDefault` or `Target.runOrList` in your build script you will have the following CLI options:
 
-> Note: This feature still makes sense, but a good CLI has not been found yet, please propose one.
-> For not you can run the target with name '--listTargets' or '-lt'. `fake run build.fsx -t '--list-Targets'`
+```help
+Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
+
+Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional argument 'target' is given)
+    -e, --environmentvariable <keyval> [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --singletarget    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
+```
+
+> please refer to the general [FAKE 5 runner command line interface](fake-commandline.html) or the [Fake.Core.CommandLineParsing documentation](core-commandlineparsing.html) for details.
+
+This means you can - for example - run `fake run build.fsx --list`
+or `fake build --list` to list your targets.
+
+To run a target `MyTarget` you could use  `fake run build.fsx -t MyTarget` or `fake build target MyTarget` (or the other way around `fake run build.fsx target MyTarget`)
+
+All parameters after `--` or `target <target>` are given to the target as paramters.
+
+> Note that the ordering of the paramters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
+> - `fake run -t Target build.fsx` - because of ordering fake will assume `-t` to be the script name
+> - `fake build -v` - It will not run FAKE in verbose mode but give the parameter `-v` to the target parameters. This is because there is no `-v` in the above CLI.
+>
+> In general you should use the command-line in a way to not be broken when new parameters are added.
+> Use longer forms in your scripts and shorter forms on your shell!
 
 ## Running specific targets
 
@@ -22,7 +51,9 @@ nuget Fake.Core.Target //"
 open Fake.Core
 
 // *** Define Targets ***
-Target.create "Clean" (fun _ ->
+Target.create "Clean" (fun c ->
+    // Access arguments given by command-line
+    Trace.tracefn "Arguments: %A" p.Context.Arguments
     Trace.trace " --- Cleaning stuff --- "
 )
 
@@ -51,10 +82,10 @@ Target.runOrDefault "Deploy"
 
 Now we have the following options:
 
-* `fake run build.fsx -t "Build"` --> starts the *Build* target and runs the dependency *Clean*
-* `fake run build.fsx -t "Build"` --single-target --> starts only the *Build* target and runs no dependencies
-* `fake run build.fsx -st -t Build` --> starts only the *Build* target and runs no dependencies
-* `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
+- `fake run build.fsx -t "Build"` --> starts the *Build* target and runs the dependency *Clean*
+- `fake run build.fsx -t "Build"` --single-target --> starts only the *Build* target and runs no dependencies
+- `fake run build.fsx -s -t Build` --> starts only the *Build* target and runs no dependencies
+- `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
 
 ## Final targets
 
@@ -95,19 +126,18 @@ still be exectued in order.
 
 ### Setting the number of threads
 
-The number of threads used can be set using the environment variable ``parallel-jobs``.
-This can be achieved in various ways where the easiest one is to use FAKE's built-in support for
-setting environment variables:
+The number of threads used can be set using the environment variable ``parallel-jobs`` or using the `--parallel` parameter.
+This can be achieved in various ways where the easiest one is to use the parameter:
 
-``fake *YourBuildScript* -e parallel-jobs 8``
+``fake run *YourBuildScript* --parallel 8``
 
 Note that the dependency tree will be traversed as usual whenever setting ``parallel-jobs`` to a value ``<= 1`` or omiting it entirely.
 
 ## Issues
 
-* Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.
-* Parallel execution may also cause races on stdout and build-logs may therefore be quite obfuscated.
-* Error detection may suffer since it's not possible to determine a first error when targets are running in parallel
+- Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.
+- Parallel execution may also cause races on stdout and build-logs may therefore be quite obfuscated.
+- Error detection may suffer since it's not possible to determine a first error when targets are running in parallel
 
 Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
 However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful

@@ -8,7 +8,7 @@ open Fake.Runtime.HashGeneration
 open Fake.Runtime.CoreCache
 open Fake.Runtime.FakeRuntime
 open System.IO
-open Fake.Core.CommandLineParsing
+open Fake.Core
 open Paket.FolderScanner
 
 let sw = System.Diagnostics.Stopwatch.StartNew()
@@ -201,40 +201,40 @@ let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
     let success = runOrBuild arg
     if not success then 1 else 0
 
-let parseAction (results:Map<string, ParseResult>) =
+let parseAction (results:DocoptMap) =
   let verbLevel =
-    ParseResult.getFlagCount "--verbose" results
+    DocoptResult.getFlagCount "--verbose" results
   let isSilent =
-    ParseResult.hasFlag "--silent" results
+    DocoptResult.hasFlag "--silent" results
   let verboseLevel =
     match isSilent, verbLevel with
     | true, _ -> VerboseLevel.Silent
     | _, 0 -> VerboseLevel.Normal
     | _, 1 -> VerboseLevel.Verbose
     | _ -> VerboseLevel.VerbosePaket
-  let isRun = ParseResult.hasFlag "run" results
-  let isBuild = ParseResult.hasFlag "build" results
+  let isRun = DocoptResult.hasFlag "run" results
+  let isBuild = DocoptResult.hasFlag "build" results
   verboseLevel, 
-  if ParseResult.hasFlag "--version" results then
+  if DocoptResult.hasFlag "--version" results then
     ShowVersion
-  elif ParseResult.hasFlag "--help" results || ParseResult.hasFlag "--help" results then
+  elif DocoptResult.hasFlag "--help" results || DocoptResult.hasFlag "--help" results then
     ShowHelp
   elif isRun || isBuild then
     let arg = {
        Script =
-          if isRun then ParseResult.tryGetArgument "<script.fsx>" results
-          else ParseResult.tryGetArgument "--script" results
+          if isRun then DocoptResult.tryGetArgument "<script.fsx>" results
+          else DocoptResult.tryGetArgument "--script" results
        ScriptArguments =
-          match ParseResult.tryGetArguments "<scriptargs>" results with
+          match DocoptResult.tryGetArguments "<scriptargs>" results with
           | Some args -> args
           | None -> []
        FsiArgLine =
-         match ParseResult.tryGetArguments "--fsiargs" results with
+         match DocoptResult.tryGetArguments "--fsiargs" results with
          | Some args -> args
          | None -> []
 
-       Debug = ParseResult.hasFlag "--debug" results
-       NoCache = ParseResult.hasFlag "--nocache" results
+       Debug = DocoptResult.hasFlag "--debug" results
+       NoCache = DocoptResult.hasFlag "--nocache" results
        VerboseLevel = verboseLevel
        IsBuild = not isRun // Did the user call `fake build` or `fake run`?
     }
@@ -259,7 +259,7 @@ let main (args:string[]) =
       parseAction rawResults
     exitCode <- handleAction verbLevel results
   with
-  | :? ArgvException as e ->
+  | :? DocoptException as e ->
     printfn "Usage error: %s" e.Message
     printfn "%s" Cli.fakeUsage
     exitCode <- 1

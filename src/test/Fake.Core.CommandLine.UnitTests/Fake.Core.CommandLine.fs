@@ -3,6 +3,7 @@ module Fake.Core.CommandLineParsingTests
 
 open System
 
+open Fake.Core
 open Fake.Core.CommandLineParsing
 open System
 open System.Diagnostics
@@ -82,7 +83,7 @@ Fake Options [fake_opts]:
 Fake Run Options [run_opts]:
   -d, --debug           Debug the script.
     """,
-      "run -v" ->! typeof<ArgvException>,
+      "run -v" ->! typeof<DocoptException>,
       "run" ->= ["run", Flag],
       "run -d" ->= ["run", Flag;"-d", Flag;"--debug", Flag],
       "-v run -d" ->= ["--verbose", Flag; "-v", Flag; "run", Flag;"-d", Flag;"--debug", Flag],
@@ -395,7 +396,7 @@ Usage: prog
 
 """,
       ""      ->= [],
-      "--xxx" ->! typeof<ArgvException>
+      "--xxx" ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Basic short option", """
@@ -406,7 +407,7 @@ Options: -a  All.
 """,
       ""   ->= [],
       "-a" ->= [("-a", Flag)],
-      "-x" ->! typeof<ArgvException>
+      "-x" ->! typeof<DocoptException>
     )
     TestCaseHelper.Create("Basic long option", """
 Usage: prog [options]
@@ -416,7 +417,7 @@ Options: --all  All.
 """,
       ""      ->= [],
       "--all" ->= [("--all", Flag)],
-      "--xxx" ->! typeof<ArgvException>
+      "--xxx" ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Synonymous short and long option, with truncation", """
@@ -439,7 +440,7 @@ Options: -p PATH
 """,
       "-p home/" ->= [("-p", Argument("home/"))],
       "-phome/"  ->= [("-p", Argument("home/"))],
-      "-p"       ->! typeof<ArgvException>
+      "-p"       ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Long option with argument", """
@@ -453,7 +454,7 @@ Options: --path <path>
       // Not supported
       //"--pa home/"   ->= [("--path", Argument("home/"))],
       //"--pa=home/"   ->= [("--path", Argument("home/"))],
-      "--path"       ->! typeof<ArgvException>
+      "--path"       ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Synonymous short and long option with both arguments declared", """
@@ -521,7 +522,7 @@ options:
 //""",
 //      "--version" ->= [("--version", Flag)],
 //      "--verbose" ->= [("--verbose", Flag)],
-//      "--ver"     ->! typeof<ArgvException>,
+//      "--ver"     ->! typeof<DocoptException>,
 //      "--verb"    ->= [("--verbose", Flag)]
 //    )
 
@@ -558,8 +559,8 @@ options:
 """,
       "-a -b" ->= [("-a", Flag);("-b", Flag)],
       "-b -a" ->= [("-a", Flag);("-b", Flag)],
-      "-a"    ->! typeof<ArgvException>,
-      ""      ->! typeof<ArgvException>
+      "-a"    ->! typeof<DocoptException>,
+      ""      ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Required short options in brackets", """
@@ -571,8 +572,8 @@ options: -a
 """,
       "-a -b" ->= [("-a", Flag);("-b", Flag)],
       "-b -a" ->= [("-a", Flag);("-b", Flag)],
-      "-a"    ->! typeof<ArgvException>,
-      ""      ->! typeof<ArgvException>
+      "-a"    ->! typeof<DocoptException>,
+      ""      ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Two options, one is optional","""
@@ -586,10 +587,10 @@ options: -a
       // !!!!!!!!!!!!! Different from SPEC! 
       // order matters!
       //"-b -a" ->= [("-a", Flag);("-b", Flag)],
-      "-b -a" ->! typeof<ArgvException>,
-      "-a"    ->! typeof<ArgvException>,
+      "-b -a" ->! typeof<DocoptException>,
+      "-a"    ->! typeof<DocoptException>,
       "-b"    ->= [("-b", Flag)],
-      ""      ->! typeof<ArgvException>
+      ""      ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Required in optional", """
@@ -601,8 +602,8 @@ options: -a
 """,
       "-a -b" ->= [("-a", Flag);("-b", Flag)],
       "-b -a" ->= [("-a", Flag);("-b", Flag)],
-      "-a"    ->! typeof<ArgvException>,
-      "-b"    ->! typeof<ArgvException>,
+      "-a"    ->! typeof<DocoptException>,
+      "-b"    ->! typeof<DocoptException>,
       ""      ->= []
     )
 
@@ -613,8 +614,8 @@ options: -a
          -b
 
 """,
-      "-a -b" ->! typeof<ArgvException>,
-      ""      ->! typeof<ArgvException>,
+      "-a -b" ->! typeof<DocoptException>,
+      ""      ->! typeof<DocoptException>,
       "-a"    ->= [("-a", Flag)],
       "-b"    ->= [("-b", Flag)]
     )
@@ -626,7 +627,7 @@ options: -a
          -b
 
 """,
-      "-a -b" ->! typeof<ArgvException>,
+      "-a -b" ->! typeof<DocoptException>,
       ""      ->= [],
       "-a"    ->= [("-a", Flag)],
       "-b"    ->= [("-b", Flag)]
@@ -635,22 +636,22 @@ options: -a
     TestCaseHelper.Create("Argument", """
 usage: prog <arg>""",
       "10"    ->= [("<arg>", Argument("10"))],
-      "10 20" ->! typeof<ArgvException>,
-      ""      ->! typeof<ArgvException>
+      "10 20" ->! typeof<DocoptException>,
+      ""      ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Optional argument", """
 usage: prog [<arg>]""",
       "10"    ->= [("<arg>", Argument("10"))],
-      "10 20" ->! typeof<ArgvException>,
+      "10 20" ->! typeof<DocoptException>,
       ""      ->= []
     )
 
     TestCaseHelper.Create("Multiple arguments", """
 usage: prog <kind> <name> <type>""",
       "10 20 40" ->= [("<kind>", Argument("10"));("<name>", Argument("20"));("<type>", Argument("40"))],
-      "10 20"    ->! typeof<ArgvException>,
-      ""         ->! typeof<ArgvException>
+      "10 20"    ->! typeof<DocoptException>,
+      ""         ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Multiple arguments, two optional", """
@@ -659,13 +660,13 @@ usage: prog <kind> [<name> <type>]""",
       
       // !!!!!!!!!!!!! Different from SPEC! 
       // "10 20"    ->= [("<kind>", Argument("10"));("<name>", Argument("20"))],
-      "10 20"    ->! typeof<ArgvException>,
-      ""         ->! typeof<ArgvException>
+      "10 20"    ->! typeof<DocoptException>,
+      ""         ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Multiple arguments xor'd in optional", """
 usage: prog [<kind> | <name> <type>]""",
-      "10 20 40" ->! typeof<ArgvException>,
+      "10 20 40" ->! typeof<DocoptException>,
       "20 40"    ->= [("<name>", Argument("20"));("<type>", Argument("40"))],
       ""         ->= []
     )
@@ -679,7 +680,7 @@ options:
 """,
       "10 --all" ->= [("--all", Flag);("<kind>", Argument("10"))],
       "10"       ->= [("<name>", Argument("10"))],
-      ""         ->! typeof<ArgvException>
+      ""         ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Stacked argument", """
@@ -689,7 +690,7 @@ usage: prog [<name> <name>]""",
       // !!!!!!!!!!!!! Different from SPEC! 
       // Both needs to be given or none (different from [<name>] [<name>])
       //"10"    ->= [("<name>", Argument("10"))],
-      "10"    ->! typeof<ArgvException>,
+      "10"    ->! typeof<DocoptException>,
       ""      ->= []
     )
 
@@ -703,7 +704,7 @@ usage: prog [<name>] [<name>]""",
     TestCaseHelper.Create("Same, but both arguments must be present", """
 usage: prog [(<name> <name>)]""",
       "10 20" ->= [("<name>", Arguments(["10";"20"]))],
-      "10"    ->! typeof<ArgvException>,
+      "10"    ->! typeof<DocoptException>,
       ""      ->= []
     )
 
@@ -711,7 +712,7 @@ usage: prog [(<name> <name>)]""",
 usage: prog NAME...""",
       "10 20" ->= [("NAME", Arguments(["10";"20"]))],
       "10"    ->= [("NAME", Argument("10"))],
-      ""      ->! typeof<ArgvException>
+      ""      ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Optional in ellipsis", """
@@ -746,7 +747,7 @@ options: --foo
       
       // !!!!!!!!!!!!! Different from SPEC! 
       // We allow arguments that look like options when they are the only way to parse them
-      //"--foo=10" ->! typeof<ArgvException>
+      //"--foo=10" ->! typeof<DocoptException>
       "--foo=10"       ->= [("NAME", Argument("--foo=10"))]
 
     )
@@ -845,7 +846,7 @@ Usage: prog [-v -v]""",
 
     TestCaseHelper.Create("Many flags", """
 Usage: prog -v ...""",
-      ""        ->! typeof<ArgvException>,
+      ""        ->! typeof<DocoptException>,
       "-v"      ->= [("-v", Flag)],
       "-vv"     ->= [("-v", Flags(2))],
       "-vvvvvv" ->= [("-v", Flags(6))]
@@ -860,7 +861,7 @@ This one is probably most readable user-friendly variant.
       ""      ->= [],
       "-v"    ->= [("-v", Flag)],
       "-vv"   ->= [("-v", Flags(2))],
-      "-vvvv" ->! typeof<ArgvException>
+      "-vvvv" ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Counting long options", """
@@ -879,9 +880,9 @@ usage: prog [go go]""",
       // !!!!!!!!!!!!! Different from SPEC! 
       // only group is optional!
       //"go"       ->= [("go", Flag)],
-      "go" ->! typeof<ArgvException>,
+      "go" ->! typeof<DocoptException>,
       "go go"    ->= [("go", Flags(2))],
-      "go go go" ->! typeof<ArgvException>
+      "go go go" ->! typeof<DocoptException>
     )
 
     TestCaseHelper.Create("Many commands", """
@@ -897,7 +898,7 @@ options: -a
 """,
       "-a"  ->= [("-a", Flag)],
       // !!!!!!!!!!!! Different from SPEC!
-      //"-aa" ->! typeof<ArgvException> // SPEC
+      //"-aa" ->! typeof<DocoptException> // SPEC
       "-aa"  ->= [("-a", Flags 2)] // Not SPEC
     )
 

@@ -1,5 +1,11 @@
-﻿namespace Fake.Core.CommandLineParsing
+﻿namespace Fake.Core
 
+exception DocoptException of string
+  with override x.ToString () = sprintf "DocoptException: %s" x.Data0
+
+namespace Fake.Core.CommandLineParsing
+
+open Fake.Core
 open FParsec
 open System
 open System.Text
@@ -7,15 +13,13 @@ open System.Text
 exception private InternalException of ErrorMessageList
 exception UsageException of string
   with override x.ToString () = sprintf "UsageException: %s" x.Data0
-exception ArgvException of string
-  with override x.ToString () = sprintf "ArgvException: %s" x.Data0
 
 module private Helpers =
   begin
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
-      raise (ArgvException(perror.ToString()))
+      raise (DocoptException(perror.ToString()))
     let unexpectedShort = string
                           >> ( + ) "short option -"
                           >> unexpected
@@ -478,7 +482,7 @@ module ArgParser =
 
   let parg argName = chooseParserFull (sprintf "Argument for  '%s'" argName) id
 
-  let updateUserState (map':'a -> ResultMap -> ResultMap) : 'a -> ArgumentParser<ResultMap, ResultMap> =
+  let updateUserState (map':'a -> DocoptMap -> DocoptMap) : 'a -> ArgumentParser<DocoptMap, DocoptMap> =
       fun arg' ->
         fun stream' ->
           let res = map' arg' stream'.UserState
@@ -494,24 +498,24 @@ module ArgParser =
   let updateMap key newItem map =
       match Map.tryFind key map, newItem with
       | None, _
-      | Some ParseResult.NoResult, _ -> Map.add key newItem map
-      | _, ParseResult.NoResult -> map
-      | Some (ParseResult.Argument arg1), ParseResult.Argument arg2 ->
-          Map.add key (ParseResult.Arguments [arg1; arg2]) map
-      | Some (ParseResult.Argument arg1), ParseResult.Arguments argList ->
-          Map.add key (ParseResult.Arguments (arg1 :: argList)) map
-      | Some (ParseResult.Arguments argList1), ParseResult.Argument arg2 ->
-          Map.add key (ParseResult.Arguments (argList1 @ [arg2])) map
-      | Some (ParseResult.Arguments argList1),  ParseResult.Arguments argList2 ->
-          Map.add key (ParseResult.Arguments (argList1 @ argList2)) map
-      | Some (ParseResult.Flag), ParseResult.Flag ->
-          Map.add key (ParseResult.Flags 2) map
-      | Some (ParseResult.Flags n1), ParseResult.Flag ->
-          Map.add key (ParseResult.Flags (n1 + 1)) map
-      | Some (ParseResult.Flag), ParseResult.Flags n2 ->
-          Map.add key (ParseResult.Flags (n2 + 1)) map
-      | Some (ParseResult.Flags n1), ParseResult.Flags n2 ->
-          Map.add key (ParseResult.Flags (n1 + n2)) map
+      | Some DocoptResult.NoResult, _ -> Map.add key newItem map
+      | _, DocoptResult.NoResult -> map
+      | Some (DocoptResult.Argument arg1), DocoptResult.Argument arg2 ->
+          Map.add key (DocoptResult.Arguments [arg1; arg2]) map
+      | Some (DocoptResult.Argument arg1), DocoptResult.Arguments argList ->
+          Map.add key (DocoptResult.Arguments (arg1 :: argList)) map
+      | Some (DocoptResult.Arguments argList1), DocoptResult.Argument arg2 ->
+          Map.add key (DocoptResult.Arguments (argList1 @ [arg2])) map
+      | Some (DocoptResult.Arguments argList1),  DocoptResult.Arguments argList2 ->
+          Map.add key (DocoptResult.Arguments (argList1 @ argList2)) map
+      | Some (DocoptResult.Flag), DocoptResult.Flag ->
+          Map.add key (DocoptResult.Flags 2) map
+      | Some (DocoptResult.Flags n1), DocoptResult.Flag ->
+          Map.add key (DocoptResult.Flags (n1 + 1)) map
+      | Some (DocoptResult.Flag), DocoptResult.Flags n2 ->
+          Map.add key (DocoptResult.Flags (n2 + 1)) map
+      | Some (DocoptResult.Flags n1), DocoptResult.Flags n2 ->
+          Map.add key (DocoptResult.Flags (n1 + n2)) map
       | Some v, _ -> failwithf "Cannot add value %A as %s -> %A already exists in the result map" newItem key v
 
   let saveInMap key f = 
@@ -552,10 +556,10 @@ module ArgParser =
         | Some (arg:string) when arg.StartsWith (flag.FullLong + "=") -> Some (arg.Substring (flag.FullLong.Length + 1))
         | _ -> None
       chooseParserFull (sprintf "Flag '%s='" flag.FullLong) chooseCmd <|> (single >>. parg flag.FullLong)
-      >>= saveInMapM keys (ParseResult.Argument)
+      >>= saveInMapM keys (DocoptResult.Argument)
     else
       single
-      >>= saveInMapM keys (fun _ -> ParseResult.Flag)
+      >>= saveInMapM keys (fun _ -> DocoptResult.Flag)
 
   let pShortFlag (flag : SafeOption) =
     if not flag.IsShort then failwithf "Cannot parse empty short flag %A" flag
@@ -592,7 +596,7 @@ module ArgParser =
       >>= (function
           | Some arg -> preturn arg
           | None -> parg flag.FullShort)
-      >>= saveInMapM keys (ParseResult.Argument)
+      >>= saveInMapM keys (DocoptResult.Argument)
     else
       let chooseCmd arg =
         match arg with
@@ -600,7 +604,7 @@ module ArgParser =
         | _ -> None
       
       chooseParser (sprintf "ShortFlag '%s'" flag.FullShort) chooseCmd
-      >>= saveInMapM keys (fun _ -> ParseResult.Flag)
+      >>= saveInMapM keys (fun _ -> DocoptResult.Flag)
 
   let pOption includeShort (o' : SafeOption) =
     let longArg =
@@ -641,7 +645,7 @@ module ArgParser =
         getParser ast' <|> preturn Map.empty
       | UsageAst.Arg name' ->
         parg name'
-        >>= saveInMap (name') (ParseResult.Argument)
+        >>= saveInMap (name') (DocoptResult.Argument)
       | UsageAst.XorEmpty -> preturn Map.empty
       | UsageAst.Xor (l', r') ->
         choiceBest [ getParser l'; getParser r' ]
@@ -659,7 +663,7 @@ module ArgParser =
         |> pseq
       | UsageAst.Cmd cmd' -> 
         pcmd cmd'
-        >>= saveInMap cmd' (fun _ -> ParseResult.Flag)
+        >>= saveInMap cmd' (fun _ -> DocoptResult.Flag)
       | UsageAst.Ell (UsageAst.Sqb ast') ->
         // Allow zero matches
         many (getParser ast')
@@ -670,7 +674,7 @@ module ArgParser =
         >>= updateUserState (fun _ state -> state)
       | UsageAst.Sdh ->
         pcmd "-"
-        >>= saveInMap "-" (fun _ -> ParseResult.Flag)
+        >>= saveInMap "-" (fun _ -> DocoptResult.Flag)
     //(debug (fun _ stream ->
     //  printfn ">>>> STARTING ast %A, state: %A" ast stream) ())
     //>>.
@@ -839,12 +843,12 @@ type UsageParser(usageStrings':string array, sections:(string * SafeOptions) lis
         sw.ToString()
       match reply.Status = ReplyStatus.Ok, errors, state.IsEnd with
       | true, [||], true -> reply.Result
-      | _, _ , true -> raise <| ArgvException (sprintf "errors %A: %s" reply.Status errorText)
+      | _, _ , true -> raise <| DocoptException (sprintf "errors %A: %s" reply.Status errorText)
       | _, [||], false ->
           let unparsed = argv.[state.Position.ArgIndex..argv.Length - 1]
-          raise <| ArgvException (sprintf "'%A' could not be parsed" unparsed)
+          raise <| DocoptException (sprintf "'%A' could not be parsed" unparsed)
       | _ ->
           let unparsed = argv.[state.Position.ArgIndex..argv.Length - 1]
-          raise <| ArgvException (sprintf "errors: %s, ('%A' could not be parsed)" errorText unparsed)
+          raise <| DocoptException (sprintf "errors: %s, ('%A' could not be parsed)" errorText unparsed)
 
     member __.Asts = asts

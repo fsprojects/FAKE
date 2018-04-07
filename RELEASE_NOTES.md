@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.0.0-beta030
+## 5.0.0-rc001
 
-* FAKE5: New Module Fake.Core.CommandLineParsing - A helper module to create a nice CLI.
+* FAKE5: New Module Fake.Core.CommandLineParsing - A helper module to create custom and nice CLIs.
 * ENHANCEMENT: Fix inconsistent naming of MSBuild package (MsBuild -> MSBuild), add setParams to run* methods - https://github.com/fsharp/FAKE/pull/1837
 * BUGFIX: Fix docs and traces for dotnet version - https://github.com/fsharp/FAKE/pull/1835
 * ENHANCEMENT: Implement MSBuild /nowarn command line option (#1840)
