@@ -11,6 +11,8 @@ open System.IO
 open Fake.Core.CommandLineParsing
 open Paket.FolderScanner
 
+let sw = System.Diagnostics.Stopwatch.StartNew()
+
 let printVersion() =
     traceFAKE "%s" fakeVersionStr
 
@@ -86,11 +88,6 @@ let runOrBuild (args : RunArguments) =
   try
     if args.VerboseLevel.PrintVerbose then printVersion()
 
-    //Maybe log.
-    //match fakeArgs.TryGetResult <@ Cli.LogFile @> with
-    //| Some(path) -> addXmlListener path
-    //| None -> ()
-
     //Get our fsiargs from somewhere!
     let fsiArgs = args.FsiArgLine |> Seq.collect (splitCommandLine) |> Seq.toArray
     let s = args.Script
@@ -139,10 +136,15 @@ let runOrBuild (args : RunArguments) =
         | None, [], true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
 
     let useCache = not args.NoCache
-    if not (FakeRuntime.prepareAndRunScript args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache) then false
-    else 
-        if args.VerboseLevel.PrintVerbose then log "Ready."
-        true
+    try
+      if not (FakeRuntime.prepareAndRunScript args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache) then false
+      else
+          if args.VerboseLevel.PrintVerbose then log "Ready."
+          true
+    finally
+      sw.Stop()
+      if args.VerboseLevel.PrintNormal then
+        Fake.Profile.print true sw.Elapsed
   with
   | exn ->
       use logPaket =
@@ -162,21 +164,13 @@ let runOrBuild (args : RunArguments) =
 
       false
 
-let handleCli (results:Map<string, ParseResult>) =
+type CliAction =
+  | ShowVersion
+  | RunOrBuild of RunArguments
+  | ShowHelp
+  | InvalidUsage of string
 
-  let mutable didSomething = false
-  let mutable exitCode = 0
-  let mutable runarg = None
-  let verbLevel =
-    ParseResult.getFlagCount "--verbose" results
-  let isSilent =
-    ParseResult.hasFlag "--silent" results
-  let verboseLevel =
-    match isSilent, verbLevel with
-    | true, _ -> VerboseLevel.Silent
-    | _, 0 -> VerboseLevel.Normal
-    | _, 1 -> VerboseLevel.Verbose
-    | _ -> VerboseLevel.VerbosePaket  
+let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
   if verboseLevel.PrintPaket then
     Paket.Logging.verbose <- true
     Paket.Logging.verboseWarnings <- true
@@ -189,19 +183,43 @@ let handleCli (results:Map<string, ParseResult>) =
     else
       { new System.IDisposable with 
           member __.Dispose() = () }
-  if ParseResult.hasFlag "--version" results then
-    didSomething <- true
+
+  match action with
+  | ShowVersion ->
     printVersion()
     printFakePath()
-
-  if ParseResult.hasFlag "--help" results || ParseResult.hasFlag "--help" results then
-    didSomething <- true
+    0
+  | ShowHelp ->
     printf "%s" Cli.fakeUsage
     printf "Hint: Run 'fake run <script.fsx> --help' to get help from your script."
+    0
+  | InvalidUsage str ->
+    eprintfn "%s" str
+    printfn "%s" Cli.fakeUsage
+    1
+  | RunOrBuild arg ->
+    let success = runOrBuild arg
+    if not success then 1 else 0
 
+let parseAction (results:Map<string, ParseResult>) =
+  let verbLevel =
+    ParseResult.getFlagCount "--verbose" results
+  let isSilent =
+    ParseResult.hasFlag "--silent" results
+  let verboseLevel =
+    match isSilent, verbLevel with
+    | true, _ -> VerboseLevel.Silent
+    | _, 0 -> VerboseLevel.Normal
+    | _, 1 -> VerboseLevel.Verbose
+    | _ -> VerboseLevel.VerbosePaket
   let isRun = ParseResult.hasFlag "run" results
   let isBuild = ParseResult.hasFlag "build" results
-  if isRun || isBuild then
+  verboseLevel, 
+  if ParseResult.hasFlag "--version" results then
+    ShowVersion
+  elif ParseResult.hasFlag "--help" results || ParseResult.hasFlag "--help" results then
+    ShowHelp
+  elif isRun || isBuild then
     let arg = {
        Script =
           if isRun then ParseResult.tryGetArgument "<script.fsx>" results
@@ -220,15 +238,10 @@ let handleCli (results:Map<string, ParseResult>) =
        VerboseLevel = verboseLevel
        IsBuild = not isRun // Did the user call `fake build` or `fake run`?
     }
-    let success = runOrBuild arg
-    if not success then exitCode <- 1
-  else
-    if not didSomething then
-      exitCode <- 1
-      eprintfn ("Please specify what you want to do!")
-      printfn "%s" Cli.fakeUsage
 
-  exitCode
+    RunOrBuild arg
+  else
+    InvalidUsage "Please specify what you want to do!"
 
 [<EntryPoint>]
 let main (args:string[]) =
@@ -239,9 +252,12 @@ let main (args:string[]) =
   let mutable exitCode = 0
   let encoding = Console.OutputEncoding
   try
-    let parser = Docopt(Cli.fakeUsage)
-    let results = parser.Parse(args)
-    exitCode <- handleCli results
+    let verbLevel, results =
+      use __ = Fake.Profile.startCategory Fake.Profile.Category.Cli
+      let parser = Docopt(Cli.fakeUsage)
+      let rawResults = parser.Parse(args)
+      parseAction rawResults
+    exitCode <- handleAction verbLevel results
   with
   | :? ArgvException as e ->
     printfn "Usage error: %s" e.Message

@@ -146,6 +146,7 @@ type AssemblyData =
     Info : Runners.AssemblyInfo }
 
 let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir (paketDependencies:Paket.Dependencies) group =
+  use __ = Fake.Profile.startCategory Fake.Profile.Category.Paket
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -430,8 +431,9 @@ let prepareFakeScript defines logLevel script =
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
-    let scriptText = File.ReadAllText(script)
     let section =
+        use __ = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
+        let scriptText = File.ReadAllText(script)
         let newSection = tryReadPaketDependenciesFromScript defines cacheDir script scriptText
         match legacyReadFakeSection scriptText with
         | Some s ->

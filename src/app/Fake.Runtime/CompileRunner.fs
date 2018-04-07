@@ -42,12 +42,14 @@ let nameParser cachedAssemblyFileName scriptFileName =
     className, parseName
 
 let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
+    use untilInvoke = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
     if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath context.Config.ScriptArgs
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-    Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
+    let result =
+      Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
         let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
         let ass = context.AssemblyContext.LoadFromAssemblyPath fullPath
         let types =
@@ -66,8 +68,9 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
               |> Seq.filter (isNull >> not)
               |> Seq.tryHead with
         | Some mainMethod ->
-          try mainMethod.Invoke(null, [||])
-              |> ignore
+          untilInvoke.Dispose()
+          try use __  = Fake.Profile.startCategory Fake.Profile.Category.UserTime
+              mainMethod.Invoke(null, [||]) |> ignore
               None
           with
           | :? TargetInvocationException as targetInvocation when not (isNull targetInvocation.InnerException) ->
@@ -76,6 +79,9 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
               Some ex
         | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 
+    use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
+    (execContext :> System.IDisposable).Dispose()
+    result
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
 

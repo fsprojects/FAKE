@@ -70,6 +70,9 @@
     <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Docopt.fs">
       <Link>Fake.Core.CommandLineParsing/Docopt.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Runtime\Profile.fs">
+      <Link>Fake.Runtime/Profile.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Runtime\LegacyApiHelper.fs">
       <Link>Fake.Runtime/LegacyApiHelper.fs</Link>
     </Compile>
