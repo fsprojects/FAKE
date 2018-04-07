@@ -12,38 +12,40 @@ Follow the [instructions](https://my.slack.com/services/new/incoming-webhook/) f
 
 ## Sending a Notification to the Webhook
 
-    open Fake.Api
+```fsharp
+open Fake.Api
 
-    // The webhook URL from the integration you set up
-    let webhookUrl = "https://hooks.slack.com/services/some/random/text"
-	
-    Slack.SendNotification webhookUrl (fun p ->
-        {p with
-            Text = "My Slack Notification!\n<https://google.com|Click Here>!"
-            Channel = "@SomeoneImportant"
-            IconEmoji = ":ghost:"
-            Attachments = [| 
-                {Slack.NotificationAttachmentDefaults with
-                    Fallback = "Attachment Plain"
-                    Text = "Attachment Rich"
-                    Pretext = "Attachment Pretext"
-                    Color = "danger"
-                    Fields = [|
-                        {Slack.NotificationAttachmentFieldDefaults with
-                            Title = "Field Title 1"
-                            Value = "Field Value 2"}
-                        {Slack.NotificationAttachmentFieldDefaults with
-                            Title = "Field Title 1"
-                            Value = "Field Value 2"}|]
-                }
-                {Slack.NotificationAttachmentDefaults with
-                    Fallback = "Attachment 2 Plain"
-                    Text = "Attachment 2 Rich"
-                    Pretext = "Attachment 2 Pretext"
-                    Color = "#FFCCDD"
-                }|]
-        })
-    |> printfn "Result: %s"
+// The webhook URL from the integration you set up
+let webhookUrl = "https://hooks.slack.com/services/some/random/text"
+
+Slack.sendNotification webhookUrl (fun p ->
+    {p with
+        Text = "My Slack Notification!\n<https://google.com|Click Here>!"
+        Channel = "@SomeoneImportant"
+        IconEmoji = ":ghost:"
+        Attachments = [| 
+            {Slack.NotificationAttachmentDefaults with
+                Fallback = "Attachment Plain"
+                Text = "Attachment Rich"
+                Pretext = "Attachment Pretext"
+                Color = "danger"
+                Fields = [|
+                    {Slack.NotificationAttachmentFieldDefaults with
+                        Title = "Field Title 1"
+                        Value = "Field Value 2"}
+                    {Slack.NotificationAttachmentFieldDefaults with
+                        Title = "Field Title 1"
+                        Value = "Field Value 2"}|]
+            }
+            {Slack.NotificationAttachmentDefaults with
+                Fallback = "Attachment 2 Plain"
+                Text = "Attachment 2 Rich"
+                Pretext = "Attachment 2 Pretext"
+                Color = "#FFCCDD"
+            }|]
+    })
+|> printfn "Result: %s"
+```
 
 The result should look something like this:
 

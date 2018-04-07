@@ -213,5 +213,5 @@ let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     |> console.Write
 
 /// Logs the given files with the message.
-[<System.Obsolete("use nuget 'Fake.Core.Trace' instead (open Fake.Core and use 'Trace.')")>]
+[<System.Obsolete("use nuget 'Fake.Core.Trace' instead (open Fake.Core and use 'Trace.logItems')")>]
 let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)

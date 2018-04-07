@@ -42,12 +42,14 @@ let nameParser cachedAssemblyFileName scriptFileName =
     className, parseName
 
 let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
-    if context.Config.PrintDetails then trace "Using cache"
+    use untilInvoke = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
+    if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
 
-    use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
+    use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath context.Config.ScriptArgs
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-    Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
+    let result =
+      Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
         let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
         let ass = context.AssemblyContext.LoadFromAssemblyPath fullPath
         let types =
@@ -55,7 +57,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
             with :? ReflectionTypeLoadException as ref ->
                 traceFAKE "Could not load types of compiled script:"
                 for err in ref.LoaderExceptions do
-                    if context.Config.PrintDetails then
+                    if context.Config.VerboseLevel.PrintVerbose then
                         traceFAKE " - %O" err
                     else
                         traceFAKE " - %s" err.Message
@@ -66,8 +68,9 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
               |> Seq.filter (isNull >> not)
               |> Seq.tryHead with
         | Some mainMethod ->
-          try mainMethod.Invoke(null, [||])
-              |> ignore
+          untilInvoke.Dispose()
+          try use __  = Fake.Profile.startCategory Fake.Profile.Category.UserTime
+              mainMethod.Invoke(null, [||]) |> ignore
               None
           with
           | :? TargetInvocationException as targetInvocation when not (isNull targetInvocation.InnerException) ->
@@ -76,9 +79,12 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
               Some ex
         | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 
+    use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
+    (execContext :> System.IDisposable).Dispose()
+    result
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
-
+    use untilCompileFinished  = Fake.Profile.startCategory Fake.Profile.Category.Compiling
     let wishPath = context.CachedAssemblyFilePath + ".dll"
 
     if not <| Directory.Exists context.FakeDirectory then
@@ -108,16 +114,17 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
          sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
     let formatErrors errors =
         System.String.Join("\n", errors |> Seq.map formatError)
-    if context.Config.PrintDetails then
+    if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSC Args: [\"%s\"]" (String.Join("\";\n\"", args))
 
     let fsc = FSharpChecker.Create()
     let errors, returnCode = fsc.Compile (("fake.exe" :: args) |> List.toArray) |> Async.RunSynchronously
+    untilCompileFinished.Dispose()
     let errors =
         errors
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
     if returnCode <> 0 then failwithf "Compilation failed: \n%s" (formatErrors errors)
-
+    
     use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 

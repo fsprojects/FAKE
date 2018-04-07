@@ -27,7 +27,7 @@ with e -> Trace.traceException e
 
 Trace.traceLine()
 
-Target.Create "mytarget" (fun _ ->
+Target.create "mytarget" (fun _ ->
     use __ = Trace.traceTask "MyOperation" "Description"
     // do my operation
 )

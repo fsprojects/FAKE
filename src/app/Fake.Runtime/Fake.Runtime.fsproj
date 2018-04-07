@@ -13,6 +13,7 @@
   <ItemGroup>
     <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs" />
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Profile.fs" />
     <Compile Include="LegacyApiHelper.fs" />
     <Compile Include="Environment.fs" />
     <Compile Include="Path.fs" />
