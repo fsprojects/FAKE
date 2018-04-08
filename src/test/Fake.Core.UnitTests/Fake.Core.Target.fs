@@ -7,7 +7,7 @@ open Expecto
 open Expecto.Flip
 
 let run targetName =
-    try Target.runAndGetContext targetName
+    try Target.runAndGetContext 1 targetName []
     with | :? BuildFailedException as bfe ->
         match bfe.Info with
         | Some context -> context

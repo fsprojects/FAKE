@@ -40,13 +40,13 @@ type ScriptCompileOptions =
     AdditionalArguments : string list }
 
 type FakeConfig =
-  { PrintDetails : bool
+  { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
     CompileOptions : ScriptCompileOptions
     UseCache : bool
     Out: TextWriter
     Err: TextWriter
-    Environment: seq<string * string> }
+    ScriptArgs: string list }
 
 let fsiAssemblyName = "removeme"
 let cachedAssemblyPrefix = "FAKE_CACHE_"

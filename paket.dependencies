@@ -28,6 +28,7 @@ nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
+nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
 nuget log4net 2.0.5
@@ -119,7 +120,7 @@ group netcore
 
     nuget NETStandard.Library ~> 2.0
     nuget FSharp.Core ~> 4.1
-    nuget Argu
+    nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
     nuget Paket.Core prerelease

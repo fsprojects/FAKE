@@ -52,6 +52,27 @@
     <Compile Include="..\..\app\Fake.Core.Context\Context.fs">
       <Link>Fake.Core.Context/Context.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Options.fs">
+      <Link>Fake.Core.CommandLineParsing/Options.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\OptionsParser.fs">
+      <Link>Fake.Core.CommandLineParsing/OptionsParser.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Args.fs">
+      <Link>Fake.Core.CommandLineParsing/Args.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Ast.fs">
+      <Link>Fake.Core.CommandLineParsing/Ast.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\UsageParser.fs">
+      <Link>Fake.Core.CommandLineParsing/UsageParser.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Docopt.fs">
+      <Link>Fake.Core.CommandLineParsing/Docopt.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Runtime\Profile.fs">
+      <Link>Fake.Runtime/Profile.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Runtime\LegacyApiHelper.fs">
       <Link>Fake.Runtime/LegacyApiHelper.fs</Link>
     </Compile>
@@ -166,11 +187,11 @@
     <Compile Include="..\..\app\Fake.Core.Process\Mono.fs">
       <Link>Fake.Core.Process/Mono.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.DotNet.MsBuild\MsBuildLogger.fs">
-      <Link>Fake.DotNet.MsBuild/MsBuildLogger.fs</Link>
+    <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuildLogger.fs">
+      <Link>Fake.DotNet.MSBuild/MSBuildLogger.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.DotNet.MsBuild\MsBuild.fs">
-      <Link>Fake.DotNet.MsBuild/MsBuild.fs</Link>
+    <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuild.fs">
+      <Link>Fake.DotNet.MSBuild/MSBuild.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Tools.ServiceControl\ServiceControl.fs">
       <Link>Fake.Tools.ServiceControl/ServiceControl.fs</Link>
@@ -569,6 +590,50 @@
       <ItemGroup>
         <Reference Include="Chessie">
           <HintPath>..\..\..\packages\Chessie\lib\netstandard1.6\Chessie.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
+      <ItemGroup>
+        <Reference Include="FParsec">
+          <HintPath>..\..\..\packages\FParsec\lib\net40-client\FParsec.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FParsecCS">
+          <HintPath>..\..\..\packages\FParsec\lib\net40-client\FParsecCS.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == 'MonoAndroid' And ($(TargetFrameworkVersion) == 'v7.0' Or $(TargetFrameworkVersion) == 'v7.1' Or $(TargetFrameworkVersion) == 'v8.0')) Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.6' Or $(TargetFrameworkVersion) == 'v2.0')) Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac') Or ($(TargetFrameworkIdentifier) == 'Xamarin.tvOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.watchOS')">
+      <ItemGroup>
+        <Reference Include="FParsec">
+          <HintPath>..\..\..\packages\FParsec\lib\netstandard1.6\FParsec.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FParsecCS">
+          <HintPath>..\..\..\packages\FParsec\lib\netstandard1.6\FParsecCS.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == 'WindowsPhoneApp') Or ($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'MonoAndroid' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v2.2' Or $(TargetFrameworkVersion) == 'v2.3' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.1' Or $(TargetFrameworkVersion) == 'v4.2' Or $(TargetFrameworkVersion) == 'v4.3' Or $(TargetFrameworkVersion) == 'v4.4' Or $(TargetFrameworkVersion) == 'v5.0' Or $(TargetFrameworkVersion) == 'v5.1' Or $(TargetFrameworkVersion) == 'v6.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v1.2' Or $(TargetFrameworkVersion) == 'v1.3' Or $(TargetFrameworkVersion) == 'v1.4' Or $(TargetFrameworkVersion) == 'v1.5')) Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile78') Or ($(TargetFrameworkProfile) == 'Profile259') Or ($(TargetFrameworkProfile) == 'Profile111') Or ($(TargetFrameworkProfile) == 'Profile49') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile151') Or ($(TargetFrameworkProfile) == 'Profile31') Or ($(TargetFrameworkProfile) == 'Profile157') Or ($(TargetFrameworkProfile) == 'Profile32') Or ($(TargetFrameworkProfile) == 'Profile84') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1'))">
+      <ItemGroup>
+        <Reference Include="FParsec">
+          <HintPath>..\..\..\packages\FParsec\lib\portable-net45+win8+wp8+wpa81\FParsec.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FParsecCS">
+          <HintPath>..\..\..\packages\FParsec\lib\portable-net45+win8+wp8+wpa81\FParsecCS.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

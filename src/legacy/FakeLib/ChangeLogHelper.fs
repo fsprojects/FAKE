@@ -23,6 +23,7 @@
 ///             |> ChangeLogHelper.PromoteUnreleased newVersion
 ///             |> ChangeLogHelper.SavceChangeLog changeLogFile
 ///     )
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 module Fake.ChangeLogHelper
 
 open System
@@ -32,6 +33,7 @@ open Fake.AssemblyInfoFile
 let private trimLine = trimStartChars [|' '; '*'; '#'; '-'|] >> trimEndChars [|' '|]
 let private trimLines lines = lines |> Seq.map trimLine |> Seq.toList
 
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 type Change =
     /// for new features
     | Added of string
@@ -48,6 +50,7 @@ type Change =
     /// Custom entry (Header, Description)
     | Custom of string * string
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     override x.ToString() = 
         match x with
         | Added s -> sprintf "Added: %s" s
@@ -58,6 +61,7 @@ type Change =
         | Security s -> sprintf "Security: %s" s
         | Custom (h, s) -> sprintf "%s: %s" h s
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(header: string, line: string): Change = 
         let line = line |> trimLine
 
@@ -83,6 +87,7 @@ let private makeEntry change =
     | Security c -> @"\n### Security", (bullet c)
     | Custom (h, c) -> (sprintf @"\n### %s" h), (bullet c)
 
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 type ChangeLogEntry =
     { /// the parsed Version
       AssemblyVersion: string
@@ -125,6 +130,7 @@ type ChangeLogEntry =
 
         (sprintf @"%s%s%s" header description changes).Replace(@"\n", Environment.NewLine).Trim()
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(assemblyVersion, nugetVersion, date, description, changes, isYanked) = {
         AssemblyVersion = assemblyVersion
         NuGetVersion = nugetVersion
@@ -134,8 +140,10 @@ type ChangeLogEntry =
         Changes = changes
         IsYanked = isYanked }
     
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(assemblyVersion, nugetVersion, changes) = ChangeLogEntry.New(assemblyVersion, nugetVersion, None, None, changes, false)
 
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 type Unreleased = 
     { Description: string option
       Changes: Change list }
@@ -157,6 +165,7 @@ type Unreleased =
 
         (sprintf @"%s%s%s" header description changes).Replace(@"\n", Environment.NewLine).Trim()
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(description, changes) =
         match description with
         | Some _ -> Some { Description = description; Changes = changes }
@@ -165,6 +174,7 @@ type Unreleased =
             | [] -> None
             | _ -> Some { Description = description; Changes = changes }
 
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 let parseVersions = 
     let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
     fun line ->
@@ -177,6 +187,7 @@ let parseVersions =
         then failwithf "Unable to parse valid NuGet version from change log (%s)." line
         assemblyVersion, nugetVersion
 
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 type ChangeLog =
     { /// the header line
       Header: string
@@ -187,9 +198,11 @@ type ChangeLog =
       /// The change log entries
       Entries: ChangeLogEntry list }
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     /// the latest change log entry
     member x.LatestEntry = x.Entries |> Seq.head
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(header, description, unreleased, entries) = 
         {
             Header = header
@@ -198,12 +211,15 @@ type ChangeLog =
             Entries = entries 
         }
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(description, unreleased, entries) =
         ChangeLog.New("Changelog", description, unreleased, entries)
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     static member New(entries) =
         ChangeLog.New(None, None, entries)
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     member x.PromoteUnreleased(assemblyVersion: string, nugetVersion: string) : ChangeLog =
         match x.Unreleased with
         | None -> x
@@ -212,10 +228,12 @@ type ChangeLog =
 
             ChangeLog.New(x.Header, x.Description, None, newEntry :: x.Entries)
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     member x.PromoteUnreleased(version: string) : ChangeLog =
         let assemblyVersion, nugetVersion = version |> parseVersions
         x.PromoteUnreleased(assemblyVersion.Value, nugetVersion.Value)
 
+    [<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
     override x.ToString() =
         let description = 
             match x.Description with
@@ -243,6 +261,7 @@ type ChangeLog =
 ///
 /// ## Parameters
 ///  - `data` - change log text
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 let parseChangeLog (data: seq<string>) : ChangeLog =
     let parseDate =
         let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
@@ -378,6 +397,7 @@ let parseChangeLog (data: seq<string>) : ChangeLog =
 /// 
 /// ## Returns
 /// The loaded change log (or throws an exception, if the change log could not be parsed)
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 let LoadChangeLog fileName =
     System.IO.File.ReadLines fileName
     |> parseChangeLog
@@ -387,6 +407,7 @@ let LoadChangeLog fileName =
 /// ## Parameters
 ///  - `fileName` - ChangeLog text file name
 ///  - `changeLog` - the change log data
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 let SaveChangeLog (fileName: string) (changeLog: ChangeLog) : unit =
     System.IO.File.WriteAllText(fileName, changeLog.ToString())
 
@@ -399,5 +420,6 @@ let SaveChangeLog (fileName: string) (changeLog: ChangeLog) : unit =
 ///
 /// ## Returns
 /// The promoted change log
+[<System.Obsolete("Please use Fake.Core.ReleaseNotes instead (and extend it if required")>]
 let PromoteUnreleased (version: string) (changeLog: ChangeLog) : ChangeLog =
     changeLog.PromoteUnreleased(version)

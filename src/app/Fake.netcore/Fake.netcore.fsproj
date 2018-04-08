@@ -23,6 +23,9 @@
     <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>
+    <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj">
+      <FromP2P>true</FromP2P>
+    </ProjectReference>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>

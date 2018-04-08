@@ -9,26 +9,26 @@ This tutorial shows how to create a (very simple) custom task in C#. The same wo
 
 Open Visual Studio and create a new C# class library called my MyCustomTask and create a class called RandomNumberTask:
 
-	[lang=csharp]
-	using System;
-
-	namespace MyCustomTask
-	{
-		public class RandomNumberTask
-		{
-			public static int RandomNumber(int min, int max)
-			{
-				var random = new Random();
-				return random.Next(min, max);
-			}
-		}
-	}
+```csharp
+using System;
+namespace MyCustomTask
+{
+    public class RandomNumberTask
+    {
+        public static int RandomNumber(int min, int max)
+        {
+            var random = new Random();
+            return random.Next(min, max);
+        }
+    }
+}
+```
 
 Now you can build, package and upload your build task to a NuGet feed.
 There are no special requirements, you can add dependencies to your NuGet package and define the API however you like.
 
 > Note: As FAKE 5 currently is a `netcore10` application you need to provide a binary in your NuGet package compatible with
-> netcore. We suggest targetting `netstandard16` or lower. 
+> netcore. We suggest targetting `netstandard16` or lower.
 > We will update FAKE 5 to target netcore20 as soon as netstandard20 is released, such that you can benefit from more APIs as soon as possible.
 
 If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference the corresponding NuGet package and [explore the FAKE namespace](apidocs/index.html).
@@ -36,7 +36,7 @@ If you want to use FAKE's standard functionality (like [globbing](http://en.wiki
 ## Using the custom task
 
 Assume you pushed your custom task as `MyTaskNuGetPackage` to NuGet.
-Now you can use your CustomTask in the build script, by adding the 
+Now you can use your CustomTask in the build script, by adding the
 
     nuget MyTaskNuGetPackage
 
@@ -53,15 +53,11 @@ nuget MyTaskNuGetPackage"
 open Fake.Core
 open MyCustomTask
 
-Target.Create "GenerateNumber" (fun _ ->
-	// use custom functionality
-	RandomNumberTask.RandomNumber(2,13)
-		|> Trace.tracefn "RandomNumber: %d"
+Target.create "GenerateNumber" (fun _ ->
+    // use custom functionality
+    RandomNumberTask.RandomNumber(2,13)
+        |> Trace.tracefn "RandomNumber: %d"
 )
 
 Target.RunOrDefault "GenerateNumber"
 ```
-
-
-
-

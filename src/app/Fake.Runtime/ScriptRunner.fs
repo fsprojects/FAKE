@@ -134,7 +134,7 @@ let nameParser scriptFileName =
     exampleName, fullName, parseName
 
 let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
-    if context.Config.PrintDetails then trace "Using cache"
+    if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, _, parseName = nameParser context.Config.ScriptFilePath
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
@@ -168,7 +168,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
         |> fun f ->
             { f with
                 References = f.References @ co.CompileReferences }
-    if context.Config.PrintDetails then
+    if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSI Args: %A" (options.AsArgs |> Seq.toList)
 (*
     let cacheDir = context.ScriptFile.ScriptFakeDirectory

@@ -13,7 +13,7 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
-    <ProjectReference Include="..\Fake.DotNet.MsBuild\Fake.DotNet.MsBuild.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
   </ItemGroup>
   <PropertyGroup>

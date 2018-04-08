@@ -170,18 +170,18 @@ module internal Cache =
 
 
 
-let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:AssemblyInfo) =
+let loadAssembly (loadContext:AssemblyLoadContext) (logLevel:Trace.VerboseLevel) (assemInfo:AssemblyInfo) =
     let realLoadAssembly (assemInfo:AssemblyInfo) =
         let assem =
             if assemInfo.Location <> "" then
                 try
                     Some assemInfo.Location, loadContext.LoadFromAssemblyPath(assemInfo.Location)
                 with :? FileLoadException as e ->
-                    if printDetails then
+                    if logLevel.PrintVerbose then
                         Trace.tracefn "Error while loading assembly: %O" e
                     let assemblyName = System.Reflection.AssemblyName(assemInfo.FullName)
                     let asem = System.Reflection.Assembly.Load(System.Reflection.AssemblyName(assemblyName.Name))
-                    if printDetails then
+                    if logLevel.PrintVerbose then
                         Trace.traceFAKE "recovered and used already loaded assembly '%s' instead of '%s' ('%s')" asem.FullName assemInfo.FullName assemInfo.Location
                     None, asem
             else None, loadContext.LoadFromAssemblyName(AssemblyName(assemInfo.FullName))
@@ -196,13 +196,13 @@ let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:Assem
         //    // TODO: This is a real bad hack for now...
         //    realLoadAssembly { assemInfo with Location = newLocation }
     with ex ->
-        if printDetails then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
+        if logLevel.PrintVerbose then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
 
 
-let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) =
+let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) =
     let strName = name.FullName
-    if printDetails then tracefn "Trying to resolve: %s" strName
+    if logLevel.PrintVerbose then tracefn "Trying to resolve: %s" strName
     let getAssemblyFromType (t:System.Type) =
 #if NETSTANDARD1_6
       t.GetTypeInfo().Assembly
@@ -233,7 +233,7 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                     let location =
                         try Some assembly.Location 
                         with e -> 
-                            if printDetails then tracefn "Could not get Location from '%s': %O" strName e
+                            if logLevel.PrintVerbose then tracefn "Could not get Location from '%s': %O" strName e
                             None
                     Some (location, assembly)
             with e -> None
@@ -241,10 +241,10 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
         | Some r -> true, Some r
         | None ->                
 #endif
-            if printDetails then tracefn "Could not find assembly in the default load-context: %s" strName
+            if logLevel.PrintVerbose then tracefn "Could not find assembly in the default load-context: %s" strName
             match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
             | Some a ->
-                true, loadAssembly loadContext printDetails a
+                true, loadAssembly loadContext logLevel a
             | _ ->
                 let token = name.GetPublicKeyToken()
                 match runtimeDependencies
@@ -255,12 +255,12 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                               n.GetPublicKeyToken() = token)) with
                 | Some (otherName, info) ->
                     // Then the version matches and the public token is null we still accept this as perfect match
-                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext printDetails info
+                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext logLevel info
                 | _ ->
                     false, None
     match result with
     | Some (location, a) ->
-        if printDetails then 
+        if logLevel.PrintVerbose then 
             if isPerfectMatch then
                 tracefn "Redirect assembly load to known assembly: %s (%A)" strName location
             else
@@ -269,20 +269,20 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
     | _ ->
         if not (strName.StartsWith("FSharp.Compiler.Service.resources"))
         && not (strName.StartsWith("FSharp.Compiler.Service.MSBuild")) then
-            if printDetails then tracefn "Could not resolve: %s" strName
+            if logLevel.PrintVerbose then tracefn "Could not resolve: %s" strName
         null
 
 let findAndLoadInRuntimeDepsCached =
     let assemblyCache = System.Collections.Concurrent.ConcurrentDictionary<_,Assembly>()
-    fun (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) ->
+    fun (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) ->
         let mutable wasCalled = false
         let result = assemblyCache.GetOrAdd(name.Name, (fun _ ->
             wasCalled <- true
-            findAndLoadInRuntimeDeps loadContext name printDetails runtimeDependencies))
+            findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
         if not wasCalled then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
-            if printDetails then 
+            if logLevel.PrintVerbose then 
                 if not isPerfectMatch then
                     traceFAKE "Redirect assembly from '%A' to previous loaded assembly '%A'" name loadedName
                 else
@@ -291,7 +291,7 @@ let findAndLoadInRuntimeDepsCached =
 
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
-type FakeLoadContext (printDetails:bool, dependencies:AssemblyInfo list) =
+type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo list) =
   inherit AssemblyLoadContext()
   let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
@@ -331,7 +331,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let context, cache = cache.TryLoadCache context
 #if NETSTANDARD1_6
     // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
-    let fakeLoadContext = FakeLoadContext(context.Config.PrintDetails, context.Config.CompileOptions.RuntimeDependencies)
+    let fakeLoadContext = FakeLoadContext(context.Config.VerboseLevel, context.Config.CompileOptions.RuntimeDependencies)
 #else
     let fakeLoadContext = new AssemblyLoadContext()
 #endif
@@ -349,7 +349,7 @@ let setupAssemblyResolverLogger (context:FakeContext) =
         let name = AssemblyName(strName)
         //findAndLoadInRuntimeDeps loadContext name context.Config.PrintDetails context.Config.CompileOptions.RuntimeDependencies
 #endif
-        if context.Config.PrintDetails then
+        if context.Config.VerboseLevel.PrintVerbose then
             printfn "Global resolve event: %s" name.FullName
         null
         ))
@@ -358,11 +358,6 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
     let newContext, cacheInfo =  prepareContext config cache
 
     setupAssemblyResolverLogger newContext
-
-    // Add arguments to the Environment
-    for (k,v) in config.Environment do
-      setEnvironVar k v
-
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
     setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.AdditionalArguments))
 
@@ -370,7 +365,13 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     match result with
     | Some err ->
-        let printDetails = config.PrintDetails
+        use logPaket =
+          // Required when 'silent' because we use paket API for error printing
+          if config.VerboseLevel = Trace.Silent then
+            Paket.Logging.event.Publish
+            |> Observable.subscribe Paket.Logging.traceToConsole
+          else { new IDisposable with member __.Dispose () = () }
+        let printDetails = config.VerboseLevel.PrintVerbose
         if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
             Paket.Logging.printErrorExt true true false err
         else Paket.Logging.printErrorExt printDetails printDetails false err

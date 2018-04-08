@@ -20,7 +20,7 @@ let rec recursively dirF fileF (dir : DirectoryInfo) =
     |> Seq.iter fileF
 
 /// Sets the directory readonly 
-[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.setReadOnly)")>]
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
 let setDirectoryReadOnly readOnly (dir : DirectoryInfo) = 
     if dir.Exists then 
         let isReadOnly = dir.Attributes &&& FileAttributes.ReadOnly = FileAttributes.ReadOnly
@@ -33,6 +33,7 @@ let SetDirReadOnly readOnly dir =
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
 
 /// Sets all given files readonly.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)")>]
 let SetReadOnly readOnly (files : string seq) = 
     files |> Seq.iter (fun file -> 
                  let fi = fileInfo file
@@ -88,6 +89,7 @@ let DeleteFile fileName =
 let DeleteFiles files = Seq.iter DeleteFile files
 
 /// Active pattern which discriminates between files and directories.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystemInfo.(|File|Directory|))")>]
 let (|File|Directory|) (fileSysInfo : FileSystemInfo) = 
     match fileSysInfo with
     | :? FileInfo as file -> File(file)
@@ -138,6 +140,7 @@ let private DoCopyFile targetName fileName =
 ///
 ///  - `target` - The target directory
 ///  - `fileName` - The fileName
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileIntoSubFolder)")>]
 let CopyFileIntoSubFolder target fileName =
     let relative = (toRelativePath fileName).TrimStart '.'
     DoCopyFile (target + relative) fileName
@@ -149,6 +152,7 @@ let CopyFileIntoSubFolder target fileName =
 ///  - `baseDir` - The base directory.
 ///  - `target` - The target directory.
 ///  - `fileName` - The file name.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileWithSubfolder)")>]
 let CopyFileWithSubfolder baseDir target fileName =
     let fileName = FullName fileName
     let baseDir = FullName baseDir
@@ -162,6 +166,7 @@ let CopyFileWithSubfolder baseDir target fileName =
 ///
 ///  - `target` - The target directory.
 ///  - `files` - A sequence of file groups.
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
 let CopyWithSubfoldersTo target files =
     let copyFiles dir inc = Seq.iter (CopyFileWithSubfolder dir target) inc
     Seq.iter (fun inc -> copyFiles inc.BaseDirectory inc) files
@@ -171,6 +176,7 @@ let CopyWithSubfoldersTo target files =
 /// 
 ///  - `target` - The target directory.
 ///  - `files` - The original file names as a sequence.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Copy)")>]
 let Copy target files = 
     ensureDirectory target
     files |> Seq.iter (CopyFile target)
@@ -180,6 +186,7 @@ let Copy target files =
 /// 
 ///  - `target` - The target directory.
 ///  - `files` - The original file names as a sequence.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyTo)")>]
 let CopyTo target files = Copy target files
 
 /// Copies the files from a cache folder.
@@ -189,6 +196,7 @@ let CopyTo target files = Copy target files
 ///  - `target` - The target FileName.
 ///  - `cacheDir` - The cache directory.
 ///  - `files` - The orginal files.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyCached)")>]
 let CopyCached target cacheDir files = 
     let cache = directoryInfo cacheDir
     ensureDirExists cache
@@ -218,6 +226,7 @@ let CopyCached target cacheDir files =
 /// 
 ///  - `target` - The target file or directory name.
 ///  - `fileName` - The orginal file or directory name.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Rename)")>]
 let Rename target fileName = (fileInfo fileName).MoveTo target
 
 /// Copies a list of files to the specified directory without any output.
@@ -225,6 +234,7 @@ let Rename target fileName = (fileInfo fileName).MoveTo target
 /// 
 ///  - `target` - The target directory.
 ///  - `files` - List of files to copy.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)")>]
 let SilentCopy target files = 
     files |> Seq.iter (fun file -> 
                  let fi = fileInfo file
@@ -241,9 +251,11 @@ let SilentCopy target files =
 /// 
 ///  - `target` - The target directory.
 ///  - `files` - The orginal file names.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFiles)")>]
 let CopyFiles target files = Copy target files
 
 /// Exclude SVN files (path with .svn)
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
 let excludeSVNFiles (path : string) = not <| path.Contains ".svn"
 
 /// Includes all files
@@ -256,6 +268,7 @@ let allFiles (path : string) = true
 ///  - `target` - The target directory.
 ///  - `source` - The source directory.
 ///  - `filterFile` - A file filter predicate.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyDir)")>]
 let CopyDir target source filterFile = 
     CreateDir target
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
@@ -273,6 +286,7 @@ let CopyDir target source filterFile =
     |> ignore
 
 /// Cleans a directory by removing all files and sub-directories.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDir)")>]
 let CleanDir path = 
     let di = directoryInfo path
     if di.Exists then 
@@ -292,13 +306,16 @@ let CleanDir path =
     File.SetAttributes(path, FileAttributes.Normal)
 
 /// Cleans multiple directories
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDirs)")>]
 let CleanDirs dirs = Seq.iter CleanDir dirs
 
 /// Deletes multiple directories
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.DeleteDirs)")>]
 let DeleteDirs dirs = Seq.iter DeleteDir dirs
 
 /// Reads a csv file line by line
 /// delimiter is a ,
+[<System.Obsolete("Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)")>]
 let ReadCSVFile(file : string) = 
     let csvRegEx = new RegularExpressions.Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))")
     ReadFile file
@@ -310,6 +327,7 @@ let ReadCSVFile(file : string) =
 /// 
 ///  - `newFileName` - The target FileName.
 ///  - `files` - The original FileNames as a sequence.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.AppendTextFiles)")>]
 let AppendTextFiles newFileName files = 
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
@@ -319,6 +337,7 @@ let AppendTextFiles newFileName files =
                  ReadFile file |> Seq.iter writer.WriteLine)
 
 /// Checks if the two files are byte-to-byte equal.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.contentIsEqualTo)")>]
 let FilesAreEqual (first : FileInfo) (second : FileInfo) = 
     if first.Length <> second.Length then false
     else 
@@ -334,6 +353,7 @@ let FilesAreEqual (first : FileInfo) (second : FileInfo) =
 
 /// Compares the given files for changes.
 /// If delete is set to true then equal files will be removed.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CompareFiles)")>]
 let CompareFiles delete originalFileName compareFileName = 
     let ori = fileInfo originalFileName
     let comp = fileInfo compareFileName
@@ -351,6 +371,7 @@ let CompareFiles delete originalFileName compareFileName =
         true
 
 /// Checks if the directory exists
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestDir)")>]
 let TestDir path = 
     let di = directoryInfo path
     if di.Exists then true
@@ -359,6 +380,7 @@ let TestDir path =
         false
         
 /// Checks if the file exists
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestFile)")>]
 let TestFile path = 
     let fi = fileInfo path
     if fi.Exists then true
@@ -373,6 +395,7 @@ let TestFile path =
 ///  - `patchDir` - The target directory
 ///  - `srcFiles` - The source files
 ///  - `findOldFileF` - A function which finds the old file
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatchWithFindOldFileFunction)")>]
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF = 
     let i = ref 0
     for file in srcFiles do
@@ -391,6 +414,7 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
 ///  - `lastReleaseDir` - The directory of the last release.
 ///  - `patchDir` - The target directory.
 ///  - `srcFiles` - The source files.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatch)")>]
 let GeneratePatch lastReleaseDir patchDir srcFiles = 
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
 
@@ -415,6 +439,7 @@ let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrit
 
 /// Copies the file structure recursively.
 
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyRecursive)")>]
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
 
 /// Moves a single file to the target and overwrites the existing file.
@@ -422,6 +447,7 @@ let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryIn
 /// 
 ///  - `target` - The target directory.
 ///  - `fileName` - The FileName.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.MoveFile)")>]
 let MoveFile target fileName = 
     let fi = fileSystemInfo fileName
     match fi with
@@ -434,6 +460,7 @@ let MoveFile target fileName =
     | Directory _ -> logVerbosefn "Ignoring %s, because it is a directory." fileName
 
 /// Creates a config file with the parameters as "key;value" lines
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.WriteConfigFile)")>]
 let WriteConfigFile configFileName parameters = 
     if isNullOrEmpty configFileName then ()
     else 
@@ -448,6 +475,7 @@ let WriteConfigFile configFileName parameters =
 ///
 ///  - `replacements` - A sequence of tuples with the patterns and the replacements.
 ///  - `files` - The files to process.
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.ReplaceInFiles)")>]
 let ReplaceInFiles replacements files = processTemplates replacements files
 
 /// Replace all occurences of the regex pattern with the given replacement in the specified file
@@ -457,6 +485,7 @@ let ReplaceInFiles replacements files = processTemplates replacements files
 /// - `replacement` - The replacement string
 /// - `encoding` - The encoding to use when reading and writing the file
 /// - `file` - The path of the file to process
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)")>]
 let RegexReplaceInFileWithEncoding pattern (replacement:string) encoding file =
     let oldContent = File.ReadAllText(file, encoding)
     let newContent = System.Text.RegularExpressions.Regex.Replace(oldContent, pattern, replacement)
@@ -469,6 +498,7 @@ let RegexReplaceInFileWithEncoding pattern (replacement:string) encoding file =
 /// - `replacement` - The replacement string
 /// - `encoding` - The encoding to use when reading and writing the files
 /// - `files` - The paths of the files to process
+[<System.Obsolete("Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)")>]
 let RegexReplaceInFilesWithEncoding pattern (replacement:string) encoding files =
     files |> Seq.iter (RegexReplaceInFileWithEncoding pattern replacement encoding)
 
@@ -486,6 +516,7 @@ let FileVersion(fileName : string) =
 /// ## Parameters
 ///
 /// - 'fileName' - Name of the file from which the extension is retrieved.
+[<System.Obsolete("Open System.IO and use Path.GetExtension")>]
 let ext fileName = Path.GetExtension fileName
 
 /// Change the extension of the file.
@@ -493,6 +524,7 @@ let ext fileName = Path.GetExtension fileName
 ///
 /// - 'extension' - The new extension containing the leading '.'.
 /// - 'fileName' - Name of the file from which the extension is retrieved.
+[<System.Obsolete("Open System.IO and use Path.ChangeExtension")>]
 let changeExt extension fileName = Path.ChangeExtension(fileName, extension)
 
 /// Tests whether the file has specified extensions (containing the leading '.')
@@ -500,18 +532,21 @@ let changeExt extension fileName = Path.ChangeExtension(fileName, extension)
 ///
 /// - 'extension' - The extension to fine containing the leading '.'.
 /// - 'fileName' - Name of the file from which the extension is retrieved.
+[<System.Obsolete("Open System.IO and use System.String.Equals(Path.GetExtension fileName, extension, System.StringComparison.InvariantCultureIgnoreCase)")>]
 let hasExt extension fileName = System.String.Equals(ext fileName, extension, System.StringComparison.InvariantCultureIgnoreCase)
 
 /// Get the filename for the specified path
 /// ## Parameters
 ///
 /// - 'path' - The path from which the filename is retrieved.
+[<System.Obsolete("Open System.IO and use Path.GetFileName")>]
 let filename path = Path.GetFileName path
 
 /// Get the filename for the specified path without it's extension
 /// ## Parameters
 ///
 /// - 'path' - The path from which the filename is retrieved.
+[<System.Obsolete("Open System.IO and use Path.GetFileNameWithoutExtension")>]
 let fileNameWithoutExt path = Path.GetFileNameWithoutExtension path
 
 [<System.Obsolete("This was a typo - please use fileNameWithoutExt")>]
@@ -521,4 +556,5 @@ let filenameWithouExt path = Path.GetFileNameWithoutExtension path
 /// ## Parameters
 ///
 /// - 'path' - The path from which the directory is retrieved.
+[<System.Obsolete("Open System.IO and use Path.GetDirectoryName")>]
 let directory path = Path.GetDirectoryName path

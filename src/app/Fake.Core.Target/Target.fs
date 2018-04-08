@@ -3,6 +3,27 @@
 open System
 open System.Collections.Generic
 open Fake.Core
+open Fake.Core.CommandLineParsing
+
+module internal TargetCli =
+    let targetCli =
+        """
+Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
+
+Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional argument 'target' is given)
+    -e, --environmentvariable <keyval> [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --singletarget    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
+        """
+    let doc = Docopt(targetCli)
+    let parseArgs args = doc.Parse args
 
 /// [omit]
 type TargetDescription = string
@@ -11,8 +32,10 @@ type TargetResult =
     { Error : exn option; Time : TimeSpan; Target : Target; WasSkipped : bool }
 
 and TargetContext =
-    { PreviousTargets : TargetResult list }
-    static member Empty = { PreviousTargets = [] }
+    { PreviousTargets : TargetResult list
+      FinalTarget : string
+      Arguments : string list }
+    static member Create ft args = { FinalTarget = ft; PreviousTargets = []; Arguments = args }
     member x.HasError =
         x.PreviousTargets
         |> List.exists (fun t -> t.Error.IsSome)
@@ -148,9 +171,9 @@ module Target =
 
 
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
-    let runSimple name =
+    let runSimple name args =
         get name
-        |> runSimpleInternal TargetContext.Empty
+        |> runSimpleInternal (TargetContext.Create name args)
 
     /// Returns the DependencyString for the given target.
     let internal dependencyString target =
@@ -385,12 +408,6 @@ module Target =
 
         Trace.traceLine()
 
-    /// [omit]
-    let internal isListMode = Environment.hasEnvironVar "list"
-
-    // Instead of the target can be used the list dependencies graph parameter.
-    let internal doesTargetMeanListTargets target = target = "--listTargets"  || target = "-lt"
-
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
@@ -443,12 +460,13 @@ module Target =
         |> Async.Parallel
         |> Async.RunSynchronously
         |> Seq.reduce (fun ctx1 ctx2 ->
-            { PreviousTargets = 
-                context.PreviousTargets @ filterKnown ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets })
+            { ctx1 with
+                PreviousTargets = 
+                    context.PreviousTargets @ filterKnown ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets
+             })
 
     /// Runs a target and its dependencies.
-    let internal runInternal targetName =
-        if doesTargetMeanListTargets targetName then listAvailable(); TargetContext.Empty else
+    let internal runInternal singleTarget parallelJobs targetName args =
         match getLastDescription() with
         | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
         | None -> ()
@@ -456,7 +474,7 @@ module Target =
         let rec runTargets (targets: Target array) (context:TargetContext) =
             let lastTarget = targets |> Array.last
             //if not context.HasErrors && context.TryFindPrevious(lastTarget.Name).IsNone then
-            if Environment.hasEnvironVar "single-target" then
+            if singleTarget then
                 Trace.traceImportant "Single target mode ==> Skipping dependencies."
                 runSingleTarget lastTarget context
             else
@@ -466,11 +484,9 @@ module Target =
         printfn "run %s" targetName
         let watch = new System.Diagnostics.Stopwatch()
         watch.Start()
-        let context = TargetContext.Empty
+        let context = TargetContext.Create targetName args
         let context =
             Trace.tracefn "Building project with version: %s" BuildServer.buildVersion
-            let parallelJobs = Environment.environVarOrDefault "parallel-jobs" "1" |> int
-
             // Figure out the order in in which targets can be run, and which can be run in parallel.
             if parallelJobs > 1 then
                 Trace.tracefn "Running parallel build with %d workers" parallelJobs
@@ -540,15 +556,68 @@ module Target =
         getFinalTargets().[name] <- true
 
     /// Runs a target and its dependencies, used for testing - usually not called in scripts.
-    let runAndGetContext targetName = runInternal targetName
+    let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 
     /// Runs a target and its dependencies
-    let run targetName = runInternal targetName |> ignore
+    let run parallelJobs targetName args = runInternal false parallelJobs targetName args |> ignore
 
-    /// Runs the target given by the target parameter or the given default target
-    let runOrDefault defaultTarget = Environment.environVarOrDefault "target" defaultTarget |> run
+    let internal runWithDefault fDefault =
+        let ctx = Fake.Core.Context.forceFakeContext ()
+
+        let results =
+            try TargetCli.parseArgs (ctx.Arguments |> List.toArray) |> Choice1Of2
+            with :? DocoptException as e -> Choice2Of2 e
+        match results with
+        | Choice1Of2 results ->
+            if DocoptResult.hasFlag "--list" results then
+                listAvailable()
+            elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
+                printfn "%s" TargetCli.targetCli
+                printf "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
+            elif DocoptResult.hasFlag "--version" results then
+                printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
+            else
+                let target =
+                    match DocoptResult.tryGetArgument "<target>" results with
+                    | None ->
+                        match DocoptResult.tryGetArgument "--target" results with
+                        | None -> Environment.environVarOrNone "target"
+                        | Some arg -> Some arg
+                    | Some arg ->
+                        match DocoptResult.tryGetArgument "--target" results with
+                        | None -> ()
+                        | Some innerArg ->
+                            Trace.traceImportant
+                                <| sprintf "--target '%s' is ignored when 'target %s' is given" innerArg arg
+                        Some arg
+                let parallelJobs =
+                    match DocoptResult.tryGetArgument "--parallel" results with
+                    | Some arg ->
+                        match System.Int32.TryParse(arg) with
+                        | true, i -> i
+                        | _ -> failwithf "--parallel needs an integer argument, could not parse '%s'" arg
+                    | None ->
+                        Environment.environVarOrDefault "parallel-jobs" "1" |> int
+                let singleTarget =
+                    match DocoptResult.hasFlag "--singletarget" results with
+                    | true -> true
+                    | false -> Environment.hasEnvironVar "single-target"
+                let arguments =
+                    match DocoptResult.tryGetArguments "<targetargs>" results with
+                    | Some args -> args
+                    | None -> []
+                match target with
+                | Some t -> runInternal singleTarget parallelJobs t arguments |> ignore
+                | None -> fDefault singleTarget parallelJobs arguments
+        | Choice2Of2 e ->
+            // To ensure exit code.
+            failwithf "Usage error: %s\n%s" e.Message TargetCli.targetCli
+
+    /// Runs the command given on the command line or the given target when no target is given
+    let runOrDefault defaultTarget =
+        runWithDefault (fun singleTarget parallelJobs arguments ->
+            runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        if Environment.hasEnvironVar "target" then Environment.environVar "target" |> run
-        else listAvailable()
+        runWithDefault (fun _ _ _ -> listAvailable())

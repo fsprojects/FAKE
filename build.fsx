@@ -17,7 +17,7 @@ nuget Fake.IO.FileSystem prerelease
 nuget Fake.IO.Zip prerelease
 nuget Fake.Core.ReleaseNotes prerelease
 nuget Fake.DotNet.AssemblyInfoFile prerelease
-nuget Fake.DotNet.MsBuild prerelease
+nuget Fake.DotNet.MSBuild prerelease
 nuget Fake.DotNet.Cli prerelease
 nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Paket prerelease
@@ -176,7 +176,7 @@ Target.create "Clean" (fun _ ->
 
     // Workaround https://github.com/fsprojects/Paket/issues/2830
     // https://github.com/fsprojects/Paket/issues/2689
-    // Basically paket fails if there is already an existing nuspec in obj/ dir because then MsBuild will call paket with multiple nuspec file arguments separated by ';'
+    // Basically paket fails if there is already an existing nuspec in obj/ dir because then MSBuild will call paket with multiple nuspec file arguments separated by ';'
     !! "src/*/*/obj/**/*.nuspec"
     -- (sprintf "src/*/*/obj/**/*%s.nuspec" release.NugetVersion)
     //-- "src/*/*/obj/*.references"
@@ -256,6 +256,7 @@ let dotnetAssemblyInfos =
       "Fake.BuildServer.Travis", "Integration into Travis buildserver"
       "Fake.BuildServer.TeamFoundation", "Integration into TeamFoundation buildserver"
       "Fake.Core.Context", "Core Context Infrastructure"
+      "Fake.Core.CommandLineParsing", "Core commandline parsing support via docopt like syntax"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
@@ -267,7 +268,7 @@ let dotnetAssemblyInfos =
       "Fake.Core.Xml", "Core Xml functionality"
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
       "Fake.DotNet.Cli", "Running the dotnet cli"
-      "Fake.DotNet.MsBuild", "Running msbuild"
+      "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
       "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
@@ -349,7 +350,11 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
 )
 
 Target.create "BuildSolution_" (fun _ ->
+#if BOOTSTRAP
+    MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
+#else
     MsBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
+#endif
     |> Trace.logItems "AppBuild-Output: "
 )
 
@@ -364,6 +369,7 @@ Target.create "GenerateDocs" (fun _ ->
         "page-author", String.separated ", " authors
         "project-author", String.separated ", " authors
         "github-link", githubLink
+        "version", release.NugetVersion
         "project-github", "http://github.com/fsharp/fake"
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
@@ -457,6 +463,12 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
+
+    // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
+    let processResult =
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.CommandLine.UnitTests.dll" "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
 )
 
 Target.create "BootstrapTest" (fun _ ->
@@ -537,7 +549,7 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
                 { info with
                     FileName = fileName
                     WorkingDirectory = "."
-                    Arguments = sprintf "run %s --fsiargs \"--define:BOOTSTRAP\" --target %s" script target }
+                    Arguments = sprintf "run --fsiargs \"--define:BOOTSTRAP\" %s --target %s" script target }
                 |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
                 )
                 timeout
@@ -721,10 +733,10 @@ Target.create "DotNetPackage_" (fun _ ->
         { c with
             Configuration = DotNet.Release
             OutputPath = Some nugetDir
-            Common = 
+            Common =
                 if CircleCi.isCircleCi then
                     { c.Common with CustomParams = Some "/m:1" }
-                else c.Common                                
+                else c.Common
         } |> dtntSmpl) "Fake.sln"
 
     let info = DotNet.info dtntSmpl
@@ -956,13 +968,13 @@ Target.create "FastRelease" (fun _ ->
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
 
-    let files = 
+    let files =
         runtimes @ [ "portable"; "packages" ]
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-    
+
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    |> GitHub.uploadFiles files    
+    |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
 )
@@ -1007,21 +1019,25 @@ open Fake.Core.TargetOperators
     ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "DotNetPackage_"
-    ==> "UnskipAndRevertAssemblyInfo"
+    ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "StartDnc"
     ==> "DotNetPackage_"
 "DownloadPaket"
     ==> "DotNetPackage_"
+"DotNetPackage_"
+    ==> "DotNetPackage"
 // Full framework build
 "Clean"
     ?=> "RenameFSharpCompilerService"
     ?=> "SetAssemblyInfo"
     ==> "BuildSolution_"
-    ==> "UnskipAndRevertAssemblyInfo"
+    ?=> "UnskipAndRevertAssemblyInfo"
     ==> "BuildSolution"
 "RenameFSharpCompilerService"
     ==> "BuildSolution_"
+"BuildSolution_"
+    ==> "BuildSolution"
 // AfterBuild -> Both Builds completed
 "BuildSolution"
     ==> "AfterBuild"

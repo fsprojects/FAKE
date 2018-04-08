@@ -19,16 +19,16 @@ So before I go into the details of what changed and what the vision is going for
 
 First let me say that there are two distributions of FAKE 5.
 
- - The first one is an update to the 'regular' FAKE 4 package on NuGet.
-   It's very safe to update to this package as mentioned in the [migrate to fake 5 guide](fake-migrate-to-fake-5.html).
-   The reason it is considered "beta" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized yet.
-   So just ignore the `Obsolete` warnings and upgrade. If you start fixing the obsolete warnings we MIGHT break your script in an update.
-   Hope this makes it clear why the Fake-5 nuget package is marked as beta.
-   Beta stage will end when all `Obsolete` attributes are correct and the new API is considered stable.
- - The second one is the new dotnet-core version of FAKE.
-   This version is brand-new, was migrated to a new platform and has several API changes which are not stabelized yet.
-   So it's considered an beta.
-   But please use it: In the beta phase we wan't to learn how we can handle breaking changes in the new modularized system and need actual users we break. Note that Fake 5 uses `paket.lock` for it's modules so you can always go back to a working version and report the issue. 
+* The first one is an update to the 'regular' FAKE 4 package on NuGet.
+  It's very safe to update to this package as mentioned in the [migrate to fake 5 guide](fake-migrate-to-fake-5.html).
+  The reason it is considered "beta" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized yet.
+  So just ignore the `Obsolete` warnings and upgrade. If you start fixing the obsolete warnings we MIGHT break your script in an update.
+  Hope this makes it clear why the Fake-5 nuget package is marked as beta.
+  Beta stage will end when all `Obsolete` attributes are correct and the new API is considered stable.
+* The second one is the new dotnet-core version of FAKE.
+  This version is brand-new, was migrated to a new platform and has several API changes which are not stabelized yet.
+  So it's considered an beta.
+  But please use it: In the beta phase we wan't to learn how we can handle breaking changes in the new modularized system and need actual users we break. Note that Fake 5 uses `paket.lock` for it's modules so you can always go back to a working version and report the issue. 
 
 > Fake 5 and this website are already released with Fake 5, so it might be more stable than you think. It's just that 
 > Some APIs are still missing and others might be renamed within the beta phase.
@@ -46,25 +46,25 @@ If you are in the scripting area there is not even a need to save `paket.depende
 
 This section describes work that still need to be done to finally release FAKE 5.
 
- - Regulary updated issue with smaller (but blocking) work-items: https://github.com/fsharp/FAKE/issues/1523
- - Porting modules (See Modules -> Legacy), please read the migrate modules section in the [contribution guide](contributing.html).
- - Missing Obsolete Attributes in the old API (please help when you migrate and notice anything)
- - Bootstrapping via Script and System to update scripts automatically + lock FAKE version
- - Concept and work on how we want do document modules and module overviews (website is generated automatically)
- - Missing documentation
- - Update documentation
- - Fixing issues with the new website
- - Implement a special formatting for the obsolete warnings -> parse them -> suggest new API dependencies file.
+* Regulary updated issue with smaller (but blocking) work-items: https://github.com/fsharp/FAKE/issues/1523
+* Porting modules (See Modules -> Legacy), please read the migrate modules section in the [contribution guide](contributing.html).
+* Missing Obsolete Attributes in the old API (please help when you migrate and notice anything)
+* Bootstrapping via Script and System to update scripts automatically + lock FAKE version
+* Concept and work on how we want do document modules and module overviews (website is generated automatically)
+* Missing documentation
+* Update documentation
+* Fixing issues with the new website
+* Implement a special formatting for the obsolete warnings -> parse them -> suggest new API dependencies file.
 
 ## New API-Design
 
 The old API suffered from several issues:
 
- - AutoOpen polluted the "Fake" namespace.
+* AutoOpen polluted the "Fake" namespace.
 
-   One problem with this that some modules introduced generic function names which are perfectly valid for other modules as well. Now the second module needs to introduce a "quirk" name.
+  One problem with this that some modules introduced generic function names which are perfectly valid for other modules as well. Now the second module needs to introduce a "quirk" name.
 
- - No visible structure and unified naming made it incredible hard to find an API.
+* No visible structure and unified naming made it incredible hard to find an API.
 
 For example consider the old API `CreateDirectory` which is a globally available.
 It needs to have its context "Directory" in the name, but this means longer method names.

@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Docopt", "Docopt.fsproj", "{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{91F8DBF6-852B-4577-A2F5-3F18714FD577}"
+	ProjectSection(SolutionItems) = preProject
+		..\Resources\PoptDescLine-DFA.png = ..\Resources\PoptDescLine-DFA.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D0079840-5A1B-4626-9574-A9CEC593AF1F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TestCases", "Tests\TestCases\TestCases.fsproj", "{B510D520-923F-490A-83C6-3F5C4730DFBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B510D520-923F-490A-83C6-3F5C4730DFBE} = {D0079840-5A1B-4626-9574-A9CEC593AF1F}
+	EndGlobalSection
+EndGlobal

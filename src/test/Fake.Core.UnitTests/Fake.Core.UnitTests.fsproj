@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.Context\Fake.Core.Context.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Target\Fake.Core.Target.fsproj" />

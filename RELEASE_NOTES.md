@@ -1,5 +1,21 @@
 # Release Notes
 
+## 5.0.0-rc001
+
+* [BREAKING] New runner is not compatible with old `Fake.Core.Target` package. Make sure to upgrade your packages before updating the runner!
+* [BREAKING] Fix inconsistent naming of MSBuild package (MsBuild -> MSBuild), add setParams to run* methods - https://github.com/fsharp/FAKE/pull/1837
+* [BREAKING] Update to the CLI, see https://fake.build/fake-commandline.html
+* [FAKE 5] Implement MSBuild /nowarn command line option (https://github.com/fsharp/FAKE/pull/1840)
+* [FAKE 5] Target Parameters (closes https://github.com/fsharp/FAKE/issues/1830)
+* [FAKE 5] Scripts can now have/use their own CLI.
+* [FAKE 5] Performance numbers (closes https://github.com/fsharp/FAKE/issues/1831)
+* [FAKE 5] new module `Fake.Core.CommandLineParsing`, see https://fake.build/core-commandlineparsing.html
+* [DOCS] fixes https://github.com/fsharp/FAKE/issues/1845
+* [BUGFIX] fix various migration messages and fix ChangeWatcher according to API-Guideline
+* [BUGFIX] Remove content-disposition from Azure.Webjobs - https://github.com/fsharp/FAKE/pull/1844
+* [BUGFIX] Don't alter global shell var $cur - https://github.com/fsharp/FAKE/pull/1844
+* [BUGFIX] Fix docs and traces for dotnet version (https://github.com/fsharp/FAKE/pull/1835)
+
 ## 5.0.0-beta029
 
 * BUGFIX: Fix mono version detection on netcore.
