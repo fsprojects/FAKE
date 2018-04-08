@@ -27,9 +27,9 @@ namespace MyCustomTask
 Now you can build, package and upload your build task to a NuGet feed.
 There are no special requirements, you can add dependencies to your NuGet package and define the API however you like.
 
-> Note: As FAKE 5 currently is a `netcore10` application you need to provide a binary in your NuGet package compatible with
-> netcore. We suggest targetting `netstandard16` or lower.
-> We will update FAKE 5 to target netcore20 as soon as netstandard20 is released, such that you can benefit from more APIs as soon as possible.
+> Note: As FAKE 5 currently is a `netcoreapp20` application you need to provide a binary in your NuGet package compatible with
+> netcore. We suggest targetting `netstandard20` or lower.
+> as we update to newer netcore versions from time to time you should re-check and open a PR to change this text if it is outdated. (Just edit [here](https://github.com/fsharp/FAKE/blob/master/help/markdown/fake-fake5-custom-modules.md) with the pencil)
 
 If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference the corresponding NuGet package and [explore the FAKE namespace](apidocs/index.html).
 
@@ -46,8 +46,8 @@ One example would be:
 
 ```fsharp
 #r "paket:
-nuget Fake.Core.Target prerelease
-nuget MyTaskNuGetPackage"
+nuget Fake.Core.Target
+nuget MyTaskNuGetPackage //"
 #load "./.fake/build.fsx/intellisense.fsx"
 
 open Fake.Core
@@ -59,5 +59,5 @@ Target.create "GenerateNumber" (fun _ ->
         |> Trace.tracefn "RandomNumber: %d"
 )
 
-Target.RunOrDefault "GenerateNumber"
+Target.runOrDefault "GenerateNumber"
 ```
