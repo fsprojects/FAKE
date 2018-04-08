@@ -40,7 +40,7 @@ Now you can use your CustomTask in the build script, by adding the
 
     nuget MyTaskNuGetPackage
 
-to your [paket.dependencies](fake-fake5-modules.md), see the relevant documentation for adding modules.
+to your [fake dependencies](fake-fake5-modules.html), see the relevant documentation for adding modules.
 This documentation now applies to your package too!
 One example would be:
 
