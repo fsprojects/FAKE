@@ -290,7 +290,8 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
         orderedGroup
-        |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p.Resolved)
+        |> Seq.choose (fun p ->
+          RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
         |> RuntimeGraph.mergeSeq
 
     // Restore load-script
