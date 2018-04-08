@@ -25,6 +25,8 @@ There are various ways to install FAKE 5
 
   > DISCLAIMER: These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.
 
+* Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/matthid/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/matthid/fake-bootstrap/blob/paket_clitool/build.proj) file.
+
 ## Create and Edit scripts with Intellisense
 
 Once `fake` is available you can start creating your script:
