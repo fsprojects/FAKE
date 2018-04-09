@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.0.0-rc004 - 2018-04-09
+
+* Same as rc002
+
 ## 5.0.0-rc002 - 2018-04-09
 
 * [BUGFIX] Fake could no longer find fsi after sdk upgrade - https://github.com/fsharp/FAKE/pull/1857
