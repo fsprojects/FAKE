@@ -195,11 +195,12 @@ module Http =
     ///  - `data` - The data to post.
     let internal postCommandAsync headerF (url : string) userName password (data : string) = async {
         let client = new HttpClient()
-        if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then 
-            invalidArg userName "You have to specify username and password for post operations."
+        if not (String.IsNullOrEmpty userName) || not (String.IsNullOrEmpty password) then
+            if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then
+                invalidArg userName "You have to specify username and password for post operations."
 
-        let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
-        client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            let byteArray = System.Text.Encoding.ASCII.GetBytes(sprintf "%s:%s" userName password)
+            client.DefaultRequestHeaders.Authorization <- new Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         
                 
         let request = new HttpRequestMessage(HttpMethod.Post, url)
