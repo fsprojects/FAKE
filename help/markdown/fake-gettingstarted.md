@@ -188,11 +188,11 @@ Target.create "Clean" (fun _ ->
 
 Target.create "BuildApp" (fun _ ->
   !! "src/app/**/*.csproj"
-    |> MSBuild.runRelease buildDir "Build"
-    |> Trace.Log "AppBuild-Output: "
+    |> MSBuild.runRelease id buildDir "Build"
+    |> Trace.logItems "AppBuild-Output: "
 )
 
-Target.Create "Default" (fun _ ->
+Target.create "Default" (fun _ ->
   Trace.trace "Hello World from FAKE"
 )
 
@@ -227,7 +227,6 @@ nuget Fake.DotNet.MSBuild
 nuget Fake.Core.Target //"
 #load "./.fake/build.fsx/intellisense.fsx"
 
-open Fake
 open Fake.IO
 open Fake.IO.Globbing.Operators
 open Fake.DotNet
@@ -245,13 +244,13 @@ Target.create "Clean" (fun _ ->
 
 Target.create "BuildApp" (fun _ ->
     !! "src/app/**/*.csproj"
-    |> MSBuild.runRelease buildDir "Build"
+    |> MSBuild.runRelease id buildDir "Build"
     |> Trace.logItems "AppBuild-Output: "
 )
 
 Target.create "BuildTest" (fun _ ->
   !! "src/test/**/*.csproj"
-    |> MSBuild.runDebug testDir "Build"
+    |> MSBuild.runDebug id testDir "Build"
     |> Trace.logItems "TestBuild-Output: "
 )
 
@@ -281,7 +280,7 @@ nuget Fake.IO.FileSystem
 nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.NUnit
 nuget Fake.Core.Target //"
-#load "./.fake/myscript.fsx/intellisense.fsx"
+#load "./.fake/build.fsx/intellisense.fsx"
 
 open Fake.IO
 open Fake.IO.Globbing.Operators
@@ -300,13 +299,13 @@ Target.create "Clean" (fun _ ->
 
 Target.create "BuildApp" (fun _ ->
    !! "src/app/**/*.csproj"
-     |> MSBuild.runRelease buildDir "Build"
+     |> MSBuild.runRelease id buildDir "Build"
      |> Trace.logItems "AppBuild-Output: "
 )
 
 Target.create "BuildTest" (fun _ ->
     !! "src/test/**/*.csproj"
-      |> MSBuild.runDebug testDir "Build"
+      |> MSBuild.runDebug id testDir "Build"
       |> Trace.logItems "TestBuild-Output: "
 )
 
