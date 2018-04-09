@@ -199,17 +199,42 @@
 <h2><a name="Getting-Started" class="anchor" href="#Getting-Started">Getting Started</a></h2>
 <p>Getting started with the Fake dotnetcore version is easy.
 Just install the corresponding package for your system:</p>
+<ul>
+<li>
+<p>Windows</p>
+<ul>
+<li>
+<p>Install chocolatey (a windows package manager) if you have not installed it yet (see <a href="https://chocolatey.org).
+Basically">https://chocolatey.org).
+Basically</a> open an admin <code>cmd.exe</code> and paste</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="batch">@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+</code></pre></td></tr></table>
+</li>
+<li>
+<p>Install fake via chocolatey</p>
+<p>In an admin <code>cmd.exe</code> enter:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip"><code lang="ps">choco install fake -pre
 </code></pre></td></tr></table>
+</li>
+<li><p>There are <a href="fake-gettingstarted.html#Install-FAKE">other ways to get started</a> if chocolatey / an administrator-cmd or global installation is not an option.</p></li>
+</ul>
+</li>
+<li>
+<p>Others</p>
+<p>We currently do not have packages for the various distributions, look for <a href="fake-gettingstarted.html#Install-FAKE">other ways to install fake</a>.
+Please consider <a href="https://github.com/fsharp/FAKE/issues/1828">helping out!</a>.</p>
+</li>
+</ul>
 <p>now you can use</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip"><code lang="ps">fake --help
 </code></pre></td></tr></table>
-<p>This is basically it. You can now execute fake commands.</p>
-<p>For unix we don't have packages yet (please contribute!), but you can use the manual install process (see <a href="contributing.html">Contributing</a>)</p>
+<p>This is basically it. You can now execute fake commands. Follow the <a href="fake-dotnetcore.html#Minimal-example">minimal example below</a> for a quick start.</p>
 <h2><a name="CLI" class="anchor" href="#CLI">CLI</a></h2>
 <p>See <a href="fake-commandline.html">Fake command line</a></p>
 <h2><a name="Buildserver-support" class="anchor" href="#Buildserver-support">Buildserver support</a></h2>
@@ -235,10 +260,8 @@ This version assumes an existing dotnet sdk installation while the non-portable 
 <p>Just use the <code>-portable</code> version of the downloads, extract it and execute.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">dotnet</span> <span class="id">fake</span><span class="pn">.</span><span class="id">dll</span> <span class="pn">&lt;</span><span class="id">regular</span><span class="o">-</span><span class="id">arguments</span><span class="pn">&gt;</span>
-</code></pre></td>
-</tr>
-</table>
+<td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake.dll &lt;regular-arguments&gt;
+</code></pre></td></tr></table>
 <p>The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
 The disadvantage is that you need to have a dotnet sdk installed.</p>
 <h2><a name="Examples" class="anchor" href="#Examples">Examples</a></h2>
@@ -314,10 +337,8 @@ Therefore this example is actually pretty bad because it just opened everything 
 <p>Run this file by executing</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">fake</span> <span class="id">run</span> <span class="id">build</span><span class="pn">.</span><span class="id">fsx</span>
-</code></pre></td>
-</tr>
-</table>
+<td class="snippet"><pre class="fssnip"><code lang="shell">fake run build.fsx
+</code></pre></td></tr></table>
 <h2><a name="Downloads" class="anchor" href="#Downloads">Downloads</a></h2>
 <p>Get the latest packages from GitHub: <a href="https://github.com/fsharp/FAKE/releases">https://github.com/fsharp/FAKE/releases</a></p>
 <p>Get the latest binaries from chocolatey: <a href="https://chocolatey.org/packages/fake">https://chocolatey.org/packages/fake</a></p>
@@ -431,7 +452,7 @@ Therefore this example is actually pretty bad because it just opened everything 
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc002</a></li>
 									</ul>
 								</div>
 							</div>

@@ -255,7 +255,7 @@ Fake Build Options [build_opts]:
 <p>Examples:</p>
 <ul>
 <li><code>fake run -v build.fsx</code> - This will not run fake in verbose mode. Instead it will try to run the script named <code>-v</code>. (But we might support that in the future)</li>
-<li><code>fake build.fsx --fsiargs "--define:BOOTSTRAP"</code> - This will not run <code>build.fsx</code> and define BOOTSTRAP, because <code>--fsiargs</code> needs to be before the script-name.</li>
+<li><code>fake run build.fsx --fsiargs "--define:BOOTSTRAP"</code> - This will not run <code>build.fsx</code> and define BOOTSTRAP, because <code>--fsiargs</code> needs to be before the script-name.</li>
 <li><code>fake build -s</code> - This will run fake in single-target mode and not in silent mode, you need to use <code>fake -s build</code> as described in the above usage description.</li>
 </ul>
 <h2><a name="header" class="anchor" href="#header"><code>--verbose [-v]</code></a></h2>
@@ -423,7 +423,7 @@ Target Module Options [target_opts]:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc002</a></li>
 									</ul>
 								</div>
 							</div>

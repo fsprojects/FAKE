@@ -230,9 +230,9 @@ This tutorial shows how to create a (very simple) custom task in C#. The same wo
 <p>Now you can build, package and upload your build task to a NuGet feed.
 There are no special requirements, you can add dependencies to your NuGet package and define the API however you like.</p>
 <blockquote>
-<p>Note: As FAKE 5 currently is a <code>netcore10</code> application you need to provide a binary in your NuGet package compatible with
-netcore. We suggest targetting <code>netstandard16</code> or lower.
-We will update FAKE 5 to target netcore20 as soon as netstandard20 is released, such that you can benefit from more APIs as soon as possible.</p>
+<p>Note: As FAKE 5 currently is a <code>netcoreapp20</code> application you need to provide a binary in your NuGet package compatible with
+netcore. We suggest targetting <code>netstandard20</code> or lower.
+as we update to newer netcore versions from time to time you should re-check and open a PR to change this text if it is outdated. (Just edit <a href="https://github.com/fsharp/FAKE/blob/master/help/markdown/fake-fake5-custom-modules.md">here</a> with the pencil)</p>
 </blockquote>
 <p>If you want to use FAKE's standard functionality (like <a href="http://en.wikipedia.org/wiki/Glob_(programming)">globbing</a>) within your CustomTask project, just reference the corresponding NuGet package and <a href="apidocs/index.html">explore the FAKE namespace</a>.</p>
 <h2><a name="Using-the-custom-task" class="anchor" href="#Using-the-custom-task">Using the custom task</a></h2>
@@ -244,7 +244,7 @@ Now you can use your CustomTask in the build script, by adding the</p>
 </code></pre></td>
 </tr>
 </table>
-<p>to your <a href="fake-fake5-modules.md">paket.dependencies</a>, see the relevant documentation for adding modules.
+<p>to your <a href="fake-fake5-modules.html">fake dependencies</a>, see the relevant documentation for adding modules.
 This documentation now applies to your package too!
 One example would be:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -264,8 +264,8 @@ One example would be:</p>
 <span class="l">15: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
-<span class="s">nuget Fake.Core.Target prerelease</span>
-<span class="s">nuget MyTaskNuGetPackage&quot;</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget MyTaskNuGetPackage //&quot;</span>
 <span class="pp">#load</span> <span class="s">&quot;./.fake/build.fsx/intellisense.fsx&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
@@ -277,7 +277,7 @@ One example would be:</p>
         <span class="o">|&gt;</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">RunOrDefault</span> <span class="s">&quot;GenerateNumber&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;GenerateNumber&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -387,7 +387,7 @@ One example would be:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc002</a></li>
 									</ul>
 								</div>
 							</div>

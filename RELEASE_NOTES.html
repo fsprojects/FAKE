@@ -196,6 +196,12 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-0-0-rc002-2018-04-09" class="anchor" href="#5-0-0-rc002-2018-04-09">5.0.0-rc002 - 2018-04-09</a></h2>
+<ul>
+<li>[BUGFIX] Fake could no longer find fsi after sdk upgrade - <a href="https://github.com/fsharp/FAKE/pull/1857">https://github.com/fsharp/FAKE/pull/1857</a></li>
+<li>[BUGFIX] Some hotfixes merged from fake 4 - <a href="https://github.com/fsharp/FAKE/pull/1849">https://github.com/fsharp/FAKE/pull/1849</a></li>
+<li>[DOCS] Fix various documentation issues - <a href="https://github.com/fsharp/FAKE/pull/1849">https://github.com/fsharp/FAKE/pull/1849</a></li>
+</ul>
 <h2><a name="5-0-0-rc001" class="anchor" href="#5-0-0-rc001">5.0.0-rc001</a></h2>
 <ul>
 <li>[BREAKING] New runner is not compatible with old <code>Fake.Core.Target</code> package. Make sure to upgrade your packages before updating the runner!</li>
@@ -497,15 +503,31 @@ Migration guide is available in the documentation.
 <li>Fix NuGet key leak if push fails (<a href="https://github.com/matthid/FAKE/pull/2)">https://github.com/matthid/FAKE/pull/2)</a></li>
 <li>Coreclr nunit3 params (<a href="https://github.com/matthid/FAKE/pull/3)">https://github.com/matthid/FAKE/pull/3)</a></li>
 </ul>
-<h2><a name="4-64-6-21-02-2018" class="anchor" href="#4-64-6-21-02-2018">4.64.6 - 21.02.2018</a></h2>
+<h4><a name="4-64-11-2018-03-09" class="anchor" href="#4-64-11-2018-03-09">4.64.11 - 2018-03-09</a></h4>
+<ul>
+<li>Added SynchronizeSchemaChanges for DynamicsNAV</li>
+</ul>
+<h4><a name="4-64-10-2018-03-06" class="anchor" href="#4-64-10-2018-03-06">4.64.10 - 2018-03-06</a></h4>
+<ul>
+<li>Added RunCodeunitWithSettings for DynamicsNAV - <a href="https://github.com/fsharp/FAKE/pull/1811">https://github.com/fsharp/FAKE/pull/1811</a></li>
+</ul>
+<h4><a name="4-64-9-2018-03-05" class="anchor" href="#4-64-9-2018-03-05">4.64.9 - 2018-03-05</a></h4>
+<ul>
+<li>CompileWithFilter for DynamicsNAV</li>
+</ul>
+<h4><a name="4-64-7-2018-03-01" class="anchor" href="#4-64-7-2018-03-01">4.64.7 - 2018-03-01</a></h4>
+<ul>
+<li>Allow REST calls without credentials</li>
+</ul>
+<h4><a name="4-64-6-2018-02-21" class="anchor" href="#4-64-6-2018-02-21">4.64.6 - 2018-02-21</a></h4>
 <ul>
 <li>ConvertFileFromWin7ToWin8 reads file line by line</li>
 </ul>
-<h2><a name="4-64-4-17-01-2018" class="anchor" href="#4-64-4-17-01-2018">4.64.4 - 17.01.2018</a></h2>
+<h2><a name="4-64-4-2018-01-17" class="anchor" href="#4-64-4-2018-01-17">4.64.4 - 2018-01-17</a></h2>
 <ul>
 <li>Support for Dynamics NAV 2018 - <a href="https://github.com/fsharp/FAKE/pull/1758">https://github.com/fsharp/FAKE/pull/1758</a></li>
 </ul>
-<h2><a name="4-64-3-19-12-2017" class="anchor" href="#4-64-3-19-12-2017">4.64.3 - 19.12.2017</a></h2>
+<h2><a name="4-64-3-2017-12-19" class="anchor" href="#4-64-3-2017-12-19">4.64.3 - 2017-12-19</a></h2>
 <ul>
 <li>New helper: GetDotNetSDKVersionFromGlobalJson</li>
 <li>Do not download DotNet SDK when it's already in temp</li>
@@ -514,7 +536,7 @@ Migration guide is available in the documentation.
 <li>Do not use "file" parameter for paket push</li>
 <li>Download .NET SDK to temp path</li>
 </ul>
-<h2><a name="4-63-0-27-07-2017" class="anchor" href="#4-63-0-27-07-2017">4.63.0 - 27.07.2017</a></h2>
+<h2><a name="4-63-0-2017-07-27" class="anchor" href="#4-63-0-2017-07-27">4.63.0 - 2017-07-27</a></h2>
 <ul>
 <li>Disable MSBuild NodeReuse by default - <a href="https://github.com/fsharp/FAKE/pull/1600">https://github.com/fsharp/FAKE/pull/1600</a></li>
 </ul>
@@ -1705,7 +1727,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc001</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc002</a></li>
 									</ul>
 								</div>
 							</div>
