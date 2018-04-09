@@ -290,7 +290,8 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
         orderedGroup
-        |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p.Resolved)
+        |> Seq.choose (fun p ->
+          RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
         |> RuntimeGraph.mergeSeq
 
     // Restore load-script
@@ -457,7 +458,7 @@ storage: none
 nuget FSharp.Core
         """
         if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
-          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r \"nuget FSharp.Core //\"'.
+          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "nuget FSharp.Core //"'.
 See https://fake.build/fake-fake5-modules.html for details. 
 If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
         let section =

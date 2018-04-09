@@ -350,11 +350,7 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
 )
 
 Target.create "BuildSolution_" (fun _ ->
-#if BOOTSTRAP
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
-#else
-    MsBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
-#endif
     |> Trace.logItems "AppBuild-Output: "
 )
 

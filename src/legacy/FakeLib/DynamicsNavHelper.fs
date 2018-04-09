@@ -68,6 +68,12 @@ type NavisionServerType =
         | NavisionServerType.SqlServer -> "MSSQL"
         | NavisionServerType.NativeServer -> "NAVISION"
 
+[<RequireQualifiedAccess>]
+type SynchronizeSchemaChangesOption =
+| No
+| Yes
+| Force 
+
 /// A parameter type to interact with Dynamics NAV
 [<CLIMutable>]
 type DynamicsNavParams = 
@@ -76,6 +82,7 @@ type DynamicsNavParams =
       Database : string
       WorkingDir : string
       TempLogFile : string
+      SynchronizeSchemaChanges : SynchronizeSchemaChangesOption
       TimeOut : TimeSpan }
 
 /// Retrieves the the file name of the Dynamics NAV ClassicClient for the given version from the registry.
@@ -132,6 +139,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
       ServerName = serverName
       Database = targetDatabase
       TempLogFile = "./NavErrorMessages.txt"
+      SynchronizeSchemaChanges = SynchronizeSchemaChangesOption.No
       TimeOut = TimeSpan.FromMinutes 20. }
 
 let private reportError text logFile = 
@@ -233,18 +241,52 @@ let ImportFiles connectionInfo importFileName files =
                      with _ -> ())
         raise exn
 
+/// Compiles all filtered uncompiled objects in the Dynamics NAV client.
+let CompileWithFilter filter (connectionInfo:DynamicsNavParams) = 
+    let sw = System.Diagnostics.Stopwatch() 
+    sw.Start()
+    let details = ""
+    use __ = traceStartTaskUsing "CompileAll" details
+    let args = 
+        sprintf "command=compileobjects, filter=\"Compiled=0;%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
+            filter
+            (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+    let args =
+        match connectionInfo.SynchronizeSchemaChanges with
+        | SynchronizeSchemaChangesOption.No -> args
+        | SynchronizeSchemaChangesOption.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChangesOption.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- connectionInfo.ToolPath
+                info.WorkingDirectory <- connectionInfo.WorkingDir
+                info.Arguments <- args) connectionInfo.TimeOut
+    then reportError (sprintf "Compile with filter %s failed." filter) connectionInfo.TempLogFile
+    tracefn "Compile with filter %s took %dms" filter sw.ElapsedMilliseconds
+
+
 /// Compiles all uncompiled objects in the Dynamics NAV client.
 let CompileAll connectionInfo = 
+    let sw = System.Diagnostics.Stopwatch() 
+    sw.Start()
     let details = ""
     use __ = traceStartTaskUsing "CompileAll" details
     let args = 
         sprintf "command=compileobjects, filter=\"Compiled=0\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+
+    let args =
+        match connectionInfo.SynchronizeSchemaChanges with
+        | SynchronizeSchemaChangesOption.No -> args
+        | SynchronizeSchemaChangesOption.Yes -> args + ", SynchronizeSchemaChanges=\"yes\""
+        | SynchronizeSchemaChangesOption.Force -> args + ", SynchronizeSchemaChanges=\"force\""
+                    
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
                 info.WorkingDirectory <- connectionInfo.WorkingDir
                 info.Arguments <- args) connectionInfo.TimeOut
-    then reportError "CompileAll failed" connectionInfo.TempLogFile
+    then reportError "CompileAll failed." connectionInfo.TempLogFile
+    tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
 
 /// The parameter type allows to interact with Dynamics NAV RTC.
 type RTCParams = 
@@ -276,6 +318,28 @@ let RunCodeunit connectionInfo (codeunitID : int) =
     use __ = traceStartTaskUsing "Running Codeunit" details
     let args = 
         sprintf "-consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
+            connectionInfo.ServerName connectionInfo.Port connectionInfo.ServiceTierName connectionInfo.Company 
+            codeunitID
+    
+    let exitCode = 
+        ExecProcess (fun info -> 
+            info.FileName <- connectionInfo.ToolPath
+            info.WorkingDirectory <- connectionInfo.WorkingDir
+            info.Arguments <- args) connectionInfo.TimeOut
+    if exitCode <> 0 && exitCode <> 255 then 
+        reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunitID exitCode) 
+            connectionInfo.TempLogFile
+
+/// Runs a codeunit with the given ID on the RTC client and the settings file (full path required)
+let RunCodeunitWithSettings connectionInfo settingsFile (codeunitID : int) = 
+    if not (fileExists settingsFile) then
+        failwithf "Given settings file [%s] could not be found!" (Path.GetFileName settingsFile)
+
+    let details = codeunitID.ToString()
+    use __ = traceStartTaskUsing "Running Codeunit" details
+    let args = 
+        sprintf "-settings:\"%s\" -consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
+            settingsFile
             connectionInfo.ServerName connectionInfo.Port connectionInfo.ServiceTierName connectionInfo.Company 
             codeunitID
     

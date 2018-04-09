@@ -1,4 +1,4 @@
 @echo off
 
-fake build GenerateDocs -s 
-fake build ReleaseDocs -s 
+fake build -s target GenerateDocs
+fake build -s target ReleaseDocs

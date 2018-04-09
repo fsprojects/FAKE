@@ -144,7 +144,7 @@ let GetPackageVersion deploymentsDir package =
         if Directory.Exists deploymentsDir |> not then
             failwithf "Package %s was not found, because the deployment directory %s doesn't exist." package deploymentsDir
         let version =
-            let dirs = Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package)
+            let dirs = Directory.GetDirectories(deploymentsDir, sprintf "%s*" package)
             if Seq.isEmpty dirs then failwithf "Package %s was not found." package
             let folder = Seq.head dirs
             let index = folder.LastIndexOf package + package.Length + 1

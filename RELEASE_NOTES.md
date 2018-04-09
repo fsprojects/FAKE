@@ -1,5 +1,15 @@
 # Release Notes
 
+## 5.0.0-rc004 - 2018-04-09
+
+* Same as rc002
+
+## 5.0.0-rc002 - 2018-04-09
+
+* [BUGFIX] Fake could no longer find fsi after sdk upgrade - https://github.com/fsharp/FAKE/pull/1857
+* [BUGFIX] Some hotfixes merged from fake 4 - https://github.com/fsharp/FAKE/pull/1849
+* [DOCS] Fix various documentation issues - https://github.com/fsharp/FAKE/pull/1849
+
 ## 5.0.0-rc001
 
 * [BREAKING] New runner is not compatible with old `Fake.Core.Target` package. Make sure to upgrade your packages before updating the runner!
@@ -294,15 +304,25 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
-## 4.64.6 - 21.02.2018
+#### 4.64.11 - 2018-03-09
+* Added SynchronizeSchemaChanges for DynamicsNAV
 
-* ConvertFileFromWin7ToWin8 reads file line by line
+#### 4.64.10 - 2018-03-06
+* Added RunCodeunitWithSettings for DynamicsNAV - https://github.com/fsharp/FAKE/pull/1811
 
-## 4.64.4 - 17.01.2018
+#### 4.64.9 - 2018-03-05
+* CompileWithFilter for DynamicsNAV
 
+#### 4.64.7 - 2018-03-01
+* Allow REST calls without credentials
+
+#### 4.64.6 - 2018-02-21
+* ConvertFileFromWin7ToWin8 reads file line by line 
+
+## 4.64.4 - 2018-01-17
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
 
-## 4.64.3 - 19.12.2017
+## 4.64.3 - 2017-12-19
 
 * New helper: GetDotNetSDKVersionFromGlobalJson
 * Do not download DotNet SDK when it's already in temp
@@ -311,7 +331,7 @@
 * Do not use "file" parameter for paket push
 * Download .NET SDK to temp path
 
-## 4.63.0 - 27.07.2017
+## 4.63.0 - 2017-07-27
 
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
 
