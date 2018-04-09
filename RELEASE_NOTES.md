@@ -2,7 +2,9 @@
 
 ## 5.0.0-rc002 - 2018-04-09
 
-* [BUGFIX] Fake could no longer find fsi after sdk upgrade - https://github.com/fsharp/FAKE/pull/1857 
+* [BUGFIX] Fake could no longer find fsi after sdk upgrade - https://github.com/fsharp/FAKE/pull/1857
+* [BUGFIX] Some hotfixes merged from fake 4 - https://github.com/fsharp/FAKE/pull/1849
+* [DOCS] Fix various documentation issues - https://github.com/fsharp/FAKE/pull/1849
 
 ## 5.0.0-rc001
 
