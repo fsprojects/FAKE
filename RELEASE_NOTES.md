@@ -1,3 +1,6 @@
+#### 4.64.12 - 11.04.2018
+* Support for F# SDK 10.1 - https://github.com/fsharp/FAKE/pull/1857
+
 #### 4.64.11 - 09.03.2018
 * Added SynchronizeSchemaChanges for DynamicsNAV
 
