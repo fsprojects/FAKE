@@ -166,6 +166,9 @@
     <Compile Include="..\..\app\Fake.IO.FileSystem\Shell.fs">
       <Link>Fake.IO.FileSystem/Shell.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.IO.FileSystem\ChangeWatcher.fs">
+      <Link>Fake.IO.FileSystem/ChangeWatcher.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
       <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>
     </Compile>
