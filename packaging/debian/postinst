@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chmod +x /opt/fake/fake
+ln -s /opt/fake/fake /usr/local/bin/fake

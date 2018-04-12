@@ -914,7 +914,7 @@ Target.create "CreateNuGet" (fun _ ->
 )
 
 let runtimes =
-  [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
+  [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "linux-x64" ]
 
 module CircleCi =
     let isCircleCi = Environment.environVarAsBool "CIRCLECI"
@@ -1089,9 +1089,9 @@ Target.create "CheckReleaseSecrets" (fun _ ->
         secret.Force() |> ignore
 )
 
-let executeFPM args =
+let executeFPM args workingDir =
     printfn "%s %s" "fpm" args
-    Shell.Exec("fpm", args=args, dir="bin")
+    Shell.Exec("fpm", args=args, dir=workingDir)
 
 
 type SourceType =
@@ -1101,6 +1101,7 @@ type DebPackageManifest =
         SourceType : SourceType
         Name : string
         Version : string
+        Architecture : string
         Dependencies : (string * string option) list
         BeforeInstall : string option
         AfterInstall : string option
@@ -1111,6 +1112,7 @@ type DebPackageManifest =
 (*
 See https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html
 Ask @theangrybyrd (slack)
+
 
 {
     SourceType = Dir("./MyCoolApp", "/opt/")
@@ -1135,18 +1137,19 @@ might also want a prerm and postrm if you want to play nice on cleanup
 *)
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
-    let createDebianPackage (manifest : DebPackageManifest) =
+    let createDebianPackage (manifest : DebPackageManifest) workingDir =
         let argsList = ResizeArray<string>()
         argsList.Add <| match manifest.SourceType with
                         | Dir (_) -> "-s dir"
+        argsList.Add <| sprintf "-a %s" manifest.Architecture
         argsList.Add <| "-t deb"
         argsList.Add <| "-f"
         argsList.Add <| (sprintf "-n %s" manifest.Name)
         argsList.Add <| (sprintf "-v %s" (manifest.Version.Replace("-","~")))
         let dependency name version =
             match version with
-            | Some v -> sprintf "-d '%s %s'" name v
-            | None  -> sprintf "-d '%s'" name
+            | Some v -> sprintf "-d %s %s" name v
+            | None  -> sprintf "-d %s" name
         argsList.AddRange <| (Seq.map(fun (a,b) -> dependency a b) manifest.Dependencies)
         manifest.BeforeInstall |> Option.iter(sprintf "--before-install %s" >> argsList.Add)
         manifest.AfterInstall |> Option.iter(sprintf "--after-install %s" >> argsList.Add)
@@ -1155,10 +1158,32 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
         argsList.Add <| match manifest.SourceType with
                         | Dir (source,target) -> sprintf "%s=%s" source target
         argsList.AddRange <| manifest.AdditionalArgs
-        if argsList |> String.concat " " |> executeFPM <> 0 then
+        let args  = argsList |> String.concat " "
+        if executeFPM args workingDir <> 0 then
             failwith "Failed creating deb package"
-    ignore createDebianPackage
-    ()
+
+    let manifest = {
+        SourceType = Dir(".", "/opt/fake")
+        Name = "fake"
+        Version =  release.NugetVersion
+        Architecture = "amd64"
+        Dependencies = [
+            // https://github.com/dotnet/cli/issues/3390#issuecomment-282488747
+            ("libunwind8", None) 
+            // https://stackoverflow.com/a/49744600/890736
+            ("icu-devtools", None) 
+        ]
+        BeforeInstall =__SOURCE_DIRECTORY__ @@ "packaging/debian/preinst" |> Some
+        AfterInstall = __SOURCE_DIRECTORY__ @@ "packaging/debian/postinst" |> Some
+        ConfigFile = None
+        AdditionalOptions = []
+        AdditionalArgs =
+            [  ]
+    }
+    
+    __SOURCE_DIRECTORY__ @@ "nuget/dotnetcore/Fake.netcore/linux-x64"
+    |> createDebianPackage manifest 
+    
 
 )
 
@@ -1487,6 +1512,8 @@ let prevDocs =
     ==> "CreateNuGet"
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
+    =?> ("DotNetCoreCreateDebianPackage", Environment.isWindows |> not)
+    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
 (if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
     =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
