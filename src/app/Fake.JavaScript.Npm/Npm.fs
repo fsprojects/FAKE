@@ -97,7 +97,7 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Restore-frontend" (fun _ ->   
-    ///            Npm.InstallForced (fun o -> 
+    ///            Npm.installForced (fun o -> 
     ///                            { o with 
     ///                                WorkingDirectory = "./src/FAKESimple.Web/"
     ///                            })
@@ -111,14 +111,14 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Restore-frontend" (fun _ ->   
-    ///            Npm.Install (fun o -> 
+    ///            Npm.install (fun o -> 
     ///                            { o with 
     ///                                WorkingDirectory = "./src/FAKESimple.Web/"
     ///                            })
     ///        )    
     let install setParams = npm setParams <| Install Standard 
 
-    /// Run `npm run`
+    /// Run `npm run <command>`
     /// ## Parameters
     ///
     /// - 'command' - command to run
@@ -126,7 +126,7 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Run-lint" (fun _ ->   
-    ///            Npm.Run "lint" (fun o -> 
+    ///            Npm.run "lint" (fun o -> 
     ///                               { o with 
     ///                                   WorkingDirectory = "./src/FAKESimple.Web/"
     ///                               })
@@ -141,7 +141,7 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Run-lint" (fun _ ->   
-    ///            Npm.RunSilent "lint" (fun o -> 
+    ///            Npm.runSilent "lint" (fun o -> 
     ///                                    { o with 
     ///                                        WorkingDirectory = "./src/FAKESimple.Web/"
     ///                                    })
@@ -156,7 +156,7 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Run-lint" (fun _ ->   
-    ///            Npm.RunTest "lint" (fun o -> 
+    ///            Npm.runTest "test" (fun o -> 
     ///                                     { o with 
     ///                                         WorkingDirectory = "./src/FAKESimple.Web/"
     ///                                     })
@@ -170,14 +170,14 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Test-frontend" (fun _ ->   
-    ///            Npm.Test (fun o -> 
+    ///            Npm.test (fun o -> 
     ///                          { o with 
     ///                              WorkingDirectory = "./src/FAKESimple.Web/"
     ///                          })
     ///        )    
     let test setParams = npm setParams Test
    
-    /// Run `npm <string>`. Used to run any command.
+    /// Run `npm <command>`. Used to run any command.
     /// ## Parameters
     ///
     /// - 'command' - command to run
@@ -185,7 +185,7 @@ module Npm =
     /// ## Sample
     ///
     ///        Target.Create "Check-npm-version" (fun _ ->   
-    ///            Npm.Exec "--v" (fun o -> 
+    ///            Npm.exec "--v" (fun o -> 
     ///                          { o with 
     ///                              WorkingDirectory = "./src/FAKESimple.Web/"
     ///                          })
