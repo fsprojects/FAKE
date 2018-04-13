@@ -168,22 +168,20 @@ let cleanForTests () =
     !! "integrationtests/*/temp"
     |> Seq.iter rmdir
 
-// Targets
-Target.create "Clean" (fun _ ->
-    !! "src/*/*/bin"
-    //++ "src/*/*/obj"
-    |> Shell.CleanDirs
-
+Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     // Workaround https://github.com/fsprojects/Paket/issues/2830
     // https://github.com/fsprojects/Paket/issues/2689
     // Basically paket fails if there is already an existing nuspec in obj/ dir because then MSBuild will call paket with multiple nuspec file arguments separated by ';'
     !! "src/*/*/obj/**/*.nuspec"
     -- (sprintf "src/*/*/obj/**/*%s.nuspec" release.NugetVersion)
-    //-- "src/*/*/obj/*.references"
-    //-- "src/*/*/obj/*.props"
-    //-- "src/*/*/obj/*.paket.references.cached"
-    //-- "src/*/*/obj/*.NuGet.Config"
     |> File.deleteAll
+)
+
+// Targets
+Target.create "Clean" (fun _ ->
+    !! "src/*/*/bin"
+    //++ "src/*/*/obj"
+    |> Shell.CleanDirs
 
     Shell.CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
 
@@ -1008,7 +1006,10 @@ open Fake.Core.TargetOperators
 
 "CheckReleaseSecrets"
     ?=> "Clean"
-
+"WorkaroundPaketNuspecBug"
+    ==> "Clean"
+"WorkaroundPaketNuspecBug"
+    ==> "DotNetPackage_"
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"

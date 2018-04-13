@@ -7,6 +7,17 @@ open Expecto.Flip
 [<Tests>]
 let tests = 
   testList "Fake.Runtime.Tests" [
+    testCase "Test that we can properly find type names when the file name contains '.'" <| fun _ ->
+      // Add test if everything works with __SOURCE_FILE__
+      let name, parser =
+          CompileRunner.nameParser
+             "build.test1.test2_E294A5A65B9A06E0358F991A589AC7246FA6677BA99829862925EF343588E50D"
+             "build.test1.test2.fsx"
+
+      Expect.equal
+        "Expected to have correct full type name"
+        "<StartupCode$build-test1-test2_E294A5A65B9A06E0358F991A589AC7246FA6677BA99829862925EF343588E50D>.$Build.test1.test2$fsx"
+        name
     testCase "Test that we can tokenize __SOURCE_FILE__" <| fun _ ->
       // Add test if everything works with __SOURCE_FILE__
       

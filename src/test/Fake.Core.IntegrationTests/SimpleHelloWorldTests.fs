@@ -43,15 +43,18 @@ let ``simple runtime error``() =
 
 [<Test>]
 let ``reference fake runtime``() =
-    fakeRun "reference_fake-runtime.fsx" "core-reference-fake-runtime" |> ignore
+    handleAndFormat <| fun () ->
+        fakeRun "reference_fake-runtime.fsx" "core-reference-fake-runtime" |> ignore
 
 [<Test>]
 let ``context exists``() =
-    fakeRun "context-exists.fsx" "core-context-exists" |> ignore
+    handleAndFormat <| fun () ->
+        fakeRun "context.exists.fsx" "core-context-exists" |> ignore
 
 [<Test>]
 let ``use external paket.dependencies``() =
-    fakeRun "use_external_dependencies.fsx" "core-use-external-paket-dependencies" |> ignore
+    handleAndFormat <| fun () ->
+        fakeRun "use_external_dependencies.fsx" "core-use-external-paket-dependencies" |> ignore
 
 [<Test>]
 let ``reference fake core targets``() = 
