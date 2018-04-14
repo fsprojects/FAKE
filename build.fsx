@@ -276,6 +276,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.JavaScript.Npm", "Running npm commands"
+      "Fake.JavaScript.Yarn", "Running Yarn commands"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.Net.Http", "HTTP Client"

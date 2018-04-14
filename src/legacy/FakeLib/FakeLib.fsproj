@@ -262,6 +262,9 @@
     <Compile Include="..\..\app\Fake.JavaScript.Npm\Npm.fs">
       <Link>Fake.JavaScript.Npm/Npm.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.JavaScript.Yarn\Yarn.fs">
+      <Link>Fake.JavaScript.Yarn/Yarn.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Tools.Git\CommandHelper.fs">
       <Link>Fake.Tools.Git/CommandHelper.fs</Link>
     </Compile>
