@@ -96,12 +96,10 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Restore-frontend" (fun _ ->   
-    ///            Npm.installForced (fun o -> 
-    ///                            { o with 
-    ///                                WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                            })
-    ///        )    
+    ///     Npm.installForced (fun o -> 
+    ///                          { o with 
+    ///                              WorkingDirectory = "./src/FAKESimple.Web/"
+    ///                          })
     let installForced setParams = npm setParams <| Install Forced
 
     /// Run `npm install`
@@ -110,12 +108,10 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Restore-frontend" (fun _ ->   
-    ///            Npm.install (fun o -> 
-    ///                            { o with 
-    ///                                WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                            })
-    ///        )    
+    ///     Npm.install (fun o -> 
+    ///                    { o with 
+    ///                        WorkingDirectory = "./src/FAKESimple.Web/"
+    ///                    })
     let install setParams = npm setParams <| Install Standard 
 
     /// Run `npm run <command>`
@@ -125,12 +121,10 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Run-lint" (fun _ ->   
-    ///            Npm.run "lint" (fun o -> 
-    ///                               { o with 
-    ///                                   WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                               })
-    ///        )    
+    ///     Npm.run "someCommand" (fun o -> 
+    ///                              { o with 
+    ///                                  WorkingDirectory = "./src/FAKESimple.Web/"
+    ///                              })
     let run command setParams = npm setParams <| Run command
     
     /// Run `npm run --silent <command>`. Suppresses npm error output. See [npm:8821](https://github.com/npm/npm/issues/8821).
@@ -140,12 +134,10 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Run-lint" (fun _ ->   
-    ///            Npm.runSilent "lint" (fun o -> 
+    ///     Npm.runSilent "someCommand" (fun o -> 
     ///                                    { o with 
     ///                                        WorkingDirectory = "./src/FAKESimple.Web/"
     ///                                    })
-    ///        )    
     let runSilent command setParams = npm setParams <| RunSilent command
    
     /// Run `npm run --silent <command>`. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See [npm:8821](https://github.com/npm/npm/issues/8821).
@@ -155,12 +147,10 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Run-lint" (fun _ ->   
-    ///            Npm.runTest "test" (fun o -> 
-    ///                                     { o with 
-    ///                                         WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                                     })
-    ///        )    
+    ///     Npm.runTest "test" (fun o -> 
+    ///                           { o with 
+    ///                               WorkingDirectory = "./src/FAKESimple.Web/"
+    ///                           })
     let runTest command setParams = npm setParams <| RunTest command
    
     /// Run `npm test --silent`. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See [npm:8821](https://github.com/npm/npm/issues/8821).
@@ -169,12 +159,10 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Test-frontend" (fun _ ->   
-    ///            Npm.test (fun o -> 
-    ///                          { o with 
-    ///                              WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                          })
-    ///        )    
+    ///     Npm.test (fun o -> 
+    ///                 { o with 
+    ///                     WorkingDirectory = "./src/FAKESimple.Web/"
+    ///                 })
     let test setParams = npm setParams Test
    
     /// Run `npm <command>`. Used to run any command.
@@ -184,10 +172,8 @@ module Npm =
     /// - 'setParams' - set command parameters
     /// ## Sample
     ///
-    ///        Target.Create "Check-npm-version" (fun _ ->   
-    ///            Npm.exec "--v" (fun o -> 
-    ///                          { o with 
-    ///                              WorkingDirectory = "./src/FAKESimple.Web/"
-    ///                          })
-    ///        )       
+    ///     Npm.exec "--v" (fun o -> 
+    ///                       { o with 
+    ///                           WorkingDirectory = "./src/FAKESimple.Web/"
+    ///                       })
     let exec command setParams = npm setParams <| Custom command
