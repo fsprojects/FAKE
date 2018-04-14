@@ -245,8 +245,9 @@ let common = [
 // New FAKE libraries
 let dotnetAssemblyInfos =
     [ "dotnet-fake", "Fake dotnet-cli command line tool"
-      "Fake.Api.Slack", "Slack Integration Support"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
+      "Fake.Api.HockeyApp", "HockeyApp Integration Support"
+      "Fake.Api.Slack", "Slack Integration Support"
       "Fake.Azure.CloudServices", "Azure Cloud Services Support"
       "Fake.Azure.Emulators", "Azure Emulators Support"
       "Fake.Azure.Kudu", "Azure Kudu Support"
