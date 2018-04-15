@@ -114,9 +114,7 @@ let run (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
                         Environment = environVars() |> Map } )
 
             let execWithExitCode testAssembly argsString timeout = 
-                Process.execRaw
-                    (fakeStartInfo testAssembly argsString) 
-                    timeout false ignore ignore
+                Process.execSimple (fakeStartInfo testAssembly argsString) timeout
 
             execWithExitCode testAssembly (setParams ExpectoParams.DefaultParams) TimeSpan.MaxValue
 
