@@ -18,7 +18,7 @@ Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
     -e, --environmentvariable <keyval> [*]
-                          Set an environment variable. Use 'key=val'
+                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
     -s, --singletarget    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
         """
@@ -584,7 +584,7 @@ module Target =
                     args |> List.choose trySplitEnvArg
                 | None -> []
             for (key, value) in envs do Environment.setEnvironVar key value
-            
+
             if DocoptResult.hasFlag "--list" results then
                 listAvailable()
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
