@@ -3,8 +3,6 @@ module Fake.DotNet.Testing.XUnit2
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.StringBuilder
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -197,29 +195,29 @@ let internal buildXUnit2Args assemblies parameters =
         sprintf @"%s ""%s=%s""" traitFlag name value
     let appendTraits traitsList traitFlag sb =
         traitsList |>
-        Seq.fold (fun sb traitPair -> sb |> appendWithoutQuotes (formatTrait traitFlag traitPair)) sb
+        Seq.fold (fun sb traitPair -> sb |> StringBuilder.appendWithoutQuotes (formatTrait traitFlag traitPair)) sb
 
     new StringBuilder()
-    |> appendFileNamesIfNotNull assemblies
-    |> appendIfTrueWithoutQuotes parameters.NoAppDomain "-noappdomain"
-    |> appendWithoutQuotes "-parallel"
-    |> appendWithoutQuotes (ParallelMode.ToArgument parameters.Parallel)
-    |> appendIfSome (CollectionConcurrencyMode.ToArgument parameters.MaxThreads) (sprintf "-maxthreads %d")
-    |> appendIfTrueWithoutQuotes (not parameters.ShadowCopy) "-noshadow"
-    |> appendIfTrueWithoutQuotes parameters.ForceTeamCity "-teamcity"
-    |> appendIfTrueWithoutQuotes parameters.ForceAppVeyor "-appveyor"
-    |> appendIfTrueWithoutQuotes parameters.Wait "-wait"
-    |> appendIfTrueWithoutQuotes parameters.Silent "-quiet"
-    |> appendIfSome parameters.XmlOutputPath (sprintf @"-xml ""%s""")
-    |> appendIfSome parameters.XmlV1OutputPath (sprintf @"-xmlv1 ""%s""")
-    |> appendIfSome parameters.NUnitXmlOutputPath (sprintf @"-nunit ""%s""")
-    |> appendIfSome parameters.HtmlOutputPath (sprintf @"-html ""%s""")
+    |> StringBuilder.appendFileNamesIfNotNull assemblies
+    |> StringBuilder.appendIfTrueWithoutQuotes parameters.NoAppDomain "-noappdomain"
+    |> StringBuilder.appendWithoutQuotes "-parallel"
+    |> StringBuilder.appendWithoutQuotes (ParallelMode.ToArgument parameters.Parallel)
+    |> StringBuilder.appendIfSome (CollectionConcurrencyMode.ToArgument parameters.MaxThreads) (sprintf "-maxthreads %d")
+    |> StringBuilder.appendIfTrueWithoutQuotes (not parameters.ShadowCopy) "-noshadow"
+    |> StringBuilder.appendIfTrueWithoutQuotes parameters.ForceTeamCity "-teamcity"
+    |> StringBuilder.appendIfTrueWithoutQuotes parameters.ForceAppVeyor "-appveyor"
+    |> StringBuilder.appendIfTrueWithoutQuotes parameters.Wait "-wait"
+    |> StringBuilder.appendIfTrueWithoutQuotes parameters.Silent "-quiet"
+    |> StringBuilder.appendIfSome parameters.XmlOutputPath (sprintf @"-xml ""%s""")
+    |> StringBuilder.appendIfSome parameters.XmlV1OutputPath (sprintf @"-xmlv1 ""%s""")
+    |> StringBuilder.appendIfSome parameters.NUnitXmlOutputPath (sprintf @"-nunit ""%s""")
+    |> StringBuilder.appendIfSome parameters.HtmlOutputPath (sprintf @"-html ""%s""")
     |> appendTraits parameters.IncludeTraits "-trait"
     |> appendTraits parameters.ExcludeTraits "-notrait"
-    |> appendIfSome parameters.Namespace (sprintf @"-namespace ""%s""")
-    |> appendIfSome parameters.Class (sprintf @"-class ""%s""")
-    |> appendIfSome parameters.Method (sprintf @"-method ""%s""")
-    |> toText
+    |> StringBuilder.appendIfSome parameters.Namespace (sprintf @"-namespace ""%s""")
+    |> StringBuilder.appendIfSome parameters.Class (sprintf @"-class ""%s""")
+    |> StringBuilder.appendIfSome parameters.Method (sprintf @"-method ""%s""")
+    |> StringBuilder.toText
 
 /// Helper method to detect if the xunit console runner supports the -noappdomain flag.
 /// If the xunit console runner does not support this flag, it will change the value to false

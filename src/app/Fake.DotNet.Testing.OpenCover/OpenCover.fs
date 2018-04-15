@@ -5,7 +5,6 @@ module Fake.DotNet.Testing.OpenCover
     open System.IO
     open System.Text
     open Fake.Core
-    open Fake.Core.StringBuilder
     open Fake.IO
     open Fake.IO.FileSystemOperators
 
@@ -96,28 +95,30 @@ module Fake.DotNet.Testing.OpenCover
             let printParamListAsValues paramName paramList = printParamListAsValuesWithModification paramName paramList (fun v -> string v)
 
             new StringBuilder()
-            |> appendWithoutQuotes (printParamWithValue "target" (quote (param.TestRunnerExePath |> Path.getFullName)))
-            |> appendWithoutQuotes (printParamWithValue "targetargs" (quote targetArgs))
-            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Output) (printParamWithValue "output" (quote param.Output))
-            |> appendWithoutQuotes (match param.Register with
-                                    | Manual -> String.Empty
-                                    | Register -> printParam "register"
-                                    | RegisterUser -> printParamWithValue "register" "user")
-            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Filter) (printParamWithValue "filter" (quote param.Filter))
-            |> appendIfTrueWithoutQuotes param.MergeByHash (printParam "mergebyhash")
-            |> appendIfTrueWithoutQuotes (not param.ExcludeByAttribute.IsEmpty) (printParamListAsValuesWithQuote "excludebyattribute" param.ExcludeByAttribute)
-            |> appendIfTrueWithoutQuotes (not param.ExcludeByFile.IsEmpty) (printParamListAsValuesWithQuote "excludebyfile" param.ExcludeByFile)
-            |> appendIfTrueWithoutQuotes (not param.ExcludeDirs.IsEmpty) (printParamListAsValuesWithQuote "excludedirs" param.ExcludeDirs)
-            |> appendIfTrueWithoutQuotes (not param.HideSkipped.IsEmpty) (printParamListAsValues "hideskipped" param.HideSkipped)
-            |> appendIfTrueWithoutQuotes param.MergeOutput (printParam "mergeoutput")
-            |> appendWithoutQuotes (match param.ReturnTargetCode with
-                                    | No ->  String.Empty
-                                    | Yes -> printParam "returntargetcode"
-                                    | Offset o -> printParamWithValue "returntargetcode" (string o))
-            |> appendIfTrueWithoutQuotes (not param.SearchDirs.IsEmpty) (printParamListAsValuesWithQuote "searchdirs" param.SearchDirs)
-            |> appendIfTrueWithoutQuotes param.SkipAutoProps (printParam "skipautoprops")
-            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.OptionalArguments) param.OptionalArguments
-            |> toText
+            |> StringBuilder.appendWithoutQuotes (printParamWithValue "target" (quote (param.TestRunnerExePath |> Path.getFullName)))
+            |> StringBuilder.appendWithoutQuotes (printParamWithValue "targetargs" (quote targetArgs))
+            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Output) (printParamWithValue "output" (quote param.Output))
+            |> StringBuilder.appendWithoutQuotes
+                    (match param.Register with
+                    | Manual -> String.Empty
+                    | Register -> printParam "register"
+                    | RegisterUser -> printParamWithValue "register" "user")
+            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.Filter) (printParamWithValue "filter" (quote param.Filter))
+            |> StringBuilder.appendIfTrueWithoutQuotes param.MergeByHash (printParam "mergebyhash")
+            |> StringBuilder.appendIfTrueWithoutQuotes (not param.ExcludeByAttribute.IsEmpty) (printParamListAsValuesWithQuote "excludebyattribute" param.ExcludeByAttribute)
+            |> StringBuilder.appendIfTrueWithoutQuotes (not param.ExcludeByFile.IsEmpty) (printParamListAsValuesWithQuote "excludebyfile" param.ExcludeByFile)
+            |> StringBuilder.appendIfTrueWithoutQuotes (not param.ExcludeDirs.IsEmpty) (printParamListAsValuesWithQuote "excludedirs" param.ExcludeDirs)
+            |> StringBuilder.appendIfTrueWithoutQuotes (not param.HideSkipped.IsEmpty) (printParamListAsValues "hideskipped" param.HideSkipped)
+            |> StringBuilder.appendIfTrueWithoutQuotes param.MergeOutput (printParam "mergeoutput")
+            |> StringBuilder.appendWithoutQuotes
+                    (match param.ReturnTargetCode with
+                    | No ->  String.Empty
+                    | Yes -> printParam "returntargetcode"
+                    | Offset o -> printParamWithValue "returntargetcode" (string o))
+            |> StringBuilder.appendIfTrueWithoutQuotes (not param.SearchDirs.IsEmpty) (printParamListAsValuesWithQuote "searchdirs" param.SearchDirs)
+            |> StringBuilder.appendIfTrueWithoutQuotes param.SkipAutoProps (printParam "skipautoprops")
+            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty param.OptionalArguments) param.OptionalArguments
+            |> StringBuilder.toText
 
     /// Runs OpenCover on a group of assemblies.
     /// ## Parameters

@@ -3,8 +3,6 @@ module Fake.DotNet.Testing.NUnit.Common
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.StringBuilder
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -156,23 +154,23 @@ let NUnitDefaults =
 /// [omit]
 let internal buildNUnitdArgs parameters assemblies = 
     new StringBuilder()
-    |> append "-nologo"
-    |> appendIfTrue parameters.DisableShadowCopy "-noshadow"
-    |> appendIfTrue parameters.ShowLabels "-labels"
-    |> appendIfTrue parameters.DontTestInNewThread "-nothread"
-    |> appendIfTrue parameters.StopOnError "-stoponerror"
-    |> appendFileNamesIfNotNull assemblies
-    |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
-    |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
-    |> appendIfNotNullOrEmpty parameters.XsltTransformFile "-transform:"
-    |> appendIfNotNullOrEmpty parameters.OutputFile "-xml:"
-    |> appendIfNotNullOrEmpty parameters.Out "-out:"
-    |> appendIfNotNullOrEmpty parameters.Framework "-framework:"
-    |> appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "-process:"
-    |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
-    |> appendIfNotNullOrEmpty parameters.Domain.ParamString "-domain:"
-    |> appendIfNotNullOrEmpty parameters.Fixture "-fixture:"
-    |> toText
+    |> StringBuilder.append "-nologo"
+    |> StringBuilder.appendIfTrue parameters.DisableShadowCopy "-noshadow"
+    |> StringBuilder.appendIfTrue parameters.ShowLabels "-labels"
+    |> StringBuilder.appendIfTrue parameters.DontTestInNewThread "-nothread"
+    |> StringBuilder.appendIfTrue parameters.StopOnError "-stoponerror"
+    |> StringBuilder.appendFileNamesIfNotNull assemblies
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.XsltTransformFile "-transform:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.OutputFile "-xml:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Out "-out:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Framework "-framework:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "-process:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Domain.ParamString "-domain:"
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.Fixture "-fixture:"
+    |> StringBuilder.toText
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]

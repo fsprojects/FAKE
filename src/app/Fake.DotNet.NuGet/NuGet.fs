@@ -5,7 +5,6 @@ module Fake.DotNet.NuGet.NuGet
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -81,7 +80,7 @@ let NuGetDefaults() =
     { ToolPath = findNuget (Shell.pwd() @@ "tools" @@ "NuGet")
       TimeOut = TimeSpan.FromMinutes 5.
       Version =
-          if not isLocalBuild then buildVersion
+          if not BuildServer.isLocalBuild then BuildServer.buildVersion
           else "0.1.0.0"
       Authors = []
       Project = ""

@@ -1,3 +1,4 @@
+[<RequireQualifiedAccess>]
 module Fake.Core.StringBuilder
 type String = System.String
 type StringBuilder = System.Text.StringBuilder
