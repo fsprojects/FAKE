@@ -1,7 +1,7 @@
 // Some common definition for testing data
 module Fake.Testing.Common
 
-open Fake.Core.Trace
+open Fake.Core
 open System
 
 /// Option which allows to specify if a test runner error should break the build.
@@ -14,4 +14,4 @@ type TestRunnerErrorLevel =
     | DontFailBuild
 
 type FailedTestsException(msg) =
-    inherit FAKEException(msg)
+    inherit Trace.FAKEException(msg)
