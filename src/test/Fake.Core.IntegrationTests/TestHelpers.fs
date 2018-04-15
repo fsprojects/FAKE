@@ -47,6 +47,14 @@ let directFakeInPath command scenarioPath target =
         raise <| FakeExecutionFailed(result)
     result
 
+let handleAndFormat f =
+    try
+        f()
+    with FakeExecutionFailed(result) ->
+        let stdOut = String.Join("\n", result.Messages).Trim()
+        let stdErr = String.Join("\n", result.Errors)
+        Assert.Fail(
+            sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr)
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null
 

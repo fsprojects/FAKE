@@ -1,7 +1,6 @@
 /// Contains functions to read and write XML files.
 module Fake.Core.Xml
 
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO

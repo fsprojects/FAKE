@@ -34,6 +34,7 @@ module TeamCityImportExtensions =
             | ImportData.Nunit _ -> "nunit"
             | ImportData.Xunit _ -> "nunit"
 
+[<RequireQualifiedAccess>]
 module TeamCity =
     // See https://confluence.jetbrains.com/display/TCD10/Build+Script+Interaction+with+TeamCity
 

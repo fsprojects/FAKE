@@ -5,8 +5,6 @@ open Fake.Tools.Git.CommandHelper
 open Fake.Tools.Git.Branches
 open Fake.Core
 open Fake.Core.String.Operators
-open Fake.Core.Environment
-open Fake.Core.BuildServer
 open System
 open System.Text.RegularExpressions
 open System.IO
@@ -45,8 +43,8 @@ let getBranchName repositoryDir =
             else match s.Contains("...") with
                     | true  -> s.Substring(3,s.IndexOf("...")-3)
                     | false -> s.Substring(3)
-    with _ when (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation ->
-        match environVarOrNone "BUILD_SOURCEBRANCHNAME" with
+    with _ when (repositoryDir = "" || repositoryDir = ".") && BuildServer.buildServer = TeamFoundation ->
+        match Environment.environVarOrNone "BUILD_SOURCEBRANCHNAME" with
         | None -> reraise()
         | Some s -> s
 
@@ -54,8 +52,8 @@ let getBranchName repositoryDir =
 let getCurrentSHA1 repositoryDir =
     try
         getSHA1 repositoryDir "HEAD"
-    with _ when (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation ->
-        match environVarOrNone "BUILD_SOURCEVERSION" with
+    with _ when (repositoryDir = "" || repositoryDir = ".") && BuildServer.buildServer = TeamFoundation ->
+        match Environment.environVarOrNone "BUILD_SOURCEVERSION" with
         | None -> reraise()
         | Some s -> s
 
@@ -100,7 +98,7 @@ let getCurrentHash() =
             |> Seq.head
             |> fun s -> s.Split('m')
         if tmp |> Array.length > 2 then tmp.[1].Substring(0,6) else tmp.[0].Substring(0,6)
-    with _ when buildServer = TeamFoundation ->
-        match environVarOrNone "BUILD_SOURCEVERSION" with
+    with _ when BuildServer.buildServer = TeamFoundation ->
+        match Environment.environVarOrNone "BUILD_SOURCEVERSION" with
         | None -> reraise()
         | Some s -> s

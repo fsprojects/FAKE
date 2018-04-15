@@ -3,7 +3,6 @@ module Fake.DotNet.Testing.NUnit.Sequential
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO

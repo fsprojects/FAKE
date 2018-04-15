@@ -28,6 +28,7 @@ module Environment =
 
 namespace Fake.Core
 
+[<RequireQualifiedAccess>]
 module Environment =
 //    type Environment = System.Environment
 #if DOTNETCORE

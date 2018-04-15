@@ -9,6 +9,7 @@ type DocoptResult =
 
 type DocoptMap = Map<string, DocoptResult>
 
+[<RequireQualifiedAccess>]
 module DocoptResult =
   let getFlagCount flag (map:DocoptMap) =
     match Map.tryFind flag map with

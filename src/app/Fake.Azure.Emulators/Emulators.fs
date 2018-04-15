@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to control the local Azure Emulator
+[<RequireQualifiedAccess>]
 module Fake.Azure.Emulators
 
 open System
@@ -7,7 +8,6 @@ open Fake.IO
 open Fake.IO.FileSystemOperators
 
 /// A type for the controlling parameter
-[<CLIMutable>]
 type private AzureEmulatorParams = {
     StorageEmulatorToolPath:Lazy<string>
     CSRunToolPath:string
