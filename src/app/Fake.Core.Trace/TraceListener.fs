@@ -1,8 +1,6 @@
 ﻿/// Defines default listeners for build output traces
 namespace Fake.Core
 
-open Fake.Core.BuildServer
-
 open System
 
 [<RequireQualifiedAccess>]
@@ -272,7 +270,9 @@ module TraceSecrets =
 
 module CoreTracing =
     // If we write the stderr on those build servers the build will fail.
-    let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
+    let importantMessagesToStdErr = 
+        let buildServer = BuildServer.buildServer 
+        buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
     /// The default TraceListener for Console.
     let defaultConsoleTraceListener  =

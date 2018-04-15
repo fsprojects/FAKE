@@ -19,7 +19,7 @@ Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
     -e, --environmentvariable <keyval> [*]
-                          Set an environment variable. Use 'key=val'
+                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
     -s, --singletarget    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
 ```
@@ -51,7 +51,7 @@ nuget Fake.Core.Target //"
 open Fake.Core
 
 // *** Define Targets ***
-Target.create "Clean" (fun c ->
+Target.create "Clean" (fun p ->
     // Access arguments given by command-line
     Trace.tracefn "Arguments: %A" p.Context.Arguments
     Trace.trace " --- Cleaning stuff --- "
@@ -86,6 +86,24 @@ Now we have the following options:
 - `fake run build.fsx -t "Build"` --single-target --> starts only the *Build* target and runs no dependencies
 - `fake run build.fsx -s -t Build` --> starts only the *Build* target and runs no dependencies
 - `fake run build.fsx` --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
+
+## Targets with arguments
+
+Example:
+
+```fsharp
+Target.create "MyTarget" (fun p ->
+    // Access arguments given by command-line
+    Trace.tracefn "Arguments: %A" p.Context.Arguments
+)
+```
+
+Everything after the target will be interpreted as argument for the target:
+
+- `fake run build.fsx target MyTarget --arg` --> `--arg` will be contained in `p.Context.Arguments`
+- `fake build -t MyTarget --arg` --> `--arg` will be contained in `p.Context.Arguments`, because --arg is not a valid argument for the `Fake.Core.Target` (see command line spec above)
+
+You can access the arguments from every target executed along the way.
 
 ## Final targets
 

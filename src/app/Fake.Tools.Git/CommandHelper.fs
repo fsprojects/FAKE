@@ -8,7 +8,6 @@ open System.Threading
 open System.Text
 open System.Collections.Generic
 open Fake.Core
-open Fake.Core.Environment
 open Fake.Core.String.Operators
 open Fake.IO
 
@@ -20,10 +19,10 @@ let private GitPath = @"[ProgramFiles]\Git\cmd\;[ProgramFilesX86]\Git\cmd\;[Prog
 
 /// Tries to locate the git.exe via the eviroment variable "GIT".
 let gitPath =
-    if isUnix then
+    if Environment.isUnix then
         "git"
     else
-        let ev = environVar "GIT"
+        let ev = Environment.environVar "GIT"
         if not (String.isNullOrEmpty ev) then ev else Process.findPath "GitPath" GitPath "git.exe"
 
 let inline private setInfo gitPath repositoryDir command (info:ProcStartInfo) =

@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to package and deploy [Azure Web Jobs](http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/) via the [Kudu](https://github.com/projectkudu/kudu) Zip controller
+[<RequireQualifiedAccess>]
 module Fake.Azure.WebJobs
 
 open System
@@ -9,8 +10,8 @@ open System.Net.Http
 open System.Net
 #endif
 open System.Text
-open Fake.Core.Trace
 open Fake.IO
+open Fake.Core
 
 /// The running modes of webjobs
 [<RequireQualifiedAccess>]
@@ -66,7 +67,7 @@ let private zipWebJob webSite webJob =
     DirectoryInfo.ensure packageFile.Directory
     let zipName = webJob.PackageLocation
     let filesToZip = Directory.GetFiles(webJob.DirectoryToPackage, "*.*", SearchOption.AllDirectories)
-    tracefn "Zipping %s webjob to %s" webJob.Project webJob.PackageLocation
+    Trace.tracefn "Zipping %s webjob to %s" webJob.Project webJob.PackageLocation
     Zip.createZip webJob.DirectoryToPackage zipName "" 0 false filesToZip
 
 /// This task to can be used create a zip for each webjob to deploy to a website
@@ -80,7 +81,7 @@ let packageWebJobs webSites =
 let private deployWebJobToWebSite webSite webJob =
     let uploadUri = Uri(webSite.Url, sprintf "api/zip/site/wwwroot/App_Data/jobs/%s/%s" (jobTypePath webJob.JobType) webJob.Name)
     let filePath = webJob.PackageLocation
-    tracefn "Deploying %s webjob to %O" filePath uploadUri
+    Trace.tracefn "Deploying %s webjob to %O" filePath uploadUri
 #if NETSTANDARD
     use client = new HttpClient(Timeout = TimeSpan.FromMilliseconds 600000.)
     let authToken = Convert.ToBase64String(Text.Encoding.ASCII.GetBytes(webSite.UserName + ":" + webSite.Password))
@@ -92,14 +93,14 @@ let private deployWebJobToWebSite webSite webJob =
 
     let response = client.PutAsync(uploadUri, content).Result
     let result = response.Content.ReadAsStringAsync().Result
-    tracefn "Response from webjob upload: %s" result
+    Trace.tracefn "Response from webjob upload: %s" result
 #else
     use client = new WebClientWithTimeout(Credentials = NetworkCredential(webSite.UserName, webSite.Password))
     
     client.Headers.Add(HttpRequestHeader.ContentType, "application/zip")
     
     let response = client.UploadFile(uploadUri, "PUT", filePath)
-    tracefn "Response from webjob upload: %s" (Encoding.ASCII.GetString response)
+    Trace.tracefn "Response from webjob upload: %s" (Encoding.ASCII.GetString response)
 #endif
 
 let private deployWebJobsToWebSite webSite =

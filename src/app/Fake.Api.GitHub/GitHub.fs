@@ -9,6 +9,7 @@ open System.Reflection
 open System.IO
 
 /// Contains tasks to interact with [GitHub](https://github.com/) releases
+[<RequireQualifiedAccess>]
 module GitHub =
 
     [<NoComparison>]

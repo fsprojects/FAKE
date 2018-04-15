@@ -5,6 +5,7 @@ open Fake.Core.CommandLineParsing
 
 //type HelpCallback = unit -> string
 
+[<RequireQualifiedAccess>]
 module DocHelper =
     type private Last =
       | Usage = 0

@@ -18,7 +18,7 @@ Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
     -e, --environmentvariable <keyval> [*]
-                          Set an environment variable. Use 'key=val'
+                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
     -s, --singletarget    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
         """
@@ -563,12 +563,28 @@ module Target =
 
     let internal runWithDefault fDefault =
         let ctx = Fake.Core.Context.forceFakeContext ()
-
+        let trySplitEnvArg (arg:string) =
+            let idx = arg.IndexOf('=')
+            if idx < 0 then
+                Trace.traceError (sprintf "Argument for -e should contain '=' but was '%s', the argument will be ignored." arg)
+                None
+            else            
+                Some (arg.Substring(0, idx), arg.Substring(idx + 1))
         let results =
-            try TargetCli.parseArgs (ctx.Arguments |> List.toArray) |> Choice1Of2
+            try 
+                let res = TargetCli.parseArgs (ctx.Arguments |> List.toArray)
+                
+                res |> Choice1Of2
             with :? DocoptException as e -> Choice2Of2 e
         match results with
         | Choice1Of2 results ->
+            let envs =
+                match DocoptResult.tryGetArguments "--environmentvariable" results with
+                | Some args ->
+                    args |> List.choose trySplitEnvArg
+                | None -> []
+            for (key, value) in envs do Environment.setEnvironVar key value
+
             if DocoptResult.hasFlag "--list" results then
                 listAvailable()
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then

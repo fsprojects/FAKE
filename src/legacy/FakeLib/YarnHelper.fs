@@ -1,4 +1,5 @@
 /// Contains function to run yarn tasks
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 module Fake.YarnHelper
 open Fake
 open System
@@ -29,6 +30,7 @@ let private yarnFileName =
               proc.StandardOutput.ReadLine()
             | _ -> "/usr/bin/yarn"
 
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 /// Arguments for the Yarn install command
 type InstallArgs =
 | Standard
@@ -42,6 +44,7 @@ type InstallArgs =
 /// The list of supported Yarn commands. The `Custom` alternative
 /// can be used for other commands not in the list until they are
 /// implemented
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 type YarnCommand =
 | Install of InstallArgs
 | Add of string
@@ -49,6 +52,7 @@ type YarnCommand =
 
 /// The Yarn parameter type
 [<CLIMutable>]
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 type YarnParams =
     { Src: string
       YarnFilePath: string
@@ -57,6 +61,7 @@ type YarnParams =
       Timeout: TimeSpan }
 
 /// Yarn default parameters
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 let defaultYarnParams =
     { Src = ""
       YarnFilePath = yarnFileName
@@ -78,6 +83,8 @@ let private parse = function
     | Add str -> sprintf "add %s" str
     | Custom str -> str
 
+
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 let run yarnParams =
     let yarnPath = Path.GetFullPath(yarnParams.YarnFilePath)
     let arguments = yarnParams.Command |> parse
@@ -111,5 +118,7 @@ let run yarnParams =
 ///                         WorkingDirectory = "./src/FAKESimple.Web/"
 ///                     })
 ///         )
+
+[<System.Obsolete("FAKE0001 Use the Fake.JavaScript.Yarn module instead")>]
 let Yarn setParams =
     defaultYarnParams |> setParams |> run

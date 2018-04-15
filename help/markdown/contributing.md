@@ -94,17 +94,13 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 ## General considerations
 
-* Fake 4 (FakeLib) is basically in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
+* Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
 
 * Fake 4 still allows hotfixes, please send the PR against the https://github.com/fsharp/FAKE/tree/hotfix_fake4
 
   It would be helpful if a second PR against master is sent which merges the hotfix into master and adds the hotfix to the FAKE 5 code as well.
 
 ## Text editor / Code style
-
-* Install the [EditorConfig](http://editorconfig.org/) extension in your text editor(s). List available [here](http://editorconfig.org/#download).
-
-* Visual Studio users can also install the [CodeMaid](http://www.codemaid.net/) extension.
 
 * When working on FAKE 5 core stuff [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) help a lot!
 
@@ -116,7 +112,7 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 We [learned from our mistakes](fake-fake5-learn-more.html), so we use the following guidelines, **please read them very carefully** (ask if you don't understand any rule):
 
-* AutoOpen is no longer used
+* `AutoOpen` is no longer used
 * We replace `<verb><module>` functions with `<module>.<verb>`
   * Use Verbs as much as possible for functions
   * In order, to have a more consistent API we propose to always use camelCase naming for functions
@@ -134,6 +130,7 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
   * FAKE0004 for API not yet migrated, waiting for your contribution
 * Operators are opened seperatly with a separate `Operators` module
 * We avoid the `Helpers` suffix (because we now expect users to write `<module>.<function>`)
+* We generally use the `RequireQualifiedAccess` attribute on modules.
 
 ## Porting a module to FAKE 5
 
