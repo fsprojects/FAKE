@@ -83,6 +83,7 @@
 																<li><a href="../apidocs/fake-core-string.html">String</a></li>
 																<li><a href="../apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="../core-trace.html">Trace</a></li>
+																<li><a href="../core-commandlineparsing.html">CommandLineParsing</a></li>
 																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
@@ -248,10 +249,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1892', 1892)" onmouseover="showTip(event, '1892', 1892)">
+          <code onmouseout="hideTip(event, '1898', 1898)" onmouseover="showTip(event, '1898', 1898)">
             defaultNpmParams
           </code>
-          <div class="tip" id="1892">
+          <div class="tip" id="1898">
             <strong>Signature:</strong> NpmParams<br />
                       </div>
         </td>
@@ -268,41 +269,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1893', 1893)" onmouseover="showTip(event, '1893', 1893)">
+          <code onmouseout="hideTip(event, '1899', 1899)" onmouseover="showTip(event, '1899', 1899)">
             exec(command setParams)
           </code>
-          <div class="tip" id="1893">
+          <div class="tip" id="1899">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L193-193" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L179-179" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Run <code>npm &lt;string&gt;</code>. Used to run any command.</p>
+          <p>Run <code>npm &lt;command&gt;</code>. Used to run any command.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'command' - command to run</li>
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Check-npm-version&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">Exec</span> <span class="s">&quot;--v&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                   <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                       <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                   <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>       
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.exec "--v" (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -312,15 +301,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1894', 1894)" onmouseover="showTip(event, '1894', 1894)">
+          <code onmouseout="hideTip(event, '1900', 1900)" onmouseover="showTip(event, '1900', 1900)">
             install(setParams)
           </code>
-          <div class="tip" id="1894">
+          <div class="tip" id="1900">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L119-119" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L115-115" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -330,22 +319,10 @@
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Restore-frontend&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">Install</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                     <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                         <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                     <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>    
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.install (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -355,15 +332,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1895', 1895)" onmouseover="showTip(event, '1895', 1895)">
+          <code onmouseout="hideTip(event, '1901', 1901)" onmouseover="showTip(event, '1901', 1901)">
             installForced(setParams)
           </code>
-          <div class="tip" id="1895">
+          <div class="tip" id="1901">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L105-105" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L103-103" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -373,22 +350,10 @@
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Restore-frontend&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">InstallForced</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                     <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                         <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                     <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>    
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.installForced (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -398,41 +363,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1896', 1896)" onmouseover="showTip(event, '1896', 1896)">
+          <code onmouseout="hideTip(event, '1902', 1902)" onmouseover="showTip(event, '1902', 1902)">
             run(command setParams)
           </code>
-          <div class="tip" id="1896">
+          <div class="tip" id="1902">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L134-134" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L128-128" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Run <code>npm run</code></p>
+          <p>Run <code>npm run &lt;command&gt;</code></p>
 <h2>Parameters</h2>
 <ul>
 <li>'command' - command to run</li>
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Run-lint&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">Run</span> <span class="s">&quot;lint&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                        <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                            <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                        <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>    
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.run "someCommand" (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -442,15 +395,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1897', 1897)" onmouseover="showTip(event, '1897', 1897)">
+          <code onmouseout="hideTip(event, '1903', 1903)" onmouseover="showTip(event, '1903', 1903)">
             runSilent(command setParams)
           </code>
-          <div class="tip" id="1897">
+          <div class="tip" id="1903">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L149-149" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L141-141" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -461,22 +414,10 @@
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Run-lint&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">RunSilent</span> <span class="s">&quot;lint&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                             <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                                 <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                             <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>    
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.runSilent "someCommand" (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -486,15 +427,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1898', 1898)" onmouseover="showTip(event, '1898', 1898)">
+          <code onmouseout="hideTip(event, '1904', 1904)" onmouseover="showTip(event, '1904', 1904)">
             runTest(command setParams)
           </code>
-          <div class="tip" id="1898">
+          <div class="tip" id="1904">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L164-164" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L154-154" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -505,22 +446,10 @@
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Run-lint&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">RunTest</span> <span class="s">&quot;lint&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                              <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                                  <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                              <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>    
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.runTest "test" (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -530,15 +459,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1899', 1899)" onmouseover="showTip(event, '1899', 1899)">
+          <code onmouseout="hideTip(event, '1905', 1905)" onmouseover="showTip(event, '1905', 1905)">
             test(setParams)
           </code>
-          <div class="tip" id="1899">
+          <div class="tip" id="1905">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L178-178" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.JavaScript.Npm/Npm.fs#L166-166" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -548,22 +477,10 @@
 <li>
 <p>'setParams' - set command parameters</p>
 <h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Test-frontend&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>   
-     <span class="id">Npm</span><span class="pn">.</span><span class="id">Test</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">o</span> <span class="k">-&gt;</span> 
-                   <span class="pn">{</span> <span class="id">o</span> <span class="k">with</span> 
-                       <span class="id">WorkingDirectory</span> <span class="o">=</span> <span class="s">&quot;./src/FAKESimple.Web/&quot;</span>
-                   <span class="pn">}</span><span class="pn">)</span>
- <span class="pn">)</span>    
-</code></pre></td>
-</tr>
-</table>
+<p>Npm.test (fun o -&gt;
+{ o with
+WorkingDirectory = "./src/FAKESimple.Web/"
+})</p>
 </li>
 </ul>
 
@@ -677,7 +594,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc004</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
 									</ul>
 								</div>
 							</div>

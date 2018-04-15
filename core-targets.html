@@ -84,6 +84,7 @@
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
 																<li><a href="apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="core-trace.html">Trace</a></li>
+																<li><a href="core-commandlineparsing.html">CommandLineParsing</a></li>
 																<li><a href="apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="apidocs/fake-core-taskrunner.html">Tasks</a></li>
@@ -224,7 +225,7 @@ Target Module Options [target_opts]:
     -t, --target &lt;target&gt;
                           Run the given target (ignored if positional argument 'target' is given)
     -e, --environmentvariable &lt;keyval&gt; [*]
-                          Set an environment variable. Use 'key=val'
+                          Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
     -s, --singletarget    Run only the specified target.
     -p, --parallel &lt;num&gt;  Run parallel with the given number of tasks.
 </code></pre></td></tr></table>
@@ -280,7 +281,7 @@ Use longer forms in your scripts and shorter forms on your shell!</p>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
 
 <span class="c">// *** Define Targets ***</span>
-<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">c</span> <span class="k">-&gt;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
     <span class="c">// Access arguments given by command-line</span>
     <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;Arguments: %A&quot;</span> <span class="id">p</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">Arguments</span>
     <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
@@ -318,6 +319,26 @@ Using the current parameter object is not supported yet.</p>
 <li><code>fake run build.fsx -s -t Build</code> --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
 <li><code>fake run build.fsx</code> --&gt; starts the Deploy target (and runs the dependencies <em>Clean</em> and <em>Build</em>)</li>
 </ul>
+<h2><a name="Targets-with-arguments" class="anchor" href="#Targets-with-arguments">Targets with arguments</a></h2>
+<p>Example:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;MyTarget&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="c">// Access arguments given by command-line</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">tracefn</span> <span class="s">&quot;Arguments: %A&quot;</span> <span class="id">p</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">Arguments</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Everything after the target will be interpreted as argument for the target:</p>
+<ul>
+<li><code>fake run build.fsx target MyTarget --arg</code> --&gt; <code>--arg</code> will be contained in <code>p.Context.Arguments</code></li>
+<li><code>fake build -t MyTarget --arg</code> --&gt; <code>--arg</code> will be contained in <code>p.Context.Arguments</code>, because --arg is not a valid argument for the <code>Fake.Core.Target</code> (see command line spec above)</li>
+</ul>
+<p>You can access the arguments from every target executed along the way.</p>
 <h2><a name="Final-targets" class="anchor" href="#Final-targets">Final targets</a></h2>
 <p>Final targets can be used for TearDown functionality.
 These targets will be executed even if the build fails but have to be activated via Target.ActivateFinal().</p>
@@ -580,7 +601,7 @@ say that target B has a soft dependency on target A:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc004</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
 									</ul>
 								</div>
 							</div>

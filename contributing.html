@@ -84,6 +84,7 @@
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
 																<li><a href="apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="core-trace.html">Trace</a></li>
+																<li><a href="core-commandlineparsing.html">CommandLineParsing</a></li>
 																<li><a href="apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="apidocs/fake-core-taskrunner.html">Tasks</a></li>
@@ -314,7 +315,7 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 </ul>
 <h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
 <ul>
-<li>Fake 4 (FakeLib) is basically in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
+<li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
 <li>
 <p>Fake 4 still allows hotfixes, please send the PR against the <a href="https://github.com/fsharp/FAKE/tree/hotfix_fake4">https://github.com/fsharp/FAKE/tree/hotfix_fake4</a></p>
 <p>It would be helpful if a second PR against master is sent which merges the hotfix into master and adds the hotfix to the FAKE 5 code as well.</p>
@@ -322,8 +323,6 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 </ul>
 <h2><a name="Text-editor-Code-style" class="anchor" href="#Text-editor-Code-style">Text editor / Code style</a></h2>
 <ul>
-<li><p>Install the <a href="http://editorconfig.org/">EditorConfig</a> extension in your text editor(s). List available <a href="http://editorconfig.org/#download">here</a>.</p></li>
-<li><p>Visual Studio users can also install the <a href="http://www.codemaid.net/">CodeMaid</a> extension.</p></li>
 <li><p>When working on FAKE 5 core stuff <a href="https://code.visualstudio.com/">Visual Studio Code</a> with <a href="http://ionide.io/">Ionide</a> help a lot!</p></li>
 <li><p>Read the <a href="http://fsharp.org/specs/component-design-guidelines/">F# component design guidelines</a>.</p></li>
 <li>Read the API-Design-Guidelines below.</li>
@@ -331,7 +330,7 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 <h2><a name="API-Design" class="anchor" href="#API-Design">API-Design</a></h2>
 <p>We <a href="fake-fake5-learn-more.html">learned from our mistakes</a>, so we use the following guidelines, <strong>please read them very carefully</strong> (ask if you don't understand any rule):</p>
 <ul>
-<li>AutoOpen is no longer used</li>
+<li><p><code>AutoOpen</code> is no longer used</p></li>
 <li>
 <p>We replace <code>&lt;verb&gt;&lt;module&gt;</code> functions with <code>&lt;module&gt;.&lt;verb&gt;</code></p>
 <ul>
@@ -360,6 +359,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 </li>
 <li><p>Operators are opened seperatly with a separate <code>Operators</code> module</p></li>
 <li><p>We avoid the <code>Helpers</code> suffix (because we now expect users to write <code>&lt;module&gt;.&lt;function&gt;</code>)</p></li>
+<li><p>We generally use the <code>RequireQualifiedAccess</code> attribute on modules.</p></li>
 </ul>
 <h2><a name="Porting-a-module-to-FAKE-5" class="anchor" href="#Porting-a-module-to-FAKE-5">Porting a module to FAKE 5</a></h2>
 <p>As mentioned in the <a href="fake-fake5-learn-more.html">"Fake 5 learn more"</a> section we have a large list to choose from to help the project. One of these things is porting modules to FAKE 5. To save you from some pitfalls this sections guides you in migrating modules with an (at least for me) working approach.</p>
@@ -488,7 +488,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc004</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
 									</ul>
 								</div>
 							</div>

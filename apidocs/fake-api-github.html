@@ -83,6 +83,7 @@
 																<li><a href="../apidocs/fake-core-string.html">String</a></li>
 																<li><a href="../apidocs/fake-core-buildserver.html">BuildServer</a></li>
 																<li><a href="../core-trace.html">Trace</a></li>
+																<li><a href="../core-commandlineparsing.html">CommandLineParsing</a></li>
 																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
@@ -239,14 +240,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1080', 1080)" onmouseover="showTip(event, '1080', 1080)">
-            createClient user password
+            createClient(user password)
           </code>
           <div class="tip" id="1080">
             <strong>Signature:</strong> user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L80-80" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L81-81" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -259,14 +260,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1081', 1081)" onmouseover="showTip(event, '1081', 1081)">
-            createClientWithToken token
+            createClientWithToken(token)
           </code>
           <div class="tip" id="1081">
             <strong>Signature:</strong> token:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L90-90" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L91-91" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,14 +280,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1082', 1082)" onmouseover="showTip(event, '1082', 1082)">
-            createGHEClient url user password
+            createGHEClient(url user password)
           </code>
           <div class="tip" id="1082">
             <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L100-100" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L101-101" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -299,14 +300,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1083', 1083)" onmouseover="showTip(event, '1083', 1083)">
-            createGHEClientWithToken url token
+            createGHEClientWithToken(url token)
           </code>
           <div class="tip" id="1083">
             <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L111-111" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L112-112" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -319,14 +320,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1084', 1084)" onmouseover="showTip(event, '1084', 1084)">
-            createRelease (...)
+            createRelease(...)
           </code>
           <div class="tip" id="1084">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; setParams:(CreateReleaseParams -&gt; CreateReleaseParams) -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L128-128" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L129-129" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -347,14 +348,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1085', 1085)" onmouseover="showTip(event, '1085', 1085)">
-            downloadAsset id destination release
+            downloadAsset(id destination release)
           </code>
           <div class="tip" id="1085">
             <strong>Signature:</strong> id:int -&gt; destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L237-237" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L238-238" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,14 +368,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1086', 1086)" onmouseover="showTip(event, '1086', 1086)">
-            downloadAssets destination release
+            downloadAssets(destination release)
           </code>
           <div class="tip" id="1086">
             <strong>Signature:</strong> destination:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L251-251" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L252-252" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -387,14 +388,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1087', 1087)" onmouseover="showTip(event, '1087', 1087)">
-            draftNewRelease (...)
+            draftNewRelease(...)
           </code>
           <div class="tip" id="1087">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L163-163" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L164-164" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -416,14 +417,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1088', 1088)" onmouseover="showTip(event, '1088', 1088)">
-            getLastRelease owner repoName client
+            getLastRelease(owner repoName client)
           </code>
           <div class="tip" id="1088">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L199-199" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L200-200" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -436,14 +437,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1089', 1089)" onmouseover="showTip(event, '1089', 1089)">
-            getReleaseByTag (...)
+            getReleaseByTag(...)
           </code>
           <div class="tip" id="1089">
             <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L215-215" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L216-216" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -456,14 +457,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1090', 1090)" onmouseover="showTip(event, '1090', 1090)">
-            publishDraft release
+            publishDraft(release)
           </code>
           <div class="tip" id="1090">
             <strong>Signature:</strong> release:Async&lt;Release&gt; -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L190-190" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L191-191" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -476,14 +477,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1091', 1091)" onmouseover="showTip(event, '1091', 1091)">
-            uploadFile fileName release
+            uploadFile(fileName release)
           </code>
           <div class="tip" id="1091">
             <strong>Signature:</strong> fileName:string -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L171-171" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L172-172" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -496,14 +497,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1092', 1092)" onmouseover="showTip(event, '1092', 1092)">
-            uploadFiles fileNames release
+            uploadFiles(fileNames release)
           </code>
           <div class="tip" id="1092">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; release:Async&lt;Release&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L182-182" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.GitHub/GitHub.fs#L183-183" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -619,7 +620,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc004</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
 									</ul>
 								</div>
 							</div>
