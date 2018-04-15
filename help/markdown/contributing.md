@@ -94,17 +94,13 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 ## General considerations
 
-* Fake 4 (FakeLib) is basically in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
+* Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
 
 * Fake 4 still allows hotfixes, please send the PR against the https://github.com/fsharp/FAKE/tree/hotfix_fake4
 
   It would be helpful if a second PR against master is sent which merges the hotfix into master and adds the hotfix to the FAKE 5 code as well.
 
 ## Text editor / Code style
-
-* Install the [EditorConfig](http://editorconfig.org/) extension in your text editor(s). List available [here](http://editorconfig.org/#download).
-
-* Visual Studio users can also install the [CodeMaid](http://www.codemaid.net/) extension.
 
 * When working on FAKE 5 core stuff [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) help a lot!
 

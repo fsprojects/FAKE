@@ -29,9 +29,11 @@ let private handleCoreCaching (context:FakeContext) (compiledAssembly:string) (e
 /// public, because it is used by test code
 let nameParser cachedAssemblyFileName scriptFileName =
     let noExtension = Path.GetFileNameWithoutExtension(scriptFileName)
+    let inline fixNamespace (n:string) =
+        n.Replace(".", "-")
     let className =
         sprintf "<StartupCode$%s>.$%s%s$%s"
-          cachedAssemblyFileName
+          (fixNamespace cachedAssemblyFileName)
           (noExtension.Substring(0, 1).ToUpper())
           (noExtension.Substring(1))
           (Path.GetExtension(scriptFileName).Substring(1))

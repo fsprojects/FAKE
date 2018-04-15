@@ -166,6 +166,9 @@
     <Compile Include="..\..\app\Fake.IO.FileSystem\Shell.fs">
       <Link>Fake.IO.FileSystem/Shell.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.IO.FileSystem\ChangeWatcher.fs">
+      <Link>Fake.IO.FileSystem/ChangeWatcher.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
       <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>
     </Compile>
@@ -258,6 +261,9 @@
     </Compile>
     <Compile Include="..\..\app\Fake.JavaScript.Npm\Npm.fs">
       <Link>Fake.JavaScript.Npm/Npm.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.JavaScript.Yarn\Yarn.fs">
+      <Link>Fake.JavaScript.Yarn/Yarn.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Tools.Git\CommandHelper.fs">
       <Link>Fake.Tools.Git/CommandHelper.fs</Link>
