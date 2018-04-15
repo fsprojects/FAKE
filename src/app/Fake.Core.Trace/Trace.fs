@@ -98,7 +98,7 @@ let traceEnvironmentVariables() =
     //        tracefn "Environment-Settings (%A):" mode
     //        environVars mode |> Seq.iter (tracefn "  %A"))
     tracefn "Environment-Settings :\n" 
-    environVars () |> Seq.iter (fun (a,b) ->
+    Environment.environVars () |> Seq.iter (fun (a,b) ->
         tracefn "  %A - %A" a b 
     )
 
