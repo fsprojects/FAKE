@@ -6,19 +6,18 @@ open System
 open System.IO
 open System.Net.Http
 open Fake.Core
-open Fake.Core.Environment
 open Fake.IO
 
 /// Location where staged outputs should go before synced up to the site.
-let deploymentTemp = environVarOrDefault "DEPLOYMENT_TEMP" (Path.GetTempPath() + "kudutemp")
+let deploymentTemp = Environment.environVarOrDefault "DEPLOYMENT_TEMP" (Path.GetTempPath() + "kudutemp")
 /// Location where synced outputs should be deployed to.
-let deploymentTarget = environVarOrDefault "DEPLOYMENT_TARGET" (Path.GetTempPath() + "kudutarget")
+let deploymentTarget = Environment.environVarOrDefault "DEPLOYMENT_TARGET" (Path.GetTempPath() + "kudutarget")
 /// Used by KuduSync for tracking and diffing deployments.
-let nextManifestPath = environVarOrDefault "NEXT_MANIFEST_PATH" String.Empty
+let nextManifestPath = Environment.environVarOrDefault "NEXT_MANIFEST_PATH" String.Empty
 /// Used by KuduSync for tracking and diffing deployments.
-let previousManifestPath = environVarOrDefault "PREVIOUS_MANIFEST_PATH" String.Empty
+let previousManifestPath = Environment.environVarOrDefault "PREVIOUS_MANIFEST_PATH" String.Empty
 /// The path to the KuduSync application.
-let kuduPath = (environVarOrDefault "GO_WEB_CONFIG_TEMPLATE" ".") |> DirectoryInfo.ofPath
+let kuduPath = (Environment.environVarOrDefault "GO_WEB_CONFIG_TEMPLATE" ".") |> DirectoryInfo.ofPath
 
 /// The different types of web jobs.
 type WebJobType = Scheduled | Continuous
