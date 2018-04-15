@@ -1,4 +1,5 @@
 /// Contains tasks to interact with [HockeyApp](http://hockeyapp.com)
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 module Fake.HockeyAppHelper
 
 open Microsoft.FSharp.Core
@@ -12,6 +13,7 @@ open Fake
 open Newtonsoft.Json
 
 /// The release type of the app
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type ReleaseType = 
     | Beta = 0 
     | Store = 1 
@@ -19,27 +21,32 @@ type ReleaseType =
     | Enterprise = 3
 
 /// The notification options
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type NotifyOption = 
     | None = 0 
     | CanInstallApp = 1 
     | All = 2
 
 /// The note types
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type NoteType = 
     | Textile = 0 
     | Markdown = 1
 
 /// The mandatory options
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type MandatoryOption = 
     | NotMandatory = 0 
     | Mandatory = 1
 
 /// The release download status
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type DownloadStatusOption =
     | NotDownloadable = 1
     | Downloadable = 2
 
 /// HockeyApp's success response
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type HockeyResponse = {
     Title : string
     
@@ -73,6 +80,7 @@ type HockeyResponse = {
 
 /// HockeyAppVersion's success response
 /// https://support.hockeyapp.net/kb/api/api-versions#create-version
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type HockeyVersionResponse = {
     Title:  string
 
@@ -93,6 +101,7 @@ type HockeyVersionResponse = {
     PublicUrl : string
 }    
 
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 type BaseHockeyAppParams = 
     /// (Required) API token
     abstract ApiToken: string
@@ -105,6 +114,7 @@ type BaseHockeyAppParams =
     
 /// The HockeyAppVersion parameter type
 /// Based on https://support.hockeyapp.net/kb/api/api-versions#create-version
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 [<CLIMutable>]
 type HockeyAppVersionParams = 
     { 
@@ -127,6 +137,7 @@ type HockeyAppVersionParams =
 
 /// The HockeyApp parameter type
 /// Based on http://support.hockeyapp.net/kb/api/api-apps#upload-app
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 [<CLIMutable>]
 type HockeyAppUploadParams = 
     {
@@ -331,6 +342,7 @@ let private processHockeyAppCmd<'TParam, 'TResponse when 'TParam :> BaseHockeyAp
 ///             ...
 ///         })
 
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 let HockeyApp setParams = processHockeyAppCmd<HockeyAppUploadParams, HockeyResponse> HockeyAppUploadDefaults setParams validateParams toCurlArgs
 
 /// Create a new version of an app on HockeyApp
@@ -347,4 +359,5 @@ let HockeyApp setParams = processHockeyAppCmd<HockeyAppUploadParams, HockeyRespo
 ///             ...
 ///         })
 
+[<System.Obsolete("Use Fake.Api.HockeyApp instead (open Fake.Api and use 'HockeyApp.')")>]
 let HockeyAppVersion setParams = processHockeyAppCmd<HockeyAppVersionParams, HockeyVersionResponse> HockeyAppVersionDefaults setParams validateVersionParams toVersionCurlArgs
