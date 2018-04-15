@@ -8,9 +8,7 @@ open System.Net
 
 open Microsoft.FSharp.Core
 open System
-open System.Collections.Generic
 open System.IO
-open System.Text
 open System.Text.RegularExpressions
 open Fake.Core
 open Newtonsoft.Json
@@ -112,7 +110,6 @@ module HockeyApp =
     
     /// The HockeyAppVersion parameter type
     /// Based on https://support.hockeyapp.net/kb/api/api-versions#create-version
-    [<CLIMutable>]
     type HockeyAppVersionParams = 
         { 
             /// (Required) API token
@@ -134,7 +131,6 @@ module HockeyApp =
 
     /// The HockeyApp parameter type
     /// Based on http://support.hockeyapp.net/kb/api/api-apps#upload-app
-    [<CLIMutable>]
     type HockeyAppUploadParams = 
         {
             /// (Required) API token
