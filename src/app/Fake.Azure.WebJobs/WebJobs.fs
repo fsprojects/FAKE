@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to package and deploy [Azure Web Jobs](http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/) via the [Kudu](https://github.com/projectkudu/kudu) Zip controller
+[<RequireQualifiedAccess>]
 module Fake.Azure.WebJobs
 
 open System

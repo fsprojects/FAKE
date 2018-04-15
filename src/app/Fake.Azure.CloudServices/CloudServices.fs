@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to package Azure Cloud Services.
+[<RequireQualifiedAccess>]
 module Fake.Azure.CloudServices
 
 open System.IO

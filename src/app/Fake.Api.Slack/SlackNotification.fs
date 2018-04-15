@@ -8,6 +8,7 @@ open System.Net
 open Newtonsoft.Json
 
 /// Contains a task to send notification messages to a [Slack](https://slack.com/) webhook
+[<RequireQualifiedAccess>]
 module Slack = 
     /// The Slack notification attachment field parameter type
     type NotificationAttachmentFieldParams = {

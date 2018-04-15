@@ -1,5 +1,14 @@
 # Release Notes
 
+## 5.0.0-rc005 - 2018-04-15
+
+* [DOCS] Improve NPM documentation - https://github.com/fsharp/FAKE/pull/1867
+* [FAKE 5] Add yarn module 'Fake.JavaScript.Yarn' - https://github.com/fsharp/FAKE/pull/1868
+* [FAKE 5] Add HockeyApp module 'Fake.Api.HockeyApp' - https://github.com/fsharp/FAKE/pull/1870
+* [BUGFIX] Properly handle '.' in file-names - https://github.com/fsharp/FAKE/issues/1865
+* Add some missing RequireQualifiedAccess Attributes - https://github.com/fsharp/FAKE/pull/1862
+
+
 ## 5.0.0-rc004 - 2018-04-09
 
 * Same as rc002

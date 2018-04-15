@@ -112,7 +112,7 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 We [learned from our mistakes](fake-fake5-learn-more.html), so we use the following guidelines, **please read them very carefully** (ask if you don't understand any rule):
 
-* AutoOpen is no longer used
+* `AutoOpen` is no longer used
 * We replace `<verb><module>` functions with `<module>.<verb>`
   * Use Verbs as much as possible for functions
   * In order, to have a more consistent API we propose to always use camelCase naming for functions
@@ -130,6 +130,7 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
   * FAKE0004 for API not yet migrated, waiting for your contribution
 * Operators are opened seperatly with a separate `Operators` module
 * We avoid the `Helpers` suffix (because we now expect users to write `<module>.<function>`)
+* We generally use the `RequireQualifiedAccess` attribute on modules.
 
 ## Porting a module to FAKE 5
 

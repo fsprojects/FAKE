@@ -14,6 +14,7 @@ open Fake.Core
 open Newtonsoft.Json
 
 /// Contains tasks to interact with [HockeyApp](http://hockeyapp.com)
+[<RequireQualifiedAccess>]
 module HockeyApp =
 
     /// The release type of the app
@@ -98,7 +99,7 @@ module HockeyApp =
         PublicUrl : string
     }    
 
-    type BaseHockeyAppParams = 
+    type IBaseHockeyAppParams = 
         /// (Required) API token
         abstract ApiToken: string
 
@@ -124,7 +125,7 @@ module HockeyApp =
             /// Set maximum upload delay
             UploadTimeout: TimeSpan 
         }
-        interface BaseHockeyAppParams with
+        interface IBaseHockeyAppParams with
             member this.ApiToken = this.ApiToken
             member this.AppId = this.AppId
             member this.UploadTimeout = this.UploadTimeout
@@ -187,7 +188,7 @@ module HockeyApp =
             /// When uploading a build, specify to which version (hockeyapp version id)
             VersionId: string
         }
-        interface BaseHockeyAppParams with
+        interface IBaseHockeyAppParams with
             member this.ApiToken: string = this.ApiToken
             member this.AppId: string = this.AppId
             member this.UploadTimeout = this.UploadTimeout
@@ -293,7 +294,7 @@ module HockeyApp =
     }
 
     /// [omit]
-    let private processHockeyAppCmd<'TParam, 'TResponse when 'TParam :> BaseHockeyAppParams> defaults
+    let private processHockeyAppCmd<'TParam, 'TResponse when 'TParam :> IBaseHockeyAppParams> defaults
         (setParams: 'TParam -> 'TParam) 
         (validateParam: 'TParam -> 'TParam) 
         (toCurlArgs: 'TParam -> seq<string>) =
@@ -328,7 +329,7 @@ module HockeyApp =
     ///
     /// ## Sample
     ///
-    ///     uploadApp (fun defaults ->
+    ///     HockeyApp.uploadApp (fun defaults ->
     ///         {defaults with
     ///             AppId = ...
     ///             ApiToken = ...
@@ -343,7 +344,7 @@ module HockeyApp =
     ///
     /// ## Sample
     ///
-    ///     createAppVersion (fun defaults ->
+    ///     HockeyApp.createAppVersion (fun defaults ->
     ///         {defaults with
     ///             AppId = ...
     ///             ApiToken = ...

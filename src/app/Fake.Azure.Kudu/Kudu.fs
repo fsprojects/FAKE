@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to stage and deploy Azure website and webjobs using source code deployment with Kudu Sync.
+[<RequireQualifiedAccess>]
 module Fake.Azure.Kudu
 
 open System

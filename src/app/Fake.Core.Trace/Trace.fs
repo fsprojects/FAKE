@@ -1,9 +1,8 @@
 ﻿/// This module contains function which allow to trace build output
+[<RequireQualifiedAccess>]
 module Fake.Core.Trace
 
 open Fake.Core
-open Fake.Core.Environment
-open Fake.Core.BuildServer
 
 open System
 open System.Reflection
@@ -26,7 +25,7 @@ let logf fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.L
 
 /// Logs the specified string if the verbose mode is activated.
 let logVerbosefn fmt = 
-    Printf.ksprintf (if verbose then log
+    Printf.ksprintf (if BuildServer.verbose then log
                      else ignore) fmt
 
 /// Writes a trace to the command line (in green)
@@ -40,7 +39,7 @@ let tracef fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData
 
 /// Writes a trace to the command line (in green) if the verbose mode is activated.
 let traceVerbose s = 
-    if verbose then trace s
+    if BuildServer.verbose then trace s
 
 /// Writes a trace to stderr (in yellow)  
 let traceImportant text = CoreTracing.postMessage (TraceData.ImportantMessage text)
@@ -105,7 +104,7 @@ let traceEnvironmentVariables() =
 
 #else
     tracefn "Environment-Settings (%A):" "Process"
-    environVars () |> Seq.iter (tracefn "  %A")
+    Environment.environVars () |> Seq.iter (tracefn "  %A")
 #endif
 
 /// Traces a line
