@@ -6,7 +6,6 @@ open Fake.Core.Environment
 open Fake.Core.StringBuilder
 open Fake.Testing.Common
 open System
-open System.Diagnostics
 
 /// CLI parameters available if you use Tests.runTestsInAssembly defaultConfig argv in your code:
 type ExpectoParams =
@@ -95,33 +94,40 @@ type ExpectoParams =
         }
 
 let run (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
-    let args = setParams ExpectoParams.DefaultParams
-    //use __ = assemblies |> String.separated ", " |> Trace.traceStartTaskUnsafe "Expecto"
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "Expecto" details
-    let argsString = string args
+
     let runAssembly testAssembly =
-        let workingDir =
-            if String.isNotNullOrEmpty args.WorkingDirectory
-            then args.WorkingDirectory else Fake.IO.Path.getDirectory testAssembly
         let exitCode =
-            let info = ProcessStartInfo(testAssembly)
-            info.WorkingDirectory <- workingDir
-            info.Arguments <- argsString
-            info.UseShellExecute <- false
-            // Pass environment variables to the expecto console process in order to let it detect it's running on TeamCity
-            // (it checks TEAMCITY_PROJECT_NAME <> null specifically).
-            for name, value in environVars() do
-                info.EnvironmentVariables.[string name] <- string value
-            use proc = Process.Start(info)
-            proc.WaitForExit() // Don't set a process timeout. The timeout is per test.
-            proc.ExitCode
+            let fakeStartInfo testAssembly args  =
+                let workingDir =
+                    if String.isNotNullOrEmpty args.WorkingDirectory
+                    then args.WorkingDirectory else Fake.IO.Path.getDirectory testAssembly
+                (fun (info: ProcStartInfo) ->
+                    { info with 
+                        FileName = testAssembly
+                        Arguments = string args
+                        WorkingDirectory = workingDir 
+                        UseShellExecute = false 
+                        // Pass environment variables to the expecto console process in order to let it detect it's running on TeamCity
+                        // (it checks TEAMCITY_PROJECT_NAME <> null specifically).
+                        Environment = environVars() |> Map } )
+
+            let execWithExitCode testAssembly argsString timeout = 
+                Process.execRaw
+                    (fakeStartInfo testAssembly argsString) 
+                    timeout false ignore ignore
+
+            execWithExitCode testAssembly (setParams ExpectoParams.DefaultParams) TimeSpan.MaxValue
+
         testAssembly, exitCode
+
     let res =
         assemblies
         |> Seq.map runAssembly
         |> Seq.filter( snd >> (<>) 0)
         |> Seq.toList
+
     match res with
     | [] -> ()
     | failedAssemblies ->
