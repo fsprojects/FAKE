@@ -1,14 +1,13 @@
 /// Contains tasks to run [Expecto](https://github.com/haf/expecto) unit tests.
+[<RequireQualifiedAccess>]
 module Fake.DotNet.Testing.Expecto
 
 open Fake.Core
-open Fake.Core.Environment
-open Fake.Core.StringBuilder
 open Fake.Testing.Common
 open System
 
 /// CLI parameters available if you use Tests.runTestsInAssembly defaultConfig argv in your code:
-type ExpectoParams =
+type Params =
     {
       /// Extra verbose output for your tests.
       Debug : bool
@@ -41,23 +40,23 @@ type ExpectoParams =
     }
 
     override this.ToString() =
-        let append (s: string) (sb: StringBuilder) = sb.Append s
+        let append (s: string) (sb: StringBuilder.StringBuilder) = sb.Append s
         let appendIfTrue value s sb =
             if value then append s sb else sb
-        let appendIfNotNullOrWhiteSpace value s (sb: StringBuilder) =
+        let appendIfNotNullOrWhiteSpace value s (sb: StringBuilder.StringBuilder) =
             if String.IsNullOrWhiteSpace value |> not
             then sprintf "%s%s " s value |> sb.Append
             else sb
-        let appendIfNotEqual other value s (sb: StringBuilder) =
+        let appendIfNotEqual other value s (sb: StringBuilder.StringBuilder) =
             if other = value
             then sprintf "%s%A " s value |> sb.Append
             else sb
-        let appendList list s (sb: StringBuilder) =
+        let appendList list s (sb: StringBuilder.StringBuilder) =
             let filtered = list |> List.filter (String.IsNullOrWhiteSpace >> not)
             if List.isEmpty filtered then sb
             else
                 filtered |> String.separated " " |> sprintf "%s%s " s |> sb.Append
-        StringBuilder()
+        StringBuilder.StringBuilder()
         |> appendIfTrue this.Debug "--debug "
         |> appendIfTrue this.Parallel "--parallel "
         |> appendIfNotEqual 0 this.ParallelWorkers "--parallel-workers "
@@ -72,7 +71,7 @@ type ExpectoParams =
         |> appendIfNotNullOrWhiteSpace this.FilterTestList "--filter-test-list "
         |> appendList this.Run "--run "
         |> appendList this.CustomArgs ""
-        |> toText
+        |> StringBuilder.toText
 
     static member DefaultParams =
         {
@@ -93,7 +92,7 @@ type ExpectoParams =
             WorkingDirectory = ""
         }
 
-let run (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
+let run (setParams : Params -> Params) (assemblies : string seq) =
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "Expecto" details
 
@@ -107,16 +106,15 @@ let run (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
                     { info with 
                         FileName = testAssembly
                         Arguments = string args
-                        WorkingDirectory = workingDir 
-                        UseShellExecute = false 
-                        // Pass environment variables to the expecto console process in order to let it detect it's running on TeamCity
-                        // (it checks TEAMCITY_PROJECT_NAME <> null specifically).
-                        Environment = environVars() |> Map } )
+                        WorkingDirectory = workingDir } 
+                    // Pass environment variables to the expecto console process in order to let it detect it's running on TeamCity
+                    // (it checks TEAMCITY_PROJECT_NAME <> null specifically).
+                    |> Process.setEnvironmentVariables (Environment.environVars()) )
 
             let execWithExitCode testAssembly argsString timeout = 
                 Process.execSimple (fakeStartInfo testAssembly argsString) timeout
 
-            execWithExitCode testAssembly (setParams ExpectoParams.DefaultParams) TimeSpan.MaxValue
+            execWithExitCode testAssembly (setParams Params.DefaultParams) TimeSpan.MaxValue
 
         testAssembly, exitCode
 
@@ -130,6 +128,7 @@ let run (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
     | [] -> ()
     | failedAssemblies ->
         failedAssemblies
-        |> List.map (fun (testAssembly,exitCode) -> sprintf "Expecto test of assembly '%s' failed. Process finished with exit code %d." testAssembly exitCode)
+        |> List.map (fun (testAssembly,exitCode) -> 
+            sprintf "Expecto test of assembly '%s' failed. Process finished with exit code %d." testAssembly exitCode )
         |> String.concat System.Environment.NewLine
         |> FailedTestsException |> raise
