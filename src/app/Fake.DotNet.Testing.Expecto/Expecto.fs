@@ -106,10 +106,7 @@ let run (setParams : Params -> Params) (assemblies : string seq) =
                     { info with 
                         FileName = testAssembly
                         Arguments = string args
-                        WorkingDirectory = workingDir } 
-                    // Pass environment variables to the expecto console process in order to let it detect it's running on TeamCity
-                    // (it checks TEAMCITY_PROJECT_NAME <> null specifically).
-                    |> Process.setEnvironmentVariables (Environment.environVars()) )
+                        WorkingDirectory = workingDir } )
 
             let execWithExitCode testAssembly argsString timeout = 
                 Process.execSimple (fakeStartInfo testAssembly argsString) timeout
