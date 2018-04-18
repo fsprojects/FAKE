@@ -13,7 +13,7 @@ Currently debugging support (and documentation around it) is limited. Please hel
 
 Debugging works (on windows) in the following way:
 
-- Download the portable fake distribution `fake-portable.zip` and extract it somewhere (for example `E:\fake-portable`)
+- Download the portable fake distribution `fake-dotnetcore-portable.zip` and extract it somewhere (for example `E:\fake-dotnetcore-portable`)
 - Open Visual Studio Code
 - Open "The Debugger" view and add the following configuration
 
@@ -22,7 +22,7 @@ Debugging works (on windows) in the following way:
             "name": "Debug My Build Script",
             "type": "coreclr",
             "request": "launch",
-            "program": "E:\\fake-portable\\fake.dll",
+            "program": "E:\\fake-dotnetcore-portable\\fake.dll",
             "args": ["run", "build.fsx", "--fsiargs", "--debug:portable --optimize-"],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
