@@ -259,6 +259,7 @@ let dotnetAssemblyInfos =
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
+      "Fake.Core.Changelog", "Parsing Changelogs"
       "Fake.Core.SemVer", "Parsing and working with SemVer"
       "Fake.Core.String", "Core String manipulations"
       "Fake.Core.Target", "Defining and running Targets"
