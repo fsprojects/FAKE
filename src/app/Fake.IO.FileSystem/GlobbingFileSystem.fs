@@ -162,6 +162,42 @@ module FileIncludes =
     [<System.Obsolete("Please use GlobbingPattern instead")>]
     let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.setBaseDir dir fileIncludes
 
+/// Contains operators to find and process files.
+/// 
+/// ### Simple glob using as list
+///
+///     #r "paket: nuget Fake.IO.FileSystem //"
+///     open Fake.IO.Globbing.Operators
+///     let csProjectFiles = !! "src/*.csproj"
+///     
+///     for projectFile in csProjectFiles do
+///         printf "F# ProjectFile: %s" projectFile
+///
+/// ### Combine globs
+///
+///     #r "paket: nuget Fake.IO.FileSystem //"
+///     open Fake.IO.Globbing.Operators
+///     let projectFiles =
+///         !! "src/*/*.*proj"
+///         ++ "src/*/*.target"
+///         -- "src/*/*.vbproj"
+///     
+///     for projectFile in projectFiles do
+///         printf "ProjectFile: %s" projectFile
+///
+/// ### Forward globs to tasks
+///
+///     #r "paket:
+///     nuget Fake.Core.Target
+///     nuget Fake.IO.FileSystem //"
+///     open Fake.Core
+///     open Fake.IO
+///     open Fake.IO.Globbing.Operators
+///     Target.create "Clean" (fun _ ->
+///        !! "src/*/*/obj/**/*.nuspec"
+///        |> File.deleteAll
+///     )
+///
 module Operators =
     /// Add Include operator
     let inline (++) (x : IGlobbingPattern) pattern = x.And pattern

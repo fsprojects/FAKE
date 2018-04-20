@@ -11,10 +11,11 @@ If you succeeded with the [Getting Started tutorial](gettingstarted.html), then 
 nuget Fake.DotNet.AssemblyInfo
 nuget Fake.DotNet.MSBuild
 nuget Fake.Core.Target //"
+open Fake.Core
 open Fake.DotNet
 
-Target.Create "BuildApp" (fun _ ->
-    AssemblyInfoFile.CreateCSharp "./src/app/Calculator/Properties/AssemblyInfo.cs"
+Target.create "BuildApp" (fun _ ->
+    AssemblyInfoFile.createCSharp "./src/app/Calculator/Properties/AssemblyInfo.cs"
         [AssemblyInfo.Title "Calculator Command line tool"
             AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
             AssemblyInfo.Guid "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA"
@@ -22,7 +23,7 @@ Target.Create "BuildApp" (fun _ ->
             AssemblyInfo.Version version
             AssemblyInfo.FileVersion version]
 
-    AssemblyInfoFile.CreateFSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.fs"
+    AssemblyInfoFile.createFSharp "./src/app/CalculatorLib/Properties/AssemblyInfo.fs"
         [AssemblyInfo.Title "Calculator library"
             AssemblyInfo.Description "Sample project for FAKE - F# MAKE"
             AssemblyInfo.Guid "EE5621DB-B86B-44eb-987F-9C94BCC98441"
@@ -30,8 +31,8 @@ Target.Create "BuildApp" (fun _ ->
             AssemblyInfo.Version version
             AssemblyInfo.FileVersion version]
 
-    MSBuild.RunRelease buildDir "Build" appReferences
-        |> Log "AppBuild-Output: "
+    MSBuild.runRelease id buildDir "Build" appReferences
+        |> Trace.logItems "AppBuild-Output: "
 )
 ```
 
@@ -43,7 +44,7 @@ The version parameter can be declared as a property or fetched from a build serv
 
 ```fsharp
 let version =
-  match buildServer with
+  match BuildServer.buildServer with
   | TeamCity -> buildVersion
   | _ -> "0.2"
 ```
