@@ -5,17 +5,18 @@ For example topics about "Targets" like "specifictargets" has been added to the 
 You can find a link to the old documentation at the top of the new documentation.
 
 So to find the old documentation you usually:
+
 * Find the module in the navigation
 * Navigate to the FAKE 4 docs (linked at the top in bold)
- 
+
 > NOTE: This page might be removed without further notice once FAKE 5 has been released!
 
 Here is the old sidebar:
- 
+
 ## FAKE - F# Make
 
 * [Old Startpage](legacy-index.html)
- 
+
 ## Get FAKE via NuGet
 
 * [Source Code on GitHub](https://github.com/fsharp/FAKE)
@@ -29,7 +30,7 @@ Here is the old sidebar:
 
 * [Getting started](gettingstarted.html)
 * [Build script caching](cache.html)
- 
+
 * [NuGet package restore](nuget.html)
 * [Using FxCop in a build](fxcop.html)
 * [Generating AssemblyInfo](assemblyinfo.html)
@@ -55,9 +56,8 @@ Here is the old sidebar:
 * [Using Slack](slacknotification.html)
 * [Using Microsoft Teams](msteamsnotification.html)
 * [Using SonarQube](sonarcube.html)
- 
+
 * [Fake.Deploy](deploy.html)
 * [Fake.IIS](iis.html)
- 
-* [API Reference](apidocs/index.html)
 
+* [API Reference](apidocs/index.html)
