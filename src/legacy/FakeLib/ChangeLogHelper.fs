@@ -23,7 +23,7 @@
 ///             |> ChangeLogHelper.PromoteUnreleased newVersion
 ///             |> ChangeLogHelper.SavceChangeLog changeLogFile
 ///     )
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog)")>]
 module Fake.ChangeLogHelper
 
 open System
@@ -33,7 +33,7 @@ open Fake.AssemblyInfoFile
 let private trimLine = trimStartChars [|' '; '*'; '#'; '-'|] >> trimEndChars [|' '|]
 let private trimLines lines = lines |> Seq.map trimLine |> Seq.toList
 
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Change)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Change)")>]
 type Change =
     /// for new features
     | Added of string
@@ -50,7 +50,7 @@ type Change =
     /// Custom entry (Header, Description)
     | Custom of string * string
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Change, member: ToString)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Change, member: ToString)")>]
     override x.ToString() = 
         match x with
         | Added s -> sprintf "Added: %s" s
@@ -61,7 +61,7 @@ type Change =
         | Security s -> sprintf "Security: %s" s
         | Custom (h, s) -> sprintf "%s: %s" h s
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Change, member: New)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Change, member: New)")>]
     static member New(header: string, line: string): Change = 
         let line = line |> trimLine
 
@@ -87,7 +87,7 @@ let private makeEntry change =
     | Security c -> @"\n### Security", (bullet c)
     | Custom (h, c) -> (sprintf @"\n### %s" h), (bullet c)
 
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: ChangelogEntry)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: ChangelogEntry)")>]
 type ChangeLogEntry =
     { /// the parsed Version
       AssemblyVersion: string
@@ -104,7 +104,7 @@ type ChangeLogEntry =
       /// True, if the entry was yanked 
       IsYanked: bool }
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: ChangelogEntry, member: ToString)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: ChangelogEntry, member: ToString)")>]
     override x.ToString() = 
         let header = 
             let isoDate =
@@ -131,7 +131,7 @@ type ChangeLogEntry =
 
         (sprintf @"%s%s%s" header description changes).Replace(@"\n", Environment.NewLine).Trim()
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: ChangelogEntry, member: New)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: ChangelogEntry, member: New)")>]
     static member New(assemblyVersion, nugetVersion, date, description, changes, isYanked) = {
         AssemblyVersion = assemblyVersion
         NuGetVersion = nugetVersion
@@ -141,15 +141,15 @@ type ChangeLogEntry =
         Changes = changes
         IsYanked = isYanked }
     
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type ChangelogEntry, member: ToString)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type ChangelogEntry, member: ToString)")>]
     static member New(assemblyVersion, nugetVersion, changes) = ChangeLogEntry.New(assemblyVersion, nugetVersion, None, None, changes, false)
 
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Unreleased)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Unreleased)")>]
 type Unreleased = 
     { Description: string option
       Changes: Change list }
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Unreleased, member: ToString)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Unreleased, member: ToString)")>]
     override x.ToString() =
         let header = @"## Unreleased\n"
         
@@ -167,7 +167,7 @@ type Unreleased =
 
         (sprintf @"%s%s%s" header description changes).Replace(@"\n", Environment.NewLine).Trim()
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Unreleased, member: New)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Unreleased, member: New)")>]
     static member New(description, changes) =
         match description with
         | Some _ -> Some { Description = description; Changes = changes }
@@ -176,7 +176,7 @@ type Unreleased =
             | [] -> None
             | _ -> Some { Description = description; Changes = changes }
 
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, function: parseVersions)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: parseVersions)")>]
 let internal parseVersions = 
     let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
     fun line ->
@@ -189,7 +189,7 @@ let internal parseVersions =
         then failwithf "Unable to parse valid NuGet version from change log (%s)." line
         assemblyVersion, nugetVersion
 
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog)")>]
 type ChangeLog =
     { /// the header line
       Header: string
@@ -200,11 +200,11 @@ type ChangeLog =
       /// The change log entries
       Entries: ChangeLogEntry list }
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: LatestEntry)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: LatestEntry)")>]
     /// the latest change log entry
     member x.LatestEntry = x.Entries |> Seq.head
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: New)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: New)")>]
     static member New(header, description, unreleased, entries) = 
         {
             Header = header
@@ -213,15 +213,15 @@ type ChangeLog =
             Entries = entries 
         }
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: New)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: New)")>]
     static member New(description, unreleased, entries) =
         ChangeLog.New("Changelog", description, unreleased, entries)
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: New)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: New)")>]
     static member New(entries) =
         ChangeLog.New(None, None, entries)
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: PromoteUnreleased)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: PromoteUnreleased)")>]
     member x.PromoteUnreleased(assemblyVersion: string, nugetVersion: string) : ChangeLog =
         match x.Unreleased with
         | None -> x
@@ -230,12 +230,12 @@ type ChangeLog =
 
             ChangeLog.New(x.Header, x.Description, None, newEntry :: x.Entries)
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: PromoteUnreleased)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: PromoteUnreleased)")>]
     member x.PromoteUnreleased(version: string) : ChangeLog =
         let assemblyVersion, nugetVersion = version |> parseVersions
         x.PromoteUnreleased(assemblyVersion.Value, nugetVersion.Value)
 
-    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, type: Changelog, member: ToString)")>]
+    [<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, type: Changelog, member: ToString)")>]
     override x.ToString() =
         let description = 
             match x.Description with
@@ -263,7 +263,7 @@ type ChangeLog =
 ///
 /// ## Parameters
 ///  - `data` - change log text
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, function: parse)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: parse)")>]
 let parseChangeLog (data: seq<string>) : ChangeLog =
     let parseDate =
         let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
@@ -399,7 +399,7 @@ let parseChangeLog (data: seq<string>) : ChangeLog =
 /// 
 /// ## Returns
 /// The loaded change log (or throws an exception, if the change log could not be parsed)
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, function: load)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: load)")>]
 let LoadChangeLog fileName =
     System.IO.File.ReadLines fileName
     |> parseChangeLog
@@ -409,7 +409,7 @@ let LoadChangeLog fileName =
 /// ## Parameters
 ///  - `fileName` - ChangeLog text file name
 ///  - `changeLog` - the change log data
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, function: save)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: save)")>]
 let SaveChangeLog (fileName: string) (changeLog: ChangeLog) : unit =
     System.IO.File.WriteAllText(fileName, changeLog.ToString())
 
@@ -422,6 +422,6 @@ let SaveChangeLog (fileName: string) (changeLog: ChangeLog) : unit =
 ///
 /// ## Returns
 /// The promoted change log
-[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.Changelog, module: Changelog, function: promoteUnreleased)")>]
+[<System.Obsolete("Open Fake.Core instead (FAKE0001 - package: Fake.Core.ReleaseNotes, module: Changelog, function: promoteUnreleased)")>]
 let PromoteUnreleased (version: string) (changeLog: ChangeLog) : ChangeLog =
     changeLog.PromoteUnreleased(version)
