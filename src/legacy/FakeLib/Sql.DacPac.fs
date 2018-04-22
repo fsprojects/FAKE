@@ -1,4 +1,5 @@
 ﻿/// Contains helpers around deploying databases.
+[<System.Obsolete("Please open Fake.Sql instead and use the Fake.Sql.DacPac module (FAKE0001 - package: Fake.Sql.DacPac, module: DacPac)")>]
 module Fake.Sql.DacPac
 
 open Fake.EnvironmentHelper
@@ -9,6 +10,7 @@ open System.Diagnostics
 open System
 
 /// The type of action to execute.
+[<System.Obsolete("FAKE0001 Use `open Fake.Sql` and `DacPac.DeployAction`")>]
 type DeployAction =
     /// Generate and apply a synchronisation script between two databases.
     | Deploy
@@ -18,6 +20,7 @@ type DeployAction =
     | Report of OutputPath:string
 
 /// Configuration arguments for DacPac deploy
+[<System.Obsolete("FAKE0001 Use `open Fake.Sql` and `DacPac.DeployDbArgs`")>]
 type DeployDbArgs = {
     /// The path to SqlPackage.exe.
     SqlPackageToolPath : string
@@ -40,6 +43,7 @@ type DeployDbArgs = {
     /// SQLCMD variables
     Variables : (string * string) list }
 
+[<System.Obsolete("FAKE0001 Use `open Fake.Sql` and `DacPac.validPaths`")>]
 let validPaths =
     let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
     let getVsVersion path = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
@@ -52,6 +56,7 @@ let validPaths =
     |> List.map fst
 
 /// The default DacPac deployment arguments.
+[<System.Obsolete("FAKE0001 Use `open Fake.Sql` and `DacPac.DefaultDeploymentArgs`")>]
 let defaultDeploymentArgs = 
     { SqlPackageToolPath = 
         validPaths
@@ -81,6 +86,7 @@ let private generateCommandLine args =
     action, outputPath
 
 /// Deploys a SQL DacPac or database to another database or DacPac.
+[<System.Obsolete("FAKE0001 Use `open Fake.Sql` and `DacPac.deployDb`")>]
 let deployDb setParams =
     let args = setParams defaultDeploymentArgs
     let action, outputPath = generateCommandLine args.Action
