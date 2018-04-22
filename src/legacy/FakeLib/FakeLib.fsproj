@@ -379,6 +379,9 @@
     <Compile Include="..\..\app\Fake.Api.HockeyApp\HockeyApp.fs">
       <Link>Fake.Api.HockeyApp\HockeyApp.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Documentation.DocFx\DocFx.fs">
+      <Link>Fake.Documentation.DocFx\DocFx.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
