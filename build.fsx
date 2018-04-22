@@ -892,11 +892,8 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 )
 let executeFPM args =
     printfn "%s %s" "fpm" args
-    #if BOOTSTRAP
-    Shell.exec("fpm", args=args, dir="bin")
-    #else
     Shell.Exec("fpm", args=args, dir="bin")
-    #endif
+
 
 type SourceType =
     | Dir of source:string * target:string
