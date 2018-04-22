@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Packaging Azure Cloud Services
+		<title>Packaging and Deploying SQL Databases
 </title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
@@ -87,12 +87,15 @@
 																<li><a href="apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -106,6 +109,7 @@
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -142,17 +146,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
-																<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -161,13 +184,9 @@
 															<ul>
 																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -196,65 +215,41 @@
 
 									<!-- Content -->
                       <article>
-<h1><a name="Packaging-Azure-Cloud-Services" class="anchor" href="#Packaging-Azure-Cloud-Services">Packaging Azure Cloud Services</a></h1>
-<p>FAKE can be used to create a Azure Cloud Service package (.cspkg) for use with e.g. Worker Roles.</p>
-<p>Currently it does not support publishing, and has several restrictions: -</p>
-<ol>
-<li>The service definition file must be called ServiceDefinition.csdef.</li>
-<li>It only works for single-role workers.</li>
-<li>It does not perform a build of the worker role project - this should be done beforehand.</li>
-<li>Always packages from the Release outputs.</li>
-</ol>
-<p>Assume a solution with the following structure: -</p>
-<ul>
-<li>
-MyCloudService.ccproj
-<ul>
-<li>Contains a single role, "MyRole".</li>
-<li>Contains a <code>ServiceDefinition.cscfg</code> file.</li>
-</ul>
-</li>
-<li>
-MyWorkerRole.fsproj
-<ul>
-<li>Referenced by MyCloudService as a Role.</li>
-<li>Contains a typical <code>RoleEntryPoint</code> class.</li>
-</ul>
-</li>
-</ul>
-<p>You can package this cloud service thus: -</p>
+<h1><a name="Packaging-and-Deploying-SQL-Databases" class="anchor" href="#Packaging-and-Deploying-SQL-Databases">Packaging and Deploying SQL Databases</a></h1>
+<p><strong>Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-dacpac.html">here</a></strong></p>
+<p>FAKE can be used to create a SQL DACPAC and also deploy it to a SQL Server using the MSDeploy executable. This is installed by default with Visual Studio and with the SQL Server Data Tools (SSDT) package.</p>
+<p>DACPACs automatically diff from the source to the destination and generate the SQL script dynamically.</p>
+<p>You can read up more on DACPac and MSDeploy arguments <a href="https://msdn.microsoft.com/en-us/library/hh550081%28v=vs.103%29.aspx">here</a>.</p>
+<h2><a name="Sample-usage" class="anchor" href="#Sample-usage">Sample usage</a></h2>
+<p>Ensure that you have already built your database project (you can do this with standard MSBuild). Then, use the <code>deployDb</code> command to deploy the <code>dbProject.dacpac</code> to the <code>myDatabase</code>.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
+<span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;PackageCloudService&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="id">PackageRole</span>
-        <span class="pn">{</span> <span class="id">CloudService</span> <span class="o">=</span> <span class="s">&quot;MyCloudService&quot;</span>
-          <span class="id">WorkerRole</span> <span class="o">=</span> <span class="s">&quot;MyWorkerRole&quot;</span>
-          <span class="id">SdkVersion</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span>
-          <span class="id">OutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">None</span> <span class="pn">}</span><span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
-<p>This will build <code>MyCloudService.cspkg</code> in the current directory (override using <code>OutputPath</code>).</p>
-<p>When packaging occurs, the task will scan the local machine for installed Azure SDK versions; if none is specified,
-it will pick the highest version installed. You can override this with the SdkVersion property e.g. <code>Some 2.4</code>.
-You can plug this into a regular FAKE pipeline as follows: -</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Clean&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;PackageCloudService&quot;</span>
-</code></pre></td>
-</tr>
-</table>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Sql</span>
 
-<div class="tip" id="fs1">union case Option.None: Option&lt;&#39;T&gt;</div>
+<span class="c">/// the database for local development + compile</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;DeployLocalDb&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="k">let</span> <span class="id">connectionString</span> <span class="o">=</span> <span class="s">&quot;Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True;Database=MyDatabase;Pooling=False&quot;</span>
+    <span class="k">let</span> <span class="id">dacPacPath</span> <span class="o">=</span> <span class="s">&quot;path/to/dbProject.dacpac&quot;</span>
+    <span class="id">DacPac</span><span class="pn">.</span><span class="id">deployDb</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span> <span class="id">Source</span> <span class="o">=</span> <span class="id">dacPacPath</span><span class="pn">;</span> <span class="id">Destination</span> <span class="o">=</span> <span class="id">localDbConnectionString</span> <span class="pn">}</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">ignore</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Deployment-Options" class="anchor" href="#Deployment-Options">Deployment Options</a></h2>
+<p>You can optionally specify the type of command to use (again, refer to the documentation above for more detail): -</p>
+<ul>
+<li>Deploy - full deploy to destination</li>
+<li>Script - SQL script</li>
+<li>Report - XML report of diff</li>
+</ul>
+<p>In addition, you can also elect to deploy to Dacpac files rather than SQL databases - simply pass in the pass to the dacpac that you wish to generate.</p>
+
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
 
                       </article>
 								</div>
@@ -360,7 +355,7 @@ You can plug this into a regular FAKE pipeline as follows: -</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>

@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Integrating a FAKE build script into TeamCity
+		<title>Packaging Azure Cloud Services
 </title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
@@ -87,12 +87,15 @@
 																<li><a href="apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -106,6 +109,7 @@
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -142,17 +146,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
-																<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -161,13 +184,9 @@
 															<ul>
 																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -196,34 +215,66 @@
 
 									<!-- Content -->
                       <article>
-<h1><a name="Integrating-a-FAKE-build-script-into-TeamCity" class="anchor" href="#Integrating-a-FAKE-build-script-into-TeamCity">Integrating a FAKE build script into TeamCity</a></h1>
-<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
-<p>Easy <a href="http://www.jetbrains.com/teamcity/">TeamCity</a> integration was one of the major goals for the FAKE build system.</p>
-<p>In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the <a href="gettingstarted.html">getting started guide</a>.</p>
-<h2><a name="Installing-TeamCity" class="anchor" href="#Installing-TeamCity">Installing TeamCity</a></h2>
-<p>You can download the free professional edition of TeamCity from <a href="http://www.jetbrains.com/teamcity/"><a href="http://www.jetbrains.com/teamcity/">http://www.jetbrains.com/teamcity/</a></a>. After the installation process you should be ready to configure your first build.</p>
-<h2><a name="Creating-a-FAKE-project-on-TeamCity" class="anchor" href="#Creating-a-FAKE-project-on-TeamCity">Creating a FAKE project on TeamCity</a></h2>
-<p>Now create a new project and add a build configuration:</p>
-<p><img src="pics/teamcity/createproject.png" alt="alt text" title="Creating a FAKE project on TeamCity" /></p>
-<p>You also need to set the artifacts paths:</p>
-<p><img src="pics/teamcity/generalsettings.png" alt="alt text" title="Set the settings" /></p>
-<h2><a name="Attach-a-VCS-root" class="anchor" href="#Attach-a-VCS-root">Attach a VCS root</a></h2>
-<p>The next step is to attach a VCS root. For this sample we will use the official FAKE repository at <a href="https://github.com/forki/FAKE/"><a href="https://github.com/forki/FAKE/">https://github.com/forki/FAKE/</a></a>.</p>
-<p><img src="pics/teamcity/vcsroot.png" alt="alt text" title="Set up the VCS root" />
-<img src="pics/teamcity/auth.png" alt="alt text" title="Set up the VCS root authentication" />
-<img src="pics/teamcity/checkoutrules.png" alt="alt text" title="Set up the VCS root checkout rules" /></p>
-<h2><a name="Creating-the-build-step" class="anchor" href="#Creating-the-build-step">Creating the build step</a></h2>
-<p>Now is the time to create two build steps. The first one downloads FAKE via Nuget and the second one runs the build script:</p>
-<p><img src="pics/teamcity/buildstep1.png" alt="alt text" title="Download FAKE" />
-<img src="pics/teamcity/buildstep2.png" alt="alt text" title="Run FAKE script" /></p>
-<p>If you want you could also add a build trigger to your build script:</p>
-<p><img src="pics/teamcity/trigger.png" alt="alt text" title="Set up the build trigger" /></p>
-<h2><a name="Running-the-build" class="anchor" href="#Running-the-build">Running the build</a></h2>
-<p>Now if everything is configured correctly, you can run your build and the output should look like:</p>
-<p><img src="pics/teamcity/output.png" alt="alt text" title="Build output" /></p>
-<p>You can also inspect the NUnit results:</p>
-<p><img src="pics/teamcity/nunit.png" alt="alt text" title="NUnit results" /></p>
+<h1><a name="Packaging-Azure-Cloud-Services" class="anchor" href="#Packaging-Azure-Cloud-Services">Packaging Azure Cloud Services</a></h1>
+<p><strong>Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found <a href="apidocs/fake-azure-cloudservices.html">here</a></strong></p>
+<p>FAKE can be used to create a Azure Cloud Service package (.cspkg) for use with e.g. Worker Roles.</p>
+<p>Currently it does not support publishing, and has several restrictions: -</p>
+<ol>
+<li>The service definition file must be called ServiceDefinition.csdef.</li>
+<li>It only works for single-role workers.</li>
+<li>It does not perform a build of the worker role project - this should be done beforehand.</li>
+<li>Always packages from the Release outputs.</li>
+</ol>
+<p>Assume a solution with the following structure: -</p>
+<ul>
+<li>
+MyCloudService.ccproj
+<ul>
+<li>Contains a single role, "MyRole".</li>
+<li>Contains a <code>ServiceDefinition.cscfg</code> file.</li>
+</ul>
+</li>
+<li>
+MyWorkerRole.fsproj
+<ul>
+<li>Referenced by MyCloudService as a Role.</li>
+<li>Contains a typical <code>RoleEntryPoint</code> class.</li>
+</ul>
+</li>
+</ul>
+<p>You can package this cloud service thus: -</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;PackageCloudService&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">PackageRole</span>
+        <span class="pn">{</span> <span class="id">CloudService</span> <span class="o">=</span> <span class="s">&quot;MyCloudService&quot;</span>
+          <span class="id">WorkerRole</span> <span class="o">=</span> <span class="s">&quot;MyWorkerRole&quot;</span>
+          <span class="id">SdkVersion</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">None</span>
+          <span class="id">OutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">None</span> <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<p>This will build <code>MyCloudService.cspkg</code> in the current directory (override using <code>OutputPath</code>).</p>
+<p>When packaging occurs, the task will scan the local machine for installed Azure SDK versions; if none is specified,
+it will pick the highest version installed. You can override this with the SdkVersion property e.g. <code>Some 2.4</code>.
+You can plug this into a regular FAKE pipeline as follows: -</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;PackageCloudService&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 
+<div class="tip" id="fs1">union case Option.None: Option&lt;&#39;T&gt;</div>
 
                       </article>
 								</div>
@@ -329,7 +380,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>

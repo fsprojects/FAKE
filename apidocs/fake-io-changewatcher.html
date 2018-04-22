@@ -86,12 +86,15 @@
 																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="../apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="../apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="../apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -105,6 +108,7 @@
 																<li><a href="../apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
 																<li><a href="../apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -141,17 +145,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="../sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="../apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="../apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="../apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="../apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="../apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="../todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="../todo-wix.html">Windows.WiX</a></li>
 																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="../todo-iis.html">?.?.IIS</a></li>
-																<li><a href="../todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="../todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -160,13 +183,9 @@
 															<ul>
 																<li><a href="../todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="../todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="../todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="../todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="../todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="../todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="../todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="../todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="../todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -201,6 +220,36 @@
 
 <a name="ChangeWatcher" class="anchor" href="#ChangeWatcher"><h1>ChangeWatcher</h1></a>
 <div class="xmldoc">
+<p>This module is part of the <code>Fake.IO.FileSystem</code> package</p>
+
+        <h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Watch&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="k">use</span> <span class="id">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;c:/projects/watchDir/*.txt&quot;</span> <span class="o">|&gt;</span> <span class="id">ChangeWatcher</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">changes</span> <span class="k">-&gt;</span>
+        <span class="c">// do something</span>
+    <span class="pn">)</span>
+
+    <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Console</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">ReadLine</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">ignore</span>
+
+    <span class="id">watcher</span><span class="pn">.</span><span class="id">Dispose</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// if you need to cleanup the watcher.</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">namespace System</div>
+<div class="tip" id="fs2">type Console =<br />&#160;&#160;static member BackgroundColor : ConsoleColor with get, set<br />&#160;&#160;static member Beep : unit -&gt; unit + 1 overload<br />&#160;&#160;static member BufferHeight : int with get, set<br />&#160;&#160;static member BufferWidth : int with get, set<br />&#160;&#160;static member CapsLock : bool<br />&#160;&#160;static member Clear : unit -&gt; unit<br />&#160;&#160;static member CursorLeft : int with get, set<br />&#160;&#160;static member CursorSize : int with get, set<br />&#160;&#160;static member CursorTop : int with get, set<br />&#160;&#160;static member CursorVisible : bool with get, set<br />&#160;&#160;...</div>
+<div class="tip" id="fs3">System.Console.ReadLine() : string</div>
+<div class="tip" id="fs4">val ignore : value:&#39;T -&gt; unit</div>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -239,7 +288,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/ChangeWatcher.fs#L121-121" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/ChangeWatcher.fs#L122-122" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -257,7 +306,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/ChangeWatcher.fs#L48-48" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/ChangeWatcher.fs#L49-49" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -268,33 +317,6 @@ Returns an IDisposable which allows to dispose all internally used FileSystemWat
 <li><code>onChange</code> - function to call when a change is detected.</li>
 <li><code>fileIncludes</code> - The glob pattern for files to watch for changes.</li>
 </ul>
-<h2>Sample</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
-<span class="l">8: </span>
-<span class="l">9: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span><span class="pn">.</span><span class="id">Create</span> <span class="s">&quot;Watch&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="k">use</span> <span class="id">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;c:/projects/watchDir/*.txt&quot;</span> <span class="o">|&gt;</span> <span class="id">ChangeWatcher</span><span class="pn">.</span><span class="id">Run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">changes</span> <span class="k">-&gt;</span>
-        <span class="c">// do something</span>
-    <span class="pn">)</span>
-
-    <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Console</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">ReadLine</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">ignore</span>
-
-    <span class="id">watcher</span><span class="pn">.</span><span class="id">Dispose</span><span class="pn">(</span><span class="pn">)</span> <span class="c">// if you need to cleanup the watcher.</span>
-<span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
-<div class="tip" id="fs1">namespace System</div>
-<div class="tip" id="fs2">type Console =<br />&#160;&#160;static member BackgroundColor : ConsoleColor with get, set<br />&#160;&#160;static member Beep : unit -&gt; unit + 1 overload<br />&#160;&#160;static member BufferHeight : int with get, set<br />&#160;&#160;static member BufferWidth : int with get, set<br />&#160;&#160;static member CapsLock : bool<br />&#160;&#160;static member Clear : unit -&gt; unit<br />&#160;&#160;static member CursorLeft : int with get, set<br />&#160;&#160;static member CursorSize : int with get, set<br />&#160;&#160;static member CursorTop : int with get, set<br />&#160;&#160;static member CursorVisible : bool with get, set<br />&#160;&#160;...</div>
-<div class="tip" id="fs3">System.Console.ReadLine() : string</div>
-<div class="tip" id="fs4">val ignore : value:&#39;T -&gt; unit</div>
 
 
         </td>
@@ -406,7 +428,7 @@ Returns an IDisposable which allows to dispose all internally used FileSystemWat
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>

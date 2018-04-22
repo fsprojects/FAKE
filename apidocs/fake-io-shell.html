@@ -86,12 +86,15 @@
 																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="../apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="../apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="../apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -105,6 +108,7 @@
 																<li><a href="../apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
 																<li><a href="../apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -141,17 +145,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="../sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="../apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="../apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="../apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="../apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="../apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="../todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="../todo-wix.html">Windows.WiX</a></li>
 																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="../todo-iis.html">?.?.IIS</a></li>
-																<li><a href="../todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="../todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -160,13 +183,9 @@
 															<ul>
 																<li><a href="../todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="../todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="../todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="../todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="../todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="../todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="../todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="../todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="../todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -232,14 +251,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1847', 1847)" onmouseover="showTip(event, '1847', 1847)">
-            AppendTextFiles(newFileName files)
+            appendTextFiles(newFileName files)
           </code>
           <div class="tip" id="1847">
             <strong>Signature:</strong> newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L204-204" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L205-205" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -257,14 +276,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1848', 1848)" onmouseover="showTip(event, '1848', 1848)">
-            AppendTextFilesWithEncoding(...)
+            AppendTextFiles(newFileName files)
           </code>
           <div class="tip" id="1848">
-            <strong>Signature:</strong> encoding:Encoding -&gt; newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+            <strong>Signature:</strong> newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L190-190" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L480-480" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -282,18 +301,23 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1849', 1849)" onmouseover="showTip(event, '1849', 1849)">
-            cd(path)
+            appendTextFilesWithEncoding(...)
           </code>
           <div class="tip" id="1849">
-            <strong>Signature:</strong> path:string -&gt; unit<br />
+            <strong>Signature:</strong> encoding:Encoding -&gt; newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L388-388" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L191-191" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Changes working directory</p>
+          <p>Appends all given files to one file.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>newFileName</code> - The target FileName.</li>
+<li><code>files</code> - The original FileNames as a sequence.</li>
+</ul>
 
 
         </td>
@@ -302,14 +326,39 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1850', 1850)" onmouseover="showTip(event, '1850', 1850)">
-            chdir(path)
+            AppendTextFilesWithEncoding(...)
           </code>
           <div class="tip" id="1850">
+            <strong>Signature:</strong> encoding:Encoding -&gt; newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L471-471" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Appends all given files to one file.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>newFileName</code> - The target FileName.</li>
+<li><code>files</code> - The original FileNames as a sequence.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1851', 1851)" onmouseover="showTip(event, '1851', 1851)">
+            cd(path)
+          </code>
+          <div class="tip" id="1851">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L385-385" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L609-609" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -321,15 +370,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1851', 1851)" onmouseover="showTip(event, '1851', 1851)">
-            CleanDir(path)
+          <code onmouseout="hideTip(event, '1852', 1852)" onmouseover="showTip(event, '1852', 1852)">
+            chdir(path)
           </code>
-          <div class="tip" id="1851">
+          <div class="tip" id="1852">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L158-158" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L606-606" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Changes working directory</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1853', 1853)" onmouseover="showTip(event, '1853', 1853)">
+            cleanDir(path)
+          </code>
+          <div class="tip" id="1853">
+            <strong>Signature:</strong> path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L159-159" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -341,15 +410,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1852', 1852)" onmouseover="showTip(event, '1852', 1852)">
-            CleanDirs(dirs)
+          <code onmouseout="hideTip(event, '1854', 1854)" onmouseover="showTip(event, '1854', 1854)">
+            CleanDir(path)
           </code>
-          <div class="tip" id="1852">
+          <div class="tip" id="1854">
+            <strong>Signature:</strong> path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L451-451" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Cleans a directory by removing all files and sub-directories.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1855', 1855)" onmouseover="showTip(event, '1855', 1855)">
+            cleanDirs(dirs)
+          </code>
+          <div class="tip" id="1855">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L177-177" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L178-178" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -361,15 +450,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1853', 1853)" onmouseover="showTip(event, '1853', 1853)">
-            CompareFiles(...)
+          <code onmouseout="hideTip(event, '1856', 1856)" onmouseover="showTip(event, '1856', 1856)">
+            CleanDirs(dirs)
           </code>
-          <div class="tip" id="1853">
+          <div class="tip" id="1856">
+            <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L455-455" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Cleans multiple directories</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1857', 1857)" onmouseover="showTip(event, '1857', 1857)">
+            compareFiles(...)
+          </code>
+          <div class="tip" id="1857">
             <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L208-208" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L209-209" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -382,15 +491,36 @@ If delete is set to true then equal files will be removed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1854', 1854)" onmouseover="showTip(event, '1854', 1854)">
-            Copy(target files)
+          <code onmouseout="hideTip(event, '1858', 1858)" onmouseover="showTip(event, '1858', 1858)">
+            CompareFiles(...)
           </code>
-          <div class="tip" id="1854">
+          <div class="tip" id="1858">
+            <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L486-486" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Compares the given files for changes.
+If delete is set to true then equal files will be removed.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1859', 1859)" onmouseover="showTip(event, '1859', 1859)">
+            copy(target files)
+          </code>
+          <div class="tip" id="1859">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L62-62" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L63-63" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -407,15 +537,40 @@ If delete is set to true then equal files will be removed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1855', 1855)" onmouseover="showTip(event, '1855', 1855)">
-            CopyCached(target cacheDir files)
+          <code onmouseout="hideTip(event, '1860', 1860)" onmouseover="showTip(event, '1860', 1860)">
+            Copy(target files)
           </code>
-          <div class="tip" id="1855">
+          <div class="tip" id="1860">
+            <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L392-392" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies the files to the target.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>files</code> - The original file names as a sequence.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1861', 1861)" onmouseover="showTip(event, '1861', 1861)">
+            copyCached(target cacheDir files)
+          </code>
+          <div class="tip" id="1861">
             <strong>Signature:</strong> target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L80-80" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L81-81" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -434,15 +589,42 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1856', 1856)" onmouseover="showTip(event, '1856', 1856)">
-            CopyDir(target source filterFile)
+          <code onmouseout="hideTip(event, '1862', 1862)" onmouseover="showTip(event, '1862', 1862)">
+            CopyCached(target cacheDir files)
           </code>
-          <div class="tip" id="1856">
+          <div class="tip" id="1862">
+            <strong>Signature:</strong> target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L410-410" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies the files from a cache folder.
+If the files are not cached or the original files have a different write time the cache will be refreshed.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target FileName.</li>
+<li><code>cacheDir</code> - The cache directory.</li>
+<li><code>files</code> - The orginal files.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1863', 1863)" onmouseover="showTip(event, '1863', 1863)">
+            copyDir(target source filterFile)
+          </code>
+          <div class="tip" id="1863">
             <strong>Signature:</strong> target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L141-141" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L142-142" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -460,15 +642,41 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1857', 1857)" onmouseover="showTip(event, '1857', 1857)">
-            CopyFile(target fileName)
+          <code onmouseout="hideTip(event, '1864', 1864)" onmouseover="showTip(event, '1864', 1864)">
+            CopyDir(target source filterFile)
           </code>
-          <div class="tip" id="1857">
+          <div class="tip" id="1864">
+            <strong>Signature:</strong> target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L446-446" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>source</code> - The source directory.</li>
+<li><code>filterFile</code> - A file filter predicate.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1865', 1865)" onmouseover="showTip(event, '1865', 1865)">
+            copyFile(target fileName)
+          </code>
+          <div class="tip" id="1865">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L16-16" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L17-17" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -485,15 +693,40 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1858', 1858)" onmouseover="showTip(event, '1858', 1858)">
-            CopyFileIntoSubFolder(target fileName)
+          <code onmouseout="hideTip(event, '1866', 1866)" onmouseover="showTip(event, '1866', 1866)">
+            CopyFile(target fileName)
           </code>
-          <div class="tip" id="1858">
+          <div class="tip" id="1866">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L40-40" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L365-365" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies a single file to the target and overwrites the existing file.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory or file.</li>
+<li><code>fileName</code> - The FileName.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1867', 1867)" onmouseover="showTip(event, '1867', 1867)">
+            copyFileIntoSubFolder(target fileName)
+          </code>
+          <div class="tip" id="1867">
+            <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L41-41" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -510,15 +743,40 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1859', 1859)" onmouseover="showTip(event, '1859', 1859)">
-            CopyFiles(target files)
+          <code onmouseout="hideTip(event, '1868', 1868)" onmouseover="showTip(event, '1868', 1868)">
+            CopyFileIntoSubFolder(target fileName)
           </code>
-          <div class="tip" id="1859">
+          <div class="tip" id="1868">
+            <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L373-373" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies a single file to a relative subfolder of the target.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory</li>
+<li><code>fileName</code> - The fileName</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1869', 1869)" onmouseover="showTip(event, '1869', 1869)">
+            copyFiles(target files)
+          </code>
+          <div class="tip" id="1869">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L132-132" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L133-133" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -535,15 +793,40 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1860', 1860)" onmouseover="showTip(event, '1860', 1860)">
-            CopyFileWithSubfolder(...)
+          <code onmouseout="hideTip(event, '1870', 1870)" onmouseover="showTip(event, '1870', 1870)">
+            CopyFiles(target files)
           </code>
-          <div class="tip" id="1860">
+          <div class="tip" id="1870">
+            <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L436-436" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies the files to the target - Alias for Copy</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>files</code> - The orginal file names.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1871', 1871)" onmouseover="showTip(event, '1871', 1871)">
+            copyFileWithSubfolder(...)
+          </code>
+          <div class="tip" id="1871">
             <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L51-51" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L52-52" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -562,15 +845,42 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1861', 1861)" onmouseover="showTip(event, '1861', 1861)">
-            CopyRecursive(dir outputDir overWrite)
+          <code onmouseout="hideTip(event, '1872', 1872)" onmouseover="showTip(event, '1872', 1872)">
+            CopyFileWithSubfolder(...)
           </code>
-          <div class="tip" id="1861">
+          <div class="tip" id="1872">
+            <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L383-383" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies a single file to the target folder preserving the folder structure
+starting from the specified base folder.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>baseDir</code> - The base directory.</li>
+<li><code>target</code> - The target directory.</li>
+<li><code>fileName</code> - The file name.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1873', 1873)" onmouseover="showTip(event, '1873', 1873)">
+            copyRecursive(dir outputDir overWrite)
+          </code>
+          <div class="tip" id="1873">
             <strong>Signature:</strong> dir:string -&gt; outputDir:string -&gt; overWrite:bool -&gt; string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L270-270" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L271-271" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -582,15 +892,35 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1862', 1862)" onmouseover="showTip(event, '1862', 1862)">
-            CopyRecursive2(method dir outputDir)
+          <code onmouseout="hideTip(event, '1874', 1874)" onmouseover="showTip(event, '1874', 1874)">
+            CopyRecursive(dir outputDir overWrite)
           </code>
-          <div class="tip" id="1862">
+          <div class="tip" id="1874">
+            <strong>Signature:</strong> dir:string -&gt; outputDir:string -&gt; overWrite:bool -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L520-520" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies the file structure recursively.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1875', 1875)" onmouseover="showTip(event, '1875', 1875)">
+            copyRecursive2(method dir outputDir)
+          </code>
+          <div class="tip" id="1875">
             <strong>Signature:</strong> method:CopyRecursiveMethod -&gt; dir:string -&gt; outputDir:string -&gt; string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L289-289" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L290-290" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -608,15 +938,41 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1863', 1863)" onmouseover="showTip(event, '1863', 1863)">
-            CopyRecursiveTo(overWrite outputDir dir)
+          <code onmouseout="hideTip(event, '1876', 1876)" onmouseover="showTip(event, '1876', 1876)">
+            CopyRecursive2(method dir outputDir)
           </code>
-          <div class="tip" id="1863">
+          <div class="tip" id="1876">
+            <strong>Signature:</strong> method:CopyRecursiveMethod -&gt; dir:string -&gt; outputDir:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L531-531" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies the file structure recursively.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>method</code> - the method to decide which files get copied</li>
+<li><code>dir</code> - The source directory.</li>
+<li><code>outputDir</code> - The target directory.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1877', 1877)" onmouseover="showTip(event, '1877', 1877)">
+            copyRecursiveTo(overWrite outputDir dir)
+          </code>
+          <div class="tip" id="1877">
             <strong>Signature:</strong> overWrite:bool -&gt; outputDir:string -&gt; dir:string -&gt; string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L271-271" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L272-272" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -626,15 +982,33 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1864', 1864)" onmouseover="showTip(event, '1864', 1864)">
-            CopyTo(target files)
+          <code onmouseout="hideTip(event, '1878', 1878)" onmouseover="showTip(event, '1878', 1878)">
+            CopyRecursiveTo(overWrite outputDir dir)
           </code>
-          <div class="tip" id="1864">
+          <div class="tip" id="1878">
+            <strong>Signature:</strong> overWrite:bool -&gt; outputDir:string -&gt; dir:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L522-522" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1879', 1879)" onmouseover="showTip(event, '1879', 1879)">
+            copyTo(target files)
+          </code>
+          <div class="tip" id="1879">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L71-71" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L72-72" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -651,15 +1025,40 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1865', 1865)" onmouseover="showTip(event, '1865', 1865)">
+          <code onmouseout="hideTip(event, '1880', 1880)" onmouseover="showTip(event, '1880', 1880)">
+            CopyTo(target files)
+          </code>
+          <div class="tip" id="1880">
+            <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L400-400" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies the given files to the target.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>files</code> - The original file names as a sequence.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1881', 1881)" onmouseover="showTip(event, '1881', 1881)">
             cp(src dest)
           </code>
-          <div class="tip" id="1865">
+          <div class="tip" id="1881">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L382-382" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L603-603" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -673,15 +1072,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1866', 1866)" onmouseover="showTip(event, '1866', 1866)">
+          <code onmouseout="hideTip(event, '1882', 1882)" onmouseover="showTip(event, '1882', 1882)">
             cp_r(src dest)
           </code>
-          <div class="tip" id="1866">
+          <div class="tip" id="1882">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L375-375" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L596-596" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -693,15 +1092,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1867', 1867)" onmouseover="showTip(event, '1867', 1867)">
-            DeleteDir(dir)
+          <code onmouseout="hideTip(event, '1883', 1883)" onmouseover="showTip(event, '1883', 1883)">
+            deleteDir(dir)
           </code>
-          <div class="tip" id="1867">
+          <div class="tip" id="1883">
             <strong>Signature:</strong> dir:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L180-180" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L181-181" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -713,15 +1112,35 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1868', 1868)" onmouseover="showTip(event, '1868', 1868)">
-            DeleteDirs(dirs)
+          <code onmouseout="hideTip(event, '1884', 1884)" onmouseover="showTip(event, '1884', 1884)">
+            DeleteDir(dir)
           </code>
-          <div class="tip" id="1868">
+          <div class="tip" id="1884">
+            <strong>Signature:</strong> dir:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L459-459" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Compat</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1885', 1885)" onmouseover="showTip(event, '1885', 1885)">
+            deleteDirs(dirs)
+          </code>
+          <div class="tip" id="1885">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L183-183" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L184-184" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -733,15 +1152,35 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1869', 1869)" onmouseover="showTip(event, '1869', 1869)">
-            GeneratePatch(...)
+          <code onmouseout="hideTip(event, '1886', 1886)" onmouseover="showTip(event, '1886', 1886)">
+            DeleteDirs(dirs)
           </code>
-          <div class="tip" id="1869">
+          <div class="tip" id="1886">
+            <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L463-463" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Deletes multiple directories</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1887', 1887)" onmouseover="showTip(event, '1887', 1887)">
+            generatePatch(...)
+          </code>
+          <div class="tip" id="1887">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L249-249" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L250-250" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -759,15 +1198,41 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1870', 1870)" onmouseover="showTip(event, '1870', 1870)">
-            GeneratePatchWithFindOldFileFunction(...)
+          <code onmouseout="hideTip(event, '1888', 1888)" onmouseover="showTip(event, '1888', 1888)">
+            GeneratePatch(...)
           </code>
-          <div class="tip" id="1870">
+          <div class="tip" id="1888">
+            <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L507-507" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks the srcFiles for changes to the last release.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>lastReleaseDir</code> - The directory of the last release.</li>
+<li><code>patchDir</code> - The target directory.</li>
+<li><code>srcFiles</code> - The source files.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1889', 1889)" onmouseover="showTip(event, '1889', 1889)">
+            generatePatchWithFindOldFileFunction(...)
+          </code>
+          <div class="tip" id="1889">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L231-231" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L232-232" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -786,15 +1251,42 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1871', 1871)" onmouseover="showTip(event, '1871', 1871)">
+          <code onmouseout="hideTip(event, '1890', 1890)" onmouseover="showTip(event, '1890', 1890)">
+            GeneratePatchWithFindOldFileFunction(...)
+          </code>
+          <div class="tip" id="1890">
+            <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L497-497" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks the srcFiles for changes to the last release.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>lastReleaseDir</code> - The directory of the last release</li>
+<li><code>patchDir</code> - The target directory</li>
+<li><code>srcFiles</code> - The source files</li>
+<li><code>findOldFileF</code> - A function which finds the old file</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1891', 1891)" onmouseover="showTip(event, '1891', 1891)">
             mkdir(path)
           </code>
-          <div class="tip" id="1871">
+          <div class="tip" id="1891">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L368-368" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L589-589" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -806,15 +1298,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1872', 1872)" onmouseover="showTip(event, '1872', 1872)">
-            MoveFile(target fileName)
+          <code onmouseout="hideTip(event, '1892', 1892)" onmouseover="showTip(event, '1892', 1892)">
+            moveFile(target fileName)
           </code>
-          <div class="tip" id="1872">
+          <div class="tip" id="1892">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L308-308" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L309-309" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -831,15 +1323,40 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1873', 1873)" onmouseover="showTip(event, '1873', 1873)">
+          <code onmouseout="hideTip(event, '1893', 1893)" onmouseover="showTip(event, '1893', 1893)">
+            MoveFile(target fileName)
+          </code>
+          <div class="tip" id="1893">
+            <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L540-540" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Moves a single file to the target and overwrites the existing file.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>fileName</code> - The FileName.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1894', 1894)" onmouseover="showTip(event, '1894', 1894)">
             mv(src dest)
           </code>
-          <div class="tip" id="1873">
+          <div class="tip" id="1894">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L408-408" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L629-629" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -853,15 +1370,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1874', 1874)" onmouseover="showTip(event, '1874', 1874)">
+          <code onmouseout="hideTip(event, '1895', 1895)" onmouseover="showTip(event, '1895', 1895)">
             popd()
           </code>
-          <div class="tip" id="1874">
+          <div class="tip" id="1895">
             <strong>Signature:</strong> unit -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L402-402" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L623-623" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -873,15 +1390,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1875', 1875)" onmouseover="showTip(event, '1875', 1875)">
+          <code onmouseout="hideTip(event, '1896', 1896)" onmouseover="showTip(event, '1896', 1896)">
             pushd(path)
           </code>
-          <div class="tip" id="1875">
+          <div class="tip" id="1896">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L397-397" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L618-618" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -893,15 +1410,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1876', 1876)" onmouseover="showTip(event, '1876', 1876)">
+          <code onmouseout="hideTip(event, '1897', 1897)" onmouseover="showTip(event, '1897', 1897)">
             pwd()
           </code>
-          <div class="tip" id="1876">
+          <div class="tip" id="1897">
             <strong>Signature:</strong> unit -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L391-391" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L612-612" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -913,15 +1430,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1877', 1877)" onmouseover="showTip(event, '1877', 1877)">
-            RegexReplaceInFilesWithEncoding(...)
+          <code onmouseout="hideTip(event, '1898', 1898)" onmouseover="showTip(event, '1898', 1898)">
+            regexReplaceInFilesWithEncoding(...)
           </code>
-          <div class="tip" id="1877">
+          <div class="tip" id="1898">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L355-355" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L356-356" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -940,15 +1457,42 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1878', 1878)" onmouseover="showTip(event, '1878', 1878)">
-            RegexReplaceInFileWithEncoding(...)
+          <code onmouseout="hideTip(event, '1899', 1899)" onmouseover="showTip(event, '1899', 1899)">
+            RegexReplaceInFilesWithEncoding(...)
           </code>
-          <div class="tip" id="1878">
+          <div class="tip" id="1899">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L576-576" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>pattern</code> - The string to search for a match</li>
+<li><code>replacement</code> - The replacement string</li>
+<li><code>encoding</code> - The encoding to use when reading and writing the files</li>
+<li><code>files</code> - The paths of the files to process</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1900', 1900)" onmouseover="showTip(event, '1900', 1900)">
+            regexReplaceInFileWithEncoding(...)
+          </code>
+          <div class="tip" id="1900">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L343-343" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L344-344" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -967,15 +1511,42 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1879', 1879)" onmouseover="showTip(event, '1879', 1879)">
-            Rename(target fileName)
+          <code onmouseout="hideTip(event, '1901', 1901)" onmouseover="showTip(event, '1901', 1901)">
+            RegexReplaceInFileWithEncoding(...)
           </code>
-          <div class="tip" id="1879">
+          <div class="tip" id="1901">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L565-565" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>pattern</code> - The string to search for a match</li>
+<li><code>replacement</code> - The replacement string</li>
+<li><code>encoding</code> - The encoding to use when reading and writing the file</li>
+<li><code>file</code> - The path of the file to process</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1902', 1902)" onmouseover="showTip(event, '1902', 1902)">
+            rename(target fileName)
+          </code>
+          <div class="tip" id="1902">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L109-109" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L110-110" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -992,15 +1563,40 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1880', 1880)" onmouseover="showTip(event, '1880', 1880)">
-            ReplaceInFiles(replacements files)
+          <code onmouseout="hideTip(event, '1903', 1903)" onmouseover="showTip(event, '1903', 1903)">
+            Rename(target fileName)
           </code>
-          <div class="tip" id="1880">
+          <div class="tip" id="1903">
+            <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L419-419" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Renames the file or directory to the target name.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target file or directory name.</li>
+<li><code>fileName</code> - The orginal file or directory name.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1904', 1904)" onmouseover="showTip(event, '1904', 1904)">
+            replaceInFiles(replacements files)
+          </code>
+          <div class="tip" id="1904">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L334-334" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L335-335" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1017,15 +1613,40 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1881', 1881)" onmouseover="showTip(event, '1881', 1881)">
+          <code onmouseout="hideTip(event, '1905', 1905)" onmouseover="showTip(event, '1905', 1905)">
+            ReplaceInFiles(replacements files)
+          </code>
+          <div class="tip" id="1905">
+            <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L554-554" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>replacements</code> - A sequence of tuples with the patterns and the replacements.</li>
+<li><code>files</code> - The files to process.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1906', 1906)" onmouseover="showTip(event, '1906', 1906)">
             rm(fileName)
           </code>
-          <div class="tip" id="1881">
+          <div class="tip" id="1906">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L360-360" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L581-581" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1037,15 +1658,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1882', 1882)" onmouseover="showTip(event, '1882', 1882)">
+          <code onmouseout="hideTip(event, '1907', 1907)" onmouseover="showTip(event, '1907', 1907)">
             rm_rf(f)
           </code>
-          <div class="tip" id="1882">
+          <div class="tip" id="1907">
             <strong>Signature:</strong> f:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L363-363" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L584-584" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1057,15 +1678,15 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1883', 1883)" onmouseover="showTip(event, '1883', 1883)">
-            SilentCopy(target files)
+          <code onmouseout="hideTip(event, '1908', 1908)" onmouseover="showTip(event, '1908', 1908)">
+            silentCopy(target files)
           </code>
-          <div class="tip" id="1883">
+          <div class="tip" id="1908">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L116-116" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L117-117" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1082,15 +1703,40 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1884', 1884)" onmouseover="showTip(event, '1884', 1884)">
-            TestDir(path)
+          <code onmouseout="hideTip(event, '1909', 1909)" onmouseover="showTip(event, '1909', 1909)">
+            SilentCopy(target files)
           </code>
-          <div class="tip" id="1884">
+          <div class="tip" id="1909">
+            <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L427-427" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copies a list of files to the specified directory without any output.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>files</code> - List of files to copy.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1910', 1910)" onmouseover="showTip(event, '1910', 1910)">
+            testDir(path)
+          </code>
+          <div class="tip" id="1910">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L253-253" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L254-254" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1102,15 +1748,35 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1885', 1885)" onmouseover="showTip(event, '1885', 1885)">
-            TestFile(path)
+          <code onmouseout="hideTip(event, '1911', 1911)" onmouseover="showTip(event, '1911', 1911)">
+            TestDir(path)
           </code>
-          <div class="tip" id="1885">
+          <div class="tip" id="1911">
             <strong>Signature:</strong> path:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L261-261" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L512-512" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks if the directory exists</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1912', 1912)" onmouseover="showTip(event, '1912', 1912)">
+            testFile(path)
+          </code>
+          <div class="tip" id="1912">
+            <strong>Signature:</strong> path:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L262-262" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1122,15 +1788,55 @@ starting from the specified base folder.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1886', 1886)" onmouseover="showTip(event, '1886', 1886)">
-            WriteConfigFile(...)
+          <code onmouseout="hideTip(event, '1913', 1913)" onmouseover="showTip(event, '1913', 1913)">
+            TestFile(path)
           </code>
-          <div class="tip" id="1886">
-            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?17723 * &#39;?17724&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?17723, '?17724          </div>
+          <div class="tip" id="1913">
+            <strong>Signature:</strong> path:string -&gt; bool<br />
+                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L320-320" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L516-516" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks if the file exists</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1914', 1914)" onmouseover="showTip(event, '1914', 1914)">
+            writeConfigFile(...)
+          </code>
+          <div class="tip" id="1914">
+            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?17724 * &#39;?17725&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?17724, '?17725          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L321-321" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a config file with the parameters as "key;value" lines</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1915', 1915)" onmouseover="showTip(event, '1915', 1915)">
+            WriteConfigFile(...)
+          </code>
+          <div class="tip" id="1915">
+            <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?17755 * &#39;?17756&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?17755, '?17756          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/Shell.fs#L545-545" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -1246,7 +1952,7 @@ starting from the specified base folder.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>

@@ -86,12 +86,15 @@
 																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="../apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="../apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="../apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -105,6 +108,7 @@
 																<li><a href="../apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
 																<li><a href="../apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -141,17 +145,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="../sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="../apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="../apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="../apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="../apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="../apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="../todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="../todo-wix.html">Windows.WiX</a></li>
 																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="../todo-iis.html">?.?.IIS</a></li>
-																<li><a href="../todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="../todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -160,13 +183,9 @@
 															<ul>
 																<li><a href="../todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="../todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="../todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="../todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="../todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="../todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="../todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="../todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="../todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -216,10 +235,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1972', 1972)" onmouseover="showTip(event, '1972', 1972)">
+          <code onmouseout="hideTip(event, '2001', 2001)" onmouseover="showTip(event, '2001', 2001)">
             environVar name
           </code>
-          <div class="tip" id="1972">
+          <div class="tip" id="2001">
             <strong>Signature:</strong> name:string -&gt; string<br />
                       </div>
         </td>
@@ -236,10 +255,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1973', 1973)" onmouseover="showTip(event, '1973', 1973)">
+          <code onmouseout="hideTip(event, '2002', 2002)" onmouseover="showTip(event, '2002', 2002)">
             environVarOrDefault name defaultValue
           </code>
-          <div class="tip" id="1973">
+          <div class="tip" id="2002">
             <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
                       </div>
         </td>
@@ -256,10 +275,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1974', 1974)" onmouseover="showTip(event, '1974', 1974)">
+          <code onmouseout="hideTip(event, '2003', 2003)" onmouseover="showTip(event, '2003', 2003)">
             environVarOrFail name
           </code>
-          <div class="tip" id="1974">
+          <div class="tip" id="2003">
             <strong>Signature:</strong> name:string -&gt; string<br />
                       </div>
         </td>
@@ -276,10 +295,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1975', 1975)" onmouseover="showTip(event, '1975', 1975)">
+          <code onmouseout="hideTip(event, '2004', 2004)" onmouseover="showTip(event, '2004', 2004)">
             environVarOrNone name
           </code>
-          <div class="tip" id="1975">
+          <div class="tip" id="2004">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                       </div>
         </td>
@@ -296,10 +315,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1976', 1976)" onmouseover="showTip(event, '1976', 1976)">
+          <code onmouseout="hideTip(event, '2005', 2005)" onmouseover="showTip(event, '2005', 2005)">
             environVars ()
           </code>
-          <div class="tip" id="1976">
+          <div class="tip" id="2005">
             <strong>Signature:</strong> unit -&gt; (obj * obj) list<br />
                       </div>
         </td>
@@ -316,10 +335,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1977', 1977)" onmouseover="showTip(event, '1977', 1977)">
+          <code onmouseout="hideTip(event, '2006', 2006)" onmouseover="showTip(event, '2006', 2006)">
             fakeVersion 
           </code>
-          <div class="tip" id="1977">
+          <div class="tip" id="2006">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -336,10 +355,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1978', 1978)" onmouseover="showTip(event, '1978', 1978)">
+          <code onmouseout="hideTip(event, '2007', 2007)" onmouseover="showTip(event, '2007', 2007)">
             fakeVersionStr 
           </code>
-          <div class="tip" id="1978">
+          <div class="tip" id="2007">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -356,10 +375,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1979', 1979)" onmouseover="showTip(event, '1979', 1979)">
+          <code onmouseout="hideTip(event, '2008', 2008)" onmouseover="showTip(event, '2008', 2008)">
             getEnvironmentVarAsBool varName
           </code>
-          <div class="tip" id="1979">
+          <div class="tip" id="2008">
             <strong>Signature:</strong> varName:string -&gt; bool<br />
                       </div>
         </td>
@@ -376,10 +395,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1980', 1980)" onmouseover="showTip(event, '1980', 1980)">
+          <code onmouseout="hideTip(event, '2009', 2009)" onmouseover="showTip(event, '2009', 2009)">
             getEnvironmentVarAsBoolOrDefault (...)
           </code>
-          <div class="tip" id="1980">
+          <div class="tip" id="2009">
             <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
                       </div>
         </td>
@@ -396,10 +415,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1981', 1981)" onmouseover="showTip(event, '1981', 1981)">
+          <code onmouseout="hideTip(event, '2010', 2010)" onmouseover="showTip(event, '2010', 2010)">
             hasEnvironVar name
           </code>
-          <div class="tip" id="1981">
+          <div class="tip" id="2010">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                       </div>
         </td>
@@ -416,10 +435,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1982', 1982)" onmouseover="showTip(event, '1982', 1982)">
+          <code onmouseout="hideTip(event, '2011', 2011)" onmouseover="showTip(event, '2011', 2011)">
             setEnvironVar name value
           </code>
-          <div class="tip" id="1982">
+          <div class="tip" id="2011">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
@@ -540,7 +559,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>

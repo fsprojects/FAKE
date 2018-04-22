@@ -86,12 +86,15 @@
 																<li><a href="../apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="../apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="../apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="../apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="../apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="../apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -105,6 +108,7 @@
 																<li><a href="../apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="../apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
 																<li><a href="../apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -141,17 +145,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="../apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="../sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="../apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="../apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="../apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="../apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="../apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="../apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="../apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="../todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="../todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="../todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="../todo-wix.html">Windows.WiX</a></li>
 																<li><a href="../todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="../todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="../todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="../todo-iis.html">?.?.IIS</a></li>
-																<li><a href="../todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="../todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -160,13 +183,9 @@
 															<ul>
 																<li><a href="../todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="../todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="../todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="../todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="../todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="../todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="../todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="../todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="../todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -211,10 +230,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5798', 5798)" onmouseover="showTip(event, '5798', 5798)">
+          <code onmouseout="hideTip(event, '5827', 5827)" onmouseover="showTip(event, '5827', 5827)">
             Create(func)
           </code>
-          <div class="tip" id="5798">
+          <div class="tip" id="5827">
             <strong>Signature:</strong> func:Func&lt;&#39;a,&#39;b,&#39;c,&#39;d&gt; -&gt; &#39;a -&gt; &#39;b -&gt; &#39;c -&gt; &#39;d<br />
                           <strong>Type parameters:</strong> 'a, 'b, 'c, 'd          </div>
         </td>
@@ -229,10 +248,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5799', 5799)" onmouseover="showTip(event, '5799', 5799)">
+          <code onmouseout="hideTip(event, '5828', 5828)" onmouseover="showTip(event, '5828', 5828)">
             Create(func)
           </code>
-          <div class="tip" id="5799">
+          <div class="tip" id="5828">
             <strong>Signature:</strong> func:Func&lt;&#39;a,&#39;b,&#39;c&gt; -&gt; &#39;a -&gt; &#39;b -&gt; &#39;c<br />
                           <strong>Type parameters:</strong> 'a, 'b, 'c          </div>
         </td>
@@ -247,10 +266,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5800', 5800)" onmouseover="showTip(event, '5800', 5800)">
+          <code onmouseout="hideTip(event, '5829', 5829)" onmouseover="showTip(event, '5829', 5829)">
             Create(func)
           </code>
-          <div class="tip" id="5800">
+          <div class="tip" id="5829">
             <strong>Signature:</strong> func:Func&lt;&#39;a,&#39;b&gt; -&gt; &#39;a -&gt; &#39;b<br />
                           <strong>Type parameters:</strong> 'a, 'b          </div>
         </td>
@@ -265,10 +284,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5801', 5801)" onmouseover="showTip(event, '5801', 5801)">
+          <code onmouseout="hideTip(event, '5830', 5830)" onmouseover="showTip(event, '5830', 5830)">
             ToFSharpFunc(func)
           </code>
-          <div class="tip" id="5801">
+          <div class="tip" id="5830">
             <strong>Signature:</strong> func:Action&lt;&#39;a&gt; -&gt; &#39;a -&gt; unit<br />
                           <strong>Type parameters:</strong> 'a          </div>
         </td>
@@ -283,10 +302,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5802', 5802)" onmouseover="showTip(event, '5802', 5802)">
+          <code onmouseout="hideTip(event, '5831', 5831)" onmouseover="showTip(event, '5831', 5831)">
             ToFSharpFunc(func)
           </code>
-          <div class="tip" id="5802">
+          <div class="tip" id="5831">
             <strong>Signature:</strong> func:Action -&gt; unit -&gt; unit<br />
                           <strong>Type parameters:</strong> 'a          </div>
         </td>
@@ -301,10 +320,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5803', 5803)" onmouseover="showTip(event, '5803', 5803)">
+          <code onmouseout="hideTip(event, '5832', 5832)" onmouseover="showTip(event, '5832', 5832)">
             ToFSharpFunc(func)
           </code>
-          <div class="tip" id="5803">
+          <div class="tip" id="5832">
             <strong>Signature:</strong> func:Func&lt;&#39;a,&#39;b,&#39;c,&#39;d&gt; -&gt; &#39;a -&gt; &#39;b -&gt; &#39;c -&gt; &#39;d<br />
                           <strong>Type parameters:</strong> 'a, 'b, 'c, 'd          </div>
         </td>
@@ -319,10 +338,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5804', 5804)" onmouseover="showTip(event, '5804', 5804)">
+          <code onmouseout="hideTip(event, '5833', 5833)" onmouseover="showTip(event, '5833', 5833)">
             ToFSharpFunc(func)
           </code>
-          <div class="tip" id="5804">
+          <div class="tip" id="5833">
             <strong>Signature:</strong> func:Func&lt;&#39;a,&#39;b,&#39;c&gt; -&gt; &#39;a -&gt; &#39;b -&gt; &#39;c<br />
                           <strong>Type parameters:</strong> 'a, 'b, 'c          </div>
         </td>
@@ -337,10 +356,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5805', 5805)" onmouseover="showTip(event, '5805', 5805)">
+          <code onmouseout="hideTip(event, '5834', 5834)" onmouseover="showTip(event, '5834', 5834)">
             ToFSharpFunc(func)
           </code>
-          <div class="tip" id="5805">
+          <div class="tip" id="5834">
             <strong>Signature:</strong> func:Func&lt;&#39;a,&#39;b&gt; -&gt; &#39;a -&gt; &#39;b<br />
                           <strong>Type parameters:</strong> 'a, 'b          </div>
         </td>
@@ -355,10 +374,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5806', 5806)" onmouseover="showTip(event, '5806', 5806)">
+          <code onmouseout="hideTip(event, '5835', 5835)" onmouseover="showTip(event, '5835', 5835)">
             ToFSharpFunc(func)
           </code>
-          <div class="tip" id="5806">
+          <div class="tip" id="5835">
             <strong>Signature:</strong> func:Func&lt;&#39;a&gt; -&gt; unit -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a          </div>
         </td>
@@ -477,7 +496,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>

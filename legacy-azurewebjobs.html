@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Compiling TypeScript applications
+		<title>Packaging and Deploying Azure WebJobs
 </title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
@@ -215,38 +215,11 @@
 
 									<!-- Content -->
                       <article>
-<h1><a name="Compiling-TypeScript-applications" class="anchor" href="#Compiling-TypeScript-applications">Compiling TypeScript applications</a></h1>
-<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
-<p>FAKE can be used to build a variety of different application types.
-In this tutorial we are looking at the TypeScript support.</p>
-<p>Consider a greetings.ts file:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="javascript"><span class="k">interface</span> Person {
-    firstname: <span class="k">string</span>;
-    lastname: <span class="k">string</span>;
-}
- 
-<span class="k">function</span> greeter(person : Person) {
-    <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
-}
-
-<span class="k">var</span> user <span class="o">=</span> {firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span>};
-
-document.body.innerHTML <span class="o">=</span> greeter(user);
-</code></pre></td></tr></table>
-<p>Now create a build.fsx and run it via FAKE.exe:</p>
+<h1><a name="Packaging-and-Deploying-Azure-WebJobs" class="anchor" href="#Packaging-and-Deploying-Azure-WebJobs">Packaging and Deploying Azure WebJobs</a></h1>
+<p><strong>Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found <a href="apidocs/fake-azure-webjobs.html">here</a></strong></p>
+<p>FAKE can be used to zip the output directory of a project and push it to Azure via the <a href="https://github.com/projectkudu/kudu/wiki/REST-API#zip">zip controller</a>.</p>
+<p>You'll need to know the http authentication details of the website to publish the web jobs to. If the web job does not already exist, it will be created as part of the deploy.</p>
+<p>In your <code>build.fsx</code> add the following:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -260,24 +233,62 @@ document.body.innerHTML <span class="o">=</span> greeter(user);
 <span class="l">11: </span>
 <span class="l">12: </span>
 <span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#I</span> <span class="s">@&quot;../../tools/FAKE/tools/&quot;</span>
-<span class="pp">#r</span> <span class="s">@&quot;FakeLib.dll&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="id">Uri</span> <span class="k">with</span>
+    <span class="k">member</span> <span class="id">this</span><span class="pn">.</span><span class="id">SubDomain</span> <span class="o">=</span> <span class="id">this</span><span class="pn">.</span><span class="id">Host</span><span class="pn">.</span><span class="id">Split</span><span class="pn">(</span><span class="pn">[|</span><span class="s">&#39;.&#39;</span><span class="pn">|]</span><span class="pn">,</span><span class="n">2</span><span class="pn">)</span><span class="pn">.</span><span class="pn">[</span><span class="n">0</span><span class="pn">]</span>
 
-<span class="k">open</span> <span class="id">Fake</span>
-<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">System</span>
-<span class="k">open</span> <span class="id">TypeScript</span>
+<span class="k">let</span> <span class="k">private</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">jobTypePath</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">webJobType</span> <span class="o">=</span>
+    <span class="k">match</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">webJobType</span> <span class="k">with</span>
+    <span class="pn">|</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Continuous</span> <span class="k">-&gt;</span> <span class="s">&quot;continuous&quot;</span>
+    <span class="pn">|</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Triggered</span> <span class="k">-&gt;</span> <span class="s">&quot;triggered&quot;</span>
 
-<span class="id">Target</span> <span class="s">&quot;CompileTypeScript&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;**/*.ts&quot;</span>
-	  <span class="o">|&gt;</span> <span class="id">TypeScriptCompiler</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">OutputPath</span> <span class="o">=</span> <span class="s">&quot;./out&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
+<span class="c">// a function to create webjobs based on the projects structure</span>
+<span class="k">let</span> <span class="k">private</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="fn">createWebJob</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">site</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">name</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">jobType</span> <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="id">project</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="id">path</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="fn">jobTypePath</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="id">jobType</span>
+    <span class="pn">{</span> <span class="id">Name</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs5', 12)" onmouseover="showTip(event, 'fs5', 12)" class="id">name</span>
+      <span class="id">JobType</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="id">jobType</span>
+      <span class="id">Project</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs7', 14)" onmouseover="showTip(event, 'fs7', 14)" class="id">project</span>
+      <span class="id">DirectoryToPackage</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs9', 15)" onmouseover="showTip(event, 'fs9', 15)" class="id">sprintf</span> <span class="s">&quot;src/%s/bin/Release&quot;</span> <span onmouseout="hideTip(event, 'fs7', 16)" onmouseover="showTip(event, 'fs7', 16)" class="id">project</span>
+      <span class="id">PackageLocation</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs9', 17)" onmouseover="showTip(event, 'fs9', 17)" class="id">sprintf</span> <span class="s">&quot;bin/%s/webjobs/%s/%s.zip&quot;</span> <span onmouseout="hideTip(event, 'fs4', 18)" onmouseover="showTip(event, 'fs4', 18)" class="id">site</span> <span onmouseout="hideTip(event, 'fs8', 19)" onmouseover="showTip(event, 'fs8', 19)" class="id">path</span> <span onmouseout="hideTip(event, 'fs7', 20)" onmouseover="showTip(event, 'fs7', 20)" class="id">project</span> <span class="pn">}</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 21)" onmouseover="showTip(event, 'fs10', 21)" class="fn">webJobs</span> <span onmouseout="hideTip(event, 'fs4', 22)" onmouseover="showTip(event, 'fs4', 22)" class="id">site</span> <span class="o">=</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs3', 23)" onmouseover="showTip(event, 'fs3', 23)" class="fn">createWebJob</span> <span onmouseout="hideTip(event, 'fs4', 24)" onmouseover="showTip(event, 'fs4', 24)" class="id">site</span> <span class="s">&quot;webjob1&quot;</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Continuous</span> <span class="s">&quot;MyProject.WebJob1&quot;</span>
+                    <span onmouseout="hideTip(event, 'fs3', 25)" onmouseover="showTip(event, 'fs3', 25)" class="fn">createWebJob</span> <span onmouseout="hideTip(event, 'fs4', 26)" onmouseover="showTip(event, 'fs4', 26)" class="id">site</span> <span class="s">&quot;webjob2&quot;</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Triggered</span> <span class="s">&quot;MyProject.WebJob2&quot;</span><span class="pn">]</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 27)" onmouseover="showTip(event, 'fs11', 27)" class="id">site</span> <span class="o">=</span> <span class="id">Uri</span><span class="pn">(</span><span class="s">&quot;https://yoursite.scm.azurewebsites.net&quot;</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 28)" onmouseover="showTip(event, 'fs12', 28)" class="id">webSite</span> <span class="o">=</span> <span class="pn">{</span><span class="id">WebSite</span><span class="pn">.</span><span class="id">Url</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs11', 29)" onmouseover="showTip(event, 'fs11', 29)" class="id">site</span>
+               <span class="id">UserName</span> <span class="o">=</span> <span class="s">&quot;$yoursite&quot;</span>
+               <span class="id">Password</span> <span class="o">=</span> <span class="s">&quot;password&quot;</span>
+               <span class="id">WebJobs</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 30)" onmouseover="showTip(event, 'fs10', 30)" class="id">webJobs</span> <span onmouseout="hideTip(event, 'fs11', 31)" onmouseover="showTip(event, 'fs11', 31)" class="id">site</span><span class="pn">.</span><span class="id">SubDomain</span> <span class="pn">}</span>
+
+<span class="id">Target</span> <span class="s">&quot;PackageWebJobs&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">PackageWebJobs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs12', 32)" onmouseover="showTip(event, 'fs12', 32)" class="id">webSite</span><span class="pn">]</span>
 <span class="pn">)</span>
-
-<span class="id">RunTargetOrDefault</span> <span class="s">&quot;CompileTypeScript&quot;</span>
+<span class="id">Target</span> <span class="s">&quot;DeployWebJobs&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">DeployWebJobs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="id">webSite</span><span class="pn">]</span>
+<span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
-<p>This small script will run all *.ts files through the TypeScript compiler and put them into the ./out/ folder. In this case we will find a greetings.js:</p>
+<p>In the dependencies section add the targets to the build order after the build action:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -286,17 +297,32 @@ document.body.innerHTML <span class="o">=</span> greeter(user);
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="javascript"><span class="k">function</span> greeter(person) {
-  <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
-}
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;BuildTest&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Test&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;PackageWebJobs&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;DeployWebJobs&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>The will create a zip file in the <code>bin</code> folder in the root which contains the contents of the <code>bin/release</code> folder of each web job to deploy and push it to azure.</p>
+<h2><a name="Caveats" class="anchor" href="#Caveats">Caveats</a></h2>
+<p>The zip controller will not remove files.</p>
 
-<span class="k">var</span> user <span class="o">=</span> { firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span> };
-
-document.body.innerHTML <span class="o">=</span> greeter(user);
-</code></pre></td></tr></table>
-<p>If you need more details please see the <a href="apidocs/fake-typescript.html">API docs for the TypeScript</a> task.</p>
-
-<div class="tip" id="fs1">namespace System</div>
+<div class="tip" id="fs1">val private jobTypePath : webJobType:&#39;a -&gt; &#39;b</div>
+<div class="tip" id="fs2">val webJobType : &#39;a</div>
+<div class="tip" id="fs3">val private createWebJob : site:&#39;a -&gt; name:&#39;b -&gt; jobType:&#39;c -&gt; project:&#39;d -&gt; &#39;e</div>
+<div class="tip" id="fs4">val site : &#39;a</div>
+<div class="tip" id="fs5">val name : &#39;a</div>
+<div class="tip" id="fs6">val jobType : &#39;a</div>
+<div class="tip" id="fs7">val project : &#39;a</div>
+<div class="tip" id="fs8">val path : obj</div>
+<div class="tip" id="fs9">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs10">val webJobs : site:&#39;a -&gt; &#39;b list</div>
+<div class="tip" id="fs11">val site : obj</div>
+<div class="tip" id="fs12">val webSite : obj</div>
 
                       </article>
 								</div>

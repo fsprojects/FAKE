@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Packaging and Deploying Azure WebJobs
+		<title>Packaging and Deploying SQL Databases
 </title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
@@ -87,12 +87,15 @@
 																<li><a href="apidocs/fake-core-context.html">Context</a></li>
 																<li><a href="apidocs/fake-core-xml.html">Xml</a></li>
 																<li><a href="apidocs/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="apidocs/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="apidocs/fake-core-changelog.html">ChangeLog</a></li>
 															</ul>
 														</li>
 														<li>
 															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-changewatcher.html">Change Watcher</a></li>
 																<li><a href="apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
@@ -106,6 +109,7 @@
 																<li><a href="apidocs/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
 																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
 																<li><a href="apidocs/fake-dotnet-paket.html">Paket</a></li>
@@ -142,17 +146,36 @@
 															</ul>
 														</li>
 														<li>
+															<a href="apidocs/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="apidocs/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="apidocs/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="apidocs/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="apidocs/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="apidocs/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="apidocs/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="apidocs/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="apidocs/index.html#Fake">Legacy / Not Migrated</a>
 															<ul>
 																<li><a href="todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
 																<li><a href="todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
-																<li><a href="todo-watch.html">IO.FileWatcher</a></li>
 																<li><a href="todo-wix.html">Windows.WiX</a></li>
 																<li><a href="todo-msteamsnotification.html">API.MsTeams</a></li>
 																<li><a href="todo-stylecop.html">DotNet.StyleCop</a></li>
 																<li><a href="todo-deploy.html">Fake.Deploy</a></li>
 																<li><a href="todo-iis.html">?.?.IIS</a></li>
-																<li><a href="todo-dacpac.html">?.?.DacPac</a></li>
 																<li><a href="todo-vagrant.html">?.?.Vagrant</a></li>
 															</ul>
 														</li>
@@ -161,13 +184,9 @@
 															<ul>
 																<li><a href="todo-fxcop.html">DotNet.FxCop</a></li>
 																<li><a href="todo-fsc.html">DotNet.Fsc</a></li>
-																<li><a href="todo-teamcity.html">BuildServer.TeamCity</a></li>
-																<li><a href="todo-teamcityadvanced.html">BuildServer.TeamCity.Advanced</a></li>
 																<li><a href="todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="todo-typescript.html">JavaScript?.TypeScript</a></li>
-																<li><a href="todo-azurewebjobs.html">Cloud.Azure.WebJobs</a></li>
-																<li><a href="todo-azurecloudservices.html">Cloud.Azure.CloudService</a></li>
 															</ul>
 														</li>
 													</ul>
@@ -196,79 +215,13 @@
 
 									<!-- Content -->
                       <article>
-<h1><a name="Packaging-and-Deploying-Azure-WebJobs" class="anchor" href="#Packaging-and-Deploying-Azure-WebJobs">Packaging and Deploying Azure WebJobs</a></h1>
-<p>FAKE can be used to zip the output directory of a project and push it to Azure via the <a href="https://github.com/projectkudu/kudu/wiki/REST-API#zip">zip controller</a>.</p>
-<p>You'll need to know the http authentication details of the website to publish the web jobs to. If the web job does not already exist, it will be created as part of the deploy.</p>
-<p>In your <code>build.fsx</code> add the following:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
-<span class="l">32: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="id">Uri</span> <span class="k">with</span>
-    <span class="k">member</span> <span class="id">this</span><span class="pn">.</span><span class="id">SubDomain</span> <span class="o">=</span> <span class="id">this</span><span class="pn">.</span><span class="id">Host</span><span class="pn">.</span><span class="id">Split</span><span class="pn">(</span><span class="pn">[|</span><span class="s">&#39;.&#39;</span><span class="pn">|]</span><span class="pn">,</span><span class="n">2</span><span class="pn">)</span><span class="pn">.</span><span class="pn">[</span><span class="n">0</span><span class="pn">]</span>
-
-<span class="k">let</span> <span class="k">private</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">jobTypePath</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">webJobType</span> <span class="o">=</span>
-    <span class="k">match</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">webJobType</span> <span class="k">with</span>
-    <span class="pn">|</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Continuous</span> <span class="k">-&gt;</span> <span class="s">&quot;continuous&quot;</span>
-    <span class="pn">|</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Triggered</span> <span class="k">-&gt;</span> <span class="s">&quot;triggered&quot;</span>
-
-<span class="c">// a function to create webjobs based on the projects structure</span>
-<span class="k">let</span> <span class="k">private</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="fn">createWebJob</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">site</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">name</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">jobType</span> <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="id">project</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="id">path</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="fn">jobTypePath</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="id">jobType</span>
-    <span class="pn">{</span> <span class="id">Name</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs5', 12)" onmouseover="showTip(event, 'fs5', 12)" class="id">name</span>
-      <span class="id">JobType</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="id">jobType</span>
-      <span class="id">Project</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs7', 14)" onmouseover="showTip(event, 'fs7', 14)" class="id">project</span>
-      <span class="id">DirectoryToPackage</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs9', 15)" onmouseover="showTip(event, 'fs9', 15)" class="id">sprintf</span> <span class="s">&quot;src/%s/bin/Release&quot;</span> <span onmouseout="hideTip(event, 'fs7', 16)" onmouseover="showTip(event, 'fs7', 16)" class="id">project</span>
-      <span class="id">PackageLocation</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs9', 17)" onmouseover="showTip(event, 'fs9', 17)" class="id">sprintf</span> <span class="s">&quot;bin/%s/webjobs/%s/%s.zip&quot;</span> <span onmouseout="hideTip(event, 'fs4', 18)" onmouseover="showTip(event, 'fs4', 18)" class="id">site</span> <span onmouseout="hideTip(event, 'fs8', 19)" onmouseover="showTip(event, 'fs8', 19)" class="id">path</span> <span onmouseout="hideTip(event, 'fs7', 20)" onmouseover="showTip(event, 'fs7', 20)" class="id">project</span> <span class="pn">}</span>
-
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 21)" onmouseover="showTip(event, 'fs10', 21)" class="fn">webJobs</span> <span onmouseout="hideTip(event, 'fs4', 22)" onmouseover="showTip(event, 'fs4', 22)" class="id">site</span> <span class="o">=</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs3', 23)" onmouseover="showTip(event, 'fs3', 23)" class="fn">createWebJob</span> <span onmouseout="hideTip(event, 'fs4', 24)" onmouseover="showTip(event, 'fs4', 24)" class="id">site</span> <span class="s">&quot;webjob1&quot;</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Continuous</span> <span class="s">&quot;MyProject.WebJob1&quot;</span>
-                    <span onmouseout="hideTip(event, 'fs3', 25)" onmouseover="showTip(event, 'fs3', 25)" class="fn">createWebJob</span> <span onmouseout="hideTip(event, 'fs4', 26)" onmouseover="showTip(event, 'fs4', 26)" class="id">site</span> <span class="s">&quot;webjob2&quot;</span> <span class="id">WebJobType</span><span class="pn">.</span><span class="id">Triggered</span> <span class="s">&quot;MyProject.WebJob2&quot;</span><span class="pn">]</span>
-
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 27)" onmouseover="showTip(event, 'fs11', 27)" class="id">site</span> <span class="o">=</span> <span class="id">Uri</span><span class="pn">(</span><span class="s">&quot;https://yoursite.scm.azurewebsites.net&quot;</span><span class="pn">)</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 28)" onmouseover="showTip(event, 'fs12', 28)" class="id">webSite</span> <span class="o">=</span> <span class="pn">{</span><span class="id">WebSite</span><span class="pn">.</span><span class="id">Url</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs11', 29)" onmouseover="showTip(event, 'fs11', 29)" class="id">site</span>
-               <span class="id">UserName</span> <span class="o">=</span> <span class="s">&quot;$yoursite&quot;</span>
-               <span class="id">Password</span> <span class="o">=</span> <span class="s">&quot;password&quot;</span>
-               <span class="id">WebJobs</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 30)" onmouseover="showTip(event, 'fs10', 30)" class="id">webJobs</span> <span onmouseout="hideTip(event, 'fs11', 31)" onmouseover="showTip(event, 'fs11', 31)" class="id">site</span><span class="pn">.</span><span class="id">SubDomain</span> <span class="pn">}</span>
-
-<span class="id">Target</span> <span class="s">&quot;PackageWebJobs&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="id">PackageWebJobs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs12', 32)" onmouseover="showTip(event, 'fs12', 32)" class="id">webSite</span><span class="pn">]</span>
-<span class="pn">)</span>
-<span class="id">Target</span> <span class="s">&quot;DeployWebJobs&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="id">DeployWebJobs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="id">webSite</span><span class="pn">]</span>
-<span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
-<p>In the dependencies section add the targets to the build order after the build action:</p>
+<h1><a name="Packaging-and-Deploying-SQL-Databases" class="anchor" href="#Packaging-and-Deploying-SQL-Databases">Packaging and Deploying SQL Databases</a></h1>
+<p><strong>Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found <a href="sql-dacpac.html">here</a></strong></p>
+<p>FAKE can be used to create a SQL DACPAC and also deploy it to a SQL Server using the MSDeploy executable. This is installed by default with Visual Studio and with the SQL Server Data Tools (SSDT) package.</p>
+<p>DACPACs automatically diff from the source to the destination and generate the SQL script dynamically.</p>
+<p>You can read up more on DACPac and MSDeploy arguments <a href="https://msdn.microsoft.com/en-us/library/hh550081%28v=vs.103%29.aspx">here</a>.</p>
+<h2><a name="Sample-usage" class="anchor" href="#Sample-usage">Sample usage</a></h2>
+<p>Ensure that you have already built your database project (you can do this with standard MSBuild). Then, use the <code>deployDb</code> command to deploy the <code>dbProject.dacpac</code> to the <code>myDatabase</code>.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -277,32 +230,26 @@
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Clean&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;BuildTest&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Test&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;PackageWebJobs&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;DeployWebJobs&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Sql</span><span class="pn">.</span><span class="id">DacPac</span>
+
+<span class="c">/// the database for local development + compile</span>
+<span class="id">Target</span> <span class="s">&quot;DeployLocalDb&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="k">let</span> <span class="id">connectionString</span> <span class="o">=</span> <span class="s">&quot;Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True;Database=MyDatabase;Pooling=False&quot;</span>
+    <span class="k">let</span> <span class="id">dacPacPath</span> <span class="o">=</span> <span class="s">&quot;path/to/dbProject.dacpac&quot;</span>
+    <span class="id">deployDb</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span> <span class="id">Source</span> <span class="o">=</span> <span class="id">dacPacPath</span><span class="pn">;</span> <span class="id">Destination</span> <span class="o">=</span> <span class="id">localDbConnectionString</span> <span class="pn">}</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">ignore</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
-<p>The will create a zip file in the <code>bin</code> folder in the root which contains the contents of the <code>bin/release</code> folder of each web job to deploy and push it to azure.</p>
-<h2><a name="Caveats" class="anchor" href="#Caveats">Caveats</a></h2>
-<p>The zip controller will not remove files.</p>
+<h2><a name="Deployment-Options" class="anchor" href="#Deployment-Options">Deployment Options</a></h2>
+<p>You can optionally specify the type of command to use (again, refer to the documentation above for more detail): -</p>
+<ul>
+<li>Deploy - full deploy to destination</li>
+<li>Script - SQL script</li>
+<li>Report - XML report of diff</li>
+</ul>
+<p>In addition, you can also elect to deploy to Dacpac files rather than SQL databases - simply pass in the pass to the dacpac that you wish to generate.</p>
 
-<div class="tip" id="fs1">val private jobTypePath : webJobType:&#39;a -&gt; &#39;b</div>
-<div class="tip" id="fs2">val webJobType : &#39;a</div>
-<div class="tip" id="fs3">val private createWebJob : site:&#39;a -&gt; name:&#39;b -&gt; jobType:&#39;c -&gt; project:&#39;d -&gt; &#39;e</div>
-<div class="tip" id="fs4">val site : &#39;a</div>
-<div class="tip" id="fs5">val name : &#39;a</div>
-<div class="tip" id="fs6">val jobType : &#39;a</div>
-<div class="tip" id="fs7">val project : &#39;a</div>
-<div class="tip" id="fs8">val path : obj</div>
-<div class="tip" id="fs9">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
-<div class="tip" id="fs10">val webJobs : site:&#39;a -&gt; &#39;b list</div>
-<div class="tip" id="fs11">val site : obj</div>
-<div class="tip" id="fs12">val webSite : obj</div>
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
 
                       </article>
 								</div>
@@ -408,7 +355,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
 									</ul>
 								</div>
 							</div>
