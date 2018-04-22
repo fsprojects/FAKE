@@ -309,12 +309,22 @@ module Process =
     /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
     let mutable ProcessEncoding = Encoding.UTF8
 
-    /// [omit]
-    let startProcess (proc : Process) = 
-        //platformInfoAction proc.StartInfo
-        let result = proc.Start()
+    let internal rawStartProcess (proc : Process) =
+        try
+            let result = proc.Start()
+            if not result then failwithf "Could not start process (Start() returned false)."
+        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
         addStartedProcess(proc.Id, proc.StartTime) |> ignore
-        result
+
+    /// [omit]
+    [<Obsolete("Do not use or open an issue")>]
+    let startProcess (proc : Process) =
+        try
+            let result = proc.Start()
+            if not result then failwithf "Could not start process (Start() returned false)."
+        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
+        addStartedProcess(proc.Id, proc.StartTime) |> ignore
+        true
 
     /// [omit]
     //let mutable redirectOutputToTrace = false
@@ -427,12 +437,9 @@ module Process =
                 if isNull d.Data |> not then errorF d.Data)
             proc.OutputDataReceived.Add(fun d -> 
                 if isNull d.Data |> not then messageF d.Data)
-        try 
-            if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
-                Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
-            if not (startProcess proc) then
-                failwithf "Could not start process (start returned false)."
-        with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
+        if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
+            Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
+        rawStartProcess proc
         if silent then 
             proc.BeginErrorReadLine()
             proc.BeginOutputReadLine()
@@ -509,24 +516,19 @@ module Process =
     /// Starts the given process and returns immediatly.
     let fireAndForget configProcessStartInfoF =
         use proc = getProc configProcessStartInfoF
-        try 
-            startProcess proc
-        with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
+        rawStartProcess proc
 
     /// Runs the given process, waits for its completion and returns if it succeeded.
     let directExec configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
-        try 
-            if not (startProcess proc) then
-                failwithf "Could not start process (start returned false)."
-        with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
+        rawStartProcess proc
         proc.WaitForExit()
         proc.ExitCode = 0
 
     /// Starts the given process and forgets about it.
     let start configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
-        startProcess proc
+        rawStartProcess proc
 
     /// Adds quotes around the string
     /// [omit]
@@ -692,8 +694,7 @@ module Process =
                 if not (isNull e.Data) then Trace.traceError e.Data)
             proc.OutputDataReceived.Add(fun e -> 
                 if not (isNull e.Data) then Trace.log e.Data)
-            if not (startProcess proc) then
-                failwithf "Could not start process (start returned false)."
+            rawStartProcess proc
             proc.BeginOutputReadLine()
             proc.BeginErrorReadLine()
             proc.StandardInput.Dispose()
