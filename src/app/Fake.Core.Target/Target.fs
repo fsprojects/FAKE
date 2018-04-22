@@ -589,7 +589,7 @@ module Target =
                 listAvailable()
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
-                printf "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
+                printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
             elif DocoptResult.hasFlag "--version" results then
                 printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
             else

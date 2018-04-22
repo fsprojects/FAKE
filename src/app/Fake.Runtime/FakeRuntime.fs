@@ -173,22 +173,29 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     let rootDir = Directory.GetCurrentDirectory()
     let sources = paketDependencies.GetSources().[groupName]
     let packageName = Domain.PackageName("NETStandard.Library")
-    let version = SemVer.Parse("2.0.0")
-    let versions =
-      Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
-      |> Async.RunSynchronously
-      |> dict
-    let source =
-      match versions.TryGetValue(version) with
-      | true, v when v.Length > 0 -> v |> Seq.head
-      | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
-    
-    let _, extractedFolder =
-      Paket.NuGet.DownloadAndExtractPackage
-        (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
-         source, [], Paket.Constants.MainDependencyGroup,
-         packageName, version, PackageResolver.ResolvedPackageKind.Package, false, false, false, false)
-      |> Async.RunSynchronously
+    let version = SemVer.Parse("2.0.2")
+    let existingpkg = NuGetCache.GetTargetUserNupkg packageName version
+    let extractedFolder =
+      if File.Exists existingpkg then
+        // Shortcut in order to prevent requests to nuget sources if we have it downloaded already
+        Path.GetDirectoryName existingpkg
+      else
+        let versions =
+          Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
+          |> Async.RunSynchronously
+          |> dict
+        let source =
+          match versions.TryGetValue(version) with
+          | true, v when v.Length > 0 -> v |> Seq.head
+          | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
+        
+        let _, extractedFolder =
+          Paket.NuGet.DownloadAndExtractPackage
+            (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
+             source, [], Paket.Constants.MainDependencyGroup,
+             packageName, version, PackageResolver.ResolvedPackageKind.Package, false, false, false, false)
+          |> Async.RunSynchronously
+        extractedFolder        
     //let netstandard = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyName(System.Reflection.AssemblyName("netstandard"))
     let sdkDir = Path.Combine(extractedFolder, "build", "netstandard2.0", "ref")
     Directory.GetFiles(sdkDir, "*.dll")
@@ -209,11 +216,11 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
 
     
     let rootDir = DirectoryInfo cacheDir
-    for sd in scripts do
-        let scriptPath = Path.Combine (rootDir.FullName , sd.PartialPath)
-        let scriptDir = Path.GetDirectoryName scriptPath |> Path.GetFullPath |> DirectoryInfo
-        scriptDir.Create()
-        sd.Save rootDir
+    //for sd in scripts do
+    //    let scriptPath = Path.Combine (rootDir.FullName , sd.PartialPath)
+    //    let scriptDir = Path.GetDirectoryName scriptPath |> Path.GetFullPath |> DirectoryInfo
+    //    scriptDir.Create()
+    //    sd.Save rootDir
 
     let content = groupScript.RenderDirect rootDir (FileInfo intellisenseFile)
 
@@ -258,6 +265,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     let lockFile = paketDependencies.GetLockFile()
     //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
     let (cache:DependencyCache) = DependencyCache(lockFile)
+    use dependencyCacheProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketDependencyCache
     if logLevel.PrintVerbose then Trace.log "Setup DependencyCache..."
     try
       cache.SetupGroup groupName |> ignore
@@ -278,6 +286,8 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       printFolder folder
       reraise()
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
+    dependencyCacheProfile.Dispose()
+
     let rid =
 #if DOTNETCORE
         let ridString = Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()
@@ -287,12 +297,14 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         Paket.Rid.Of(ridString)
 
     // get runtime graph
+    use runtimeGraphProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketRuntimeGraph
     if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
         orderedGroup
         |> Seq.choose (fun p ->
           RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
         |> RuntimeGraph.mergeSeq
+    runtimeGraphProfile.Dispose()
 
     // Restore load-script
     writeIntellisenseFile cacheDir {
@@ -303,6 +315,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       }
 
     // Retrieve assemblies
+    use __ = Fake.Profile.startCategory Fake.Profile.Category.PaketGetAssemblies
     if logLevel.PrintVerbose then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
     orderedGroup
     |> Seq.filter (fun p ->
