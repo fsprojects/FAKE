@@ -178,6 +178,9 @@
     <Compile Include="..\..\app\Fake.Core.ReleaseNotes\ReleaseNotes.fs">
       <Link>Fake.Core.ReleaseNotes/ReleaseNotes.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.ReleaseNotes\Changelog.fs">
+      <Link>Fake.Core.ReleaseNotes/Changelog.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.IO.Zip\Zip.fs">
       <Link>Fake.IO.Zip/Zip.fs</Link>
     </Compile>
@@ -231,6 +234,9 @@
     </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Testing.MSTest\MSTest.fs">
       <Link>Fake.DotNet.Testing.MSTest/MSTest.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.DotNet.Testing.Expecto\Expecto.fs">
+      <Link>Fake.DotNet.Testing.Expecto/Expecto.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Core.Xml\Xml.fs">
       <Link>Fake.Core.Xml/Xml.fs</Link>
@@ -382,6 +388,9 @@
     <Compile Include="..\..\app\Fake.Documentation.DocFx\DocFx.fs">
       <Link>Fake.Documentation.DocFx\DocFx.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Sql.DacPac\Sql.DacPac.fs">
+      <Link>Fake.Sql.DacPac\Sql.DacPac.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
@@ -511,7 +520,6 @@
     <Compile Include="AndroidPublisher.fs" />
     <Compile Include="ChangeWatcher.fs" />
     <Compile Include="CMake.fs" />
-    <Compile Include="Sql.DacPac.fs" />
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
