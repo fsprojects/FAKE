@@ -32,7 +32,7 @@
 									<!-- Nav -->
 										<nav id="nav">
 											<ul>
-												<li class="current_page_item">
+												<li >
 													<a href="legacy-index.html">FAKE 4</a>
 													<ul>
 														<li><a href="legacy-gettingstarted.html">Getting Started Tutorial</a></li>
@@ -65,7 +65,7 @@
 														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
 													</ul>
 												</li>
-												<li >
+												<li class="current_page_item">
 													<a href="fake-fake5-modules.html">Modules</a>
 													<ul>
 														<li>
@@ -78,7 +78,6 @@
 															<a href="core.html">Core</a>
 															<ul>
 																<li><a href="core-targets.html">Targets</a></li>
-																<li><a href="apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-core-environment.html.html">Environment</a></li>
 																<li><a href="core-process.html">Process</a></li>
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
@@ -94,6 +93,7 @@
 															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
@@ -197,12 +197,39 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Packaging-and-Deploying-SQL-Databases" class="anchor" href="#Packaging-and-Deploying-SQL-Databases">Packaging and Deploying SQL Databases</a></h1>
-<p>This page moved to:</p>
-<ul>
-<li>Not yet migrated to FAKE 5</li>
-<li><a href="todo-dacpac.html">here for FAKE 4</a> (Final location not decided yet)</li>
-</ul>
+<p>FAKE can be used to create a SQL DACPAC and also deploy it to a SQL Server using the MSDeploy executable. This is installed by default with Visual Studio and with the SQL Server Data Tools (SSDT) package.</p>
+<p>DACPACs automatically diff from the source to the destination and generate the SQL script dynamically.</p>
+<p>You can read up more on DACPac and MSDeploy arguments <a href="https://msdn.microsoft.com/en-us/library/hh550081%28v=vs.103%29.aspx">here</a>.</p>
+<h2><a name="Sample-usage" class="anchor" href="#Sample-usage">Sample usage</a></h2>
+<p>Ensure that you have already built your database project (you can do this with standard MSBuild). Then, use the <code>deployDb</code> command to deploy the <code>dbProject.dacpac</code> to the <code>myDatabase</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Sql</span>
 
+<span class="c">/// the database for local development + compile</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;DeployLocalDb&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="k">let</span> <span class="id">connectionString</span> <span class="o">=</span> <span class="s">&quot;Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True;Database=MyDatabase;Pooling=False&quot;</span>
+    <span class="k">let</span> <span class="id">dacPacPath</span> <span class="o">=</span> <span class="s">&quot;path/to/dbProject.dacpac&quot;</span>
+    <span class="id">DacPac</span><span class="pn">.</span><span class="id">deployDb</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">args</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">args</span> <span class="k">with</span> <span class="id">Source</span> <span class="o">=</span> <span class="id">dacPacPath</span><span class="pn">;</span> <span class="id">Destination</span> <span class="o">=</span> <span class="id">localDbConnectionString</span> <span class="pn">}</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">ignore</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Deployment-Options" class="anchor" href="#Deployment-Options">Deployment Options</a></h2>
+<p>You can optionally specify the type of command to use (again, refer to the documentation above for more detail): -</p>
+<ul>
+<li>Deploy - full deploy to destination</li>
+<li>Script - SQL script</li>
+<li>Report - XML report of diff</li>
+</ul>
+<p>In addition, you can also elect to deploy to Dacpac files rather than SQL databases - simply pass in the pass to the dacpac that you wish to generate.</p>
+
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
 
                       </article>
 								</div>
@@ -308,7 +335,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
 									</ul>
 								</div>
 							</div>

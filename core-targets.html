@@ -78,7 +78,6 @@
 															<a href="core.html">Core</a>
 															<ul>
 																<li><a href="core-targets.html">Targets</a></li>
-																<li><a href="apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-core-environment.html.html">Environment</a></li>
 																<li><a href="core-process.html">Process</a></li>
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
@@ -94,6 +93,7 @@
 															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
@@ -400,7 +400,7 @@ This can be achieved in various ways where the easiest one is to use the paramet
 <p>Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
 However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful</p>
 <h2><a name="Example" class="anchor" href="#Example">Example</a></h2>
-<p>When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
+<p>When using this parallel option, Fake resolves the build dependency hierarchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
 For example this dependency tree:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -601,7 +601,7 @@ say that target B has a soft dependency on target A:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
 									</ul>
 								</div>
 							</div>

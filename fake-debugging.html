@@ -78,7 +78,6 @@
 															<a href="core.html">Core</a>
 															<ul>
 																<li><a href="core-targets.html">Targets</a></li>
-																<li><a href="apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-core-environment.html.html">Environment</a></li>
 																<li><a href="core-process.html">Process</a></li>
 																<li><a href="apidocs/fake-core-string.html">String</a></li>
@@ -94,6 +93,7 @@
 															<a href="apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
@@ -209,7 +209,7 @@
 <h2><a name="Visual-Studio-Code-amp-amp-portable-zip" class="anchor" href="#Visual-Studio-Code-amp-amp-portable-zip">Visual Studio Code &amp;&amp; portable.zip</a></h2>
 <p>Debugging works (on windows) in the following way:</p>
 <ul>
-<li><p>Download the portable fake distribution <code>fake-portable.zip</code> and extract it somewhere (for example <code>E:\fake-portable</code>)</p></li>
+<li><p>Download the portable fake distribution <code>fake-dotnetcore-portable.zip</code> and extract it somewhere (for example <code>E:\fake-dotnetcore-portable</code>)</p></li>
 <li>Open Visual Studio Code</li>
 <li>
 <p>Open "The Debugger" view and add the following configuration</p>
@@ -228,15 +228,16 @@
           "name": "Debug My Build Script",
           "type": "coreclr",
           "request": "launch",
-          "program": "E:\\fake-portable\\fake.dll",
-          "args": ["run", "build.fsx", "--fsiargs", "--debug:portable --optimize-"],
+          "program": "E:\\fake-dotnetcore-portable\\fake.dll",
+          "args": ["run", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
           "cwd": "${workspaceRoot}",
           "stopAtEntry": false,
           "console": "internalConsole"
       }
 </code></pre></td></tr></table>
 <blockquote>
-<p>It is important to specify <code>--debug:portable --optimize-</code></p>
+<p>It is important to specify <code>--debug:portable --optimize-</code><br>
+To get debugging support for .NET Core you need <a href="https://github.com/OmniSharp/omnisharp-vscode">C# for Visual Studio Code</a></p>
 </blockquote>
 </li>
 <li><p>Delete the <code>.fake</code> directory</p></li>
@@ -404,7 +405,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
 									</ul>
 								</div>
 							</div>

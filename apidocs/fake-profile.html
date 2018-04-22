@@ -77,7 +77,6 @@
 															<a href="../core.html">Core</a>
 															<ul>
 																<li><a href="../core-targets.html">Targets</a></li>
-																<li><a href="../apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-core-environment.html.html">Environment</a></li>
 																<li><a href="../core-process.html">Process</a></li>
 																<li><a href="../apidocs/fake-core-string.html">String</a></li>
@@ -93,6 +92,7 @@
 															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
@@ -243,15 +243,33 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '606', 606)" onmouseover="showTip(event, '606', 606)">
+          <code onmouseout="hideTip(event, '605', 605)" onmouseover="showTip(event, '605', 605)">
             events 
           </code>
-          <div class="tip" id="606">
+          <div class="tip" id="605">
             <strong>Signature:</strong> ConcurrentBag&lt;Event&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L70-70" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L73-73" class="github-link">
+              <img src="../assets/img/github.png" class="normal" />
+              <img src="../assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '606', 606)" onmouseover="showTip(event, '606', 606)">
+            getCoalescedEventTimeSpans boundaries
+          </code>
+          <div class="tip" id="606">
+            <strong>Signature:</strong> boundaries:EventBoundary array -&gt; TimeSpan array<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L65-65" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -262,14 +280,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '607', 607)" onmouseover="showTip(event, '607', 607)">
-            getCoalescedEventTimeSpans boundaries
+            print includePaket realTime
           </code>
           <div class="tip" id="607">
-            <strong>Signature:</strong> boundaries:EventBoundary array -&gt; TimeSpan array<br />
+            <strong>Signature:</strong> includePaket:bool -&gt; realTime:TimeSpan -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L62-62" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L101-101" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -280,14 +298,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '608', 608)" onmouseover="showTip(event, '608', 608)">
-            print includePaket realTime
+            startCategory cat
           </code>
           <div class="tip" id="608">
-            <strong>Signature:</strong> includePaket:bool -&gt; realTime:TimeSpan -&gt; unit<br />
+            <strong>Signature:</strong> cat:Category -&gt; IDisposable<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L98-98" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L80-80" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -298,14 +316,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '609', 609)" onmouseover="showTip(event, '609', 609)">
-            startCategory cat
+            startCategoryF cat f
           </code>
           <div class="tip" id="609">
-            <strong>Signature:</strong> cat:Category -&gt; IDisposable<br />
-                      </div>
+            <strong>Signature:</strong> cat:Category -&gt; f:(unit -&gt; &#39;?18276) -&gt; &#39;?18276<br />
+                          <strong>Type parameters:</strong> '?18276          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L77-77" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L92-92" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -316,32 +334,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '610', 610)" onmouseover="showTip(event, '610', 610)">
-            startCategoryF cat f
-          </code>
-          <div class="tip" id="610">
-            <strong>Signature:</strong> cat:Category -&gt; f:(unit -&gt; &#39;?17998) -&gt; &#39;?17998<br />
-                          <strong>Type parameters:</strong> '?17998          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L89-89" class="github-link">
-              <img src="../assets/img/github.png" class="normal" />
-              <img src="../assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '611', 611)" onmouseover="showTip(event, '611', 611)">
             trackEvent cat
           </code>
-          <div class="tip" id="611">
+          <div class="tip" id="610">
             <strong>Signature:</strong> cat:Category -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L73-73" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Runtime/Profile.fs#L76-76" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -455,7 +455,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
 									</ul>
 								</div>
 							</div>

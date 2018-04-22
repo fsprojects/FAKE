@@ -77,7 +77,6 @@
 															<a href="../core.html">Core</a>
 															<ul>
 																<li><a href="../core-targets.html">Targets</a></li>
-																<li><a href="../apidocs/fake-core-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-core-environment.html.html">Environment</a></li>
 																<li><a href="../core-process.html">Process</a></li>
 																<li><a href="../apidocs/fake-core-string.html">String</a></li>
@@ -93,6 +92,7 @@
 															<a href="../apidocs/index.html#Fake.IO">IO</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="../apidocs/fake-io-globbing-operators.html">Globbing</a></li>
 																<li><a href="../apidocs/fake-io-zip.html#Functions and values">Zip</a></li>
 															</ul>
 														</li>
@@ -201,6 +201,86 @@
 
 <a name="Operators" class="anchor" href="#Operators"><h1>Operators</h1></a>
 <div class="xmldoc">
+<p>Contains operators to find and process files.</p>
+<h3>Simple glob using as list</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket: nuget Fake.IO.FileSystem //&quot;</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">IO</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Globbing</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">Operators</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">csProjectFiles</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;src/*.csproj&quot;</span>
+
+<span class="k">for</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">projectFile</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs5', 7)" onmouseover="showTip(event, 'fs5', 7)" class="id">csProjectFiles</span> <span class="k">do</span>
+    <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="fn">printf</span> <span class="s">&quot;F# ProjectFile: </span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="id">projectFile</span>
+</code></pre></td>
+</tr>
+</table>
+<h3>Combine globs</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket: nuget Fake.IO.FileSystem //&quot;</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">IO</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 12)" onmouseover="showTip(event, 'fs3', 12)" class="id">Globbing</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 13)" onmouseover="showTip(event, 'fs4', 13)" class="id">Operators</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 14)" onmouseover="showTip(event, 'fs8', 14)" class="id">projectFiles</span> <span class="o">=</span>
+    <span class="o">!!</span> <span class="s">&quot;src/*/*.*proj&quot;</span>
+    <span class="o">++</span> <span class="s">&quot;src/*/*.target&quot;</span>
+    <span class="o">--</span> <span class="s">&quot;src/*/*.vbproj&quot;</span>
+
+<span class="k">for</span> <span onmouseout="hideTip(event, 'fs6', 15)" onmouseover="showTip(event, 'fs6', 15)" class="id">projectFile</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs8', 16)" onmouseover="showTip(event, 'fs8', 16)" class="id">projectFiles</span> <span class="k">do</span>
+    <span onmouseout="hideTip(event, 'fs7', 17)" onmouseover="showTip(event, 'fs7', 17)" class="fn">printf</span> <span class="s">&quot;ProjectFile: </span><span class="pf">%s</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs6', 18)" onmouseover="showTip(event, 'fs6', 18)" class="id">projectFile</span>
+</code></pre></td>
+</tr>
+</table>
+<h3>Forward globs to tasks</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.IO.FileSystem //&quot;</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 19)" onmouseover="showTip(event, 'fs1', 19)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs9', 20)" onmouseover="showTip(event, 'fs9', 20)" class="id">Core</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 21)" onmouseover="showTip(event, 'fs1', 21)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 22)" onmouseover="showTip(event, 'fs2', 22)" class="id">IO</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 23)" onmouseover="showTip(event, 'fs1', 23)" class="id">Fake</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 24)" onmouseover="showTip(event, 'fs2', 24)" class="id">IO</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 25)" onmouseover="showTip(event, 'fs3', 25)" class="id">Globbing</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 26)" onmouseover="showTip(event, 'fs4', 26)" class="id">Operators</span>
+<span onmouseout="hideTip(event, 'fs10', 27)" onmouseover="showTip(event, 'fs10', 27)" class="m">Target</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs11', 28)" onmouseover="showTip(event, 'fs11', 28)" class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+   <span class="o">!!</span> <span class="s">&quot;src/*/*/obj/**/*.nuspec&quot;</span>
+   <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs12', 29)" onmouseover="showTip(event, 'fs12', 29)" class="m">File</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs13', 30)" onmouseover="showTip(event, 'fs13', 30)" class="id">deleteAll</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">namespace Fake</div>
+<div class="tip" id="fs2">namespace Fake.IO</div>
+<div class="tip" id="fs3">namespace Fake.IO.Globbing</div>
+<div class="tip" id="fs4">module Operators<br /><br />from Fake.IO.Globbing</div>
+<div class="tip" id="fs5">val csProjectFiles : Fake.IO.IGlobbingPattern</div>
+<div class="tip" id="fs6">val projectFile : string</div>
+<div class="tip" id="fs7">val printf : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs8">val projectFiles : Fake.IO.IGlobbingPattern</div>
+<div class="tip" id="fs9">namespace Fake.Core</div>
+<div class="tip" id="fs10">Multiple items<br />module Target<br /><br />from Fake.Core<br /><br />--------------------<br />type Target =<br />&#160;&#160;{Name: string;<br />&#160;&#160;&#160;Dependencies: string list;<br />&#160;&#160;&#160;SoftDependencies: string list;<br />&#160;&#160;&#160;Description: TargetDescription option;<br />&#160;&#160;&#160;Function: TargetParameter -&gt; unit;}</div>
+<div class="tip" id="fs11">val create : name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit</div>
+<div class="tip" id="fs12">module File<br /><br />from Fake.IO</div>
+<div class="tip" id="fs13">val deleteAll : files:seq&lt;string&gt; -&gt; unit</div>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -214,15 +294,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1893', 1893)" onmouseover="showTip(event, '1893', 1893)">
+          <code onmouseout="hideTip(event, '1909', 1909)" onmouseover="showTip(event, '1909', 1909)">
             ( -- ) x pattern
           </code>
-          <div class="tip" id="1893">
+          <div class="tip" id="1909">
             <strong>Signature:</strong> x:IGlobbingPattern -&gt; pattern:string -&gt; IGlobbingPattern<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L170-170" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L206-206" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -234,15 +314,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1894', 1894)" onmouseover="showTip(event, '1894', 1894)">
+          <code onmouseout="hideTip(event, '1910', 1910)" onmouseover="showTip(event, '1910', 1910)">
             ( !! ) x
           </code>
-          <div class="tip" id="1894">
+          <div class="tip" id="1910">
             <strong>Signature:</strong> x:string -&gt; IGlobbingPattern<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L173-173" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L209-209" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -254,15 +334,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1895', 1895)" onmouseover="showTip(event, '1895', 1895)">
+          <code onmouseout="hideTip(event, '1911', 1911)" onmouseover="showTip(event, '1911', 1911)">
             ( ++ ) x pattern
           </code>
-          <div class="tip" id="1895">
+          <div class="tip" id="1911">
             <strong>Signature:</strong> x:IGlobbingPattern -&gt; pattern:string -&gt; IGlobbingPattern<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L167-167" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.IO.FileSystem/GlobbingFileSystem.fs#L203-203" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -378,7 +458,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc005</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc006</a></li>
 									</ul>
 								</div>
 							</div>
