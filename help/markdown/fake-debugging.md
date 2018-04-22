@@ -13,7 +13,7 @@ Currently debugging support (and documentation around it) is limited. Please hel
 
 Debugging works (on windows) in the following way:
 
-- Download the portable fake distribution `fake-portable.zip` and extract it somewhere (for example `E:\fake-portable`)
+- Download the portable fake distribution `fake-dotnetcore-portable.zip` and extract it somewhere (for example `E:\fake-dotnetcore-portable`)
 - Open Visual Studio Code
 - Open "The Debugger" view and add the following configuration
 
@@ -22,15 +22,16 @@ Debugging works (on windows) in the following way:
             "name": "Debug My Build Script",
             "type": "coreclr",
             "request": "launch",
-            "program": "E:\\fake-portable\\fake.dll",
-            "args": ["run", "build.fsx", "--fsiargs", "--debug:portable --optimize-"],
+            "program": "E:\\fake-dotnetcore-portable\\fake.dll",
+            "args": ["run", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
             "console": "internalConsole"
         }
   ```
 
-  > It is important to specify `--debug:portable --optimize-`
+  > It is important to specify `--debug:portable --optimize-`<br>
+  > To get debugging support for .NET Core you need [C# for Visual Studio Code](https://github.com/OmniSharp/omnisharp-vscode) 
 
 - Delete the `.fake` directory
 - Set a breakpoint in your script and run the new configuration

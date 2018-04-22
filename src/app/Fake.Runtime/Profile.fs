@@ -7,6 +7,9 @@ open Paket.Profile
 type Category =
     | Cli
     | Paket
+    | PaketDependencyCache
+    | PaketRuntimeGraph
+    | PaketGetAssemblies
     | Compiling
     | Analyzing
     | UserTime
@@ -114,12 +117,15 @@ let print includePaket realTime =
         match cat with
         | Cli -> 1
         | Paket -> 2
-        | Compiling -> 3
-        | Analyzing -> 4
-        | UserTime -> 5
-        | Cleanup -> 6
-        | Other -> 7)
-    |> List.iter (fun (cat, num, elapsed) ->
+        | PaketDependencyCache -> 3
+        | PaketRuntimeGraph -> 4
+        | PaketGetAssemblies -> 5
+        | Compiling -> 6
+        | Analyzing -> 7
+        | UserTime -> 8
+        | Cleanup -> 9
+        | Other -> 10)
+    |> List.iter (fun (cat, _, elapsed) ->
         match cat with
         | Cli ->
             Paket.Logging.tracefn " - Cli parsing: %s" (Paket.Utils.TimeSpanToReadableString elapsed)
@@ -188,6 +194,12 @@ let print includePaket realTime =
                         Paket.Logging.tracefn "   - Other: %s" (Paket.Utils.TimeSpanToReadableString elapsed)
                     )
 
+        | PaketDependencyCache ->
+            Paket.Logging.tracefn "   - Dependency Cache: %s" (Paket.Utils.TimeSpanToReadableString elapsed)
+        | PaketRuntimeGraph ->
+            Paket.Logging.tracefn "   - Creating Runtime Graph: %s" (Paket.Utils.TimeSpanToReadableString elapsed)
+        | PaketGetAssemblies ->
+            Paket.Logging.tracefn "   - Retrieve Assembly List: %s" (Paket.Utils.TimeSpanToReadableString elapsed)
         | Compiling ->
             Paket.Logging.tracefn " - Script compiling: %s" (Paket.Utils.TimeSpanToReadableString elapsed)
         | Analyzing ->

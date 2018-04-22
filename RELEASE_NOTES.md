@@ -1,5 +1,14 @@
 # Release Notes
 
+## 5.0.0-rc006 - 2018-04-22
+
+* FAKE5: New module `Fake.DotNet.Testing.Expecto` - https://github.com/fsharp/FAKE/pull/1871
+* FAKE5: New module `Fake.Sql.DacPac` - https://github.com/fsharp/FAKE/pull/1878
+* FAKE5: New module `Fake.Documentation.DocFx` - https://github.com/fsharp/FAKE/pull/1872
+* FAKE5: Add ChangeLog module to `Fake.Core.ReleaseNotes` - https://github.com/fsharp/FAKE/pull/1876
+* DOCS: Fix some documentation - https://github.com/fsharp/FAKE/pull/1877
+
+
 ## 5.0.0-rc005 - 2018-04-15
 
 * [DOCS] Improve NPM documentation - https://github.com/fsharp/FAKE/pull/1867

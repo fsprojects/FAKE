@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ReleaseNotes.fs" />
+    <Compile Include="Changelog.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />

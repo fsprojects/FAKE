@@ -162,7 +162,7 @@ However when a fast build is desired (and the project is e.g. known to build suc
 
 ## Example
 
-When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
+When using this parallel option, Fake resolves the build dependency hierarchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
 For example this dependency tree:
 
 ```fsharp
