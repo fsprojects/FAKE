@@ -263,6 +263,9 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     |> ignore
 
     let lockFile = paketDependencies.GetLockFile()
+    match lockFile.Groups |> Map.tryFind groupName with
+    | Some g -> ()
+    | None -> failwithf "The group '%s' was not found in the lockfile. You might need to run 'paket install' first!" groupName.Name
     //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
     let (cache:DependencyCache) = DependencyCache(lockFile)
     use dependencyCacheProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketDependencyCache
