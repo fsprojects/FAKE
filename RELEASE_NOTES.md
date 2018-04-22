@@ -1,5 +1,13 @@
 # Release Notes
 
+## 5.0.0-rc007 - 2018-04-23
+
+* DOCS: Update documentation issues - https://github.com/fsharp/FAKE/pull/1881
+* BUGFIX: Improve error message when groups doesn't exist - https://github.com/fsharp/FAKE/issues/1874
+* BUGFIX: Improve error message when file doesn't exist (`Process.start`) - https://github.com/fsharp/FAKE/issues/1875
+* ENHANCEMENT: Make `Shell` module conform to API-guidelines. Mark existing functions as obsolete - https://github.com/fsharp/FAKE/pull/1882
+
+
 ## 5.0.0-rc006 - 2018-04-22
 
 * FAKE5: New module `Fake.DotNet.Testing.Expecto` - https://github.com/fsharp/FAKE/pull/1871
