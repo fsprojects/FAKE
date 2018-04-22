@@ -1,5 +1,7 @@
 # Packaging and Deploying SQL Databases
 
+**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](sql-dacpac.html)**
+
 FAKE can be used to create a SQL DACPAC and also deploy it to a SQL Server using the MSDeploy executable. This is installed by default with Visual Studio and with the SQL Server Data Tools (SSDT) package.
 
 DACPACs automatically diff from the source to the destination and generate the SQL script dynamically.

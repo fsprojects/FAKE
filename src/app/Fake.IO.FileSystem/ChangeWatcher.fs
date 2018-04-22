@@ -16,6 +16,20 @@ type FileChange =
       Name : string
       Status : FileStatus }
 
+/// This module is part of the `Fake.IO.FileSystem` package
+///
+/// ## Sample
+///
+///     Target.create "Watch" (fun _ ->
+///         use watcher = !! "c:/projects/watchDir/*.txt" |> ChangeWatcher.run (fun changes ->
+///             // do something
+///         )
+///
+///         System.Console.ReadLine() |> ignore
+///
+///         watcher.Dispose() // if you need to cleanup the watcher.
+///     )
+///
 module ChangeWatcher =
 
     type Options =
@@ -32,19 +46,6 @@ module ChangeWatcher =
     /// ## Parameters
     ///  - `onChange` - function to call when a change is detected.
     ///  - `fileIncludes` - The glob pattern for files to watch for changes.
-    ///
-    /// ## Sample
-    ///
-    ///     Target.Create "Watch" (fun _ ->
-    ///         use watcher = !! "c:/projects/watchDir/*.txt" |> ChangeWatcher.Run (fun changes ->
-    ///             // do something
-    ///         )
-    ///
-    ///         System.Console.ReadLine() |> ignore
-    ///
-    ///         watcher.Dispose() // if you need to cleanup the watcher.
-    ///     )
-    ///
     let runWithOptions (foptions:Options -> Options) (onChange : FileChange seq -> unit) (fileIncludes : IGlobbingPattern) =
         let options = foptions { IncludeSubdirectories = true }
         let dirsToWatch = fileIncludes |> GlobbingPattern.getBaseDirectoryIncludes

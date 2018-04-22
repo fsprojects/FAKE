@@ -1,6 +1,6 @@
 # Sending Notifications to a Slack Webhook
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](api-slack.html)**
 
 In this article you will learn how to create a [Slack](https://slack.com) webhook integration and send a notification to it. This article assumes that you already have a Slack team setup.
 

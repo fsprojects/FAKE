@@ -1,6 +1,6 @@
 # Advanced TeamCity usage
 
-As can be seen on the [TeamCity](teamcity.md) page FAKE is really easy to setup in TeamCity,
+As can be seen on the [TeamCity](legacy-teamcity.html) page FAKE is really easy to setup in TeamCity,
 it also support some advanced scenarios to integrate even deeper with it.
 
 ## Displaying blocks in the log

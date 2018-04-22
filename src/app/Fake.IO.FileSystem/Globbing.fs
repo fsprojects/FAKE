@@ -1,4 +1,5 @@
 /// This module contains a file pattern globbing implementation.
+/// This module is part of the `Fake.IO.FileSystem` package
 module Fake.IO.Globbing.Glob
 
 open System

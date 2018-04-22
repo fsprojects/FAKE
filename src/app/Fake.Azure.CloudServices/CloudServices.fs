@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to package Azure Cloud Services.
+/// **Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found [here](legacy-azurecloudservices.html)**
 [<RequireQualifiedAccess>]
 module Fake.Azure.CloudServices
 
