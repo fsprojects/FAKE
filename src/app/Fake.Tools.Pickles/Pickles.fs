@@ -1,15 +1,32 @@
 /// Contains tasks to run the [Pickles](http://www.picklesdoc.com/) living documentation generator
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles)")>]
-module Fake.PicklesHelper
+///
+/// ## Sample usage
+/// 
+/// ```
+/// open Fake.Tools
+/// 
+/// Target "BuildDoc" (fun _ ->
+///     Pickles.convert (fun p -> { p with
+///                                 FeatureDirectory = currentDirectory @@ "Specs"
+///                                 OutputDirectory = currentDirectory @@ "SpecDocs" })
+/// )
+/// ```
+///
+
+[<RequireQualifiedAccess>]
+module Fake.Tools.Pickles
 
 open System
-open System.IO
 open System.Text
-open Fake
+open Fake.Core
+open Fake.IO
+open Fake.IO.Globbing
+open Fake.IO.FileSystemOperators
+open System.IO
 
 (*
 .\packages\Pickles.CommandLine\tools\pickles.exe  --help                                                 
-Pickles version 2.6.1.0
+Pickles version 2.18.1.0
   -f, --feature-directory=VALUE
                              directory to start scanning recursively for
                                features
@@ -17,7 +34,8 @@ Pickles version 2.6.1.0
                              directory where output files will be placed
       --trfmt, --test-results-format=VALUE
                              the format of the linked test results
-                               (nunit|xunit)
+                               (nunit|nunit3|xunit|xunit2|mstest
+                               |cucumberjson|specrun|vstest)
       --lr, --link-results-file=VALUE
                              the path to the linked test results file (can be
                                a semicolon-separated list of files)
@@ -32,20 +50,21 @@ Pickles version 2.6.1.0
   -h, -?, --help
       --exp, --include-experimental-features
                              whether to include experimental features
+      --cmt, --enableComments=VALUE
+                             whether to enable comments in the output
+      --et, --excludeTags=VALUE
+                             exclude scenarios that match this tag
 *)
 
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: ErrorLevel)")>]
 /// Option which allows to specify if failure of pickles should break the build.
-type PicklesErrorLevel = 
+type ErrorLevel = 
     /// This option instructs FAKE to break the build if pickles fails to execute
     | Error
     /// With this option set, no exception is thrown if pickles fails to execute
     | DontFailBuild
 
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: TestResultsFormat)")>]
 /// The format of the test results
 type TestResultsFormat =
-    | Nunit
     | NUnit
     | NUnit3
     | XUnit
@@ -55,15 +74,13 @@ type TestResultsFormat =
     | SpecRun
     | VSTest
     
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: DocumentationFormat)")>]
  type DocumentationFormat =
     | DHTML
     | HTML
     | Word
     | JSON
     | Excel
-  
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: PicklesParams)")>]
+
 /// The Pickles parameter type
 [<CLIMutable>]
 type PicklesParams =
@@ -88,10 +105,12 @@ type PicklesParams =
       /// Maximum time to allow xUnit to run before being killed.
       TimeOut : TimeSpan
       /// Option which allows to specify if failure of pickles should break the build.
-      ErrorLevel : PicklesErrorLevel
+      ErrorLevel : ErrorLevel
       /// Option which allows to enable some experimental features
       IncludeExperimentalFeatures : bool option
     }
+
+let currentDirectory = Directory.GetCurrentDirectory()
 
 /// The Pickles default parameters
 ///
@@ -109,13 +128,12 @@ type PicklesParams =
 /// - `TimeOut` - 5 minutes
 /// - `ErrorLevel` - `Error`
 /// - `IncludeExperimentalFeatures` - `None` 
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, function: PicklesDefaults)")>]
 let PicklesDefaults =
     {
-      ToolPath = findToolInSubPath "pickles.exe" currentDirectory
+      ToolPath = Tools.findToolInSubPath "pickles.exe" currentDirectory
       FeatureDirectory = currentDirectory
       FeatureFileLanguage = None
-      OutputDirectory = currentDirectory @@ "Documentation"
+      OutputDirectory = currentDirectory </> "Documentation"
       OutputFileFormat = DHTML
       TestResultsFormat = NUnit
       LinkedTestResultFiles = []
@@ -126,7 +144,7 @@ let PicklesDefaults =
       IncludeExperimentalFeatures = None
     }
     
-let buildPicklesArgs parameters =
+let private buildPicklesArgs parameters =
     let outputFormat = match parameters.OutputFileFormat with
                        | DHTML -> "dhtml"
                        | HTML -> "html"
@@ -137,7 +155,6 @@ let buildPicklesArgs parameters =
     let testResultFormat = match parameters.LinkedTestResultFiles with
                            | [] -> None
                            | _  -> match parameters.TestResultsFormat with
-                                   | Nunit -> Some "nunit"
                                    | NUnit -> Some "nunit"
                                    | NUnit3 -> Some "nunit3"
                                    | XUnit -> Some "xunit"
@@ -158,17 +175,17 @@ let buildPicklesArgs parameters =
                                | _ -> None
                                    
     new StringBuilder()
-    |> appendWithoutQuotes (sprintf " -f \"%s\"" parameters.FeatureDirectory)
-    |> appendWithoutQuotes (sprintf " -o \"%s\"" parameters.OutputDirectory)
-    |> appendIfSome parameters.SystemUnderTestName (sprintf " --sn %s")
-    |> appendIfSome parameters.SystemUnderTestVersion (sprintf " --sv %s")
-    |> appendIfSome parameters.FeatureFileLanguage (sprintf " -l %s")
-    |> appendWithoutQuotes (sprintf " --df %s" outputFormat)
-    |> appendIfSome testResultFormat (sprintf " --trfmt %s")
-    |> appendIfSome linkedResultFiles (sprintf " --lr %s")
-    |> appendIfSome experimentalFeatures (sprintf "%s")
-    |> toText
-    
+    |> StringBuilder.appendWithoutQuotes (sprintf " -f \"%s\"" parameters.FeatureDirectory)
+    |> StringBuilder.appendWithoutQuotes (sprintf " -o \"%s\"" parameters.OutputDirectory)
+    |> StringBuilder.appendIfSome parameters.SystemUnderTestName (sprintf " --sn %s")
+    |> StringBuilder.appendIfSome parameters.SystemUnderTestVersion (sprintf " --sv %s")
+    |> StringBuilder.appendIfSome parameters.FeatureFileLanguage (sprintf " -l %s")
+    |> StringBuilder.appendWithoutQuotes (sprintf " --df %s" outputFormat)
+    |> StringBuilder.appendIfSome testResultFormat (sprintf " --trfmt %s")
+    |> StringBuilder.appendIfSome linkedResultFiles (sprintf " --lr %s")
+    |> StringBuilder.appendIfSome experimentalFeatures (sprintf "%s")
+    |> StringBuilder.toText
+
 module internal ResultHandling = 
     let (|OK|Failure|) = function
         | 0 -> OK
@@ -180,13 +197,12 @@ module internal ResultHandling =
             Some (sprintf "Pickles reported an error (Error code %d)" errorCode)
             
     let failBuildWithMessage = function
-        | DontFailBuild -> traceImportant
+        | DontFailBuild -> Trace.traceImportant
         | _ -> failwith
         
     let failBuildIfPicklesReportedError errorLevel =
         buildErrorMessage
         >> Option.iter (failBuildWithMessage errorLevel)
-        
         
 /// Runs pickles living documentation generator via the given tool
 /// Will fail if the pickles command line tool terminates with a non zero exit code.
@@ -196,14 +212,14 @@ module internal ResultHandling =
 ///
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default `PicklesParams` value
-[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, function: convert)")>]
-let Pickles setParams =
-    use __ = traceStartTaskUsing "Pickles" ""
+let convert setParams =
+    Trace.traceStartTaskUnsafe "Pickles" ""
     let parameters = setParams PicklesDefaults
-    let result = 
-        ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- "."
-            info.Arguments <- parameters |> buildPicklesArgs) parameters.TimeOut
+    let makeProcessStartInfo info =
+        { info with FileName = parameters.ToolPath
+                    WorkingDirectory = "."
+                    Arguments = parameters |> buildPicklesArgs } 
+    
+    let result = Process.execSimple makeProcessStartInfo  parameters.TimeOut
     
     ResultHandling.failBuildIfPicklesReportedError parameters.ErrorLevel result
