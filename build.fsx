@@ -283,6 +283,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
+      "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.JavaScript.Npm", "Running npm commands"
       "Fake.JavaScript.Yarn", "Running Yarn commands"
