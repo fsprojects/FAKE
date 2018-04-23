@@ -1,4 +1,3 @@
-﻿[<AutoOpen>]
 /// Contains helper functions which allow FAKE to call the [Manifest Generation and Editing Tool](http://msdn.microsoft.com/en-us/library/acz3y3te.aspx), in short 'MAGE'.
 /// The intentional use is the creation of a clickonce application.
 ///
@@ -7,24 +6,22 @@
 /// On the other hand - you want to be able to run the compile batch on each developer machine. How can we achieve that? 
 /// In the parameter structure, we use a CertFile property and a TmpCertFile property. Whenever the CertFile was not found, the manifest is signed with
 /// a temporary certificate. And the latter one can be shared in the source control.
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, module: Mage)")>]
-module Fake.MageHelper
+[<RequireQualifiedAccess>]
+module Fake.DotNet.Mage
 
-open System.IO
+open Fake.Core
+open Fake.IO
+open Fake.IO.FileSystemOperators
 
 /// These are the supported processor types of the MAGE tool
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, type: Processor)")>]
-type MageProcessor = MSIL | X86 | IA64 | AMD64
+type Processor = MSIL | X86 | IA64 | AMD64
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.TooDotNets.Mage, type: MageCall)")>]
 /// The supported commands of the MAGE tool
 type MageCall = NewApp | UpdateApp | Sign | Deploy | UpdateDeploy | SignDeploy
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, type: TrustLevel)")>]
 /// The level of trust to grant the application on client computers.
-type MageTrustLevels = Internet | LocalIntranet | FullTrust
+type TrustLevel = Internet | LocalIntranet | FullTrust
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, type: MageParams)")>]
 /// Needed information to call MAGE
 [<CLIMutable>]
 type MageParams =
@@ -33,12 +30,12 @@ type MageParams =
     Name : string
     IconPath : string 
     IconFile : string 
-    Processor : MageProcessor
+    Processor : Processor
     Version : string
     Manifest : string
     FromDirectory : string
     ApplicationFile : string
-    TrustLevel : MageTrustLevels option
+    TrustLevel : TrustLevel option
     CertFile : string option
     TmpCertFile : string
     Password : string option
@@ -51,9 +48,8 @@ type MageParams =
     ProviderURL : string 
     SupportURL : string option}
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: serializeParams (private))")>]
 /// Convert the parameter structure into command line arguments of MAGE
-let MageSerializeParams (action: MageCall) (mp : MageParams) =
+let private serializeParams (action: MageCall) (mp : MageParams) =
   let processorStr =
     match mp.Processor with
     | MSIL -> "msil"
@@ -62,20 +58,20 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
     | AMD64 -> "amd64"
   
   let processor = "-p " + processorStr
-  let name = if isNullOrEmpty mp.Name then "" else "-n \"" + mp.Name + "\""
-  let iconFile = if isNullOrEmpty mp.IconFile then "" else "-if \"" + mp.IconFile + "\""
-  let version = if isNullOrEmpty mp.Version then "" else "-v " + mp.Version
-  let fromDir = if isNullOrEmpty mp.FromDirectory then "" else "-fd " + mp.FromDirectory
-  let manifest = if isNullOrEmpty mp.Manifest then "" else "-appm " + mp.Manifest
+  let name = if String.isNullOrEmpty mp.Name then "" else "-n \"" + mp.Name + "\""
+  let iconFile = if String.isNullOrEmpty mp.IconFile then "" else "-if \"" + mp.IconFile + "\""
+  let version = if String.isNullOrEmpty mp.Version then "" else "-v " + mp.Version
+  let fromDir = if String.isNullOrEmpty mp.FromDirectory then "" else "-fd " + mp.FromDirectory
+  let manifest = if String.isNullOrEmpty mp.Manifest then "" else "-appm " + mp.Manifest
   let certFile = 
     match mp.CertFile with
     | None -> "" 
     | Some (p) -> 
-        if not (File.Exists p) then "-cf " + mp.TmpCertFile else "-cf " + p
+        if not (File.exists p) then "-cf " + mp.TmpCertFile else "-cf " + p
   let password = 
     match mp.Password with
     | None -> ""
-    | Some (p) -> if isNullOrEmpty certFile then "" else if not (File.Exists p) then "" else "-pwd " + ReadLine p
+    | Some (p) -> if String.isNullOrEmpty certFile then "" else if not (File.exists p) then "" else "-pwd " + File.readLine p
   let certHash =
     match mp.CertHash with
     | None -> ""
@@ -88,7 +84,7 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
       | Internet -> "Internet"
       | LocalIntranet -> "LocalIntranet"
       | FullTrust -> "FullTrust"
-  let trustlevel = if isNullOrEmpty trustlevelStr then "" else "-tr " + trustlevelStr
+  let trustlevel = if String.isNullOrEmpty trustlevelStr then "" else "-tr " + trustlevelStr
   let includeProvider =
     match mp.IncludeProvider with
     | None -> ""
@@ -109,7 +105,7 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
     match mp.CodeBase with
     | None -> ""
     | Some (p) -> "-appc \"" + p + "\""
-  let providerUrl = if isNullOrEmpty mp.ProviderURL then "" else "-pu \"" + mp.ProviderURL + "\""
+  let providerUrl = if String.isNullOrEmpty mp.ProviderURL then "" else "-pu \"" + mp.ProviderURL + "\""
   let supportUrl =
     match mp.SupportURL with
     | None -> ""
@@ -126,12 +122,11 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
     | SignDeploy -> [certFile; password; certHash] 
 
   allParameters
-  |> separated " "
+  |> String.separated " "
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: call")>]
 /// Execute the MAGE tool. Adds some parameters, dependent on the MAGE command.
-let mageCall (action : MageCall) (mp : MageParams) =
-  let magePath = mp.ToolsPath @@ "mage.exe"
+let call (action : MageCall) (mp : MageParams) =
+  let magePath = mp.ToolsPath </> "mage.exe"
   let call =
     match action with
     | NewApp -> "New Application -t \"" + mp.Manifest + "\""
@@ -140,47 +135,33 @@ let mageCall (action : MageCall) (mp : MageParams) =
     | Deploy -> "New Deployment -t \"" + mp.ApplicationFile + "\""
     | UpdateDeploy -> "Update \"" + mp.ApplicationFile + "\""
     | SignDeploy -> "Sign \"" + mp.ApplicationFile + "\""
-  let args = "-" + call + " " + MageSerializeParams  action mp
+  let args = "-" + call + " " + serializeParams  action mp
   let result =
-    ExecProcess (fun info ->
-      info.FileName <- magePath
-      info.Arguments <- args) System.TimeSpan.MaxValue
+    Process.execSimple (fun info -> { info with FileName = magePath; Arguments = args }) System.TimeSpan.MaxValue
   if result <> 0 then failwithf "Error during mage call "
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: createApp")>]
 /// Encapsulates the MAGE call to create a new application's manifest
-let MageCreateApp (mp : MageParams) =
-  mageCall NewApp mp
+let createApp = call NewApp
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: updateApp")>]
 /// Encapsulates the MAGE call to update an existing application's manifest
-let MageUpdateApp (mp : MageParams) =
-  mageCall UpdateApp mp
+let updateApp = call UpdateApp
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: signManifest")>]
 /// Encapsulates the MAGE call to sign an application's manifest
-let MageSignManifest (mp : MageParams) =
-  mageCall Sign mp
+let signManifest = call Sign
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: deployApp")>]
 /// Encapsulates the MAGE call to deploy an application
-let MageDeployApp (mp : MageParams) =
-  mageCall Deploy mp
+let deployApp = call Deploy
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: updateDeploy")>]
-let MageUpdateDeploy (mp : MageParams) =
-  mageCall UpdateDeploy mp
+/// Encapsulates the MAGE call to update the deployment of an application
+let updateDeploy = call UpdateDeploy
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: signDeploy")>]
 /// Encapsulates the MAGE call to sign the deployment of an application
-let MageSignDeploy (mp : MageParams) =
-  mageCall SignDeploy mp
+let signDeploy = call SignDeploy
 
-[<System.Obsolete("Open Fake.DotNet instead (FAKE0001 - package: Fake.DotNet.Mage, function: run")>]
 /// Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest, deploys the application and finally signs the deployment.
-let MageRun (mp : MageParams) =
-  use __ = traceStartTaskUsing "Mage-Tool" mp.ApplicationFile
-  MageCreateApp mp
-  MageSignManifest mp
-  MageDeployApp mp
-  MageSignDeploy mp
+let run (mp : MageParams) =
+  Trace.traceStartTaskUnsafe "Fake.Tools.Mage" mp.ApplicationFile
+  createApp mp
+  signManifest mp
+  deployApp mp
+  signDeploy mp
