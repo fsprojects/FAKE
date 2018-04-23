@@ -1,6 +1,6 @@
 # Integrating a FAKE build script into TeamCity
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](buildserver.html)**
 
 Easy [TeamCity](http://www.jetbrains.com/teamcity/) integration was one of the major goals for the FAKE build system.
 

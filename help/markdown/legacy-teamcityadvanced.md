@@ -1,5 +1,7 @@
 # Advanced TeamCity usage
 
+**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](buildserver.html)**
+
 As can be seen on the [TeamCity](legacy-teamcity.html) page FAKE is really easy to setup in TeamCity,
 it also support some advanced scenarios to integrate even deeper with it.
 
