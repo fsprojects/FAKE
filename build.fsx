@@ -298,7 +298,8 @@ let dotnetAssemblyInfos =
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
-      "Fake.Documentation.DocFx", "Documentation with DocFx" ]
+      "Fake.Documentation.DocFx", "Documentation with DocFx"
+      "Fake.Installer.InnoSetup", "Creating installers with InnoSetup" ]
 
 let assemblyInfos =
   [ legacyDir </> "FAKE/AssemblyInfo.fs",
