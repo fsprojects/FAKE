@@ -6,7 +6,7 @@ Supported Build-Server (Note: Not supported doesn't mean that it won't work, but
 
 - `Fake.BuildServer.AppVeyor`
 - `Fake.BuildServer.Travis`
-- `Fake.BuildServer.TeamCity`
+- `Fake.BuildServer.TeamCity` - [legacy documentation](legacy-teamcity.html)
 - `Fake.BuildServer.TeamFoundation`
 
 ## General API usage

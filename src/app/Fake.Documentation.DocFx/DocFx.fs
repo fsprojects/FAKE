@@ -115,11 +115,11 @@ let private serializeInitParams p =
 ///  - `setParams` - Function used to manipulate the default Init parameters. See `InitParams.Create()`
 /// ## Sample
 ///
-///     DocFx.init (fun p -> 
-///      { p with 
-///          Overwrite = true
-///          Timeout = TimeSpan.FromMinutes 10.
-///      })
+///         DocFx.init (fun p -> 
+///          { p with 
+///              Overwrite = true
+///              Timeout = TimeSpan.FromMinutes 10.
+///          })
 
 let init setParams =
     let p = InitParams.Create() |> setParams
@@ -389,11 +389,11 @@ let private serializeBuildParams p =
 ///  - `setParams` - Function used to manipulate the default build parameters. See `BuildParams.Create()`
 /// ## Sample
 ///
-///     DocFx.build (fun p -> 
-///      { p with 
-///          OutputFolder = "build" @@ "docs"
-///          ConfigFile = "docs" @@ "docfx.json"    
-///      })
+///        DocFx.build (fun p -> 
+///         { p with 
+///             OutputFolder = "build" @@ "docs"
+///             ConfigFile = "docs" @@ "docfx.json"    
+///         })
 
 let build setParams =
     let p = BuildParams.Create() |> setParams
@@ -490,14 +490,14 @@ let private serializePdfParams p =
 ///  - `setParams` - Function used to manipulate the default pdf parameters. See `PdfParams.Create()`
 /// ## Sample
 ///
-///  DocFx.pdf (fun p ->
-///      { p with
-///              Name = "Docs.pdf" }
-///        .WithBuildParams (fun b -> 
-///             { b with 
-///                 OutputFolder = "build" @@ "docs"
-///                 ConfigFile = "docs" @@ "docfx.json"})
-///              )   
+///        DocFx.pdf (fun p ->
+///            { p with
+///                    Name = "Docs.pdf" }
+///              .WithBuildParams (fun b -> 
+///                   { b with 
+///                       OutputFolder = "build" @@ "docs"
+///                       ConfigFile = "docs" @@ "docfx.json"})
+///                    )   
 let pdf setParams =
     let p = PdfParams.Create() |> setParams
     p

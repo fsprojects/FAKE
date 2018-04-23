@@ -235,7 +235,7 @@ let private toRunnerContext task assemblies options =
     context.ApplicationContext <- options.Context
     context.Profile <- options.Profile
     context.ProviderSwitches <- options.ProviderSwitches
-    context.Timeout <- options.Timeout
+    context.Timeout <- Nullable options.Timeout
     context.TransactionPerSession <- options.TransactionPerSession
     context.WorkingDirectory <- options.WorkingDirectory
     match options.Namespace with

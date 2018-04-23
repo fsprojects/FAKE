@@ -1,5 +1,7 @@
 # Packaging Azure Cloud Services
 
+**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](apidocs/fake-azure-cloudservices.html)**
+
 FAKE can be used to create a Azure Cloud Service package (.cspkg) for use with e.g. Worker Roles.
 
 Currently it does not support publishing, and has several restrictions: -

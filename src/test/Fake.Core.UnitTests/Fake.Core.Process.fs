@@ -10,6 +10,18 @@ open Expecto.Flip
 [<Tests>]
 let tests = 
   testList "Fake.Core.Process.Tests" [
+    testCase "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
+        try
+            Process.start(fun proc ->
+                { proc with
+                    FileName = "FileDoesntExist.exe"
+                    Arguments = "arg1 arg2" })
+                |> ignore
+            Expect.isTrue "Expected an exception" false 
+        with e ->
+            let s = e.Message.Contains "FileDoesntExist.exe"
+            Expect.isTrue ("Expected file-path as part of the message '" + e.Message + "'") s
+    
     testCase "Test that we can read messages correctly" <| fun _ ->
         let shell, command =
             if Environment.isWindows then

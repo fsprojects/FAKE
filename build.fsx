@@ -181,9 +181,17 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
 Target.create "Clean" (fun _ ->
     !! "src/*/*/bin"
     //++ "src/*/*/obj"
+    #if BOOTSTRAP
+    |> Shell.cleanDirs
+    #else
     |> Shell.CleanDirs
+    #endif
 
+    #if BOOTSTRAP
+    Shell.cleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
+    #else
     Shell.CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
+    #endif
 
     // Clean Data for tests
     cleanForTests()
@@ -357,7 +365,11 @@ Target.create "BuildSolution_" (fun _ ->
 )
 
 Target.create "GenerateDocs" (fun _ ->
+    #if BOOTSTRAP
+    Shell.cleanDir docsDir
+    #else
     Shell.CleanDir docsDir
+    #endif
     let source = "./help"
     let docsTemplate = "docpage.cshtml"
     let indexTemplate = "indexpage.cshtml"
@@ -374,12 +386,20 @@ Target.create "GenerateDocs" (fun _ ->
         "project-name", "FAKE - F# Make" ]
     let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
+    #if BOOTSTRAP
+    Shell.copyDir (docsDir) "help/content" FileFilter.allFiles
+    #else
     Shell.CopyDir (docsDir) "help/content" FileFilter.allFiles
+    #endif
     File.writeString false "./docs/.nojekyll" ""
     File.writeString false "./docs/CNAME" "fake.build"
     //CopyDir (docsDir @@ "pics") "help/pics" FileFilter.allFiles
 
+    #if BOOTSTRAP
+    Shell.copy (source @@ "markdown") ["RELEASE_NOTES.md"]
+    #else
     Shell.Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
+    #endif
     FSFormatting.createDocs (fun s ->
         { s with
             Source = source @@ "markdown"
@@ -427,7 +447,11 @@ Target.create "GenerateDocs" (fun _ ->
 )
 
 Target.create "CopyLicense" (fun _ ->
+    #if BOOTSTRAP
+    Shell.copyTo buildDir additionalFiles
+    #else
     Shell.CopyTo buildDir additionalFiles
+    #endif
 )
 
 Target.create "Test" (fun _ ->
@@ -607,14 +631,22 @@ Target.create "ILRepack" (fun _ ->
 
         if result <> 0 then failwithf "Error during ILRepack execution."
 
+        #if BOOTSTRAP
+        Shell.copyFile (buildDir </> filename) targetFile
+        #else
         Shell.CopyFile (buildDir </> filename) targetFile
+        #endif
 
     internalizeIn "FAKE.exe"
 
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter File.delete
 
+    #if BOOTSTRAP
+    Shell.deleteDir buildMergedDir
+    #else
     Shell.DeleteDir buildMergedDir
+    #endif
 )
 
 Target.create "CreateNuGet" (fun _ ->
@@ -640,10 +672,17 @@ Target.create "CreateNuGet" (fun _ ->
         let nugetLibDir = nugetLegacyDir @@ "lib"
         let nugetLib451Dir = nugetLibDir @@ "net451"
 
+        #if BOOTSTRAP
+        Shell.cleanDir nugetDocsDir
+        Shell.cleanDir nugetToolsDir
+        Shell.cleanDir nugetLibDir
+        Shell.deleteDir nugetLibDir
+        #else
         Shell.CleanDir nugetDocsDir
         Shell.CleanDir nugetToolsDir
         Shell.CleanDir nugetLibDir
         Shell.DeleteDir nugetLibDir
+        #endif
 
         File.delete "./build/FAKE.Gallio/Gallio.dll"
 
@@ -652,6 +691,30 @@ Target.create "CreateNuGet" (fun _ ->
           //|> Seq.iter DeleteFile
           ()
 
+        #if BOOTSTRAP
+        match package with
+        | p when p = projectName ->
+            !! (buildDir @@ "**/*.*") |> Shell.copy nugetToolsDir
+            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
+            deleteFCS nugetToolsDir
+        | p when p = "FAKE.Core" ->
+            !! (buildDir @@ "*.*") |> Shell.copy nugetToolsDir
+            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
+            deleteFCS nugetToolsDir
+        | p when p = "FAKE.Lib" ->
+            Shell.cleanDir nugetLib451Dir
+            {
+                Globbing.BaseDirectory = buildDir
+                Globbing.Includes = [ "FakeLib.dll"; "FakeLib.XML" ]
+                Globbing.Excludes = []
+            }
+            |> Shell.copy nugetLib451Dir
+            deleteFCS nugetLib451Dir
+        | _ ->
+            Shell.copyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
+            Shell.copyTo nugetToolsDir additionalFiles
+        !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
+        #else
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Shell.Copy nugetToolsDir
@@ -674,6 +737,7 @@ Target.create "CreateNuGet" (fun _ ->
             Shell.CopyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
             Shell.CopyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
+        #endif
 
         let setParams (p:NuGet.NuGet.NuGetParams) =
             {p with
@@ -830,6 +894,7 @@ let executeFPM args =
     printfn "%s %s" "fpm" args
     Shell.Exec("fpm", args=args, dir="bin")
 
+
 type SourceType =
     | Dir of source:string * target:string
 type DebPackageManifest =
@@ -939,13 +1004,22 @@ Target.create "PublishNuget" (fun _ ->
 )
 
 Target.create "ReleaseDocs" (fun _ ->
+    #if BOOTSTRAP
+    Shell.cleanDir "gh-pages"
+    #else
     Shell.CleanDir "gh-pages"
+    #endif
     let url = Environment.environVarOrDefault "fake_git_url" "https://github.com/fsharp/FAKE.git"
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
     Git.Repository.fullclean "gh-pages"
+    #if BOOTSTRAP
+    Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
+    Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
+    #else
     Shell.CopyRecursive "docs" "gh-pages" true |> printfn "%A"
     Shell.CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
+    #endif
     Git.Staging.stageAll "gh-pages"
     Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
     Git.Branches.push "gh-pages"

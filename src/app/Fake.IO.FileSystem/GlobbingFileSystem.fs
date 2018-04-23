@@ -163,7 +163,8 @@ module FileIncludes =
     let SetBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = GlobbingPattern.setBaseDir dir fileIncludes
 
 /// Contains operators to find and process files.
-/// 
+/// This module is part of the `Fake.IO.FileSystem` package
+///
 /// ### Simple glob using as list
 ///
 ///     #r "paket: nuget Fake.IO.FileSystem //"

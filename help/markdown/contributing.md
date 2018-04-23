@@ -132,6 +132,12 @@ We [learned from our mistakes](fake-fake5-learn-more.html), so we use the follow
 * We avoid the `Helpers` suffix (because we now expect users to write `<module>.<function>`)
 * We generally use the `RequireQualifiedAccess` attribute on modules.
 
+## Guidelines
+
+* Add documentation for your feature
+* If you add new markdown documentation make sure to link if from an existing site, ideally add it to the [menu](https://github.com/fsharp/FAKE/blob/master/help/templates/template.cshtml)
+* If you write API-Documentation but no extra markdown please consider adding it to the menu as well.
+
 ## Porting a module to FAKE 5
 
 As mentioned in the ["Fake 5 learn more"](fake-fake5-learn-more.html) section we have a large list to choose from to help the project. One of these things is porting modules to FAKE 5. To save you from some pitfalls this sections guides you in migrating modules with an (at least for me) working approach.
