@@ -296,6 +296,7 @@ let dotnetAssemblyInfos =
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
+      "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
       "Fake.Documentation.DocFx", "Documentation with DocFx" ]
