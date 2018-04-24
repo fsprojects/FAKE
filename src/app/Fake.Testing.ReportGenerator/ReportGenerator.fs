@@ -37,7 +37,6 @@ type LogVerbosity =
     | Error = 2
 
 /// ReportGenerator parameters, for more details see: https://github.com/danielpalme/ReportGenerator.
-[<CLIMutable>]
 type ReportGeneratorParams =
     { /// (Required) Path to the ReportGenerator exe file.
       ExePath : string
@@ -64,7 +63,7 @@ type ReportGeneratorParams =
 let private currentDirectory = Directory.GetCurrentDirectory ()
 
 /// ReportGenerator default parameters
-let ReportGeneratorDefaultParams =
+let private ReportGeneratorDefaultParams =
     { ExePath = "./tools/ReportGenerator/bin/ReportGenerator.exe"
       TargetDir = currentDirectory
       ReportTypes = [ ReportType.Html ]
@@ -101,7 +100,7 @@ let generateReports setParams (reports : string list) =
     let taskName = "ReportGenerator"
     let description = "Generating reports"
     
-    Trace.traceStartTaskUnsafe taskName description
+    use _ = Trace.traceStartTask taskName description
     let param = setParams ReportGeneratorDefaultParams
 
     let processArgs = buildReportGeneratorArgs param reports
