@@ -212,7 +212,7 @@ module internal ResultHandling =
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default `PicklesParams` value
 let convert setParams =
-    Trace.traceStartTaskUnsafe "Pickles" ""
+    use _ = Trace.traceStartTask "Pickles" ""
     let parameters = setParams PicklesDefaults
     let makeProcessStartInfo info =
         { info with FileName = parameters.ToolPath
