@@ -10,7 +10,6 @@ open System.IO
 open System.Text
 
 /// SpecFlow execution parameter type.
-[<CLIMutable>]
 type SpecFlowParams = { 
     SubCommand:         string
     ProjectFile:        string
@@ -30,7 +29,7 @@ let private toolname = "specflow.exe"
 let private currentDirectory = Directory.GetCurrentDirectory ()
 
 /// SpecFlow default execution parameters.
-let SpecFlowDefaults = { 
+let private SpecFlowDefaults = { 
     SubCommand =        "generateall"
     ProjectFile =       null
     ToolName =          toolname
@@ -49,10 +48,10 @@ let SpecFlowDefaults = {
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
-let generate setParams =    
+let run setParams =    
     let parameters = setParams SpecFlowDefaults
 
-    Trace.traceStartTaskUnsafe "SpecFlow " parameters.SubCommand
+    use _ = Trace.traceStart "SpecFlow " parameters.SubCommand
 
     let tool = parameters.ToolPath </> parameters.ToolName
 

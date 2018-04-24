@@ -19,12 +19,12 @@ open Fake.DotNet.Testing
 let specsProject = "IntegrationTests.csproj"
 
 Target.create "Regenerate Test Classes" (fun _ ->
-    SpecFlow.generate (fun p ->
+    SpecFlow.run (fun p ->
         { p with ProjectFile = specsProject })
 )
 
 Target.create "Create StepDefinition Report" (fun _ ->
-    SpecFlow.generate (fun p ->
+    SpecFlow.run (fun p ->
         { p with SubCommand = "stepdefinitionreport"
                  ProjectFile = specsProject
                  BinFolder = "bin/Debug"
