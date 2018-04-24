@@ -100,7 +100,7 @@ let generateReports setParams (reports : string list) =
     let taskName = "ReportGenerator"
     let description = "Generating reports"
     
-    use _ = Trace.traceStartTask taskName description
+    use __ = Trace.traceTask taskName description
     let param = setParams ReportGeneratorDefaultParams
 
     let processArgs = buildReportGeneratorArgs param reports
