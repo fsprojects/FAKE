@@ -51,7 +51,7 @@ let private SpecFlowDefaults = {
 let run setParams =    
     let parameters = setParams SpecFlowDefaults
 
-    use _ = Trace.traceStartTask "SpecFlow " parameters.SubCommand
+    use __ = Trace.traceTask "SpecFlow " parameters.SubCommand
 
     let tool = parameters.ToolPath </> parameters.ToolName
 
