@@ -82,7 +82,6 @@ type TestResultsFormat =
     | Excel
 
 /// The Pickles parameter type
-[<CLIMutable>]
 type PicklesParams =
     { /// The path to the Pickles console tool: 'pickles.exe'      
       ToolPath : string
@@ -110,7 +109,7 @@ type PicklesParams =
       IncludeExperimentalFeatures : bool option
     }
 
-let currentDirectory = Directory.GetCurrentDirectory()
+let private currentDirectory = Directory.GetCurrentDirectory()
 
 /// The Pickles default parameters
 ///
@@ -128,7 +127,7 @@ let currentDirectory = Directory.GetCurrentDirectory()
 /// - `TimeOut` - 5 minutes
 /// - `ErrorLevel` - `Error`
 /// - `IncludeExperimentalFeatures` - `None` 
-let PicklesDefaults =
+let private PicklesDefaults =
     {
       ToolPath = Tools.findToolInSubPath "pickles.exe" currentDirectory
       FeatureDirectory = currentDirectory
