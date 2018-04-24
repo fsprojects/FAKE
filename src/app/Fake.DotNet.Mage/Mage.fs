@@ -17,13 +17,12 @@ open Fake.IO.FileSystemOperators
 type Processor = MSIL | X86 | IA64 | AMD64
 
 /// The supported commands of the MAGE tool
-type MageCall = NewApp | UpdateApp | Sign | Deploy | UpdateDeploy | SignDeploy
+type internal MageCall = NewApp | UpdateApp | Sign | Deploy | UpdateDeploy | SignDeploy
 
 /// The level of trust to grant the application on client computers.
 type TrustLevel = Internet | LocalIntranet | FullTrust
 
 /// Needed information to call MAGE
-[<CLIMutable>]
 type MageParams =
   { ToolsPath : string 
     ProjectFiles : seq<string>
@@ -125,7 +124,7 @@ let private serializeParams (action: MageCall) (mp : MageParams) =
   |> String.separated " "
 
 /// Execute the MAGE tool. Adds some parameters, dependent on the MAGE command.
-let call (action : MageCall) (mp : MageParams) =
+let internal call (action : MageCall) (mp : MageParams) =
   let magePath = mp.ToolsPath </> "mage.exe"
   let call =
     match action with
