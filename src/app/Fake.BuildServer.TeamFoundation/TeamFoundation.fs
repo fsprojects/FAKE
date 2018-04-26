@@ -101,7 +101,7 @@ module TeamFoundation =
                         match openTags.Value with
                         | [] -> None
                         | (_, id) :: _ -> Some id
-                    openTags.Value <- (tag,id) :: openTags
+                    openTags.Value <- (tag,id) :: openTags.Value
                     let order = System.Threading.Interlocked.Increment(&order)
                     createLogDetail id parentId tag.Type tag.Name order descr
                 | TraceData.CloseTag (tag, time) ->
