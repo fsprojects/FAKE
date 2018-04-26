@@ -98,7 +98,7 @@ module TeamFoundation =
                 | TraceData.OpenTag (tag, descr) ->
                     let id = Guid.NewGuid()
                     let parentId =
-                        match openTags with
+                        match openTags.Value with
                         | [] -> None
                         | (_, id) :: _ -> Some id
                     openTags.Value <- (tag,id) :: openTags
@@ -107,7 +107,7 @@ module TeamFoundation =
                 | TraceData.CloseTag (tag, time) ->
                     ignore time
                     let id, rest =
-                        match openTags with
+                        match openTags.Value with
                         | [] -> failwithf "Cannot close tag, as it was not opened before! (Expected %A)" tag
                         | (savedTag, id) :: rest ->
                             ignore savedTag // TODO: Check if tag = savedTag
