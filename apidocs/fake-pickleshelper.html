@@ -109,8 +109,10 @@
 																<li><a href="../apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="../apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="../fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="../dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="../dotnet-nuget.html">NuGet</a></li>
+																<li><a href="../apidocs/fake-dotnet-mage.html">Mage</a></li>
 																<li><a href="../apidocs/fake-dotnet-paket.html">Paket</a></li>
 															</ul>
 														</li>
@@ -124,6 +126,7 @@
 															<a href="../apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
 																<li><a href="../apidocs/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="../fake-tools-pickles.html">Pickles</a></li>
 															</ul>
 														</li>
 														<li>
@@ -136,6 +139,7 @@
 															<a href="../apidocs/index.html#Fake.Testing">Testing</a>
 															<ul>
 																<li><a href="../testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="../testing-reportgenerator.html">ReportGenerator</a></li>
 															</ul>
 														</li>
 														<li>
@@ -284,7 +288,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PicklesHelper.fs#L123-123" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PicklesHelper.fs#L129-129" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -302,7 +306,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PicklesHelper.fs#L201-201" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PicklesHelper.fs#L200-200" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -314,21 +318,6 @@ is any error.</p>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default <a href="fake-pickleshelper-picklesparams.html" title="PicklesParams"><code>PicklesParams</code></a> value</li>
 </ul>
-<h2>Sample usage</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;BuildDoc&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-   <span class="id">Pickles</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span>
-                       <span class="id">FeatureDirectory</span> <span class="o">=</span> <span class="id">currentDirectory</span> <span class="id">@@</span> <span class="s">&quot;Specs&quot;</span>
-                       <span class="id">OutputDirectory</span> <span class="o">=</span> <span class="id">currentDirectory</span> <span class="id">@@</span> <span class="s">&quot;SpecDocs&quot;</span> <span class="pn">}</span><span class="pn">)</span>
-<span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
 
 
         </td>
@@ -344,7 +333,7 @@ is any error.</p>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PicklesHelper.fs#L107-107" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/PicklesHelper.fs#L113-113" class="github-link">
               <img src="../assets/img/github.png" class="normal" />
               <img src="../assets/img/github-blue.png" class="hover" />
             </a>
@@ -475,7 +464,7 @@ is any error.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc008</a></li>
 									</ul>
 								</div>
 							</div>

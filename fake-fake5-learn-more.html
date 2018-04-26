@@ -110,8 +110,10 @@
 																<li><a href="apidocs/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="apidocs/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="dotnet-nuget.html">NuGet</a></li>
+																<li><a href="apidocs/fake-dotnet-mage.html">Mage</a></li>
 																<li><a href="apidocs/fake-dotnet-paket.html">Paket</a></li>
 															</ul>
 														</li>
@@ -125,6 +127,7 @@
 															<a href="apidocs/index.html#Fake.Tools.Git">Tools</a>
 															<ul>
 																<li><a href="apidocs/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="fake-tools-pickles.html">Pickles</a></li>
 															</ul>
 														</li>
 														<li>
@@ -137,6 +140,7 @@
 															<a href="apidocs/index.html#Fake.Testing">Testing</a>
 															<ul>
 																<li><a href="testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="testing-reportgenerator.html">ReportGenerator</a></li>
 															</ul>
 														</li>
 														<li>
@@ -220,7 +224,7 @@
 <p>This is especially about the FAKE 5 update, <a href="fake-what-is-fake.html">here you can learn about FAKE</a></p>
 </blockquote>
 <p>FAKE 5 is a huge undertaking in modularizing and porting FAKE 4 to dotnet-core.
-At the same time we want to use that opportunity to pay old API depths.</p>
+At the same time we want to use that opportunity to pay old API debts.</p>
 <p>On top of that compatibility was always a major concern when updating FAKE,
 therefore we need a clear <a href="fake-migrate-to-fake-5.html">migration path</a> for existing projects.</p>
 <p>So before I go into the details of what changed and what the vision is going forward let me say:</p>
@@ -230,38 +234,32 @@ I think we now have a good foundation to finish the remaining work.
 Therefore I decided to make the finish line of FAKE 5 a community effort.
 If your favorite module is missing, please port it and send a PR (see Open Work section below).</p>
 </blockquote>
-<h2><a name="How-stable-is-it-What-is-alpha-Should-I-use-it" class="anchor" href="#How-stable-is-it-What-is-alpha-Should-I-use-it">How stable is it? What is alpha? Should I use it?</a></h2>
-<p>First let me say that there are two distributions of FAKE 5.</p>
+<h2><a name="How-stable-is-it-What-is-RC-Should-I-use-it" class="anchor" href="#How-stable-is-it-What-is-RC-Should-I-use-it">How stable is it? What is RC? Should I use it?</a></h2>
+<p>First, let me say that there are two distributions of FAKE 5.</p>
 <ul>
 <li>
 The first one is an update to the 'regular' FAKE 4 package on NuGet.
 It's very safe to update to this package as mentioned in the <a href="fake-migrate-to-fake-5.html">migrate to fake 5 guide</a>.
-The reason it is considered "beta" is because all "legacy"-APIs have been marked as obsolete, but new APIs have not been stabelized yet.
-So just ignore the <code>Obsolete</code> warnings and upgrade. If you start fixing the obsolete warnings we MIGHT break your script in an update.
-Hope this makes it clear why the Fake-5 nuget package is marked as beta.
-Beta stage will end when all <code>Obsolete</code> attributes are correct and the new API is considered stable.
+Update the package and fix the <code>Obsolete</code> warnings to use the new API. There might still be some minor issues in the new API but it is considered stable now (ie no more breaking changes).
 </li>
 <li>
 The second one is the new dotnet-core version of FAKE.
-This version is brand-new, was migrated to a new platform and has several API changes which are not stabelized yet.
-So it's considered an beta.
-But please use it: In the beta phase we wan't to learn how we can handle breaking changes in the new modularized system and need actual users we break. Note that Fake 5 uses <code>paket.lock</code> for it's modules so you can always go back to a working version and report the issue.
+This version is brand-new, was migrated to a new platform and has several API changes.
+We call it the "new runner" it bundles the support for the <code>#r "paket: ..."</code> references and has a new <a href="fake-commandline.html">CLI</a>. At this point we no longer break the API but there might still be some minor issues.
 </li>
 </ul>
 <blockquote>
-<p>Fake 5 and this website are already released with Fake 5, so it might be more stable than you think. It's just that
-Some APIs are still missing and others might be renamed within the beta phase.</p>
+<p>Fake 5 and this website are already released with Fake 5, so it might be more stable than you think.</p>
 </blockquote>
 <h2><a name="Modules-Packages-Paket" class="anchor" href="#Modules-Packages-Paket">Modules? Packages? Paket?</a></h2>
 <p>In the past it was cumbersome and hard to extend your own builds with customized logic or share logic across builds easily.
-Paket loading scripts helped a lot in that issue space, but now you have quite a lot infrastructor for simply running a build script.
+Paket loading scripts helped a lot in that issue space, but now you have quite a lot infrastructure for simply running a build script.
 So in a sense it made sense to combine all good parts of paket, dotnet-core and the huge fake library to go to the next level. The result is a standalone, dependency free version of Fake which is modular and extendible. On top of that you can now use all the Fake 5 modules in your "regular" F# projects!</p>
-<p>You only need to know the simple <a href="http://fsprojects.github.io/Paket/dependencies-file.html">paket.dependencies</a> syntax (basically a list of nuget packages) and are able to add custom logic to your script.
+<p>You only need to know the simple <a href="http://fsprojects.github.io/Paket/dependencies-file.html">paket.dependencies</a> syntax (basically a list of nuget packages) and are able to add <a href="fake-fake5-custom-modules.html">custom logic</a> to your script.
 If you are in the scripting area there is not even a need to save <code>paket.dependencies</code> as a separate file. Just put it on top of the script. Fake will take care of the rest.</p>
 <h2><a name="Open-Work-Help-wanted" class="anchor" href="#Open-Work-Help-wanted">Open Work / Help wanted</a></h2>
 <p>This section describes work that still need to be done to finally release FAKE 5.</p>
 <ul>
-<li>Regulary updated issue with smaller (but blocking) work-items: <a href="https://github.com/fsharp/FAKE/issues/1523">https://github.com/fsharp/FAKE/issues/1523</a></li>
 <li>Porting modules (See Modules -&gt; Legacy), please read the migrate modules section in the <a href="contributing.html">contribution guide</a>.</li>
 <li>Missing Obsolete Attributes in the old API (please help when you migrate and notice anything)</li>
 <li>Bootstrapping via Script and System to update scripts automatically + lock FAKE version</li>
@@ -275,7 +273,7 @@ If you are in the scripting area there is not even a need to save <code>paket.de
 <p>The old API suffered from several issues:</p>
 <ul>
 <li>
-<p>AutoOpen polluted the "Fake" namespace.</p>
+<p><code>AutoOpen</code> polluted the "Fake" namespace.</p>
 <p>One problem with this that some modules introduced generic function names which are perfectly valid for other modules as well. Now the second module needs to introduce a "quirk" name.</p>
 </li>
 <li>No visible structure and unified naming made it incredible hard to find an API.</li>
@@ -391,7 +389,7 @@ This old API design lead to ambiguities and even user issues.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc007</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc008</a></li>
 									</ul>
 								</div>
 							</div>
