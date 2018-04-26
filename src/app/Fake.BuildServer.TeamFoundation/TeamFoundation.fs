@@ -22,7 +22,7 @@ module TeamFoundation =
                 |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensureProp prop) (ensureProp value))
                 |> String.separated ""
             if String.isNullOrWhiteSpace temp then "" else " " + temp            
-        printf "##vso[%s%s]%s" action formattedProperties message
+        printfn "##vso[%s%s]%s" action formattedProperties message
 
     let private toType t o =
         o |> Option.map (fun value -> t, value)
@@ -82,7 +82,8 @@ module TeamFoundation =
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
     type internal TeamFoundationTraceListener() =
-        let mutable openTags = []
+        let mutable openTags = System.Threading.AsyncLocal<_>()
+        do openTags.Value <- []
         let mutable order = 1        
         interface ITraceListener with
             /// Writes the given message to the Console.
@@ -97,20 +98,21 @@ module TeamFoundation =
                 | TraceData.OpenTag (tag, descr) ->
                     let id = Guid.NewGuid()
                     let parentId =
-                        match openTags with
+                        match openTags.Value with
                         | [] -> None
                         | (_, id) :: _ -> Some id
-                    openTags <- (tag,id) :: openTags               
+                    openTags.Value <- (tag,id) :: openTags.Value
+                    let order = System.Threading.Interlocked.Increment(&order)
                     createLogDetail id parentId tag.Type tag.Name order descr
                 | TraceData.CloseTag (tag, time) ->
                     ignore time
                     let id, rest =
-                        match openTags with
+                        match openTags.Value with
                         | [] -> failwithf "Cannot close tag, as it was not opened before! (Expected %A)" tag
                         | (savedTag, id) :: rest ->
                             ignore savedTag // TODO: Check if tag = savedTag
                             id, rest
-                    openTags <- rest                
+                    openTags.Value <- rest                
                     setLogDetailFinished id Succeeded
                 | TraceData.ImportData (typ, path) ->
                     publishArtifact typ.Name (Path.GetFileName path|>Some) path

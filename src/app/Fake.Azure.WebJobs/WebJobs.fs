@@ -1,5 +1,6 @@
 ﻿/// Contains tasks to package and deploy [Azure Web Jobs](http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/) via the [Kudu](https://github.com/projectkudu/kudu) Zip controller
-/// **Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found [here](legacy-azurewebjobs.html)**
+///
+/// **Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found [here](/legacy-azurewebjobs.html)**
 [<RequireQualifiedAccess>]
 module Fake.Azure.WebJobs
 

@@ -1,3 +1,4 @@
 FSharp.Core
 Argu
 FSharp.Compiler.Tools
+System.ValueTuple // From FSharp.Compiler.Service, but manually managed because of rename
