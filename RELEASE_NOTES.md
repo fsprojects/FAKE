@@ -1,5 +1,16 @@
 # Release Notes
 
+## 5.0.0-rc008 - 2018-04-26
+
+* FAKE4: Bundle System.ValueTuple to prevent some issues - https://github.com/fsharp/FAKE/pull/1883
+* DOCS: Various improvements - https://github.com/fsharp/FAKE/pull/1883
+* FAKE5: New module `Fake.Tools.Pickles` - https://github.com/fsharp/FAKE/pull/1884
+* FAKE5: New module `Fake.Tools.Mage` - https://github.com/fsharp/FAKE/pull/1885
+* FAKE5: New module `Fake.DotNet.Testing.SpecFlow` - https://github.com/fsharp/FAKE/pull/1886
+* FAKE5: New module `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/1887
+* BUGFIX: Some fixes in TeamFoundation integration - https://github.com/fsharp/FAKE/pull/1883
+
+
 ## 5.0.0-rc007 - 2018-04-23
 
 * DOCS: Update documentation issues - https://github.com/fsharp/FAKE/pull/1881
