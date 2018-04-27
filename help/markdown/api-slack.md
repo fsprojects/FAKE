@@ -6,7 +6,7 @@ In this article you will learn how to create a [Slack](https://slack.com) webhoo
 
 **Note:  This documentation is for FAKE 5. The old documentation can be found [here](legacy-slacknotification.html)! **
 
-[API-Reference](apidocs/fake-api-slack.html)
+[API-Reference](apidocs/v5/fake-api-slack.html)
 
 ## Adding a Webhook Integration to a Channel
 

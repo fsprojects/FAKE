@@ -2,7 +2,7 @@
 
 **Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
 
-The [Fsc task set](apidocs/fake-fschelper.html) in FAKE can be used to build F# source files and output libraries, modules,
+The [Fsc task set](apidocs/v5/legacy/fake-fschelper.html) in FAKE can be used to build F# source files and output libraries, modules,
 and executables by using the bundled
 [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service). 
 In this tutorial we will look at these compile tasks.
@@ -62,7 +62,7 @@ you want to use. All F# compiler parameters are available as `FscParam` union ca
         |> function 0 -> () | c -> failwithf "F# compiler return code: %i" c
     )
 
-See the [API docs for FscHelper](apidocs/fake-fschelper.html) for details of
+See the [API docs for FscHelper](apidocs/v5/legacy/fake-fschelper.html) for details of
 the available parameters.
 
 The `FscHelper.compile` task will print any compile warnings or errors. If there's any

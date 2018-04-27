@@ -60,7 +60,7 @@ open System.Reflection
 //let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
 //Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 //#endif
-
+#load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
 open System.IO
 open Fake.Api
 open Fake.Core
@@ -388,8 +388,10 @@ Target.create "GenerateDocs" (fun _ ->
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
         "project-name", "FAKE - F# Make" ]
-    let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
+    let layoutRoots = [ "./help/templates"; "./help/templates/reference"]
+    let fake5LayoutRoots = "./help/templates/fake5" :: layoutRoots  
+    let legacyLayoutRoots = "./help/templates/legacy" :: layoutRoots
     #if BOOTSTRAP
     Shell.copyDir (docsDir) "help/content" FileFilter.allFiles
     #else
@@ -410,14 +412,14 @@ Target.create "GenerateDocs" (fun _ ->
             OutputDirectory = docsDir
             Template = docsTemplate
             ProjectParameters = ("CurrentPage", "Modules") :: projInfo
-            LayoutRoots = layoutroots })
+            LayoutRoots = layoutRoots })
     FSFormatting.createDocs (fun s ->
         { s with
             Source = source @@ "redirects"
             OutputDirectory = docsDir
             Template = docsTemplate
             ProjectParameters = ("CurrentPage", "FAKE-4") :: projInfo
-            LayoutRoots = layoutroots })
+            LayoutRoots = layoutRoots })
     FSFormatting.createDocs (fun s ->
         { s with
             Source = source @@ "startpage"
@@ -425,9 +427,29 @@ Target.create "GenerateDocs" (fun _ ->
             Template = indexTemplate
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("CurrentPage", "Home") :: projInfo
-            LayoutRoots = layoutroots })
+            LayoutRoots = layoutRoots })
 
-    let dllFiles =
+    Directory.ensure apidocsDir
+
+    // FAKE 5 module documentation
+    let fake5ApidocsDir = apidocsDir @@ "v5"
+    Directory.ensure fake5ApidocsDir
+    let fake5Dlls =
+          !! "./src/app/Fake.*/bin/Release/**/Fake.*.dll"
+          |> Seq.distinctBy Path.GetFileName
+    fake5Dlls
+    |> FSFormatting.createDocsForDlls (fun s ->
+        { s with
+            OutputDirectory = fake5ApidocsDir
+            LayoutRoots =  fake5LayoutRoots
+            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            SourceRepository = githubLink + "/blob/master" })
+
+    // FAKE 5 legacy documentation
+    let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
+    Directory.ensure fake5LegacyApidocsDir
+    let fake5LegacyDlls =
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
@@ -436,13 +458,13 @@ Target.create "GenerateDocs" (fun _ ->
           -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
+        |> Seq.distinctBy Path.GetFileName
 
-    Directory.ensure apidocsDir
-    dllFiles
+    fake5LegacyDlls
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
-            OutputDirectory = apidocsDir
-            LayoutRoots = layoutroots
+            OutputDirectory = fake5LegacyApidocsDir
+            LayoutRoots = legacyLayoutRoots
             LibDirs = [ "./build" ]
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo

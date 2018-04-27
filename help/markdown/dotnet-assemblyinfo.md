@@ -36,7 +36,7 @@ Target.create "BuildApp" (fun _ ->
 )
 ```
 
-As you can see generating an AssemblyInfo.cs file is pretty easy with FAKE. You can read more about the C# and F# AssemblyInfo tasks in the [API docs](apidocs/fake-assemblyinfofile.html).
+As you can see generating an AssemblyInfo.cs file is pretty easy with FAKE. You can read more about the C# and F# AssemblyInfo tasks in the [API docs](apidocs/v5/fake-assemblyinfofile.html).
 
 ## Setting the version no.
 

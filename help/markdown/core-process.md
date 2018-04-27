@@ -2,7 +2,7 @@
 
 **Note:  This documentation is for FAKE 5! **
 
-[API-Reference](apidocs/fake-core-process.html)
+[API-Reference](apidocs/v5/fake-core-process.html)
 
 ## Running a command and analyse results
 

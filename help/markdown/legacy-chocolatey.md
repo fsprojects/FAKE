@@ -8,7 +8,7 @@ To be used, the `Choco` module needs the `Fake.Windows` namespace:
 
 ## Install
 
-The [`Install`](apidocs/fake-choco.html) method allow to easily install packages from [Chocolatey](https://chocolatey.org).
+The [`Install`](apidocs/v5/fake-choco.html) method allow to easily install packages from [Chocolatey](https://chocolatey.org).
 By default all user interaction are skipped but it can be modified through the `NonInteractive` property.
 
 
@@ -21,7 +21,7 @@ By default all user interaction are skipped but it can be modified through the `
 
 ## Pack
 
-The [`Pack`](apidocs/fake-choco.html) and [`PackFromTemplate`](apidocs/fake-choco.html) methods allow to pack a .nuspec, chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 file to a package (.nupkg).
+The [`Pack`](apidocs/v5/fake-choco.html) and [`PackFromTemplate`](apidocs/v5/fake-choco.html) methods allow to pack a .nuspec, chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 file to a package (.nupkg).
 It is based on [`NuGet`](create-nuget-package.html) but have some specifics, the package can be base on templates for the .nuspec, the chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 but it's not mandatory.
 It is also possible to only defines the fields in ChocoPackParams and the corresponding files will be created.
 
@@ -88,7 +88,7 @@ Placeholder | replaced by (`ChocoPackParams` record field)
 
 ## Push
 
-The [`Push`](apidocs/fake-choco.html) method allow to push a package (.nupkg) to Chocolatey.
+The [`Push`](apidocs/v5/fake-choco.html) method allow to push a package (.nupkg) to Chocolatey.
 If need the source could be modified to a private feed for example.
 It is heavily recommended to indicate your Chocolatey api key, specifically for the build servers which don't have registered Chocolatey api key.
 In order to keep it secret you can encrypt it, for example with |AppVeyor](https://www.appveyor.com) you can [encrypt an environment variable](https://www.appveyor.com/docs/build-configuration#secure-variables) and use it in your FAKE script:
