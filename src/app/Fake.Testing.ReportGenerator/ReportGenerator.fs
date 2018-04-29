@@ -109,7 +109,7 @@ let generateReports setParams (reports : string list) =
     let processStartInfo info = 
       { info with FileName = param.ExePath
                   WorkingDirectory = if param.WorkingDir |> String.isNullOrEmpty then info.WorkingDirectory else param.WorkingDir
-                  Arguments = processArgs }
+                  Arguments = processArgs } |> Process.withFramework
     match Process.execSimple processStartInfo param.TimeOut with
     | 0 -> ()
     | v -> failwithf "ReportGenerator reported errors: %i" v
