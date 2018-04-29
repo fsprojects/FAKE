@@ -23,8 +23,17 @@ type SafeOption =
   member xx.IsShort = Option.isSome xx.Short
   member xx.IsLong = Option.isSome xx.Long
   override xx.ToString() =
-    sprintf "Option { Short=%A; Long=%A; ArgName=%A; Default=%A }"
-      xx.Short xx.Long xx.ArgumentName xx.DefaultValue
+    let inline printCOpt c =
+      match c with
+      | Some c -> sprintf "'%c'" c
+      | None -> "<none>"
+    let inline printSOpt s =
+      match s with
+      | Some s -> sprintf "\"%s\"" s
+      | None -> "<none>"
+
+    sprintf "Option { Short=%s; Long=%s; ArgName=%s; Default=%s }"
+      (printCOpt xx.Short) (printSOpt xx.Long) (printSOpt xx.ArgumentName) (printSOpt xx.DefaultValue)
 
 type SafeOptions(list:SafeOption list) =
     let findIn (l':string) (list:SafeOption list) =

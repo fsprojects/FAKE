@@ -6,6 +6,13 @@ type DocoptResult =
   | Flags of int
   | Argument of string
   | Arguments of string list
+  override x.ToString() =
+    match x with
+    | NoResult -> "NoResult"
+    | Flag -> "Flag"
+    | Flags f -> sprintf "Flags(%d)" f
+    | Argument arg -> sprintf "Argument(%s)" arg
+    | Arguments args -> sprintf "Arguments([%s])" (System.String.Join(";", args :> _ seq))
 
 type DocoptMap = Map<string, DocoptResult>
 

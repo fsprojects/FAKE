@@ -207,7 +207,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     let intellisenseFile = Path.Combine (cacheDir, "intellisense.fsx")
     if logLevel.PrintVerbose then Trace.log <| sprintf "Writing '%s'" intellisenseFile
     let groupScripts = Paket.LoadingScripts.ScriptGeneration.generateScriptContent context
-    let scripts, groupScript =
+    let _, groupScript =
       match groupScripts with
       | [] -> failwith "generateScriptContent returned []"
       | [h] -> failwithf "generateScriptContent returned a single item: %A" h
@@ -266,30 +266,10 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     match lockFile.Groups |> Map.tryFind groupName with
     | Some g -> ()
     | None -> failwithf "The group '%s' was not found in the lockfile. You might need to run 'paket install' first!" groupName.Name
-    //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
+    
     let (cache:DependencyCache) = DependencyCache(lockFile)
-    use dependencyCacheProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketDependencyCache
-    if logLevel.PrintVerbose then Trace.log "Setup DependencyCache..."
-    try
-      cache.SetupGroup groupName |> ignore
-    with e when e.Message.Contains "doesn't exist. Did you restore" ->
-      let idx = e.Message.IndexOf(" doesn't exist. Did you restore")
-      let folder = e.Message.Substring("Folder ".Length, idx - "Folder ".Length)
-      let rec printFolder f =
-        if not (System.IO.Directory.Exists f) then
-          printfn "Dir '%s' doesn't exist" f
-        else
-          printfn "Dir '%s':" f
-          System.IO.Directory.EnumerateDirectories(f)
-          |> Seq.iter (fun dir -> printfn " -> %s" dir)
-        let parent = System.IO.Path.GetDirectoryName(f)
-        if not (isNull parent) then
-          printFolder parent
-
-      printFolder folder
-      reraise()
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
-    dependencyCacheProfile.Dispose()
+    //dependencyCacheProfile.Dispose()
 
     let rid =
 #if DOTNETCORE
@@ -300,14 +280,19 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         Paket.Rid.Of(ridString)
 
     // get runtime graph
-    use runtimeGraphProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketRuntimeGraph
-    if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
-        orderedGroup
-        |> Seq.choose (fun p ->
-          RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
-        |> RuntimeGraph.mergeSeq
-    runtimeGraphProfile.Dispose()
+      async {
+        if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
+        use runtimeGraphProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketRuntimeGraph
+        let result =
+          orderedGroup
+          |> Seq.choose (fun p ->
+            RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
+          |> RuntimeGraph.mergeSeq
+        runtimeGraphProfile.Dispose()
+        return result
+      }
+      |> Async.StartAsTask
 
     // Restore load-script
     writeIntellisenseFile cacheDir {
@@ -340,7 +325,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         |> Seq.map (fun fi -> true, FileInfo fi.Path)
         |> Seq.toList
       let runtimeAssemblies =
-        installModel.GetRuntimeAssemblies graph rid targetProfile
+        installModel.GetRuntimeAssemblies graph.Result rid targetProfile
         |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
         |> Seq.toList
       runtimeAssemblies @ refAssemblies)
