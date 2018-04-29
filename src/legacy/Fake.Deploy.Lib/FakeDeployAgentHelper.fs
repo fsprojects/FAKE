@@ -1,4 +1,5 @@
 ﻿/// Contains a http helper functions for FAKE.Deploy.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.FakeDeployAgentHelper
 
 open System
@@ -10,18 +11,22 @@ open System.Web
 open HttpListenerHelper
 open Fake.SshRsaModule
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Authentication token received from a successful login
 type AuthToken = 
     | AuthToken of Guid
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let mutable private authToken : Guid option = None
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// A http response type.
 type Response = 
     { Messages : seq<Fake.ProcessHelper.ConsoleMessage>
       Exception : obj
       IsError : bool }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Deployment result type.
 type DeploymentResponse = 
     | Success of Response
@@ -42,10 +47,14 @@ let private wrapFailure =
           Exception = exn }
         |> Failure
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Url = string
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Action = string
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type FilePath = string
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Deployment = 
     { PackageFileName : FilePath
       Url : Url
@@ -62,6 +71,7 @@ let private defaultDeployment =
       Arguments = []
       AuthToken = None }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 [<Literal>]
 let scriptArgumentsHeaderName = "X-FAKE-Script-Arguments"
 
@@ -74,6 +84,7 @@ let private httpClient (timeout : TimeSpan) =
     | Some t -> client.DefaultRequestHeaders.Add("AuthToken", string t)
     client
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let parseDeploymentResponse msg = 
     match msg |> Json.tryDeserialize<HttpResponseMessage<string>> with
     | Choice1Of2 m -> match m with
@@ -126,14 +137,17 @@ let private post url file timeout = uploadFile url file timeout >> processRespon
 /// Puts the given body to the given URL.
 let private put url timeout = uploadData url timeout >> processResponse
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type DeployStatus = 
     | Active
     | Inactive
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type App = 
     { Name : string
       Version : string }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let buildExceptionString (r : Response) = 
     let msgs = 
         r.Messages
@@ -141,6 +155,7 @@ let buildExceptionString (r : Response) =
         |> fun arr -> String.Join("\r\n", arr)
     sprintf "%O\r\n\r\nDeploy messages\r\n{\r\n%s\r\n}\r\n" r.Exception msgs
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Authenticate against the given server with the given userId and private key
 let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey = 
     let privateKey = loadPrivateKey serverpathToPrivateKeyFile passwordForPrivateKey
@@ -161,22 +176,27 @@ let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey 
     authToken
 
 /// Returns all releases of the given app from the given server.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getReleasesFor server appname status = 
     if String.IsNullOrEmpty(appname) then server + "/deployments?status=" + status
     else server + "/deployments/" + appname + "?status=" + status
     |> get defaultTimeout parseDeploymentResponse
 
 /// Performs a rollback of the given app on the server.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rollbackTo server appname version = 
     put (server + "/deployments/" + appname + "?version=" + version) [||] defaultTimeout |> wrapFailure
 
 /// Returns all active releases from the given server.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getAllActiveReleases server = getReleasesFor server null "active" |> wrapFailure
 
 /// Returns the active release of the given app from the given server.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getActiveReleasesFor server appname = getReleasesFor server appname "active" |> wrapFailure
 
 /// Returns all releases of the given app from the given server.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getAllReleasesFor server appname = 
     if String.IsNullOrEmpty(appname) then server + "/deployments/"
     else server + "/deployments/" + appname + "/"
@@ -184,13 +204,16 @@ let getAllReleasesFor server appname =
     |> wrapFailure
 
 /// Returns all releases from the given server.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getAllReleases server = getAllReleasesFor server null
 
 /// Posts a deployment package to the given URL.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let postDeploymentPackage url packageFileName args = post url packageFileName args defaultTimeout |> wrapFailure
 
 
 /// Posts a deployment package to the given URL, executes the script inside it with given arguments and handles the response.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let deployPackage (f : Deployment -> Deployment) =
     let d = f { defaultDeployment with 
                     AuthToken = 
@@ -219,6 +242,7 @@ let DeployPackageWithArgs url packageFileName args =
 let DeployPackage url packageFileName = DeployPackageWithArgs url packageFileName [||]
 
 /// Performs a rollback of the given app at the given URL and handles the response.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RollbackPackage url appName version = 
     match rollbackTo url appName version with
     | Success _ -> tracefn "Rollback of %s to %s successful" appName version

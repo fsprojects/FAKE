@@ -1,4 +1,5 @@
-﻿module Fake.Gallio
+﻿[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+module Fake.Gallio
 
 // this module is largely based on Gallio's NAnt task implementation
 
@@ -15,9 +16,12 @@ open Gallio.Common.Reflection
 open Gallio.Model
 open Gallio.Model.Filters
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ReportArchiveMode = Normal | Zip
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Verbosity = Quiet | Normal | Verbose | Debug 
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type GallioParams = 
       /// Sets whether to load the tests but not run them.
     { DoNotRun: bool
@@ -79,6 +83,7 @@ type GallioParams =
 
 
 /// Default Gallio parameters
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let GallioDefaults = 
     { DoNotRun = false
       EchoResults = true
@@ -203,6 +208,7 @@ let private createLauncher param =
 /// </summary>
 /// <param name="setParam">Function that modifies the default parameters</param>
 /// <param name="assemblies">List of test assemblies</param>
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Run (setParam: GallioParams -> GallioParams) assemblies =
     let param = setParam GallioDefaults
     let launcher = createLauncher param

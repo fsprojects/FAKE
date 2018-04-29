@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Contains a task which can be used to run [NCover](http://www.ncover.com/) on .NET assemblies.
 module Fake.NCoverHelper
 
@@ -8,6 +9,7 @@ open System.Text
 
 /// The NCover parameter type.
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type NCoverParams = 
     { ProjectName : string
       ToolPath : string
@@ -16,6 +18,7 @@ type NCoverParams =
       WorkingDir : string }
 
 /// NCover default parameters.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let NCoverDefaults = 
     { ProjectName = String.Empty
       ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe"
@@ -29,6 +32,7 @@ let NCoverDefaults =
 ///  - `setParams` - Function used to overwrite the NCover default parameters.
 ///  - `assemblies` - The test assemblies, which should be inspected.
 ///  - `excludeAssemblies` - These assemblies are excluded.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let NCover setParams (assemblies : string seq) (excludeAssemblies : string seq) = 
     let param = setParams NCoverDefaults
     

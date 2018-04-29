@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.HttpHeaderHelper
 open System
 open System.Text.RegularExpressions
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let toHeaderValue (values:string []) : string = 
     values
     |> Array.map (fun x -> 
@@ -13,6 +15,7 @@ let toHeaderValue (values:string []) : string =
 
 let private regex = Regex("(\"[^\"]*\")(?:,(\"[^\"]*\"))*", RegexOptions.Compiled)
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let fromHeaderValue (value: string) = 
     match regex.Matches value |> Seq.cast<Match> |> Seq.toList with
     | [] ->

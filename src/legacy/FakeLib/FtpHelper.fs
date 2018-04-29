@@ -2,6 +2,7 @@
 /// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII).
 /// Assumes direct network connectivity to destination FTP server (not via a proxy).
 /// Does not support FTPS and SFTP.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.FtpHelper
 
 open System
@@ -9,11 +10,13 @@ open System.IO
 open System.Net
 open System.Text.RegularExpressions
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type FtpServerInfo = 
     { Server : string
       Request : FtpWebRequest }
 
 /// Gets a connection to the FTP server
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getServerInfo (serverNameIp : string) (user : string) (password : string) ftpMethod = 
     let ftpRequest = (WebRequest.Create serverNameIp) :?> FtpWebRequest
     ftpRequest.Credentials <- new NetworkCredential(user, password)
@@ -44,6 +47,7 @@ let inline private dirNameIsValid (dirName : string) =
     not (invalid1 && invalid2 && invalid3 && invalid4 && invalid5)
 
 /// Checks to see if the `ftp content` string containts the string `Given_Folder_Name`
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"\s+%s\s+" fname))
 
 /// Gets the contents/listing of files and folders in a given FTP server folder
@@ -52,6 +56,7 @@ let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath : string) = 
     logfn "Getting FTP dir contents for %s" dirPath
     dirPath
@@ -69,6 +74,7 @@ let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath 
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let uploadAFile (server : string) (user : string) (pwd : string) (destPath : string) (srcPath : string) = 
     logfn "Uploading %s to %s" srcPath destPath
     let fl = new FileInfo(srcPath)
@@ -99,6 +105,7 @@ let private checkInExistingDirList server user pwd destPath fname =
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let isFolderPresent server user pwd (destPath : string) = 
     destPath
     |> lastSlashPos
@@ -111,6 +118,7 @@ let isFolderPresent server user pwd (destPath : string) =
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let createAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
     logfn "Creating folder %s" destPath
     if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then 
@@ -127,6 +135,7 @@ let createAFolder (server : string) (user : string) (pwd : string) (destPath : s
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec uploadAFolder server user pwd (srcPath : string) (rootDir : string) = 
     logfn "Uploading folder %s" srcPath
     let dirInfo = new DirectoryInfo(srcPath)
@@ -148,6 +157,7 @@ and private upload server user pwd (fsi : FileSystemInfo) (rootDir : string) =
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let deleteAFile (server : string) (user : string) (pwd : string) (destPath : string) = 
     logfn "Deleting %s" destPath
     destPath
@@ -177,6 +187,7 @@ let private deleteEmptyFolder (server : string) (user : string) (pwd : string) (
 ///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec deleteAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
     logfn "Deleting %s" destPath
     let folderContents = getFolderContents server user pwd destPath

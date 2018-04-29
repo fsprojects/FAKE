@@ -1,4 +1,5 @@
 ﻿/// Allows to execute processes as unit tests.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.ProcessTestRunner
 
 open System
@@ -7,6 +8,7 @@ open System.Text
 
 /// The ProcessTestRunner parameter type.
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ProcessTestRunnerParams = 
     { /// The working directory (optional).
       WorkingDir : string
@@ -16,12 +18,14 @@ type ProcessTestRunnerParams =
       ErrorLevel : TestRunnerErrorLevel }
 
 /// The ProcessTestRunner defaults.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ProcessTestRunnerDefaults = 
     { WorkingDir = null
       TimeOut = TimeSpan.FromMinutes 5.
       ErrorLevel = TestRunnerErrorLevel.Error }
 
 /// Runs the given process and returns the process result.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RunConsoleTest parameters fileName args = 
     let taskName = sprintf "Run_%s" fileName
     let result = ref None
@@ -39,6 +43,7 @@ let RunConsoleTest parameters fileName args =
     !result
 
 /// Runs the given processes and returns the process result messages.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let runConsoleTests parameters processes = 
     processes
     |> Seq.map (fun (fileName, args) -> 
@@ -61,6 +66,7 @@ let runConsoleTests parameters processes =
 ///          "process2.exe","argument2"]
 ///           |> RunConsoleTests (fun p -> {p with TimeOut = TimeSpan.FromMinutes 1. })
 ///     )
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RunConsoleTests setParams processes = 
     use __ = traceStartTaskUsing "RunConsoleTests" ""
     let parameters = setParams ProcessTestRunnerDefaults

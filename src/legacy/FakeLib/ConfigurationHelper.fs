@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Contains functions which allow to read and write config files.
 module Fake.ConfigurationHelper
     
@@ -9,6 +10,7 @@ open System.Xml.Xsl
 /// Reads a config file into an XmlDocument.
 /// ## Parameters
 ///  - `fileName` - The file name of the config file.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let readConfig (fileName:string) = 
     let xmlDocument = new XmlDocument()
     xmlDocument.Load fileName
@@ -18,6 +20,7 @@ let readConfig (fileName:string) =
 /// ## Parameters
 ///  - `fileName` - The file name of the config file.
 ///  - `config` - The XmlDocument representing the config.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let writeConfig (fileName:string) (config:XmlDocument) = config.Save fileName 
 
 /// Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.
@@ -26,6 +29,7 @@ let writeConfig (fileName:string) (config:XmlDocument) = config.Save fileName
 ///  - `attribute` - The attribute name for which the value should be replaced.
 ///  - `value` - The new attribute value.
 ///  - `config` - The XElement representing the config.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let updateConfig xpath attribute value (config:XmlDocument) =
     let node = config.SelectSingleNode xpath :?> XmlElement
     if node = null then
@@ -40,6 +44,7 @@ let updateConfig xpath attribute value (config:XmlDocument) =
 ///  - `xpath` - An XPath term which can be used to replace the attribute.
 ///  - `attribute` - The attribute name for which the value should be replaced.
 ///  - `value` - The new attribute value.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let updateConfigSetting fileName xpath attribute value =
     readConfig fileName
     |> updateConfig xpath attribute value 
@@ -54,6 +59,7 @@ let updateConfigSetting fileName xpath attribute value =
 /// ## Sample
 ///
 ///     updateAppSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let updateAppSetting key value fileName =
     updateConfigSetting fileName ("//appSettings/add[@key='" + key + "']") "value" value
 
@@ -66,6 +72,7 @@ let updateAppSetting key value fileName =
 /// ## Sample
 ///
 ///     updateApplicationSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let updateApplicationSetting (fileName : string) settingName value = 
     let doc = new XmlDocument()
     let xpath = "/configuration/applicationSettings//setting[@name=\"" + settingName + "\"]/value"
@@ -80,6 +87,7 @@ let updateApplicationSetting (fileName : string) settingName value =
 ///  - `connectionStringKey` - The connection string key name for which the value should be replaced.
 ///  - `value` - The new connection string value.
 ///  - `fileName` - The file name of the config file.     
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let updateConnectionString connectionStringKey value fileName =
     updateConfigSetting fileName ("//connectionStrings/add[@name='" + connectionStringKey + "']") "connectionString" value
 
@@ -91,6 +99,7 @@ let updateConnectionString connectionStringKey value fileName =
 /// ## Sample
 ///
 ///     applyXslOnConfig (navServicePath @@ DEV.xsl) (navServicePath @@ "CustomSettings.config")
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let applyXslOnConfig (xsl:string) fileName =
     let xslDoc = new XslCompiledTransform()
     xslDoc.Load xsl

@@ -10,7 +10,7 @@
         I would like to use a JsonProvider to parse json but i don't know if it causes a problem with dependency "FSharp.Data.DesignTime.dll"
         So i used Newtonsoft.Json
 *)
-
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.AndroidPublisher
 
 open System
@@ -27,6 +27,7 @@ open ICSharpCode.SharpZipLib.Zip
 open ICSharpCode.SharpZipLib.Core
 open System.Xml.Linq
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type AndroidPublishConfig = {
     Certificate: X509Certificate2;
     PackageName: string;
@@ -35,14 +36,19 @@ type AndroidPublishConfig = {
 }
 
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type AndroidPublishParams = {
     Track: string;
     Config: AndroidPublishConfig;
 }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ProductionSettings = { Track = "production"; Config = { Certificate = null; PackageName = null; AccountId = null; Apk = null; } }
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let AlphaSettings = { ProductionSettings with Track = "alpha"; }
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let BetaSettings = { ProductionSettings with Track = "beta"; }
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RolloutSettings = { ProductionSettings with Track = "rollout"; }
 
 type private ServiceCredentials = { 
@@ -89,6 +95,7 @@ type private AuthReply = {
 }
 
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type EditResourceModel = { 
     [<JsonProperty("id")>]
     Id: string;
@@ -97,18 +104,21 @@ type EditResourceModel = {
 }
 
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ApkVersion = {
     [<JsonProperty("versionCode")>]
     Code: int;
 }
 
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type AppEditListApksResult = {
     [<JsonProperty("apks")>]
     Apks: ApkVersion list
 }
 
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type TrackModel = {
     [<JsonProperty("versionCodes")>]
     VersionCodes: int list;
@@ -134,9 +144,13 @@ type private HttpClient() =
     member x.CreateRequest (address:Uri) =
         x.GetWebRequest (address)
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let mutable public AndroidPublisherScope = "https://www.googleapis.com/auth/androidpublisher"
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let mutable public TokenServerUrl = "https://www.googleapis.com/oauth2/v3/token"
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let mutable public AndroidPublisherBaseUrl = "https://www.googleapis.com/androidpublisher/v2/applications"
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let mutable public AndroidUploadApkBaseUrl = "https://www.googleapis.com/upload/androidpublisher/v2/applications"
 
 let private ServiceAccountHeader = {Algo = "RS256"; Type = "JWT"}
@@ -144,6 +158,7 @@ let private ServiceAccountHeader = {Algo = "RS256"; Type = "JWT"}
 let private toJson = JsonConvert.SerializeObject
 let private fromJson<'t> v = JsonConvert.DeserializeObject<'t>(v)
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let PublishApk (param:AndroidPublishParams)= 
 
     let getZipEntry (filepath, path) =

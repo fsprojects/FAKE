@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.IISHelper
 
 open Microsoft.Web.Administration
@@ -16,6 +17,7 @@ let private doWithManager (f : ServerManager->unit) (mgr : ServerManager option)
         f m
         m.CommitChanges()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let SetPhysicalPath (virtualPath : string) physicalPath (siteName : string) (manager : ServerManager option) =
     doWithManager (fun m ->
         let site = m.Sites.[siteName]
@@ -24,6 +26,7 @@ let SetPhysicalPath (virtualPath : string) physicalPath (siteName : string) (man
         virtDir.PhysicalPath <- physicalPath
     ) manager
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RemoveBindingFromSite bindingInformation bindingProtocol (siteName : string) (manager : ServerManager option) =
     doWithManager (fun m ->
         let site = m.Sites.[siteName]
@@ -32,6 +35,7 @@ let RemoveBindingFromSite bindingInformation bindingProtocol (siteName : string)
         | None -> ()
     ) manager
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let  AddBindingToSite (bindingInformation : string) (bindingProtocol : string) (siteName : string) (manager : ServerManager option) =
     doWithManager (fun m ->
         let site = m.Sites.[siteName]
@@ -40,32 +44,53 @@ let  AddBindingToSite (bindingInformation : string) (bindingProtocol : string) (
         | true -> ()
     ) manager
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let commit (mgr : ServerManager) = mgr.CommitChanges()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ISiteConfig = interface
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     abstract name : string
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     abstract binding : string
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     abstract physicalPath : string
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     abstract appPool : string
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     abstract id : int64 option
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     abstract protocol : string
 end
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type SiteConfig(name : string, binding:string, physicalPath:string, appPool:string, ?id: int64, ?protocol:string) = class
     interface ISiteConfig with 
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member this.name = name
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member this.binding = binding
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member this.physicalPath = physicalPath
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member this.appPool = appPool
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member this.id = id
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member this.protocol = defaultArg protocol "http"
 end
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ApplicationPoolConfig(name : string, ?runtime:string, ?allow32on64:bool, ?identity : ProcessModelIdentityType, ?credentials: string * string) = class
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member this.name = name
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member this.runtime = defaultArg runtime "v4.0"
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member this.allow32on64 = defaultArg allow32on64 false
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member this.identity = defaultArg identity ProcessModelIdentityType.ApplicationPoolIdentity
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member this.credentials = defaultArg credentials ("","")
 end
 
@@ -86,6 +111,7 @@ let private MergeSiteProperties(site:Site)(config:ISiteConfig) =
     | None -> ()
     site
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Site (config:ISiteConfig) (mgr : ServerManager) =
     let mutable site = mgr.Sites.[config.name]
     match (site) with
@@ -95,6 +121,7 @@ let Site (config:ISiteConfig) (mgr : ServerManager) =
         AddBindingToSite config.binding config.protocol config.name (Some mgr)
     MergeSiteProperties site config
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ApplicationPool (config: ApplicationPoolConfig) (mgr : ServerManager) = 
     let appPool = mgr.ApplicationPools.[config.name]
     match (appPool) with
@@ -104,12 +131,14 @@ let ApplicationPool (config: ApplicationPoolConfig) (mgr : ServerManager) =
     | _ ->
         MergeAppPoolProperties appPool config
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Application (virtualPath : string) (physicalPath : string) (site : Site) (mgr : ServerManager) =
     let app = site.Applications.[virtualPath]
     match (app) with
     | null -> site.Applications.Add(virtualPath, physicalPath)
     | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let IIS (site : ServerManager -> Site) 
         (appPool : ServerManager -> ApplicationPool) 
         (app : (Site -> ServerManager -> Application) option) =
@@ -121,6 +150,7 @@ let IIS (site : ServerManager -> Site)
         commit mgr
     )
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let AppCmd (command : string) = 
     System.Console.WriteLine("Applying {0} via appcmd.exe", command)
     if 0 <> ExecProcess (fun info ->  
@@ -129,9 +159,11 @@ let AppCmd (command : string) =
     then failwithf "AppCmd.exe %s failed." command
     ()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let UnlockSection (configPath : string) =
     requiresAdmin (fun _ -> AppCmd (sprintf "unlock config -section:%s" configPath))
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let deleteSite (name : string) = 
     use mgr = new ServerManager()
     let site = mgr.Sites.[name]
@@ -139,6 +171,7 @@ let deleteSite (name : string) =
         site.Delete()
         commit mgr 
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let deleteApp (name : string) (site : Site) = 
     use mgr = new ServerManager()
     let app = site.Applications.[name]
@@ -146,6 +179,7 @@ let deleteApp (name : string) (site : Site) =
         app.Delete()
         commit mgr
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let deleteApplicationPool (name : string) = 
     use mgr = new ServerManager()
     let appPool = mgr.ApplicationPools.[name]
