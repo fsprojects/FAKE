@@ -6,7 +6,7 @@ open Fake.Runtime
 open Paket
 
 type FakeSection =
- | PaketDependencies of Paket.Dependencies * group : String option
+ | PaketDependencies of Paket.Dependencies * Lazy<Paket.DependenciesFile> * group : String option
 
 let readAllLines (r : TextReader) =
   seq {
@@ -59,7 +59,7 @@ let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
         |> replacePaketCommand "cache"
       )
     File.WriteAllLines(dependenciesFile, fixedSection)
-    PaketDependencies (Paket.Dependencies(dependenciesFile), None)
+    PaketDependencies (Dependencies dependenciesFile, (lazy DependenciesFile.ReadFromFile dependenciesFile), None)
   | "paket.dependencies" ->
     let groupStart = "group "
     let fileStart = "file "
@@ -81,7 +81,8 @@ let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
       match options.TryGetValue "file" with
       | true, depFile -> depFile
       | _ -> dependenciesFileName
-    PaketDependencies (Paket.Dependencies(Path.GetFullPath file), group)
+    let fullpath = Path.GetFullPath file
+    PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), group)
   | _ -> failwithf "unknown dependencies header '%s'" f.Header
 
 #endif
@@ -118,14 +119,20 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
 
   if paketCode <> "" then
     let fixDefaults (paketCode:string) =
-      let lines = paketCode.Split([|'\r';'\n'|])
+      let lines = paketCode.Split([|'\r';'\n'|]) |> Array.map (fun line -> line.ToLower().TrimStart())
       let storageRef = "storage"
       let sourceRef = "source"
-      let containsStorage = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(storageRef))
-      let containsSource = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(sourceRef))
+      let frameworkRef = "framework"
+      let restrictionRef = "restriction"
+      let containsStorage = lines |> Seq.exists (fun line -> line.StartsWith(storageRef))
+      let containsSource = lines |> Seq.exists (fun line -> line.StartsWith(sourceRef))
+      let containsFramework = lines |> Seq.exists (fun line -> line.StartsWith(frameworkRef))
+      let containsRestriction = lines |> Seq.exists (fun line -> line.StartsWith(restrictionRef))
       paketCode
       |> fun p -> if containsStorage then p else "storage: none" + "\n" + p
       |> fun p -> if containsSource then p else "source https://api.nuget.org/v3/index.json" + "\n" + p
+      |> fun p -> if containsFramework || containsRestriction then p 
+                  else "framework: netstandard2.0" + "\n" + p
 
     { Header = "paket-inline"
       Section = fixDefaults paketCode }
@@ -137,7 +144,8 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
     | [] ->
       None
     | group :: _ ->
-      PaketDependencies (Paket.Dependencies(Path.GetFullPath file), Some group)
+      let fullpath = Path.GetFullPath file
+      PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
       |> Some
 
 
@@ -145,7 +153,7 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir (paketDependencies:Paket.Dependencies) group =
+let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
   use __ = Fake.Profile.startCategory Fake.Profile.Category.Paket
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
@@ -155,7 +163,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
 #else
   let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
 #endif
-  let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
+  let lockFilePath = Paket.DependenciesFile.FindLockfile paketApi.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
 
@@ -171,7 +179,6 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     // Note: This package/version needs to updated together with our "framework" variable below and needs to 
     // be compatible with the runtime we are currently running on.
     let rootDir = Directory.GetCurrentDirectory()
-    let sources = paketDependencies.GetSources().[groupName]
     let packageName = Domain.PackageName("NETStandard.Library")
     let version = SemVer.Parse("2.0.2")
     let existingpkg = NuGetCache.GetTargetUserNupkg packageName version
@@ -180,6 +187,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         // Shortcut in order to prevent requests to nuget sources if we have it downloaded already
         Path.GetDirectoryName existingpkg
       else
+        let sources = paketDependenciesFile.Value.Groups.[groupName].Sources
         let versions =
           Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
           |> Async.RunSynchronously
@@ -244,11 +252,10 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       File.Copy(localLock, lockFilePath.FullName)
     if needLocalLock && not (File.Exists localLock) then
       File.Delete lockFilePath.FullName
-
     if not <| File.Exists lockFilePath.FullName then
       if logLevel.PrintVerbose then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
       try
-        paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
+        paketApi.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
         |> ignore
       with
       | e when e.Message.Contains "Did you restore groups" ->
@@ -258,17 +265,20 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         ()
       if needLocalLock then File.Copy(lockFilePath.FullName, localLock)
     
+    // TODO: Check if restore is up-to date and skip all paket calls (load assembly-list from a new cache)
+    
     // Restore
-    paketDependencies.Restore((*false, group, [], false, true*))
+    paketApi.Restore((*false, group, [], false, true*))
     |> ignore
 
-    let lockFile = paketDependencies.GetLockFile()
+    let lockFile = LockFile.LoadFrom(lockFilePath.FullName)
     match lockFile.Groups |> Map.tryFind groupName with
     | Some g -> ()
     | None -> failwithf "The group '%s' was not found in the lockfile. You might need to run 'paket install' first!" groupName.Name
     
     let (cache:DependencyCache) = DependencyCache(lockFile)
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
+    
     //dependencyCacheProfile.Dispose()
 
     let rid =
@@ -294,13 +304,31 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       }
       |> Async.StartAsTask
 
-    // Restore load-script
-    writeIntellisenseFile cacheDir {
-          Cache = cache
-          ScriptType = Paket.LoadingScripts.ScriptGeneration.ScriptType.FSharp
-          Groups = [groupName]
-          DefaultFramework = false, (Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_7_1))
-      }
+    // Restore load-script, as we don't need it create it in the background.
+    let writeIntellisenseTask = 
+      async {
+        try
+            writeIntellisenseFile cacheDir {
+              Cache = cache
+              ScriptType = Paket.LoadingScripts.ScriptGeneration.ScriptType.FSharp
+              Groups = [groupName]
+              DefaultFramework = false, (Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_7_1))
+            }
+        with e ->
+            eprintfn "Failed to write intellisense script: %O" e
+      } |> Async.StartAsTask
+
+    let filterValidAssembly (isSdk, isReferenceAssembly, fi:FileInfo) =
+        let fullName = fi.FullName
+        try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
+            { IsReferenceAssembly = isReferenceAssembly
+              Info =
+                { Runners.AssemblyInfo.FullName = assembly.Name.FullName
+                  Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
+                  Runners.AssemblyInfo.Location = fullName } } |> Some
+        with e -> 
+            if logLevel.PrintVerbose then Trace.log <| sprintf "Could not load '%s': %O" fullName e
+            None
 
     // Retrieve assemblies
     use __ = Fake.Profile.startCategory Fake.Profile.Category.PaketGetAssemblies
@@ -311,9 +339,9 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         eprintfn "Ignoring 'Microsoft.FSharp.Core.netcore' please tell the package authors to fix their package and reference 'FSharp.Core' instead."
         false
       else true)
-    |> Seq.collect (fun p ->
+    |> Seq.map (fun p -> async {
       match cache.InstallModel groupName p.Name with
-      | None -> failwith "InstallModel not cached?"
+      | None -> return failwith "InstallModel not cached?"
       | Some installModelRaw ->
       let installModel =
         installModelRaw
@@ -323,27 +351,32 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       let refAssemblies =
         installModel.GetCompileReferences targetProfile
         |> Seq.map (fun fi -> true, FileInfo fi.Path)
-        |> Seq.toList
+        //|> Seq.toList
       let runtimeAssemblies =
         installModel.GetRuntimeAssemblies graph.Result rid targetProfile
         |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
+        //|> Seq.toList
+      let result =
+        Seq.append runtimeAssemblies refAssemblies
+        |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
+        |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
+        |> Seq.choose filterValidAssembly
         |> Seq.toList
-      runtimeAssemblies @ refAssemblies)
-    |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
-    |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
+      return result })
+    |> Seq.toArray
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> Seq.collect id
 #if DOTNETCORE
     // Append sdk files as references in order to properly compile, for runtime we can default to the default-load-context.
-    |> Seq.append (getCurrentSDKReferenceFiles() |> Seq.map (fun file -> true, true, FileInfo file))
+    |> Seq.append
+        (getCurrentSDKReferenceFiles()
+         |> Seq.map (fun file -> true, true, FileInfo file)
+         |> Seq.choose filterValidAssembly)
 #endif  
-    |> Seq.choose (fun (isSdk, isReferenceAssembly, fi) ->
-      let fullName = fi.FullName
-      try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
-          { IsReferenceAssembly = isReferenceAssembly
-            Info =
-              { Runners.AssemblyInfo.FullName = assembly.Name.FullName
-                Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
-                Runners.AssemblyInfo.Location = fullName } } |> Some
-      with e -> (if logLevel.PrintVerbose then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
+    //|> Async.Parallel
+    //|> Async.RunSynchronously
+    //|> Seq.choose id
     // If we have multiple select one
     |> Seq.groupBy (fun ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name)
     |> Seq.map (fun (_, group) -> group |> Seq.maxBy(fun ass -> ass.Info.Version))
@@ -397,8 +430,8 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
 
 let restoreDependencies script logLevel cacheDir section =
   match section with
-  | PaketDependencies (paketDependencies, group) ->
-    paketCachingProvider script logLevel cacheDir paketDependencies group
+  | PaketDependencies (paketDependencies, paketDependenciesFile, group) ->
+    paketCachingProvider script logLevel cacheDir paketDependencies paketDependenciesFile group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -424,7 +457,9 @@ let tryFindGroupFromDepsFile scriptDir =
                 | _ -> if l.Contains "// [ FAKE GROUP ]" then true, None else false, None) (false, None)
             |> snd with
         | Some group ->
-            PaketDependencies (Paket.Dependencies(Path.GetFullPath depsFile), Some group) |> Some
+            let fullpath = Path.GetFullPath depsFile
+            PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
+            |> Some
         | _ -> None
     else None
 
@@ -439,7 +474,7 @@ let prepareFakeScript defines logLevel script =
         let newSection = tryReadPaketDependenciesFromScript defines cacheDir script scriptText
         match legacyReadFakeSection scriptText with
         | Some s ->
-          Trace.traceFAKE "Legacy header is no longer supported and will be removed soon, please upgrade to '#r \"paket: nuget FakeModule\" in paket syntax (consult the docs)."
+          Trace.traceFAKE "Legacy header is no longer supported and will be removed soon, please upgrade to '#r \"paket: nuget FakeModule //\" in paket syntax (consult the docs)."
           match newSection with
           | Some s -> Some s // prefer new method (but print warning)
           | None -> legacyParseHeader cacheDir s |> Some
@@ -456,10 +491,11 @@ let prepareFakeScript defines logLevel script =
         let defaultPaketCode = """
 source https://api.nuget.org/v3/index.json
 storage: none
+framework: netstandard2.0
 nuget FSharp.Core
         """
         if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
-          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "nuget FSharp.Core //"'.
+          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "paket: nuget FSharp.Core //"'.
 See https://fake.build/fake-fake5-modules.html for details. 
 If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
         let section =
@@ -497,6 +533,6 @@ let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string
       Runners.FakeConfig.ScriptArgs = scriptArgs }
   CoreCache.runScriptWithCacheProvider config provider
 
-let prepareAndRunScript logLevel fsiOptions scriptPath scriptArgs useCache =
+let inline prepareAndRunScript logLevel fsiOptions scriptPath scriptArgs useCache =
   prepareAndRunScriptRedirect logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache
 

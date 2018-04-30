@@ -130,6 +130,30 @@ type AnalyseState =
   | NoAnalysis
   | Reference of string option
 
+(*
+let findInterestingItems (tokens:Token list) =
+  let rec analyseNextToken (_, state) (tok :Token) =
+    match state with
+    | NoAnalysis ->
+      if tok.TokenInfo.IsSome && tok.TokenInfo.Value.TokenName = "HASH" && tok.Representation = "#r" then
+        None, Reference None
+      else None, NoAnalysis
+    | Reference None -> // Initial string start
+      if tok.TokenInfo.IsSome && tok.TokenInfo.Value.TokenName = "STRING_TEXT" then
+        None, Reference (Some "")
+      else None, Reference None
+    | Reference (Some s) -> // read string
+      if tok.TokenInfo.IsNone || (tok.TokenInfo.IsSome && tok.TokenInfo.Value.TokenName = "STRING_TEXT") then
+        None, Reference (Some (s + tok.Representation))
+      elif tok.TokenInfo.IsSome && tok.TokenInfo.Value.TokenName = "STRING" then
+        Some (InterestingItem.Reference s), NoAnalysis
+      else failwithf "No idea how %A can happen in a string" (tok, tok.Representation) // None, Reference (Some s)
+
+  tokens
+    |> Seq.scan analyseNextToken (None, NoAnalysis)
+    |> Seq.choose fst
+    |> Seq.toList*)
+
 let findInterestingItems defines (scriptFile:string) (scriptText:string) =
   let rec tokenizeLine results (line:string) (tokenizer:FSharpLineTokenizer) state =
       match tokenizer.ScanToken(state) with
