@@ -34,13 +34,6 @@ type AssemblyInfo =
     let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
     { FullName = n.FullName; Version = n.Version.ToString(); Location = loc }
 
-(*
-type ScriptCompileOptions =
-  { CompileReferences : string list
-    RuntimeDependencies : AssemblyInfo list
-    UserDefinedArguments : string list
-    Defines : string list }*)
-
 type CompileOptions = 
     internal { FsiOptions : FsiOptions; RuntimeDependencies : AssemblyInfo list }
 
