@@ -17,12 +17,8 @@ type Script = {
 let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.HashContent)
 
-let getAllScripts defines scriptPath : Script list =
+let getAllScripts (tokens:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) scriptPath : Script list =
     let rec getAllScriptsRec scriptPath parentIncludes : Script list =
-        let scriptContents =
-          File.ReadLines scriptPath
-          |> FSharpParser.getTokenized scriptPath defines
-        //let searchPaths = getSearchPaths scriptContents |> Seq.toList
         let resolvePath currentIncludes currentDir relativeOrAbsolute isDir =
             let possiblePaths =
               if Path.IsPathRooted relativeOrAbsolute then [ relativeOrAbsolute ]
@@ -37,7 +33,7 @@ let getAllScripts defines scriptPath : Script list =
             realPath
 
         let loadedContents =
-            scriptContents
+            tokens.Value
             |> FSharpParser.findProcessorDirectives
             |> List.fold (fun ((currentIncludes, currentDir, childScripts) as state) preprocessorDirective ->
                 let (|MatchFirstString|_|) (l:FSharpParser.StringLike list) =
@@ -55,8 +51,13 @@ let getAllScripts defines scriptPath : Script list =
                     None
                 match preprocessorDirective with
                 | { Token = { Representation = "#load" }; Strings = MatchFirstString childScriptRelPath } ->
-                  let realPath = resolvePath currentIncludes currentDir childScriptRelPath false
-                  currentIncludes, currentDir, getAllScriptsRec realPath currentIncludes @ childScripts
+                  let name = Path.GetFileName childScriptRelPath
+                  // ignore intellisense file, because it might not be generated yet
+                  if name = Runners.loadScriptName && childScriptRelPath.StartsWith ".fake"
+                  then currentIncludes, currentDir, childScripts
+                  else
+                      let realPath = resolvePath currentIncludes currentDir childScriptRelPath false
+                      currentIncludes, currentDir, getAllScriptsRec realPath currentIncludes @ childScripts
                 | { Token = { Representation = "#cd" }; Strings = MatchFirstString relOrAbsolute } ->
                   let realPath = resolvePath currentIncludes currentDir relOrAbsolute true
                   currentIncludes, realPath, childScripts
@@ -68,7 +69,7 @@ let getAllScripts defines scriptPath : Script list =
             |> fun (_, _, c) -> c
             |> List.rev
         { Location = scriptPath
-          HashContent = FSharpParser.getHashableString scriptContents } :: loadedContents
+          HashContent = FSharpParser.getHashableString tokens.Value } :: loadedContents
 
     getAllScriptsRec scriptPath []
 

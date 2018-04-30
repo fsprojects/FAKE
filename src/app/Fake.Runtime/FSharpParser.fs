@@ -2,9 +2,8 @@ module Fake.Runtime.FSharpParser
 
 open Microsoft.FSharp.Compiler.SourceCodeServices
 type Token = { Representation : string; LineNumber : int; TokenInfo : FSharpTokenInfo option }
-type TokenizedScript =
-    private { Tokens : Token list }
-
+type TokenizedScript = private { Tokens : Token list }
+    
 let getTokenized (filePath:string) defines lines =
     let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
     /// Tokenize a single line of F# code
@@ -130,8 +129,8 @@ type AnalyseState =
   | NoAnalysis
   | Reference of string option
 
-(*
-let findInterestingItems (tokens:Token list) =
+
+let findInterestingItems { Tokens = tokens }  =
   let rec analyseNextToken (_, state) (tok :Token) =
     match state with
     | NoAnalysis ->
@@ -152,49 +151,5 @@ let findInterestingItems (tokens:Token list) =
   tokens
     |> Seq.scan analyseNextToken (None, NoAnalysis)
     |> Seq.choose fst
-    |> Seq.toList*)
-
-let findInterestingItems defines (scriptFile:string) (scriptText:string) =
-  let rec tokenizeLine results (line:string) (tokenizer:FSharpLineTokenizer) state =
-      match tokenizer.ScanToken(state) with
-      | Some tok, state ->
-          // Print token name
-          let result = Some tok, (line.Substring(tok.LeftColumn, tok.RightColumn - tok.LeftColumn + 1))
-          // Tokenize the rest, in the new state
-          tokenizeLine (result::results) line tokenizer state
-      | None, state -> results |> List.rev, state
-  let rec tokenizeLines (sourceTok : FSharpSourceTokenizer) state lines = seq {
-      match lines with
-      | line::lines ->
-          // Create tokenizer & tokenize single line
-          let tokenizer = sourceTok.CreateLineTokenizer(line)
-          let lineResults, state = tokenizeLine [] line tokenizer state
-          yield! lineResults
-          yield None, "\n" 
-          // Tokenize the rest using new state
-          yield! tokenizeLines sourceTok state lines
-      | [] -> () }
-  let rec analyseNextToken (_, state) (tok :FSharpTokenInfo option, text) =
-    match state with
-    | NoAnalysis ->
-      if tok.IsSome && tok.Value.TokenName = "HASH" && text = "#r" then
-        None, Reference None
-      else None, NoAnalysis
-    | Reference None -> // Initial string start
-      if tok.IsSome && tok.Value.TokenName = "STRING_TEXT" then
-        None, Reference (Some "")
-      else None, Reference None
-    | Reference (Some s) -> // read string
-      if tok.IsNone || (tok.IsSome && tok.Value.TokenName = "STRING_TEXT") then
-        None, Reference (Some (s + text))
-      elif tok.IsSome && tok.Value.TokenName = "STRING" then
-        Some (InterestingItem.Reference s), NoAnalysis
-      else failwithf "No idea how %A can happen in a string" (tok, text) // None, Reference (Some s)
-
-  let sourceTok = FSharpSourceTokenizer("FAKE_DEPENDENCIES" :: defines, Some scriptFile)            
-  scriptText.Replace("\r\n", "\n").Split('\n')
-    |> List.ofSeq
-    |> tokenizeLines sourceTok 0L
-    |> Seq.scan analyseNextToken (None, NoAnalysis)
-    |> Seq.choose fst
     |> Seq.toList
+

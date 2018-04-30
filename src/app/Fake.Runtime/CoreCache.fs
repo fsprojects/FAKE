@@ -134,7 +134,7 @@ module internal Cache =
                 traceFAKE "Default caching is disabled on dotnetcore, see https://github.com/dotnet/coreclr/issues/919#issuecomment-219212910"
                 traceFAKE "Use a Fake-Header to get rid of this warning and let FAKE handle the script dependencies!"
 
-                let fsiOpts = context.Config.CompileOptions.AdditionalArguments |> FsiOptions.ofArgs
+                let fsiOpts = context.Config.CompileOptions.FsiOptions // |> FsiOptions.ofArgs
                 if not fsiOpts.NoFramework then // Caller should take care!
                     let basePath = System.AppContext.BaseDirectory
                     let references =
@@ -148,17 +148,13 @@ module internal Cache =
                         { fsiOpts with
                             NoFramework = true
                             Debug = Some DebugMode.Portable }
-                        |> (fun options -> options.AsArgs)
-                        |> Seq.toList
                     { context with
                         Config =
                           { context.Config with
                               CompileOptions =
                                 { context.Config.CompileOptions with
-                                    AdditionalArguments = newAdditionalArgs
+                                    FsiOptions = newAdditionalArgs
                                     RuntimeDependencies = references @ context.Config.CompileOptions.RuntimeDependencies
-                                    CompileReferences =
-                                        (references |> List.map (fun r -> r.Location)) @ context.Config.CompileOptions.CompileReferences
                                 }
                           }
                     }, None
@@ -301,25 +297,40 @@ type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo
 let fakeDirectoryName = ".fake"
 
 let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
-    let fsiOptions = FsiOptions.ofArgs (config.CompileOptions.AdditionalArguments)
-    let newFsiOptions =
-      { fsiOptions with
-#if !NETSTANDARD1_6
-          Defines = "FAKE" :: fsiOptions.Defines
-#else
-          Defines = "DOTNETCORE" :: "FAKE" :: fsiOptions.Defines
-#endif
-      }
-    let config =
-      { config with
-          FakeConfig.CompileOptions =
-            { config.CompileOptions with
-                AdditionalArguments = newFsiOptions.AsArgs |> Array.toList } }
-    let allScriptContents = getAllScripts newFsiOptions.Defines config.ScriptFilePath
-    let getOpts (c:ScriptCompileOptions) = c.AdditionalArguments @ c.CompileReferences
-    let scriptHash = getScriptHash allScriptContents (getOpts config.CompileOptions)
-    //TODO this is only calculating the hash for the input file, not anything #load-ed
+    
     let fakeDir = Path.Combine(Path.GetDirectoryName config.ScriptFilePath, fakeDirectoryName)
+    let cacheDir = Path.Combine(fakeDir, Path.GetFileName config.ScriptFilePath)
+    let fakeHashFile = Path.Combine(cacheDir, "fake-hash.cached")
+    let fakeCacheFile = Path.Combine(cacheDir, "fake-hash.txt")
+    
+    let getHashUncached () =
+        //TODO this is only calculating the hash for the input file, not anything #load-ed
+        let allScriptContents = getAllScripts config.ScriptTokens config.ScriptFilePath
+        let getOpts (c:CompileOptions) = c.FsiOptions.AsArgs // @ c.CompileReferences
+        getScriptHash allScriptContents (getOpts config.CompileOptions)
+    
+    let writeToCache hash =
+        File.WriteAllText(fakeCacheFile, hash)
+        File.Copy(config.ScriptFilePath, fakeHashFile)
+    
+    let readFromCache () =
+        File.ReadAllText fakeCacheFile
+    
+    let scriptHash =
+        let inline getUncached () =
+            let section = getHashUncached()
+            writeToCache section
+            section
+            
+        if File.Exists fakeHashFile && File.Exists fakeCacheFile && File.ReadAllText fakeHashFile = File.ReadAllText config.ScriptFilePath then 
+            // get assembly list from cache
+            try readFromCache()
+            with e ->
+                eprintfn "Caching fake section failed: %O" e
+                getUncached()
+        else
+            getUncached()
+    
 
 
 
@@ -359,7 +370,7 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     setupAssemblyResolverLogger newContext
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
-    setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.AdditionalArguments))
+    setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.FsiOptions.AsArgs))
 
     let resultCache, result = runFakeScript cacheInfo newContext
 

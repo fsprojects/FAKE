@@ -31,7 +31,9 @@ let tests =
 nuget Fake.Core.SemVer prerelease //"
 #endif
       """
-      let interesting = Fake.Runtime.FSharpParser.findInterestingItems ["BOOTSTRAP"; "DOTNETCORE"; "FAKE"] "testfile.fsx" scriptText
+      let interesting =
+          Fake.Runtime.FSharpParser.getTokenized "testfile.fsx" ["BOOTSTRAP"; "DOTNETCORE"; "FAKE"] (scriptText.Split([|'\r';'\n'|]))
+          |> Fake.Runtime.FSharpParser.findInterestingItems
       let expected =
         [Fake.Runtime.FSharpParser.InterestingItem.Reference (sprintf "paket:\nnuget Fake.Core.SemVer prerelease //") ]
       Expect.equal "Expected to find reference." expected interesting 
@@ -44,7 +46,9 @@ nuget Fake.Core.SemVer prerelease //"
 nuget Fake.Core.SemVer prerelease //"
 #endif
       """
-      let interesting = Fake.Runtime.FSharpParser.findInterestingItems ["DOTNETCORE"; "FAKE"] "testfile.fsx" scriptText
+      let interesting =
+          Fake.Runtime.FSharpParser.getTokenized "testfile.fsx" ["DOTNETCORE"; "FAKE"] (scriptText.Split([|'\r';'\n'|]))
+          |> Fake.Runtime.FSharpParser.findInterestingItems
       let expected = []
       Expect.equal "Expected to find reference." expected interesting 
   ]    

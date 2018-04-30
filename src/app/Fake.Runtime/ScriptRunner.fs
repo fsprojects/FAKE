@@ -53,7 +53,7 @@ let private handleCoreCaching (context:FakeContext) (session:IFsiSession) fsiErr
                 let resolve name =
                     let n = AssemblyName(name)
                     // Maybe we have a runtime or reference assembly available
-                    match (context.Config.CompileOptions.CompileReferences |> List.map AssemblyInfo.ofLocation) @ context.Config.CompileOptions.RuntimeDependencies
+                    match (context.Config.CompileOptions.FsiOptions.References |> List.map AssemblyInfo.ofLocation) @ context.Config.CompileOptions.RuntimeDependencies
                           |> List.tryFind (fun a -> a.FullName = name) with
                     | Some f -> f.Location
                     | None ->
@@ -162,12 +162,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let co = context.Config.CompileOptions
-    let options =
-        co.AdditionalArguments
-        |> FsiOptions.ofArgs
-        |> fun f ->
-            { f with
-                References = f.References @ co.CompileReferences }
+    let options =  co.FsiOptions
     if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSI Args: %A" (options.AsArgs |> Seq.toList)
 (*

@@ -62,7 +62,7 @@
 #r "C:\\Users\\matth\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.4.0\\lib\\net461\\System.Security.Cryptography.ProtectedData.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.core.xml\\5.0.0-rc008\\lib\\net46\\Fake.Core.Xml.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.core.semver\\5.0.0-rc008\\lib\\net46\\Fake.Core.SemVer.dll" 
-#r "C:\\Users\\matth\\.nuget\\packages\\paket.core\\5.156.7\\lib\\net45\\Paket.Core.dll" 
+#r "C:\\Users\\matth\\.nuget\\packages\\paket.core\\5.157.0-alpha001\\lib\\net45\\Paket.Core.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.api.github\\5.0.0-rc008\\lib\\net46\\Fake.Api.GitHub.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.core.context\\5.0.0-rc008\\lib\\net46\\Fake.Core.Context.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.core.environment\\5.0.0-rc008\\lib\\net46\\Fake.Core.Environment.dll" 

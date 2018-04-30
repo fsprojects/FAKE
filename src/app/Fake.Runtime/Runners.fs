@@ -12,6 +12,7 @@ open System.IO
 open System.Diagnostics
 open System.Threading
 open System.Text.RegularExpressions
+open System.Threading.Tasks
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
@@ -33,23 +34,30 @@ type AssemblyInfo =
     let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
     { FullName = n.FullName; Version = n.Version.ToString(); Location = loc }
 
-
+(*
 type ScriptCompileOptions =
   { CompileReferences : string list
     RuntimeDependencies : AssemblyInfo list
-    AdditionalArguments : string list }
+    UserDefinedArguments : string list
+    Defines : string list }*)
+
+type CompileOptions = 
+    internal { FsiOptions : FsiOptions; RuntimeDependencies : AssemblyInfo list }
 
 type FakeConfig =
   { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
-    CompileOptions : ScriptCompileOptions
+    ScriptTokens : Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
+    CompileOptions : CompileOptions
     UseCache : bool
     Out: TextWriter
     Err: TextWriter
     ScriptArgs: string list }
+  member x.FsArgs = x.CompileOptions.FsiOptions.AsArgs
 
 let fsiAssemblyName = "removeme"
 let cachedAssemblyPrefix = "FAKE_CACHE_"
+let loadScriptName = "intellisense.fsx"
 
 type ResultCoreCacheInfo =
   { MaybeCompiledAssembly : string option
