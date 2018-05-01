@@ -55,6 +55,10 @@ nuget System.ValueTuple copy_local: true, redirects:force
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
+group Docs
+    source https://api.nuget.org/v3/index.json
+    nuget FAKE ~> 4.0
+
 group TestAdapter
     source https://api.nuget.org/v3/index.json
     nuget Expecto.VisualStudio.TestAdapter version_in_path: true

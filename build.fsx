@@ -383,6 +383,10 @@ Target.create "GenerateDocs" (fun _ ->
     let legacyLayoutRoots = "./help/templates/legacy" :: layoutRoots
 
     Shell.copyDir (docsDir) "help/content" FileFilter.allFiles
+    // to skip circleci builds
+    let docsCircleCi = docsDir + "/.circleci"
+    Shell.cleanDir docsCircleCi
+    Shell.copyDir docsCircleCi ".circleci" FileFilter.allFiles
     File.writeString false "./docs/.nojekyll" ""
     File.writeString false "./docs/CNAME" "fake.build"
     //CopyDir (docsDir @@ "pics") "help/pics" FileFilter.allFiles
@@ -428,6 +432,36 @@ Target.create "GenerateDocs" (fun _ ->
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
 
+    // Compat urls
+    let redirectPage newPage =
+        sprintf """
+<html>
+	<head>
+		<title>Redirecting</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+    <body>
+        <noscript>
+          <p><a href="%s">This page has moved here...</a></p>
+        </noscript>
+        <script type="text/javascript">
+            var url = "%s";
+            window.location.replace(url);
+        </script>
+    </body>
+</html>"""  newPage newPage
+
+    !! (fake5ApidocsDir + "/*.html")
+    |> Seq.map (fun v5File ->
+        // ./docs/apidocs/v5/blub.html
+        let name = Path.GetFileName v5File
+        let v4Name = Path.GetDirectoryName (Path.GetDirectoryName name) @@ name
+        // ./docs/apidocs/blub.html
+        let link = sprintf "/apidocs/v5/%s" name
+        File.WriteAllText(v4Name, redirectPage link)
+        )
+
     // FAKE 5 legacy documentation
     let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
     Directory.ensure fake5LegacyApidocsDir
@@ -452,6 +486,28 @@ Target.create "GenerateDocs" (fun _ ->
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
 
+    // FAKE 4 legacy documentation
+    let fake4LegacyApidocsDir = apidocsDir @@ "v4"
+    Directory.ensure fake4LegacyApidocsDir
+    let fake4LegacyDlls =
+        !! "./packages/docs/FAKE/tools/Fake.*.dll"
+          ++ "./packages/docs/FAKE/tools/FakeLib.dll"
+          -- "./packages/docs/FAKE/tools/Fake.Experimental.dll"
+          -- "./packages/docs/FAKE/tools/FSharp.Compiler.Service.dll"
+          -- "./packages/docs/FAKE/tools/FAKE.FSharp.Compiler.Service.dll"
+          -- "./packages/docs/FAKE/tools/Fake.IIS.dll"
+          -- "./packages/docs/FAKE/tools/Fake.Deploy.Lib.dll"
+        |> Seq.distinctBy Path.GetFileName
+
+    fake4LegacyDlls
+    |> FSFormatting.createDocsForDlls (fun s ->
+        { s with
+            OutputDirectory = fake4LegacyApidocsDir
+            LayoutRoots = legacyLayoutRoots
+            LibDirs = [ "./packages/docs/FAKE/tools" ]
+            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            SourceRepository = githubLink + "/blob/hotfix_fake4" })
 )
 
 Target.create "CopyLicense" (fun _ ->
