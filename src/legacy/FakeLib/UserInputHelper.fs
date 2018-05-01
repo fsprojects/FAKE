@@ -1,4 +1,5 @@
 [<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// This module contains functions which allow to interactively input values
 module Fake.UserInputHelper
 
@@ -45,6 +46,7 @@ let internal color (color: ConsoleColor) (code : unit -> _) =
       Console.ForegroundColor <- before
     
 /// Return a string entered by the user followed by enter. The input is echoed to the screen.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getUserInput prompt =
     color ConsoleColor.White (fun _ -> printf "%s" prompt)
     let s = readString true
@@ -52,6 +54,7 @@ let getUserInput prompt =
     s
 
 /// Return a string entered by the user followed by enter. The input is replaced by '*' on the screen.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getUserPassword prompt =
     color ConsoleColor.White (fun _ -> printf "%s" prompt)
     let s = readString false

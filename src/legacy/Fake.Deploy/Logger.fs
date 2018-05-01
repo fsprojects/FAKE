@@ -1,4 +1,5 @@
-﻿module Fake.Logger
+﻿[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+module Fake.Logger
 
 open System
 open System.Diagnostics
@@ -33,30 +34,37 @@ let private configureConsoleLogger (logconfig : LoggerConfiguration) =
 let private create (logconfig : LoggerConfiguration) = 
     logconfig.CreateLogger()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let initLogAsConsole() = 
     log <- LoggerConfiguration()
            |> configureFileLogger
            |> configureConsoleLogger
            |> create
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let initLogAsService eventLogWriter = 
     writeToEventLog <- eventLogWriter
     log <- LoggerConfiguration()
            |> configureFileLogger
            |> create
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let debug fmt = Printf.kprintf log.Debug fmt
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let info fmt = Printf.kprintf log.Information fmt
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let warn fmt = Printf.kprintf log.Warning fmt
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let error fmt = 
     let log str = 
         log.Error(str)
         writeToEventLog str EventLogEntryType.Error
     Printf.kprintf log fmt
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let errorEx (ex : Exception) fmt = 
     let log str = 
         log.Error(ex, str)

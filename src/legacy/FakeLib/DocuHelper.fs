@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Contains helper functions to run the XML documentation tool "docu".
 module Fake.DocuHelper
 
@@ -6,6 +7,7 @@ open System
 
 /// The parameter type for docu.
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type DocuParams = 
     { /// The tool path - FAKE tries to find docu.exe automatically in any sub folder.
       ToolPath : string
@@ -17,6 +19,7 @@ type DocuParams =
       OutputPath : string }
 
 /// The Docu default params
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let DocuDefaults = 
     let toolPath = findToolInSubPath "docu.exe" (currentDirectory @@ "tools" @@ "Fake")
     let fi = fileInfo toolPath
@@ -30,6 +33,7 @@ let DocuDefaults =
 /// 
 ///  - `setParams` - Function used to manipulate the default docu parameters.
 ///  - `assemblies` - Sequence of one or more assemblies containing the XML docs.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Docu setParams assemblies = 
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "Docu" details

@@ -17,6 +17,7 @@ type Submodule =
       UpToDate: bool }
 with
     /// Gets the current status.
+    [<System.Obsolete("Use Fake.Tools.Git.Submodule instead")>]
     member x.Status =
         if not x.Initialized then "Not initialized" else
         if not x.UpToDate then "Modified" else

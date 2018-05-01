@@ -1,0 +1,26 @@
+﻿@{
+  Layout = "template";
+  //Description = Properties["project-summary"];
+  
+  // Properties["current-page"] = "APIReference";
+  ViewBag.CurrentPage = "APIReference";
+  ViewBag.PathPrefix = "../../";
+}
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                    <p>
+                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
+                                            <a href="../../apidocs/v5/legacy/index.html">here</a>
+                                        </strong>
+                                    </p>
+									<!-- Content -->
+                      <article>
+          			@RenderBody()
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>

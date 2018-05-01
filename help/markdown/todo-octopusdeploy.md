@@ -14,7 +14,7 @@ You will also need to install and configure at least one [Tentacle](http://octop
 
 Octopus Deploy has a REST-style [HTTP API](http://octopusdeploy.com/documentation/api) available at `http://your-octopus-server/api` which we will be using via the [Octopus Tools](https://github.com/OctopusDeploy/Octopus-Tools), controlled from a FAKE script.
 
-You should add the [OctopusTools NuGet](http://www.nuget.org/packages/OctopusTools/) package to your solution, which you can also [resolve from a FAKE script](nuget.html) - which you will need in order to use the [OctoTools](apidocs/fake-octotools.html) from a FAKE script.
+You should add the [OctopusTools NuGet](http://www.nuget.org/packages/OctopusTools/) package to your solution, which you can also [resolve from a FAKE script](nuget.html) - which you will need in order to use the [OctoTools](apidocs/v5/legacy/fake-octotools.html) from a FAKE script.
 
 ### Generate an API Key
 
@@ -28,7 +28,7 @@ It is a good idea to create an account in Octopus Deploy for your Continuous Int
 
 ## Create a Release
 
-Octopus Deploy relies on the concept of a **release**, which should be an immutable *NuGet Package* which has been built, tested, [packaged and published](apidocs/fake-nugethelper.html) from your Continuous Integration systems - which you can of course completely manage with your FAKE script.
+Octopus Deploy relies on the concept of a **release**, which should be an immutable *NuGet Package* which has been built, tested, [packaged and published](apidocs/v5/legacy/fake-nugethelper.html) from your Continuous Integration systems - which you can of course completely manage with your FAKE script.
 
 So once you have created a project you are able to create and push a release into Octopus Deploy. This can be done through the Octopus UI, command line tool, or in our case - from a FAKE script.
 

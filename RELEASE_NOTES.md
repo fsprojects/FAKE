@@ -1044,7 +1044,7 @@
 * Added ZipHelper.ZipOfIncludes - https://github.com/fsharp/FAKE/pull/686
 * Added AppVeyorEnvironment.RepoTag & .RepoTagName - https://github.com/fsharp/FAKE/pull/685
 * New tutorial about Azure Cloud Service - http://fsharp.github.io/FAKE/azurecloudservices.html
-* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/fake-azure-cloudservices.html
+* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/v5/fake-azure-cloudservices.html
 * Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
 
 ## 3.18.0 - 2015-03-04

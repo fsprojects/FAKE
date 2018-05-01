@@ -1,10 +1,12 @@
 /// New Command line interface for FAKE that utilises Argu.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 [<RequireQualifiedAccessAttribute>]
 module Cli
 
 open System
 open Argu
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type FakeArg =
     | [<AltCommandLine("-ev")>] EnvVar of string * string
     | [<AltCommandLine("-ef")>] EnvFlag of string
@@ -17,6 +19,7 @@ type FakeArg =
     | [<AltCommandLine("-st")>] Single_Target
     | [<AltCommandLine("-nc")>] NoCache
     interface IArgParserTemplate with
+        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
         member x.Usage =
             match x with
             | EnvVar _ -> "Set environment variable <name> <value>. Supports multiple."
@@ -31,6 +34,7 @@ type FakeArg =
             | NoCache -> "Disables caching of compiled script"
 
 /// Return the parsed FAKE args or the parse exception.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let parsedArgsOrEx args =
     try
         let args = args |> Seq.skip 1 |> Array.ofSeq
@@ -39,6 +43,7 @@ let parsedArgsOrEx args =
     with | ex -> Choice2Of2(ex)
 
 /// Prints the FAKE argument usage.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let printUsage () =
     printfn @"
     fake.exe [<scriptPath>] [<targetName>] [options]
@@ -51,9 +56,11 @@ let printUsage () =
     Options:
     %s" (defaultArg (ArgumentParser.Create<FakeArg>().HelpTextMessage) "")
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Args = { Script: string option; Target: string option; Rest: string [] }
 
 /// Parses the positional args and provides the remaining tail args.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let parsePositionalArgs (args:string []) =
 
     //Support this usage.

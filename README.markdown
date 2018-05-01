@@ -9,7 +9,7 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
 
-See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [API documentation](http://fsharp.github.io/FAKE/apidocs/index.html).
+See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [API documentation](http://fsharp.github.io/FAKE/apidocs/v5/index.html).
 
 # Build the project
 

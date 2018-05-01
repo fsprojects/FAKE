@@ -2,7 +2,7 @@
 
 **Note:  This documentation is for FAKE 5. The old documentation can be found [here](legacy-core-targets.html)! **
 
-[API-Reference](apidocs/fake-core-target.html), [Operators](apidocs/fake-core-targetoperators.html)
+[API-Reference](apidocs/v5/fake-core-target.html), [Operators](apidocs/v5/fake-core-targetoperators.html)
 
 ## Command line interface for the target module
 
