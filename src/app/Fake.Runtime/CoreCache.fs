@@ -301,29 +301,54 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     
     let fakeDir = Path.Combine(Path.GetDirectoryName config.ScriptFilePath, fakeDirectoryName)
     let cacheDir = Path.Combine(fakeDir, Path.GetFileName config.ScriptFilePath)
-    let fakeHashFile = Path.Combine(cacheDir, "fake-hash.cached")
     let fakeCacheFile = Path.Combine(cacheDir, "fake-hash.txt")
+    let fakeCacheDepsFile = Path.Combine(cacheDir, "fake-hash-files.txt")
+    let fakeCacheContentsFile = Path.Combine(cacheDir, "fake-hash-contents.txt")
     
     let getHashUncached () =
         //TODO this is only calculating the hash for the input file, not anything #load-ed
-        let allScriptContents = getAllScripts config.ScriptTokens config.ScriptFilePath
+        let allScriptContents = getAllScripts config.CompileOptions.FsiOptions.Defines config.ScriptTokens config.ScriptFilePath
         let getOpts (c:CompileOptions) = c.FsiOptions.AsArgs // @ c.CompileReferences
-        getScriptHash allScriptContents (getOpts config.CompileOptions)
+        allScriptContents, getScriptHash allScriptContents (getOpts config.CompileOptions)
     
-    let writeToCache hash =
+    let writeToCache ((scripts:Script list), hash) =
         File.WriteAllText(fakeCacheFile, hash)
-        File.Copy(config.ScriptFilePath, fakeHashFile)
+        let locations =
+            scripts
+            |> List.map (fun s -> s.Location)
+        // write fakeCacheContentsFile
+        locations
+        |> Seq.map File.ReadAllText
+        |> fun texts -> File.WriteAllText(fakeCacheContentsFile, String.Join("", texts))
+        // write fakeCacheDepsFile
+        File.WriteAllLines(fakeCacheDepsFile, locations)
     
     let readFromCache () =
         File.ReadAllText fakeCacheFile
     
     let scriptHash =
         let inline getUncached () =
-            let section = getHashUncached()
-            writeToCache section
+            let scripts, section = getHashUncached()
+            writeToCache (scripts, section)
             section
-            
-        if File.Exists fakeHashFile && File.Exists fakeCacheFile && File.ReadAllText fakeHashFile = File.ReadAllText config.ScriptFilePath then 
+        let cacheFilesExist =
+            File.Exists fakeCacheDepsFile &&
+            File.Exists fakeCacheContentsFile &&
+            File.Exists fakeCacheFile
+        let inline dependencyCacheUpdated () =
+            let contents =
+                File.ReadLines fakeCacheDepsFile
+                |> Seq.map (fun line -> if File.Exists line then Some (File.ReadAllText line) else None)
+                |> Seq.toList
+            if contents |> Seq.exists Option.isNone then false
+            else
+               let actual = contents |> Seq.choose id |> fun texts -> String.Join("", texts)
+               let cached = File.ReadAllText fakeCacheContentsFile
+               actual = cached
+
+        // TODO: This could be improved in such a way that we only
+        // TODO: need to tokenize "changed" files and not everything
+        if cacheFilesExist && dependencyCacheUpdated() then
             // get assembly list from cache
             try readFromCache()
             with e ->
@@ -331,9 +356,6 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
                 getUncached()
         else
             getUncached()
-    
-
-
 
     let context =
       { FakeContext.Config = config

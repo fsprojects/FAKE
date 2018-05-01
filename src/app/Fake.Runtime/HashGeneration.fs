@@ -17,8 +17,8 @@ type Script = {
 let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.HashContent)
 
-let getAllScripts (tokens:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) scriptPath : Script list =
-    let rec getAllScriptsRec scriptPath parentIncludes : Script list =
+let getAllScripts defines (tokens:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) scriptPath : Script list =
+    let rec getAllScriptsRec (tokens:Fake.Runtime.FSharpParser.TokenizedScript) scriptPath parentIncludes : Script list =
         let resolvePath currentIncludes currentDir relativeOrAbsolute isDir =
             let possiblePaths =
               if Path.IsPathRooted relativeOrAbsolute then [ relativeOrAbsolute ]
@@ -33,7 +33,7 @@ let getAllScripts (tokens:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) scrip
             realPath
 
         let loadedContents =
-            tokens.Value
+            tokens
             |> FSharpParser.findProcessorDirectives
             |> List.fold (fun ((currentIncludes, currentDir, childScripts) as state) preprocessorDirective ->
                 let (|MatchFirstString|_|) (l:FSharpParser.StringLike list) =
@@ -57,7 +57,10 @@ let getAllScripts (tokens:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) scrip
                   then currentIncludes, currentDir, childScripts
                   else
                       let realPath = resolvePath currentIncludes currentDir childScriptRelPath false
-                      currentIncludes, currentDir, getAllScriptsRec realPath currentIncludes @ childScripts
+                      let nestedTokens =
+                          File.ReadLines realPath
+                          |> FSharpParser.getTokenized realPath defines
+                      currentIncludes, currentDir, getAllScriptsRec nestedTokens realPath currentIncludes @ childScripts
                 | { Token = { Representation = "#cd" }; Strings = MatchFirstString relOrAbsolute } ->
                   let realPath = resolvePath currentIncludes currentDir relOrAbsolute true
                   currentIncludes, realPath, childScripts
@@ -69,9 +72,9 @@ let getAllScripts (tokens:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) scrip
             |> fun (_, _, c) -> c
             |> List.rev
         { Location = scriptPath
-          HashContent = FSharpParser.getHashableString tokens.Value } :: loadedContents
+          HashContent = FSharpParser.getHashableString tokens } :: loadedContents
 
-    getAllScriptsRec scriptPath []
+    getAllScriptsRec tokens.Value scriptPath []
 
 let getStringHash (s:string) =
     use sha256 = System.Security.Cryptography.SHA256.Create()
