@@ -28,6 +28,7 @@ nuget Fake.DotNet.Testing.NUnit prerelease
 nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
+nuget Suave
 nuget Octokit //"
 #endif
 
@@ -385,7 +386,7 @@ Target.create "GenerateDocs" (fun _ ->
     Shell.copyDir (docsDir) "help/content" FileFilter.allFiles
     // to skip circleci builds
     let docsCircleCi = docsDir + "/.circleci"
-    Shell.cleanDir docsCircleCi
+    Directory.ensure docsCircleCi
     Shell.copyDir docsCircleCi ".circleci" FileFilter.allFiles
     File.writeString false "./docs/.nojekyll" ""
     File.writeString false "./docs/CNAME" "fake.build"
@@ -442,9 +443,7 @@ Target.create "GenerateDocs" (fun _ ->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
     <body>
-        <noscript>
-          <p><a href="%s">This page has moved here...</a></p>
-        </noscript>
+        <p><a href="%s">This page has moved here...</a></p>
         <script type="text/javascript">
             var url = "%s";
             window.location.replace(url);
@@ -453,14 +452,14 @@ Target.create "GenerateDocs" (fun _ ->
 </html>"""  newPage newPage
 
     !! (fake5ApidocsDir + "/*.html")
-    |> Seq.map (fun v5File ->
+    |> Seq.iter (fun v5File ->
         // ./docs/apidocs/v5/blub.html
         let name = Path.GetFileName v5File
-        let v4Name = Path.GetDirectoryName (Path.GetDirectoryName name) @@ name
+        let v4Name = Path.GetDirectoryName (Path.GetDirectoryName v5File) @@ name
         // ./docs/apidocs/blub.html
         let link = sprintf "/apidocs/v5/%s" name
         File.WriteAllText(v4Name, redirectPage link)
-        )
+    )
 
     // FAKE 5 legacy documentation
     let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
@@ -508,6 +507,41 @@ Target.create "GenerateDocs" (fun _ ->
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/hotfix_fake4" })
+)
+
+let startWebServer () =
+    let rec findPort port =
+        let portIsTaken = false
+            //if Environment.isMono then false else
+            //System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners()
+            //|> Seq.exists (fun x -> x.Port = port)
+
+        if portIsTaken then findPort (port + 1) else port
+
+    let port = findPort 8083
+    let serverConfig = 
+        { Suave.Web.defaultConfig with
+           homeFolder = Some (Path.GetFullPath docsDir)
+           bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ]
+        }
+    let (>=>) = Suave.Operators.(>=>)    
+    let app =
+      Suave.WebPart.choose [
+        //Filters.path "/websocket" >=> handShake socketHandler
+        Suave.Writers.setHeader "Cache-Control" "no-cache, no-store, must-revalidate"
+        >=> Suave.Writers.setHeader "Pragma" "no-cache"
+        >=> Suave.Writers.setHeader "Expires" "0"
+        >=> Suave.Files.browseHome ]
+    Suave.Web.startWebServerAsync serverConfig app |> snd |> Async.Start
+    let psi = System.Diagnostics.ProcessStartInfo(sprintf "http://localhost:%d/index.html" port)
+    psi.UseShellExecute <- true
+    System.Diagnostics.Process.Start (psi) |> ignore
+
+Target.create "HostDocs" (fun _ -> 
+
+    startWebServer()
+    Trace.traceImportant "Press any key to stop."
+    System.Console.ReadKey() |> ignore
 )
 
 Target.create "CopyLicense" (fun _ ->

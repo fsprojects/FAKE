@@ -1,5 +1,19 @@
 # Release Notes
 
+## 5.0.0-rc009 - 2018-05-01
+
+* FAKE5: New module `Fake.Installer.InnoSetu` - https://github.com/fsharp/FAKE/pull/1890
+* DOCS: Order module-namespaces alphabetically - https://github.com/fsharp/FAKE/pull/1891
+* BUGFIX: Make sure ReportGenerator is run with mono on unix - https://github.com/fsharp/FAKE/pull/1894
+* DOCS: Make sure API docs for new modules and FAKE 4 is available - https://github.com/fsharp/FAKE/pull/1893
+* PERFORMANCE: A lot of shortcuts have been added to improve the speed of some common use-cases - https://github.com/fsharp/FAKE/pull/1891
+* BUGFIX: `tryFindFileOnPath` not working properly on windows - https://github.com/fsharp/FAKE/issues/1899
+* BREAKING: Change --environmentvariable to --environment-variable and --singletarget to --single-target - https://github.com/fsharp/FAKE/issues/1896
+* BREAKING: Targets with arguments are not opt-in to make the command line parser fail on spurious inputs by default - https://github.com/fsharp/FAKE/issues/1896
+  See https://fake.build/core-targets.html#Targets-with-arguments for details, basically you need to use `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault` to opt-in.
+* DOCS: Fix missing modules on documentation page - https://github.com/fsharp/FAKE/issues/1895
+
+
 ## 5.0.0-rc008 - 2018-04-26
 
 * FAKE4: Bundle System.ValueTuple to prevent some issues - https://github.com/fsharp/FAKE/pull/1883

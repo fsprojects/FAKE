@@ -68,6 +68,7 @@
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.core.environment\\5.0.0-rc008\\lib\\net46\\Fake.Core.Environment.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fake.core.string\\5.0.0-rc008\\lib\\net46\\Fake.Core.String.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\fparsec\\1.0.3\\lib\\net40-client\\FParsec.dll" 
+#r "C:\\Users\\matth\\.nuget\\packages\\suave\\2.4.0\\lib\\net461\\Suave.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\system.reflection.metadata\\1.5.0\\lib\\netstandard2.0\\System.Reflection.Metadata.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\mono.cecil\\0.10.0\\lib\\net40\\Mono.Cecil.Rocks.dll" 
 #r "C:\\Users\\matth\\.nuget\\packages\\mono.cecil\\0.10.0\\lib\\net40\\Mono.Cecil.Pdb.dll" 
