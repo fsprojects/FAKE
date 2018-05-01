@@ -6,7 +6,7 @@
 
 ## 5.0.0-rc009 - 2018-05-01
 
-* FAKE5: New module `Fake.Installer.InnoSetu` - https://github.com/fsharp/FAKE/pull/1890
+* FAKE5: New module `Fake.Installer.InnoSetup` - https://github.com/fsharp/FAKE/pull/1890
 * DOCS: Order module-namespaces alphabetically - https://github.com/fsharp/FAKE/pull/1891
 * BUGFIX: Make sure ReportGenerator is run with mono on unix - https://github.com/fsharp/FAKE/pull/1894
 * DOCS: Make sure API docs for new modules and FAKE 4 is available - https://github.com/fsharp/FAKE/pull/1893
