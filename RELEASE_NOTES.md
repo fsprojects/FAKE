@@ -12,7 +12,7 @@
 * BREAKING: Targets with arguments are not opt-in to make the command line parser fail on spurious inputs by default - https://github.com/fsharp/FAKE/issues/1896
   See https://fake.build/core-targets.html#Targets-with-arguments for details, basically you need to use `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault` to opt-in.
 * DOCS: Fix missing modules on documentation page - https://github.com/fsharp/FAKE/issues/1895
-
+* DOCS: Documentation can now be hosted locally via `fake build target HostDocs` (after it has been built) - https://github.com/fsharp/FAKE/pull/1891
 
 ## 5.0.0-rc008 - 2018-04-26
 

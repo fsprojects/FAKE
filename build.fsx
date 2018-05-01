@@ -380,8 +380,9 @@ Target.create "GenerateDocs" (fun _ ->
         "project-name", "FAKE - F# Make" ]
 
     let layoutRoots = [ "./help/templates"; "./help/templates/reference"]
-    let fake5LayoutRoots = "./help/templates/fake5" :: layoutRoots  
+    let fake5LayoutRoots = "./help/templates/fake5" :: layoutRoots
     let legacyLayoutRoots = "./help/templates/legacy" :: layoutRoots
+    let fake4LayoutRoots = "./help/templates/fake4" :: layoutRoots
 
     Shell.copyDir (docsDir) "help/content" FileFilter.allFiles
     // to skip circleci builds
@@ -430,7 +431,7 @@ Target.create "GenerateDocs" (fun _ ->
             OutputDirectory = fake5ApidocsDir
             LayoutRoots =  fake5LayoutRoots
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            ProjectParameters = ("api-docs-prefix", "/apidocs/v5/") :: ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
 
     // Compat urls
@@ -482,7 +483,7 @@ Target.create "GenerateDocs" (fun _ ->
             LayoutRoots = legacyLayoutRoots
             LibDirs = [ "./build" ]
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
 
     // FAKE 4 legacy documentation
@@ -502,10 +503,10 @@ Target.create "GenerateDocs" (fun _ ->
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
             OutputDirectory = fake4LegacyApidocsDir
-            LayoutRoots = legacyLayoutRoots
+            LayoutRoots = fake4LayoutRoots
             LibDirs = [ "./packages/docs/FAKE/tools" ]
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            ProjectParameters = ("api-docs-prefix", "/apidocs/v4/") ::("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/hotfix_fake4" })
 )
 

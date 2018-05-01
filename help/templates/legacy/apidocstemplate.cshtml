@@ -4,6 +4,8 @@
   
   // Properties["current-page"] = "APIReference";
   ViewBag.CurrentPage = "APIReference";
+  var urlName = ((string)ViewBag.UrlName) ?? "index";
+  var newUrl = string.Format("/apidocs/v5/{0}.html", urlName);
 }
 
 					<div class="wrapper style2">
@@ -11,8 +13,10 @@
 							<div class="container">
 								<div id="content">
                                     <p>
-                                        <strong>Note: This API documentation is for FAKE version 4. The new API documentation can be found 
-                                            <a href="/apidocs/v5/index.html">here</a>
+                                        <strong>Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
+                                            <a href="/apidocs/v5/index.html">here</a>.
+                                            If the API is already migrated you can check <a href="@newUrl">here if exists in a module</a>.
+                                            More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
                                         </strong>
                                     </p>
 									<!-- Content -->
