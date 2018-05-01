@@ -9,4 +9,4 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
 
-See the [project home page](index.html) for tutorials and [API documentation](apidocs/index.html).
+See the [project home page](index.html) for tutorials and [API documentation](apidocs/v5/index.html).

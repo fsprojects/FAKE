@@ -1,4 +1,5 @@
 ﻿/// Contains helper function which allow to interact with Microsoft Dynamics NAV.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.DynamicsNav
 
 open System
@@ -8,23 +9,27 @@ open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Replacements =
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let isWin8 = 
         Environment.OSVersion.Platform = PlatformID.Win32NT &&
           Environment.OSVersion.Version >= new Version(6, 2, 9200, 0)
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let win8Replacements =
         ["4.0:{F6D90F11-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v4.0'.DOMDocument","6.0:{88D96A05-F192-11D4-A65F-0040963251E5}:'Microsoft XML, v6.0'.DOMDocument60"
          "4.0:{2933BF80-7B36-11D2-B20E-00C04F983E60}:'Microsoft XML, v4.0'","6.0:{2933BF80-7B36-11D2-B20E-00C04F983E60}:'Microsoft XML, v6.0'"
          "{F6D90F11-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v6.0'.DOMDocument","{88D96A05-F192-11D4-A65F-0040963251E5}:'Microsoft XML, v6.0'.DOMDocument60"]
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let Win8ToWin7 (s:string) =
         if isWin8 then
             win8Replacements
             |> Seq.fold (fun (s:string) (r,p) -> s.Replace(p,r)) s
         else
             s
-
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let Win7ToWin8 (s:string) =
         if isWin8 then
             win8Replacements
@@ -32,6 +37,7 @@ module Replacements =
         else
             s
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let ConvertFileFromWin7ToWin8 fileName =
         if isWin8 then
             traceVerbose "Converting from Win7 format to Win8"
@@ -43,32 +49,38 @@ module Replacements =
             File.Delete(fileName)
             File.Move(tmpFile, fileName)
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let shortcutReplacements =
         ["ShortCutKey=Strg","ShortCutKey=Ctrl"
          "ShortCutKey=Umschalt+Strg","ShortCutKey=Shift+Ctrl"
          "ShortCutKey=Umschalt","ShortCutKey=Shift"]
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let replaceShortcuts (s:string) =
         shortcutReplacements
         |> Seq.fold (fun (s:string) (r,p) -> s.Replace(p,r)) s
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     let NormalizeShortcuts fileName =
         Fake.StringHelper.ReadFileAsString fileName
         |> replaceShortcuts
         |> Fake.StringHelper.WriteStringToFile false fileName
 
 [<RequireQualifiedAccess>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// A Dynamics NAV server type
 type NavisionServerType = 
     | SqlServer
     | NativeServer
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member this.ToTypeString() =
         match this with
         | NavisionServerType.SqlServer -> "MSSQL"
         | NavisionServerType.NativeServer -> "NAVISION"
 
 [<RequireQualifiedAccess>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type SynchronizeSchemaChangesOption =
 | No
 | Yes
@@ -76,6 +88,7 @@ type SynchronizeSchemaChangesOption =
 
 /// A parameter type to interact with Dynamics NAV
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type DynamicsNavParams = 
     { ToolPath : string
       ServerName : string
@@ -86,6 +99,7 @@ type DynamicsNavParams =
       TimeOut : TimeSpan }
 
 /// Retrieves the the file name of the Dynamics NAV ClassicClient for the given version from the registry.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getNAVClassicPath navClientVersion = 
     let subKey = 
         match navClientVersion with
@@ -104,8 +118,10 @@ let getNAVClassicPath navClientVersion =
     getRegistryValue HKEYLocalMachine subKey "Path"
 
 /// Gets the directory of the Dynamics NAV ClassicClient for the given version from the registry.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getNAVPath navClientVersion = (directoryInfo (getNAVClassicPath navClientVersion)).Parent.FullName
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getNAVServicePath navClientVersion = 
     let navServiceRootPath =
         let subKey = 
@@ -127,6 +143,7 @@ let getNAVServicePath navClientVersion =
     (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
 
 /// Creates the connection information to a Dynamics NAV instance.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let createConnectionInfo navClientVersion serverMode serverName targetDatabase =     
     let clientExe = 
         match serverMode with
@@ -201,21 +218,25 @@ let private export connectionInfo filter fileName =
         reportError "Export failed" connectionInfo.TempLogFile
 
 /// Exports objects from the Dynamics NAV client based on the given filter to the given .txt or .fob file
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ExportObjects connectionInfo filter fileName = 
     use __ = traceStartTaskUsing "ExportObjects" fileName
     export connectionInfo filter fileName
 
 /// Exports all objects from the Dynamics NAV client to the given .txt or .fob file
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ExportAllObjects connectionInfo fileName = 
     use __ = traceStartTaskUsing "ExportAllObjects" fileName
     export connectionInfo "" fileName
 
 /// Imports the given .txt or .fob file into the Dynamics NAV client
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ImportFile connectionInfo fileName = 
     use __ = traceStartTaskUsing "ImportFile" fileName
     import connectionInfo fileName
 
 /// Creates an import file from the given .txt files.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let CreateImportFile importFileName files = 
     let details = importFileName
     use __ = traceStartTaskUsing "CreateImportFile" details
@@ -228,6 +249,7 @@ let CreateImportFile importFileName files =
 
 /// Creates an import file from the given .txt files and imports it into the Dynamics NAV client.
 /// If the import fails, then every file will be tried alone.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ImportFiles connectionInfo importFileName files = 
     let details = importFileName
     use __ = traceStartTaskUsing "ImportFiles" details
@@ -242,6 +264,7 @@ let ImportFiles connectionInfo importFileName files =
         raise exn
 
 /// Compiles all filtered uncompiled objects in the Dynamics NAV client.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let CompileWithFilter filter (connectionInfo:DynamicsNavParams) = 
     let sw = System.Diagnostics.Stopwatch() 
     sw.Start()
@@ -266,6 +289,7 @@ let CompileWithFilter filter (connectionInfo:DynamicsNavParams) =
 
 
 /// Compiles all uncompiled objects in the Dynamics NAV client.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let CompileAll connectionInfo = 
     let sw = System.Diagnostics.Stopwatch() 
     sw.Start()
@@ -289,6 +313,7 @@ let CompileAll connectionInfo =
     tracefn "CompileAll took %dms" sw.ElapsedMilliseconds
 
 /// The parameter type allows to interact with Dynamics NAV RTC.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type RTCParams = 
     { ToolPath : string
       ServerName : string
@@ -300,6 +325,7 @@ type RTCParams =
       TimeOut : TimeSpan }
 
 /// Creates the connection information to a Dynamics NAV RTC instance
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let createRTCConnectionInfo navClientVersion serverName serviceTierName port company = 
     let navRTCPath = getNAVPath navClientVersion @@ "RoleTailored Client"
     let rtcExe = navRTCPath @@ "Microsoft.Dynamics.NAV.Client.exe"
@@ -313,6 +339,7 @@ let createRTCConnectionInfo navClientVersion serverName serviceTierName port com
       TimeOut = TimeSpan.FromMinutes 20. }
 
 /// Runs a codeunit with the given ID on the RTC client
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RunCodeunit connectionInfo (codeunitID : int) = 
     let details = codeunitID.ToString()
     use __ = traceStartTaskUsing "Running Codeunit" details
@@ -331,6 +358,7 @@ let RunCodeunit connectionInfo (codeunitID : int) =
             connectionInfo.TempLogFile
 
 /// Runs a codeunit with the given ID on the RTC client and the settings file (full path required)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RunCodeunitWithSettings connectionInfo settingsFile (codeunitID : int) = 
     if not (fileExists settingsFile) then
         failwithf "Given settings file [%s] could not be found!" (Path.GetFileName settingsFile)
@@ -353,6 +381,7 @@ let RunCodeunitWithSettings connectionInfo settingsFile (codeunitID : int) =
             connectionInfo.TempLogFile
 
 /// Opens a page with the given ID on the RTC client
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let OpenPage connectionInfo pageNo = 
     let details = sprintf "%d" pageNo
     use __ = traceStartTaskUsing "OpenPage" details
@@ -365,6 +394,7 @@ let OpenPage connectionInfo pageNo =
     result
 
 /// Returns all running NAV processes.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getNAVProcesses() = 
     Process.GetProcesses() 
     |> Seq.filter 
@@ -373,6 +403,7 @@ let getNAVProcesses() =
            || p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
 
 /// Closes all running Dynamics NAV instances
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let CloseAllNavProcesses raiseExceptionIfNotFound = 
     let details = ""
     use __ = traceStartTaskUsing "CloseNAV" details
@@ -387,6 +418,7 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
 /// ## Parameters
 ///  - `name` - The name of the processes in question.
 ///  - `timeout` - The timespan to time out after.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ensureAllNAVProcessesHaveStopped timeout = 
     let endTime = DateTime.Now.Add timeout
     while DateTime.Now <= endTime && (getNAVProcesses() <> Seq.empty) do
@@ -395,6 +427,7 @@ let ensureAllNAVProcessesHaveStopped timeout =
     if getNAVProcesses() <> Seq.empty then failwith "The NAV process has not stopped (check the logs for errors)"
 
 /// Analyzes the Dynamics NAV test results
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let analyzeTestResults fileName = 
     let messages = ReadFile fileName
     if Seq.isEmpty messages then failwithf "Communication error. The message file %s is empty." fileName
@@ -456,6 +489,7 @@ let analyzeTestResults fileName =
                    Tests = tests }
 
 /// Analyzes the XML-based Dynamics NAV test results from XMLPort 130021
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let analyzeXmlTestResults (fileName : string) (testSuite : string) = 
     let doc = new XmlDocument()
     doc.Load(fileName)
@@ -496,6 +530,7 @@ let analyzeXmlTestResults (fileName : string) (testSuite : string) =
     Some { SuiteName = testSuite
            Tests = tests }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let StartNavServiceTier serverMode navClientVersion =
     use __ = traceStartTaskUsing "StartNavServiceTier" ""
     match serverMode with
@@ -516,6 +551,7 @@ let StartNavServiceTier serverMode navClientVersion =
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV110"
         | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let StopNavServiceTier serverMode navClientVersion =
     use __ = traceStartTaskUsing "StopNavServiceTier" ""
     match serverMode with

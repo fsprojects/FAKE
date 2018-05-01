@@ -1,4 +1,5 @@
 [<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
 
 module Fake.WiXHelper
@@ -14,6 +15,7 @@ open System.Text
 let mutable internal fileCount = 0
 let mutable internal dirs = Dictionary()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let dirName dir = 
     match dirs.TryGetValue dir with
     | true, n -> 
@@ -25,6 +27,7 @@ let dirName dir =
 
 let mutable internal compRefs = Dictionary()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let compRefName compRef = 
     match compRefs.TryGetValue compRef with
     | true, n -> 
@@ -36,6 +39,7 @@ let compRefName compRef =
 
 let mutable internal comps = Dictionary()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let compName comp = 
     match comps.TryGetValue comp with
     | true, n -> 
@@ -46,16 +50,19 @@ let compName comp =
         comp
 
 /// Creates a WiX File tag from the given FileInfo
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let wixFile (fileInfo : FileInfo) = 
     fileCount <- fileCount + 1
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" fileCount fileInfo.Name fileInfo.FullName
 
 /// Creates WiX File tags from the given files
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getFilesAsWiXString files = 
     files
     |> Seq.map (fileInfo >> wixFile)
     |> toLines
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Architecture = 
     | X64
     | X86
@@ -65,6 +72,7 @@ type Architecture =
         | X86 -> "x86"
 
 /// WiX File Element
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXFile =
     {
         /// File Id in WiX definition
@@ -80,6 +88,7 @@ type WiXFile =
                                 w.Id w.Name w.Source (w.ProcessorArchitecture.ToString())
 
 /// Defaults for WiX file
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXFileDefaults = 
     {
         Id = "fi"
@@ -89,6 +98,7 @@ let WiXFileDefaults =
     }
 
 /// Specifies whether an action occur on install, uninstall or both.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type InstallUninstall = 
     | Install
     | Uninstall
@@ -102,6 +112,7 @@ type InstallUninstall =
         | Never -> null
 
 /// These are used in many methods for generating WiX nodes, regard them as booleans
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type YesOrNo = 
     | Yes
     | No
@@ -111,6 +122,7 @@ type YesOrNo =
         | No -> "no"
 
 /// Service Control Element. Can Start, Stop and Remove services
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXServiceControl =
     {
         Id : string
@@ -120,6 +132,7 @@ type WiXServiceControl =
         Stop : InstallUninstall
         Wait : YesOrNo
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member w.createAttributeList () =
         seq 
             {
@@ -141,6 +154,7 @@ type WiXServiceControl =
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList()))             
 
 /// Defaults for service control element
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXServiceControlDefaults =
     {
         Id = "ServiceControl"
@@ -152,6 +166,7 @@ let WiXServiceControlDefaults =
     }
 
 /// Use this for generating service controls
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateServiceControl (setParams : WiXServiceControl -> WiXServiceControl) =
     let parameters = WiXServiceControlDefaults |> setParams
     if parameters.Id = "" then 
@@ -159,6 +174,7 @@ let generateServiceControl (setParams : WiXServiceControl -> WiXServiceControl) 
     parameters
 
 /// Determines what action should be taken on an error.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ErrorControl = 
     /// Logs the error and continues with the startup operation.
     | Ignore
@@ -173,6 +189,7 @@ type ErrorControl =
         | Critical -> "critical"
 
 /// Determines when the service should be started. The Windows Installer does not support boot or system. 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ServiceInstallStart = 
     /// The service will start during startup of the system.
     | Auto
@@ -193,6 +210,7 @@ type ServiceInstallStart =
         | System -> "system"
 
 /// Determines the type of the service. The Windows Installer does not currently support kernelDriver or systemDriver.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ServiceInstallType = 
     /// A Win32 service that runs its own process.
     | OwnProcess
@@ -210,6 +228,7 @@ type ServiceInstallType =
         | SystemDriver -> "systemDriver"
 
 /// Determines the type of the service failure action.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ServiceFailureActionType =
     | NoneAction
     | Reboot
@@ -223,6 +242,7 @@ type ServiceFailureActionType =
         | RunCommand -> "runCommand"
 
 /// Service configuration information for failure actions.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXServiceConfig =
     {
         /// [Required] Determines the type of the service failure action.
@@ -242,6 +262,7 @@ type WiXServiceConfig =
         /// [Required] Action to take on the third failure of the service.
         ThirdFailureActionType: ServiceFailureActionType
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member w.createAttributeList () =
         seq 
             {
@@ -261,6 +282,7 @@ type WiXServiceConfig =
         sprintf "<ServiceConfig xmlns=\"http://schemas.microsoft.com/wix/UtilExtension\" %s/>" 
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXServiceConfigDefaults =
     {       
         FirstFailureActionType = NoneAction
@@ -274,11 +296,13 @@ let WiXServiceConfigDefaults =
     }
 
 /// Use this for generating service configs
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateServiceConfig (setParams : WiXServiceConfig -> WiXServiceConfig) =
     let parameters = WiXServiceConfigDefaults |> setParams
     parameters
 
 /// Service or group of services that must start before the parent service.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXServiceDependency = 
     {
         /// [Required] The value of this attribute should be one of the following:
@@ -288,6 +312,7 @@ type WiXServiceDependency =
         /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.	
         Group : YesOrNo option
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member w.createAttributeList () =
         seq {           
             yield ("Id", w.Id)           
@@ -297,6 +322,7 @@ type WiXServiceDependency =
         sprintf "<ServiceDependency%s />"
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXServiceDependencyDefaults =
     {       
         Id = ""
@@ -304,6 +330,7 @@ let WiXServiceDependencyDefaults =
     }
 
 /// Use this for generating service dependencies
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateServiceDependency (setParams : WiXServiceDependency -> WiXServiceDependency) =
     let parameters = WiXServiceDependencyDefaults |> setParams
     if String.IsNullOrWhiteSpace parameters.Id then 
@@ -311,6 +338,7 @@ let generateServiceDependency (setParams : WiXServiceDependency -> WiXServiceDep
     parameters
 
 /// Adds services for parent Component. Use the ServiceControl element to remove services.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXServiceInstall =
     {
         /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
@@ -346,6 +374,7 @@ type WiXServiceInstall =
         /// Service configuration information for failure actions.
         ServiceConfig: WiXServiceConfig seq
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member w.createAttributeList () =
         seq {
             if not (String.IsNullOrWhiteSpace w.Account) then yield ("Account", w.Account)
@@ -370,6 +399,7 @@ type WiXServiceInstall =
             (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceConfig)
 
 /// Defaults for service install element
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXServiceInstallDefaults =
     {       
         Account = ""        
@@ -391,6 +421,7 @@ let WiXServiceInstallDefaults =
     }
 
 /// Use this for generating service installs
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateServiceInstall (setParams : WiXServiceInstall -> WiXServiceInstall) =
     let parameters = WiXServiceInstallDefaults |> setParams
     if String.IsNullOrWhiteSpace parameters.Name then 
@@ -398,6 +429,7 @@ let generateServiceInstall (setParams : WiXServiceInstall -> WiXServiceInstall) 
     parameters
 
 /// Represents the registry root under which this key should be written
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXRegistryRootType =
     /// Writes this registry key inside either HKEY_LOCAL_MACHINE or HKEY_CURRENT_USER. Wix decides at install time based on wether or not this is an "all users" install
     | HKMU
@@ -418,6 +450,7 @@ type WiXRegistryRootType =
         | HKU -> "HKU"
 
 /// The action that will be taken for a registry value
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXRegistryValueAction = 
     /// Appends the specified value(s) to a multiString registry value
     | Append
@@ -432,6 +465,7 @@ type WiXRegistryValueAction =
         | Write -> "write"
 
 /// The desired type of a registry key.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXRegistryValueType =
     /// The value is interpreted and stored as a string (REG_SZ)
     | String
@@ -452,6 +486,7 @@ type WiXRegistryValueType =
         | MultiString -> "multistring"
 
 /// Parameters for WiX RegistryValue
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXRegistryValue =
     {
         /// The Id of this value
@@ -472,6 +507,7 @@ type WiXRegistryValue =
         /// The predefined root key for the registry value.
         Root : WiXRegistryRootType Option
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member v.createAttributeList () =
         seq {
             if not (String.IsNullOrWhiteSpace v.Id) then yield ("Id", v.Id)
@@ -485,7 +521,8 @@ type WiXRegistryValue =
     override v.ToString() = 
         sprintf "<RegistryValue%s />" 
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (v.createAttributeList())) 
-    
+
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]    
 let wixRegistryValueDefaults =
     {
         Id = ""
@@ -513,12 +550,14 @@ let wixRegistryValueDefaults =
 ///                                                   KeyPath = YesOrNo.No
 ///                                                   Value = "2"
 ///                                               })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 
 let generateRegistryValue (setParams : WiXRegistryValue -> WiXRegistryValue) =
     let parameters = wixRegistryValueDefaults |> setParams
     parameters
 
 /// Parameters for WiX RegistryKey
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXRegistryKey =
     {
         /// Primary key used to identify this particular entry
@@ -541,6 +580,7 @@ type WiXRegistryKey =
         /// You can nest child registry values here
         Values : WiXRegistryValue seq
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member k.createAttributeList () = 
         seq {
             if not (String.IsNullOrWhiteSpace k.Id) then yield ("Id", k.Id)
@@ -554,7 +594,8 @@ type WiXRegistryKey =
               (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (k.createAttributeList())) 
               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Keys) 
               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Values)
-    
+
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]    
 let wixRegistryKeyDefaults =
     {
         Id = ""
@@ -582,11 +623,13 @@ let wixRegistryKeyDefaults =
 ///                                   Keys = someChildKeys
 ///                                   Values = someChildValues
 ///                                 })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateRegistryKey (setParams : WiXRegistryKey -> WiXRegistryKey) =
     let parameters = wixRegistryKeyDefaults |> setParams
     parameters
 
 /// Reference to a component for including it in a feature
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXComponentRef =
     {
         Id : string
@@ -594,12 +637,14 @@ type WiXComponentRef =
     override w.ToString() = sprintf "<ComponentRef Id=\"%s\" />" w.Id
 
 /// Defaults for component ref
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXComponentRefDefaults =
     {
         Id = ""
     }
 
 /// Use this for generating component refs
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
     let parameters = WiXComponentRefDefaults |> setParams
     if parameters.Id = "" then 
@@ -607,9 +652,11 @@ let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
     Some(parameters)
 
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXDirectoryComponent = 
     | C of WiXComponent
     | D of WiXDir      
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member w.ToComponentRef() = 
         match w with
         | C c -> c.ToComponentRef()
@@ -630,6 +677,7 @@ and WiXComponent =
         RegistryKeys : WiXRegistryKey seq
         RegistryValues : WiXRegistryValue seq
     }
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member w.ToComponentRef() = generateComponentRef (fun f -> { f with Id = w.Id })
     override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\" Win64=\"%s\">%s%s%s%s%s</Component>" 
                                 w.Id w.Guid (w.Win64.ToString())
@@ -658,6 +706,7 @@ and WiXDir =
                                                            )) "" d.Components)
 
 /// Reference to a component for including it in a feature
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXDirectoryRef =
    {
        Id : string
@@ -668,6 +717,7 @@ type WiXDirectoryRef =
                               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" r.Components)
 
 /// Defaults for component ref
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXDirectoryRefDefaults =
    {
        Id = ""
@@ -675,6 +725,7 @@ let WiXDirectoryRefDefaults =
    }
 
 /// Use this for generating component refs
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateDirectoryRef (setParams : WiXDirectoryRef -> WiXDirectoryRef) =
    let parameters = WiXDirectoryRefDefaults |> setParams
    if parameters.Id = "" then 
@@ -682,6 +733,7 @@ let generateDirectoryRef (setParams : WiXDirectoryRef -> WiXDirectoryRef) =
    parameters
 
 ///get component refs from a directory component hierarchy
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec getComponentRefs (elements : WiXDirectoryComponent seq) = 
     let refs = elements
                 |> Seq.choose (fun e -> 
@@ -700,6 +752,7 @@ let rec getComponentRefs (elements : WiXDirectoryComponent seq) =
     
 
 /// Defaults for component
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXComponentDefaults =
     {
         Id = ""
@@ -713,6 +766,7 @@ let WiXComponentDefaults =
     }
 
 /// Use this for generating single components
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateComponent (setParams : WiXComponent -> WiXComponent) =
     let parameters = WiXComponentDefaults |> setParams
     if parameters.Id = "" then 
@@ -720,6 +774,7 @@ let generateComponent (setParams : WiXComponent -> WiXComponent) =
     parameters
 
 /// Defaults for directories
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXDirDefaults = 
     {
         Id = ""
@@ -729,6 +784,7 @@ let WiXDirDefaults =
     }
 
 /// Use this for generating directories
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateDirectory (setParams : WiXDir -> WiXDir) =
     let parameters = WiXDirDefaults |> setParams
     if parameters.Id = "" then 
@@ -783,6 +839,7 @@ let private createComponents fileFilter directoryInfo directoryName architecture
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentRefs function for getting all created component refs and adding them to features.
 /// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo architecture =
     let directoryName = ""
     let directories = directoryInfo
@@ -810,6 +867,7 @@ and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInf
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let bulkComponentCreation fileFilter directoryInfo architecture = 
     directoryInfo
         |> filesInDir
@@ -838,6 +896,7 @@ let bulkComponentCreation fileFilter directoryInfo architecture =
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// The components are embedded into the passed in root directory.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) architecture = 
     {
         Id = getDirectoryId(directoryInfo.FullName)
@@ -847,6 +906,7 @@ let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) arc
     }  
                  
 ///// Use this to attach service controls to your components.   
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilter serviceControls = 
     match comp with
     | C c -> C (if fileFilter c then                        
@@ -860,6 +920,7 @@ and attachServiceControlToComponents (components : WiXDirectoryComponent seq) fi
     |> Seq.map(fun c -> attachServiceControlToComponent c fileFilter serviceControls)
             
 /// Use this to attach service installs to your components.          
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilter serviceInstalls = 
     match comp with
     | C c -> C (if fileFilter c then                        
@@ -877,6 +938,7 @@ and attachServiceInstallToComponents (components : WiXDirectoryComponent seq) fi
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec wixDir fileFilter asSubDir (directoryInfo : DirectoryInfo) = 
     let dirs = 
         directoryInfo
@@ -911,6 +973,7 @@ let rec wixDir fileFilter asSubDir (directoryInfo : DirectoryInfo) =
 /// ## Sample
 ///     let directoryString = wixDir (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
 ///     let executableFileId = getFileIdFromWiXString directoryString "\S*.exe"
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getFileIdFromWiXString wiXString fileRegex =
     let lines = split '\n' wiXString
 
@@ -929,6 +992,7 @@ let getFileIdFromWiXString wiXString fileRegex =
 /// ## Sample
 ///     let directoryString = wixDir (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
 ///     let componentIds = getComponentIdsFromWiXString directoryString
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getComponentIdsFromWiXString wiXString =
     let lines = split '\n' wiXString
 
@@ -939,6 +1003,7 @@ let getComponentIdsFromWiXString wiXString =
         |> System.String.Concat
 
 /// Creates WiX ComponentRef tags from the given DirectoryInfo
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let rec wixComponentRefs (directoryInfo : DirectoryInfo) = 
     let compos = 
         directoryInfo
@@ -951,6 +1016,7 @@ let rec wixComponentRefs (directoryInfo : DirectoryInfo) =
 
 /// Take a component string and set "neverOverwrite" Tag
 /// This is useful for config files, since they are not replaced on upgrade like that
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let setComponentsNeverOverwrite (components : string) = 
     components.Replace("<Component", "<Component NeverOverwrite=\"yes\"")
 
@@ -958,6 +1024,7 @@ open System
 
 /// WiX parameter type
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXParams = 
     { ToolDirectory : string
       TimeOut : TimeSpan
@@ -965,6 +1032,7 @@ type WiXParams =
       AdditionalLightArgs : string list }
 
 /// Contains the WiX default parameters  
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXDefaults : WiXParams = 
     { ToolDirectory = currentDirectory @@ "tools" @@ "Wix"
       TimeOut = TimeSpan.FromMinutes 5.0
@@ -972,6 +1040,7 @@ let WiXDefaults : WiXParams =
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
 /// Used for determing whether the feature should be visible in the select features installer pane or not
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type FeatureDisplay = 
     /// Initially shows the feature collapsed. This is the default value.
     | Collapse
@@ -1034,6 +1103,7 @@ let WiXFeatureDefaults =
     }
 
 /// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Feature =
     {
          /// Unique identifier of the feature.
@@ -1078,6 +1148,7 @@ type Feature =
         ConcatAll f ""
 
 /// Default values for creating WiX Feature
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let FeatureDefaults =
     {   
         Id = ""
@@ -1090,6 +1161,7 @@ let FeatureDefaults =
     }
 
 /// Type for defining, which program directory should be used for installation. ProgramFiles32 refers to 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ProgramFilesFolder = 
     | ProgramFiles32
     | ProgramFiles64
@@ -1182,6 +1254,7 @@ let WiXScriptDefaults =
     }
 
 /// Used in WiXCustomAction for determing when to run the custom action
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type CustomActionExecute = 
     /// Indicates that the custom action will run after successful completion of the installation script (at the end of the installation). 
     | Commit
@@ -1208,6 +1281,7 @@ type CustomActionExecute =
         | SecondSequence -> "secondSequence"
 
 /// Used in WiXCustomAction for determing the return type
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type CustomActionReturn = 
     /// Indicates that the custom action will run asyncronously and execution may continue after the installer terminates. 
     | AsyncNoWait
@@ -1225,6 +1299,7 @@ type CustomActionReturn =
         | Ignore -> "ignore"
 
 /// Parameters for WiX custom action, use ToString for creating the string xml nodes
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXCustomAction = 
     {
         ///	The identifier of the custom action. 
@@ -1254,6 +1329,7 @@ type WiXCustomAction =
                             + w.ExeCommand + "\" Return=\"" + w.Return.ToString() + "\" />"
 
 /// Default values for WiX custom actions
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXCustomActionDefaults = 
     {
         Id = ""
@@ -1265,6 +1341,7 @@ let WiXCustomActionDefaults =
     }
 
 /// Used for specifying the point of time for action execution in WiXCustomActionExecution
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ActionExecutionVerb = 
     /// Specifies that action should be executed after some standard or custom action
     | After
@@ -1276,6 +1353,7 @@ type ActionExecutionVerb =
         | Before -> "Before"
 
 /// Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXCustomActionExecution = 
     {
         /// The action to which the Custom element applies.
@@ -1290,6 +1368,7 @@ type WiXCustomActionExecution =
     override w.ToString() = "<Custom Action=\"" + w.ActionId + "\" " + w.Verb.ToString() + "=\"" + w.Target + "\"> " + w.Condition + " </Custom>"
 
 /// Default values for WiX custom action executions
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WixCustomActionExecutionDefaults = 
     {
         ActionId = ""
@@ -1299,6 +1378,7 @@ let WixCustomActionExecutionDefaults =
     }
 
 /// Parameters for WiX UI Reference, use ToString for creating the string xml nodes
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXUIRef = 
     {   
         /// Name of referenced UI
@@ -1307,6 +1387,7 @@ type WiXUIRef =
     override w.ToString() = "<UIRef Id=\"" + w.Id + "\" />"
 
 /// Default value for WiX UI Reference (WixUI_Minimal)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXUIRefDefaults = 
     {
         Id = "WixUI_Minimal"
@@ -1323,6 +1404,7 @@ type WiXUpgrade =
     override w.ToString() = "<Upgrade Id=\"" + w.Id.ToString("D") + "\">" + w.UpgradeVersion + "</Upgrade>"
 
 /// Default value for WiX Upgrade
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXUpgradeDefaults = 
     {
         Id = Guid.Empty
@@ -1330,6 +1412,7 @@ let WiXUpgradeDefaults =
     }
 
 /// Parameters for WiX Upgrade Version
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXUpgradeVersion =
     {
         /// Set to "yes" to detect products and applications but do not uninstall.
@@ -1353,6 +1436,7 @@ type WiXUpgradeVersion =
                             + "\" IncludeMaximum=\"" + w.IncludeMaximum.ToString() + "\" Property=\"" + w.Property + "\" />"
 
 /// Default value for WiX Upgrade
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXUpgradeVersionDefaults = 
     {
         OnlyDetect = YesOrNo.No
@@ -1364,6 +1448,7 @@ let WiXUpgradeVersionDefaults =
     }
 
 /// Used for determing when to run RemoveExistingProducts on major upgrade
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type MajorUpgradeSchedule =
     /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product. 
     /// It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails, 
@@ -1393,6 +1478,7 @@ type MajorUpgradeSchedule =
         | AfterInstallFinalize -> "afterInstallFinalize"
 
 /// Parameters for WiX Major Upgrade
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXMajorUpgrade = 
     {
         /// Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the 
@@ -1412,6 +1498,7 @@ type WiXMajorUpgrade =
         "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\"" + downgradeErrorMessage + " />"
 
 /// Default value for WiX Major Upgrade
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXMajorUpgradeDefaults =
     {
         Schedule = MajorUpgradeSchedule.AfterInstallValidate
@@ -1420,6 +1507,7 @@ let WiXMajorUpgradeDefaults =
     }
 
     /// Parameters for WiX Variable, use ToString for creating the string xml nodes
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type WiXVariable = 
     {
         /// The name of the variable.
@@ -1433,6 +1521,7 @@ type WiXVariable =
     override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable.ToString() + "\"/>"
 
 /// Default value for WiX Variable
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiXVariableDefaults = 
     {
         Id = ""
@@ -1441,6 +1530,7 @@ let WiXVariableDefaults =
     }
 
 /// Parameters for WiX Script properties, use ToString for creating the string xml nodes
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Script =
     {
         /// The product code GUID for the product.
@@ -1508,6 +1598,7 @@ type Script =
     }
 
 /// Default values for WiX Script properties
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ScriptDefaults = 
     {
         ProductCode = Guid.Empty
@@ -1540,6 +1631,7 @@ let ScriptDefaults =
 ///
 /// ## Sample
 ///     generateWiXScript "Setup.wxs"
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateWiXScript fileName =
     let scriptTemplate = 
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1676,6 +1768,7 @@ let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
 ///                                CustomActions = action1.ToString() + action2.ToString()
 ///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
 ///                            })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let FillInWiXTemplate wiXPath setParams =
     let parameters = ScriptDefaults |> setParams
     let wixScript = !!( wiXPath @@ "*.wxs" )
@@ -1741,6 +1834,7 @@ let generateFeature (setParams : WiXFeature -> WiXFeature) =
 ///                                            Display = "expand" 
 ///                                            InnerContent = [otherFeature1; otherFeature2]
 ///                                        })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateFeatureElement setParams =
     let parameters : Feature = FeatureDefaults |> setParams
     if parameters.Id = "" then 
@@ -1764,6 +1858,7 @@ let generateFeatureElement setParams =
 ///                                                ExeCommand = "install"
 ///                                                Return = "check"
 ///                                            })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateCustomAction setParams =
     let parameters : WiXCustomAction = WiXCustomActionDefaults |> setParams
     if parameters.Id = "" then 
@@ -1783,6 +1878,7 @@ let generateCustomAction setParams =
 ///                                                                    Target = "InstallFiles"                                                                        
 ///                                                                    Condition = "<![CDATA[(&" + feature.Id + " = 3) AND NOT (!" + feature.Id + " = 3)]]>"
 ///                                                                })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateCustomActionExecution setParams =
     let parameters : WiXCustomActionExecution = WixCustomActionExecutionDefaults |> setParams
     if parameters.ActionId = "" then 
@@ -1798,6 +1894,7 @@ let generateCustomActionExecution setParams =
 ///                                    {f with
 ///                                        Id = "WixUI_Mondo"
 ///                                    })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateUIRef setParams =
     let parameters : WiXUIRef = WiXUIRefDefaults |> setParams
     if parameters.Id = "" then 
@@ -1814,6 +1911,7 @@ let generateUIRef setParams =
 ///                                       {f with
 ///                                          Id = productUpgradeCode
 ///                                       })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateUpgrade setParams =
     let parameters : WiXUpgrade = WiXUpgradeDefaults |> setParams
     if parameters.Id = Guid.Empty then 
@@ -1830,6 +1928,7 @@ let generateUpgrade setParams =
 ///                                                        Minimum = productVersion
 ///                                                        OnlyDetect = "yes"
 ///                                                     })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateUpgradeVersion setParams =
     let parameters : WiXUpgradeVersion = WiXUpgradeVersionDefaults |> setParams
     parameters
@@ -1844,11 +1943,13 @@ let generateUpgradeVersion setParams =
 ///                                                     {f with 
 ///                                                         DowngradeErrorMessage = "A later version is already installed, exiting."
 ///                                                     })
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let generateMajorUpgradeVersion setParams =
     let parameters : WiXMajorUpgrade = WiXMajorUpgradeDefaults |> setParams
     parameters
 
 /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Candle (parameters : WiXParams) wixScript = 
     use __ = traceStartTaskUsing "Candle" wixScript
     let fi = fileInfo wixScript
@@ -1865,6 +1966,7 @@ let Candle (parameters : WiXParams) wixScript =
     wixObj
 
 /// Runs the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) on the given WiX script with the given parameters
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Light (parameters : WiXParams) outputFile wixObj = 
     use __ = traceStartTaskUsing "Light" wixObj
     let tool = parameters.ToolDirectory @@ "light.exe"
@@ -1909,12 +2011,14 @@ let Light (parameters : WiXParams) outputFile wixObj =
 ///             setupFileName
 ///             (setupBuildDir + "Setup.wxs.template")
 ///     )
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let WiX setParams outputFile wixScript = 
     let parameters = setParams WiXDefaults
     wixScript
     |> Candle parameters
     |> Light parameters outputFile
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type HeatParams = 
     { 
       /// Directory that contains the Heat tool
@@ -1945,6 +2049,7 @@ type HeatParams =
     }
 
 /// Default values for the Heat harvesting
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let HeatDefaulParams = 
     {
       ToolDirectory = currentDirectory @@ "tools" @@ "Wix"
@@ -1968,6 +2073,7 @@ let HeatDefaulParams =
 ///  - `directory` - The path to the directory that will be harvested by Heat.
 ///  - `outputFile` - The output file path given to Heat.
 ///
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
     use __ = traceStartTaskUsing "Heat" directory
     let conditionalArgument condition arg args =

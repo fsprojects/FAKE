@@ -38,6 +38,7 @@
 ///     Office365Notification webhookURL notification |> ignore
 ///
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.Office365ConnectorHelper
 
 open System.Net
@@ -45,12 +46,15 @@ open System
 open Newtonsoft.Json
 
 /// This type alias for string gives you a hint where you can use markdown
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type MarkdownString = string
 
 /// This type alias for string gives you a hint where you **can't** use markdown
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type SimpleString = string
 
 /// This type alias gives you a hint where you have to use a Hex color value (e.g. #AAFF77)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ColorHexValue = string
 
 /// [omit]
@@ -97,6 +101,7 @@ let private asObject (writeValues: JsonWriter -> JsonWriter) (writer: JsonWriter
     writer
 
 /// Represents an action button
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ViewAction = 
     {
         /// (Required) The name of the Action (appears on the button).
@@ -107,6 +112,7 @@ type ViewAction =
     }
 
     /// Writes the action to a JSON writer
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.WriteJson (writer: JsonWriter) =
         writer |> asObject (fun _ -> 
             writer
@@ -117,6 +123,7 @@ type ViewAction =
 
         
 /// Represents the URI to an image (either a normal URI or a DataUri)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ImageUri =
     /// A simple URI of the image
     | ImageUrl of Uri
@@ -125,17 +132,20 @@ type ImageUri =
     | DataUri of string
 
     /// Writes the image uri to a JSON writer
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.WriteJson (writer: JsonWriter) =
         match self with
         | ImageUrl uri -> writer |> writeString (uri.ToString())
         | DataUri uri -> writer |> writeString uri
         
     /// Creates a new ImageUrl from a given url string
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     static member FromUrl url =
         System.Uri(url) |> ImageUrl
 
     /// Creates a new DataUri from a given file
     /// png, gif, jpg and bmp files are supported
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     static member FromFile fileName =
         let allowedExtensions = [ "png"; "gif"; "jpg"; "bmp" ]
         let extension = System.IO.Path.GetExtension(fileName) |> toLower
@@ -151,6 +161,7 @@ type ImageUri =
             None
         
 /// A simple key/value pair
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Fact = 
     { 
         /// (Required) Name of the fact
@@ -161,6 +172,7 @@ type Fact =
     }
 
     /// Writes the fact to a JSON writer
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.WriteJson (writer: JsonWriter) =
         writer |> asObject (fun _ ->
             writer
@@ -168,6 +180,7 @@ type Fact =
             |> writeNamedString "value" self.Value)
 
 /// Represents a described image object
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Image = 
     {
         /// (Optional) Alt-text for the image
@@ -177,11 +190,13 @@ type Image =
         Image: ImageUri 
     }
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     static member FromUrlWithoutTitle url = 
         { Title = None
           Image = url |> ImageUri.FromUrl } 
 
     /// Writes the Image to a JSON writer
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.WriteJson (writer: JsonWriter) =
         writer |> asObject (fun w ->
             w
@@ -190,6 +205,7 @@ type Image =
             |> self.Image.WriteJson)
 
 /// A section in a ConnectorCard
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type Section = 
     { 
         /// (Optional) The title of the section
@@ -224,6 +240,7 @@ type Section =
     }
 
     /// Writes the Section to a JSON writer
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.WriteJson (writer: JsonWriter) =
         writer |> asObject (fun _ ->
             writer
@@ -251,6 +268,7 @@ type Section =
                         | _ -> writer |> asList "potentialAction" (fun _ -> self.PotentialActions |> List.fold writeJson writer))
 
 /// This is the base data, which will be sent to the Office 365 webhook connector
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ConnectorCard = 
     {
         /// (Required, if the text property is not populated) A string used for summarizing card content. This will be shown as the message subject.
@@ -272,6 +290,7 @@ type ConnectorCard =
         PotentialActions: ViewAction list 
     }
 
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.WriteJson (writer: JsonWriter) =
         writer |> asObject (fun _ ->
             writer
@@ -287,6 +306,7 @@ type ConnectorCard =
                         | _ -> writer |> asList "potentialAction" (fun _ -> self.PotentialActions |> List.fold writeJson writer))
 
     /// Converts the connector card to a JSON string
+    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
     member self.AsJson() =
         let sb = System.Text.StringBuilder()
         let sw = new System.IO.StringWriter(sb)
@@ -295,6 +315,7 @@ type ConnectorCard =
         sb.ToString ()
 
 /// Default values for a Section in a ConnectorCard (everything is empty here)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let SectionDefaults = 
     {
         Title = None
@@ -310,6 +331,7 @@ let SectionDefaults =
     }
 
 /// Default values for a ConnectorCard (everything is empty here)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ConnectorCardDefaults = 
     {
         Summary = None
@@ -344,6 +366,7 @@ let private validateParams webhookURL (card : ConnectorCard) =
 /// ## Parameters
 ///  - `webhookURL` - The Office 365 webhook connector URL
 ///  - `setParams` - Function used to override the default notification parameters
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Office365Notification (webhookURL : string) (setParams: ConnectorCard -> ConnectorCard) =
     let sendNotification (card: ConnectorCard) =
         use client = (new WebClient())

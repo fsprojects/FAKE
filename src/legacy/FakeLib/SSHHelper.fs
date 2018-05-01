@@ -1,9 +1,11 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Conatins a task which allows to perform SSH operations
 module Fake.SSHHelper
 
 /// The SSH parameter type.
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type SSHParams = 
     { /// Path of the scp.exe 
       ToolPath : string
@@ -17,6 +19,7 @@ type SSHParams =
 
 
 /// The SSH default parameters
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let SSHDefaults : SSHParams = 
     { ToolPath = if isMono then "ssh" else "ssh.exe"
       RemoteUser = "fake"
@@ -34,6 +37,7 @@ let SSHDefaults : SSHParams =
 /// ## Sample
 ///
 ///     SSH (fun p -> { p with ToolPath = "tools/ssh.exe" }) command
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let SSH setParams command = 
     let (p : SSHParams) = setParams SSHDefaults
     let target =

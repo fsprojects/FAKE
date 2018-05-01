@@ -1,4 +1,5 @@
 ﻿/// Contains functions for working with Sysinternals PsExec
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.PsExecHelper
 
 let private formatArgs host username password exe inputs =
@@ -13,6 +14,7 @@ let private formatArgs host username password exe inputs =
 /// - `exe` - The path to the file that is to be executed.
 /// - `inputs` - The command-line arguments to pass to the remote process.
 /// - `timeOut` - The timeout for PsExec.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let execRemote host username password exe inputs timeout = 
     let args = formatArgs host username password exe inputs 
     let exitCode =

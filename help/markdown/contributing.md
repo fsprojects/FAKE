@@ -108,6 +108,11 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 * Read the API-Design-Guidelines below.
 
+## "Testing" Documentation locally
+
+* `fake build target GenerateDocs` to build everything including the documentation or `fake build -s target GenerateDocs` to only build the docs (assumes binaries are already build and not modified)
+* `fake build target HostDocs` spins up a webserver for the documentation folder and opens the browser.
+
 ## API-Design
 
 We [learned from our mistakes](fake-fake5-learn-more.html), so we use the following guidelines, **please read them very carefully** (ask if you don't understand any rule):

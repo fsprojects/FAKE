@@ -3,6 +3,7 @@
 /// To install GitVersion.exe on Windows, start PowerShell as Administrator and run choco install gitversion.portable -s https://chocolatey.org/api/v2"
 /// For Mac and Unix, install the NuGet version.
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.GitVersionHelper
 
 open FSharp.Data
@@ -10,14 +11,17 @@ open Newtonsoft.Json
 open System
 
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type GitversionParams = {
     ToolPath : string
 }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let GitversionDefaults = {
     ToolPath = findToolInSubPath "GitVersion.exe" (environVarOrDefault "ChocolateyInstall" currentDirectory)
 }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type GitVersionProperties = {
                                 Major : int;
                                 Minor : int;
@@ -54,6 +58,7 @@ type GitVersionProperties = {
 ///
 ///      GitVersion id // Use Defaults
 ///      GitVersion (fun p -> { p with ToolPath = currentDirectory @@ "tools" }
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let GitVersion (setParams : GitversionParams -> GitversionParams) =
     let parameters = GitversionDefaults |> setParams
     let timespan =  TimeSpan.FromMinutes 1.

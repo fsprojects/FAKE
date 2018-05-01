@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Contains a task to sign assemblies using the [SignTool](http://msdn.microsoft.com/en-us/library/windows/desktop/aa387764(v=vs.85).aspx).
 ///
 /// ## Certificates
@@ -12,6 +13,7 @@ open System
 open System.IO
 
 /// Represents a certificate file and an optional password
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type SignCert = {
     /// The certificate files
     CertFile : string
@@ -21,6 +23,7 @@ type SignCert = {
 
 /// Parameters used for signing.
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type SignParams = {
     /// The dev certificate that will be used when the real certificate can not be found
     DevCertificate : SignCert
@@ -32,6 +35,7 @@ type SignParams = {
 
 /// Signs assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
     use __ = traceStartTaskUsing "SignTool" "Trying to sign the specified assemblies"
   
@@ -64,6 +68,7 @@ let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<strin
 
 /// Appends a SHA 256 signature to assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
     use __ = traceStartTaskUsing "SignTool" "Trying to dual sign the specified assemblies"
       
@@ -95,7 +100,7 @@ let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign 
                 info.Arguments <- withFileToSign) System.TimeSpan.MaxValue
         if result <> 0 then failwithf "Error during sign call ")
 
-[<Obsolete>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Signs all files in filesToSign with the certification file certFile, 
 /// protected with the password in the file passFile. 
 /// The signtool will be search in the toolPath.

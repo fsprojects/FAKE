@@ -86,7 +86,7 @@ In addition to artifacts, TeamCity also allow to report test results that will b
 visible in the dashboard directly from the build.
 
 Each test runner has a specific function to send it's result that can be found in the
-[TeamCityHelper API](apidocs/fake-teamcityhelper.html) like here for NUnit :
+[TeamCityHelper API](apidocs/v5/legacy/fake-teamcityhelper.html) like here for NUnit :
 
 ```fsharp
 Target "Tests" (fun () ->
@@ -105,4 +105,4 @@ Target "Tests" (fun () ->
 
 *Note:* NUnit version 3 is a special case as it directly support TeamCity and it's
 enough to set `TeamCity = (BuildServer = TeamCity)` in
-[it's configuration](apidocs/fake-testing-nunit3-nunit3params.html).
+[it's configuration](apidocs/v5/legacy/fake-testing-nunit3-nunit3params.html).

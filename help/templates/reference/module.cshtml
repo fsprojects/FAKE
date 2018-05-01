@@ -2,6 +2,8 @@
 @{
   Layout = "apidocstemplate";
   Title = Model.Module.Name + " - " + Properties["project-name"];
+  ViewBag.UrlName = Model.Module.UrlName;
+  ViewBag.AssemblyName = Model.Module.Assembly.Name;
 }
 
 @{

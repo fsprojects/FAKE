@@ -28,6 +28,7 @@ nuget Fake.DotNet.Testing.NUnit prerelease
 nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
+nuget Suave
 nuget Octokit //"
 #endif
 
@@ -60,7 +61,7 @@ open System.Reflection
 //let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
 //Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 //#endif
-
+#load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
 open System.IO
 open Fake.Api
 open Fake.Core
@@ -181,17 +182,9 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
 Target.create "Clean" (fun _ ->
     !! "src/*/*/bin"
     //++ "src/*/*/obj"
-    #if BOOTSTRAP
     |> Shell.cleanDirs
-    #else
-    |> Shell.CleanDirs
-    #endif
 
-    #if BOOTSTRAP
     Shell.cleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
-    #else
-    Shell.CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDncDir; nugetLegacyDir; reportDir]
-    #endif
 
     // Clean Data for tests
     cleanForTests()
@@ -302,7 +295,8 @@ let dotnetAssemblyInfos =
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
-      "Fake.Documentation.DocFx", "Documentation with DocFx" ]
+      "Fake.Documentation.DocFx", "Documentation with DocFx"
+      "Fake.Installer.InnoSetup", "Creating installers with InnoSetup" ]
 
 let assemblyInfos =
   [ legacyDir </> "FAKE/AssemblyInfo.fs",
@@ -363,17 +357,13 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
         ()
 )
 
-Target.create "BuildSolution_" (fun _ ->
+Target.create "_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
     |> Trace.logItems "AppBuild-Output: "
 )
 
 Target.create "GenerateDocs" (fun _ ->
-    #if BOOTSTRAP
     Shell.cleanDir docsDir
-    #else
-    Shell.CleanDir docsDir
-    #endif
     let source = "./help"
     let docsTemplate = "docpage.cshtml"
     let indexTemplate = "indexpage.cshtml"
@@ -388,36 +378,36 @@ Target.create "GenerateDocs" (fun _ ->
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
         "project-name", "FAKE - F# Make" ]
-    let layoutroots = [ "./help/templates"; "./help/templates/reference" ]
 
-    #if BOOTSTRAP
+    let layoutRoots = [ "./help/templates"; "./help/templates/reference"]
+    let fake5LayoutRoots = "./help/templates/fake5" :: layoutRoots
+    let legacyLayoutRoots = "./help/templates/legacy" :: layoutRoots
+    let fake4LayoutRoots = "./help/templates/fake4" :: layoutRoots
+
     Shell.copyDir (docsDir) "help/content" FileFilter.allFiles
-    #else
-    Shell.CopyDir (docsDir) "help/content" FileFilter.allFiles
-    #endif
+    // to skip circleci builds
+    let docsCircleCi = docsDir + "/.circleci"
+    Directory.ensure docsCircleCi
+    Shell.copyDir docsCircleCi ".circleci" FileFilter.allFiles
     File.writeString false "./docs/.nojekyll" ""
     File.writeString false "./docs/CNAME" "fake.build"
     //CopyDir (docsDir @@ "pics") "help/pics" FileFilter.allFiles
 
-    #if BOOTSTRAP
     Shell.copy (source @@ "markdown") ["RELEASE_NOTES.md"]
-    #else
-    Shell.Copy (source @@ "markdown") ["RELEASE_NOTES.md"]
-    #endif
     FSFormatting.createDocs (fun s ->
         { s with
             Source = source @@ "markdown"
             OutputDirectory = docsDir
             Template = docsTemplate
             ProjectParameters = ("CurrentPage", "Modules") :: projInfo
-            LayoutRoots = layoutroots })
+            LayoutRoots = layoutRoots })
     FSFormatting.createDocs (fun s ->
         { s with
             Source = source @@ "redirects"
             OutputDirectory = docsDir
             Template = docsTemplate
             ProjectParameters = ("CurrentPage", "FAKE-4") :: projInfo
-            LayoutRoots = layoutroots })
+            LayoutRoots = layoutRoots })
     FSFormatting.createDocs (fun s ->
         { s with
             Source = source @@ "startpage"
@@ -425,9 +415,57 @@ Target.create "GenerateDocs" (fun _ ->
             Template = indexTemplate
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("CurrentPage", "Home") :: projInfo
-            LayoutRoots = layoutroots })
+            LayoutRoots = layoutRoots })
 
-    let dllFiles =
+    Directory.ensure apidocsDir
+
+    // FAKE 5 module documentation
+    let fake5ApidocsDir = apidocsDir @@ "v5"
+    Directory.ensure fake5ApidocsDir
+    let fake5Dlls =
+          !! "./src/app/Fake.*/bin/Release/**/Fake.*.dll"
+          |> Seq.distinctBy Path.GetFileName
+    fake5Dlls
+    |> FSFormatting.createDocsForDlls (fun s ->
+        { s with
+            OutputDirectory = fake5ApidocsDir
+            LayoutRoots =  fake5LayoutRoots
+            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+            ProjectParameters = ("api-docs-prefix", "/apidocs/v5/") :: ("CurrentPage", "APIReference") :: projInfo
+            SourceRepository = githubLink + "/blob/master" })
+
+    // Compat urls
+    let redirectPage newPage =
+        sprintf """
+<html>
+	<head>
+		<title>Redirecting</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+    <body>
+        <p><a href="%s">This page has moved here...</a></p>
+        <script type="text/javascript">
+            var url = "%s";
+            window.location.replace(url);
+        </script>
+    </body>
+</html>"""  newPage newPage
+
+    !! (fake5ApidocsDir + "/*.html")
+    |> Seq.iter (fun v5File ->
+        // ./docs/apidocs/v5/blub.html
+        let name = Path.GetFileName v5File
+        let v4Name = Path.GetDirectoryName (Path.GetDirectoryName v5File) @@ name
+        // ./docs/apidocs/blub.html
+        let link = sprintf "/apidocs/v5/%s" name
+        File.WriteAllText(v4Name, redirectPage link)
+    )
+
+    // FAKE 5 legacy documentation
+    let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
+    Directory.ensure fake5LegacyApidocsDir
+    let fake5LegacyDlls =
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
@@ -436,26 +474,80 @@ Target.create "GenerateDocs" (fun _ ->
           -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
+        |> Seq.distinctBy Path.GetFileName
 
-    Directory.ensure apidocsDir
-    dllFiles
+    fake5LegacyDlls
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
-            OutputDirectory = apidocsDir
-            LayoutRoots = layoutroots
+            OutputDirectory = fake5LegacyApidocsDir
+            LayoutRoots = legacyLayoutRoots
             LibDirs = [ "./build" ]
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("CurrentPage", "APIReference") :: projInfo
+            ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
 
+    // FAKE 4 legacy documentation
+    let fake4LegacyApidocsDir = apidocsDir @@ "v4"
+    Directory.ensure fake4LegacyApidocsDir
+    let fake4LegacyDlls =
+        !! "./packages/docs/FAKE/tools/Fake.*.dll"
+          ++ "./packages/docs/FAKE/tools/FakeLib.dll"
+          -- "./packages/docs/FAKE/tools/Fake.Experimental.dll"
+          -- "./packages/docs/FAKE/tools/FSharp.Compiler.Service.dll"
+          -- "./packages/docs/FAKE/tools/FAKE.FSharp.Compiler.Service.dll"
+          -- "./packages/docs/FAKE/tools/Fake.IIS.dll"
+          -- "./packages/docs/FAKE/tools/Fake.Deploy.Lib.dll"
+        |> Seq.distinctBy Path.GetFileName
+
+    fake4LegacyDlls
+    |> FSFormatting.createDocsForDlls (fun s ->
+        { s with
+            OutputDirectory = fake4LegacyApidocsDir
+            LayoutRoots = fake4LayoutRoots
+            LibDirs = [ "./packages/docs/FAKE/tools" ]
+            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+            ProjectParameters = ("api-docs-prefix", "/apidocs/v4/") ::("CurrentPage", "APIReference") :: projInfo
+            SourceRepository = githubLink + "/blob/hotfix_fake4" })
 )
 
+#if DOTNETCORE
+let startWebServer () =
+    let rec findPort port =
+        let portIsTaken = false
+            //if Environment.isMono then false else
+            //System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners()
+            //|> Seq.exists (fun x -> x.Port = port)
+
+        if portIsTaken then findPort (port + 1) else port
+
+    let port = findPort 8083
+    let serverConfig = 
+        { Suave.Web.defaultConfig with
+           homeFolder = Some (Path.GetFullPath docsDir)
+           bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ]
+        }
+    let (>=>) = Suave.Operators.(>=>)    
+    let app =
+      Suave.WebPart.choose [
+        //Filters.path "/websocket" >=> handShake socketHandler
+        Suave.Writers.setHeader "Cache-Control" "no-cache, no-store, must-revalidate"
+        >=> Suave.Writers.setHeader "Pragma" "no-cache"
+        >=> Suave.Writers.setHeader "Expires" "0"
+        >=> Suave.Files.browseHome ]
+    Suave.Web.startWebServerAsync serverConfig app |> snd |> Async.Start
+    let psi = System.Diagnostics.ProcessStartInfo(sprintf "http://localhost:%d/index.html" port)
+    psi.UseShellExecute <- true
+    System.Diagnostics.Process.Start (psi) |> ignore
+
+Target.create "HostDocs" (fun _ -> 
+    startWebServer()
+    Trace.traceImportant "Press any key to stop."
+    System.Console.ReadKey() |> ignore
+)
+#endif
+
 Target.create "CopyLicense" (fun _ ->
-    #if BOOTSTRAP
     Shell.copyTo buildDir additionalFiles
-    #else
-    Shell.CopyTo buildDir additionalFiles
-    #endif
 )
 
 Target.create "Test" (fun _ ->
@@ -634,22 +726,14 @@ Target.create "ILRepack" (fun _ ->
 
         if result <> 0 then failwithf "Error during ILRepack execution."
 
-        #if BOOTSTRAP
         Shell.copyFile (buildDir </> filename) targetFile
-        #else
-        Shell.CopyFile (buildDir </> filename) targetFile
-        #endif
 
     internalizeIn "FAKE.exe"
 
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter File.delete
 
-    #if BOOTSTRAP
     Shell.deleteDir buildMergedDir
-    #else
-    Shell.DeleteDir buildMergedDir
-    #endif
 )
 
 Target.create "CreateNuGet" (fun _ ->
@@ -675,17 +759,10 @@ Target.create "CreateNuGet" (fun _ ->
         let nugetLibDir = nugetLegacyDir @@ "lib"
         let nugetLib451Dir = nugetLibDir @@ "net451"
 
-        #if BOOTSTRAP
         Shell.cleanDir nugetDocsDir
         Shell.cleanDir nugetToolsDir
         Shell.cleanDir nugetLibDir
         Shell.deleteDir nugetLibDir
-        #else
-        Shell.CleanDir nugetDocsDir
-        Shell.CleanDir nugetToolsDir
-        Shell.CleanDir nugetLibDir
-        Shell.DeleteDir nugetLibDir
-        #endif
 
         File.delete "./build/FAKE.Gallio/Gallio.dll"
 
@@ -694,7 +771,6 @@ Target.create "CreateNuGet" (fun _ ->
           //|> Seq.iter DeleteFile
           ()
 
-        #if BOOTSTRAP
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Shell.copy nugetToolsDir
@@ -717,30 +793,6 @@ Target.create "CreateNuGet" (fun _ ->
             Shell.copyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
             Shell.copyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
-        #else
-        match package with
-        | p when p = projectName ->
-            !! (buildDir @@ "**/*.*") |> Shell.Copy nugetToolsDir
-            Shell.CopyDir nugetDocsDir docsDir FileFilter.allFiles
-            deleteFCS nugetToolsDir
-        | p when p = "FAKE.Core" ->
-            !! (buildDir @@ "*.*") |> Shell.Copy nugetToolsDir
-            Shell.CopyDir nugetDocsDir docsDir FileFilter.allFiles
-            deleteFCS nugetToolsDir
-        | p when p = "FAKE.Lib" ->
-            Shell.CleanDir nugetLib451Dir
-            {
-                Globbing.BaseDirectory = buildDir
-                Globbing.Includes = [ "FakeLib.dll"; "FakeLib.XML" ]
-                Globbing.Excludes = []
-            }
-            |> Shell.Copy nugetLib451Dir
-            deleteFCS nugetLib451Dir
-        | _ ->
-            Shell.CopyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
-            Shell.CopyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
-        #endif
 
         let setParams (p:NuGet.NuGet.NuGetParams) =
             {p with
@@ -772,12 +824,62 @@ let runtimes =
 module CircleCi =
     let isCircleCi = Environment.environVarAsBool "CIRCLECI"
 
-Target.create "DotNetPackage_" (fun _ ->
+
+// Create target for each runtime
+let info = lazy DotNet.info dtntSmpl
+runtimes
+|> List.map Some
+|> (fun rs -> None :: rs)
+|> Seq.iter (fun runtime ->
+    let runtimeName, runtime =
+        match runtime with
+        | Some r -> r, lazy r
+        | None -> "current", lazy info.Value.RID
+    let targetName = sprintf "_DotNetPublish_%s" runtimeName
+    Target.create targetName (fun _ ->
+        !! (appDir </> "Fake.netcore/Fake.netcore.fsproj")
+        |> Seq.iter(fun proj ->
+            let nugetDir = System.IO.Path.GetFullPath nugetDncDir
+            let projName = Path.GetFileName(Path.GetDirectoryName proj)
+
+            //DotNetRestore (fun c -> {c with Runtime = Some runtime}) proj
+            let outDir = nugetDir @@ projName @@ runtimeName
+            DotNet.publish (fun c ->
+                { c with
+                    Runtime = Some runtime.Value
+                    Configuration = DotNet.Release
+                    OutputPath = Some outDir
+                } |> dtntSmpl) proj
+            let source = outDir </> "dotnet"
+            if File.Exists source then
+                failwithf "Workaround no longer required?" //TODO: If this is not triggered delete this block
+                Trace.traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
+                let target = outDir </> "fake"
+                if File.Exists target then File.Delete target
+                File.Move(source, target)
+        )
+    )
+)
+
+Target.create "_DotNetPublish_portable" (fun _ ->
+    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
+    
+    // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
+    let netcoreFsproj = appDir </> "Fake.netcore/Fake.netcore.fsproj"
+    let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
+    DotNet.publish (fun c ->
+        { c with
+            Framework = Some "netcoreapp2.0"
+            OutputPath = Some outDir
+        } |> dtntSmpl) netcoreFsproj
+)
+
+Target.create "_DotNetPackage" (fun _ ->
+    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
     // This line actually ensures we get the correct version checked in
     // instead of the one previously bundled with 'fake`
     Git.CommandHelper.gitCommand "" "checkout .paket/Paket.Restore.targets"
 
-    let nugetDir = System.IO.Path.GetFullPath nugetDncDir
 
     //Environment.setEnvironVar "IncludeSource" "true"
     //Environment.setEnvironVar "IncludeSymbols" "false"
@@ -803,48 +905,6 @@ Target.create "DotNetPackage_" (fun _ ->
                     { c.Common with CustomParams = Some "/m:1" }
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
-
-    let info = DotNet.info dtntSmpl
-
-    // dotnet publish
-    runtimes
-    |> List.map Some
-    |> (fun rs -> None :: rs)
-    |> Seq.iter (fun runtime ->
-        !! (appDir </> "Fake.netcore/Fake.netcore.fsproj")
-        |> Seq.iter(fun proj ->
-            let projName = Path.GetFileName(Path.GetDirectoryName proj)
-            let runtimeName, runtime =
-                match runtime with
-                | Some r -> r, r
-                | None -> "current", info.RID
-
-            //DotNetRestore (fun c -> {c with Runtime = Some runtime}) proj
-            let outDir = nugetDir @@ projName @@ runtimeName
-            DotNet.publish (fun c ->
-                { c with
-                    Runtime = Some runtime
-                    Configuration = DotNet.Release
-                    OutputPath = Some outDir
-                } |> dtntSmpl) proj
-            let source = outDir </> "dotnet"
-            if File.Exists source then
-                failwithf "Workaround no longer required?" //TODO: If this is not triggered delete this block
-                Trace.traceFAKE "Workaround https://github.com/dotnet/cli/issues/6465"
-                let target = outDir </> "fake"
-                if File.Exists target then File.Delete target
-                File.Move(source, target)
-        )
-    )
-
-    // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
-    let netcoreFsproj = appDir </> "Fake.netcore/Fake.netcore.fsproj"
-    let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
-    DotNet.publish (fun c ->
-        { c with
-            Framework = Some "netcoreapp2.0"
-            OutputPath = Some outDir
-        } |> dtntSmpl) netcoreFsproj
 )
 
 Target.create "DotNetCoreCreateZipPackages" (fun _ ->
@@ -1007,22 +1067,13 @@ Target.create "PublishNuget" (fun _ ->
 )
 
 Target.create "ReleaseDocs" (fun _ ->
-    #if BOOTSTRAP
     Shell.cleanDir "gh-pages"
-    #else
-    Shell.CleanDir "gh-pages"
-    #endif
     let url = Environment.environVarOrDefault "fake_git_url" "https://github.com/fsharp/FAKE.git"
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
     Git.Repository.fullclean "gh-pages"
-    #if BOOTSTRAP
     Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
     Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
-    #else
-    Shell.CopyRecursive "docs" "gh-pages" true |> printfn "%A"
-    Shell.CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
-    #endif
     Git.Staging.stageAll "gh-pages"
     Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
     Git.Branches.push "gh-pages"
@@ -1082,6 +1133,7 @@ Target.create "BuildSolution" ignore
 Target.create "DotNetPackage" ignore
 Target.create "AfterBuild" ignore
 Target.create "FullDotNetCore" ignore
+Target.create "DotNetPublish" ignore
 
 open Fake.Core.TargetOperators
 
@@ -1090,36 +1142,61 @@ open Fake.Core.TargetOperators
 "WorkaroundPaketNuspecBug"
     ==> "Clean"
 "WorkaroundPaketNuspecBug"
-    ==> "DotNetPackage_"
+    ==> "_DotNetPackage"
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
     ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
-    ==> "DotNetPackage_"
+    ==> "_DotNetPackage"
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
 "StartDnc"
-    ==> "DotNetPackage_"
+    ==> "_DotNetPackage"
 "DownloadPaket"
-    ==> "DotNetPackage_"
-"DotNetPackage_"
+    ==> "_DotNetPackage"
+"_DotNetPackage"
     ==> "DotNetPackage"
+
+for runtime in "current" :: "portable" :: runtimes do
+    let rawTargetName = sprintf "_DotNetPublish_%s" runtime
+    let targetName = sprintf "DotNetPublish_%s" runtime
+    Target.create targetName ignore
+    "SetAssemblyInfo"
+        ==> rawTargetName
+        ?=> "UnskipAndRevertAssemblyInfo"
+        ==> targetName
+        |> ignore
+    rawTargetName
+        ==> targetName
+        |> ignore
+    "StartDnc"
+        ==> targetName
+        |> ignore
+    "DownloadPaket"
+        ==> targetName
+        |> ignore
+    targetName
+        ==> "DotNetPublish"
+        |> ignore
+ 
 // Full framework build
 "Clean"
     ?=> "RenameFSharpCompilerService"
     ?=> "SetAssemblyInfo"
-    ==> "BuildSolution_"
+    ==> "_BuildSolution"
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "BuildSolution"
 "RenameFSharpCompilerService"
-    ==> "BuildSolution_"
-"BuildSolution_"
+    ==> "_BuildSolution"
+"_BuildSolution"
     ==> "BuildSolution"
 // AfterBuild -> Both Builds completed
 "BuildSolution"
     ==> "AfterBuild"
 "DotNetPackage"
+    ==> "AfterBuild"
+"DotNetPublish"
     ==> "AfterBuild"
 
 // Create artifacts when build is finished

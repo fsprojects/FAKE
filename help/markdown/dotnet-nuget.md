@@ -15,7 +15,7 @@ You can download the "NuGet.exe Command Line Tool" from the [release page](https
 Modify your build script and add **RestorePackages()** near the beginning of the script.
 This will use the default parameters to retrieve all NuGet packages specified in *"./\*\*/packages.config"* files.
 
-If you need to use different parameters please use the [RestorePackage](apidocs/fake-restorepackagehelper.html) task directly.
+If you need to use different parameters please use the [RestorePackage](apidocs/v5/legacy/fake-restorepackagehelper.html) task directly.
 
 ## Download latest version of FAKE via NuGet
 
@@ -81,7 +81,7 @@ Placeholder | replaced by (`NuGetParams` record field)
 
 ## Setting up the build script
 
-In the build script you need to create a target which executes the [NuGet task](apidocs/fake-nugethelper.html):
+In the build script you need to create a target which executes the [NuGet task](apidocs/v5/legacy/fake-nugethelper.html):
 
 ```fsharp
 Target "CreatePackage" (fun _ ->

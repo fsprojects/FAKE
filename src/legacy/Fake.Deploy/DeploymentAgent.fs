@@ -1,4 +1,5 @@
-﻿module Fake.DeploymentAgent
+﻿[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+module Fake.DeploymentAgent
 
 open System.IO
 open Fake
@@ -8,11 +9,13 @@ open Nancy
 open Nancy.Hosting.Self
 open Nancy.Security
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getBodyFromNancyRequest (ctx : Nancy.Request) = 
     use ms = new MemoryStream()
     ctx.Body.CopyTo ms
     ms.ToArray()
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getScriptArgumentsFromNancyRequest (ctx : Nancy.Request) : string [] =
     let args = 
         ctx.Headers 
@@ -28,6 +31,7 @@ let getScriptArgumentsFromNancyRequest (ctx : Nancy.Request) : string [] =
     | _ -> args |> Seq.collect id |> Seq.map fromHeaderValue |> Seq.collect id |> Array.ofSeq
     
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let  runDeployment workDir (ctx : Nancy.Request) = 
     let packageBytes = getBodyFromNancyRequest ctx
     let package, scriptFile = unpack workDir false packageBytes
@@ -47,12 +51,15 @@ let  runDeployment workDir (ctx : Nancy.Request) =
     response |> Json.serialize
 
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let createNancyHost uri =
     let config = HostConfiguration()
     config.UrlReservations.CreateAutomatically <- true
     new NancyHost(config, uri)
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let mutable workDir = AppConfig.WorkDirectory
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 
 type DeployAgentModule() as http =
     inherit FakeModule("/fake")

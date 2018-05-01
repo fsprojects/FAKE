@@ -103,12 +103,10 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     // see https://github.com/fsharp/FSharp.Compiler.Service/issues/799
     let options =
-        [co.AdditionalArguments; [ "--fullpaths"; "--simpleresolution"; "--targetprofile:netstandard"; "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
-        |> List.concat
-        |> FsiOptions.ofArgs
-        |> fun f ->
-            { f with
-                References = f.References @ co.CompileReferences }
+        { co.FsiOptions with
+            FullPaths = true
+            ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "-o" :: wishPath :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
+        }
     let args =
         options.AsArgs |> Seq.toList
         |> List.filter (fun arg -> arg <> "--")

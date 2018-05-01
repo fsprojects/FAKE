@@ -31,7 +31,7 @@ There are no special requirements, you can add dependencies to your NuGet packag
 > netcore. We suggest targetting `netstandard20` or lower.
 > as we update to newer netcore versions from time to time you should re-check and open a PR to change this text if it is outdated. (Just edit [here](https://github.com/fsharp/FAKE/blob/master/help/markdown/fake-fake5-custom-modules.md) with the pencil)
 
-If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference the corresponding NuGet package and [explore the FAKE namespace](apidocs/index.html).
+If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference the corresponding NuGet package and [explore the FAKE namespace](apidocs/v5/index.html).
 
 ## Using the custom task
 

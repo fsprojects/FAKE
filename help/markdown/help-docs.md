@@ -60,4 +60,4 @@ Here is the old sidebar:
 * [Fake.Deploy](deploy.html)
 * [Fake.IIS](iis.html)
 
-* [API Reference](apidocs/index.html)
+* [API Reference](apidocs/v5/index.html)

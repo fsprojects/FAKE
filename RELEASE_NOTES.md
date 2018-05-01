@@ -1,5 +1,19 @@
 # Release Notes
 
+## 5.0.0-rc009 - 2018-05-01
+
+* FAKE5: New module `Fake.Installer.InnoSetu` - https://github.com/fsharp/FAKE/pull/1890
+* DOCS: Order module-namespaces alphabetically - https://github.com/fsharp/FAKE/pull/1891
+* BUGFIX: Make sure ReportGenerator is run with mono on unix - https://github.com/fsharp/FAKE/pull/1894
+* DOCS: Make sure API docs for new modules and FAKE 4 is available - https://github.com/fsharp/FAKE/pull/1893
+* PERFORMANCE: A lot of shortcuts have been added to improve the speed of some common use-cases - https://github.com/fsharp/FAKE/pull/1891
+* BUGFIX: `tryFindFileOnPath` not working properly on windows - https://github.com/fsharp/FAKE/issues/1899
+* BREAKING: Change --environmentvariable to --environment-variable and --singletarget to --single-target - https://github.com/fsharp/FAKE/issues/1896
+* BREAKING: Targets with arguments are not opt-in to make the command line parser fail on spurious inputs by default - https://github.com/fsharp/FAKE/issues/1896
+  See https://fake.build/core-targets.html#Targets-with-arguments for details, basically you need to use `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault` to opt-in.
+* DOCS: Fix missing modules on documentation page - https://github.com/fsharp/FAKE/issues/1895
+* DOCS: Documentation can now be hosted locally via `fake build target HostDocs` (after it has been built) - https://github.com/fsharp/FAKE/pull/1891
+
 ## 5.0.0-rc008 - 2018-04-26
 
 * FAKE4: Bundle System.ValueTuple to prevent some issues - https://github.com/fsharp/FAKE/pull/1883
@@ -10,14 +24,12 @@
 * FAKE5: New module `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/1887
 * BUGFIX: Some fixes in TeamFoundation integration - https://github.com/fsharp/FAKE/pull/1883
 
-
 ## 5.0.0-rc007 - 2018-04-23
 
 * DOCS: Update documentation issues - https://github.com/fsharp/FAKE/pull/1881
 * BUGFIX: Improve error message when groups doesn't exist - https://github.com/fsharp/FAKE/issues/1874
 * BUGFIX: Improve error message when file doesn't exist (`Process.start`) - https://github.com/fsharp/FAKE/issues/1875
 * ENHANCEMENT: Make `Shell` module conform to API-guidelines. Mark existing functions as obsolete - https://github.com/fsharp/FAKE/pull/1882
-
 
 ## 5.0.0-rc006 - 2018-04-22
 
@@ -27,7 +39,6 @@
 * FAKE5: Add ChangeLog module to `Fake.Core.ReleaseNotes` - https://github.com/fsharp/FAKE/pull/1876
 * DOCS: Fix some documentation - https://github.com/fsharp/FAKE/pull/1877
 
-
 ## 5.0.0-rc005 - 2018-04-15
 
 * [DOCS] Improve NPM documentation - https://github.com/fsharp/FAKE/pull/1867
@@ -35,7 +46,6 @@
 * [FAKE 5] Add HockeyApp module 'Fake.Api.HockeyApp' - https://github.com/fsharp/FAKE/pull/1870
 * [BUGFIX] Properly handle '.' in file-names - https://github.com/fsharp/FAKE/issues/1865
 * Add some missing RequireQualifiedAccess Attributes - https://github.com/fsharp/FAKE/pull/1862
-
 
 ## 5.0.0-rc004 - 2018-04-09
 
@@ -1048,7 +1058,7 @@
 * Added ZipHelper.ZipOfIncludes - https://github.com/fsharp/FAKE/pull/686
 * Added AppVeyorEnvironment.RepoTag & .RepoTagName - https://github.com/fsharp/FAKE/pull/685
 * New tutorial about Azure Cloud Service - http://fsharp.github.io/FAKE/azurecloudservices.html
-* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/fake-azure-cloudservices.html
+* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/v5/fake-azure-cloudservices.html
 * Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
 
 ## 3.18.0 - 2015-03-04

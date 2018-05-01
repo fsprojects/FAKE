@@ -1,6 +1,7 @@
 /// Enables deployment tracking using Raygun.io
 ///
 /// Thin wrapper around [the Raygun HTTP deployment API](https://raygun.io/docs/deployments/api)
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.RaygunHelper
 
 open Fake
@@ -9,6 +10,7 @@ open Newtonsoft.Json
 open System.Net
 
 /// Data describing a deployment to Raygun
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type RaygunDeploymentData =
   {
     /// Application API key
@@ -45,6 +47,7 @@ type RaygunDeploymentData =
     }
 
 /// Connection configuration
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type RaygunConnectionSettings =
     {
       /// Endpoint to connect to
@@ -98,6 +101,7 @@ let private serialize data = JsonConvert.SerializeObject(data)
 ///
 /// * settings : Function that sets the raygun connection settings.
 /// * data : Function that sets the deployment data
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ReportDeployment (settings:RaygunConnectionSettings->RaygunConnectionSettings) (data:RaygunDeploymentData->RaygunDeploymentData) =
     use __ = traceStartTaskUsing "Raygun.io" "Report new deployment"
     let settings = defaultSettings |> settings

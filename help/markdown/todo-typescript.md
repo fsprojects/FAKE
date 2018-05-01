@@ -49,4 +49,4 @@ This small script will run all *.ts files through the TypeScript compiler and pu
 
 	document.body.innerHTML = greeter(user);
 
-If you need more details please see the [API docs for the TypeScript](apidocs/fake-typescript.html) task.
+If you need more details please see the [API docs for the TypeScript](apidocs/v5/legacy/fake-typescript.html) task.

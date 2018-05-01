@@ -4,7 +4,7 @@
 
 This article is an extension to the [getting started guide](gettingstarted.html). You will improve the same Calculator sample with a task for [FxCop](http://msdn2.microsoft.com/en-us/library/bb429476.aspx).
 
-If you need more details please see the [API docs for the FxCop](apidocs/fake-fxcophelper.html) task.
+If you need more details please see the [API docs for the FxCop](apidocs/v5/legacy/fake-fxcophelper.html) task.
 
 ## Setting up FxCop
 

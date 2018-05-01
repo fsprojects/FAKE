@@ -1,4 +1,5 @@
 ﻿/// Contains code to call the typescript compiler. There is also a [tutorial](../typescript.html) for this task available.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.TypeScript
 
 open System
@@ -6,17 +7,20 @@ open System.Text
 open System.IO
 
 /// Generated ECMAScript version
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ECMAScript =
     | ES3
     | ES5
 
 /// Generated JavaScript module type
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type ModuleGeneration = 
     | CommonJs
     | AMD
 
 /// TypeScript task parameter type
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type TypeScriptParams =
     { 
       /// Specifies which ECMAScript version the TypeScript compiler should generate. Default is ES3.
@@ -44,12 +48,14 @@ type TypeScriptParams =
 
 let private TypeScriptCompilerPrefix = "Microsoft SDKs" </> "TypeScript"
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let extractVersionNumber (di : DirectoryInfo) = 
     match Double.TryParse di.Name with
     | true, d -> d
     | false, _ -> 0.0
 
 /// Default parameters for the TypeScript task
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let TypeScriptDefaultParams = 
     { ECMAScript = ES3
       EmitComments = false
@@ -110,6 +116,7 @@ let private buildArguments parameters file =
 ///
 ///         !! "src/**/*.ts"
 ///             |> TypeScriptCompiler (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let TypeScriptCompiler setParams files = 
     use __ = traceStartTaskUsing "TypeScript" ""
     let parameters = setParams TypeScriptDefaultParams

@@ -2,7 +2,7 @@
 
 The `Fake.Net.Http` module provides a functionality to download files over HTTP.
 
-[API-Reference](apidocs/fake-net-http.html)
+[API-Reference](apidocs/v5/fake-net-http.html)
 
 ## Including the Fake.Net.Http dependency
 

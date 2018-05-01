@@ -1,4 +1,5 @@
 ﻿/// Provides an abstraction over Dynamics NAV object files.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.DynamicsNavFile
 
 open System
@@ -9,28 +10,35 @@ open System.Text.RegularExpressions
 open System.Threading
 
 /// A Regex which allows to retrieve the modified flag.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ModifiedRegex = new Regex(@"\s\s\s\sModified\=Yes;(?:\r\n|\r|\n)", RegexOptions.Compiled)
 
 /// A Regex which allows to retrieve the version list.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let VersionRegex = new Regex(@"\n\s\s\s\sVersion List\=(?<VersionList>[^;\s]*);", RegexOptions.Compiled)
 
 /// A Regex which allows to retrieve modified date.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compiled)
 
 /// A Regex which allows to retrieve the modified time.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
 /// A Regex which allows to parse objects in a Dynamics NAV file.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ObjectRegex = 
     new Regex(@"OBJECT (?<ObjectType>(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?<ObjectId>(\d+)) (?<ObjectName>([^\r\n]+))", 
               RegexOptions.Compiled)
 
 /// A Regex which allows to find objects in a Dynamics NAV file.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let ObjectSplitRegex = 
     new Regex(@"(?=OBJECT (?:(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?:(\d+)) (?:([^\r\n]+)))", 
               RegexOptions.Compiled)
 
 /// A type definition of a Dynamics NAV object.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type NavObject = 
     { Type : string
       Id : int
@@ -38,28 +46,35 @@ type NavObject =
       Source : string }
 
 /// A NAV culture-specific date format.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let NavObjectDateFormat = Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.Replace("yyyy", "yy")
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let replaceDateTimeInStringWithFormat (dateTime : DateTime) (dateFormat : string) text = 
     let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString(dateFormat)))
     TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
 
 /// Replaces the timestamp in a Dynamics NAV object.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let replaceDateTimeInString (dateTime : DateTime) text = 
     replaceDateTimeInStringWithFormat dateTime NavObjectDateFormat text
 
 /// Removes the modified flag from a Dynamics NAV object.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
 
 /// Returns the version tag list from Dynamics NAV object.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getVersionTagList text = 
     if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value
     else ""
 
 /// Splits a version tag list from Dynamics NAV object into single tags
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let splitVersionTags (tagList : string) = tagList.ToUpper().Split Colon
 
 /// Replaces a version tag in a version tag list from Dynamics NAV object
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let replaceInVersionTag (versionTag : string) (newVersion : string) (tagList : string) = 
     let versionTag = versionTag.ToUpper()
     if tagList.ToUpper().Contains versionTag then 
@@ -71,10 +86,12 @@ let replaceInVersionTag (versionTag : string) (newVersion : string) (tagList : s
     else tagList + Colon.ToString() + versionTag + newVersion
 
 /// Replaces a version tag list from a complete Dynamics NAV object with a new version tag list
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let replaceVersionTagList (text : string) (newTags : string) = 
     VersionRegex.Replace(text, String.Format("\n    Version List={0};", newTags))
 
 /// Replaces a version tag in a Dynamics NAV
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let replaceVersionTag versionTag (newVersion : string) sourceCode = 
     let tagList = getVersionTagList sourceCode
     tagList
@@ -82,6 +99,7 @@ let replaceVersionTag versionTag (newVersion : string) sourceCode =
     |> replaceVersionTagList sourceCode
 
 /// Get all missing required tags from a Dynamics NAV version tag list
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getMissingRequiredTags requiredTags versionTags = 
     requiredTags
     |> Seq.map (fun (rTag : string) -> rTag.ToUpper())
@@ -91,12 +109,14 @@ let getMissingRequiredTags requiredTags versionTags =
            |> not)
 
 /// Get all invalid tags from a Dynamics NAV version tag list
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getInvalidTags invalidTags versionTags = 
     invalidTags
     |> Seq.map (fun (iTag : string) -> iTag.ToUpper())
     |> Seq.filter (fun iTag -> versionTags |> Seq.exists (fun (tag : string) -> tag.StartsWith iTag))
 
 /// Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let checkTagsInObjectString requiredTags acceptPreTagged invalidTags objectString name = 
     try 
         let tagList = getVersionTagList objectString
@@ -117,11 +137,13 @@ let checkTagsInObjectString requiredTags acceptPreTagged invalidTags objectStrin
         failwithf "Error during VersionTag check in %s.\r\nError: %s" name s
 
 /// Checks a Dynamics NAV file for missing required and invalid tags and raises this as errors
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let checkTagsInFile requiredTags acceptPreTagged invalidTags fileName = 
     checkTagsInObjectString requiredTags acceptPreTagged invalidTags (ReadFileAsString fileName) fileName
 
 /// Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 /// It also changes the given tag, resets the modified flag and time stamp.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newVersion removeModified newDateTime 
     fileNames = 
     let errors = new System.Collections.Generic.List<string>()
@@ -149,6 +171,7 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
 
 /// Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 /// It also changes the given tag, resets the modified flag and time stamp.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let setVersionTags requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime 
     fileNames = 
     trace "Setting VersionTags."
@@ -160,6 +183,7 @@ let setVersionTags requiredTags acceptPreTagged invalidTags versionTag newVersio
         fileNames
 
 /// Splits an object string into multiple Dynamics NAV objects of type NavObject.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let objectsInObjectString text = 
     ObjectSplitRegex.Split(text)
     |> Seq.filter (fun x -> x.StartsWith("OBJECT "))
@@ -172,10 +196,12 @@ let objectsInObjectString text =
     |> List.ofSeq
 
 /// Returns a standardized filename based on the given NavObject.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let fileNameFromObject (navObject : NavObject, fileEnding : string) = 
     String.Format("{0}{1}.{2}", navObject.Type.Substring(0, 3).ToUpper(), navObject.Id, fileEnding)
 
 /// Splits the given files into individual object files in the specified destination directory.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let splitNavisionFiles fileNames destDir = 
     trace "Splitting files"
     for fileName in fileNames do
@@ -191,6 +217,7 @@ let splitNavisionFiles fileNames destDir =
             outputFile.Close()
 
 /// Gets the version number for the specified version tag in a Dynamics NAV version tag list
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getTagVersionInVersionTagList (versionTag : string) (tagList : string) =
     let versionTag = versionTag.ToUpper()
     if tagList.ToUpper().Contains versionTag then
@@ -201,11 +228,13 @@ let getTagVersionInVersionTagList (versionTag : string) (tagList : string) =
         ""
 
 /// Gets the version number for the specified version tag in a Dynamics NAV object
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getTagVersionInObject (versionTag : string) sourceCode =
     let tagList = getVersionTagList sourceCode
     getTagVersionInVersionTagList versionTag tagList
 
 /// Gets the highest version number for a specified version tag in a number of Dynamics NAV objects
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getHighestTagVersionInObjects (versionTag : string) sourceCode =
     objectsInObjectString sourceCode
     |> Seq.map (fun objectSourcecode -> getTagVersionInObject versionTag objectSourcecode.Source)
@@ -213,6 +242,7 @@ let getHighestTagVersionInObjects (versionTag : string) sourceCode =
     |> Seq.max
 
 /// Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let getHighestTagVersionInFiles (versionTag : string) fileNames =
     fileNames
     |> Seq.map (fun fileName -> File.ReadAllText(fileName))

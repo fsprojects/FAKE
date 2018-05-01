@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 /// Contains a task which can be used to run regasm .NET assembly
 module Fake.RegAsmHelper
 
@@ -6,11 +7,13 @@ open System
 open System.IO
 
 /// Path to newest `regasm.exe`
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let regAsmToolPath = !! (TargetPlatformPrefix + "/**/RegAsm.exe")  
                              |> getNewestTool
 
 /// RegAsm parameter type
 [<CLIMutable>]
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 type RegAsmParams = 
     { ToolPath : string
       WorkingDir : string
@@ -18,6 +21,7 @@ type RegAsmParams =
       ExportTypeLibrary : bool }
 
 /// RegAsm default params
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RegAsmDefaults = 
     { ToolPath = regAsmToolPath
       WorkingDir = "."
@@ -29,6 +33,7 @@ let RegAsmDefaults =
 /// 
 ///  - `setParams` - Function used to manipulate the default RegAsm parameters.
 ///  - `lib` - The assembly file name.
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let RegAsm setParams lib = 
     use __ = traceStartTaskUsing "RegAsm" lib
     let parameters = setParams RegAsmDefaults
@@ -46,6 +51,7 @@ let RegAsm setParams lib =
 ///
 /// Used to temporarily register any .net dependencies before running 
 /// a VB6 build
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let public RegisterAssembliesWithCodebase workingDir (assemblies:string seq) =
     use __ = traceStartTaskUsing "Regasm with codebase" "Registering assemblies with codebase, expect warnings"
     let registerAssemblyWithCodebase assembly =
@@ -69,6 +75,7 @@ let public RegisterAssembliesWithCodebase workingDir (assemblies:string seq) =
 ///
 /// Used to unregegister any temporarily registerd .net dependencies
 /// _after_ running a VB6 build
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 let public UnregisterAssemblies workingDir (assemblies:string seq) =
     use __ = traceStartTaskUsing "Regasm /unregister with codebase" "Registering assemblies with codebase, expect warnings"
     let registerAssemblyWithCodebase assembly =

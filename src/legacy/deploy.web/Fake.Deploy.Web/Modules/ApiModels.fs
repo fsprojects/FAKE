@@ -1,7 +1,8 @@
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 module Fake.Deploy.Web.Module.ApiModels
 open System
 
-
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 [<CLIMutable>]
 type RollbackRequest = {
     agentUrl : string
@@ -9,6 +10,7 @@ type RollbackRequest = {
     appName : string
 }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 [<CLIMutable>]
 type DeployResponse = {
     Agent : string
@@ -17,6 +19,7 @@ type DeployResponse = {
     Error : string
 }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 [<CLIMutable>]
 type TeamcityBuild = {
     Id : string
@@ -28,6 +31,7 @@ type TeamcityBuild = {
     Branch: string
 }
 
+[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
 [<CLIMutable>]
 type TeamcityArtifact = { 
     Name : string

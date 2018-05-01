@@ -1,6 +1,6 @@
 # Packaging and Deploying Azure WebJobs
 
-**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](apidocs/fake-azure-webjobs.html)**
+**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](apidocs/v5/fake-azure-webjobs.html)**
 
 FAKE can be used to zip the output directory of a project and push it to Azure via the [zip controller](https://github.com/projectkudu/kudu/wiki/REST-API#zip).
 
