@@ -8,11 +8,13 @@
 #r "paket:
 nuget Fake.Core.Target
 nuget Fake.IO.FileSystem
-nuget Fake.Tools.Pickles //"
+nuget Fake.Tools.Pickles
+nuget Pickles.CommandLine storage: packages
+//"
 
 open Fake.Core
-open Fake.Core.TargetOperators
 open Fake.IO.FileSystemOperators
+open Fake.IO.Globbing
 open Fake.Tools
 open System.IO
 
@@ -22,7 +24,8 @@ Target.create "BuildDoc" (fun _ ->
     Pickles.convert (fun p ->
         { p with FeatureDirectory = currentDirectory </> "Specs"
                  OutputDirectory = currentDirectory </> "SpecDocs"
-                 OutputFileFormat = Pickles.DocumentationFormat.DHTML })
+                 OutputFileFormat = Pickles.DocumentationFormat.DHTML
+                 ToolPath = Tools.findToolInSubPath "pickles.exe" "~/.fake/build.fsx/packages" })
 )
 
 Target.runOrDefault "BuildDoc"
