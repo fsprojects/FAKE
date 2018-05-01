@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.0.0-rc010 - 2018-05-01
+
+* BUGFIX: Some minor issues after last performance release - https://github.com/fsharp/FAKE/pull/1902
+
 ## 5.0.0-rc009 - 2018-05-01
 
 * FAKE5: New module `Fake.Installer.InnoSetu` - https://github.com/fsharp/FAKE/pull/1890
