@@ -579,7 +579,7 @@ let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string
       }
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
-  let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath newFsiOptions.Defines)
+  let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
   let config =
     { Runners.FakeConfig.VerboseLevel = logLevel
       Runners.FakeConfig.ScriptFilePath = scriptPath
