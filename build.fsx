@@ -510,6 +510,7 @@ Target.create "GenerateDocs" (fun _ ->
             SourceRepository = githubLink + "/blob/hotfix_fake4" })
 )
 
+#if DOTNETCORE
 let startWebServer () =
     let rec findPort port =
         let portIsTaken = false
@@ -539,11 +540,11 @@ let startWebServer () =
     System.Diagnostics.Process.Start (psi) |> ignore
 
 Target.create "HostDocs" (fun _ -> 
-
     startWebServer()
     Trace.traceImportant "Press any key to stop."
     System.Console.ReadKey() |> ignore
 )
+#endif
 
 Target.create "CopyLicense" (fun _ ->
     Shell.copyTo buildDir additionalFiles
