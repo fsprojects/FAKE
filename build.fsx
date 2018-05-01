@@ -558,12 +558,11 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
-            if Directory.Exists ".fake/testbuild.fsx/packages" then
-              Directory.Delete (".fake/testbuild.fsx/packages", true)
-            if File.Exists ".fake/testbuild.fsx/paket.depedencies.sha1" then
-              File.Delete ".fake/testbuild.fsx/paket.depedencies.sha1"
-            if File.Exists ".fake/testbuild.fsx/paket.lock" then
-              File.Delete ".fake/testbuild.fsx/paket.lock"
+            [ ".fake/testbuild.fsx/packages"
+              ".fake/testbuild.fsx/paket.depedencies.sha1"
+              ".fake/testbuild.fsx/paket.lock"
+              "testbuild.fsx.lock" ]
+            |> List.iter Shell.rm_rf
             // TODO: Clean a potentially cached dll as well.
 
         let executeTarget target =
