@@ -331,7 +331,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     let needLocalLock = lockFilePath.FullName.Contains (Path.GetFullPath cacheDir) // Only primary if not external already.
     let localLockText = lazy File.ReadAllText localLock
     if needLocalLock && File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
-      File.Copy(localLock, lockFilePath.FullName)
+      File.Copy(localLock, lockFilePath.FullName, true)
     if needLocalLock && not (File.Exists localLock) then
       File.Delete lockFilePath.FullName
     if not <| File.Exists lockFilePath.FullName then
@@ -346,7 +346,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         // We do a restore anyway.
         eprintfn "paket update has thrown an error: %O" e
         ()
-      if needLocalLock then File.Copy(lockFilePath.FullName, localLock)
+      if needLocalLock then File.Copy(lockFilePath.FullName, localLock, true)
     
     // TODO: Check if restore is up-to date and skip all paket calls (load assembly-list from a new cache)
     // Restore
@@ -394,7 +394,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
             item.Info.Location
             item.Info.FullName)
       |> fun lines -> File.WriteAllLines(assemblyCacheFile, lines)
-      File.Copy(lockFilePath.FullName, assemblyCacheHashFile)
+      File.Copy(lockFilePath.FullName, assemblyCacheHashFile, true)
       ()
       
   let getKnownAssemblies () =
@@ -515,7 +515,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
             sprintf "paket: %s, %s" p.DependenciesFile (match group with | Some g -> g | _ -> "<null>")
         | None -> "none"
         |> fun t -> File.WriteAllText(scriptSectionCacheFile, t)
-        File.Copy (script, scriptSectionHashFile)
+        File.Copy (script, scriptSectionHashFile, true)
         
     let readFromCache () =
         let t = File.ReadAllText(scriptSectionCacheFile).Trim()
