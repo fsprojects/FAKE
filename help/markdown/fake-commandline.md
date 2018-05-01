@@ -106,9 +106,9 @@ Usage:
 Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
-    -e, --environmentvariable <keyval> [*]
+    -e, --environment-variable <keyval> [*]
                           Set an environment variable. Use 'key=val'
-    -s, --singletarget    Run only the specified target.
+    -s, --single-target    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
 ```
 
