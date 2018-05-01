@@ -17,9 +17,9 @@ Usage:
 Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
-    -e, --environmentvariable <keyval> [*]
+    -e, --environment-variable <keyval> [*]
                           Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
-    -s, --singletarget    Run only the specified target.
+    -s, --single-target    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
@@ -579,7 +579,7 @@ module Target =
         match results with
         | Choice1Of2 results ->
             let envs =
-                match DocoptResult.tryGetArguments "--environmentvariable" results with
+                match DocoptResult.tryGetArguments "--environment-variable" results with
                 | Some args ->
                     args |> List.choose trySplitEnvArg
                 | None -> []
@@ -615,7 +615,7 @@ module Target =
                     | None ->
                         Environment.environVarOrDefault "parallel-jobs" "1" |> int
                 let singleTarget =
-                    match DocoptResult.hasFlag "--singletarget" results with
+                    match DocoptResult.hasFlag "--single-target" results with
                     | true -> true
                     | false -> Environment.hasEnvironVar "single-target"
                 let arguments =
