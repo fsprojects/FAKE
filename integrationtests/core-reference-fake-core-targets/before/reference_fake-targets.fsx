@@ -31,4 +31,4 @@ Target.create "TestTarget" (fun p ->
 
 printfn "before run targets"
 
-Target.runOrDefault "TestTarget"
+Target.runOrDefaultWithArguments "TestTarget"
