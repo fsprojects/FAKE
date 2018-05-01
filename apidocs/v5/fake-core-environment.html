@@ -1,0 +1,1055 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Environment - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                    <p>
+                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
+                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                        </strong>
+                                    </p>
+                                    <p>
+                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/Fake.Core.Environment" >Fake.Core.Environment</a> module.</strong>
+                                    </p>
+									<!-- Content -->
+                      <article>
+          			
+
+
+
+<a name="Environment" class="anchor" href="#Environment"><h1>Environment</h1></a>
+<div class="xmldoc">
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-environment-internal.html">Internal</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
+            clearEnvironVar(name)
+          </code>
+          <div class="tip" id="109">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L75-75" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Clears the environment variable with the given name for the current process.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
+            environVar(name)
+          </code>
+          <div class="tip" id="110">
+            <strong>Signature:</strong> name:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L53-53" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the environment variable with the given name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '111', 111)" onmouseover="showTip(event, '111', 111)">
+            environVarAsBool(varName)
+          </code>
+          <div class="tip" id="111">
+            <strong>Signature:</strong> varName:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L101-101" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the environment variable with the given name or returns the false if no value was set</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '112', 112)" onmouseover="showTip(event, '112', 112)">
+            environVarAsBoolOrDefault(...)
+          </code>
+          <div class="tip" id="112">
+            <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L94-94" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the environment variable with the given name or returns the default bool if no value was set</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '113', 113)" onmouseover="showTip(event, '113', 113)">
+            environVarOrDefault(name defaultValue)
+          </code>
+          <div class="tip" id="113">
+            <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L82-82" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
+            environVarOrFail(name)
+          </code>
+          <div class="tip" id="114">
+            <strong>Signature:</strong> name:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L88-88" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the environment variable with the given name or fails if not found</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
+            environVarOrNone(name)
+          </code>
+          <div class="tip" id="115">
+            <strong>Signature:</strong> name:string -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L104-104" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the environment variable or None</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
+            environVars()
+          </code>
+          <div class="tip" id="116">
+            <strong>Signature:</strong> unit -&gt; (string * string) list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L56-56" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves all environment variables from the given target</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
+            getBuildParam(name)
+          </code>
+          <div class="tip" id="117">
+            <strong>Signature:</strong> name:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L130-130" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
+            getBuildParamOrDefault(...)
+          </code>
+          <div class="tip" id="118">
+            <strong>Signature:</strong> name:string -&gt; defaultParam:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L124-124" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
+            getDefaultEncoding()
+          </code>
+          <div class="tip" id="119">
+            <strong>Signature:</strong> unit -&gt; Encoding<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L292-292" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
+            getNewestTool(possibleToolPaths)
+          </code>
+          <div class="tip" id="120">
+            <strong>Signature:</strong> possibleToolPaths:seq&lt;&#39;?8160&gt; -&gt; &#39;?8160<br />
+                          <strong>Type parameters:</strong> '?8160          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L278-278" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Helper function to help find framework or sdk tools from the
+newest toolkit available</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
+            getTargetPlatformDir(platformVersion)
+          </code>
+          <div class="tip" id="121">
+            <strong>Signature:</strong> platformVersion:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L287-287" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets the local directory for the given target platform</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
+            hasBuildParam(name)
+          </code>
+          <div class="tip" id="122">
+            <strong>Signature:</strong> name:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L120-120" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns if the build parameter with the given name was set</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
+            hasEnvironVar(name)
+          </code>
+          <div class="tip" id="123">
+            <strong>Signature:</strong> name:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L116-116" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns if the build parameter with the given name was set</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
+            isDotnetCore
+          </code>
+          <div class="tip" id="124">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L211-211" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
+            isDotNetCore
+          </code>
+          <div class="tip" id="125">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L203-203" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
+            isLinux
+          </code>
+          <div class="tip" id="126">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L175-175" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determines if the current system is a Linux system</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '127', 127)" onmouseover="showTip(event, '127', 127)">
+            isMacOS
+          </code>
+          <div class="tip" id="127">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L164-164" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determines if the current system is a MacOs system</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '128', 128)" onmouseover="showTip(event, '128', 128)">
+            isMono
+          </code>
+          <div class="tip" id="128">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L196-196" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determines if the current system is a mono system
+Todo: Detect mono on windows</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '129', 129)" onmouseover="showTip(event, '129', 129)">
+            isUnix
+          </code>
+          <div class="tip" id="129">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L153-153" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determines if the current system is an Unix system.
+See <a href="http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform">http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform</a></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '130', 130)" onmouseover="showTip(event, '130', 130)">
+            isWindows
+          </code>
+          <div class="tip" id="130">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L184-184" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determines if the current system is a Windows system</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '131', 131)" onmouseover="showTip(event, '131', 131)">
+            monoPath
+          </code>
+          <div class="tip" id="131">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L255-255" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '132', 132)" onmouseover="showTip(event, '132', 132)">
+            monoVersion
+          </code>
+          <div class="tip" id="132">
+            <strong>Signature:</strong> (string * Version option) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L237-237" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>required sometimes to workaround mono crashes
+<a href="http://stackoverflow.com/a/8414517/1269722
+Note:">http://stackoverflow.com/a/8414517/1269722
+Note:</a> Only given when we are running on mono,
+represents the version of the mono runtime we
+are currently running on.
+In netcore world you can retrieve the mono version in the
+environment (PATH) via Fake.Core.Process.Mono.monoVersion</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '133', 133)" onmouseover="showTip(event, '133', 133)">
+            pathDirectories
+          </code>
+          <div class="tip" id="133">
+            <strong>Signature:</strong> seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L250-250" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets the list of valid directories included in the PATH environment variable.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '134', 134)" onmouseover="showTip(event, '134', 134)">
+            ProgramFiles
+          </code>
+          <div class="tip" id="134">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L133-133" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '135', 135)" onmouseover="showTip(event, '135', 135)">
+            ProgramFilesX86
+          </code>
+          <div class="tip" id="135">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L138-138" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The path of Program Files (x86)
+It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable
+PROCESSOR_ARCHITEW6432 can be null</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '136', 136)" onmouseover="showTip(event, '136', 136)">
+            sdkBasePath
+          </code>
+          <div class="tip" id="136">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L274-274" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Base path for getting tools from windows SDKs</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '137', 137)" onmouseover="showTip(event, '137', 137)">
+            setBuildParam(name value)
+          </code>
+          <div class="tip" id="137">
+            <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L79-79" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Sets the build parameter with the given name for the current process.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '138', 138)" onmouseover="showTip(event, '138', 138)">
+            setEnvironVar(name value)
+          </code>
+          <div class="tip" id="138">
+            <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L72-72" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Sets the environment variable with the given name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '139', 139)" onmouseover="showTip(event, '139', 139)">
+            splitEnvironVar(name)
+          </code>
+          <div class="tip" id="139">
+            <strong>Signature:</strong> name:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L110-110" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Splits the entries of an environment variable and removes the empty ones.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '140', 140)" onmouseover="showTip(event, '140', 140)">
+            SystemRoot
+          </code>
+          <div class="tip" id="140">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Environment/Environment.fs#L149-149" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The system root environment variable. Typically "C:\Windows"</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc009</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+
+	</body>
+</html>

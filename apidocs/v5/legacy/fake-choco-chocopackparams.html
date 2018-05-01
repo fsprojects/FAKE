@@ -1,0 +1,1254 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>ChocoPackParams - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                    <p>
+                                        <strong>Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
+                                            <a href="/apidocs/v5/index.html">here</a>.
+                                            If the API is already migrated you can check <a href="/apidocs/v5/fake-choco-chocopackparams.html">here if exists in a module</a>.
+                                            More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
+                                        </strong>
+                                    </p>
+									<!-- Content -->
+                      <article>
+          			
+
+
+
+<a name="ChocoPackParams" class="anchor" href="#ChocoPackParams" ><h1>ChocoPackParams</h1></a>
+<div class="xmldoc">
+<p>The choco pack parameter type.</p>
+
+</div>
+  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Record Field</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2561', 2561)" onmouseover="showTip(event, '2561', 2561)">
+            AdditionalArgs
+          </code>
+          <div class="tip" id="2561">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L85-85" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>A character string containing additional arguments to give to choco.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2562', 2562)" onmouseover="showTip(event, '2562', 2562)">
+            Authors
+          </code>
+          <div class="tip" id="2562">
+            <strong>Signature:</strong> string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L91-91" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Authors of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2563', 2563)" onmouseover="showTip(event, '2563', 2563)">
+            BugTrackerUrl
+          </code>
+          <div class="tip" id="2563">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L159-159" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url pointing to the location where issues and tickets can be accessed.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2564', 2564)" onmouseover="showTip(event, '2564', 2564)">
+            Checksum
+          </code>
+          <div class="tip" id="2564">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L190-190" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The checksum hash value of the PackageDownloadUrl resource
+This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType.
+Equivalent to the <code>--checksum &lt;string&gt;</code> option of Install-Chocolatey[Zip]Package functions.
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2565', 2565)" onmouseover="showTip(event, '2565', 2565)">
+            Checksum64
+          </code>
+          <div class="tip" id="2565">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L195-195" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The checksum hash value of the PackageDownload64Url resource
+This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType64.
+Equivalent to the <code>--checksum &lt;string&gt;</code> option of Install-Chocolatey[Zip]Package functions.
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2566', 2566)" onmouseover="showTip(event, '2566', 2566)">
+            Checksum64Type
+          </code>
+          <div class="tip" id="2566">
+            <strong>Signature:</strong> ChocolateyChecksumType<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L201-201" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The type of checksum that the file is validated with. Default: Sha256
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2567', 2567)" onmouseover="showTip(event, '2567', 2567)">
+            ChecksumType
+          </code>
+          <div class="tip" id="2567">
+            <strong>Signature:</strong> ChocolateyChecksumType<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L198-198" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The type of checksum that the file is validated with. Default: Sha256
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2568', 2568)" onmouseover="showTip(event, '2568', 2568)">
+            Copyright
+          </code>
+          <div class="tip" id="2568">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L115-115" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Copyright of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2569', 2569)" onmouseover="showTip(event, '2569', 2569)">
+            Dependencies
+          </code>
+          <div class="tip" id="2569">
+            <strong>Signature:</strong> NugetDependencies<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L120-120" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Dependencies of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2570', 2570)" onmouseover="showTip(event, '2570', 2570)">
+            DependenciesByFramework
+          </code>
+          <div class="tip" id="2570">
+            <strong>Signature:</strong> NugetFrameworkDependencies list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L123-123" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Dependencies by framework of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2571', 2571)" onmouseover="showTip(event, '2571', 2571)">
+            Description
+          </code>
+          <div class="tip" id="2571">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L106-106" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Description of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2572', 2572)" onmouseover="showTip(event, '2572', 2572)">
+            DevelopmentDependency
+          </code>
+          <div class="tip" id="2572">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L165-165" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Boolean specifying whether the package will be marked as a <a href="https://docs.nuget.org/Release-Notes/NuGet-2.7#development-only-dependencies">development-only dependency</a>. Default: false.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2573', 2573)" onmouseover="showTip(event, '2573', 2573)">
+            DocsUrl
+          </code>
+          <div class="tip" id="2573">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L153-153" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url pointing to the location of the wiki or docs of the software.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2574', 2574)" onmouseover="showTip(event, '2574', 2574)">
+            Files
+          </code>
+          <div class="tip" id="2574">
+            <strong>Signature:</strong> (string * string option * string option) list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L135-135" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Files of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2575', 2575)" onmouseover="showTip(event, '2575', 2575)">
+            FrameworkAssemblies
+          </code>
+          <div class="tip" id="2575">
+            <strong>Signature:</strong> NugetFrameworkAssemblyReferences list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L132-132" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Framework assemblies of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2576', 2576)" onmouseover="showTip(event, '2576', 2576)">
+            IconUrl
+          </code>
+          <div class="tip" id="2576">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L141-141" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url to the icon of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2577', 2577)" onmouseover="showTip(event, '2577', 2577)">
+            InstallerType
+          </code>
+          <div class="tip" id="2577">
+            <strong>Signature:</strong> ChocolateyInstallerType<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L180-180" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Installer type. Default: Zip.
+Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2578', 2578)" onmouseover="showTip(event, '2578', 2578)">
+            LicenseUrl
+          </code>
+          <div class="tip" id="2578">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L144-144" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url to the license of the software.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2579', 2579)" onmouseover="showTip(event, '2579', 2579)">
+            MailingListUrl
+          </code>
+          <div class="tip" id="2579">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L156-156" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url pointing to the forum or email list group for the software.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2580', 2580)" onmouseover="showTip(event, '2580', 2580)">
+            NonInteractive
+          </code>
+          <div class="tip" id="2580">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L88-88" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Do not prompt for user input or confirmations. Default <code>true</code>.
+Equivalent to the <code>-y</code> option.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2581', 2581)" onmouseover="showTip(event, '2581', 2581)">
+            OutputDir
+          </code>
+          <div class="tip" id="2581">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L117-117" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Output directory for the files (nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1) creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2582', 2582)" onmouseover="showTip(event, '2582', 2582)">
+            Owners
+          </code>
+          <div class="tip" id="2582">
+            <strong>Signature:</strong> string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L94-94" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Owners of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2583', 2583)" onmouseover="showTip(event, '2583', 2583)">
+            PackageDownload64Url
+          </code>
+          <div class="tip" id="2583">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L171-171" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url pointing to the installer (exe, msi, zip) of the 64 bits version of the package.
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2584', 2584)" onmouseover="showTip(event, '2584', 2584)">
+            PackageDownloadUrl
+          </code>
+          <div class="tip" id="2584">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L168-168" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url pointing to the installer (exe, msi, zip) of the package.
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2585', 2585)" onmouseover="showTip(event, '2585', 2585)">
+            PackageId
+          </code>
+          <div class="tip" id="2585">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L97-97" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Id of the package. Should be lowercase, not contains weird chars and use dash (-) instead of spaces.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2586', 2586)" onmouseover="showTip(event, '2586', 2586)">
+            PackageSourceUrl
+          </code>
+          <div class="tip" id="2586">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L150-150" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url to the chocolatey package repository, not the software (unless they are the same).
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2587', 2587)" onmouseover="showTip(event, '2587', 2587)">
+            ProjectSourceUrl
+          </code>
+          <div class="tip" id="2587">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L162-162" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url pointing to the location of the underlying software source.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2588', 2588)" onmouseover="showTip(event, '2588', 2588)">
+            ProjectUrl
+          </code>
+          <div class="tip" id="2588">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L138-138" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Url to the software.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2589', 2589)" onmouseover="showTip(event, '2589', 2589)">
+            References
+          </code>
+          <div class="tip" id="2589">
+            <strong>Signature:</strong> NugetReferences<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L126-126" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>References of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2590', 2590)" onmouseover="showTip(event, '2590', 2590)">
+            ReferencesByFramework
+          </code>
+          <div class="tip" id="2590">
+            <strong>Signature:</strong> NugetFrameworkReferences list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L129-129" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>References by framework of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2591', 2591)" onmouseover="showTip(event, '2591', 2591)">
+            ReleaseNotes
+          </code>
+          <div class="tip" id="2591">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L112-112" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Release notes of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2592', 2592)" onmouseover="showTip(event, '2592', 2592)">
+            RequireLicenseAcceptance
+          </code>
+          <div class="tip" id="2592">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L147-147" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>True if the software needs license acceptance. Default: false.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2593', 2593)" onmouseover="showTip(event, '2593', 2593)">
+            SilentArgs
+          </code>
+          <div class="tip" id="2593">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L174-174" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Silent args for the installer.
+Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2594', 2594)" onmouseover="showTip(event, '2594', 2594)">
+            Summary
+          </code>
+          <div class="tip" id="2594">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L103-103" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Summary of the package.
+Used for the nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2595', 2595)" onmouseover="showTip(event, '2595', 2595)">
+            Tags
+          </code>
+          <div class="tip" id="2595">
+            <strong>Signature:</strong> string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L109-109" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Tags of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2596', 2596)" onmouseover="showTip(event, '2596', 2596)">
+            Timeout
+          </code>
+          <div class="tip" id="2596">
+            <strong>Signature:</strong> TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L81-81" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The choco execution timeout.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2597', 2597)" onmouseover="showTip(event, '2597', 2597)">
+            Title
+          </code>
+          <div class="tip" id="2597">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L100-100" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Title of the package.
+Used for the nuspec creation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2598', 2598)" onmouseover="showTip(event, '2598', 2598)">
+            ToolPath
+          </code>
+          <div class="tip" id="2598">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L83-83" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The location of the choco executable. Automatically found if null or empty.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2599', 2599)" onmouseover="showTip(event, '2599', 2599)">
+            UninstallPath
+          </code>
+          <div class="tip" id="2599">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L185-185" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Either:</p>
+<ul>
+<li>For zip: the zip filename originally installed</li>
+<li>For exe or msi: the full path to the native uninstaller to run</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2600', 2600)" onmouseover="showTip(event, '2600', 2600)">
+            UnzipLocation
+          </code>
+          <div class="tip" id="2600">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L177-177" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Unzip location for zip package. Default: Chocolatey install folder.
+Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2601', 2601)" onmouseover="showTip(event, '2601', 2601)">
+            Version
+          </code>
+          <div class="tip" id="2601">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ChocoHelper.fs#L79-79" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>The version you would like to insert into the package.
+Equivalent to the <code>--version &lt;version&gt;</code> option.</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc009</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+
+	</body>
+</html>

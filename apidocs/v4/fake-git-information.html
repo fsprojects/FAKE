@@ -1,0 +1,610 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Information - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                    <p>
+                                        <strong>Note: This API documentation is for FAKE version 4. The migration API documentation can be found 
+                                            <a href="/apidocs/v5/legacy/fake-git-information.html">here</a>. The API documentation for the new fake 5 modules can be found 
+                                            <a href="/apidocs/v5/index.html">here</a>
+                                        </strong>
+                                    </p>
+									<!-- Content -->
+                      <article>
+          			
+
+
+
+<a name="Information" class="anchor" href="#Information"><h1>Information</h1></a>
+<div class="xmldoc">
+<p>Contains helper functions which can be used to retrieve status information from git.</p>
+
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1147', 1147)" onmouseover="showTip(event, '1147', 1147)">
+            describe repositoryDir
+          </code>
+          <div class="tip" id="1147">
+            <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the last git tag by calling git describe</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1148', 1148)" onmouseover="showTip(event, '1148', 1148)">
+            getBranchName repositoryDir
+          </code>
+          <div class="tip" id="1148">
+            <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the git branch name</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1149', 1149)" onmouseover="showTip(event, '1149', 1149)">
+            getCurrentHash ()
+          </code>
+          <div class="tip" id="1149">
+            <strong>Signature:</strong> unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the current hash of the current repository</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1150', 1150)" onmouseover="showTip(event, '1150', 1150)">
+            getCurrentSHA1 repositoryDir
+          </code>
+          <div class="tip" id="1150">
+            <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns the SHA1 of the current HEAD</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1151', 1151)" onmouseover="showTip(event, '1151', 1151)">
+            getLastTag ()
+          </code>
+          <div class="tip" id="1151">
+            <strong>Signature:</strong> unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the last git tag of the current repository by calling git describe</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1152', 1152)" onmouseover="showTip(event, '1152', 1152)">
+            getVersion repositoryDir
+          </code>
+          <div class="tip" id="1152">
+            <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the git version</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1153', 1153)" onmouseover="showTip(event, '1153', 1153)">
+            isAheadOf repositoryDir rev1 rev2
+          </code>
+          <div class="tip" id="1153">
+            <strong>Signature:</strong> repositoryDir:string -&gt; rev1:string -&gt; rev2:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns true if rev1 is ahead of rev2</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1154', 1154)" onmouseover="showTip(event, '1154', 1154)">
+            isCleanWorkingCopy repositoryDir
+          </code>
+          <div class="tip" id="1154">
+            <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Checks if the working copy is clean</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1155', 1155)" onmouseover="showTip(event, '1155', 1155)">
+            isGitVersionHigherOrEqual (...)
+          </code>
+          <div class="tip" id="1155">
+            <strong>Signature:</strong> referenceVersion:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1156', 1156)" onmouseover="showTip(event, '1156', 1156)">
+            isVersionHigherOrEqual (...)
+          </code>
+          <div class="tip" id="1156">
+            <strong>Signature:</strong> currentVersion:string -&gt; referenceVersion:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1157', 1157)" onmouseover="showTip(event, '1157', 1157)">
+            shortlog repositoryDir
+          </code>
+          <div class="tip" id="1157">
+            <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the git log in one line</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1158', 1158)" onmouseover="showTip(event, '1158', 1158)">
+            showName repositoryDir sha1
+          </code>
+          <div class="tip" id="1158">
+            <strong>Signature:</strong> repositoryDir:string -&gt; sha1:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns a friendly name from a SHA1</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1159', 1159)" onmouseover="showTip(event, '1159', 1159)">
+            showStatus repositoryDir
+          </code>
+          <div class="tip" id="1159">
+            <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Shows the git status</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1160', 1160)" onmouseover="showTip(event, '1160', 1160)">
+            versionRegex 
+          </code>
+          <div class="tip" id="1160">
+            <strong>Signature:</strong> Regex<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc009</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+
+	</body>
+</html>

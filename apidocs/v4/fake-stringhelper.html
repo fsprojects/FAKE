@@ -1,0 +1,1444 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>StringHelper - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-what-is-fake.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-fsc.html">DotNet.Fsc</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                    <p>
+                                        <strong>Note: This API documentation is for FAKE version 4. The migration API documentation can be found 
+                                            <a href="/apidocs/v5/legacy/fake-stringhelper.html">here</a>. The API documentation for the new fake 5 modules can be found 
+                                            <a href="/apidocs/v5/index.html">here</a>
+                                        </strong>
+                                    </p>
+									<!-- Content -->
+                      <article>
+          			
+
+
+
+<a name="StringHelper" class="anchor" href="#StringHelper"><h1>StringHelper</h1></a>
+<div class="xmldoc">
+<p>Contains basic functions for string manipulation.</p>
+
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '694', 694)" onmouseover="showTip(event, '694', 694)">
+            ( &lt;* ) prefix text
+          </code>
+          <div class="tip" id="694">
+            <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Checks whether the given text starts with the given prefix</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '695', 695)" onmouseover="showTip(event, '695', 695)">
+            ( &gt;** ) pattern text
+          </code>
+          <div class="tip" id="695">
+            <strong>Signature:</strong> pattern:string -&gt; text:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Determines if a text matches a given regex pattern.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '696', 696)" onmouseover="showTip(event, '696', 696)">
+            ( &gt;=&gt; ) pattern replacement text
+          </code>
+          <div class="tip" id="696">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Find a regex pattern in a text and replaces it with the given replacement.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '697', 697)" onmouseover="showTip(event, '697', 697)">
+            append text builder
+          </code>
+          <div class="tip" id="697">
+            <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text to a StringBuilder.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '698', 698)" onmouseover="showTip(event, '698', 698)">
+            appendFileNamesIfNotNull (...)
+          </code>
+          <div class="tip" id="698">
+            <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends all notnull fileNames.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '699', 699)" onmouseover="showTip(event, '699', 699)">
+            appendIfFalse p
+          </code>
+          <div class="tip" id="699">
+            <strong>Signature:</strong> p:bool -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text if the predicate is false.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '700', 700)" onmouseover="showTip(event, '700', 700)">
+            appendIfNotNull value s
+          </code>
+          <div class="tip" id="700">
+            <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text if the value is not null.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '701', 701)" onmouseover="showTip(event, '701', 701)">
+            appendIfNotNullOrEmpty value s
+          </code>
+          <div class="tip" id="701">
+            <strong>Signature:</strong> value:string -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text if the value is not null or empty.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '702', 702)" onmouseover="showTip(event, '702', 702)">
+            appendIfSome o f builder
+          </code>
+          <div class="tip" id="702">
+            <strong>Signature:</strong> o:&#39;a option -&gt; f:(&#39;a -&gt; string) -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> 'a          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends string of function value if option has some value</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '703', 703)" onmouseover="showTip(event, '703', 703)">
+            appendIfTrue p s builder
+          </code>
+          <div class="tip" id="703">
+            <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text if the predicate is true.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '704', 704)" onmouseover="showTip(event, '704', 704)">
+            appendIfTrueWithoutQuotes p s builder
+          </code>
+          <div class="tip" id="704">
+            <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '705', 705)" onmouseover="showTip(event, '705', 705)">
+            appendQuotedIfNotNull value s builder
+          </code>
+          <div class="tip" id="705">
+            <strong>Signature:</strong> value:Object -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a quoted text if the value is not null.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '706', 706)" onmouseover="showTip(event, '706', 706)">
+            appendStringIfValueIsNotNull value
+          </code>
+          <div class="tip" id="706">
+            <strong>Signature:</strong> value:&#39;?13435 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> '?13435          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text if the value is not null.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '707', 707)" onmouseover="showTip(event, '707', 707)">
+            appendStringIfValueIsNotNullOrEmpty (...)
+          </code>
+          <div class="tip" id="707">
+            <strong>Signature:</strong> value:string -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text if the value is not null or empty.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '708', 708)" onmouseover="showTip(event, '708', 708)">
+            AppendToFile file lines
+          </code>
+          <div class="tip" id="708">
+            <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends all lines to a file line by line</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '709', 709)" onmouseover="showTip(event, '709', 709)">
+            appendWithoutQuotes text builder
+          </code>
+          <div class="tip" id="709">
+            <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text to a StringBuilder without surrounding quotes.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '710', 710)" onmouseover="showTip(event, '710', 710)">
+            appendWithoutQuotesIfNotNull value s
+          </code>
+          <div class="tip" id="710">
+            <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Appends a text without quoting if the value is not null.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '711', 711)" onmouseover="showTip(event, '711', 711)">
+            charsAndDigits 
+          </code>
+          <div class="tip" id="711">
+            <strong>Signature:</strong> char list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns all standard chars and digits.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '712', 712)" onmouseover="showTip(event, '712', 712)">
+            Colon 
+          </code>
+          <div class="tip" id="712">
+            <strong>Signature:</strong> char<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '713', 713)" onmouseover="showTip(event, '713', 713)">
+            ConvertFileToWindowsLineBreaks fileName
+          </code>
+          <div class="tip" id="713">
+            <strong>Signature:</strong> fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Reads a file line by line and replaces all line breaks to windows line breaks
+- uses a temp file to store the contents in order to prevent OutOfMemory exceptions</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '714', 714)" onmouseover="showTip(event, '714', 714)">
+            ConvertTextToWindowsLineBreaks text
+          </code>
+          <div class="tip" id="714">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts all line breaks in a text to windows line breaks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '715', 715)" onmouseover="showTip(event, '715', 715)">
+            DecodeBase64Utf8String text
+          </code>
+          <div class="tip" id="715">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Decodes a Base64-encoded UTF-8-encoded string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '716', 716)" onmouseover="showTip(event, '716', 716)">
+            EncapsulateApostrophe text
+          </code>
+          <div class="tip" id="716">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Encapsulates the Apostrophe</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '717', 717)" onmouseover="showTip(event, '717', 717)">
+            endsWith suffix text
+          </code>
+          <div class="tip" id="717">
+            <strong>Signature:</strong> suffix:string -&gt; text:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Checks whether the given text ends with the given suffix</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '718', 718)" onmouseover="showTip(event, '718', 718)">
+            endsWithSlash 
+          </code>
+          <div class="tip" id="718">
+            <strong>Signature:</strong> string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Determines whether the last character of the given <see cref="string" />
+matches Path.DirectorySeparatorChar.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '719', 719)" onmouseover="showTip(event, '719', 719)">
+            isLetterOrDigit c
+          </code>
+          <div class="tip" id="719">
+            <strong>Signature:</strong> c:char -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Checks whether the given char is a standard char or digit.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '720', 720)" onmouseover="showTip(event, '720', 720)">
+            isNotNullOrEmpty value
+          </code>
+          <div class="tip" id="720">
+            <strong>Signature:</strong> value:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns if the string is not null or empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '721', 721)" onmouseover="showTip(event, '721', 721)">
+            isNullOrEmpty value
+          </code>
+          <div class="tip" id="721">
+            <strong>Signature:</strong> value:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns if the string is null or empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '722', 722)" onmouseover="showTip(event, '722', 722)">
+            isNullOrWhiteSpace value
+          </code>
+          <div class="tip" id="722">
+            <strong>Signature:</strong> value:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns if the string is null or empty or completely whitespace</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '723', 723)" onmouseover="showTip(event, '723', 723)">
+            isUmlaut c
+          </code>
+          <div class="tip" id="723">
+            <strong>Signature:</strong> c:char -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Checks whether the given char is a german umlaut.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '724', 724)" onmouseover="showTip(event, '724', 724)">
+            liftString x
+          </code>
+          <div class="tip" id="724">
+            <strong>Signature:</strong> x:string -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Lifts a string to an option</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '725', 725)" onmouseover="showTip(event, '725', 725)">
+            LinuxLineBreaks 
+          </code>
+          <div class="tip" id="725">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Represents Linux line breaks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '726', 726)" onmouseover="showTip(event, '726', 726)">
+            MacLineBreaks 
+          </code>
+          <div class="tip" id="726">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Represents Mac line breaks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '727', 727)" onmouseover="showTip(event, '727', 727)">
+            NormalizeVersion version
+          </code>
+          <div class="tip" id="727">
+            <strong>Signature:</strong> version:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Removes all trailing .0 from a version string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '728', 728)" onmouseover="showTip(event, '728', 728)">
+            ProduceRelativePath (...)
+          </code>
+          <div class="tip" id="728">
+            <strong>Signature:</strong> baseLocation:string -&gt; targetLocation:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Produces relative path when possible to go from baseLocation to targetLocation.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '729', 729)" onmouseover="showTip(event, '729', 729)">
+            ReadFile file
+          </code>
+          <div class="tip" id="729">
+            <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Reads a file line by line</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '730', 730)" onmouseover="showTip(event, '730', 730)">
+            ReadFileAsBytes file
+          </code>
+          <div class="tip" id="730">
+            <strong>Signature:</strong> file:string -&gt; byte []<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Reads a file as one array of bytes</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '731', 731)" onmouseover="showTip(event, '731', 731)">
+            ReadFileAsString file
+          </code>
+          <div class="tip" id="731">
+            <strong>Signature:</strong> file:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Reads a file as one text</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '732', 732)" onmouseover="showTip(event, '732', 732)">
+            ReadLine file
+          </code>
+          <div class="tip" id="732">
+            <strong>Signature:</strong> file:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '733', 733)" onmouseover="showTip(event, '733', 733)">
+            RemoveLineBreaks text
+          </code>
+          <div class="tip" id="733">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Removes linebreaks from the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '734', 734)" onmouseover="showTip(event, '734', 734)">
+            replace pattern replacement text
+          </code>
+          <div class="tip" id="734">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Replaces the given pattern in the given text with the replacement</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '735', 735)" onmouseover="showTip(event, '735', 735)">
+            ReplaceFile fileName text
+          </code>
+          <div class="tip" id="735">
+            <strong>Signature:</strong> fileName:string -&gt; text:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Replaces the file with the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '736', 736)" onmouseover="showTip(event, '736', 736)">
+            replaceFirst pattern replacement text
+          </code>
+          <div class="tip" id="736">
+            <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Replaces the first occurrence of the pattern with the given replacement.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '737', 737)" onmouseover="showTip(event, '737', 737)">
+            ReplaceInFile replaceF fileName
+          </code>
+          <div class="tip" id="737">
+            <strong>Signature:</strong> replaceF:(string -&gt; string) -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Replaces the text in the given file</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '738', 738)" onmouseover="showTip(event, '738', 738)">
+            separated delimiter items
+          </code>
+          <div class="tip" id="738">
+            <strong>Signature:</strong> delimiter:string -&gt; items:seq&lt;string&gt; -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of strings to a string with delimiters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '739', 739)" onmouseover="showTip(event, '739', 739)">
+            shortenCurrentDirectory value
+          </code>
+          <div class="tip" id="739">
+            <strong>Signature:</strong> value:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Replaces any occurence of the currentDirectory with .</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
+            split delimiter text
+          </code>
+          <div class="tip" id="740">
+            <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Splits the given string at the given char delimiter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
+            splitRemove delimiter text
+          </code>
+          <div class="tip" id="741">
+            <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
+            splitStr delimiterStr text
+          </code>
+          <div class="tip" id="742">
+            <strong>Signature:</strong> delimiterStr:string -&gt; text:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Splits the given string at the given string delimiter</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
+            startsWith prefix text
+          </code>
+          <div class="tip" id="743">
+            <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Checks whether the given text starts with the given prefix</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
+            toLines text
+          </code>
+          <div class="tip" id="744">
+            <strong>Signature:</strong> text:seq&lt;string&gt; -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of strings into a string separated with line ends</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
+            toLower s
+          </code>
+          <div class="tip" id="745">
+            <strong>Signature:</strong> s:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts all characters in a string to lower case.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
+            toRelativePath value
+          </code>
+          <div class="tip" id="746">
+            <strong>Signature:</strong> value:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Replaces the absolute path to a relative path.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
+            toText builder
+          </code>
+          <div class="tip" id="747">
+            <strong>Signature:</strong> builder:StringBuilder -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns the text from the StringBuilder</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '748', 748)" onmouseover="showTip(event, '748', 748)">
+            trim x
+          </code>
+          <div class="tip" id="748">
+            <strong>Signature:</strong> x:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Trims the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '749', 749)" onmouseover="showTip(event, '749', 749)">
+            trimChars chars x
+          </code>
+          <div class="tip" id="749">
+            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Trims the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '750', 750)" onmouseover="showTip(event, '750', 750)">
+            trimEndChars chars x
+          </code>
+          <div class="tip" id="750">
+            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Trims the end of the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '751', 751)" onmouseover="showTip(event, '751', 751)">
+            trimSeparator s
+          </code>
+          <div class="tip" id="751">
+            <strong>Signature:</strong> s:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Trims the given string with the DirectorySeparatorChar</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '752', 752)" onmouseover="showTip(event, '752', 752)">
+            trimSlash s
+          </code>
+          <div class="tip" id="752">
+            <strong>Signature:</strong> s:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Removes the slashes from the end of the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
+            trimSpecialChars text
+          </code>
+          <div class="tip" id="753">
+            <strong>Signature:</strong> text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Trims all special characters from a string.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '754', 754)" onmouseover="showTip(event, '754', 754)">
+            trimStartChars chars x
+          </code>
+          <div class="tip" id="754">
+            <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Trims the start of the given string</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '755', 755)" onmouseover="showTip(event, '755', 755)">
+            WindowsLineBreaks 
+          </code>
+          <div class="tip" id="755">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Represents Windows line breaks</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '756', 756)" onmouseover="showTip(event, '756', 756)">
+            WriteBytesToFile file bytes
+          </code>
+          <div class="tip" id="756">
+            <strong>Signature:</strong> file:string -&gt; bytes:byte [] -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Writes a byte array to a file</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '757', 757)" onmouseover="showTip(event, '757', 757)">
+            WriteFile file lines
+          </code>
+          <div class="tip" id="757">
+            <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Writes a file line by line</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '758', 758)" onmouseover="showTip(event, '758', 758)">
+            WriteStringToFile append fileName text
+          </code>
+          <div class="tip" id="758">
+            <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Writes a string to a file</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '759', 759)" onmouseover="showTip(event, '759', 759)">
+            WriteToFile append fileName lines
+          </code>
+          <div class="tip" id="759">
+            <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Writes a file line by line</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc009</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+
+	</body>
+</html>
