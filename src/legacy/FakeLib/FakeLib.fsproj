@@ -88,6 +88,9 @@
     <Compile Include="..\..\app\Fake.Runtime\Trace.fs">
       <Link>Fake.Runtime/Trace.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Runtime\FSharpParser.fs">
+      <Link>Fake.Runtime/FSharpParser.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Runtime\Runners.fs">
       <Link>Fake.Runtime\Runners.fs</Link>
     </Compile>
@@ -96,9 +99,6 @@
     </Compile>
     <Compile Include="..\..\app\Fake.Runtime\ScriptRunner.fs">
       <Link>Fake.Runtime/ScriptRunner.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Runtime\FSharpParser.fs">
-      <Link>Fake.Runtime/FSharpParser.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.Runtime\HashGeneration.fs">
       <Link>Fake.Runtime/HashGeneration.fs</Link>

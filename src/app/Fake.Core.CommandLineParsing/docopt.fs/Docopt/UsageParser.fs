@@ -15,7 +15,6 @@ exception UsageException of string
   with override x.ToString () = sprintf "UsageException: %s" x.Data0
 
 module private Helpers =
-  begin
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
@@ -33,7 +32,18 @@ module private Helpers =
     let raiseUnexpectedShort s' = raiseInternal (unexpectedShort s')
     let raiseUnexpectedLong l' = raiseInternal (unexpectedLong l')
     let raiseUnexpectedArg a' = raiseInternal (unexpectedArg a')
-  end
+    let inline printSOption s =
+      match s with
+      | None -> ""
+      | Some s -> s
+
+    let inline printReplyStatus (r:ReplyStatus) =
+      match r with
+      | ReplyStatus.Ok -> "Ok"
+      | ReplyStatus.Error -> "Error"
+      | ReplyStatus.FatalError -> "FatalError"
+      | _ -> sprintf "%d" (int r)
+          
 
 open Helpers
 
@@ -47,6 +57,10 @@ type ArgumentStreamPosition =
   | ArgumentPos of int
   // For short options like -adf we iterate over every letter
   | ShortArgumentPartialPos of int * int
+  override x.ToString () =
+    match x with
+    | ArgumentPos p -> sprintf "ArgumentPos(%d)" p
+    | ShortArgumentPartialPos (p, part) -> sprintf "ArgumentPos(%d, %d)" p part 
   member x.ArgIndex =
     match x with
     | ShortArgumentPartialPos (p, _)
@@ -204,7 +218,7 @@ type ArgumentStream<'TUserState> private (argv:string array, initState:'TUserSta
   static member Create(argv:string array, initState:'TUserState) =
     new ArgumentStream<'TUserState>(argv, initState)
   override x.ToString() =
-    sprintf "Pos: %A, %A, state: %A" pos argv state
+    sprintf "Pos: %O, [|%s|], state: %O" pos (System.String.Join(";", argv)) state
 
 module ArgumentStream =
   let create (argv:string array) (initState:'TUserState) =
@@ -364,7 +378,7 @@ module ArgParser =
             reply <- elementParser stream
             while reply.Status = Ok (*&& stateTag <> stream.StateTag*) do
                 if stateTag = stream.StateTag then
-                    failwithf "infiniteLoopException %A" stream
+                    failwithf "infiniteLoopException %O" stream
                 xs    <- foldState xs reply.Result
                 error <- reply.Error
                 stateTag <- stream.StateTag
@@ -445,7 +459,7 @@ module ArgParser =
           Reply(result)
         | None ->
           let e1 = expected itemType
-          let e2 = unexpected (sprintf "%A" (stream.PeekFull()))
+          let e2 = unexpected (sprintf "%s" (stream.PeekFull() |> printSOption))
           let error = mergeErrors e1 e2
           Reply(ReplyStatus.Error, error)
 
@@ -457,7 +471,7 @@ module ArgParser =
           Reply(result)
         | None ->
           let e1 = expected itemType
-          let e2 = unexpected (sprintf "%A" (stream.PeekFull()))
+          let e2 = unexpected (sprintf "%s" (stream.PeekFull() |> printSOption))
           let error = mergeErrors e1 e2
           Reply(ReplyStatus.Error, error)
 
@@ -516,7 +530,7 @@ module ArgParser =
           Map.add key (DocoptResult.Flags (n2 + 1)) map
       | Some (DocoptResult.Flags n1), DocoptResult.Flags n2 ->
           Map.add key (DocoptResult.Flags (n1 + n2)) map
-      | Some v, _ -> failwithf "Cannot add value %A as %s -> %A already exists in the result map" newItem key v
+      | Some v, _ -> failwithf "Cannot add value %O as %s -> %O already exists in the result map" newItem key v
 
   let saveInMap key f = 
     updateUserState (fun item map ->
@@ -540,7 +554,7 @@ module ArgParser =
 
 
   let pLongFlag (flag:SafeOption) =
-    if not flag.IsLong then failwithf "Cannot parse empty short flag %A" flag
+    if not flag.IsLong then failwithf "Cannot parse empty short flag %O" flag
     let keys =
       [ if flag.IsShort then yield flag.FullShort
         if flag.IsLong then yield flag.FullLong ]
@@ -561,8 +575,9 @@ module ArgParser =
       single
       >>= saveInMapM keys (fun _ -> DocoptResult.Flag)
 
+
   let pShortFlag (flag : SafeOption) =
-    if not flag.IsShort then failwithf "Cannot parse empty short flag %A" flag
+    if not flag.IsShort then failwithf "Cannot parse empty short flag %O" flag
     let keys =
       [ if flag.IsShort then yield flag.FullShort
         if flag.IsLong then yield flag.FullLong ]
@@ -582,7 +597,7 @@ module ArgParser =
           Reply(result)
         | _ ->
           let e1 = expected (sprintf "ShortFlag '%s'" flag.FullShort)
-          let e2 = unexpected (sprintf "%A" (stream.PeekFull()))
+          let e2 = unexpected (sprintf "%s" (stream.PeekFull() |> printSOption))
           let error = mergeErrors e1 e2
           Reply(ReplyStatus.Error, error)
         //match arg with
@@ -843,12 +858,12 @@ type UsageParser(usageStrings':string array, sections:(string * SafeOptions) lis
         sw.ToString()
       match reply.Status = ReplyStatus.Ok, errors, state.IsEnd with
       | true, [||], true -> reply.Result
-      | _, _ , true -> raise <| DocoptException (sprintf "errors %A: %s" reply.Status errorText)
+      | _, _ , true -> raise <| DocoptException (sprintf "errors %s: %s" (printReplyStatus reply.Status) errorText)
       | _, [||], false ->
           let unparsed = argv.[state.Position.ArgIndex..argv.Length - 1]
-          raise <| DocoptException (sprintf "'%A' could not be parsed" unparsed)
+          raise <| DocoptException (sprintf "'[|%s|]' could not be parsed" (System.String.Join(";", unparsed :> _ seq)))
       | _ ->
           let unparsed = argv.[state.Position.ArgIndex..argv.Length - 1]
-          raise <| DocoptException (sprintf "errors: %s, ('%A' could not be parsed)" errorText unparsed)
+          raise <| DocoptException (sprintf "errors: %s, ('[|%s|]' could not be parsed)" errorText (System.String.Join(";", unparsed :> _ seq)))
 
     member __.Asts = asts

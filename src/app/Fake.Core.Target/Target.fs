@@ -17,9 +17,9 @@ Usage:
 Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
-    -e, --environmentvariable <keyval> [*]
+    -e, --environment-variable <keyval> [*]
                           Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
-    -s, --singletarget    Run only the specified target.
+    -s, --single-target    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
         """
     let doc = Docopt(targetCli)
@@ -561,7 +561,7 @@ module Target =
     /// Runs a target and its dependencies
     let run parallelJobs targetName args = runInternal false parallelJobs targetName args |> ignore
 
-    let internal runWithDefault fDefault =
+    let internal runWithDefault allowArgs fDefault =
         let ctx = Fake.Core.Context.forceFakeContext ()
         let trySplitEnvArg (arg:string) =
             let idx = arg.IndexOf('=')
@@ -573,13 +573,12 @@ module Target =
         let results =
             try 
                 let res = TargetCli.parseArgs (ctx.Arguments |> List.toArray)
-                
                 res |> Choice1Of2
             with :? DocoptException as e -> Choice2Of2 e
         match results with
         | Choice1Of2 results ->
             let envs =
-                match DocoptResult.tryGetArguments "--environmentvariable" results with
+                match DocoptResult.tryGetArguments "--environment-variable" results with
                 | Some args ->
                     args |> List.choose trySplitEnvArg
                 | None -> []
@@ -615,13 +614,15 @@ module Target =
                     | None ->
                         Environment.environVarOrDefault "parallel-jobs" "1" |> int
                 let singleTarget =
-                    match DocoptResult.hasFlag "--singletarget" results with
+                    match DocoptResult.hasFlag "--single-target" results with
                     | true -> true
                     | false -> Environment.hasEnvironVar "single-target"
                 let arguments =
                     match DocoptResult.tryGetArguments "<targetargs>" results with
                     | Some args -> args
                     | None -> []
+                if not allowArgs && arguments <> [] then
+                    failwithf "The following arguments could not be parsed: %A\nTo forward arguments to your targets you need to use \nTarget.runOrDefaultWithArguments instead of Target.runOrDefault" arguments
                 match target with
                 | Some t -> runInternal singleTarget parallelJobs t arguments |> ignore
                 | None -> fDefault singleTarget parallelJobs arguments
@@ -631,9 +632,14 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
-        runWithDefault (fun singleTarget parallelJobs arguments ->
+        runWithDefault false (fun singleTarget parallelJobs arguments ->
+            runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
+
+    /// Runs the command given on the command line or the given target when no target is given
+    let runOrDefaultWithArguments defaultTarget =
+        runWithDefault true (fun singleTarget parallelJobs arguments ->
             runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        runWithDefault (fun _ _ _ -> listAvailable())
+        runWithDefault false (fun _ _ _ -> listAvailable())

@@ -4,7 +4,15 @@ open Fake.Core
 open Fake.IO
 open System
 open System.IO
-        
+
+/// Helpers for running the yarn tool
+///
+/// ## Sample
+///
+///     Yarn.install (fun o ->
+///                     { o with
+///                         WorkingDirectory = "./src/FAKESimple.Web/"
+///                     })
 [<RequireQualifiedAccess>]
 module Yarn =
 

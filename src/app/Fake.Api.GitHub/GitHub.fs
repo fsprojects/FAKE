@@ -9,6 +9,25 @@ open System.Reflection
 open System.IO
 
 /// Contains tasks to interact with [GitHub](https://github.com/) releases
+///
+/// ### Sample
+///
+///        Target.create "GitHubRelease" (fun _ ->
+///            let token =
+///                match Environment.environVarOrDefault "github_token" "" with
+///                | s when not (System.String.IsNullOrWhiteSpace s) -> s
+///                | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+///        
+///            let files =
+///                runtimes @ [ "portable"; "packages" ]
+///                |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+///        
+///            GitHub.createClientWithToken token
+///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+///            |> GitHub.uploadFiles files
+///            |> GitHub.publishDraft
+///            |> Async.RunSynchronously)
+///
 [<RequireQualifiedAccess>]
 module GitHub =
 

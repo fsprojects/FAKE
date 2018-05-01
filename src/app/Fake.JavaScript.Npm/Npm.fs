@@ -5,7 +5,15 @@ open Fake.IO
 open Fake.Testing.Common
 open System
 open System.IO
-        
+
+/// Helpers to run the npm tool.
+/// 
+/// ## Sample
+///
+///     Npm.install (fun o -> 
+///                    { o with 
+///                        WorkingDirectory = "./src/FAKESimple.Web/"
+///                    })
 [<RequireQualifiedAccess>]
 module Npm =
 

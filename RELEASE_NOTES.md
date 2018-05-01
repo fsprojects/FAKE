@@ -10,14 +10,12 @@
 * FAKE5: New module `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/1887
 * BUGFIX: Some fixes in TeamFoundation integration - https://github.com/fsharp/FAKE/pull/1883
 
-
 ## 5.0.0-rc007 - 2018-04-23
 
 * DOCS: Update documentation issues - https://github.com/fsharp/FAKE/pull/1881
 * BUGFIX: Improve error message when groups doesn't exist - https://github.com/fsharp/FAKE/issues/1874
 * BUGFIX: Improve error message when file doesn't exist (`Process.start`) - https://github.com/fsharp/FAKE/issues/1875
 * ENHANCEMENT: Make `Shell` module conform to API-guidelines. Mark existing functions as obsolete - https://github.com/fsharp/FAKE/pull/1882
-
 
 ## 5.0.0-rc006 - 2018-04-22
 
@@ -27,7 +25,6 @@
 * FAKE5: Add ChangeLog module to `Fake.Core.ReleaseNotes` - https://github.com/fsharp/FAKE/pull/1876
 * DOCS: Fix some documentation - https://github.com/fsharp/FAKE/pull/1877
 
-
 ## 5.0.0-rc005 - 2018-04-15
 
 * [DOCS] Improve NPM documentation - https://github.com/fsharp/FAKE/pull/1867
@@ -35,7 +32,6 @@
 * [FAKE 5] Add HockeyApp module 'Fake.Api.HockeyApp' - https://github.com/fsharp/FAKE/pull/1870
 * [BUGFIX] Properly handle '.' in file-names - https://github.com/fsharp/FAKE/issues/1865
 * Add some missing RequireQualifiedAccess Attributes - https://github.com/fsharp/FAKE/pull/1862
-
 
 ## 5.0.0-rc004 - 2018-04-09
 

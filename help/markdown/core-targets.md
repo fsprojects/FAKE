@@ -18,9 +18,9 @@ Usage:
 Target Module Options [target_opts]:
     -t, --target <target>
                           Run the given target (ignored if positional argument 'target' is given)
-    -e, --environmentvariable <keyval> [*]
+    -e, --environment-variable <keyval> [*]
                           Set an environment variable. Use 'key=val'. Consider using regular arguments, see https://fake.build/core-targets.html 
-    -s, --singletarget    Run only the specified target.
+    -s, --single-target    Run only the specified target.
     -p, --parallel <num>  Run parallel with the given number of tasks.
 ```
 
@@ -31,9 +31,9 @@ or `fake build --list` to list your targets.
 
 To run a target `MyTarget` you could use  `fake run build.fsx -t MyTarget` or `fake build target MyTarget` (or the other way around `fake run build.fsx target MyTarget`)
 
-All parameters after `--` or `target <target>` are given to the target as paramters.
+All parameters after `--` or `target <target>` are given to the target as paramters. Note that this feature needs to be enabled by using `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault`!
 
-> Note that the ordering of the paramters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
+> Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
 > - `fake run -t Target build.fsx` - because of ordering fake will assume `-t` to be the script name
 > - `fake build -v` - It will not run FAKE in verbose mode but give the parameter `-v` to the target parameters. This is because there is no `-v` in the above CLI.
 >
@@ -52,8 +52,6 @@ open Fake.Core
 
 // *** Define Targets ***
 Target.create "Clean" (fun p ->
-    // Access arguments given by command-line
-    Trace.tracefn "Arguments: %A" p.Context.Arguments
     Trace.trace " --- Cleaning stuff --- "
 )
 
@@ -96,6 +94,10 @@ Target.create "MyTarget" (fun p ->
     // Access arguments given by command-line
     Trace.tracefn "Arguments: %A" p.Context.Arguments
 )
+
+// Feature is opt-in in order to provide good error messages out of the box
+// see https://github.com/fsharp/FAKE/issues/1896
+Target.runOrDefaultWithArguments "Deploy"
 ```
 
 Everything after the target will be interpreted as argument for the target:
