@@ -58,7 +58,8 @@ let ``use external paket.dependencies``() =
 
 [<Test>]
 let ``reference fake core targets``() = 
-    let result = fakeRun "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
+    let result =
+        handleAndFormat <| fun () -> fakeRun "reference_fake-targets.fsx --test" "core-reference-fake-core-targets"
     let stdOut = String.Join("\n", result.Messages).Trim()
     let stdErr = String.Join("\n", result.Errors)
 

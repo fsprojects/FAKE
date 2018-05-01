@@ -55,6 +55,7 @@ let handleAndFormat f =
         let stdErr = String.Join("\n", result.Errors)
         Assert.Fail(
             sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr)
+        reraise() // for return value
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null
 
