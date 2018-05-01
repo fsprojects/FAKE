@@ -84,13 +84,14 @@ module internal Cache =
                 match tryLoadDefault context with
                 | Some config when File.Exists xmlFile ->
                     let readXml = read xmlFile
+                    let fsiOpts = context.Config.CompileOptions.FsiOptions // |> FsiOptions.ofArgs
                     { context with
                         Config =
                           { context.Config with
                               CompileOptions =
                                 { context.Config.CompileOptions with
                                     RuntimeDependencies = context.Config.CompileOptions.RuntimeDependencies @ readXml
-                                    CompileReferences = context.Config.CompileOptions.CompileReferences @ (readXml |> List.map (fun x -> x.Location))
+                                    FsiOptions = { fsiOpts with References = fsiOpts.References @ (readXml |> List.map (fun x -> x.Location)) }
                                 }
                           }
                     }, Some config
