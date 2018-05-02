@@ -1,3 +1,6 @@
+#### 4.64.13 - 02.05.2018
+* Download x86 version of dotnet core on win x86 - https://github.com/SAFE-Stack/SAFE-BookStore/issues/328
+
 #### 4.64.12 - 11.04.2018
 * Support for F# SDK 10.1 - https://github.com/fsharp/FAKE/pull/1857
 

@@ -535,7 +535,10 @@ let InstallDotNetSDK sdkVersion =
             try
                 let archiveFileName = 
                     if isWindows then
-                        sprintf "dotnet-dev-win-x64.%s.zip" sdkVersion
+                        if Environment.Is64BitOperatingSystem then
+                            sprintf "dotnet-dev-win-x64.%s.zip" sdkVersion
+                        else
+                            sprintf "dotnet-dev-win-x86.%s.zip" sdkVersion
                     elif isLinux then
                         sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" sdkVersion
                     else
@@ -547,7 +550,10 @@ let InstallDotNetSDK sdkVersion =
             | _ -> 
                 let archiveFileName = 
                     if isWindows then
-                        sprintf "dotnet-sdk-%s-win-x64.zip" sdkVersion
+                        if Environment.Is64BitOperatingSystem then
+                            sprintf "dotnet-sdk-%s-win-x64.zip" sdkVersion
+                        else
+                            sprintf "dotnet-sdk-%s-win-x86.zip" sdkVersion
                     elif isLinux then
                         sprintf "dotnet-sdk-%s-linux-x64.tar.gz" sdkVersion
                     else
