@@ -23,7 +23,7 @@ Target.create "BuildDoc" (fun _ ->
     Pickles.convert (fun p ->
         { p with FeatureDirectory = currentDirectory </> "Specs"
                  OutputDirectory = currentDirectory </> "SpecDocs"
-                 OutputFileFormat = Pickles.DocumentationFormat.DHTML" })
+                 OutputFileFormat = Pickles.DocumentationFormat.DHTML })
 )
 
 Target.runOrDefault "BuildDoc"
