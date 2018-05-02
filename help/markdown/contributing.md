@@ -92,6 +92,26 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 * The pull request will be updated automatically.
 
+### A note on module testing
+
+* If you make a change to a module and would like to test it in a fake script, the easiest way to do this is to create a local nuget package and reference it in your script. To do this, follow the steps below
+
+1. Create a local nuget package for the module you've changed.  
+e.g: Using dotnet cli
+
+        cd path/to/project
+        dotnet pack
+
+2. Dotnet pack will create a default nuget package with version of 1.0.0 in the `bin/Debug` of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references  
+  
+    e.g: If you wanted to test a local build of Fake.DotNet.NuGet
+
+        #r "paket: 
+        source path/to/Fake.DotNet.NuGet/bin/Debug/
+        source https://api.nuget.org/v3/index.json
+        ...Other Dependencies...
+        nuget Fake.DotNet.NuGet == 1.0.0 //" //Require version 1.0.0, which is the local build
+
 ## General considerations
 
 * Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).
