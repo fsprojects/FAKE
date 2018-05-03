@@ -2,7 +2,7 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("FAKE - F# Make Core Context Infrastructure")>]
+[<assembly: AssemblyTitleAttribute("FAKE - F# CRUD functionality for Windows registry")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
 [<assembly: AssemblyInformationalVersionAttribute("5.0.0-beta025")>]
@@ -10,7 +10,7 @@ open System.Reflection
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "FAKE - F# Make Core Context Infrastructure"
+    let [<Literal>] AssemblyTitle = "FAKE - F# CRUD functionality for Windows registry"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
     let [<Literal>] AssemblyVersion = "5.0.0"
     let [<Literal>] AssemblyInformationalVersion = "5.0.0-beta025"
