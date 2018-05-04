@@ -129,6 +129,8 @@ ProjectSection(SolutionItems) = preProject
 	build.fsx = build.fsx
 EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.FluentMigrator", "src\app\Fake.FluentMigrator\Fake.FluentMigrator.fsproj", "{F3EEDB98-2413-412D-A52B-8749B2128CA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -811,6 +813,18 @@ Global
 		{2EC1798B-3AD5-42FE-9406-F358B995ACC3}.Release|x64.Build.0 = Release|Any CPU
 		{2EC1798B-3AD5-42FE-9406-F358B995ACC3}.Release|x86.ActiveCfg = Release|Any CPU
 		{2EC1798B-3AD5-42FE-9406-F358B995ACC3}.Release|x86.Build.0 = Release|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Debug|x64.Build.0 = Debug|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Debug|x86.Build.0 = Debug|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Release|x64.ActiveCfg = Release|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Release|x64.Build.0 = Release|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -874,6 +888,7 @@ Global
 		{4E702236-A2B1-4920-B56D-4746CC0726D3} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 		{DA58D728-C36A-4DC7-8D92-F2BA13667EA5} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 		{2EC1798B-3AD5-42FE-9406-F358B995ACC3} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
+		{F3EEDB98-2413-412D-A52B-8749B2128CA8} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {058A0C5E-2216-4306-8AFB-0AE28320C26A}
