@@ -8,11 +8,12 @@
 #r "paket:
 nuget Fake.Core.Target
 nuget Fake.IO.FileSystem
-nuget Fake.Tools.Pickles //"
+nuget Fake.Tools.Pickles
+//"
 
 open Fake.Core
-open Fake.Core.TargetOperators
 open Fake.IO.FileSystemOperators
+open Fake.IO.Globbing
 open Fake.Tools
 open System.IO
 
