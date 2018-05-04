@@ -124,12 +124,12 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Mage", "src/app
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Tools.Pickles", "src/app/Fake.Tools.Pickles/Fake.Tools.Pickles.fsproj", "{2EC1798B-3AD5-42FE-9406-F358B995ACC3}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.FluentMigrator", "src/app/Fake.FluentMigrator/Fake.FluentMigrator.fsproj", "{F3EEDB98-2413-412D-A52B-8749B2128CA8}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{03CB61B6-EBB8-4C4A-B6A3-0D84D1F78A92}"
 ProjectSection(SolutionItems) = preProject
 	build.fsx = build.fsx
 EndProjectSection
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.FluentMigrator", "src\app\Fake.FluentMigrator\Fake.FluentMigrator.fsproj", "{F3EEDB98-2413-412D-A52B-8749B2128CA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

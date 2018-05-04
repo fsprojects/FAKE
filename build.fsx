@@ -279,6 +279,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
+      "Fake.FluentMigrator", "Wrapper for FluentMigrator"
       "Fake.JavaScript.Npm", "Running npm commands"
       "Fake.JavaScript.Yarn", "Running Yarn commands"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
