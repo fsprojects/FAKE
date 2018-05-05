@@ -334,7 +334,6 @@ Target.create "SetAssemblyInfo" (fun _ ->
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
         // Quick-fix: git ls-files -v . | grep ^S | cut -c3- | xargs git update-index --no-skip-worktree
-        printf "%s" assemblyFile
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> AssemblyInfoFile.createFSharp assemblyFile
         ()
