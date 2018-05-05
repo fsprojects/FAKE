@@ -129,6 +129,7 @@ group netcore
     nuget FSharp.Core ~> 4.1
     nuget FParsec
     nuget Octokit
+    nuget FluentMigrator.Runner
     nuget Newtonsoft.Json
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease

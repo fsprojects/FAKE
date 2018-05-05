@@ -279,7 +279,6 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
-      "Fake.FluentMigrator", "Wrapper for FluentMigrator"
       "Fake.JavaScript.Npm", "Running npm commands"
       "Fake.JavaScript.Yarn", "Running Yarn commands"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
@@ -296,6 +295,7 @@ let dotnetAssemblyInfos =
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
+      "Fake.Sql.FluentMigrator", "Wrapper for FluentMigrator"
       "Fake.Documentation.DocFx", "Documentation with DocFx"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup" ]
 
@@ -334,6 +334,7 @@ Target.create "SetAssemblyInfo" (fun _ ->
         // Fixes merge conflicts in AssemblyInfo.fs files, while at the same time leaving the repository in a compilable state.
         // http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-file
         // Quick-fix: git ls-files -v . | grep ^S | cut -c3- | xargs git update-index --no-skip-worktree
+        printf "%s" assemblyFile
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --skip-worktree %s" assemblyFile)
         attributes |> AssemblyInfoFile.createFSharp assemblyFile
         ()
