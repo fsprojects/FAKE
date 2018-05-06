@@ -1,5 +1,16 @@
 # Release Notes
 
+## 5.0.0-rc011 - 2018-05-06
+
+* ENHANCEMENT: Add Verbosity setting for NuGet restore - https://github.com/fsharp/FAKE/pull/1904
+* BUGFIX: Fix msbuild helper OutputPath with trailing `\` - https://github.com/fsharp/FAKE/pull/1905
+* BUGFIX: Make `Fake.Tools.Pickles` run on unix (with mono) - https://github.com/fsharp/FAKE/pull/1901
+* DOCS: Add docs on how to test modules locally - https://github.com/fsharp/FAKE/pull/1906
+* DOCS: Added some links to the documentation of SpecFlow, Pickles and ReportGenerator - https://github.com/fsharp/FAKE/pull/1907
+* BUGFIX: API-Reference documentation showing invalid tool-tips - https://github.com/fsharp/FAKE/pull/1912
+* BUGFIX: Fake being unable to compile when `intellisense.fsx` doesn't exist - https://github.com/fsharp/FAKE/issues/1908
+* ENHANCEMENT: Some improvements to the target build order algorithm - https://github.com/fsharp/FAKE/pull/1903
+
 ## 5.0.0-rc010 - 2018-05-01
 
 * BUGFIX: Some minor issues after last performance release - https://github.com/fsharp/FAKE/pull/1902
