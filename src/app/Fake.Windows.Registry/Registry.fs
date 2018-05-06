@@ -3,31 +3,31 @@
 /// ## Sample
 /// 
 /// #### Create a subkey
-/// let subkey = "Company/MyApp"
-/// Registry.createRegistrySubKey Registry.HKEYCurrentUser subkey
+///     let subkey = "Company/MyApp"
+///     Registry.createRegistrySubKey Registry.HKEYCurrentUser subkey
 ///
 /// #### Write a key-value pair to a subkey
-/// Registry.setRegistryValue Registry.HKEYCurrentUser subkey "AppType" "Premium"
-/// Registry.setRegistryValue Registry.HKEYCurrentUser subkey "Version" "1.0.4"
+///     Registry.setRegistryValue Registry.HKEYCurrentUser subkey "AppType" "Premium"
+///     Registry.setRegistryValue Registry.HKEYCurrentUser subkey "Version" "1.0.4"
 ///
 /// #### Get a list of key-value names in a subkey
-/// let values = Registry.getRegistryValueNames Registry.HKEYCurrentUser subkey
-/// values |> Array.iter (Trace.trace << (sprintf "Found value name: %s!"))
+///     let values = Registry.getRegistryValueNames Registry.HKEYCurrentUser subkey
+///     values |> Array.iter (Trace.trace << (sprintf "Found value name: %s!"))
 ///
 /// #### Read the value of a key-value pair
-/// let AppType = Registry.getRegistryValue Registry.HKEYCurrentUser subkey values.[0]
-/// Trace.trace (sprintf "You are running the %s version" AppType)
+///     let AppType = Registry.getRegistryValue Registry.HKEYCurrentUser subkey values.[0]
+///     Trace.trace (sprintf "You are running the %s version" AppType)
 ///
 /// #### Check if a value exists within a subkey
-/// let exists b = if b then Trace.trace "It exists!" else Trace.trace "It doesn't exist!"
-/// exists <| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "DateCreated"
-/// exists <| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "Version"
+///     let exists b = if b then Trace.trace "It exists!" else Trace.trace "It doesn't exist!"
+///     exists <| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "DateCreated"
+///     exists <| Registry.valueExistsForKey Registry.HKEYCurrentUser subkey "Version"
 ///
 /// #### Delete a key-value pair from a subkey
-/// Registry.deleteRegistryValue Registry.HKEYCurrentUser subkey "AppType"
+///     Registry.deleteRegistryValue Registry.HKEYCurrentUser subkey "AppType"
 ///
 /// #### Delete a subkey
-/// Registry.deleteRegistrySubKey Registry.HKEYCurrentUser subkey
+///     Registry.deleteRegistrySubKey Registry.HKEYCurrentUser subkey
 
 [<RequireQualifiedAccess>]
 module Fake.Windows.Registry
