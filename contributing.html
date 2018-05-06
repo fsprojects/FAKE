@@ -353,6 +353,40 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 </li>
 <li>The pull request will be updated automatically.</li>
 </ul>
+<h3><a name="A-note-on-module-testing" class="anchor" href="#A-note-on-module-testing">A note on module testing</a></h3>
+<ul>
+<li>If you make a change to a module and would like to test it in a fake script, the easiest way to do this is to create a local nuget package and reference it in your script. To do this, follow the steps below</li>
+<li>
+<p>Create a local nuget package for the module you've changed.<br />
+e.g: Using dotnet cli</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">cd</span> <span class="id">path</span><span class="o">/</span><span class="k">to</span><span class="o">/</span><span class="id">project</span>
+ <span class="id">dotnet</span> <span class="id">pack</span>
+</code></pre></td>
+</tr>
+</table>
+</li>
+<li>
+<p>Dotnet pack will create a default nuget package with version of 1.0.0 in the <code>bin/Debug</code> of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references</p>
+<p>e.g: If you wanted to test a local build of Fake.DotNet.NuGet</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="pp">#r</span> <span class="s">&quot;paket: </span>
+<span class="s"> source path/to/Fake.DotNet.NuGet/bin/Debug/</span>
+<span class="s"> source https://api.nuget.org/v3/index.json</span>
+<span class="s"> ...Other Dependencies...</span>
+<span class="s"> nuget Fake.DotNet.NuGet == 1.0.0 //&quot;</span> <span class="c">//Require version 1.0.0, which is the local build</span>
+</code></pre></td>
+</tr>
+</table>
+</li>
+</ul>
 <h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
 <ul>
 <li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
@@ -539,7 +573,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc010</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
 									</ul>
 								</div>
 							</div>

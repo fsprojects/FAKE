@@ -336,7 +336,7 @@
             createClient(user password)
           </code>
           <div class="tip" id="1">
-            <strong>Signature:</strong> user:string -&gt; password:string -&gt; Async&lt;(type)&gt;<br />
+            <strong>Signature:</strong> user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -356,7 +356,7 @@
             createClientWithToken(token)
           </code>
           <div class="tip" id="2">
-            <strong>Signature:</strong> token:string -&gt; Async&lt;(type)&gt;<br />
+            <strong>Signature:</strong> token:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -376,7 +376,7 @@
             createGHEClient(url user password)
           </code>
           <div class="tip" id="3">
-            <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;(type)&gt;<br />
+            <strong>Signature:</strong> url:string -&gt; user:string -&gt; password:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -396,7 +396,7 @@
             createGHEClientWithToken(url token)
           </code>
           <div class="tip" id="4">
-            <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;(type)&gt;<br />
+            <strong>Signature:</strong> url:string -&gt; token:string -&gt; Async&lt;GitHubClient&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -416,7 +416,7 @@
             createRelease(...)
           </code>
           <div class="tip" id="5">
-            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; setParams:(CreateReleaseParams -&gt; CreateReleaseParams) -&gt; client:Async&lt;(type)&gt; -&gt; Async&lt;Release&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; setParams:(CreateReleaseParams -&gt; CreateReleaseParams) -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -484,7 +484,7 @@
             draftNewRelease(...)
           </code>
           <div class="tip" id="8">
-            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;(type)&gt; -&gt; Async&lt;Release&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; prerelease:bool -&gt; notes:seq&lt;string&gt; -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -513,7 +513,7 @@
             getLastRelease(owner repoName client)
           </code>
           <div class="tip" id="9">
-            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; client:Async&lt;(type)&gt; -&gt; Async&lt;Release&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -533,7 +533,7 @@
             getReleaseByTag(...)
           </code>
           <div class="tip" id="10">
-            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; client:Async&lt;(type)&gt; -&gt; Async&lt;Release&gt;<br />
+            <strong>Signature:</strong> owner:string -&gt; repoName:string -&gt; tagName:string -&gt; client:Async&lt;GitHubClient&gt; -&gt; Async&lt;Release&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -713,7 +713,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc010</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
 									</ul>
 								</div>
 							</div>

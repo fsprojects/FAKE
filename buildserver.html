@@ -286,6 +286,9 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 <span class="l">35: </span>
 <span class="l">36: </span>
 <span class="l">37: </span>
+<span class="l">38: </span>
+<span class="l">39: </span>
+<span class="l">40: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.BuildServer.TeamCity</span>
@@ -300,6 +303,9 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
     <span class="id">TeamCity</span><span class="pn">.</span><span class="id">Installer</span>
     <span class="id">TeamFoundation</span><span class="pn">.</span><span class="id">Installer</span>
 <span class="pn">]</span>
+
+<span class="c">// If you additionally want output in the console, even on the build-server (otherwise remove this line).</span>
+<span class="id">CoreTracing</span><span class="pn">.</span><span class="id">ensureConsoleListener</span> <span class="pn">(</span><span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">File</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">WriteAllText</span><span class="pn">(</span><span class="s">&quot;myfile.txt&quot;</span><span class="pn">,</span> <span class="s">&quot;some content&quot;</span><span class="pn">)</span>
@@ -439,7 +445,7 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc010</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
 									</ul>
 								</div>
 							</div>

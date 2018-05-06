@@ -237,7 +237,9 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Convert-Gherkin-to-HTML-with-Pickles" class="anchor" href="#Convert-Gherkin-to-HTML-with-Pickles">Convert Gherkin to HTML with Pickles</a></h1>
+<p><strong>Note: This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="apidocs/v4/fake-pickleshelper.html">here</a></strong></p>
 <p><a href="http://www.picklesdoc.com/">Pickles</a> is a Living Documentation generator: it takes your Specification (written in Gherkin, with Markdown descriptions) and turns them into an always up-to-date documentation of the current state of your software - in a variety of formats.</p>
+<p><a href="apidocs/v5/fake-tools-pickles.html">API-Reference</a></p>
 <h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -260,15 +262,17 @@
 <span class="l">19: </span>
 <span class="l">20: </span>
 <span class="l">21: </span>
+<span class="l">22: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.Core.Target</span>
 <span class="s">nuget Fake.IO.FileSystem</span>
-<span class="s">nuget Fake.Tools.Pickles //&quot;</span>
+<span class="s">nuget Fake.Tools.Pickles</span>
+<span class="s">//&quot;</span>
 
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
-<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span><span class="pn">.</span><span class="id">FileSystemOperators</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">IO</span><span class="pn">.</span><span class="id">Globbing</span>
 <span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
 <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">IO</span>
 
@@ -396,7 +400,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc010</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
 									</ul>
 								</div>
 							</div>
