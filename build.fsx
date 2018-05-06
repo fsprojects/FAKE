@@ -1233,25 +1233,53 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "Default"
 
 // Test the full framework build
-"BuildSolution"
+"_BuildSolution"
     =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+"BuildSolution"
+    ==> "Default"
+    
+"_BuildSolution"
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
+
 // Test the dotnetcore build
-"DotNetPackage"
+"_DotNetPackage"
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
-    ==> "DotNetCoreCreateZipPackages"
+    ==> "FullDotNetCore"
+
+"_DotNetPublish_current"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
+
+"_BuildSolution"
+    =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+
+"_DotNetPublish_current"
     =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
+
+"DotNetPackage"
+    ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
     =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     ==> "DotNetCorePushNuGet"
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     ==> "PublishNuget"
     ==> "FastRelease"
 
