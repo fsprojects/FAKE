@@ -33,7 +33,7 @@ BuildServer.install [
 ]
 
 // If you additionally want output in the console, even on the build-server (otherwise remove this line).
-CoreTracing.addListener CoreTracing.defaultConsoleTraceListener
+CoreTracing.ensureConsoleListener ()
 
 Target.create "Test" (fun _ ->
     File.WriteAllText("myfile.txt", "some content")

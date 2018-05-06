@@ -132,8 +132,9 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
-CoreTracing.addListener CoreTracing.defaultConsoleTraceListener
-
+let current = CoreTracing.getListeners()
+if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
+    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
@@ -1174,6 +1175,7 @@ open Fake.Core.TargetOperators
 "_DotNetPackage"
     ==> "DotNetPackage"
 
+let mutable prev = None
 for runtime in "current" :: "portable" :: runtimes do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
@@ -1195,7 +1197,14 @@ for runtime in "current" :: "portable" :: runtimes do
     targetName
         ==> "DotNetPublish"
         |> ignore
- 
+
+    // Make sure we order then (when building parallel!)
+    match prev with
+    | Some prev -> prev ?=> rawTargetName |> ignore
+    | None -> "_DotNetPackage" ?=> rawTargetName |> ignore
+    prev <- Some rawTargetName
+
+
 // Full framework build
 "Clean"
     ?=> "RenameFSharpCompilerService"
