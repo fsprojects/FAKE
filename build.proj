@@ -15,10 +15,11 @@
     <RepoRootDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)"))</RepoRootDir>
     <BuildDependsOn></BuildDependsOn>
     <CoreBuildDependsOn></CoreBuildDependsOn>
+    <FakeParallel Condition="'$(Parallel)' == 'true'">--parallel 5</FakeParallel>
   </PropertyGroup>
 
   <Target Name="Build">
-    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake build' WorkingDirectory="$(RepoRootDir)" />
+    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake build $(FakeParallel)' WorkingDirectory="$(RepoRootDir)" />
   </Target>
 
   <Target Name="Pack">

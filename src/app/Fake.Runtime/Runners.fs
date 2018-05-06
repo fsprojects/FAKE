@@ -50,7 +50,10 @@ type FakeConfig =
 
 let fsiAssemblyName = "removeme"
 let cachedAssemblyPrefix = "FAKE_CACHE_"
+// This file is created immediately in order to make fsc happy
 let loadScriptName = "intellisense.fsx"
+// This file is created lazily and is not used by fsc (only for intellisense).
+let loadScriptLazyName = "intellisense_lazy.fsx"
 
 type ResultCoreCacheInfo =
   { MaybeCompiledAssembly : string option

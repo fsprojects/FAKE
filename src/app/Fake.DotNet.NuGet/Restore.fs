@@ -50,6 +50,13 @@ let findNuget defaultPath =
     with
     | _ -> defaultPath @@ "NuGet.exe"
 
+
+/// RestorePackages Verbosity settings
+type NugetRestoreVerbosity =
+| Normal
+| Quiet
+| Detailed
+
 /// RestorePackages parameter path
 type RestorePackageParams =
     { ToolPath: string
@@ -57,7 +64,8 @@ type RestorePackageParams =
       TimeOut: TimeSpan
       /// Specifies how often nuget should try to restore the packages - default is 5
       Retries: int
-      OutputPath: string}
+      OutputPath: string
+      Verbosity: NugetRestoreVerbosity }
 
 /// RestorePackage defaults parameters
 let RestorePackageDefaults =
@@ -65,7 +73,8 @@ let RestorePackageDefaults =
       Sources = []
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
-      OutputPath = "./packages" }
+      OutputPath = "./packages"
+      Verbosity = Normal }
 
 /// RestorePackages parameter path for single packages
 type RestoreSinglePackageParams =
@@ -77,7 +86,8 @@ type RestoreSinglePackageParams =
       ExcludeVersion: bool
       /// Specifies how often nuget should try to restore the packages - default is 5
       Retries: int
-      IncludePreRelease: bool }
+      IncludePreRelease: bool
+      Verbosity: NugetRestoreVerbosity }
 
 /// RestoreSinglePackageParams defaults parameters
 let RestoreSinglePackageDefaults =
@@ -88,7 +98,8 @@ let RestoreSinglePackageDefaults =
       Version = None
       ExcludeVersion = false
       Retries = 5
-      IncludePreRelease = false }
+      IncludePreRelease = false
+      Verbosity = Normal }
 
 /// [omit]
 let runNuGet toolPath timeOut args failWith =
@@ -110,12 +121,30 @@ let buildSources sources =
     |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
     |> String.separated ""
 
+
+//Args Helper Functions
+//quotePair wraps a pair of arguments in quotes -- used to pass cli args
+let private quotePair = sprintf "\"%s\" \"%s\""
+let private joinArgs = Seq.filter( not << String.IsNullOrEmpty ) >> String.concat " "
+
+let private install = quotePair "install"
+let private restore = quotePair "restore"
+let private outputDirectory = quotePair "-OutputDirectory"
+let private verbosity (v:NugetRestoreVerbosity) = 
+    quotePair "-verbosity" (match v with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "normal")
+
+
 /// [omit]
 let buildNuGetArgs setParams packageId =
     let parameters = RestoreSinglePackageDefaults |> setParams
     let sources = parameters.Sources |> buildSources
 
-    let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> Path.getFullName) + "\"" + sources
+    let args = 
+        [
+            install packageId
+            outputDirectory (Path.combine (parameters.OutputPath |> Path.getFullName) sources)
+            verbosity parameters.Verbosity
+        ] |> joinArgs
 
     match parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version with
     | (true, false, Some(v))  -> args + " \"-ExcludeVersion\" \"-Version\" \"" + v.ToString() + "\""
@@ -155,9 +184,12 @@ let RestorePackage setParams packageFile =
 
     let sources = parameters.Sources |> buildSources
 
-    let args =
-        " \"install\" \"" + (packageFile |> Path.getFullName) + "\"" +
-        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> Path.getFullName) + "\"" + sources
+    let args = 
+        [
+            install (packageFile |> Path.getFullName)
+            outputDirectory (Path.combine (parameters.OutputPath |> Path.getFullName) sources)
+            verbosity parameters.Verbosity
+        ] |> joinArgs
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
 
@@ -189,7 +221,10 @@ let RestoreMSSolutionPackages setParams solutionFile =
     let sources = parameters.Sources |> buildSources
 
     let args =
-        "\"restore\" \"" + (solutionFile |> Path.getFullName) + "\"" +
-        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> Path.getFullName) + "\"" + sources
+        [
+            restore (solutionFile |> Path.getFullName)
+            outputDirectory (Path.combine (parameters.OutputPath |> Path.getFullName) sources)
+            verbosity parameters.Verbosity
+        ] |> joinArgs
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)

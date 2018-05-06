@@ -32,6 +32,9 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
+// If you additionally want output in the console, even on the build-server (otherwise remove this line).
+CoreTracing.ensureConsoleListener ()
+
 Target.create "Test" (fun _ ->
     File.WriteAllText("myfile.txt", "some content")
 

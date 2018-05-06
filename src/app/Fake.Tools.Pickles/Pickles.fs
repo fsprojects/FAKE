@@ -217,8 +217,9 @@ let convert setParams =
     let makeProcessStartInfo info =
         { info with FileName = parameters.ToolPath
                     WorkingDirectory = "."
-                    Arguments = parameters |> buildPicklesArgs } 
+                    Arguments = parameters |> buildPicklesArgs }
+        |> Process.withFramework
     
-    let result = Process.execSimple makeProcessStartInfo  parameters.TimeOut
+    let result = Process.execSimple makeProcessStartInfo parameters.TimeOut
     
     ResultHandling.failBuildIfPicklesReportedError parameters.ErrorLevel result

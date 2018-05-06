@@ -351,21 +351,35 @@ module Target =
         match getTargetDict().TryGetValue (target) with
         | false,_ -> listAvailable()
         | true,target ->
-            Trace.logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
+            let sb = System.Text.StringBuilder()
+            let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
 
+            appendfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
             let logDependency ((t: Target), depType, level, isVisited) =
                 if verbose ||  not isVisited then
                     let indent = (String(' ', level * 3))
                     if depType = DependencyType.Soft then
-                        Trace.log <| sprintf "%s<=? %s" indent t.Name
+                        appendfn "%s<=? %s" indent t.Name
                     else
-                        Trace.log <| sprintf "%s<== %s" indent t.Name
+                        appendfn "%s<== %s" indent t.Name
 
             let _, ordered = visitDependencies logDependency target.Name
+            //appendfn ""
+            //sb.Length <- sb.Length - Environment.NewLine.Length
+            Trace.log <| sb.ToString()
 
-            Trace.log ""
-            Trace.log "The resulting target order is:"
-            Seq.iter (Trace.logfn " - %s") ordered
+    let internal printRunningOrder (targetOrder:Target[] list) =
+        let sb = System.Text.StringBuilder()
+        let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
+        appendfn "The running order is:"
+        targetOrder
+        |> List.iteri (fun index x ->
+                                //if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then
+                                appendfn "Group - %d" (index + 1)
+                                Seq.iter (appendfn "  - %s") (x|>Seq.map (fun t -> t.Name)))
+
+        sb.Length <- sb.Length - Environment.NewLine.Length
+        Trace.log <| sb.ToString()
 
     /// <summary>Writes a build time report.</summary>
     /// <param name="total">The total runtime.</param>
@@ -411,31 +425,46 @@ module Target =
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
-
         let t = get target
 
-        let targetLevels = new Dictionary<_,_>()
-        let addTargetLevel ((target: Target), _, level, _ ) =
-            match targetLevels.TryGetValue target.Name with
-            | true, mapLevel when mapLevel >= level -> ()
-            | _ -> targetLevels.[target.Name] <- level
+        let rec visitDependenciesAux fGetDependencies (visited:string list) level (depType,targetName) =
+            let target = get targetName
+            let isVisited = visited |> Seq.contains targetName
+            //fVisit (target, depType, level, isVisited)
+            let dependencies =
+                fGetDependencies target
+                |> Seq.collect (visitDependenciesAux fGetDependencies (targetName::visited) (level + 1))
+                |> Seq.distinctBy (fun t -> t.Name)
+                |> Seq.toList
+            if not isVisited then target :: dependencies
+            else dependencies
 
-        let visited, ordered = visitDependencies addTargetLevel target
+        // first find the list of targets we "have" to build
+        let targets = visitDependenciesAux (fun t -> t.Dependencies |> withDependencyType DependencyType.Hard) [] 0 (DependencyType.Hard, target)
+        let isValidTarget name = targets |> Seq.exists (fun t -> t.Name = name)
 
-        // the results are grouped by their level, sorted descending (by level) and
-        // finally grouped together in a list<TargetTemplate<unit>[]>
-        let result =
-            targetLevels
-            |> Seq.map (fun pair -> pair.Key, pair.Value)
-            |> Seq.groupBy snd
-            |> Seq.sortBy (fun (l,_) -> -l)
-            |> Seq.map (snd >> Seq.map fst >> Seq.distinct >> Seq.map get >> Seq.toArray)
-            |> Seq.toList
-
-        // Note that this build order cannot be considered "optimal"
-        // since it may introduce order where actually no dependencies
-        // exist. However it yields a "good" execution order in practice.
-        result
+        // Try to build the optimal tree by starting with the targets without dependencies and remove them from the list iteratively
+        let rec findOrder (targetLeft:Target list) =
+            let isValidTarget name = targetLeft |> Seq.exists (fun t -> t.Name = name)
+            let canBeExecuted (t:Target) =
+                t.Dependencies @ t.SoftDependencies
+                |> Seq.filter isValidTarget
+                |> Seq.isEmpty
+            let map =
+                targetLeft
+                    |> Seq.groupBy (fun t -> canBeExecuted t)
+                    |> Seq.map (fun (t, g) -> t, Seq.toList g)
+                    |> dict
+            let execute, left =
+                (match map.TryGetValue true with
+                | true, ts -> ts
+                | _ -> []),
+                match map.TryGetValue false with
+                | true, ts -> ts
+                | _ -> []
+            if List.isEmpty execute then failwithf "Could not progress build order in %A" targetLeft
+            List.toArray execute :: if List.isEmpty left then [] else findOrder left
+        findOrder targets
 
     /// Runs a single target without its dependencies... only when no error has been detected yet.
     let internal runSingleTarget (target : Target) (context:TargetContext) =
@@ -471,42 +500,34 @@ module Target =
         | Some d -> failwithf "You set a task description (%A) but didn't specify a task. Make sure to set the Description above the Target." d
         | None -> ()
 
-        let rec runTargets (targets: Target array) (context:TargetContext) =
-            let lastTarget = targets |> Array.last
-            //if not context.HasErrors && context.TryFindPrevious(lastTarget.Name).IsNone then
-            if singleTarget then
-                Trace.traceImportant "Single target mode ==> Skipping dependencies."
-                runSingleTarget lastTarget context
-            else
-               targets |> Array.fold (fun context target -> runSingleTarget target context) context
-           // else                
-
         printfn "run %s" targetName
         let watch = new System.Diagnostics.Stopwatch()
         watch.Start()
         let context = TargetContext.Create targetName args
         let context =
             Trace.tracefn "Building project with version: %s" BuildServer.buildVersion
-            // Figure out the order in in which targets can be run, and which can be run in parallel.
-            if parallelJobs > 1 then
-                Trace.tracefn "Running parallel build with %d workers" parallelJobs
+            printDependencyGraph false targetName
 
-                // determine a parallel build order
-                let order = determineBuildOrder targetName
+            // determine a build order
+            let order = determineBuildOrder targetName
+            if singleTarget
+            then Trace.traceImportant "Single target mode ==> Skipping dependencies."
+            else printRunningOrder order
+
+            // Figure out the order in in which targets can be run, and which can be run in parallel.
+            if parallelJobs > 1 && not singleTarget then
+                Trace.tracefn "Running parallel build with %d workers" parallelJobs
 
                 // run every level in parallel
                 order
                     |> Seq.fold (fun context par -> runTargetsParallel parallelJobs par context) context
             else
-                // single threaded build.
-                printDependencyGraph false targetName
-
-                // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
-                // for a single threaded build (thereby centralizing the algorithm for build order), but that
-                // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
-                let _, ordered = visitDependencies ignore targetName
-
-                runTargets (ordered |> Seq.map get |> Seq.toArray) context
+                let targets = order |> Seq.collect id |> Seq.toArray
+                let lastTarget = targets |> Array.last
+                if singleTarget then
+                    runSingleTarget lastTarget context
+                else
+                    targets |> Array.fold (fun context target -> runSingleTarget target context) context
 
         let context =        
             if context.HasError then
