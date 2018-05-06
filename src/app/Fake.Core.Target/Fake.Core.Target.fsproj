@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
     <AssemblyName>Fake.Core.Target</AssemblyName>
@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="ThisAssemblyInfo.fs" />
     <Compile Include="Target.fs" />
     <Compile Include="TargetOperators.fs" />
   </ItemGroup>

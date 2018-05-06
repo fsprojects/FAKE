@@ -300,6 +300,11 @@ module CoreTracing =
     let setTraceListeners l = setTraceListenersPrivate l
     let addListener l = setTraceListenersPrivate (l :: getListeners())
 
+    let ensureConsoleListener () =
+        let current = getListeners()
+        if current |> Seq.contains defaultConsoleTraceListener |> not then
+            setTraceListenersPrivate (defaultConsoleTraceListener :: current)
+
     /// Allows to post messages to all trace listeners
     let postMessage x =
         let msg =

@@ -61,7 +61,7 @@ open System.Reflection
 //let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
 //Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 //#endif
-#load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
+// #load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
 open System.IO
 open Fake.Api
 open Fake.Core
@@ -132,6 +132,9 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
+let current = CoreTracing.getListeners()
+if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
+    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
@@ -420,17 +423,31 @@ Target.create "GenerateDocs" (fun _ ->
 
     Directory.ensure apidocsDir
 
+    let dllsAndLibDirs (dllPattern:IGlobbingPattern) = 
+        let dlls = 
+            dllPattern
+            |> Seq.distinctBy Path.GetFileName
+            |> List.ofSeq
+        let libDirs = 
+            dlls
+            |> Seq.map Path.GetDirectoryName
+            |> Seq.distinct
+            |> List.ofSeq
+        (dlls,libDirs)         
     // FAKE 5 module documentation
     let fake5ApidocsDir = apidocsDir @@ "v5"
     Directory.ensure fake5ApidocsDir
-    let fake5Dlls =
-          !! "./src/app/Fake.*/bin/Release/**/Fake.*.dll"
-          |> Seq.distinctBy Path.GetFileName
+    
+    let fake5Dlls, fake5LibDirs = 
+        !! "./src/app/Fake.*/bin/Release/**/Fake.*.dll" 
+        |> dllsAndLibDirs
+ 
     fake5Dlls
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
             OutputDirectory = fake5ApidocsDir
             LayoutRoots =  fake5LayoutRoots
+            LibDirs = fake5LibDirs
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("api-docs-prefix", "/apidocs/v5/") :: ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
@@ -466,7 +483,7 @@ Target.create "GenerateDocs" (fun _ ->
     // FAKE 5 legacy documentation
     let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
     Directory.ensure fake5LegacyApidocsDir
-    let fake5LegacyDlls =
+    let fake5LegacyDlls, fake5LegacyLibDirs = 
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
@@ -475,14 +492,14 @@ Target.create "GenerateDocs" (fun _ ->
           -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
-        |> Seq.distinctBy Path.GetFileName
+        |> dllsAndLibDirs
 
     fake5LegacyDlls
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
             OutputDirectory = fake5LegacyApidocsDir
             LayoutRoots = legacyLayoutRoots
-            LibDirs = [ "./build" ]
+            LibDirs = fake5LegacyLibDirs
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/master" })
@@ -490,7 +507,7 @@ Target.create "GenerateDocs" (fun _ ->
     // FAKE 4 legacy documentation
     let fake4LegacyApidocsDir = apidocsDir @@ "v4"
     Directory.ensure fake4LegacyApidocsDir
-    let fake4LegacyDlls =
+    let fake4LegacyDlls, fake4LegacyLibDirs =
         !! "./packages/docs/FAKE/tools/Fake.*.dll"
           ++ "./packages/docs/FAKE/tools/FakeLib.dll"
           -- "./packages/docs/FAKE/tools/Fake.Experimental.dll"
@@ -498,14 +515,14 @@ Target.create "GenerateDocs" (fun _ ->
           -- "./packages/docs/FAKE/tools/FAKE.FSharp.Compiler.Service.dll"
           -- "./packages/docs/FAKE/tools/Fake.IIS.dll"
           -- "./packages/docs/FAKE/tools/Fake.Deploy.Lib.dll"
-        |> Seq.distinctBy Path.GetFileName
+        |> dllsAndLibDirs
 
     fake4LegacyDlls
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
             OutputDirectory = fake4LegacyApidocsDir
             LayoutRoots = fake4LayoutRoots
-            LibDirs = [ "./packages/docs/FAKE/tools" ]
+            LibDirs = fake4LegacyLibDirs
             // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
             ProjectParameters = ("api-docs-prefix", "/apidocs/v4/") ::("CurrentPage", "APIReference") :: projInfo
             SourceRepository = githubLink + "/blob/hotfix_fake4" })
@@ -1159,6 +1176,7 @@ open Fake.Core.TargetOperators
 "_DotNetPackage"
     ==> "DotNetPackage"
 
+let mutable prev = None
 for runtime in "current" :: "portable" :: runtimes do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
@@ -1180,7 +1198,14 @@ for runtime in "current" :: "portable" :: runtimes do
     targetName
         ==> "DotNetPublish"
         |> ignore
- 
+
+    // Make sure we order then (when building parallel!)
+    match prev with
+    | Some prev -> prev ?=> rawTargetName |> ignore
+    | None -> "_DotNetPackage" ?=> rawTargetName |> ignore
+    prev <- Some rawTargetName
+
+
 // Full framework build
 "Clean"
     ?=> "RenameFSharpCompilerService"
@@ -1209,25 +1234,53 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "Default"
 
 // Test the full framework build
-"BuildSolution"
+"_BuildSolution"
     =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+"BuildSolution"
+    ==> "Default"
+    
+"_BuildSolution"
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
+
 // Test the dotnetcore build
-"DotNetPackage"
+"_DotNetPackage"
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
-    ==> "DotNetCoreCreateZipPackages"
+    ==> "FullDotNetCore"
+
+"_DotNetPublish_current"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
+
+"_BuildSolution"
+    =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+
+"_DotNetPublish_current"
     =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
+
+"DotNetPackage"
+    ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
     =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     ==> "DotNetCorePushNuGet"
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     ==> "PublishNuget"
     ==> "FastRelease"
 

@@ -619,12 +619,17 @@ module Process =
         |> fun path ->
             // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
             if Environment.isWindows then
-                match tryFindFile path file with
-                | Some s -> Some s
-                | None ->
-                    Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
-                    |> String.split ';'
-                    |> Seq.tryPick (fun postFix -> tryFindFile path (file + postFix))
+                // Prefer PATHEXT, see https://github.com/fsharp/FAKE/issues/1911
+                // and https://github.com/fsharp/FAKE/issues/1899
+                Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
+                |> String.split ';'
+                |> Seq.tryPick (fun postFix -> tryFindFile path (file + postFix))
+                |> function
+                   | None ->
+                        match tryFindFile path file with
+                        | Some s -> Some s
+                        | None -> None
+                   | Some s -> Some s
             else tryFindFile path file
 
     /// Returns the AppSettings for the key - Splitted on ;
