@@ -132,6 +132,8 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
+CoreTracing.addListener CoreTracing.defaultConsoleTraceListener
+
 let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value

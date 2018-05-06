@@ -21,9 +21,9 @@ module TeamFoundation =
                 properties  
                 |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensureProp prop) (ensureProp value))
                 |> String.separated ""
-            if String.isNullOrWhiteSpace temp then "" else " " + temp            
+            if String.isNullOrWhiteSpace temp then "" else " " + temp
         printfn "##vso[%s%s]%s" action formattedProperties message
-
+        
     let private toType t o =
         o |> Option.map (fun value -> t, value)
     let private toList t o =
