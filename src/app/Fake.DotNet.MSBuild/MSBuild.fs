@@ -515,7 +515,7 @@ module MSBuild =
         | Some path ->
             (fun project ->
                 let outputPath = path |> String.trimSeparator
-                ("OutputPath", (sprintf @"%s\\" outputPath)) :: (properties project)
+                ("OutputPath", (sprintf @"%s\" outputPath)) :: (properties project)
             )
         | None -> properties
 
