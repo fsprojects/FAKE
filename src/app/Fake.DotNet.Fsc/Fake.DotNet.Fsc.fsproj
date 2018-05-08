@@ -20,8 +20,19 @@
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FSharp.Compiler.Service" Version="22.0.3" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+    <Reference Include="FAKE.FSharp.Compiler.Service">
+        <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FAKE.FSharp.Compiler.Service.dll</HintPath>
+        <Private>True</Private>
+        <Paket>False</Paket>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <Reference Include="FAKE.FSharp.Compiler.Service">
+        <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\netstandard2.0\FAKE.FSharp.Compiler.Service.dll</HintPath>
+        <Private>True</Private>
+        <Paket>False</Paket>
+    </Reference>
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
