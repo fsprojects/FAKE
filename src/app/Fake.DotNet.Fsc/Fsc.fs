@@ -297,35 +297,78 @@ type FscParam =
             Debug false        
         ]
 
-/// Compiles the given source files with the given options. If no options
+///Common Error Result type for tracing errors
+type FscResultMessage = 
+    | Warning of string 
+    | Error of string
+
+/// Type signature for a Compiler Function
+type CompilerFunc = string [] -> ( FscResultMessage [] * int )
+
+
+/// Computes output type and appends source files to argument list
+let private makeArgsList (opts: string list) (srcFiles: string list) = 
+    let outputArg arg = arg = "-o" || arg.StartsWith("--out:")
+    let libTarget arg = arg = "-a" || arg = "--target:library"
+    let hasOutputArg = Seq.exists outputArg
+    let hasLibTarget = Seq.exists libTarget
+
+    // If output file name is specified, pass it on to fsc.
+    if opts |> hasOutputArg 
+        then opts @ srcFiles
+    // But if it's not, then figure out what it should be.
+    else 
+        let outExt = if opts |> hasLibTarget then ".dll" else ".exe"
+        "-o" :: Path.changeExtension outExt (List.head srcFiles) :: opts @ srcFiles
+    |> Array.ofList
+
+/// Reports Fsc compile errors to the console using Fake.Core.Trace
+let private reportErrors (errors: FscResultMessage []) = 
+    for e in errors do
+        match e with
+        | FscResultMessage.Warning errMsg -> Trace.traceImportant errMsg
+        | FscResultMessage.Error errMsg -> Trace.traceError errMsg
+
+/// Compiles the given source files with the given options using either
+/// the internal FCS or an external fsc.exe. If no options
 /// given (i.e. the second argument is an empty list), by default tries
 /// to behave the same way as would the command-line 'fsc.exe' tool.
-let compileFiles (srcFiles : string list) (opts : string list) : int = 
-    let scs = FSharpChecker.Create()
-    
-    let optsArr = 
-        // If output file name is specified, pass it on to fsc.
-        if Seq.exists (fun e -> e = "-o" || e.StartsWith("--out:")) opts then opts @ srcFiles
-        // But if it's not, then figure out what it should be.
-        else 
-            let outExt = 
-                if Seq.exists (fun e -> e = "-a" || e = "--target:library") opts then ".dll"
-                else ".exe"
-            "-o" :: Path.changeExtension outExt (List.head srcFiles) :: opts @ srcFiles
-        |> Array.ofList
+let compileFiles (compiler: CompilerFunc) (srcFiles : string list) (opts : string list) : int = 
+    let optsArr = makeArgsList opts srcFiles
 
     Trace.trace <| sprintf "FSC with args:%A" optsArr
+    let errors, exitCode = compiler optsArr
+    
+    reportErrors errors
+    exitCode
+
+/// Common compiler arg prep code
+let private doCompile (compiler: CompilerFunc) (fscParams : FscParam list) (inputFiles : string list) : int = 
+    let inputFiles = inputFiles |> Seq.toList
+    let taskDesc = inputFiles |> FakeString.separated ", "
+    let fscParams = if fscParams = [] then FscParam.Defaults else fscParams
+    let argList = fscParams |> List.map string
+
+    use __ = Trace.traceTask "Fsc " taskDesc
+    let res = compileFiles compiler inputFiles argList
+    res
+
+
+/// The internal FCS Compiler
+let private scsCompile optsArr = 
+    let scs = FSharpChecker.Create()
     // Always prepend "fsc.exe" since fsc compiler skips the first argument
     let optsArr = Array.append [|"fsc.exe"|] optsArr
-    let errors, exitCode = scs.Compile optsArr |> Async.RunSynchronously
-    // Better compile reporting thanks to:
-    // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
-    for e in errors do
-        let errMsg = e.ToString()
+    let errors, exitcode = scs.Compile optsArr |> Async.RunSynchronously
+
+    /// Better compile reporting thanks to:
+    /// https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
+    let errors = errors |> Array.map (fun (e: FSharpErrorInfo) -> 
         match e.Severity with
-        | FSharpErrorSeverity.Warning -> Trace.traceImportant errMsg
-        | FSharpErrorSeverity.Error -> Trace.traceError errMsg
-    exitCode
+            | FSharpErrorSeverity.Error -> FscResultMessage.Error e.Message
+            | FSharpErrorSeverity.Warning -> FscResultMessage.Warning e.Message)
+
+    errors, exitcode
 
 /// Compiles the given F# source files with the specified parameters.
 ///
@@ -348,13 +391,7 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
 ///                 Debug false 
 ///             ]
 let compile (fscParams : FscParam list) (inputFiles : string list) : int = 
-    let inputFiles = inputFiles |> Seq.toList
-    let taskDesc = inputFiles |> FakeString.separated ", "
-    let fscParams = if fscParams = [] then FscParam.Defaults else fscParams
-    let argList = fscParams |> List.map string
-    use __ = Trace.traceTask "Fsc " taskDesc
-    let res = compileFiles inputFiles argList
-    res
+    doCompile scsCompile fscParams inputFiles
 
 /// Compiles one or more F# source files with the specified parameters.
 /// ## Parameters
@@ -373,4 +410,40 @@ let compile (fscParams : FscParam list) (inputFiles : string list) : int =
 ///             ]
 let Compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
     let res = compile fscParams inputFiles
+    if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
+
+
+/// An externally referenced compiler
+let private externalCompile (fscTool: string) (optsArr: string []) = 
+    let args = String.Join(" ", optsArr)
+    let r = 
+        Process.execWithResult (fun info -> 
+        { info with
+            FileName = fscTool
+            Arguments = args
+        } ) TimeSpan.MaxValue
+
+    let errors = r.Errors |> List.map FscResultMessage.Warning |> List.toArray
+    errors, r.ExitCode
+
+/// Compiles one or more F# source files with the specified parameters 
+/// using an existing fsc.exe installed on the system
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the default Fsc parameters.
+///  - `inputFiles` - The F# input files.
+///
+/// ## Sample
+///
+///     ["file1.fs"; "file2.fs"]
+///     |> CompileExternal "path/to/fsc.exe" 
+///                 [Out "" 
+///                 Target Exe
+///                 Platform AnyCpu
+///                 References []
+///                 Debug false 
+///             ]
+let CompileExternal (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : unit = 
+    let compile = externalCompile fscTool
+    let res = doCompile compile fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])

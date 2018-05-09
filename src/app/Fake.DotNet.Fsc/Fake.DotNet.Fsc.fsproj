@@ -15,21 +15,22 @@
     <Compile Include="Fsc.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
-    <Reference Include="FAKE.FSharp.Compiler.Service">
-        <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FAKE.FSharp.Compiler.Service.dll</HintPath>
+    <Reference Include="FSharp.Compiler.Service">
+        <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FSharp.Compiler.Service.dll</HintPath>
         <Private>True</Private>
         <Paket>False</Paket>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <Reference Include="FAKE.FSharp.Compiler.Service">
-        <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\netstandard2.0\FAKE.FSharp.Compiler.Service.dll</HintPath>
+    <Reference Include="FSharp.Compiler.Service">
+        <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\netstandard2.0\FSharp.Compiler.Service.dll</HintPath>
         <Private>True</Private>
         <Paket>False</Paket>
     </Reference>
