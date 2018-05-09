@@ -299,6 +299,7 @@ let dotnetAssemblyInfos =
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
+      "Fake.Sql.FluentMigrator", "Wrapper for FluentMigrator"
       "Fake.Documentation.DocFx", "Documentation with DocFx"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup" ]
 
