@@ -9,6 +9,7 @@ open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
+open Fake.Core
 
 /// A type to represent MSBuild project files.
 type MSBuildProject = XDocument
@@ -16,13 +17,11 @@ type MSBuildProject = XDocument
 /// An exception type to signal build errors.
 exception BuildException of string*list<string>
   with
-    override x.ToString() = x.Data0.ToString() + "\r\n" + (String.separated "\r\n" x.Data1)
+    override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
 
-type MSBuildEntry = {
-    Version: string;
-    Paths: string list;
-}
-
+type MSBuildEntry =
+    { Version: string
+      Paths: string list }
 
 /// MSBuild verbosity option
 type MSBuildVerbosity =
@@ -57,10 +56,9 @@ type MSBuildFileLoggerConfig =
       Parameters : MSBuildLogParameter list option }
 
 type MSBuildDistributedLoggerConfig =
-    {
-        ClassName : string option
-        AssemblyPath : string
-        Parameters : (string * string) list option }
+    { ClassName : string option
+      AssemblyPath : string
+      Parameters : (string * string) list option }
 
 module private MSBuildExe =
   let knownMSBuildEntries =
@@ -89,7 +87,6 @@ module private MSBuildExe =
   /// Versions of Mono prior to this one have faulty implementations of MSBuild
   /// NOTE: in System.Version 5.0 >= 5.0.0.0 is false while 5.0.0.0 >= 5.0 is true...
   let monoVersionToUseMSBuildOn = System.Version("5.0")
-
 
   /// Tries to detect the right version of MSBuild.
   ///
@@ -276,7 +273,6 @@ module MSBuild =
 
   /// [omit]
   let processReferences elementName f projectFileName (doc : XDocument) =
-    let fi = FileInfo.ofPath projectFileName
     doc
         |> getReferenceElements elementName projectFileName
         |> Seq.iter (fun (a, fileName) -> a.Value <- f fileName)
@@ -293,7 +289,6 @@ module MSBuild =
       |> Seq.collect getProjectReferences
       |> Seq.append references
       |> Set.ofSeq
-
 
   /// [omit]
   let internal getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger warnAsError nowarn fileLoggers binaryLoggers distributedFileLoggers properties =
@@ -450,20 +445,6 @@ module MSBuild =
   let private pathToLogger = typedefof<MSBuildParams>.Assembly.Location
 #endif
 
-  /// Defines the loggers to use for MSBuild task
-  let mutable private MSBuildLoggers =
-    []
-    //[ ErrorLoggerName ]
-    //|> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
-
-  do
-    // Add MSBuildLogger to track build messages
-    match BuildServer.buildServer with
-    | BuildServer.AppVeyor ->
-        MSBuildLoggers <- @"""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" :: MSBuildLoggers
-    //| BuildServer.TeamCity -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
-    | _ -> ()
-
   /// Runs a MSBuild project
   /// ## Parameters
   ///  - `setParams` - A function that overwrites the default MSBuildParams
@@ -492,12 +473,7 @@ module MSBuild =
         |> setParams
     let argsString = msBuildParams |> serializeMSBuildParams
 
-    let errorLoggerParam =
-        MSBuildLoggers
-        |> List.map (fun a -> Some ("logger", a))
-        |> serializeArgs
-
-    let args = Process.toParam project + " " + argsString + " " + errorLoggerParam
+    let args = Process.toParam project + " " + argsString
     Trace.tracefn "Building project: %s\n  %s %s" project msBuildParams.ToolPath args
     let exitCode =
         Process.execSimple (fun info ->
@@ -530,15 +506,18 @@ module MSBuild =
     let projects = projects |> Seq.toList
 
     let output =
-        if String.isNullOrEmpty outputPath then ""
-        else
-            outputPath
-            |> Path.getFullName
-            |> String.trimSeparator
+        match String.liftString outputPath with
+        | Some path -> Some (Path.getFullName path)
+        | None -> None
 
     let properties =
-        if String.isNullOrEmpty output then properties
-        else fun x -> ("OutputPath", output) :: (properties x)
+        match output with
+        | Some path ->
+            (fun project ->
+                let outputPath = path |> String.trimSeparator
+                ("OutputPath", (sprintf @"%s\" outputPath)) :: (properties project)
+            )
+        | None -> properties
 
     let dependencies =
         projects
@@ -553,11 +532,13 @@ module MSBuild =
             Properties = projectParams.Properties @ properties project }
 
     projects
-      |> List.filter (fun project -> not <| Set.contains project dependencies)
-      |> List.iter (fun project -> build (setBuildParam project) project)
+    |> List.filter (fun project -> not <| Set.contains project dependencies)
+    |> List.iter (fun project -> build (setBuildParam project) project)
+
     // it makes no sense to output the root dir content here since it does not contain the build output
-    if String.isNotNullOrEmpty output then !!(outputPath @@ "/**/*.*") |> Seq.toList
-    else []
+    match output with
+    | Some path -> !! (path @@ "/**/*.*") |> Seq.toList
+    | None -> []
 
   /// Builds the given project files or solution files and collects the output files.
   /// ## Parameters
@@ -608,8 +589,8 @@ module MSBuild =
   ///  - `configuration` - MSBuild configuration.
   ///  - `projectFile` - The project file path.
   let buildWebsiteConfig setParams outputPath configuration projectFile  =
-    use t = Trace.traceTask "BuildWebsite" projectFile
-    let projectName = (FileInfo.ofPath projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
+    use __ = Trace.traceTask "BuildWebsite" projectFile
+    let projectName = Path.GetFileNameWithoutExtension projectFile
 
     let slashes (dir : string) =
         dir.Replace("\\", "/").TrimEnd('/')
@@ -630,7 +611,7 @@ module MSBuild =
           "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
-    !!(projectDir + "/bin/*.*") |> Shell.Copy(outputPath + "/" + projectName + "/bin/")
+    !! (projectDir + "/bin/*.*") |> Shell.copy(outputPath + "/" + projectName + "/bin/")
 
   /// Builds the given web project file with debug configuration and copies it to the given outputPath.
   /// ## Parameters

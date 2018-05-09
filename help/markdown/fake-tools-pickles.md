@@ -1,6 +1,10 @@
 # Convert Gherkin to HTML with Pickles
 
+**Note: This documentation is for FAKE version 5.0 or later. The old documentation can be found [here](apidocs/v4/fake-pickleshelper.html)** 
+
 [Pickles] is a Living Documentation generator: it takes your Specification (written in Gherkin, with Markdown descriptions) and turns them into an always up-to-date documentation of the current state of your software - in a variety of formats.
+
+[API-Reference](apidocs/v5/fake-tools-pickles.html)
 
 ## Minimal working example
 
@@ -8,11 +12,12 @@
 #r "paket:
 nuget Fake.Core.Target
 nuget Fake.IO.FileSystem
-nuget Fake.Tools.Pickles //"
+nuget Fake.Tools.Pickles
+//"
 
 open Fake.Core
-open Fake.Core.TargetOperators
 open Fake.IO.FileSystemOperators
+open Fake.IO.Globbing
 open Fake.Tools
 open System.IO
 
