@@ -1123,7 +1123,7 @@ Target.create "FastRelease" (fun _ ->
     |> Async.RunSynchronously
 )
 
-Target.create "DeployGitLab" (fun _ -> ())
+Target.create "PublishStaging" (fun _ -> ())
 
 Target.create "BuildArtifacts" (fun _ ->
     runtimes @ [ "portable"; "packages" ]
@@ -1137,6 +1137,14 @@ Target.create "BuildArtifacts" (fun _ ->
     !! (nugetLegacyDir </> "**/*.nupkg")
     |> Zip.zip nugetLegacyDir legacyZip
     Trace.publish ImportData.BuildArtifact legacyZip
+
+    let buildCache = "temp/build-cache.zip"
+    !! (".fake" </> "build.fsx" </> "*.*")
+    ++ "paket.dependencies"
+    ++ "paket.lock"
+    |> Zip.zip "." buildCache
+    Trace.publish ImportData.BuildArtifact buildCache
+
 )
 
 open System
@@ -1310,9 +1318,9 @@ for runtime in "current" :: "portable" :: runtimes do
 
 // Gitlab staging (myget release)
 "PublishNuget"
-    ==> "DeployGitLab"
+    ==> "PublishStaging"
 "DotNetCorePushNuGet"
-    ==> "DeployGitLab"
+    ==> "PublishStaging"
 
 // If 'Default' happens it needs to happen before 'EnsureTestsRun'
 "Default"
