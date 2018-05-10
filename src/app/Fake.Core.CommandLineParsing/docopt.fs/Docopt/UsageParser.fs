@@ -1,7 +1,7 @@
 ﻿namespace Fake.Core
 
 exception DocoptException of string
-  with override x.ToString () = sprintf "DocoptException: %s" x.Data0
+  with override x.Message = sprintf "DocoptException: %s" x.Data0
 
 namespace Fake.Core.CommandLineParsing
 
