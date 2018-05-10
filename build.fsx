@@ -788,6 +788,7 @@ Target.create "CreateNuGet" (fun _ ->
           //|> Seq.iter DeleteFile
           ()
 
+        Directory.ensure docsDir
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Shell.copy nugetToolsDir
