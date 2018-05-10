@@ -187,6 +187,9 @@
     <Compile Include="..\..\app\Fake.Core.Process\GuardedAwaitObservable.fs">
       <Link>Fake.Core.Process/GuardedAwaitObservable.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.Process\CmdLineParsing.fs">
+      <Link>Fake.Core.Process/CmdLineParsing.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Core.Process\Process.fs">
       <Link>Fake.Core.Process/Process.fs</Link>
     </Compile>
@@ -390,6 +393,9 @@
     </Compile>
     <Compile Include="..\..\app\Fake.Sql.DacPac\Sql.DacPac.fs">
       <Link>Fake.Sql.DacPac\Sql.DacPac.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Windows.Registry\Registry.fs">
+      <Link>Fake.Windows.Registry\Registry.fs</Link>
     </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />

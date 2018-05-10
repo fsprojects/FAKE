@@ -649,7 +649,7 @@ module Target =
                 | None -> fDefault singleTarget parallelJobs arguments
         | Choice2Of2 e ->
             // To ensure exit code.
-            failwithf "Usage error: %s\n%s" e.Message TargetCli.targetCli
+            raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =

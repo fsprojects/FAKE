@@ -297,12 +297,11 @@ module MSBuild =
 
   let private serializeArgs args =
     args
-    |> Seq.map (function
-           | None -> ""
-           | Some(k, v) ->
+    |> Seq.choose id
+    |> Seq.map (fun (k, v) ->
                "/" + k + (if String.isNullOrEmpty v then ""
                           else ":" + v))
-    |> String.separated " "
+    |> Args.toWindowsCommandLine
 
   /// [omit]
   let serializeMSBuildParams (p : MSBuildParams) =
@@ -319,11 +318,7 @@ module MSBuild =
         | [] -> None
         | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
 
-    let escapePropertyValue (v:string) =
-        let escapedQuotes = v.Replace("\"", "\\\"")
-        if escapedQuotes.EndsWith "\\" then escapedQuotes + "\\" // Fix https://github.com/fsharp/FAKE/issues/869
-        else escapedQuotes
-    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k (escapePropertyValue v)))
+    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=%s" k v))
 
     let maxcpu =
         match p.MaxCpuCount with
@@ -416,12 +411,12 @@ module MSBuild =
         let serializeDLogger (dlogger : MSBuildDistributedLoggerConfig) =
             sprintf "%s%s%s"
                 (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name)
-                (sprintf "\"%s\"" dlogger.AssemblyPath)
+                (sprintf "%s" dlogger.AssemblyPath)
                 (match dlogger.Parameters with
                     | None -> ""
                     | Some vars -> vars
                                     |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s;" acc k v) ""
-                                    |> sprintf ";\"%s\""
+                                    |> sprintf ";%s"
                 )
 
         let createLoggerString cl fl =
@@ -515,7 +510,7 @@ module MSBuild =
         | Some path ->
             (fun project ->
                 let outputPath = path |> String.trimSeparator
-                ("OutputPath", (sprintf @"%s\\" outputPath)) :: (properties project)
+                ("OutputPath", (sprintf @"%s\" outputPath)) :: (properties project)
             )
         | None -> properties
 

@@ -78,6 +78,18 @@ type RunArguments = {
    IsBuild : bool // Did the user call `fake build` or `fake run`?
 }
 
+let reportExn (verb:VerboseLevel) exn =
+  use logPaket =
+    // Required when 'silent' because we use paket API for error printing
+    if verb = Trace.Silent then
+      Paket.Logging.event.Publish
+      |> Observable.subscribe Paket.Logging.traceToConsole
+    else { new IDisposable with member __.Dispose () = () }      
+  traceError "Script failed"
+  if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
+      Paket.Logging.printErrorExt true true true exn
+  else Paket.Logging.printErrorExt verb.PrintVerbose verb.PrintVerbose false exn
+
 let runOrBuild (args : RunArguments) =
   if args.VerboseLevel.PrintVerbose then
     Trace.log (sprintf "runOrBuild (%A)" args)
@@ -147,17 +159,7 @@ let runOrBuild (args : RunArguments) =
         Fake.Profile.print true sw.Elapsed
   with
   | exn ->
-      use logPaket =
-        // Required when 'silent' because we use paket API for error printing
-        if args.VerboseLevel = Trace.Silent then
-          Paket.Logging.event.Publish
-          |> Observable.subscribe Paket.Logging.traceToConsole
-        else { new IDisposable with member __.Dispose () = () }      
-      traceError "Script failed"
-      if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
-          Paket.Logging.printErrorExt true true true exn
-      else Paket.Logging.printErrorExt args.VerboseLevel.PrintVerbose args.VerboseLevel.PrintVerbose false exn
-
+      reportExn args.VerboseLevel exn
       //let isKnownException = exn :? FAKEException
       //if not isKnownException then
       //    sendTeamCityError exn.Message
@@ -294,9 +296,9 @@ let main (args:string[]) =
       parseAction rawResults
     exitCode <- handleAction verbLevel results
   with
-  | :? DocoptException as e ->
-    printfn "Usage error: %s" e.Message
+  | exn ->
     printfn "%s" Cli.fakeUsage
+    reportExn VerboseLevel.Normal exn
     exitCode <- 1
   Console.OutputEncoding <- encoding
 #if !NETSTANDARD1_6

@@ -2,5 +2,4 @@ group netcore
 
 FSharp.Core
 NETStandard.Library
-Expecto
-FParsec
+Microsoft.Win32.Registry

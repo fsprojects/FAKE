@@ -132,9 +132,10 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
-let current = CoreTracing.getListeners()
-if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
-    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
+//let current = CoreTracing.getListeners()
+//if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
+//    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
+
 let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
@@ -294,6 +295,7 @@ let dotnetAssemblyInfos =
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
+      "Fake.Windows.Registry", "CRUD functionality for Windows registry"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
@@ -587,8 +589,10 @@ Target.create "Test" (fun _ ->
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
-    !! (testDir @@ "*.IntegrationTests.dll")
-    |> NUnit3.run id
+    let processResult =
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.0/Fake.Core.IntegrationTests.dll" "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
 )
 
 
@@ -1233,25 +1237,53 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "Default"
 
 // Test the full framework build
-"BuildSolution"
+"_BuildSolution"
     =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
+    ==> "Default"
+
+"BuildSolution"
+    ==> "Default"
+    
+"_BuildSolution"
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
+
 // Test the dotnetcore build
-"DotNetPackage"
+"_DotNetPackage"
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
-    ==> "DotNetCoreCreateZipPackages"
+    ==> "FullDotNetCore"
+
+"_DotNetPublish_current"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
+
+"_DotNetPackage"
+    =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+
+"_DotNetPublish_current"
     =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
+    ==> "FullDotNetCore"
+
+"DotNetPackage"
+    ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 "EnsureTestsRun"
     =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     ==> "DotNetCorePushNuGet"
+    ==> "FastRelease"
+
+"EnsureTestsRun"
     ==> "PublishNuget"
     ==> "FastRelease"
 
