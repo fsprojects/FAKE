@@ -1257,7 +1257,7 @@ for runtime in "current" :: "portable" :: runtimes do
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 
-"_BuildSolution"
+"_DotNetPackage"
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
 
 "_DotNetPublish_current"

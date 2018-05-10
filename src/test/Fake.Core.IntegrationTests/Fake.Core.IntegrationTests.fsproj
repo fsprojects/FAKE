@@ -6,9 +6,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="TestHelpers.fs" />
     <Compile Include="SimpleHelloWorldTests.fs" />
     <Compile Include="Main.fs" />
