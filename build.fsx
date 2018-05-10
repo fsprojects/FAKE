@@ -1134,7 +1134,9 @@ Target.create "BuildArtifacts" (fun _ ->
     |> List.iter (publish)
 
     let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    publish chocoPackage
+    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" release.NugetVersion
+    File.Copy(chocoPackage, chocoTargetPackage, true)
+    publish chocoTargetPackage
 
     let legacyZip = "nuget/fake-legacy-packages.zip"
     !! (nugetLegacyDir </> "**/*.nupkg")
@@ -1267,7 +1269,8 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "BuildArtifacts"
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
-
+"DotNetCoreCreateZipPackages"
+    ==> "BuildArtifacts"
 
 // Test the full framework build
 "_BuildSolution"
