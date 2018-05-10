@@ -16,11 +16,11 @@
     <BuildDependsOn></BuildDependsOn>
     <CoreBuildDependsOn></CoreBuildDependsOn>
     <FakeParallel Condition="'$(Parallel)' == 'true'">--parallel 5</FakeParallel>
-    <FakeTargetArg Condition="'$(FakeTarget)' != ''">target $(FakeTarget)</FakeParallel>
+    <FakeTargetArg Condition="'$(FakeTarget)' != ''">target $(FakeTarget)</FakeTargetArg>
   </PropertyGroup>
 
   <Target Name="Build">
-    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake build $(FakeParallel)' WorkingDirectory="$(RepoRootDir)" />
+    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake build $(FakeParallel) $(FakeTargetArg)' WorkingDirectory="$(RepoRootDir)" />
   </Target>
 
   <Target Name="Pack">
