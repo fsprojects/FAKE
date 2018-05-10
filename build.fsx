@@ -43,15 +43,11 @@ open System.Reflection
 #else
 // Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
 #r "packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
-//#if DESIGNTIME
 #I "packages/build/FAKE/tools/"
 #r "FakeLib.dll"
 #r "Paket.Core.dll"
 #r "packages/build/System.Net.Http/lib/net46/System.Net.Http.dll"
 #r "packages/build/Octokit/lib/net45/Octokit.dll"
-//#else
-//#r "src/app/FakeLib/bin/Debug/FakeLib.dll"
-//#endif
 #I "packages/build/SourceLink.Fake/tools/"
 //#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
