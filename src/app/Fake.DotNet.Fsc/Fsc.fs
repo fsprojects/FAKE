@@ -8,8 +8,6 @@ open Microsoft.FSharp.Compiler.SourceCodeServices
 open Fake.IO
 open Fake.Core
 
-//Aliases
-module FakeString = Fake.Core.String
 
 type TargetType = 
     /// Build a console executable
@@ -333,7 +331,7 @@ let private reportErrors (errors: FscResultMessage []) =
 /// the internal FCS or an external fsc.exe. If no options
 /// given (i.e. the second argument is an empty list), by default tries
 /// to behave the same way as would the command-line 'fsc.exe' tool.
-let compileFiles (compiler: CompilerFunc) (srcFiles : string list) (opts : string list) : int = 
+let private compileFiles (compiler: CompilerFunc) (srcFiles : string list) (opts : string list) : int = 
     let optsArr = makeArgsList opts srcFiles
 
     Trace.trace <| sprintf "FSC with args:%A" optsArr
@@ -345,7 +343,7 @@ let compileFiles (compiler: CompilerFunc) (srcFiles : string list) (opts : strin
 /// Common compiler arg prep code
 let private doCompile (compiler: CompilerFunc) (fscParams : FscParam list) (inputFiles : string list) : int = 
     let inputFiles = inputFiles |> Seq.toList
-    let taskDesc = inputFiles |> FakeString.separated ", "
+    let taskDesc = inputFiles |> String.separated ", "
     let fscParams = if fscParams = [] then FscParam.Defaults else fscParams
     let argList = fscParams |> List.map string
 
@@ -354,6 +352,9 @@ let private doCompile (compiler: CompilerFunc) (fscParams : FscParam list) (inpu
     res
 
 
+(*
+Compile using the internals of FCS
+*)
 /// The internal FCS Compiler
 let private scsCompile optsArr = 
     let scs = FSharpChecker.Create()
@@ -384,13 +385,13 @@ let private scsCompile optsArr =
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> compile [Out "" 
+///     |> CompileWithResult [Out "" 
 ///                 Target Exe
 ///                 Platform AnyCpu
 ///                 References []
 ///                 Debug false 
 ///             ]
-let compile (fscParams : FscParam list) (inputFiles : string list) : int = 
+let CompileWithResult (fscParams : FscParam list) (inputFiles : string list) : int = 
     doCompile scsCompile fscParams inputFiles
 
 /// Compiles one or more F# source files with the specified parameters.
@@ -409,13 +410,16 @@ let compile (fscParams : FscParam list) (inputFiles : string list) : int =
 ///                 Debug false 
 ///             ]
 let Compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
-    let res = compile fscParams inputFiles
+    let res = CompileWithResult fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
 
 
-/// An externally referenced compiler
-let private externalCompile (fscTool: string) (optsArr: string []) = 
-    let args = String.Join(" ", optsArr)
+(*
+Compile using a path to Fsc.exe
+*)
+/// An external fsc.exe compiler
+let private extFscCompile (fscTool: string) (optsArr: string []) = 
+    let args = (Arguments.OfArgs optsArr).ToWindowsCommandLine
     let r = 
         Process.execWithResult (fun info -> 
         { info with
@@ -426,10 +430,37 @@ let private externalCompile (fscTool: string) (optsArr: string []) =
     let errors = r.Errors |> List.map FscResultMessage.Warning |> List.toArray
     errors, r.ExitCode
 
+/// Compiles the given F# source files with the specified parameters.
+///
+/// ## Parameters
+///
+///  - `fscTool` - Path to an existing fsc.exe executable
+///  - `setParams` - Function used to overwrite the default Fsc parameters.
+///  - `inputFiles` - The F# input files.
+///
+/// ## Returns
+///
+/// The exit status code of the compile process.
+///
+/// ## Sample
+///
+///     ["file1.fs"; "file2.fs"]
+///     |> CompileExternalWithResult "path/to/fsc.exe" 
+///                 [Out "" 
+///                 Target Exe
+///                 Platform AnyCpu
+///                 References []
+///                 Debug false 
+///             ]          
+let CompileExternalWithResult (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : int = 
+    let compile = extFscCompile fscTool
+    doCompile compile fscParams inputFiles
+
 /// Compiles one or more F# source files with the specified parameters 
 /// using an existing fsc.exe installed on the system
 /// ## Parameters
 ///
+///  - `fscTool` - Path to an existing fsc.exe executable
 ///  - `setParams` - Function used to overwrite the default Fsc parameters.
 ///  - `inputFiles` - The F# input files.
 ///
@@ -444,6 +475,6 @@ let private externalCompile (fscTool: string) (optsArr: string []) =
 ///                 Debug false 
 ///             ]
 let CompileExternal (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : unit = 
-    let compile = externalCompile fscTool
+    let compile = extFscCompile fscTool
     let res = doCompile compile fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
