@@ -5,7 +5,9 @@ open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open System
-open NUnit.Framework
+//open NUnit.Framework
+open Expecto
+open Expecto.Flip
 open System
 open System.IO
 
@@ -32,7 +34,7 @@ let prepare scenario =
     if Directory.Exists scenarioPath then
       Directory.Delete(scenarioPath, true)
     Directory.ensure scenarioPath
-    Shell.CopyDir scenarioPath originalScenarioPath (fun _ -> true)
+    Shell.copyDir scenarioPath originalScenarioPath (fun _ -> true)
 
 let directFakeInPath command scenarioPath target =
     let result =
@@ -53,8 +55,7 @@ let handleAndFormat f =
     with FakeExecutionFailed(result) ->
         let stdOut = String.Join("\n", result.Messages).Trim()
         let stdErr = String.Join("\n", result.Errors)
-        Assert.Fail(
-            sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr)
+        Expect.isTrue (sprintf "fake.exe failed with code %d\nOut: %s\nError: %s" result.ExitCode stdOut stdErr) false
         reraise() // for return value
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null

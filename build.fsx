@@ -132,9 +132,10 @@ BuildServer.install [
     TeamFoundation.Installer
 ]
 
-let current = CoreTracing.getListeners()
-if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
-    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
+//let current = CoreTracing.getListeners()
+//if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
+//    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
+
 let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
@@ -587,8 +588,10 @@ Target.create "Test" (fun _ ->
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
-    !! (testDir @@ "*.IntegrationTests.dll")
-    |> NUnit3.run id
+    let processResult =
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.0/Fake.Core.IntegrationTests.dll" "--summary"
+
+    if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
 )
 
 
