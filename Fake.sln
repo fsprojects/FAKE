@@ -130,6 +130,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.IntegrationTests", "src/test/Fake.Core.IntegrationTests/Fake.Core.IntegrationTests.fsproj", "{AFEF80BC-0B9A-42D8-A830-3FF1946DF51C}"
+EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Windows.Registry", "src/app/Fake.Windows.Registry/Fake.Windows.Registry.fsproj", "{71259EF7-41FD-4068-BD85-E4C7F67EAC25}"
 EndProject
 Global
