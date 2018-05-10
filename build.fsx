@@ -1127,24 +1127,27 @@ Target.create "FastRelease" (fun _ ->
 Target.create "PublishStaging" (fun _ -> ())
 
 Target.create "BuildArtifacts" (fun _ ->
+    let publish f =
+        Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
     runtimes @ [ "portable"; "packages" ]
     |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-    |> List.iter (Trace.publish ImportData.BuildArtifact)
+    |> List.iter (publish)
 
     let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    Trace.publish ImportData.BuildArtifact chocoPackage
+    publish chocoPackage
 
     let legacyZip = "nuget/fake-legacy-packages.zip"
     !! (nugetLegacyDir </> "**/*.nupkg")
     |> Zip.zip nugetLegacyDir legacyZip
-    Trace.publish ImportData.BuildArtifact legacyZip
+    publish legacyZip
 
+    Directory.ensure "temp"
     let buildCache = "temp/build-cache.zip"
     !! (".fake" </> "build.fsx" </> "*.*")
     ++ "paket.dependencies"
     ++ "paket.lock"
     |> Zip.zip "." buildCache
-    Trace.publish ImportData.BuildArtifact buildCache
+    publish buildCache
 
 )
 
