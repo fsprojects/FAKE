@@ -1151,6 +1151,10 @@ Target.create "BuildArtifacts" (fun _ ->
     |> Zip.zip "." buildCache
     publish buildCache
 
+    let helpZip = "temp/help-markdown.zip"
+    !! ("help" </> "**")
+    |> Zip.zip "help" helpZip
+    publish helpZip
 )
 
 open System
