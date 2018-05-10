@@ -396,6 +396,8 @@
     </Compile>
     <Compile Include="..\..\app\Fake.Windows.Registry\Registry.fs">
       <Link>Fake.Windows.Registry\Registry.fs</Link>
+    <Compile Include="..\..\app\Fake.DotNet.Fsc\Fsc.fs">
+      <Link>Fake.DotNet.Fsc\Fsc.fs</Link>
     </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />

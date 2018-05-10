@@ -268,6 +268,7 @@ let dotnetAssemblyInfos =
       "Fake.Core.Xml", "Core Xml functionality"
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
       "Fake.DotNet.Cli", "Running the dotnet cli"
+      "Fake.DotNet.Fsc", "Running the f# compiler - fsc"
       "Fake.DotNet.Mage", "Manifest Generation and Editing Tool"
       "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
