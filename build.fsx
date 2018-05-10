@@ -1155,6 +1155,11 @@ Target.create "BuildArtifacts" (fun _ ->
     !! ("help" </> "**")
     |> Zip.zip "help" helpZip
     publish helpZip
+
+    let testZip = "temp/tests.zip"
+    !! "src/test/*/bin/Release/netcoreapp2.0/**"
+    |> Zip.zip "src/test" testZip
+    publish testZip
 )
 
 open System
