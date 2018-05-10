@@ -1,20 +1,95 @@
-image: mono:5.8.0.127
+stages:
+ - build
+ - staging
+ - prod
 
-before_script:
-  - apt-get update
-  - apt-get install -y libunwind8 libicu52 unzip wget git
-  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
-  - mkdir fake-dotnetcore
-  - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
-  - chmod +x $PWD/fake-dotnetcore/fake
+build:
+  stage: build
+  image: mono:5.8.0.127
+  dependencies:
+    - build
+  before_script:
+    - apt-get update
+    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - mkdir fake-dotnetcore
+    - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
+    - chmod +x $PWD/fake-dotnetcore/fake
+  build_all:
+    variables:
+      TERM: "xterm-256color"
+      # PATH: $PATH:$PWD/fake-dotnetcore/
+      MSBUILDDISABLENODEREUSE: "1"
+      BuildInParallel: "false"
+  
+    script: |
+      export PATH=$PATH:$PWD/fake-dotnetcore/
+      fake run build.fsx
 
-build_all:
-  variables:
-    TERM: "xterm-256color"
-    # PATH: $PATH:$PWD/fake-dotnetcore/
-    MSBUILDDISABLENODEREUSE: "1"
-    BuildInParallel: "false"
+  artifacts:
+    paths:
+    - nuget/
+    - docs/
 
-  script: |
-    export PATH=$PATH:$PWD/fake-dotnetcore/
-    fake run build.fsx
+staging:
+  stage: staging
+  image: mono:5.8.0.127
+  dependencies:
+    - build
+  before_script:
+    - apt-get update
+    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - mkdir fake-dotnetcore
+    - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
+    - chmod +x $PWD/fake-dotnetcore/fake
+  build_all:
+    variables:
+      TERM: "xterm-256color"
+      # PATH: $PATH:$PWD/fake-dotnetcore/
+      MSBUILDDISABLENODEREUSE: "1"
+      BuildInParallel: "false"
+  
+    script: |
+      export PATH=$PATH:$PWD/fake-dotnetcore/
+      fake run build.fsx target DeployGitLab
+  only:
+   - release/*
+
+  environment:
+    name: staging
+    url: https://staging.fake.build
+
+   variables:
+    nugetsource: "https://www.myget.org/F/fake/api/v2/package"
+
+prod:
+  stage: prod
+  image: mono:5.8.0.127
+  dependencies:
+    - build
+    - staging
+  before_script:
+    - apt-get update
+    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - mkdir fake-dotnetcore
+    - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
+    - chmod +x $PWD/fake-dotnetcore/fake
+  build_all:
+    variables:
+      TERM: "xterm-256color"
+      # PATH: $PATH:$PWD/fake-dotnetcore/
+      MSBUILDDISABLENODEREUSE: "1"
+      BuildInParallel: "false"
+  
+    script: |
+      export PATH=$PATH:$PWD/fake-dotnetcore/
+      fake run build.fsx target FastRelease
+  only:
+   - release/*
+  when: manual
+
+  environment:
+    name: production
+    url: https://fake.build

@@ -1081,6 +1081,7 @@ Target.create "PublishNuget" (fun _ ->
     // Timeout atm
     Paket.push(fun p ->
         { p with
+            PublishUrl = nugetsource
             DegreeOfParallelism = 2
             WorkingDir = nugetLegacyDir })
     //!! (nugetLegacyDir </> "**/*.nupkg")
@@ -1125,6 +1126,8 @@ Target.create "FastRelease" (fun _ ->
     |> GitHub.publishDraft
     |> Async.RunSynchronously
 )
+
+Target.create "DeployGitLab" (fun _ -> ())
 
 open System
 Target.create "PrintColors" (fun _ ->
@@ -1286,6 +1289,12 @@ for runtime in "current" :: "portable" :: runtimes do
 "EnsureTestsRun"
     ==> "PublishNuget"
     ==> "FastRelease"
+
+// Gitlab staging (myget release)
+"PublishNuget"
+    ==> "DeployGitLab"
+"DotNetCorePushNuGet"
+    ==> "DeployGitLab"
 
 // If 'Default' happens it needs to happen before 'EnsureTestsRun'
 "Default"
