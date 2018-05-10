@@ -187,6 +187,9 @@
     <Compile Include="..\..\app\Fake.Core.Process\GuardedAwaitObservable.fs">
       <Link>Fake.Core.Process/GuardedAwaitObservable.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.Process\CmdLineParsing.fs">
+      <Link>Fake.Core.Process/CmdLineParsing.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Core.Process\Process.fs">
       <Link>Fake.Core.Process/Process.fs</Link>
     </Compile>
