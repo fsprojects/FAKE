@@ -1125,6 +1125,20 @@ Target.create "FastRelease" (fun _ ->
 
 Target.create "DeployGitLab" (fun _ -> ())
 
+Target.create "BuildArtifacts" (fun _ ->
+    runtimes @ [ "portable"; "packages" ]
+    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    |> List.iter (Trace.publish ImportData.BuildArtifact)
+
+    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
+    Trace.publish ImportData.BuildArtifact chocoPackage
+
+    let legacyZip = "nuget/fake-legacy-packages.zip"
+    !! (nugetLegacyDir </> "**/*.nupkg")
+    |> Zip.zip nugetLegacyDir legacyZip
+    Trace.publish ImportData.BuildArtifact legacyZip
+)
+
 open System
 Target.create "PrintColors" (fun _ ->
   let color (color: ConsoleColor) (code : unit -> _) =
@@ -1227,6 +1241,7 @@ for runtime in "current" :: "portable" :: runtimes do
 "DotNetPublish"
     ==> "AfterBuild"
 
+
 // Create artifacts when build is finished
 "AfterBuild"
     =?> ("CreateNuGet", Environment.isWindows)
@@ -1234,6 +1249,13 @@ for runtime in "current" :: "portable" :: runtimes do
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
     =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
+
+// Build artifacts only (no testing)
+"AfterBuild"
+    ==> "BuildArtifacts"
+"DotNetCoreCreateChocolateyPackage"
+    =?> ("BuildArtifacts", Environment.isWindows)
+
 
 // Test the full framework build
 "_BuildSolution"

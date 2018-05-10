@@ -16,6 +16,7 @@
     <BuildDependsOn></BuildDependsOn>
     <CoreBuildDependsOn></CoreBuildDependsOn>
     <FakeParallel Condition="'$(Parallel)' == 'true'">--parallel 5</FakeParallel>
+    <FakeTargetArg Condition="'$(FakeTarget)' != ''">target $(FakeTarget)</FakeParallel>
   </PropertyGroup>
 
   <Target Name="Build">
