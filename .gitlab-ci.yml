@@ -102,7 +102,7 @@ do_staging:
     export PATH=$PATH:$PWD/fake-dotnetcore/
     fake run build.fsx target DeployGitLab
   only:
-   - release/*
+   - /^release.*$/
 
   environment:
     name: staging
@@ -132,7 +132,7 @@ do_prod:
     export PATH=$PATH:$PWD/fake-dotnetcore/
     fake run build.fsx target FastRelease
   only:
-   - release/*
+   - /^release.*$/
   when: manual
 
   environment:
