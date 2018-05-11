@@ -39,9 +39,9 @@ do_tests:
     - apt-get install -y libunwind8 libicu52 unzip wget git
 
   script: |
-    unzip artifacts/build-cache.zip
+    unzip -n artifacts/build-cache.zip || echo unzip returned $?
     mkdir fake-bin
-    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin
+    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
     export PATH=$PATH:$PWD/fake-bin/
     export artifactsdirectory=$PWD/artifacts
     fake run build.fsx target RunTests
@@ -55,7 +55,7 @@ do_choco_pack:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git apt-transport-https ca-certificates curl software-properties-common
     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
     - apt-get update
     - apt-get install docker-ce
   services:
@@ -64,12 +64,12 @@ do_choco_pack:
     DOCKER_HOST: "tcp://docker:2375"
   script:
     - docker version
-    - unzip -n artifacts/build-cache.zip
+    - unzip -n artifacts/build-cache.zip || echo unzip returned $?
     - mkdir fake-bin
-    - unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin
+    - unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
     - mkdir -p nuget/dotnetcore/Fake.netcore/win7-x86
-    - unzip -n artifacts/fake-dotnetcore-win7-x86.zip -d nuget/dotnetcore/Fake.netcore/win7-x86
-    - unzip -n artifacts/chocolatey-requirements.zip
+    - unzip -n artifacts/fake-dotnetcore-win7-x86.zip -d nuget/dotnetcore/Fake.netcore/win7-x86 || echo unzip returned $?
+    - unzip -n artifacts/chocolatey-requirements.zip || echo unzip returned $?
     - fake-bin/fake build target DotNetCoreCreateChocolateyPackage
 
     #- docker build -t $CI_REGISTRY_IMAGE:latest .
@@ -85,9 +85,9 @@ do_gen_docs:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
   script:
-    - unzip -n artifacts/build-cache.zip
+    - unzip -n artifacts/build-cache.zip || echo unzip returned $?
     - mkdir fake-bin
-    - unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin
+    - unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
     - fake-bin/fake build target Release_GenerateDocs
 
 do_staging:
@@ -144,7 +144,7 @@ do_choco_push:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git apt-transport-https ca-certificates curl software-properties-common
     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
     - apt-get update
     - apt-get install docker-ce
   services:
@@ -153,9 +153,9 @@ do_choco_push:
     DOCKER_HOST: "tcp://docker:2375"
   script: |
     docker version
-    unzip -n artifacts/build-cache.zip
+    unzip -n artifacts/build-cache.zip || echo unzip returned $?
     mkdir fake-bin
-    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin
+    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
     export artifactsdirectory=$PWD/artifacts
     fake-bin/fake build target DotNetCorePushChocolateyPackage
   only:
