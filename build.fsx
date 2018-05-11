@@ -1352,6 +1352,8 @@ Target.create "Release_GenerateDocs" (fun _ ->
     publish testZip
 )
 
+Target.create "Release_BuildAndTest" ignore
+
 open Fake.Core.TargetOperators
 
 "CheckReleaseSecrets"
@@ -1360,6 +1362,7 @@ open Fake.Core.TargetOperators
     ==> "Clean"
 "WorkaroundPaketNuspecBug"
     ==> "_DotNetPackage"
+    
 // DotNet Core Build
 "Clean"
     ?=> "StartDnc"
@@ -1490,6 +1493,11 @@ let prevDocs =
     ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
+
+// Artifacts & Tests
+"Default" ==> "Release_BuildAndTest"
+"BuildArtifacts" ==> "Release_BuildAndTest"
+
 
 // Release stuff ('FastRelease' is to release after running 'Default')
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
