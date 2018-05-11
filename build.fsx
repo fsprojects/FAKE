@@ -998,6 +998,7 @@ Target.create "_DotNetPackage" (fun _ ->
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
 
+    Directory.ensure "temp"
     let testZip = "temp/tests.zip"
     !! "src/test/*/bin/Release/netcoreapp2.0/**"
     |> Zip.zip "src/test" testZip
