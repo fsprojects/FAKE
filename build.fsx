@@ -1283,6 +1283,8 @@ Target.create "PrepareArtifacts" (fun _ ->
 )
 
 Target.create "BuildArtifacts" (fun _ ->
+    Directory.ensure "temp"
+    
     if not Environment.isWindows then
         // Chocolatey package is done in a separate step...
         let chocoReq = "temp/chocolatey-requirements.zip"
@@ -1293,7 +1295,6 @@ Target.create "BuildArtifacts" (fun _ ->
         |> Zip.zip "." chocoReq
         publish chocoReq
 
-    Directory.ensure "temp"
     let buildCache = "temp/build-cache.zip"
     !! (".fake" </> "build.fsx" </> "*.*")
     ++ "paket.dependencies"
