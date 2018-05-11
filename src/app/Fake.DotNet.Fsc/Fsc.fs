@@ -410,7 +410,7 @@ let compileWithResult (fscParams : FscParam list) (inputFiles : string list) : i
 ///                 Debug false 
 ///             ]
 let compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
-    let res = CompileWithResult fscParams inputFiles
+    let res = compileWithResult fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
 
 
