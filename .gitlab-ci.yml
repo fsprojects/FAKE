@@ -50,12 +50,14 @@ do_choco_pack:
   stage: test_package
   dependencies:
     - do_build
-  image: docker:1.11
+  image: mono:5.8.0.127
   before_script:
     - apt-get update
-    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - apt-get install -y libunwind8 libicu52 unzip wget git docker.io
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: "tcp://docker:2375"
   script:
     - docker version
     - unzip artifacts/build-cache.zip
@@ -79,7 +81,6 @@ do_gen_docs:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
   script:
-    - docker version
     - unzip artifacts/build-cache.zip
     - mkdir fake-bin
     - unzip artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin
@@ -134,12 +135,14 @@ do_choco_push:
     - do_build
     - do_choco_pack
     - do_approve_prod
-  image: docker:1.11
+  image: mono:5.8.0.127
   before_script:
     - apt-get update
-    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - apt-get install -y libunwind8 libicu52 unzip wget git docker.io
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: "tcp://docker:2375"
   script: |
     docker version
     unzip artifacts/build-cache.zip
