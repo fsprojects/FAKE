@@ -11,7 +11,7 @@ do_build:
   before_script:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
-    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
     - mkdir fake-dotnetcore
     - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
     - chmod +x $PWD/fake-dotnetcore/fake
@@ -87,7 +87,7 @@ do_staging:
   before_script:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
-    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
     - mkdir fake-dotnetcore
     - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
     - chmod +x $PWD/fake-dotnetcore/fake
@@ -117,7 +117,7 @@ do_prod:
   before_script:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
-    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
     - mkdir fake-dotnetcore
     - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
     - chmod +x $PWD/fake-dotnetcore/fake
