@@ -1322,12 +1322,12 @@ for runtime in "current" :: "portable" :: runtimes do
 
 
 // Create artifacts when build is finished
-let prev =
+let prevDocs =
     "AfterBuild"
     =?> ("CreateNuGet", Environment.isWindows)
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-(if fromArtifacts then "PrepareArtifacts" else prev)
+(if fromArtifacts then "PrepareArtifacts" else prevDocs)
     =?> ("GenerateDocs", Environment.isWindows)
     ==> "Default"
 
