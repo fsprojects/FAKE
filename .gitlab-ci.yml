@@ -22,9 +22,9 @@ build:
       MSBUILDDISABLENODEREUSE: "1"
       BuildInParallel: "false"
   
-    script: |
-      export PATH=$PATH:$PWD/fake-dotnetcore/
-      fake run build.fsx
+  script: |
+    export PATH=$PATH:$PWD/fake-dotnetcore/
+    fake run build.fsx
 
   artifacts:
     paths:
@@ -50,9 +50,9 @@ staging:
       MSBUILDDISABLENODEREUSE: "1"
       BuildInParallel: "false"
   
-    script: |
-      export PATH=$PATH:$PWD/fake-dotnetcore/
-      fake run build.fsx target DeployGitLab
+  script: |
+    export PATH=$PATH:$PWD/fake-dotnetcore/
+    fake run build.fsx target DeployGitLab
   only:
    - release/*
 
@@ -83,9 +83,9 @@ prod:
       MSBUILDDISABLENODEREUSE: "1"
       BuildInParallel: "false"
   
-    script: |
-      export PATH=$PATH:$PWD/fake-dotnetcore/
-      fake run build.fsx target FastRelease
+  script: |
+    export PATH=$PATH:$PWD/fake-dotnetcore/
+    fake run build.fsx target FastRelease
   only:
    - release/*
   when: manual
