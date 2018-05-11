@@ -1086,6 +1086,7 @@ Target.create "CheckReleaseSecrets" (fun _ ->
     Environment.environVarOrFail "github_user" |> ignore
     Environment.environVarOrFail "github_token" |> ignore
 )
+
 let executeFPM args =
     printfn "%s %s" "fpm" args
     Shell.Exec("fpm", args=args, dir="bin")
@@ -1336,15 +1337,23 @@ Target.create "EnsureTestsRun" (fun _ ->
 //#endif
   ()
 )
+Target.Description "Default Build all artifacts and documentation"
 Target.create "Default" ignore
-Target.create "StartDnc" ignore
+Target.create "_StartDnc" ignore
+Target.Description "Simple local command line release"
 Target.create "Release" ignore
+Target.Description "Build the full-framework (legacy) solution"
 Target.create "BuildSolution" ignore
+Target.Description "dotnet pack pack to build all nuget packages"
 Target.create "DotNetPackage" ignore
-Target.create "AfterBuild" ignore
+Target.create "_AfterBuild" ignore
+Target.Description "Build and test the dotnet sdk part (fake 5 - no legacy)"
 Target.create "FullDotNetCore" ignore
+Target.Description "publish fake 5 runner for various platforms"
 Target.create "DotNetPublish" ignore
+Target.Description "Run the tests - if artifacts are available via 'artifactsdirectory' those are used."
 Target.create "RunTests" ignore
+Target.Description "Generate the docs (potentially from artifacts) and publish as artifact."
 Target.create "Release_GenerateDocs" (fun _ ->
     let testZip = "temp/docs.zip"
     !! "docs/**"
@@ -1352,6 +1361,7 @@ Target.create "Release_GenerateDocs" (fun _ ->
     publish testZip
 )
 
+Target.Description "Full Build & Test and publish results as artifacts."
 Target.create "Release_BuildAndTest" ignore
 
 open Fake.Core.TargetOperators
@@ -1365,13 +1375,13 @@ open Fake.Core.TargetOperators
     
 // DotNet Core Build
 "Clean"
-    ?=> "StartDnc"
+    ?=> "_StartDnc"
     ?=> "DownloadPaket"
     ?=> "SetAssemblyInfo"
     ==> "_DotNetPackage"
     ?=> "UnskipAndRevertAssemblyInfo"
     ==> "DotNetPackage"
-"StartDnc"
+"_StartDnc"
     ==> "_DotNetPackage"
 "DownloadPaket"
     ==> "_DotNetPackage"
@@ -1382,6 +1392,7 @@ let mutable prev = None
 for runtime in "current" :: "portable" :: runtimes do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
+    Target.Description (sprintf "publish fake 5 runner for %s" runtime)
     Target.create targetName ignore
     "SetAssemblyInfo"
         ==> rawTargetName
@@ -1391,7 +1402,7 @@ for runtime in "current" :: "portable" :: runtimes do
     rawTargetName
         ==> targetName
         |> ignore
-    "StartDnc"
+    "_StartDnc"
         ==> targetName
         |> ignore
     "DownloadPaket"
@@ -1421,16 +1432,16 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "BuildSolution"
 // AfterBuild -> Both Builds completed
 "BuildSolution"
-    ==> "AfterBuild"
+    ==> "_AfterBuild"
 "DotNetPackage"
-    ==> "AfterBuild"
+    ==> "_AfterBuild"
 "DotNetPublish"
-    ==> "AfterBuild"
+    ==> "_AfterBuild"
 
 
 // Create artifacts when build is finished
 let prevDocs =
-    "AfterBuild"
+    "_AfterBuild"
     =?> ("CreateNuGet", Environment.isWindows)
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
@@ -1442,7 +1453,7 @@ let prevDocs =
     ==> "Release_GenerateDocs"
 
 // Build artifacts only (no testing)
-"AfterBuild"
+"_AfterBuild"
     ==> "BuildArtifacts"
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
