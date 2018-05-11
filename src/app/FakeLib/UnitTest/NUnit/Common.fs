@@ -62,6 +62,9 @@ type NUnitParams =
 
       /// Causes execution of the test run to terminate immediately on the first test failure or error.
       StopOnError : bool
+      
+      /// Gives ability to not error if an assembly with no tests is passed into nunit
+      SkipNonTestAssemblies : bool
 
       /// The output path of the nUnit XML report.
       OutputFile : string
@@ -95,8 +98,10 @@ type NUnitParams =
 
       /// See [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).
       Domain : NUnitDomainModel
+      
       /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
       ErrorLevel : NUnitErrorLevel 
+      
       /// Default: ""
       Fixture: string}
 
@@ -109,6 +114,7 @@ type NUnitParams =
 /// - `ToolName` - `"nunit-console.exe"`
 /// - `DontTestInNewThread`- `false`
 /// - `StopOnError` - `false`
+/// - `SkipNonTestAssemblies` - `false`
 /// - `OutputFile` - `"TestResult.xml"`
 /// - `Out` - `""`
 /// - `ErrorOutputFile` - `""`
@@ -130,6 +136,7 @@ let NUnitDefaults =
       ToolName = toolname
       DontTestInNewThread = false
       StopOnError = false
+      SkipNonTestAssemblies = false
       OutputFile = currentDirectory @@ "TestResult.xml"
       Out = ""
       ErrorOutputFile = ""
@@ -153,6 +160,7 @@ let buildNUnitdArgs parameters assemblies =
     |> appendIfTrue parameters.ShowLabels "-labels"
     |> appendIfTrue parameters.DontTestInNewThread "-nothread"
     |> appendIfTrue parameters.StopOnError "-stoponerror"
+    |> appendIfTrue parameters.SkipNonTestAssemblies "-skipnontestassemblies"
     |> appendFileNamesIfNotNull assemblies
     |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
     |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
