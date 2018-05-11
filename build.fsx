@@ -1042,16 +1042,24 @@ Target.create "DotNetCoreCreateZipPackages" (fun _ ->
     |> List.iter publish
 )
 
-Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
-    // !! ""
-    let changeToolPath (p: Choco.ChocoPackParams) =
-        if Environment.isWindows then p else
-            File.WriteAllText("temp/choco.sh", """#!/bin/bash
+let getChocoWrapper () =
+    let altToolPath = Path.GetFullPath "temp/choco.sh"
+    if not Environment.isWindows then
+        Directory.ensure "temp"
+        File.WriteAllText(altToolPath, """#!/bin/bash
 docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
 """          )
-            let result = Shell.Exec("chmod", "-x temp/choco.sh")
-            if result <> 0 then failwith "'chmod +x temp/choco.sh' failed on unix"
-            { p with ToolPath = "temp/choco.sh" }
+        let result = Shell.Exec("chmod", sprintf "+x %s" altToolPath)
+        if result <> 0 then failwithf "'chmod +x %s' failed on unix" altToolPath
+    altToolPath
+
+Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
+    // !! ""
+    let altToolPath = getChocoWrapper()
+    let changeToolPath (p: Choco.ChocoPackParams) =
+        if Environment.isWindows
+        then p
+        else { p with ToolPath = altToolPath }
     Directory.ensure "nuget/dotnetcore/chocolatey"
     Choco.packFromTemplate (fun p ->
         { p with
@@ -1078,14 +1086,9 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
         Directory.ensure "nuget/dotnetcore/chocolatey"
         Shell.copyFile path (artifactsDir </> sprintf "chocolatey-%s" name)
 
+    let altToolPath = getChocoWrapper()
     let changeToolPath (p: Choco.ChocoPushParams) =
-        if Environment.isWindows then p else
-            File.WriteAllText("temp/choco.sh", """#!/bin/bash
-docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
-"""          )
-            let result = Shell.Exec("chmod", "-x temp/choco.sh")
-            if result <> 0 then failwith "'chmod +x temp/choco.sh' failed on unix"
-            { p with ToolPath = "temp/choco.sh" }
+        if Environment.isWindows then p else { p with ToolPath = altToolPath }
     path |> Choco.push (fun p ->
         { p with
             Source = "https://push.chocolatey.org/"
