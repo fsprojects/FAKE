@@ -425,6 +425,7 @@ Target.create "_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
     |> Trace.logItems "AppBuild-Output: "
     
+    Directory.ensure "temp"
     let testZip = "temp/tests-legacy.zip"
     !! "test/**"
     |> Zip.zip "." testZip
@@ -1284,7 +1285,7 @@ Target.create "PrepareArtifacts" (fun _ ->
 
 Target.create "BuildArtifacts" (fun _ ->
     Directory.ensure "temp"
-    
+
     if not Environment.isWindows then
         // Chocolatey package is done in a separate step...
         let chocoReq = "temp/chocolatey-requirements.zip"
