@@ -9,17 +9,12 @@ do_build:
   stage: build
   image: mono:5.8.0.127
   before_script: |
-    apt-get update
-    apt-get install -y libunwind8 libicu52 unzip wget git locales
-    wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
-    mkdir fake-dotnetcore
-    unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
-    chmod +x $PWD/fake-dotnetcore/fake
-    export LANGUAGE=en_US.UTF-8
-    export LANG=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-    locale-gen en_US.UTF-8
-    dpkg-reconfigure locales
+    - apt-get update
+    - apt-get install -y libunwind8 libicu52 unzip wget git locales
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - mkdir fake-dotnetcore
+    - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
+    - chmod +x $PWD/fake-dotnetcore/fake
 
   variables:
     TERM: "xterm-256color"
@@ -28,6 +23,11 @@ do_build:
     BuildInParallel: "false"
   
   script: |
+    export LANGUAGE=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+    locale-gen en_US.UTF-8
+    dpkg-reconfigure locales
     export PATH=$PATH:$PWD/fake-dotnetcore/
     fake run build.fsx target BuildArtifacts
 
