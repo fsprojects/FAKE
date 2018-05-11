@@ -898,6 +898,7 @@ Target.create "CreateNuGet" (fun _ ->
 
         let setParams (p:NuGet.NuGet.NuGetParams) =
             {p with
+                NuGet.NuGet.NuGetParams.ToolPath = Path.GetFullPath "packages/NuGet.CommandLine/tools/NuGet.exe"
                 NuGet.NuGet.NuGetParams.Authors = authors
                 NuGet.NuGet.NuGetParams.Project = package
                 NuGet.NuGet.NuGetParams.Description = description
