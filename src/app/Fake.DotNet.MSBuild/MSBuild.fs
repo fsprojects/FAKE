@@ -15,6 +15,11 @@ open Fake.Core
 type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
+exception MSBuildException of string*list<string>
+  with
+    override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
+
+[<System.Obsolete("Using this is a BUG as this exception is no longer thrown! Use MSBuildException instead!")>]
 exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
@@ -488,7 +493,7 @@ module MSBuild =
 #endif
 
         let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
-        raise (BuildException(errorMessage, errors))
+        raise (MSBuildException(errorMessage, errors))
 
   /// Builds the given project files and collects the output files.
   /// ## Parameters
