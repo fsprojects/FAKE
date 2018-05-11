@@ -10,7 +10,7 @@ do_build:
   image: mono:5.8.0.127
   before_script:
     - apt-get update
-    - apt-get install -y libunwind8 libicu52 unzip wget git locales
+    - apt-get install -y libunwind8 libicu52 unzip wget git
     - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
     - mkdir fake-dotnetcore
     - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
@@ -18,16 +18,10 @@ do_build:
 
   variables:
     TERM: "xterm-256color"
-    # PATH: $PATH:$PWD/fake-dotnetcore/
     MSBUILDDISABLENODEREUSE: "1"
     BuildInParallel: "false"
   
   script: |
-    export LANGUAGE=en_US.UTF-8
-    export LANG=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-    locale-gen en_US.UTF-8
-    dpkg-reconfigure locales
     export PATH=$PATH:$PWD/fake-dotnetcore/
     fake run build.fsx target BuildArtifacts
 
@@ -60,11 +54,6 @@ do_choco_pack:
   before_script:
     - apt-get update
     - apt-get install -y libunwind8 libicu52 unzip wget git
-    #- wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
-    #- mkdir fake-dotnetcore
-    #- unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
-    #- chmod +x $PWD/fake-dotnetcore/fake
-
   services:
     - docker:dind
   script:
@@ -78,9 +67,6 @@ do_choco_pack:
     - fake-bin/fake build target DotNetCoreCreateChocolateyPackage
 
     #- docker build -t $CI_REGISTRY_IMAGE:latest .
-    # push only for tags
-    #- "[[ -z $CI_BUILD_TAG ]] && exit 0"
-    #- docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
     #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     #- docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
 
@@ -113,7 +99,6 @@ do_staging:
     - chmod +x $PWD/fake-dotnetcore/fake
   variables:
     TERM: "xterm-256color"
-    # PATH: $PATH:$PWD/fake-dotnetcore/
     MSBUILDDISABLENODEREUSE: "1"
     BuildInParallel: "false"
     nugetsource: "https://www.myget.org/F/fake/api/v2/package"
@@ -183,7 +168,6 @@ do_prod:
 
   variables:
     TERM: "xterm-256color"
-    # PATH: $PATH:$PWD/fake-dotnetcore/
     MSBUILDDISABLENODEREUSE: "1"
     BuildInParallel: "false"
   
