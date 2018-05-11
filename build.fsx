@@ -1047,6 +1047,9 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 let apikey = Environment.environVarOrDefault "nugetkey" ""
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
+let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
+
 let rec nugetPush tries nugetpackage =
     try
         if not <| System.String.IsNullOrEmpty apikey then
@@ -1124,11 +1127,57 @@ Target.create "FastRelease" (fun _ ->
     |> Async.RunSynchronously
 )
 
-Target.create "PublishStaging" (fun _ -> ())
+Target.create "Release_Staging" (fun _ -> ())
 
+open System.IO.Compression
+let unzip target (fileName : string) =
+    use stream = new FileStream(fileName, FileMode.Open)
+    use zipFile = new ZipArchive(stream)
+    for zipEntry in zipFile.Entries do
+        let unzipPath = Path.Combine(target, zipEntry.FullName)
+        let directoryPath = Path.GetDirectoryName(unzipPath)
+        if unzipPath.EndsWith "/" then
+            Directory.CreateDirectory(unzipPath) |> ignore
+        else
+            // unzip the file
+            Directory.ensure directoryPath
+            let zipStream = zipEntry.Open()
+            if unzipPath.EndsWith "/" |> not then 
+                use unzippedFileStream = File.Create(unzipPath)
+                zipStream.CopyTo(unzippedFileStream)
+
+Target.create "PrepareArtifacts" (fun _ ->
+    if not fromArtifacts then
+        Trace.trace "empty artifactsDir."
+    else
+        !! (artifactsDir </> "fake-dotnetcore*")
+        |> Shell.copy "nuget/dotnetcore/Fake.netcore"
+
+        unzip "nuget/dotnetcore" "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-packages.zip"
+
+        Directory.ensure "nuget/dotnetcore/chocolatey"
+        let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
+        Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
+
+        Directory.ensure "nuget/legacy"
+        unzip "nuget/legacy" (artifactsDir </> "fake-legacy-packages.zip")
+
+        Directory.ensure "temp/build"
+        !! ("nuget" </> "legacy" </> "*.nupkg")
+        |> Seq.iter (fun pack ->
+            unzip "temp/build" pack
+        )
+        Shell.copyDir "build" "temp/build" (fun _ -> true)
+        
+        Directory.ensure "help"
+        unzip "help" (artifactsDir </> "help-markdown.zip")
+
+        unzip "src/test" (artifactsDir </> "tests.zip")
+)
+
+let publish f =
+    Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
 Target.create "BuildArtifacts" (fun _ ->
-    let publish f =
-        Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
     runtimes @ [ "portable"; "packages" ]
     |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
     |> List.iter (publish)
@@ -1191,6 +1240,13 @@ Target.create "DotNetPackage" ignore
 Target.create "AfterBuild" ignore
 Target.create "FullDotNetCore" ignore
 Target.create "DotNetPublish" ignore
+Target.create "RunTests" ignore
+Target.create "Release_GenerateDocs" (fun _ ->
+    let testZip = "temp/docs.zip"
+    !! "docs/**"
+    |> Zip.zip "docs" testZip
+    publish testZip
+)
 
 open Fake.Core.TargetOperators
 
@@ -1266,12 +1322,17 @@ for runtime in "current" :: "portable" :: runtimes do
 
 
 // Create artifacts when build is finished
-"AfterBuild"
+let prev =
+    "AfterBuild"
     =?> ("CreateNuGet", Environment.isWindows)
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
+(if fromArtifacts then "PrepareArtifacts" else prev)
+    =?> ("GenerateDocs", Environment.isWindows)
     ==> "Default"
+
+"GenerateDocs"
+    ==> "Release_GenerateDocs"
 
 // Build artifacts only (no testing)
 "AfterBuild"
@@ -1289,26 +1350,37 @@ for runtime in "current" :: "portable" :: runtimes do
 "BuildSolution"
     ==> "Default"
     
-"_BuildSolution"
+(if fromArtifacts then "PrepareArtifacts" else "_BuildSolution")
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
+"BootstrapTest"
+    ==> "RunTests"
 
 // Test the dotnetcore build
-"_DotNetPackage"
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 
-"_DotNetPublish_current"
+"DotNetCoreUnitTests"
+    ==> "RunTests"
+
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 
-"_DotNetPackage"
+"DotNetCoreIntegrationTests"
+    ==> "RunTests"
+
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
 
-"_DotNetPublish_current"
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
     =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
+
+"BootstrapTestDotNetCore"
+    ==> "RunTests"
 
 "DotNetPackage"
     ==> "DotNetCoreCreateZipPackages"
@@ -1316,27 +1388,27 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
     ==> "FastRelease"
 
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "FastRelease"
 
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     ==> "DotNetCorePushNuGet"
     ==> "FastRelease"
 
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     ==> "PublishNuget"
     ==> "FastRelease"
 
 // Gitlab staging (myget release)
 "PublishNuget"
-    ==> "PublishStaging"
+    ==> "Release_Staging"
 "DotNetCorePushNuGet"
-    ==> "PublishStaging"
+    ==> "Release_Staging"
 
 // If 'Default' happens it needs to happen before 'EnsureTestsRun'
 "Default"
