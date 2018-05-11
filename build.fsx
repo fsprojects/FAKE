@@ -89,6 +89,12 @@ let gitHome = "https://github.com/" + gitOwner
 let gitName = "FAKE"
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
+(*
+let version =
+    let semVer = SemVer.parse release.NugetVersion
+    match semVer.PreRelease with
+    | None -> ()
+    | _ -> ()*)
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -178,8 +184,6 @@ module MyGitLab =
         { new BuildServerInstaller() with
             member __.Install () = install (false)
             member __.Detect () = detect() }
-
-printfn "Is GitLab-CI: Current: %b Environment: %A" MyGitLab.isGitLabCi BuildServer.buildServer
 
 BuildServer.install [
     AppVeyor.Installer
@@ -429,6 +433,7 @@ Target.create "_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
     |> Trace.logItems "AppBuild-Output: "
     
+    // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests-legacy.zip"
     !! "test/**"
@@ -827,16 +832,23 @@ Target.create "ILRepack" (fun _ ->
 )
 
 Target.create "CreateNuGet" (fun _ ->
+    let path = "temp/xCorFlags.exe"
+    if not (File.Exists path) then
+        let xplatcoreflags = "https://github.com/sushihangover/CorFlags/releases/download/v1.0.5643.36015/xCorFlags.exe"
+        Directory.ensure "temp"
+        Fake.Net.Http.downloadFile path xplatcoreflags |> ignore
     let set64BitCorFlags files =
         files
         |> Seq.iter (fun file ->
-            let args =
-                { Program = "lib" @@ "corflags.exe"
-                  WorkingDir = Path.GetDirectoryName file
-                  CommandLine = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
-                  Args = [] }
-            printfn "%A" args
-            Process.shellExec args |> ignore)
+            let exitCode =
+                Process.execSimple (fun proc -> 
+                { proc with
+                    FileName = path
+                    WorkingDirectory = Path.GetDirectoryName file
+                    Arguments = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
+                    }
+                |> Process.withFramework) (System.TimeSpan.FromMinutes 1.)
+            if exitCode <> 0 then failwithf "corflags.exe failed with %d" exitCode)
 
     let x64ify (package:NuGet.NuGet.NuGetParams) =
         { package with
@@ -1002,6 +1014,7 @@ Target.create "_DotNetPackage" (fun _ ->
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
 
+    // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
     !! "src/test/*/bin/Release/netcoreapp2.0/**"
@@ -1289,7 +1302,7 @@ Target.create "PrepareArtifacts" (fun _ ->
         unzip "src/test" (artifactsDir </> "tests.zip")
 )
 
-Target.create "BuildArtifacts" (fun _ ->
+Target.create "BuildArtifacts" (fun args ->
     Directory.ensure "temp"
 
     if not Environment.isWindows then
@@ -1310,10 +1323,12 @@ Target.create "BuildArtifacts" (fun _ ->
     |> Zip.zip "." buildCache
     publish buildCache
 
-    let helpZip = "temp/help-markdown.zip"
-    !! ("help" </> "**")
-    |> Zip.zip "help" helpZip
-    publish helpZip
+    if args.Context.TryFindPrevious "Release_GenerateDocs" |> Option.isNone then
+        // When Release_GenerateDocs is missing upload markdown (for later processing)
+        let helpZip = "temp/help-markdown.zip"
+        !! ("help" </> "**")
+        |> Zip.zip "help" helpZip
+        publish helpZip
 )
 
 open System
@@ -1442,18 +1457,18 @@ for runtime in "current" :: "portable" :: runtimes do
 // Create artifacts when build is finished
 let prevDocs =
     "_AfterBuild"
-    =?> ("CreateNuGet", Environment.isWindows)
+    ==> "CreateNuGet"
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
 (if fromArtifacts then "PrepareArtifacts" else prevDocs)
-    =?> ("GenerateDocs", Environment.isWindows)
+    =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
 
 "GenerateDocs"
     ==> "Release_GenerateDocs"
 
 // Build artifacts only (no testing)
-"_AfterBuild"
+"CreateNuGet"
     ==> "BuildArtifacts"
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
@@ -1507,7 +1522,9 @@ let prevDocs =
 
 // Artifacts & Tests
 "Default" ==> "Release_BuildAndTest"
+"Release_GenerateDocs" ?=> "BuildArtifacts"
 "BuildArtifacts" ==> "Release_BuildAndTest"
+"Release_GenerateDocs" ==> "Release_BuildAndTest"
 
 
 // Release stuff ('FastRelease' is to release after running 'Default')
@@ -1516,7 +1533,7 @@ let prevDocs =
     ==> "FastRelease"
 
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
-    =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
+    =?> ("ReleaseDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "FastRelease"
 
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
