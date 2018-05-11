@@ -23,29 +23,11 @@ do_build:
   
   script: |
     export PATH=$PATH:$PWD/fake-dotnetcore/
-    fake run build.fsx target BuildArtifacts
+    fake run build.fsx target Release_BuildAndTest
 
   artifacts:
     paths:
     - artifacts/
-
-do_tests:
-  stage: test_package
-  dependencies:
-    - do_build
-  image: mono:5.8.0.127
-  before_script:
-    - apt-get update
-    - apt-get install -y libunwind8 libicu52 unzip wget git
-
-  script: |
-    unzip -n artifacts/build-cache.zip || echo unzip returned $?
-    mkdir fake-bin
-    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
-    chmod +x fake-bin/fake
-    export PATH=$PATH:$PWD/fake-bin/
-    export artifactsdirectory=$PWD/artifacts
-    fake run build.fsx target RunTests
 
 do_choco_pack:
   stage: test_package
@@ -79,22 +61,6 @@ do_choco_pack:
     #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     #- docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
 
-do_gen_docs:
-  stage: test_package
-  dependencies:
-    - do_build
-  image: mono:5.8.0.127
-  before_script:
-    - apt-get update
-    - apt-get install -y libunwind8 libicu52 unzip wget git
-  script: |
-    unzip -n artifacts/build-cache.zip || echo unzip returned $?
-    mkdir fake-bin
-    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
-    chmod +x fake-bin/fake
-    export artifactsdirectory=$PWD/artifacts
-    fake-bin/fake build target Release_GenerateDocs
-
 do_staging:
   stage: staging
   image: mono:5.8.0.127
@@ -116,7 +82,7 @@ do_staging:
     chmod +x fake-bin/fake
     export PATH=$PATH:$PWD/fake-bin/
     export artifactsdirectory=$PWD/artifacts
-    fake run build.fsx target DeployGitLab
+    fake run build.fsx target Release_Staging
   only:
    - /^release.*$/
   when: manual
