@@ -130,7 +130,7 @@ let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
 module MyGitLab =
-
+    let isGitLabCi = Environment.environVar "GITLAB_CI" = "true"
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
@@ -166,8 +166,7 @@ module MyGitLab =
 
     let defaultTraceListener =
       GitLabTraceListener() :> ITraceListener
-    let detect () =
-        BuildServer.buildServer = BuildServer.GitLabCI
+    let detect () = isGitLabCi
     let install(force:bool) =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-AppVeyor environment"
         if force || not (CoreTracing.areListenersSet()) then
@@ -177,6 +176,8 @@ module MyGitLab =
         { new BuildServerInstaller() with
             member __.Install () = install (false)
             member __.Detect () = detect() }
+
+printfn "Is GitLab-CI: Current: %b Environment: %A" MyGitLab.isGitLabCi BuildServer.buildServer
 
 BuildServer.install [
     AppVeyor.Installer
