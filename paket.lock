@@ -292,7 +292,7 @@ NUGET
       System.Runtime.Loader (>= 4.0) - restriction: && (< monoandroid4.4) (< net35) (>= netstandard1.5) (< netstandard2.0) (< xamarinios)
       System.Threading.Thread (>= 4.0) - restriction: && (< monoandroid4.4) (< net35) (>= netstandard1.5) (< netstandard2.0) (< xamarinios)
       System.Xml.XmlDocument (>= 4.0.1) - restriction: || (&& (< monoandroid4.4) (< net35) (>= netstandard1.3) (< netstandard1.5)) (&& (< monoandroid4.4) (< net35) (>= netstandard1.5) (< netstandard2.0) (< xamarinios))
-    Nuget.CommandLine (4.6.2)
+    NuGet.CommandLine (4.6.2)
     Nuget.Core (2.14)
       Microsoft.Web.Xdt (>= 2.1)
     NUnit (3.10.1)
@@ -1218,7 +1218,7 @@ NUGET
       System.Threading.Timer (>= 4.3) - restriction: || (&& (< net45) (>= netstandard1.2) (< netstandard1.3) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.3) (< netstandard1.4) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.4) (< netstandard1.5) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.5) (< netstandard1.6) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.6) (< netstandard2.0) (< win8) (< wpa81)) (&& (>= uap10.0) (< uap10.1))
       System.Xml.ReaderWriter (>= 4.3) - restriction: || (&& (< net45) (>= netstandard1.1) (< netstandard1.2) (< win8)) (&& (< net45) (>= netstandard1.2) (< netstandard1.3) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.3) (< netstandard1.4) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.4) (< netstandard1.5) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.5) (< netstandard1.6) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.6) (< netstandard2.0) (< win8) (< wpa81)) (&& (>= net46) (< netstandard1.4)) (&& (>= netstandard1.0) (< portable-net45+win8+wpa81) (< wp8)) (&& (>= uap10.0) (< uap10.1))
       System.Xml.XDocument (>= 4.3) - restriction: || (&& (< net45) (>= netstandard1.1) (< netstandard1.2) (< win8)) (&& (< net45) (>= netstandard1.2) (< netstandard1.3) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.3) (< netstandard1.4) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.4) (< netstandard1.5) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.5) (< netstandard1.6) (< win8) (< wpa81)) (&& (< net45) (>= netstandard1.6) (< netstandard2.0) (< win8) (< wpa81)) (&& (>= netstandard1.0) (< portable-net45+win8+wpa81) (< wp8)) (&& (>= uap10.0) (< uap10.1))
-    Nuget.CommandLine (4.6.2)
+    NuGet.CommandLine (4.6.2)
     Octokit (0.29) - content: none
       NETStandard.Library (>= 1.6) - restriction: && (< net45) (>= netstandard1.1)
     runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.2) - content: none, restriction: || (&& (< monoandroid) (< monotouch) (< net45) (>= netstandard1.6) (< netstandard2.0) (< win8) (< wpa81) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)) (&& (< monoandroid) (< net45) (< netstandard1.2) (>= netstandard1.6) (< win8)) (&& (< monoandroid) (< net45) (< netstandard1.3) (>= netstandard1.6) (< win8) (< wpa81)) (&& (< monoandroid) (< net45) (< netstandard1.4) (>= netstandard1.6) (< win8) (< wpa81)) (&& (< monoandroid) (< net45) (< netstandard1.5) (>= netstandard1.6) (< win8) (< wpa81)) (&& (< net45) (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= netstandard1.6) (>= uap10.0) (< win8) (< wpa81))

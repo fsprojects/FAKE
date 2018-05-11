@@ -854,6 +854,24 @@ Target.create "CreateNuGet" (fun _ ->
             Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
             Project = package.Project + ".x64" }
 
+    let nugetExe =
+        let pref = Path.GetFullPath "packages/build/NuGet.CommandLine/tools/NuGet.exe"
+        if File.Exists pref then pref
+        else
+            let rec printDir space d =
+                for f in Directory.EnumerateFiles d do
+                    Trace.tracefn "%sFile: %s" space f
+                for sd in Directory.EnumerateDirectories d do
+                    Trace.tracefn "%sDirectory: %s" space sd
+                    printDir (space + "  ") d
+            printDir "  " (Path.GetFullPath "packages")
+            match !! "packages/**/NuGet.exe" |> Seq.tryHead with
+            | Some e ->
+                Trace.tracefn "Found %s" e
+                e
+            | None ->
+                pref
+        
     for package,description in packages do
         let nugetDocsDir = nugetLegacyDir @@ "docs"
         let nugetToolsDir = nugetLegacyDir @@ "tools"
@@ -896,9 +914,10 @@ Target.create "CreateNuGet" (fun _ ->
             Shell.copyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
 
+
         let setParams (p:NuGet.NuGet.NuGetParams) =
             {p with
-                NuGet.NuGet.NuGetParams.ToolPath = Path.GetFullPath "packages/NuGet.CommandLine/tools/NuGet.exe"
+                NuGet.NuGet.NuGetParams.ToolPath = nugetExe
                 NuGet.NuGet.NuGetParams.Authors = authors
                 NuGet.NuGet.NuGetParams.Project = package
                 NuGet.NuGet.NuGetParams.Description = description

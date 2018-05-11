@@ -71,7 +71,7 @@ group Build
     source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1
-    nuget Nuget.CommandLine
+    nuget NuGet.CommandLine
     nuget FAKE prerelease
     nuget FSharp.Formatting prerelease
     nuget FSharp.Formatting.CommandTool prerelease
