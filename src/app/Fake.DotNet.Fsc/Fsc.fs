@@ -385,13 +385,13 @@ let private scsCompile optsArr =
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> CompileWithResult [Out "" 
+///     |> compileWithResult [Out "" 
 ///                 Target Exe
 ///                 Platform AnyCpu
 ///                 References []
 ///                 Debug false 
 ///             ]
-let CompileWithResult (fscParams : FscParam list) (inputFiles : string list) : int = 
+let compileWithResult (fscParams : FscParam list) (inputFiles : string list) : int = 
     doCompile scsCompile fscParams inputFiles
 
 /// Compiles one or more F# source files with the specified parameters.
@@ -403,13 +403,13 @@ let CompileWithResult (fscParams : FscParam list) (inputFiles : string list) : i
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> Compile [Out "" 
+///     |> compile [Out "" 
 ///                 Target Exe
 ///                 Platform AnyCpu
 ///                 References []
 ///                 Debug false 
 ///             ]
-let Compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
+let compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
     let res = CompileWithResult fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
 
@@ -445,14 +445,14 @@ let private extFscCompile (fscTool: string) (optsArr: string []) =
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> CompileExternalWithResult "path/to/fsc.exe" 
+///     |> compileExternalWithResult "path/to/fsc.exe" 
 ///                 [Out "" 
 ///                 Target Exe
 ///                 Platform AnyCpu
 ///                 References []
 ///                 Debug false 
 ///             ]          
-let CompileExternalWithResult (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : int = 
+let compileExternalWithResult (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : int = 
     let compile = extFscCompile fscTool
     doCompile compile fscParams inputFiles
 
@@ -467,14 +467,14 @@ let CompileExternalWithResult (fscTool: string) (fscParams : FscParam list) (inp
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> CompileExternal "path/to/fsc.exe" 
+///     |> compileExternal "path/to/fsc.exe" 
 ///                 [Out "" 
 ///                 Target Exe
 ///                 Platform AnyCpu
 ///                 References []
 ///                 Debug false 
 ///             ]
-let CompileExternal (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : unit = 
+let compileExternal (fscTool: string) (fscParams : FscParam list) (inputFiles : string list) : unit = 
     let compile = extFscCompile fscTool
     let res = doCompile compile fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
