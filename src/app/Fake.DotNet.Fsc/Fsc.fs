@@ -8,6 +8,10 @@ open Microsoft.FSharp.Compiler.SourceCodeServices
 open Fake.IO
 open Fake.Core
 
+/// An exception type to signal build errors.
+exception BuildException of string*list<string>
+  with
+    override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
 
 type TargetType = 
     /// Build a console executable
