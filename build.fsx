@@ -155,6 +155,8 @@ module MyGitLab =
                 | TraceData.ImportData (typ, path) ->
                     let name = Path.GetFileName path
                     let target = Path.Combine("artifacts", name)
+                    let targetDir = Path.GetDirectoryName target
+                    Directory.ensure targetDir
                     Shell.cp_r path target
                     write false color true (sprintf "Import data '%O': %s -> %s" typ path target)
                 | TraceData.TestOutput (test, out, err) ->
