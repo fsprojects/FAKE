@@ -123,11 +123,61 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
+module MyGitLab =
+
+    /// Implements a TraceListener for TeamCity build servers.
+    /// ## Parameters
+    ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
+    ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+    type internal GitLabTraceListener() =
+
+        interface ITraceListener with
+            /// Writes the given message to the Console.
+            member __.Write msg = 
+                let color = ConsoleWriter.colorMap msg
+                let importantMessagesToStdErr = true
+                let write = ConsoleWriter.writeAnsiColor //else ConsoleWriter.write
+                match msg with
+                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                    write importantMessagesToStdErr color true text
+                | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
+                    write false color newLine text
+                | TraceData.OpenTag (tag, descr) ->
+                    write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                | TraceData.CloseTag (tag, time) ->
+                    write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.ImportData (typ, path) ->
+                    let name = Path.GetFileName path
+                    let target = Path.Combine("artifacts", name)
+                    Shell.cp_r path target
+                    write false color true (sprintf "Import data '%O': %s -> %s" typ path target)
+                | TraceData.TestOutput (test, out, err) ->
+                    write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
+                | TraceData.BuildNumber number ->
+                    write false color true (sprintf "Build Number: %s" number)
+                | TraceData.TestStatus (test, status) ->
+                    write false color true (sprintf "Test '%s' status: %A" test status)
+
+    let defaultTraceListener =
+      GitLabTraceListener() :> ITraceListener
+    let detect () =
+        BuildServer.buildServer = BuildServer.GitLabCI
+    let install(force:bool) =
+        if not (detect()) then failwithf "Cannot run 'install()' on a non-AppVeyor environment"
+        if force || not (CoreTracing.areListenersSet()) then
+            CoreTracing.setTraceListeners [defaultTraceListener]
+        () 
+    let Installer =
+        { new BuildServerInstaller() with
+            member __.Install () = install (false)
+            member __.Detect () = detect() }
+
 BuildServer.install [
     AppVeyor.Installer
     TeamCity.Installer
     Travis.Installer
     TeamFoundation.Installer
+    MyGitLab.Installer
 ]
 
 //let current = CoreTracing.getListeners()
