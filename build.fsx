@@ -1303,6 +1303,7 @@ Target.create "BuildArtifacts" (fun _ ->
 
     let buildCache = "temp/build-cache.zip"
     !! (".fake" </> "build.fsx" </> "*.*")
+    ++ "build.fsx"
     ++ "paket.dependencies"
     ++ "paket.lock"
     |> Zip.zip "." buildCache
