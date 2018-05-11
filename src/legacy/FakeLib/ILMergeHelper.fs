@@ -1,12 +1,12 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains task a task which allows to merge .NET assemblies with [ILMerge](http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx).
 module Fake.ILMergeHelper
 
 open System
 
 /// Option type to configure ILMerge's processing of duplicate types.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type AllowDuplicateTypes = 
     /// No duplicates of public types allowed
     | NoDuplicateTypes
@@ -16,14 +16,14 @@ type AllowDuplicateTypes =
     | DuplicateTypes of string list
 
 /// Option type to configure ILMerge's processing of internal types.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type InternalizeTypes = 
     | NoInternalize
     | Internalize
     | InternalizeExcept of string
 
 /// Option type to configure ILMerge's target output.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type TargetKind = 
     | Library
     | Exe
@@ -31,7 +31,7 @@ type TargetKind =
 
 /// Parameter type for ILMerge
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ILMergeParams = 
     { /// Path to ILMerge.exe
       ToolPath : string
@@ -71,7 +71,7 @@ type ILMergeParams =
       XmlDocs : bool }
 
 /// ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ILMergeDefaults : ILMergeParams = 
     { ToolPath = findToolInSubPath "ilmerge.exe" (currentDirectory @@ "tools" @@ "ILMerge")
       Version = ""
@@ -97,7 +97,7 @@ let ILMergeDefaults : ILMergeParams =
 
 /// Builds the arguments for the ILMerge task
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getArguments outputFile primaryAssembly parameters = 
     let stringParams = 
         [ "out", outputFile
@@ -148,7 +148,7 @@ let getArguments outputFile primaryAssembly parameters =
 ///  - `setParams` - Function used to create an ILMergeParams value with your required settings. Called with an ILMergeParams value configured with the defaults.
 ///  - `outputFile` - Output file path for the merged assembly.
 ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ILMerge setParams outputFile primaryAssembly = 
     use __ = traceStartTaskUsing "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults

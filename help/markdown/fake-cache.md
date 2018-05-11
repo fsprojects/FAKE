@@ -1,6 +1,9 @@
 # Caching of build scripts
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 Starting with version `4.0.0` of FAKE, the first time a script is run the
 compiled assembly that is generated is saved into the hidden `.fake` directory. This

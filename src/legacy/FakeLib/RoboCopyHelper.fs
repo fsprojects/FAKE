@@ -1,8 +1,8 @@
 ﻿/// Contains a task to use [robocopy](https://en.wikipedia.org/wiki/Robocopy) on Windows.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.RoboCopyHelper
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type RoboCopyOptions = { Mirror: bool }
 
 /// Executes a RoboCopy command with options
@@ -45,7 +45,7 @@ let private roboCopyWithOptions (source:string) (destination:string) (options:Ro
 /// ## Parameters
 ///  - `source` - The source directory
 ///  - `destination` - The target directory
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let RoboCopy (source:string) (destination:string) =
    roboCopyWithOptions source destination { Mirror = false }
 
@@ -53,6 +53,6 @@ let RoboCopy (source:string) (destination:string) =
 /// ## Parameters
 ///  - `source` - The source directory
 ///  - `destination` - The target directory
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let RoboCopyMirror (source:string) (destination:string) =
     roboCopyWithOptions source destination { Mirror = true }

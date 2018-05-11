@@ -1,6 +1,9 @@
 # Running targets in "FAKE - F# Make"
 
-**Note:  This documentation is for FAKE 5. The old documentation can be found [here](legacy-core-targets.html)! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-core-targets.html">here</a></p>
+</div>
 
 [API-Reference](apidocs/v5/fake-core-target.html), [Operators](apidocs/v5/fake-core-targetoperators.html)
 
@@ -8,7 +11,7 @@
 
 If you use the `Fake.Core.Target` module and call `Target.runOrDefault` or `Target.runOrList` in your build script you will have the following CLI options:
 
-```help
+```bash
 Usage:
   fake-run --list
   fake-run --version
@@ -24,7 +27,10 @@ Target Module Options [target_opts]:
     -p, --parallel <num>  Run parallel with the given number of tasks.
 ```
 
-> please refer to the general [FAKE 5 runner command line interface](fake-commandline.html) or the [Fake.Core.CommandLineParsing documentation](core-commandlineparsing.html) for details.
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Please refer to the general <a href="fake-commandline.html">FAKE 5 runner command line interface</a> or the <a href="core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a></p> 
+</div>
 
 This means you can - for example - run `fake run build.fsx --list`
 or `fake build --list` to list your targets.
@@ -33,12 +39,18 @@ To run a target `MyTarget` you could use  `fake run build.fsx -t MyTarget` or `f
 
 All parameters after `--` or `target <target>` are given to the target as paramters. Note that this feature needs to be enabled by using `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault`!
 
-> Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
-> - `fake run -t Target build.fsx` - because of ordering fake will assume `-t` to be the script name
-> - `fake build -v` - It will not run FAKE in verbose mode but give the parameter `-v` to the target parameters. This is because there is no `-v` in the above CLI.
->
-> In general you should use the command-line in a way to not be broken when new parameters are added.
-> Use longer forms in your scripts and shorter forms on your shell!
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
+    <ul>
+        <li><code>fake run -t Target build.fs</code> - because of ordering fake will assume <code>-t</code> to be the script name </li>
+        <li> <code>fake build -v</code> - It will not run FAKE in verbose mode but give the parameter <code>-v</code> to the target parameters. This is because there is no <code>-v</code> in the above CLI.</li>
+    </ul>
+    In general you should use the command-line in a way to not be broken when new parameters are added.
+    Use longer forms in your scripts and shorter forms on your shell!</p>
+</div>
+
+
 
 ## Running specific targets
 
@@ -74,9 +86,16 @@ open Fake.Core.TargetOperators
 Target.runOrDefault "Deploy"
 ```
 
-> Warning: Previous versions of FAKE 5 used `(fun () -> ...)` instead of `(fun _ -> ...)`.
-> We decided to change the syntax here to introduce some parameters or other features at a later point.
-> Using the current parameter object is not supported yet.
+<div class="alert alert-warning">
+    <h5>WARNING</h5>
+    <p>
+    Previous versions of FAKE 5 used <code>(fun () -> ...)</code> instead of <code>(fun _ -> ...)</code>.
+    We decided to change the syntax here to introduce some parameters or other features at a later point.
+    Using the current parameter object is not supported yet.
+    </p> 
+</div>
+
+
 
 Now we have the following options:
 

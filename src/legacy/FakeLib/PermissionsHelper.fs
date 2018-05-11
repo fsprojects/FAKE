@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains functions which allow to deal with permissions.
 module Fake.PermissionsHelper
 
@@ -8,7 +8,7 @@ open System.Security.Principal
 /// Returns whether the given user has administrator permissions.
 /// ## Parameters
 ///  - `identity` - The windows identity of the user in question.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let isAdmin identity = 
     let principal = new WindowsPrincipal(identity)
     principal.IsInRole WindowsBuiltInRole.Administrator
@@ -22,7 +22,7 @@ let isAdmin identity =
 ///     Target "Install" (fun _ -> 
 ///          requiresAdmin (fun _ -> installMSI())
 ///      )
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let requiresAdmin f = 
     if isAdmin(WindowsIdentity.GetCurrent()) then
         f()

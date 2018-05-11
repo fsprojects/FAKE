@@ -1,30 +1,30 @@
 ﻿/// Contains tasks to run [VSTest](https://msdn.microsoft.com/en-us/library/ms182486.aspx) unit tests.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.VSTest
 
 open System
 open System.Text
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let vsTestPaths = 
     [|  @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow";
         @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow";
         @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow" |]
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let vsTestExe = 
     if isMono then failwith "VSTest is not supported on the mono platform"
     else "vstest.console.exe"
 
 /// Option which allow to specify if a VSTest error should break the build.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type VSTestParams = 
     { /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
       SettingsPath : string
@@ -66,7 +66,7 @@ type VSTestParams =
       TestAdapterPath: string}
 
 /// VSTest default parameters.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let VSTestDefaults = 
     { SettingsPath = null
       Tests = []
@@ -93,7 +93,7 @@ let VSTestDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let buildVSTestArgs (parameters : VSTestParams) assembly = 
     let testsToRun = 
         if not (Seq.isEmpty parameters.Tests) then 
@@ -130,7 +130,7 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
 ///         !! (testDir + @"\*.Tests.dll") 
 ///           |> VSTest (fun p -> { p with SettingsPath = "Local.RunSettings" })
 ///     )
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let VSTest (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
     use __ = traceStartTaskUsing "VSTest" details

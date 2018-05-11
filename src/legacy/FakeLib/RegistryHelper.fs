@@ -1,12 +1,12 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains functions which allow to read and write information from/to the registry.
 module Fake.RegistryHelper
 
 open Microsoft.Win32
 
 /// Registry base keys.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type RegistryBaseKey =
     | HKEYLocalMachine
     | HKEYClassesRoot
@@ -17,7 +17,7 @@ type RegistryBaseKey =
 
 /// Maps the RegistryBaseKey to a RegistryKey
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getKey name =
     match name with
     | HKEYLocalMachine -> Registry.LocalMachine
@@ -29,7 +29,7 @@ let getKey name =
 
 /// Maps the RegistryBaseKey to a RegistryKey for a 64bit System
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let get64BitKey name =
     match name with
     | HKEYLocalMachine -> RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
@@ -41,7 +41,7 @@ let get64BitKey name =
 
 /// Maps the RegistryBaseKey to a RegistryKey for a 32bit System
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let get32BitKey name =
     match name with
     | HKEYLocalMachine -> RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
@@ -52,19 +52,19 @@ let get32BitKey name =
     | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)
 
 /// Gets a 64-bit registry key
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRegistryKey64 baseKey subKey (writePermission : bool) =
     (get64BitKey baseKey).OpenSubKey(subKey, writePermission)
 
 /// Gets a registry key and falls back to 32 bit if the 64bit key is not there
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRegistryKey baseKey subKey (writePermission : bool) =
     let x64BitKey = (getKey baseKey).OpenSubKey(subKey, writePermission)
     if x64BitKey <> null then x64BitKey else
     (get32BitKey baseKey).OpenSubKey(subKey, writePermission)  // fall back to 32 bit
 
 /// Gets a registry value as string
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey false
     if key = null then
@@ -75,7 +75,7 @@ let getRegistryValue baseKey subKey name =
     value.ToString()
 
 /// Gets a registry value as string
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRegistryValue64 baseKey subKey name =
     use key = getRegistryKey64 baseKey subKey false
     if key = null then
@@ -86,43 +86,43 @@ let getRegistryValue64 baseKey subKey name =
     value.ToString()
 
 /// Sets a registry value
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let setRegistryValue<'T> baseKey subKey name (value : 'T) =
     use key = getRegistryKey baseKey subKey true
     key.SetValue(name, value)
 
 /// Deletes the registry value from its key
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let deleteRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey true
     key.DeleteValue name
 
 /// Returns all the value names of a registry key
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRegistryValueNames baseKey subKey =
     use key = getRegistryKey baseKey subKey false
     key.GetValueNames()
 
 /// Returns whether or not a registry value name exists for a key
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let valueExistsForKey = fun baseKey subKey name ->
     getRegistryValueNames baseKey subKey
     |> Seq.exists (fun n -> n = name)
 
 /// Create a registry subKey
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let createRegistrySubKey baseKey subKey =
     use key = getKey baseKey
     key.CreateSubKey subKey |> ignore
 
 /// Deletes a registry subKey
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let deleteRegistrySubKey baseKey subKey =
     use key = getKey baseKey
     key.DeleteSubKey subKey
 
 /// Returns all the subKey names of a registry key
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRegistrySubKeyNames baseKey subKey =
     use key = getRegistryKey baseKey subKey false
     key.GetSubKeyNames()

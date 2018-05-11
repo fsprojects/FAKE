@@ -1,7 +1,7 @@
 # Analyze your code with SonarQube
 
 From the [web page](http://sonarqube.org):
-"The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, from project portfolio down to the method level"
+>"The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, >from project portfolio down to the method level"
 
 It can analyze a lot of different programming languages, from PHP, Erlang, CSS to Cobol. C# can be installed
 with an additional plugin. This must be done on the SonarQube server. 

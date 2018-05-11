@@ -1,12 +1,12 @@
 ﻿[<AutoOpen>]
 /// Contains tasks which allow to run msiexec in order to install or uninstall msi files.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.MSIHelper
 
 open System
 
 /// MSI parameter type
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type MSIParams =
     { ToolPath: string
@@ -17,7 +17,7 @@ type MSIParams =
       TimeOut: TimeSpan}
 
 /// MSI default parameters  
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let MSIDefaults =
     { ToolPath = "msiexec "
       WorkingDir = "."
@@ -31,7 +31,7 @@ let MSIDefaults =
 /// 
 ///  - `setParams` - Function used to manipulate the default MSI parameters.
 ///  - `setup` - The setup file name.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Install setParams setup = 
     use __ = traceStartTaskUsing "MSI-Install" setup
     let parameters = setParams MSIDefaults
@@ -49,7 +49,7 @@ let Install setParams setup =
 /// 
 ///  - `setParams` - Function used to manipulate the default MSI parameters.
 ///  - `setup` - The setup file name.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Uninstall setParams setup = 
     use __ = traceStartTaskUsing "MSI-Uninstall" setup
     let parameters = setParams MSIDefaults

@@ -1,4 +1,4 @@
-﻿[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+﻿[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Deploy.Web.InitialData
 
 open System
@@ -20,7 +20,7 @@ let private createUser (name : string) password email roles (provider : IMembers
             | MembershipCreateStatus.Success, a -> provider.AddUserToRoles(a.Username, roles)
             | _,s -> failwithf "Could not create user %s" (s.ToString())
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider, memberProvider : IMembershipProvider) =
     createRole "Administrator" memberProvider
     createUser adminUsername adminPassword adminEmail [|"Administrator"|] memberProvider

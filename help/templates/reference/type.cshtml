@@ -10,7 +10,7 @@
   // Get all the members & comment for the type
   var members = (IEnumerable<Member>)Model.Type.AllMembers;
   var comment = (Comment)Model.Type.Comment;
-  
+  var type = (FSharp.MetadataFormat.Type)Model.Type;
   // Group all members by their category which is an inline annotation
   // that can be added to members using special XML comment:
   //
@@ -28,7 +28,16 @@
       Name = String.IsNullOrEmpty(g.Key) ? "Other type members" : g.Key 
     });
 }
+<p>
 
+    @if (Model.Type.IsObsolete)
+    {
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>@Html.Encode(@Model.Type.ObsoleteMessage)</p>
+        </div> 
+    }
+</p>
 <a name="@Model.Type.Name" class="anchor" href="#@Model.Type.Name" ><h1>@Model.Type.Name</h1></a>
 <div class="xmldoc">
   @foreach (var sec in comment.Sections) {

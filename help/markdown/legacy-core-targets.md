@@ -1,6 +1,9 @@
 # Running targets in "FAKE - F# Make"
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be [found here](core-targets.html) **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="core-targets.html">here </a></p>
+</div>
 
 ## Listing targets
 Before running any specific target it is useful to know all the targets that are available in a build script.
@@ -162,8 +165,6 @@ This is in addition to that that MSBuild may use multiple threads when building 
 
 
 # Writing custom C# tasks for FAKE
-
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
 
 "FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks.
 This tutorial shows how to create a (very simple) custom task in C#.

@@ -6,11 +6,11 @@ open Nancy.Authentication.Forms
 open Fake.Deploy.Web.Data
 open Newtonsoft.Json
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Bootstrapper() =
     inherit DefaultNancyBootstrapper()
 
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]    
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]    
     override this.ConfigureApplicationContainer(container) =
         let m = UserMapper()
         container.Register<IUserMapper, UserMapper>(m) |> ignore
@@ -27,7 +27,7 @@ type Bootstrapper() =
 
         container.Register<AgentProxy, AgentProxy>().AsSingleton() |> ignore
 
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     override this.ApplicationStartup (container, pipelines) =
         //StaticConfiguration.Caching.EnableRuntimeViewUpdates <- true
         StaticConfiguration.EnableRequestTracing <- true
@@ -38,7 +38,7 @@ type Bootstrapper() =
 
         base.ApplicationStartup(container, pipelines);
 
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]    
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]    
     override this.RequestStartup(container, pipelines, context) =
         let c = container.Resolve<Configuration>()
 

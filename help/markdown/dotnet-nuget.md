@@ -1,6 +1,9 @@
 # NuGet package restore
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 If you are using a source control system like [git](http://git-scm.com/) you probably don't want to store all binary dependencies in it.
 With FAKE you can use [NuGet](http://nuget.codeplex.com/) to download all dependent packages during the build.
@@ -21,52 +24,30 @@ If you need to use different parameters please use the [RestorePackage](apidocs/
 
 If you don't want to store FAKE.exe and its components in your repository, you can use a batch file which downloads it before the build:
 
-    [lang=batchfile]
+<pre><code class="language-bash">
     @echo off
     cls
     "tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
     "tools\FAKE\tools\Fake.exe" build.fsx
     pause
-
+</code></pre>
 # Creating NuGet packages
-
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
 
 ## Creating a .nuspec template
 
 The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
 The following code shows such .nuspec file from the [OctoKit](https://github.com/octokit/octokit.net) project.
 
-    [lang=xml]
-    <?xml version="1.0" encoding="utf-8"?>
-    <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-      <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-        <id>@project@</id>
-        <version>@build.number@</version>
-        <authors>@authors@</authors>
-        <owners>@authors@</owners>
-        <summary>@summary@</summary>
-        <licenseUrl>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</licenseUrl>
-        <projectUrl>https://github.com/octokit/octokit.net</projectUrl>
-        <iconUrl>https://github.com/octokit/octokit.net/icon.png</iconUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>@description@</description>
-        <releaseNotes>@releaseNotes@</releaseNotes>
-        <copyright>Copyright GitHub 2013</copyright>
-        <tags>GitHub API Octokit</tags>
-        @dependencies@
-        @references@
-      </metadata>
-      @files@
-    </package>
+<pre data-src="nuspec-example.xml"><code class="language-xml">
 
+</code></pre>
 The .nuspec template contains some placeholders like `@build.number@` which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.
 
 The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.
 
 Placeholder | replaced by (`NuGetParams` record field)
---- | ---
+:--- | :---
 `@build.number@` | `Version`
 `@authors@` | `Authors`
 `@project@` | `Project`

@@ -32,8 +32,18 @@
   var nestModules = (IEnumerable<Module>)Model.Module.NestedModules;
   var nestTypes = (IEnumerable<FSharp.MetadataFormat.Type>)Model.Module.NestedTypes;
 }
+<p>
+    @if (Model.Module.IsObsolete)
+    {
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>@Html.Encode(@Model.Module.ObsoleteMessage)</p>
+        </div> 
+    }
 
+</p>
 <a name="@Model.Module.Name" class="anchor" href="#@Model.Module.Name"><h1>@Model.Module.Name</h1></a>
+
 <div class="xmldoc">
   @foreach (var sec in comment.Sections) {
     // XML comment for the type has multiple sections that can be labelled

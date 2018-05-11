@@ -1,4 +1,4 @@
-﻿[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+﻿[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.FuchuHelper
 
 /// Execute Fuchu tests from one or more assemblies.
@@ -6,7 +6,7 @@ module Fake.FuchuHelper
 /// ## Parameters
 /// 
 ///  - `testExes` - The paths of the executables containing Fuchu tests to run.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Fuchu testExes = 
     let errorCode =
         testExes

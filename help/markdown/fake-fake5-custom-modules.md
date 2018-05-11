@@ -1,6 +1,9 @@
 # FAKE 5 - Custom Modules
 
-**Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found [here](legacy-customtasks.html)**
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 "FAKE - F# Make" is intended to be an extensible build framework and therefore it should be as easy as possible to create custom tasks. 
 This tutorial shows how to create a (very simple) custom task in C#. The same works for other .NET language like Visual Basic or F#.

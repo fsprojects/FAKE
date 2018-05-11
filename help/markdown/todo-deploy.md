@@ -1,11 +1,12 @@
 # Deployment using FAKE
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Fake.Deploy is no longer part of FAKE 5 and is considered obsolete and fully replaced by modern deployment systems (puppet, chef, PowerShell DSC, ...). <a href"https://github.com/fsharp/FAKE/issues/1820">Announcement</a>
+    You can still use fake scripts on those alternative deployment systems. Just download the fake binaries and run your scripts.</p>
+</div>
 
 This introduction assumes Fake.Deploy.exe is available in the current directory or path.
-
-**Note: Fake.Deploy is no longer part of FAKE 5 and is considered obsolete and fully replaced by modern deployment systems (puppet, chef, PowerShell DSC, ...). [Announcement](https://github.com/fsharp/FAKE/issues/1820)
-**Tipp: You can still use fake scripts on those alternative deployment systems. Just download the fake binaries and run your scripts.
 
 ## Introduction
 

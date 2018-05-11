@@ -1,5 +1,5 @@
 ﻿/// Contains helper functions for Fake.Deploy
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.DeploymentHelper
 
 open System
@@ -7,16 +7,16 @@ open System.IO
 open Fake.FakeDeployAgentHelper
 
 /// Allows to specify a deployment version
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let predecessorPrefix = "head~"
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type VersionInfo = 
     /// Allows to deploy a specific version
     | Specific of string
     /// Allows to deploy a version which is a predecessor to the current version
     | Predecessor of int
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     static member Parse(s : string) = 
         let s = s.ToLower()
         if s.StartsWith predecessorPrefix then 
@@ -26,41 +26,41 @@ type VersionInfo =
         else Specific s
 
 /// The root dir for Fake.Deploy - Dafault value is "./deployments"
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let mutable deploymentRootDir = "deployments/"
 
 /// Retrieves the NuSpec information for all active releases.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getActiveReleases dir = !!(dir @@ deploymentRootDir @@ "**/active/*.nupkg") |> Seq.map GetMetaDataFromPackageFile
 
 /// Retrieves the NuSpec information for the active release of the given app.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getActiveReleaseFor dir (app : string) = 
     !!(dir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
     |> Seq.map GetMetaDataFromPackageFile
     |> Seq.head
 
 /// Retrieves the NuSpec information of all releases.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getAllReleases dir = !!(dir @@ deploymentRootDir @@ "**/*.nupkg") |> Seq.map GetMetaDataFromPackageFile
 
 /// Retrieves the NuSpec information for all releases of the given app.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getAllReleasesFor dir (app : string) = 
     !!(dir @@ deploymentRootDir @@ app @@ "/**/*.nupkg") |> Seq.map GetMetaDataFromPackageFile
 
 /// Returns statistics about the machine environment.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getStatistics() = getMachineEnvironment()
 
 /// Gets the backup package file name for the given app and version
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getBackupFor dir (app : string) (version : string) = 
     let backupFileName = app + "." + version + ".nupkg"
     dir @@ deploymentRootDir @@ app @@ "backups"
     |> FindFirstMatchingFile backupFileName
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let findScriptFile dir =
     let prioFiles = ["deploy.fsx",1; "install.fsx",2; "setup.fsx",3]
     let getWeight s =
@@ -74,7 +74,7 @@ let findScriptFile dir =
     else new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir) |> raise
 
 /// Extracts the NuGet package
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let unpack workDir isRollback packageBytes = 
     let tempFile = Path.GetTempFileName()
     WriteBytesToFile tempFile packageBytes
@@ -95,7 +95,7 @@ let unpack workDir isRollback packageBytes =
     package, scriptFile
 
 /// Runs a deployment script from the given package
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let doDeployment scriptFileName scriptArgs =
     try
         TargetHelper.reset()
@@ -115,7 +115,7 @@ let doDeployment scriptFileName scriptArgs =
                   Exception = e }
 
 /// Runs a deployment from the given package file name
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let runDeploymentFromPackageFile workDir packageFileName scriptArgs = 
     try 
         let packageBytes = ReadFileAsBytes packageFileName
@@ -127,7 +127,7 @@ let runDeploymentFromPackageFile workDir packageFileName scriptArgs =
                   Exception = e }
 
 /// Rolls the given app back to the specified version
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let rollback workDir (app : string) (version : string) = 
     try 
         let currentPackageFileName = !!(workDir @@ deploymentRootDir @@ app @@ "/active/*.nupkg") |> Seq.head
@@ -160,12 +160,12 @@ let rollback workDir (app : string) (version : string) =
                   Exception = e }
 
 /// Returns the version no. which specified in the NuGet package
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getVersionFromNugetFileName (app : string) (fileName : string) = 
     Path.GetFileName(fileName).ToLower().Replace(".nupkg", "").Replace(app.ToLower() + ".", "")
 
 /// Returns the version no. of the latest backup of the given app
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getPreviousPackageVersionFromBackup dir app versions = 
     let currentPackageFileName = 
         !!(dir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
@@ -181,7 +181,7 @@ let getPreviousPackageVersionFromBackup dir app versions =
     |> Seq.head
 
 /// Rolls the given app back to the specified version info
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let rollbackTo workDir app versionInfo = 
     let previousVersion = predecessorPrefix + "1"
     let versionInfo = if String.IsNullOrEmpty versionInfo then previousVersion else  versionInfo

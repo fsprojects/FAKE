@@ -30,16 +30,23 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 * Clone your personal fork locally.
 
 * Add a new git remote in order to retrieve upstream changes.
-
-        git remote add upstream https://github.com/fsharp/FAKE.git
+<pre>
+    <code class="lang-bash">
+    git remote add upstream https://github.com/fsharp/FAKE.git
+    </code>
+</pre>
 
 #### Build tools
 
 * Windows users can install Visual Studio 2017 (the [Community Edition](https://www.visualstudio.com/de/vs/community/) 
   is freely available for open-source projects).
 
-  > Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
-  > Otherwise the test-suite will fail (However, the build should work)
+    <div class="alert alert-info">
+    <h5>INFO</h5>
+        Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
+        Otherwise the test-suite will fail (However, the build should work)
+     </div> 
+
 
 * Linux and Mac users can read "[Guide - Cross-Platform Development with F#](http://fsharp.org/guides/mac-linux-cross-platform/)" 
   to find out the required tools.
@@ -52,16 +59,24 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 * Alternately, you can use [Vagrant](https://www.vagrantup.com/) in-pair with [VirtualBox](https://www.virtualbox.org/) 
   to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](vagrant.html) to get in touch with the tool.
 
-> Note: The vagrant file might be outdated at this time, please help updating it and removing this banner.
-
+    <div class="alert alert-warning">
+    <h5>WARNING</h5>
+    The vagrant file might be outdated at this time, please help updating it and removing this banner.
+    </div>
 * Ubuntu / Windows Subsystem for Linux:
+
   * Install Mono, as of today 2017-09-30 you need at least alpha to have the msbuild package (http://www.mono-project.com/download/beta/#download-lin)
-  * `apt-get install msbuild mono-complete`
-  * `apt-cache search libunwind`
-  * `# apt-get Install the libunwind runtime (one of the search results)`
-  * `apt-cache search libcurl # Install`
-  * `# apt-get Install the libcurl library (one of the search results)`
-  * `./build.sh`
+  * Run the following
+    <pre>
+        <code class="lang-bash">
+        apt-get install msbuild mono-complete
+        apt-cache search libunwind
+        # apt-get Install the libunwind runtime (one of the search results)
+        apt-cache search libcurl # Install
+        # apt-get Install the libcurl library (one of the search results)
+        ./build.sh
+        </code>
+    </pre>
 
 ### Programming
 
@@ -70,8 +85,11 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 * Run the build via `fake run build.fsx` in order to check if everything works.
 
 * Create a new feature branch.
-
-        git checkout -b myfeature
+<pre>
+    <code class="lang-bash">
+    git checkout -b myfeature
+    </code>
+</pre>
 
 * Implement your bugfix/feature.
 
@@ -85,10 +103,13 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
     Write "WIP" into the pull request description if it's not completely ready
 
 * If you need to rebase you can do:
-
-        git fetch upstream
-        git rebase upstream/master
-        git push origin myfeature -f
+<pre>
+    <code class="lang-bash">
+    git fetch upstream
+    git rebase upstream/master
+    git push origin myfeature -f
+    </code>
+</pre>
 
 * The pull request will be updated automatically.
 
@@ -98,9 +119,12 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
 1. Create a local nuget package for the module you've changed.  
 e.g: Using dotnet cli
-
-        cd path/to/project
-        dotnet pack
+<pre>
+    <code class="lang-bash">
+    cd path/to/project
+    dotnet pack
+    </code>
+</pre>
 
 2. Dotnet pack will create a default nuget package with version of 1.0.0 in the `bin/Debug` of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references  
   
@@ -177,8 +201,9 @@ Tooling in netcore it not optimal yet so some things have to be done by hand, bu
 * Add the info about the new module to the `dotnetAssemblyInfos` variable in `build.fsx`. From this point on the build script will let you know if anything is missing. Again, if you have problems let us know.
 * Mark the old module with the `Obsolete` attribute.
 
-> Note that `src/Fake-netcore.sln` is currently not used (as IDEs don't support that yet). However it is used so speed up the build, `fake run build.fsx` will let you know what to do in the error message.
-
+    <div class="alert alert-info">
+    <h5>INFO</h5> <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that yet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.
+    </div>
 These steps will ensure:
 
 * People using the NuGet package will get the warnings to update the new API

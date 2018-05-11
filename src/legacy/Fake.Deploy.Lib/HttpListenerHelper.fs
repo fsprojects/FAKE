@@ -1,5 +1,5 @@
 ﻿/// Contains basic HTTP listener functions for FAKE.Deploy.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.HttpListenerHelper
 
 open System
@@ -12,20 +12,20 @@ open System.Text.RegularExpressions
 open System.Security.Principal
 
 /// Represents a route.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Route = 
     { Verb : string
       Path : string
       Handler : Map<string, string> -> HttpListenerContext -> string }
     override x.ToString() = sprintf "%s %s" x.Verb x.Path
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type HttpResponseMessage<'a> = 
     | Message of 'a
     | Exception of string
 
 /// Represents a route result.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type RouteResult = 
     { Route : Route
       Parameters : Map<string, string> }
@@ -52,11 +52,11 @@ let private writeResponse (ctx : HttpListenerContext) msg =
     ctx.Response.Close(response, true)
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let placeholderRegex = new Regex("{([^}]+)}", RegexOptions.Compiled)
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let routeMatcher route = 
     let dict = new System.Collections.Generic.Dictionary<int, string>()
     let normalized = route.Path.Replace("?", @"\?").Trim '/'
@@ -106,11 +106,11 @@ let private routeRequest log (ctx : HttpListenerContext) routeMatchers =
 let private getStatus args (ctx : HttpListenerContext) = "Http listener is running"
 
 /// Contains the default routes.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let defaultRoutes = [ "GET", "", getStatus ]
 
 /// Creates routes for the http listener.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let createRoutes routes = 
     routes
     |> Seq.map (fun (verb, route : string, func) -> 
@@ -120,18 +120,18 @@ let createRoutes routes =
     |> Seq.map routeMatcher
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let CreateDefaultRequestMap() = createRoutes defaultRoutes
 
 /// Matches an URL with the given routes.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let matchRoute routes verb url = 
     routes
     |> Seq.map routeMatcher
     |> Seq.tryPick (fun r -> r verb url)
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getBodyFromContext (ctx : HttpListenerContext) = 
     let readAllBytes (s : Stream) = 
         let ms = new MemoryStream()
@@ -148,7 +148,7 @@ let getBodyFromContext (ctx : HttpListenerContext) =
     else failwith "Attempted to read body from request when there is not one"
 
 /// Returns the first free port which can be used for the http listener.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getFirstFreePort() = 
     let defaultPort = 8080
     let usedports = 
@@ -165,32 +165,32 @@ let getFirstFreePort() =
     port.ToString()
 
 /// Returns the specified port from the config or the first free port if no port was specified.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getPort configPort = 
     match configPort with
     | "*" -> getFirstFreePort()
     | _ -> configPort
 
 /// Represents a http listener.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Listener = 
     { ServerName : string
       Port : string
       CancelF : unit -> unit }
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member x.Cancel() = x.CancelF()
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member x.RootUrl = sprintf "http://%s:%s/fake/" x.ServerName x.Port
 
 /// Creates an empty http listener.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let emptyListener = 
     { ServerName = ""
       Port = ""
       CancelF = id }
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getSetUrlAclArgs port = 
     if Environment.OSVersion.Version.Major > 5 then 
         "netsh", 
@@ -200,7 +200,7 @@ let getSetUrlAclArgs port =
         String.Format(@"set urlacl /u http://+:{0}/ /a D:(A;;GX;;;""{1}"")", port, WindowsIdentity.GetCurrent().User)
 
 /// Returns if the http listener can listen to the given port.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let canListen port = 
     try 
         let httpListener = new HttpListener()
@@ -213,7 +213,7 @@ let canListen port =
         false
 
 /// Checks whether the http listener can be bound to the given port.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureCanBindHttpPort port = 
     if not <| canListen port then 
         let cmd, args = getSetUrlAclArgs port
@@ -222,7 +222,7 @@ let ensureCanBindHttpPort port =
         | a -> failwithf "Failed to grant rights for listening to http, exit code: %d" a
 
 /// Starts a http listener on the given server and port.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let start log serverName port requestMap = 
     let cts = new CancellationTokenSource()
     let usedPort = getPort port
@@ -247,5 +247,5 @@ let start log serverName port requestMap =
       CancelF = cts.Cancel }
 
 /// Starts a http listener on the given server and port - uses the console logger.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let startWithConsoleLogger serverName port requestMap = start TraceHelper.logToConsole serverName port requestMap

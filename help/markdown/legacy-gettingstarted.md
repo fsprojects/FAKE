@@ -1,6 +1,9 @@
 # Getting started with FAKE - F# Make
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found [here](fake-gettingstarted.html)**
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="fake-gettingstarted.html">here </a></p>
+</div>
 
 In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
 
