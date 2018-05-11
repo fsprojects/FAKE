@@ -1466,6 +1466,7 @@ let prevDocs =
 (if fromArtifacts then "PrepareArtifacts" else prevDocs)
     =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
+prevDocs ?=> "GenerateDocs"
 
 "GenerateDocs"
     ==> "Release_GenerateDocs"
@@ -1489,6 +1490,7 @@ let prevDocs =
 (if fromArtifacts then "PrepareArtifacts" else "_BuildSolution")
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
+"_BuildSolution" ?=> "BootstrapTest"
 
 "BootstrapTest"
     ==> "RunTests"
@@ -1497,6 +1499,7 @@ let prevDocs =
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
+"_DotNetPackage" ?=> "DotNetCoreUnitTests"
 
 "DotNetCoreUnitTests"
     ==> "RunTests"
@@ -1504,16 +1507,19 @@ let prevDocs =
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
+"_DotNetPublish_current" ?=> "DotNetCoreIntegrationTests"
 
 "DotNetCoreIntegrationTests"
     ==> "RunTests"
 
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
+"_DotNetPackage" ?=> "DotNetCoreIntegrationTests"
 
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
     =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
+"_DotNetPublish_current" ?=> "BootstrapTestDotNetCore"
 
 "BootstrapTestDotNetCore"
     ==> "RunTests"
@@ -1534,18 +1540,22 @@ let prevDocs =
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
     ==> "FastRelease"
+"EnsureTestsRun" ?=> "DotNetCorePushChocolateyPackage"
 
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     =?> ("ReleaseDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "FastRelease"
+"EnsureTestsRun" ?=> "ReleaseDocs"
 
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     ==> "DotNetCorePushNuGet"
     ==> "FastRelease"
+"EnsureTestsRun" ?=> "DotNetCorePushNuGet"
 
 (if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     ==> "PublishNuget"
     ==> "FastRelease"
+"EnsureTestsRun" ?=> "PublishNuget"
 
 // Gitlab staging (myget release)
 "PublishNuget"
