@@ -945,6 +945,14 @@ Target.create "DotNetCoreCreateZipPackages" (fun _ ->
 
 Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
+    let changeToolPath (p: Choco.ChocoPackParams) =
+        if Environment.isWindows then p else
+            File.WriteAllText("temp/choco.sh", """#!/bin/bash
+docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
+"""          )
+            let result = Shell.Exec("chmod", "-x temp/choco.sh")
+            if result <> 0 then failwith "'chmod +x temp/choco.sh' failed on unix"
+            { p with ToolPath = "temp/choco.sh" }
     Directory.ensure "nuget/dotnetcore/chocolatey"
     Choco.packFromTemplate (fun p ->
         { p with
@@ -956,15 +964,25 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
                 [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None
                   (System.IO.Path.GetFullPath @"src\VERIFICATION.txt"), Some "VERIFICATION.txt", None
                   (System.IO.Path.GetFullPath @"License.txt"), Some "LICENSE.txt", None ]
-            OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
+            OutputDir = "nuget/dotnetcore/chocolatey" }
+        |> changeToolPath) "src/Fake-choco-template.nuspec"
     ()
 )
 Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
+    let changeToolPath (p: Choco.ChocoPushParams) =
+        if Environment.isWindows then p else
+            File.WriteAllText("temp/choco.sh", """#!/bin/bash
+docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
+"""          )
+            let result = Shell.Exec("chmod", "-x temp/choco.sh")
+            if result <> 0 then failwith "'chmod +x temp/choco.sh' failed on unix"
+            { p with ToolPath = "temp/choco.sh" }
     let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
     path |> Choco.push (fun p ->
         { p with
             Source = "https://push.chocolatey.org/"
-            ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" })
+            ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" }
+        |> changeToolPath)
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
@@ -1157,9 +1175,12 @@ Target.create "PrepareArtifacts" (fun _ ->
 
         unzip "nuget/dotnetcore" "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-packages.zip"
 
-        Directory.ensure "nuget/dotnetcore/chocolatey"
-        let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
-        Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
+        if Environment.isWindows then
+            Directory.ensure "nuget/dotnetcore/chocolatey"
+            let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
+            Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
+        else
+            unzip "." (artifactsDir </> "chocolatey-requirements.zip")
 
         Directory.ensure "nuget/legacy"
         unzip "nuget/legacy" (artifactsDir </> "fake-legacy-packages.zip")
@@ -1184,10 +1205,19 @@ Target.create "BuildArtifacts" (fun _ ->
     |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
     |> List.iter (publish)
 
-    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" release.NugetVersion
-    File.Copy(chocoPackage, chocoTargetPackage, true)
-    publish chocoTargetPackage
+    if Environment.isWindows then
+        let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
+        let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" release.NugetVersion
+        File.Copy(chocoPackage, chocoTargetPackage, true)
+        publish chocoTargetPackage
+    else
+        let chocoReq = "temp/chocolatey-requirements.zip"
+        //!! @"nuget\dotnetcore\Fake.netcore\win7-x86\**" already part of fake-dotnetcore-win7-x86
+        !! @"src\VERIFICATION.txt"
+        ++ @"License.txt"
+        ++ "src/Fake-choco-template.nuspec"
+        |> Zip.zip "." chocoReq
+        publish chocoReq
 
     let legacyZip = "nuget/fake-legacy-packages.zip"
     !! (nugetLegacyDir </> "**/*.nupkg")

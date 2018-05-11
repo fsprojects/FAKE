@@ -46,7 +46,7 @@ module Travis =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-Travis environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
-        () 
+        ()
     let Installer =
         { new BuildServerInstaller() with
             member __.Install () = install (false)

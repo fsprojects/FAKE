@@ -629,7 +629,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyInstall.ps1 at %s from template %s" outputPath templatePath
 
-        templatePath |> Shell.CopyFile outputPath
+        templatePath |> Shell.copyFile outputPath
 
         let replacements =
             [ "@packageName@", parameters.Title
@@ -674,7 +674,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyUninstall.ps1 at %s from template %s" outputPath templatePath
 
-        templatePath |> Shell.CopyFile outputPath
+        templatePath |> Shell.copyFile outputPath
 
         let replacements =
             [ "@packageName@", parameters.Title
