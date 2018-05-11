@@ -79,6 +79,25 @@ do_choco_pack:
     #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     #- docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
 
+do_choco_push:
+  stage: prod
+  dependencies:
+    - do_build
+    - do_choco_pack
+  image: docker:1.11
+  before_script:
+    - apt-get update
+    - apt-get install -y libunwind8 libicu52 unzip wget git
+  services:
+    - docker:dind
+  script: |
+    docker version
+    unzip artifacts/build-cache.zip
+    mkdir fake-bin
+    unzip artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin
+    export artifactsdirectory=$PWD/artifacts
+    fake-bin/fake build target DotNetCorePushChocolateyPackage
+
 do_staging:
   stage: staging
   image: mono:5.8.0.127
