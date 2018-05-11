@@ -49,6 +49,8 @@ open System.Reflection
 #r "packages/build/System.Net.Http/lib/net46/System.Net.Http.dll"
 #r "packages/build/Octokit/lib/net45/Octokit.dll"
 #I "packages/build/SourceLink.Fake/tools/"
+
+#r "System.IO.Compression"
 //#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
 #endif
@@ -121,11 +123,67 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 
+let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
+let apikey = Environment.environVarOrDefault "nugetkey" ""
+let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
+let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
+
+module MyGitLab =
+
+    /// Implements a TraceListener for TeamCity build servers.
+    /// ## Parameters
+    ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
+    ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+    type internal GitLabTraceListener() =
+
+        interface ITraceListener with
+            /// Writes the given message to the Console.
+            member __.Write msg = 
+                let color = ConsoleWriter.colorMap msg
+                let importantMessagesToStdErr = true
+                let write = ConsoleWriter.writeAnsiColor //else ConsoleWriter.write
+                match msg with
+                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                    write importantMessagesToStdErr color true text
+                | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
+                    write false color newLine text
+                | TraceData.OpenTag (tag, descr) ->
+                    write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                | TraceData.CloseTag (tag, time) ->
+                    write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.ImportData (typ, path) ->
+                    let name = Path.GetFileName path
+                    let target = Path.Combine("artifacts", name)
+                    Shell.cp_r path target
+                    write false color true (sprintf "Import data '%O': %s -> %s" typ path target)
+                | TraceData.TestOutput (test, out, err) ->
+                    write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
+                | TraceData.BuildNumber number ->
+                    write false color true (sprintf "Build Number: %s" number)
+                | TraceData.TestStatus (test, status) ->
+                    write false color true (sprintf "Test '%s' status: %A" test status)
+
+    let defaultTraceListener =
+      GitLabTraceListener() :> ITraceListener
+    let detect () =
+        BuildServer.buildServer = BuildServer.GitLabCI
+    let install(force:bool) =
+        if not (detect()) then failwithf "Cannot run 'install()' on a non-AppVeyor environment"
+        if force || not (CoreTracing.areListenersSet()) then
+            CoreTracing.setTraceListeners [defaultTraceListener]
+        () 
+    let Installer =
+        { new BuildServerInstaller() with
+            member __.Install () = install (false)
+            member __.Detect () = detect() }
+
 BuildServer.install [
     AppVeyor.Installer
     TeamCity.Installer
     Travis.Installer
     TeamFoundation.Installer
+    MyGitLab.Installer
 ]
 
 //let current = CoreTracing.getListeners()
@@ -137,6 +195,9 @@ let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
+
+let publish f =
+    Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
@@ -251,12 +312,13 @@ let dotnetAssemblyInfos =
       "Fake.Azure.Emulators", "Azure Emulators Support"
       "Fake.Azure.Kudu", "Azure Kudu Support"
       "Fake.Azure.WebJobs", "Azure Web Jobs Support"
-      "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
       "Fake.BuildServer.AppVeyor", "Integration into AppVeyor buildserver"
-      "Fake.BuildServer.Travis", "Integration into Travis buildserver"
+      "Fake.BuildServer.GitLab", "Integration into GitLab-CI buildserver"
+      "Fake.BuildServer.TeamCity", "Integration into TeamCity buildserver"
       "Fake.BuildServer.TeamFoundation", "Integration into TeamFoundation buildserver"
-      "Fake.Core.Context", "Core Context Infrastructure"
+      "Fake.BuildServer.Travis", "Integration into Travis buildserver"
       "Fake.Core.CommandLineParsing", "Core commandline parsing support via docopt like syntax"
+      "Fake.Core.Context", "Core Context Infrastructure"
       "Fake.Core.Environment", "Environment Detection"
       "Fake.Core.Process", "Starting and managing Processes"
       "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
@@ -266,39 +328,40 @@ let dotnetAssemblyInfos =
       "Fake.Core.Tasks", "Repeating and managing Tasks"
       "Fake.Core.Trace", "Core Logging functionality"
       "Fake.Core.Xml", "Core Xml functionality"
+      "Fake.Documentation.DocFx", "Documentation with DocFx"
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
       "Fake.DotNet.Cli", "Running the dotnet cli"
       "Fake.DotNet.Fsc", "Running the f# compiler - fsc"
+      "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
       "Fake.DotNet.Mage", "Manifest Generation and Editing Tool"
       "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
       "Fake.DotNet.Paket", "Running Paket and publishing packages"
-      "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
+      "Fake.DotNet.Testing.Expecto", "Running expecto test runner"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
-      "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
-      "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
+      "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
+      "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
+      "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
-      "Fake.JavaScript.Npm", "Running npm commands"
-      "Fake.JavaScript.Yarn", "Running Yarn commands"
+      "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
+      "Fake.JavaScript.Npm", "Running npm commands"
+      "Fake.JavaScript.Yarn", "Running Yarn commands"
       "Fake.Net.Http", "HTTP Client"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
+      "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
+      "Fake.Testing.Common", "Common testing data types"
+      "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
+      "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.Tools.Git", "Running git commands"
       "Fake.Tools.Pickles", "Convert Gherkin to HTML"
-      "Fake.Testing.Common", "Common testing data types"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
-      "Fake.Windows.Registry", "CRUD functionality for Windows registry"
-      "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
-      "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
-      "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
-      "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
-      "Fake.Documentation.DocFx", "Documentation with DocFx"
-      "Fake.Installer.InnoSetup", "Creating installers with InnoSetup" ]
+      "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
 
 let assemblyInfos =
   [ legacyDir </> "FAKE/AssemblyInfo.fs",
@@ -362,6 +425,11 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
 Target.create "_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
     |> Trace.logItems "AppBuild-Output: "
+    
+    let testZip = "temp/tests-legacy.zip"
+    !! "test/**"
+    |> Zip.zip "." testZip
+    publish testZip
 )
 
 Target.create "GenerateDocs" (fun _ ->
@@ -832,6 +900,11 @@ Target.create "CreateNuGet" (fun _ ->
         NuGet.NuGet.NuGet setParams "fake.nuspec"
         !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
         NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
+
+    let legacyZip = "nuget/fake-legacy-packages.zip"
+    !! (nugetLegacyDir </> "**/*.nupkg")
+    |> Zip.zip nugetLegacyDir legacyZip
+    publish legacyZip
 )
 
 let netCoreProjs =
@@ -924,6 +997,11 @@ Target.create "_DotNetPackage" (fun _ ->
                     { c.Common with CustomParams = Some "/m:1" }
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
+
+    let testZip = "temp/tests.zip"
+    !! "src/test/*/bin/Release/netcoreapp2.0/**"
+    |> Zip.zip "src/test" testZip
+    publish testZip
 )
 
 Target.create "DotNetCoreCreateZipPackages" (fun _ ->
@@ -940,10 +1018,22 @@ Target.create "DotNetCoreCreateZipPackages" (fun _ ->
         !! (sprintf "%s/**" runtimeDir)
         |> Zip.zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
     )
+    
+    runtimes @ [ "portable"; "packages" ]
+    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    |> List.iter publish
 )
 
 Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
+    let changeToolPath (p: Choco.ChocoPackParams) =
+        if Environment.isWindows then p else
+            File.WriteAllText("temp/choco.sh", """#!/bin/bash
+docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
+"""          )
+            let result = Shell.Exec("chmod", "-x temp/choco.sh")
+            if result <> 0 then failwith "'chmod +x temp/choco.sh' failed on unix"
+            { p with ToolPath = "temp/choco.sh" }
     Directory.ensure "nuget/dotnetcore/chocolatey"
     Choco.packFromTemplate (fun p ->
         { p with
@@ -955,15 +1045,34 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
                 [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None
                   (System.IO.Path.GetFullPath @"src\VERIFICATION.txt"), Some "VERIFICATION.txt", None
                   (System.IO.Path.GetFullPath @"License.txt"), Some "LICENSE.txt", None ]
-            OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
-    ()
+            OutputDir = "nuget/dotnetcore/chocolatey" }
+        |> changeToolPath) "src/Fake-choco-template.nuspec"
+
+    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
+    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" release.NugetVersion
+    File.Copy(chocoPackage, chocoTargetPackage, true)
+    publish chocoTargetPackage
 )
 Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
-    let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
+    let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
+    let path = sprintf "nuget/dotnetcore/chocolatey/%s" name
+    if not Environment.isWindows && not (File.exists path) && fromArtifacts then
+        Directory.ensure "nuget/dotnetcore/chocolatey"
+        Shell.copyFile path (artifactsDir </> sprintf "chocolatey-%s" name)
+
+    let changeToolPath (p: Choco.ChocoPushParams) =
+        if Environment.isWindows then p else
+            File.WriteAllText("temp/choco.sh", """#!/bin/bash
+docker run --rm -v $PWD:$PWD -w $PWD linuturk/mono-choco $@
+"""          )
+            let result = Shell.Exec("chmod", "-x temp/choco.sh")
+            if result <> 0 then failwith "'chmod +x temp/choco.sh' failed on unix"
+            { p with ToolPath = "temp/choco.sh" }
     path |> Choco.push (fun p ->
         { p with
             Source = "https://push.chocolatey.org/"
-            ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" })
+            ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" }
+        |> changeToolPath)
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
@@ -1045,9 +1154,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
 
 )
 
-let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
-let apikey = Environment.environVarOrDefault "nugetkey" ""
-let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+
 let rec nugetPush tries nugetpackage =
     try
         if not <| System.String.IsNullOrEmpty apikey then
@@ -1125,26 +1232,70 @@ Target.create "FastRelease" (fun _ ->
     |> Async.RunSynchronously
 )
 
-Target.create "PublishStaging" (fun _ -> ())
+Target.create "Release_Staging" (fun _ -> ())
+
+open System.IO.Compression
+let unzip target (fileName : string) =
+    use stream = new FileStream(fileName, FileMode.Open)
+    use zipFile = new ZipArchive(stream)
+    for zipEntry in zipFile.Entries do
+        let unzipPath = Path.Combine(target, zipEntry.FullName)
+        let directoryPath = Path.GetDirectoryName(unzipPath)
+        if unzipPath.EndsWith "/" then
+            Directory.CreateDirectory(unzipPath) |> ignore
+        else
+            // unzip the file
+            Directory.ensure directoryPath
+            let zipStream = zipEntry.Open()
+            if unzipPath.EndsWith "/" |> not then 
+                use unzippedFileStream = File.Create(unzipPath)
+                zipStream.CopyTo(unzippedFileStream)
+
+Target.create "PrepareArtifacts" (fun _ ->
+    if not fromArtifacts then
+        Trace.trace "empty artifactsDir."
+    else
+        !! (artifactsDir </> "fake-dotnetcore*")
+        |> Shell.copy "nuget/dotnetcore/Fake.netcore"
+
+        unzip "nuget/dotnetcore" "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-packages.zip"
+
+        if Environment.isWindows then
+            Directory.ensure "nuget/dotnetcore/chocolatey"
+            let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
+            Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
+        else
+            unzip "." (artifactsDir </> "chocolatey-requirements.zip")
+
+        Directory.ensure "nuget/legacy"
+        unzip "nuget/legacy" (artifactsDir </> "fake-legacy-packages.zip")
+
+        Directory.ensure "temp/build"
+        !! ("nuget" </> "legacy" </> "*.nupkg")
+        |> Seq.iter (fun pack ->
+            unzip "temp/build" pack
+        )
+        Shell.copyDir "build" "temp/build" (fun _ -> true)
+        
+        Directory.ensure "help"
+        unzip "help" (artifactsDir </> "help-markdown.zip")
+
+        unzip "src/test" (artifactsDir </> "tests.zip")
+)
 
 Target.create "BuildArtifacts" (fun _ ->
-    let publish f =
-        Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
-    runtimes @ [ "portable"; "packages" ]
-    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
-    |> List.iter (publish)
-
-    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" release.NugetVersion
-    File.Copy(chocoPackage, chocoTargetPackage, true)
-    publish chocoTargetPackage
-
-    let legacyZip = "nuget/fake-legacy-packages.zip"
-    !! (nugetLegacyDir </> "**/*.nupkg")
-    |> Zip.zip nugetLegacyDir legacyZip
-    publish legacyZip
-
     Directory.ensure "temp"
+    
+    if not Environment.isWindows then
+        // Chocolatey package is done in a separate step...
+        let chocoReq = "temp/chocolatey-requirements.zip"
+        //!! @"nuget\dotnetcore\Fake.netcore\win7-x86\**" already part of fake-dotnetcore-win7-x86
+        !! @"src\VERIFICATION.txt"
+        ++ @"License.txt"
+        ++ "src/Fake-choco-template.nuspec"
+        |> Zip.zip "." chocoReq
+        publish chocoReq
+
     let buildCache = "temp/build-cache.zip"
     !! (".fake" </> "build.fsx" </> "*.*")
     ++ "paket.dependencies"
@@ -1187,6 +1338,13 @@ Target.create "DotNetPackage" ignore
 Target.create "AfterBuild" ignore
 Target.create "FullDotNetCore" ignore
 Target.create "DotNetPublish" ignore
+Target.create "RunTests" ignore
+Target.create "Release_GenerateDocs" (fun _ ->
+    let testZip = "temp/docs.zip"
+    !! "docs/**"
+    |> Zip.zip "docs" testZip
+    publish testZip
+)
 
 open Fake.Core.TargetOperators
 
@@ -1262,12 +1420,17 @@ for runtime in "current" :: "portable" :: runtimes do
 
 
 // Create artifacts when build is finished
-"AfterBuild"
+let prevDocs =
+    "AfterBuild"
     =?> ("CreateNuGet", Environment.isWindows)
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-    =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
+(if fromArtifacts then "PrepareArtifacts" else prevDocs)
+    =?> ("GenerateDocs", Environment.isWindows)
     ==> "Default"
+
+"GenerateDocs"
+    ==> "Release_GenerateDocs"
 
 // Build artifacts only (no testing)
 "AfterBuild"
@@ -1285,26 +1448,37 @@ for runtime in "current" :: "portable" :: runtimes do
 "BuildSolution"
     ==> "Default"
     
-"_BuildSolution"
+(if fromArtifacts then "PrepareArtifacts" else "_BuildSolution")
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"
 
+"BootstrapTest"
+    ==> "RunTests"
 
 // Test the dotnetcore build
-"_DotNetPackage"
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
     =?> ("DotNetCoreUnitTests",not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 
-"_DotNetPublish_current"
+"DotNetCoreUnitTests"
+    ==> "RunTests"
+
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
 
-"_DotNetPackage"
+"DotNetCoreIntegrationTests"
+    ==> "RunTests"
+
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
     =?> ("DotNetCoreIntegrationTests", not <| Environment.hasEnvironVar "SkipIntegrationTests" && not <| Environment.hasEnvironVar "SkipTests")
 
-"_DotNetPublish_current"
+(if fromArtifacts then "PrepareArtifacts" else "_DotNetPublish_current")
     =?> ("BootstrapTestDotNetCore", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "FullDotNetCore"
+
+"BootstrapTestDotNetCore"
+    ==> "RunTests"
 
 "DotNetPackage"
     ==> "DotNetCoreCreateZipPackages"
@@ -1312,27 +1486,27 @@ for runtime in "current" :: "portable" :: runtimes do
     ==> "Default"
 
 // Release stuff ('FastRelease' is to release after running 'Default')
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     =?> ("DotNetCorePushChocolateyPackage", Environment.isWindows)
     ==> "FastRelease"
 
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     =?> ("ReleaseDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "FastRelease"
 
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     ==> "DotNetCorePushNuGet"
     ==> "FastRelease"
 
-"EnsureTestsRun"
+(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
     ==> "PublishNuget"
     ==> "FastRelease"
 
 // Gitlab staging (myget release)
 "PublishNuget"
-    ==> "PublishStaging"
+    ==> "Release_Staging"
 "DotNetCorePushNuGet"
-    ==> "PublishStaging"
+    ==> "Release_Staging"
 
 // If 'Default' happens it needs to happen before 'EnsureTestsRun'
 "Default"

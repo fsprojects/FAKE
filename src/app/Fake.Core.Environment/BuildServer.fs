@@ -69,7 +69,7 @@ module BuildServer =
 
     /// Checks if we are on GitLab CI
     /// [omit]
-    let isGitlabCI = Environment.environVar "CI_SERVER_NAME" = "GitLab CI"
+    let isGitlabCI = Environment.environVar "CI_SERVER_NAME" = "GitLab CI" || Environment.environVar "GITLAB_CI" = "true"
 
     /// Build number retrieved from GitLab CI
     /// [omit]
