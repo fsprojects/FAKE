@@ -832,11 +832,10 @@ Target.create "ILRepack" (fun _ ->
 )
 
 Target.create "CreateNuGet" (fun _ ->
-    let path = "temp/xCorFlags.exe"
-    if not (File.Exists path) then
-        let xplatcoreflags = "https://github.com/sushihangover/CorFlags/releases/download/v1.0.5643.36015/xCorFlags.exe"
-        Directory.ensure "temp"
-        Fake.Net.Http.downloadFile path xplatcoreflags |> ignore
+    let path =
+        if Environment.isWindows 
+        then "lib" @@ "corflags.exe"
+        else "lib" @@ "xCorFlags.exe"
     let set64BitCorFlags files =
         files
         |> Seq.iter (fun file ->
