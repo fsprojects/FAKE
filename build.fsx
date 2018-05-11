@@ -49,6 +49,8 @@ open System.Reflection
 #r "packages/build/System.Net.Http/lib/net46/System.Net.Http.dll"
 #r "packages/build/Octokit/lib/net45/Octokit.dll"
 #I "packages/build/SourceLink.Fake/tools/"
+
+#r "System.IO.Compression"
 //#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
 #endif
