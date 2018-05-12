@@ -352,16 +352,19 @@ let version =
     let segToString = function 
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
-        
+    let createAlphaNum (s:string) =
+        PreReleaseSegment.AlphaNumeric (s.Replace("_", "-"))
     let source =
         match BuildServer.buildServer with 
         | _ when MyGitLab.isGitLabCi ->
             // Workaround for now
             // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
-            
-            [ PreReleaseSegment.AlphaNumeric "release"
-              PreReleaseSegment.AlphaNumeric MyGitLab.Environment.CommitRefName
-              PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ]
+            let branchPath =
+                MyGitLab.Environment.CommitRefName.Split('/')
+                |> Seq.map createAlphaNum
+            [ yield PreReleaseSegment.AlphaNumeric "gitlab"
+              yield! branchPath
+              yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ]
         | BuildServer.TeamFoundation ->
             let sourceBranch = MyTeamFoundation.Environment.BuildSourceBranch
             let isPr = sourceBranch.StartsWith "refs/pull/"
@@ -369,11 +372,13 @@ let version =
                 if isPr then
                     let splits = sourceBranch.Split '/'
                     let prNum = bigint (int splits.[2])
-                    [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.Numeric prNum ]
-                else [ PreReleaseSegment.AlphaNumeric "release" ]
+                    [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.AlphaNumeric "vsts"; PreReleaseSegment.Numeric prNum ]
+                else
+                    let branchPath = sourceBranch.Split('/') |> Seq.skip 2 |> Seq.map createAlphaNum
+                    [ yield PreReleaseSegment.AlphaNumeric "vsts"
+                      yield! branchPath ]
             let buildId = bigint (int MyTeamFoundation.Environment.BuildId)
             [ yield! firstSegment
-              yield PreReleaseSegment.AlphaNumeric MyTeamFoundation.Environment.BuildSourceBranchName
               yield PreReleaseSegment.Numeric buildId
             ]
         | _ -> []
@@ -388,6 +393,7 @@ let version =
             Some ({p with Values = p.Values @ source; Origin = p.Origin + toAdd })
     { semVer with PreRelease = prerelease; Original = None }
 let nugetVersion = version.AsString
+Trace.setBuildNumber nugetVersion
 
 //let current = CoreTracing.getListeners()
 //if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
