@@ -1338,7 +1338,8 @@ Target.create "BuildArtifacts" (fun args ->
         publish chocoReq
 
     let buildCache = "temp/build-cache.zip"
-    !! (".fake" </> "build.fsx" </> "*.*")
+    !! (".fake" </> "build.fsx" </> "*.dll")
+    ++ (".fake" </> "build.fsx" </> "*.pdb")
     ++ "build.fsx"
     ++ "paket.dependencies"
     ++ "paket.lock"
