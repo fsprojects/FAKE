@@ -103,7 +103,7 @@ let packages =
      "FAKE.FluentMigrator",projectDescription + " Extensions for FluentMigrator"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
+     "Fake.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."
      "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
