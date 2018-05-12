@@ -362,8 +362,8 @@ let version =
             let branchPath =
                 MyGitLab.Environment.CommitRefName.Split('/')
                 |> Seq.map createAlphaNum
-            [ yield PreReleaseSegment.AlphaNumeric "gitlab"
-              yield! branchPath
+            [ yield! branchPath
+              yield PreReleaseSegment.AlphaNumeric "gitlab"
               yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ]
         | BuildServer.TeamFoundation ->
             let sourceBranch = MyTeamFoundation.Environment.BuildSourceBranch
@@ -372,13 +372,13 @@ let version =
                 if isPr then
                     let splits = sourceBranch.Split '/'
                     let prNum = bigint (int splits.[2])
-                    [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.AlphaNumeric "vsts"; PreReleaseSegment.Numeric prNum ]
+                    [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.Numeric prNum ]
                 else
                     let branchPath = sourceBranch.Split('/') |> Seq.skip 2 |> Seq.map createAlphaNum
-                    [ yield PreReleaseSegment.AlphaNumeric "vsts"
-                      yield! branchPath ]
+                    [ yield! branchPath ]
             let buildId = bigint (int MyTeamFoundation.Environment.BuildId)
             [ yield! firstSegment
+              yield PreReleaseSegment.AlphaNumeric "vsts"
               yield PreReleaseSegment.Numeric buildId
             ]
         | _ -> []
