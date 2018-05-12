@@ -59,8 +59,8 @@ module GitLab =
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
                     write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-                | TraceData.CloseTag (tag, time) ->
-                    write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.CloseTag (tag, time, state) ->
+                    write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
                 | TraceData.ImportData (typ, path) ->
                     let name = Path.GetFileName path
                     let target = Path.Combine("artifacts", name)
