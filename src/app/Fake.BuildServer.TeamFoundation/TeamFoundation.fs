@@ -104,7 +104,7 @@ module TeamFoundation =
                     openTags.Value <- (tag,id) :: openTags.Value
                     let order = System.Threading.Interlocked.Increment(&order)
                     createLogDetail id parentId tag.Type tag.Name order descr
-                | TraceData.CloseTag (tag, time) ->
+                | TraceData.CloseTag (tag, time, state) ->
                     ignore time
                     let id, rest =
                         match openTags.Value with
@@ -112,8 +112,13 @@ module TeamFoundation =
                         | (savedTag, id) :: rest ->
                             ignore savedTag // TODO: Check if tag = savedTag
                             id, rest
-                    openTags.Value <- rest                
-                    setLogDetailFinished id Succeeded
+                    openTags.Value <- rest 
+                    let result =
+                        match state with
+                        | TagStatus.Warning -> LogDetailResult.SucceededWithIssues
+                        | TagStatus.Failed -> LogDetailResult.Failed
+                        | TagStatus.Success -> LogDetailResult.Succeeded               
+                    setLogDetailFinished id result
                 | TraceData.ImportData (typ, path) ->
                     publishArtifact typ.Name (Path.GetFileName path|>Some) path
                 | TraceData.TestOutput (test, out, err) ->

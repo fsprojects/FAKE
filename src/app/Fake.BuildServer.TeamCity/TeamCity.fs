@@ -257,15 +257,15 @@ module TeamCity =
                     testFailed testName message detail
                 | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     comparisonFailure testName message detail expected actual
-                | TraceData.CloseTag (KnownTags.Test name, time) ->
+                | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
                     startTestSuite name
-                | TraceData.CloseTag (KnownTags.TestSuite name, _) ->
+                | TraceData.CloseTag (KnownTags.TestSuite name, _, _) ->
                     finishTestSuite name
                 | TraceData.OpenTag (tag, description) ->
                     TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type description)
-                | TraceData.CloseTag (tag, _) ->
+                | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                     ConsoleWriter.write false color true text
