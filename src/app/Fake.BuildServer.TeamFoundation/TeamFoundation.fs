@@ -126,7 +126,7 @@ module TeamFoundation =
                         | TagStatus.Success -> LogDetailResult.Succeeded               
                     setLogDetailFinished id result
                 | TraceData.ImportData (typ, path) ->
-                    publishArtifact typ.Name (Path.GetFileName path|>Some) path
+                    publishArtifact typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number ->

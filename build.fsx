@@ -227,6 +227,12 @@ let inline dtntWorkDir wd =
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
 
 let publish f =
+    // Workaround
+    let path = Path.GetFullPath f
+    let name = Path.GetFileName path
+    let target = Path.Combine("artifacts", name)
+    let targetDir = Path.GetDirectoryName target
+    Directory.ensure targetDir
     Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
 
 let cleanForTests () =
