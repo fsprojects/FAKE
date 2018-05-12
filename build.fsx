@@ -359,10 +359,11 @@ let version =
         | _ when MyGitLab.isGitLabCi ->
             // Workaround for now
             // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
-            let branchPath =
-                MyGitLab.Environment.CommitRefName.Split('/')
-                |> Seq.map createAlphaNum
-            [ yield! branchPath
+            // Too long for chocolatey (limit = 20) and we don't strictly need it.
+            //let branchPath =
+            //    MyGitLab.Environment.CommitRefName.Split('/')
+            //    |> Seq.map createAlphaNum
+            [ //yield! branchPath
               yield PreReleaseSegment.AlphaNumeric "gitlab"
               yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ]
         | BuildServer.TeamFoundation ->
@@ -374,8 +375,10 @@ let version =
                     let prNum = bigint (int splits.[2])
                     [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.Numeric prNum ]
                 else
-                    let branchPath = sourceBranch.Split('/') |> Seq.skip 2 |> Seq.map createAlphaNum
-                    [ yield! branchPath ]
+                    // Too long for chocolatey (limit = 20) and we don't strictly need it.
+                    //let branchPath = sourceBranch.Split('/') |> Seq.skip 2 |> Seq.map createAlphaNum
+                    //[ yield! branchPath ]
+                    []
             let buildId = bigint (int MyTeamFoundation.Environment.BuildId)
             [ yield! firstSegment
               yield PreReleaseSegment.AlphaNumeric "vsts"
@@ -1449,7 +1452,13 @@ Target.create "PublishNuget" (fun _ ->
 
 Target.create "ReleaseDocs" (fun _ ->
     Shell.cleanDir "gh-pages"
-    let url = Environment.environVarOrDefault "fake_git_url" "https://github.com/fsharp/FAKE.git"
+    let auth = 
+        match Environment.environVarOrDefault "github_token" "" with
+        | s when not (System.String.IsNullOrWhiteSpace s) ->
+            TraceSecrets.register "<token>"  s
+            sprintf "%s:x-oauth-basic@" s
+        | _ -> ""
+    let url = Environment.environVarOrDefault "fake_git_url" (sprintf "https://%sgithub.com/fsharp/FAKE.git" auth)
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
     Git.Repository.fullclean "gh-pages"
@@ -1457,23 +1466,31 @@ Target.create "ReleaseDocs" (fun _ ->
     Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     Git.Staging.stageAll "gh-pages"
     Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" nugetVersion)
-    Git.Branches.push "gh-pages"
+    Git.Branches.pushBranch "gh-pages" url "gh-pages"
 )
 
 Target.create "FastRelease" (fun _ ->
-
-    Git.Staging.stageAll ""
-    Git.Commit.exec "" (sprintf "Bump version to %s" nugetVersion)
-    let branch = Git.Information.getBranchName ""
-    Git.Branches.pushBranch "" "origin" branch
-
-    Git.Branches.tag "" nugetVersion
-    Git.Branches.pushTag "" "origin" nugetVersion
-
-    let token =
+    let token = 
         match Environment.environVarOrDefault "github_token" "" with
-        | s when not (System.String.IsNullOrWhiteSpace s) -> s
+        | s when not (System.String.IsNullOrWhiteSpace s) ->
+            TraceSecrets.register "<token>"  s
+            s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    let auth = sprintf "%s:x-oauth-basic@" token
+    let url = Environment.environVarOrDefault "fake_git_url" (sprintf "https://%sgithub.com/fsharp/FAKE.git" auth)
+    
+    let gitDirectory = Environment.environVarOrDefault "git_directory" ""
+    if gitDirectory <> "" && BuildServer.buildServer = BuildServer.TeamFoundation then
+        Trace.trace "Prepare git directory"
+        Git.Branches.checkout gitDirectory false MyTeamFoundation.Environment.BuildSourceVersion
+    else
+        Git.Staging.stageAll gitDirectory
+        Git.Commit.exec gitDirectory (sprintf "Bump version to %s" nugetVersion)
+        let branch = Git.Information.getBranchName gitDirectory
+        Git.Branches.pushBranch gitDirectory "origin" branch
+
+    Git.Branches.tag gitDirectory nugetVersion
+    Git.Branches.pushTag gitDirectory url nugetVersion
 
     let files =
         runtimes @ [ "portable"; "packages" ]
