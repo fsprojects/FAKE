@@ -142,7 +142,9 @@ BuildServer.install [
     TeamCity.Installer
     Travis.Installer
     TeamFoundation.Installer
+#if DOTNETCORE
     GitLab.Installer
+#endif
 ]
 
 let version =
@@ -152,7 +154,8 @@ let version =
     let createAlphaNum (s:string) =
         PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
     let source, buildMeta =
-        match BuildServer.buildServer with 
+        match BuildServer.buildServer with
+#if DOTNETCORE
         | BuildServer.GitLabCI ->
             // Workaround for now
             // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
@@ -164,6 +167,7 @@ let version =
               //yield PreReleaseSegment.AlphaNumeric "gitlab"
               yield PreReleaseSegment.AlphaNumeric GitLab.Environment.PipelineId
             ], sprintf "gitlab.%s" GitLab.Environment.CommitSha
+#endif
         | BuildServer.TeamFoundation ->
             let sourceBranch = TeamFoundation.Environment.BuildSourceBranch
             let isPr = sourceBranch.StartsWith "refs/pull/"
