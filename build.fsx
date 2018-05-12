@@ -410,8 +410,13 @@ let chocoVersion =
         match version.PreRelease with
         | Some preRelease -> ("-" + preRelease.Origin.Replace(".", "-"))
         | None -> ""
-    sprintf "%d.%d.%d%s%s" version.Major version.Minor version.Patch build pre
-    
+    let result = sprintf "%d.%d.%d%s%s" version.Major version.Minor version.Patch build pre
+    if pre.Length > 20 then
+        let msg = sprintf "Version '%s' is too long for chocolatey (Prerelease string is max 20 chars)" result
+        Trace.traceError msg
+        failwithf "%s" msg
+    result
+
 Trace.setBuildNumber nugetVersion
 
 //let current = CoreTracing.getListeners()
