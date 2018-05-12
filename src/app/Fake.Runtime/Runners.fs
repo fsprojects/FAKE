@@ -43,6 +43,7 @@ type FakeConfig =
     ScriptTokens : Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
     CompileOptions : CompileOptions
     UseCache : bool
+    RestoreOnlyGroup : bool
     Out: TextWriter
     Err: TextWriter
     ScriptArgs: string list }
