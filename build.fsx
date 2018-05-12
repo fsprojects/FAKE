@@ -1520,6 +1520,7 @@ Target.create "Release_Staging" (fun _ -> ())
 
 open System.IO.Compression
 let unzip target (fileName : string) =
+    Trace.tracefn "Extracting %s." fileName
     use stream = new FileStream(fileName, FileMode.Open)
     use zipFile = new ZipArchive(stream)
     for zipEntry in zipFile.Entries do
@@ -1532,6 +1533,7 @@ let unzip target (fileName : string) =
             Directory.ensure directoryPath
             let zipStream = zipEntry.Open()
             if unzipPath.EndsWith "/" |> not then 
+                Trace.tracefn "  %s -> %s" zipEntry.FullName unzipPath
                 use unzippedFileStream = File.Create(unzipPath)
                 zipStream.CopyTo(unzippedFileStream)
 
@@ -1539,10 +1541,16 @@ Target.create "PrepareArtifacts" (fun _ ->
     if not fromArtifacts then
         Trace.trace "empty artifactsDir."
     else
-        !! (artifactsDir </> "fake-dotnetcore*")
-        |> Shell.copy "nuget/dotnetcore/Fake.netcore"
+        
+        let target = "nuget/dotnetcore/Fake.netcore"
+        Directory.ensure target
+        !! (artifactsDir </> "fake-dotnetcore-*.zip")
+        |> Seq.iter (fun file ->
+            Trace.tracefn "Copied file %s to %s" file target
+            Shell.copyFile target file)
+        //|> Shell.copy target
 
-        unzip "nuget/dotnetcore" "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-packages.zip"
+        unzip "nuget/dotnetcore" (artifactsDir </> "fake-dotnetcore-packages.zip")
 
         if Environment.isWindows then
             Directory.ensure "nuget/dotnetcore/chocolatey"
