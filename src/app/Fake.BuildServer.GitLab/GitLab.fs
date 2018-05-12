@@ -40,6 +40,11 @@ module GitLabImportExtensions =
 [<RequireQualifiedAccess>]
 module GitLab =
 
+    type Environment =
+        static member CommitSha = Environment.environVar "CI_COMMIT_SHA"
+        static member CommitRefName = Environment.environVar "CI_COMMIT_REF_NAME"
+        static member PipelineId = Environment.environVar "CI_PIPELINE_ID"
+
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.

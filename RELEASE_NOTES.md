@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.0.0-rc011 - 2018-05-12
+## 5.0.0-rc012 - 2018-05-12
 
 * FAKE5: New module `Fake.Windows.Registry` - https://github.com/fsharp/FAKE/pull/1909
 * BUGFIX: Fix MSBuild parameter parsing - https://github.com/fsharp/FAKE/pull/1918

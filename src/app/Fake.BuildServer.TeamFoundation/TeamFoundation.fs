@@ -77,6 +77,12 @@ module TeamFoundation =
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
+    type Environment =
+        static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
+        static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"
+        static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
+        static member BuildId = Environment.environVar "BUILD_BUILDID"
+
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.

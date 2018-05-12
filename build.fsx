@@ -89,6 +89,7 @@ let gitHome = "https://github.com/" + gitOwner
 let gitName = "FAKE"
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
+
 (*
 let version =
     let semVer = SemVer.parse release.NugetVersion
@@ -137,6 +138,11 @@ let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
 module MyGitLab =
     let isGitLabCi = Environment.environVar "GITLAB_CI" = "true"
+    
+    type Environment =
+        static member CommitSha = Environment.environVar "CI_COMMIT_SHA"
+        static member CommitRefName = Environment.environVar "CI_COMMIT_REF_NAME"
+        static member PipelineId = Environment.environVar "CI_PIPELINE_ID"
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
@@ -263,6 +269,12 @@ module MyTeamFoundation =
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
+    type Environment =
+        static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
+        static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"
+        static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
+        static member BuildId = Environment.environVar "BUILD_BUILDID"
+
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
@@ -336,6 +348,47 @@ BuildServer.install [
     MyGitLab.Installer
 ]
 
+let version =
+    let segToString = function 
+        | PreReleaseSegment.AlphaNumeric n -> n
+        | PreReleaseSegment.Numeric n -> string n
+        
+    let source =
+        match BuildServer.buildServer with 
+        | _ when MyGitLab.isGitLabCi ->
+            // Workaround for now
+            // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
+            
+            [ PreReleaseSegment.AlphaNumeric "release"
+              PreReleaseSegment.AlphaNumeric MyGitLab.Environment.CommitRefName
+              PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ]
+        | BuildServer.TeamFoundation ->
+            let sourceBranch = MyTeamFoundation.Environment.BuildSourceBranch
+            let isPr = sourceBranch.StartsWith "refs/pull/"
+            let firstSegment =
+                if isPr then
+                    let splits = sourceBranch.Split '/'
+                    let prNum = bigint (int splits.[2])
+                    [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.Numeric prNum ]
+                else [ PreReleaseSegment.AlphaNumeric "release" ]
+            let buildId = bigint (int MyTeamFoundation.Environment.BuildId)
+            [ yield! firstSegment
+              yield PreReleaseSegment.AlphaNumeric MyTeamFoundation.Environment.BuildSourceBranchName
+              yield PreReleaseSegment.Numeric buildId
+            ]
+        | _ -> []
+    
+    let semVer = SemVer.parse release.NugetVersion
+    let prerelease =
+        match semVer.PreRelease with
+        | None -> None
+        | Some p ->
+            let toAdd = System.String.Join(".", source |> Seq.map segToString)
+            let toAdd = if System.String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
+            Some ({p with Values = p.Values @ source; Origin = p.Origin + toAdd })
+    { semVer with PreRelease = prerelease; Original = None }
+let nugetVersion = version.AsString
+
 //let current = CoreTracing.getListeners()
 //if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
 //    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
@@ -385,7 +438,7 @@ Target.create "WorkaroundPaketNuspecBug" (fun _ ->
     // https://github.com/fsprojects/Paket/issues/2689
     // Basically paket fails if there is already an existing nuspec in obj/ dir because then MSBuild will call paket with multiple nuspec file arguments separated by ';'
     !! "src/*/*/obj/**/*.nuspec"
-    -- (sprintf "src/*/*/obj/**/*%s.nuspec" release.NugetVersion)
+    -- (sprintf "src/*/*/obj/**/*%s.nuspec" nugetVersion)
     |> File.deleteAll
 )
 
@@ -449,8 +502,8 @@ Target.create "RenameFSharpCompilerService" (fun _ ->
 let common = [
     AssemblyInfo.Product "FAKE - F# Make"
     AssemblyInfo.Version release.AssemblyVersion
-    AssemblyInfo.InformationalVersion release.NugetVersion
-    AssemblyInfo.FileVersion release.NugetVersion]
+    AssemblyInfo.InformationalVersion nugetVersion
+    AssemblyInfo.FileVersion nugetVersion]
 
 // New FAKE libraries
 let dotnetAssemblyInfos =
@@ -595,7 +648,7 @@ Target.create "GenerateDocs" (fun _ ->
         "page-author", String.separated ", " authors
         "project-author", String.separated ", " authors
         "github-link", githubLink
-        "version", release.NugetVersion
+        "version", nugetVersion
         "project-github", "http://github.com/fsharp/fake"
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
@@ -1064,7 +1117,7 @@ Target.create "CreateNuGet" (fun _ ->
                 NuGet.NuGet.NuGetParams.Authors = authors
                 NuGet.NuGet.NuGetParams.Project = package
                 NuGet.NuGet.NuGetParams.Description = description
-                NuGet.NuGet.NuGetParams.Version = release.NugetVersion
+                NuGet.NuGet.NuGetParams.Version = nugetVersion
                 NuGet.NuGet.NuGetParams.OutputPath = nugetLegacyDir
                 NuGet.NuGet.NuGetParams.WorkingDir = nugetLegacyDir
                 NuGet.NuGet.NuGetParams.Summary = projectSummary
@@ -1154,8 +1207,8 @@ Target.create "_DotNetPackage" (fun _ ->
     //Environment.setEnvironVar "IncludeSource" "true"
     //Environment.setEnvironVar "IncludeSymbols" "false"
     Environment.setEnvironVar "GenerateDocumentationFile" "true"
-    Environment.setEnvironVar "PackageVersion" release.NugetVersion
-    Environment.setEnvironVar "Version" release.NugetVersion
+    Environment.setEnvironVar "PackageVersion" nugetVersion
+    Environment.setEnvironVar "Version" nugetVersion
     Environment.setEnvironVar "Authors" (String.separated ";" authors)
     Environment.setEnvironVar "Description" projectDescription
     Environment.setEnvironVar "PackageReleaseNotes" (release.Notes |> String.toLines)
@@ -1185,7 +1238,7 @@ Target.create "_DotNetPackage" (fun _ ->
 )
 
 Target.create "DotNetCoreCreateZipPackages" (fun _ ->
-    Environment.setEnvironVar "Version" release.NugetVersion
+    Environment.setEnvironVar "Version" nugetVersion
 
     // build zip packages
     !! "nuget/dotnetcore/*.nupkg"
@@ -1228,7 +1281,7 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
             PackageId = "fake"
             ReleaseNotes = release.Notes |> String.toLines
             InstallerType = Choco.ChocolateyInstallerType.SelfContained
-            Version = release.NugetVersion
+            Version = nugetVersion
             Files =
                 [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None
                   (System.IO.Path.GetFullPath @"src\VERIFICATION.txt"), Some "VERIFICATION.txt", None
@@ -1236,13 +1289,13 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
             OutputDir = "nuget/dotnetcore/chocolatey" }
         |> changeToolPath) "src/Fake-choco-template.nuspec"
 
-    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
-    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" release.NugetVersion
+    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" nugetVersion
+    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" nugetVersion
     File.Copy(chocoPackage, chocoTargetPackage, true)
     publish chocoTargetPackage
 )
 Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
-    let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
+    let name = sprintf "%s.%s.nupkg" "fake" nugetVersion
     let path = sprintf "nuget/dotnetcore/chocolatey/%s" name
     if not Environment.isWindows && not (File.exists path) && fromArtifacts then
         Directory.ensure "nuget/dotnetcore/chocolatey"
@@ -1386,19 +1439,19 @@ Target.create "ReleaseDocs" (fun _ ->
     Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
     Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     Git.Staging.stageAll "gh-pages"
-    Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
+    Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" nugetVersion)
     Git.Branches.push "gh-pages"
 )
 
 Target.create "FastRelease" (fun _ ->
 
     Git.Staging.stageAll ""
-    Git.Commit.exec "" (sprintf "Bump version to %s" release.NugetVersion)
+    Git.Commit.exec "" (sprintf "Bump version to %s" nugetVersion)
     let branch = Git.Information.getBranchName ""
     Git.Branches.pushBranch "" "origin" branch
 
-    Git.Branches.tag "" release.NugetVersion
-    Git.Branches.pushTag "" "origin" release.NugetVersion
+    Git.Branches.tag "" nugetVersion
+    Git.Branches.pushTag "" "origin" nugetVersion
 
     let token =
         match Environment.environVarOrDefault "github_token" "" with
@@ -1410,7 +1463,7 @@ Target.create "FastRelease" (fun _ ->
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
 
     GitHub.createClientWithToken token
-    |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    |> GitHub.draftNewRelease gitOwner gitName nugetVersion (release.SemVer.PreRelease <> None) release.Notes
     |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
@@ -1446,7 +1499,7 @@ Target.create "PrepareArtifacts" (fun _ ->
 
         if Environment.isWindows then
             Directory.ensure "nuget/dotnetcore/chocolatey"
-            let name = sprintf "%s.%s.nupkg" "fake" release.NugetVersion
+            let name = sprintf "%s.%s.nupkg" "fake" nugetVersion
             Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
             unzip "." (artifactsDir </> "chocolatey-requirements.zip")
