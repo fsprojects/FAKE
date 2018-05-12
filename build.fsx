@@ -354,7 +354,7 @@ let version =
         | PreReleaseSegment.Numeric n -> string n
     let createAlphaNum (s:string) =
         PreReleaseSegment.AlphaNumeric (s.Replace("_", "-"))
-    let source =
+    let source, overwrite =
         match BuildServer.buildServer with 
         | _ when MyGitLab.isGitLabCi ->
             // Workaround for now
@@ -365,7 +365,7 @@ let version =
             //    |> Seq.map createAlphaNum
             [ //yield! branchPath
               yield PreReleaseSegment.AlphaNumeric "gitlab"
-              yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ]
+              yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ], false
         | BuildServer.TeamFoundation ->
             let sourceBranch = MyTeamFoundation.Environment.BuildSourceBranch
             let isPr = sourceBranch.StartsWith "refs/pull/"
@@ -383,8 +383,8 @@ let version =
             [ yield! firstSegment
               yield PreReleaseSegment.AlphaNumeric "vsts"
               yield PreReleaseSegment.Numeric buildId
-            ]
-        | _ -> []
+            ], isPr
+        | _ -> [], false
     
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =
@@ -392,8 +392,10 @@ let version =
         | None -> None
         | Some p ->
             let toAdd = System.String.Join(".", source |> Seq.map segToString)
-            let toAdd = if System.String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
-            Some ({p with Values = p.Values @ source; Origin = p.Origin + toAdd })
+            let toAdd = if System.String.IsNullOrEmpty toAdd || overwrite then toAdd else "." + toAdd
+            Some ({p with 
+                        Values = if overwrite then source else p.Values @ source
+                        Origin = if overwrite then toAdd else p.Origin + toAdd })
     { semVer with PreRelease = prerelease; Original = None }
 let nugetVersion = version.AsString
 let chocoVersion =
@@ -712,10 +714,12 @@ Target.create "GenerateDocs" (fun _ ->
             LayoutRoots = layoutRoots })
 
     Directory.ensure apidocsDir
-
+    
+    let baseDir = Path.GetFullPath "."
     let dllsAndLibDirs (dllPattern:IGlobbingPattern) = 
         let dlls = 
             dllPattern
+            |> GlobbingPattern.setBaseDir baseDir
             |> Seq.distinctBy Path.GetFileName
             |> List.ofSeq
         let libDirs = 
@@ -729,7 +733,7 @@ Target.create "GenerateDocs" (fun _ ->
     Directory.ensure fake5ApidocsDir
     
     let fake5Dlls, fake5LibDirs = 
-        !! "./src/app/Fake.*/bin/Release/**/Fake.*.dll" 
+        !! "src/app/Fake.*/bin/Release/**/Fake.*.dll" 
         |> dllsAndLibDirs
  
     fake5Dlls
@@ -774,14 +778,14 @@ Target.create "GenerateDocs" (fun _ ->
     let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
     Directory.ensure fake5LegacyApidocsDir
     let fake5LegacyDlls, fake5LegacyLibDirs = 
-        !! "./build/**/Fake.*.dll"
-          ++ "./build/FakeLib.dll"
-          -- "./build/**/Fake.Experimental.dll"
-          -- "./build/**/FSharp.Compiler.Service.dll"
-          -- "./build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
-          -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
-          -- "./build/**/Fake.IIS.dll"
-          -- "./build/**/Fake.Deploy.Lib.dll"
+        !! "build/**/Fake.*.dll"
+          ++ "build/FakeLib.dll"
+          -- "build/**/Fake.Experimental.dll"
+          -- "build/**/FSharp.Compiler.Service.dll"
+          -- "build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
+          -- "build/**/FAKE.FSharp.Compiler.Service.dll"
+          -- "build/**/Fake.IIS.dll"
+          -- "build/**/Fake.Deploy.Lib.dll"
         |> dllsAndLibDirs
 
     fake5LegacyDlls
@@ -798,13 +802,13 @@ Target.create "GenerateDocs" (fun _ ->
     let fake4LegacyApidocsDir = apidocsDir @@ "v4"
     Directory.ensure fake4LegacyApidocsDir
     let fake4LegacyDlls, fake4LegacyLibDirs =
-        !! "./packages/docs/FAKE/tools/Fake.*.dll"
-          ++ "./packages/docs/FAKE/tools/FakeLib.dll"
-          -- "./packages/docs/FAKE/tools/Fake.Experimental.dll"
-          -- "./packages/docs/FAKE/tools/FSharp.Compiler.Service.dll"
-          -- "./packages/docs/FAKE/tools/FAKE.FSharp.Compiler.Service.dll"
-          -- "./packages/docs/FAKE/tools/Fake.IIS.dll"
-          -- "./packages/docs/FAKE/tools/Fake.Deploy.Lib.dll"
+        !! "packages/docs/FAKE/tools/Fake.*.dll"
+          ++ "packages/docs/FAKE/tools/FakeLib.dll"
+          -- "packages/docs/FAKE/tools/Fake.Experimental.dll"
+          -- "packages/docs/FAKE/tools/FSharp.Compiler.Service.dll"
+          -- "packages/docs/FAKE/tools/FAKE.FSharp.Compiler.Service.dll"
+          -- "packages/docs/FAKE/tools/Fake.IIS.dll"
+          -- "packages/docs/FAKE/tools/Fake.Deploy.Lib.dll"
         |> dllsAndLibDirs
 
     fake4LegacyDlls
