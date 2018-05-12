@@ -18,7 +18,7 @@ type private SearchOption =
     | Recursive
     | FilePattern of string
 
-let private checkSubDirs absolute (dir : string) root = 
+let private checkSubDirs absolute (dir : string) root =
     if dir.Contains "*" then Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else 
         let path = Path.Combine(root, dir)

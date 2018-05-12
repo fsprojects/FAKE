@@ -1,5 +1,5 @@
 /// Contains code to configure FAKE for Appcast handling
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Appcast
 open System.Xml
 open System.Xml.Linq
@@ -17,7 +17,7 @@ let private XAttributeXName expandedName value = Linq.XAttribute(expandedName, v
 let private sparkle = XNamespace.Get("http://www.andymatuschak.org/xml-namespaces/sparkle")
 
 /// Mime type of the download file
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type MimeType =
     /// Octetstream use for exe or zip files
     | OctetStream
@@ -25,7 +25,7 @@ type MimeType =
     | Custom of string
 
 /// Download details for the appcast
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type AppcastItem = {
     /// The name of the update
     title : string;
@@ -49,7 +49,7 @@ type AppcastItem = {
 }
 
 /// Configuration data for the appcast
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Appcast = {
     /// A titel, usually the app name
     title : string;
@@ -107,7 +107,7 @@ type Appcast = {
 ///          ]
 ///      } |> writeAppcast "build/updates.xml"
 ///  )
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let writeAppcast (path : string) (cast : Appcast) = 
     let toXml (cast : Appcast) =
         let mtToString mimetype = 

@@ -85,3 +85,4 @@ let NugetUpdate setParams packagesFile =
     let param = NugetUpdateDefaults |> setParams
     let args = sprintf "update %s %s" packagesFile (buildArgs param)
     runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package update for %s failed." packagesFile)
+    __.MarkSuccess()

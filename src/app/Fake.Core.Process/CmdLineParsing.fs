@@ -101,17 +101,25 @@ module internal CmdLineParsing =
         else cmd
 
 type FilePath = string
+
+module Args =
+    let toWindowsCommandLine args = CmdLineParsing.windowsArgvToCommandLine args
+    let toLinuxShellCommandLine args =
+        System.String.Join(" ", args |> Seq.map CmdLineParsing.escapeCommandLineForShell)
+
+    let fromWindowsCommandLine cmd = CmdLineParsing.windowsCommandLineToArgv cmd
+    
 type Arguments = 
     { Args : string array }
     static member Empty = { Args = [||] }
     /// See https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     static member OfWindowsCommandLine cmd =
-        { Args = CmdLineParsing.windowsCommandLineToArgv cmd }
+        { Args = Args.fromWindowsCommandLine cmd }
+
     /// This is the reverse of https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
-    member x.ToWindowsCommandLine = CmdLineParsing.windowsArgvToCommandLine x.Args
-    member x.ToLinuxShellCommandLine =
-        System.String.Join(" ", x.Args |> Seq.map CmdLineParsing.escapeCommandLineForShell)
+    member x.ToWindowsCommandLine = Args.toWindowsCommandLine x.Args
+    member x.ToLinuxShellCommandLine = Args.toLinuxShellCommandLine x.Args
+
     static member OfArgs args = { Args = args }
-    static member OfStartInfo cmd =
-        Arguments.OfWindowsCommandLine cmd
+    static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
     member internal x.ToStartInfo = CmdLineParsing.toProcessStartInfo x.Args

@@ -1,6 +1,9 @@
 # Make BDD with Gherkin and SpecFlow
 
-**Note: This documentation is for FAKE version 5.0 or later. The old documentation can be found [here](apidocs/v4/fake-specflowhelper.html)** 
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="apidocs/v4/fake-specflowhelper.html">here</a></p>
+</div>
 
 Use [SpecFlow] to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.
 

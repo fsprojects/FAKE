@@ -1,4 +1,6 @@
+group netcore
+
 FSharp.Core
-NUnit
-Unquote
-FSharp.Compiler.Tools
+NETStandard.Library
+Expecto
+FParsec

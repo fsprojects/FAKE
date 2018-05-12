@@ -1,5 +1,5 @@
 ﻿/// Contains tasks to upload apps to [TestFlight](http://testflightapp.com)
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.TestFlightHelper
 
 open System
@@ -7,7 +7,7 @@ open System.IO
 
 /// The TestFlight parameter type.
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type TestFlightParams = {
     /// (Required) API token from testflightapp.com/account/#api
     ApiToken: string
@@ -28,7 +28,7 @@ type TestFlightParams = {
 }
 
 /// The default TestFlight upload parameters.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let TestFlightDefaults = {
     ApiToken = ""
     TeamToken = ""
@@ -76,7 +76,7 @@ let private toCurlArgs ps = seq {
 /// Uploads the app build to TestFlight.
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default TestFlightParams value.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let TestFlight (setParams: TestFlightParams -> TestFlightParams) =
     let ps = TestFlightDefaults |> setParams |> validateParams
     let args = ps |> toCurlArgs |> String.concat " "

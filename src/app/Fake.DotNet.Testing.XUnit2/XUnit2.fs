@@ -282,3 +282,4 @@ let run setParams assemblies =
             Arguments = parameters |> buildXUnit2Args assemblies}) >> Process.withFramework) parameters.TimeOut
 
     ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result
+    __.MarkSuccess()

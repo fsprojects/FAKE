@@ -77,6 +77,12 @@ module TeamFoundation =
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
+    type Environment =
+        static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
+        static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"
+        static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
+        static member BuildId = Environment.environVar "BUILD_BUILDID"
+
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
@@ -104,7 +110,7 @@ module TeamFoundation =
                     openTags.Value <- (tag,id) :: openTags.Value
                     let order = System.Threading.Interlocked.Increment(&order)
                     createLogDetail id parentId tag.Type tag.Name order descr
-                | TraceData.CloseTag (tag, time) ->
+                | TraceData.CloseTag (tag, time, state) ->
                     ignore time
                     let id, rest =
                         match openTags.Value with
@@ -112,10 +118,15 @@ module TeamFoundation =
                         | (savedTag, id) :: rest ->
                             ignore savedTag // TODO: Check if tag = savedTag
                             id, rest
-                    openTags.Value <- rest                
-                    setLogDetailFinished id Succeeded
+                    openTags.Value <- rest 
+                    let result =
+                        match state with
+                        | TagStatus.Warning -> LogDetailResult.SucceededWithIssues
+                        | TagStatus.Failed -> LogDetailResult.Failed
+                        | TagStatus.Success -> LogDetailResult.Succeeded               
+                    setLogDetailFinished id result
                 | TraceData.ImportData (typ, path) ->
-                    publishArtifact typ.Name (Path.GetFileName path|>Some) path
+                    publishArtifact typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number ->

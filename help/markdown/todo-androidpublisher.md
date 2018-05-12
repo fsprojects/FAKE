@@ -1,6 +1,9 @@
 # Publish Android apk
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 This module helps android developers to automatically publish their APKs
 

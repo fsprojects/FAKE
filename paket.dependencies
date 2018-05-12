@@ -71,7 +71,7 @@ group Build
     source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1
-    nuget Nuget.CommandLine
+    nuget NuGet.CommandLine
     nuget FAKE prerelease
     nuget FSharp.Formatting prerelease
     nuget FSharp.Formatting.CommandTool prerelease
@@ -84,6 +84,7 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
+    source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
@@ -98,6 +99,7 @@ group NetcoreBuild
     nuget Fake.BuildServer.TeamCity prerelease
     nuget Fake.BuildServer.Travis prerelease
     nuget Fake.BuildServer.TeamFoundation prerelease
+    nuget Fake.BuildServer.GitLab prerelease
     nuget Fake.IO.FileSystem prerelease
     nuget Fake.IO.Zip prerelease
     nuget Fake.Core.ReleaseNotes prerelease
@@ -119,7 +121,7 @@ group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
     storage: none
-    framework: net46, netstandard1.6, netstandard2.0, netcoreapp2.0
+    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0
 
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget FSharp.Compiler.Service storage: packages, content: none

@@ -6,7 +6,7 @@ open System.ComponentModel.DataAnnotations
 open System.Globalization
 open System.Runtime.Serialization
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type Login = {
@@ -15,7 +15,7 @@ type Login = {
     [<DataMember>]RememberMe : bool
 }
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type Registration = {
@@ -29,7 +29,7 @@ type Registration = {
     ConfirmPassword : string
 }
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type Role = {
@@ -37,7 +37,7 @@ type Role = {
     Id : string
 }
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type User = {

@@ -2,7 +2,7 @@
 /// Also includes a do-it-all function that will embed interop
 /// side-by-side manifest to executables from Vb6 using
 /// functions from the Side-by-side helper module
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Vb6Helper
 
 open Fake
@@ -12,7 +12,7 @@ open System.IO
 
 /// Parameters for running a VB6 build
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Vb6BuildParams = 
     { 
         /// Path to the VB6 executable
@@ -47,13 +47,13 @@ type private Vb6BuildResult =
 
 /// Represents the version of a VB6 project
 /// `ToString ()` will return a Maj.Min.Rev.Patch version string
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Vb6Version = {MajorVer:int; MinorVer:int; RevisionVer:int; AutoIncrementVer:int;}
                     override x.ToString () = sprintf "%i.%i.%i.%i" x.MajorVer x.MinorVer x.RevisionVer x.AutoIncrementVer
 
 /// Represents the version of a VB6 reference
 /// References from VB6 projects only care about Major.Minor versions
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Vb6ReferenceVersion = 
     {
         Major: int
@@ -61,7 +61,7 @@ type Vb6ReferenceVersion =
     }
 
 /// Represents a VB6 Reference
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Vb6Reference =
     {
         Guid : Guid
@@ -69,7 +69,7 @@ type Vb6Reference =
     }
 
 /// Represents a VB6 project
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Vb6Project = 
     {
         /// Path to the Propject file representing 
@@ -122,7 +122,7 @@ let private referenceLineFilter (l:string) = l.StartsWith("Reference") || l.Star
 /// ## Parameters
 ///  - `getConfig` - function to modify the build params record from default values
 ///  - `vb6Projects`- `Seq` of paths to `.vbp` files to build
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) =
      let config = defaultVb6BuildParams |> getConfig
      use __ = traceStartTaskUsing "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
@@ -210,7 +210,7 @@ let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: str
 /// ## Usage
 /// 
 /// This is used for creating Side-By-Side interop manifests.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public GetVb6ApplicationProjDetails (projects: string seq) =
     let defaultVb6Version = {MajorVer = 1; MinorVer = 0; RevisionVer = 0; AutoIncrementVer = 0}
     
@@ -282,7 +282,7 @@ let public GetVb6ApplicationProjDetails (projects: string seq) =
 ///  - `getConfig`- function to alter default VB6 build parameters
 ///  - `vb6Projects` - Paths to all `.vbp` files to build
 ///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
     use __ = traceStartTaskUsing "RegisterDependenciesForDevelopment" (sprintf "Registering dependenices for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
@@ -305,7 +305,7 @@ let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6Bui
 ///  - `getConfig`- function to alter default VB6 build parameters
 ///  - `vb6Projects` - Paths to all `.vbp` files to build
 ///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
     use __ = traceStartTaskUsing "UnRegisterDependenciesForDevelopment" (sprintf "Un-registering dependenices for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
@@ -339,7 +339,7 @@ let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6B
 /// 4. Unregister all registered assemblies
 /// 5. Generate and embed Side-By-Side interop appplication manifests in all generated VB6 executables
 /// 6. Generate and embed Side-By-Side interop assembly manifest in all referenced assemblies 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
     use __ = traceStartTaskUsing "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
@@ -374,7 +374,7 @@ let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildPar
 ///
 /// Note: Vb6 Reference versions are __hex numbers__ not decimals like .net verions. This task handles
 ///       this difference automatically.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public UpdateDependencyVersions (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
     use __ = traceStartTaskUsing "UpdateDependencyVersion" (sprintf "Updating dependency versions for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 

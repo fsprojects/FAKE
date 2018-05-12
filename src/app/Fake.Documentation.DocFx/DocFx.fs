@@ -61,6 +61,7 @@ let exec setParams command args=
                 WorkingDirectory = p.WorkingDirectory
                 Arguments = commandArgs })) p.Timeout
     then failwithf "DocFx command %s failed." commandArgs
+    __.MarkSuccess()
 
 /// Init-Command parameters
 type InitParams = 

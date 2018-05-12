@@ -144,6 +144,7 @@ module Fake.DotNet.Testing.OpenCover
                     if param.WorkingDir <> String.Empty then param.WorkingDir else info.WorkingDirectory
                 Arguments = processArgs }) >> Process.withFramework) param.TimeOut
         if ok <> 0 then failwithf "OpenCover reported errors."
+        __.MarkSuccess()
 
     /// Show version OpenCover
     /// ## Parameters
@@ -164,3 +165,4 @@ module Fake.DotNet.Testing.OpenCover
         { info with
             FileName = param.ExePath
             Arguments = "-version" }) >> Process.withFramework) param.TimeOut |> ignore
+        __.MarkSuccess()

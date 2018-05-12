@@ -30,6 +30,7 @@ Trace.traceLine()
 Target.create "mytarget" (fun _ ->
     use __ = Trace.traceTask "MyOperation" "Description"
     // do my operation
+    __.MarkSuccess()
 )
 
 ```

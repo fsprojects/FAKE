@@ -1,5 +1,18 @@
 # Release Notes
 
+## 5.0.0-rc012 - 2018-05-12
+
+* FAKE5: New module `Fake.Windows.Registry` - https://github.com/fsharp/FAKE/pull/1909
+* BUGFIX: Fix MSBuild parameter parsing - https://github.com/fsharp/FAKE/pull/1918
+* BUGFIX: DocoptException was not reported correctly - https://github.com/MangelMaxime/fulma-demo/issues/4
+* FAKE5: New module `Fake.DotNet.Fsc` - https://github.com/fsharp/FAKE/pull/1919
+* ENHANCEMENT: Improve GitLab and VSTS CI Support - https://github.com/fsharp/FAKE/pull/1920
+* FAKE5: New module `Fake.BuildServer.GitLab` - https://github.com/fsharp/FAKE/pull/1919
+* BUGFIX: Zip.unzip was flattening the result - https://github.com/fsharp/FAKE/pull/1920
+* BUGFIX: Fake complained that Intellisense.fsx didn't exist - https://github.com/fsharp/FAKE/issues/1917
+* ENHANCEMENT: Targets now retrieve the current execution list as context parameter - https://github.com/fsharp/FAKE/pull/1920
+* DOCS: Huge update to the documentation, adds obsolete warnings thanks @kblohm - https://github.com/fsharp/FAKE/pull/1923
+
 ## 5.0.0-rc011 - 2018-05-06
 
 * ENHANCEMENT: Add Verbosity setting for NuGet restore - https://github.com/fsharp/FAKE/pull/1904

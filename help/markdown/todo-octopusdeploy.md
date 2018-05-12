@@ -1,6 +1,9 @@
 # Automating Deployment using FAKE and Octopus Deploy
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 [Octopus Deploy](http://octopusdeploy.com/) is a great tool for simple and user-friendly release management.
 

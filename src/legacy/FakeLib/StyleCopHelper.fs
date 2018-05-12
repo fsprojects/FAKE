@@ -1,5 +1,5 @@
 ﻿//// Contains a task which can be used to run [StyleCop](https://github.com/StyleCop/StyleCop) on .NET source files.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.StyleCopHelper
 
 open System
@@ -11,14 +11,14 @@ open VSFile.Source
 open StyleCop
 
 /// Type to define the behavior of how StyleCop must react on violations
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type StyleCopErrorLevel = 
     | Fail 
     | Warning
 
 /// Parameter type for the StyleCop tool
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type StyleCopParams =
     { ConfigurationFlags : List<string>
       OutputFile : string
@@ -30,7 +30,7 @@ type StyleCopParams =
       SolutionFiles : List<string> }
 
 /// StyleCop default parameters
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let StyleCopDefaults = 
     { ConfigurationFlags = List.Empty
       OutputFile = "StyleCopViolations.xml"
@@ -51,7 +51,7 @@ let StyleCopDefaults =
 ///
 ///     StyleCop (fun p -> { p with 
 ///                     SolutionFiles = [ artifactsDir @@ "MySolution.sln" ] }) 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let StyleCop (setParams : StyleCopParams -> StyleCopParams) =
     let param = setParams StyleCopDefaults
 

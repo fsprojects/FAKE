@@ -238,6 +238,7 @@ module AssemblyInfoFile =
 
         attributeLines @ sourceLines
         |> writeToFile outputFileName
+        __.MarkSuccess()
 
     /// Creates a F# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
@@ -268,6 +269,7 @@ module AssemblyInfoFile =
             ]
 
         sourceLines |> writeToFile outputFileName
+        __.MarkSuccess()
 
     /// Creates a VB AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
@@ -294,6 +296,7 @@ module AssemblyInfoFile =
 
         attributeLines @ sourceLines
         |> writeToFile outputFileName
+        __.MarkSuccess()
 
     /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
     /// Does not generate an AssemblyVersionInformation class.
@@ -312,6 +315,7 @@ module AssemblyInfoFile =
 
         attributeLines
         |> writeToFile outputFileName
+        __.MarkSuccess()
 
     /// Creates a C# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.

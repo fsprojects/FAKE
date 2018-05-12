@@ -93,3 +93,4 @@ let NugetInstall setParams packageName =
     let param = NugetInstallDefaults |> setParams
     let args = sprintf "install %s %s" packageName (buildArgs param)
     runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package install for %s failed." packageName)
+    __.MarkSuccess()

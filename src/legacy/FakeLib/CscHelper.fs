@@ -1,11 +1,11 @@
 ﻿/// Contains tasks to compile C# source files with CSC.EXE (C# Compiler).
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.CscHelper
 open System
 open System.IO
 
 /// Supported output types
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CscTarget =
     | Exe
     | Winexe
@@ -13,7 +13,7 @@ type CscTarget =
     | Module
 
 /// Supported platforms
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CscPlatform =
     | X86
     | Itanium
@@ -22,7 +22,7 @@ type CscPlatform =
     | AnyCpu
 
 /// Compiler parameters
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CscParams =
     { /// Specifies the output file name and path.
       Output : string
@@ -40,7 +40,7 @@ type CscParams =
       OtherParams : string list }
 
     /// The default parameters to the compiler.
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     static member Default =
         { Output = ""
           Target = Exe
@@ -56,7 +56,7 @@ type CscParams =
           Debug = false
           OtherParams = [] }
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let cscExe toolPath (srcFiles : string list) (opts : string list) : int =
     let processResult =
         ExecProcessAndReturnMessages (fun p ->
@@ -89,7 +89,7 @@ let cscExe toolPath (srcFiles : string list) (opts : string list) : int =
 ///              { parameters with Output = ...
 ///                                Target = ...
 ///                                ... })
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
     // Helper to quote a path with spaces in it, if not already quoted.  See https://github.com/fsharp/FAKE/issues/992
     let ensureTrimQuotedPath (path : string) =
@@ -143,7 +143,7 @@ let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
 ///                   { parameters with Output = ...
 ///                                     Target = ...
 ///                                     ... })
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Csc (setParams : CscParams -> CscParams) (inputFiles : string list) : unit =
     let res = csc setParams inputFiles
     if res <> 0 then raise <| BuildException("Csc: compile failed with exit code", [ string res ])

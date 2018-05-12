@@ -366,9 +366,12 @@ module Fake.Windows.Choco
                 Arguments = args }
         let result = Process.execSimple (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
+        __.MarkSuccess()
 
     let private getTempFolder =
-        let tempFolder = DirectoryInfo.ofPath (Path.GetTempPath() @@ "FakeChocolateyPack")
+        // temp folder in current working directory has the advantage of being compatible
+        // with chocolatey on docker on mono...
+        let tempFolder = DirectoryInfo.ofPath (".fake" @@ "temp" @@ "FakeChocolateyPack")
 
         if tempFolder.Exists
         then tempFolder.Delete(true)
@@ -629,7 +632,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyInstall.ps1 at %s from template %s" outputPath templatePath
 
-        templatePath |> Shell.CopyFile outputPath
+        templatePath |> Shell.copyFile outputPath
 
         let replacements =
             [ "@packageName@", parameters.Title
@@ -674,7 +677,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyUninstall.ps1 at %s from template %s" outputPath templatePath
 
-        templatePath |> Shell.CopyFile outputPath
+        templatePath |> Shell.copyFile outputPath
 
         let replacements =
             [ "@packageName@", parameters.Title
@@ -761,7 +764,7 @@ module Fake.Windows.Choco
 
         callChocoPack nuspecFile parameters
 
-        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.MoveFile parameters.OutputDir
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package
     /// ## Parameters
@@ -802,7 +805,7 @@ module Fake.Windows.Choco
 
         callChocoPack nuspecFile parameters
 
-        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.MoveFile parameters.OutputDir
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [push](https://github.com/chocolatey/choco/wiki/CommandsPush) a package
     /// ## Parameters

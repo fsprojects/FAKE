@@ -15,6 +15,11 @@ open Fake.Core
 type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
+exception MSBuildException of string*list<string>
+  with
+    override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
+
+[<System.Obsolete("Using this is a BUG as this exception is no longer thrown! Use MSBuildException instead!")>]
 exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + Environment.NewLine + (String.separated Environment.NewLine x.Data1)
@@ -297,12 +302,11 @@ module MSBuild =
 
   let private serializeArgs args =
     args
-    |> Seq.map (function
-           | None -> ""
-           | Some(k, v) ->
+    |> Seq.choose id
+    |> Seq.map (fun (k, v) ->
                "/" + k + (if String.isNullOrEmpty v then ""
                           else ":" + v))
-    |> String.separated " "
+    |> Args.toWindowsCommandLine
 
   /// [omit]
   let serializeMSBuildParams (p : MSBuildParams) =
@@ -319,11 +323,7 @@ module MSBuild =
         | [] -> None
         | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
 
-    let escapePropertyValue (v:string) =
-        let escapedQuotes = v.Replace("\"", "\\\"")
-        if escapedQuotes.EndsWith "\\" then escapedQuotes + "\\" // Fix https://github.com/fsharp/FAKE/issues/869
-        else escapedQuotes
-    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k (escapePropertyValue v)))
+    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=%s" k v))
 
     let maxcpu =
         match p.MaxCpuCount with
@@ -416,12 +416,12 @@ module MSBuild =
         let serializeDLogger (dlogger : MSBuildDistributedLoggerConfig) =
             sprintf "%s%s%s"
                 (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name)
-                (sprintf "\"%s\"" dlogger.AssemblyPath)
+                (sprintf "%s" dlogger.AssemblyPath)
                 (match dlogger.Parameters with
                     | None -> ""
                     | Some vars -> vars
                                     |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s;" acc k v) ""
-                                    |> sprintf ";\"%s\""
+                                    |> sprintf ";%s"
                 )
 
         let createLoggerString cl fl =
@@ -493,7 +493,8 @@ module MSBuild =
 #endif
 
         let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
-        raise (BuildException(errorMessage, errors))
+        raise (MSBuildException(errorMessage, errors))
+    __.MarkSuccess()
 
   /// Builds the given project files and collects the output files.
   /// ## Parameters
@@ -515,7 +516,7 @@ module MSBuild =
         | Some path ->
             (fun project ->
                 let outputPath = path |> String.trimSeparator
-                ("OutputPath", (sprintf @"%s\\" outputPath)) :: (properties project)
+                ("OutputPath", (sprintf @"%s\" outputPath)) :: (properties project)
             )
         | None -> properties
 
@@ -612,6 +613,7 @@ module MSBuild =
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
     !! (projectDir + "/bin/*.*") |> Shell.copy(outputPath + "/" + projectName + "/bin/")
+    __.MarkSuccess()
 
   /// Builds the given web project file with debug configuration and copies it to the given outputPath.
   /// ## Parameters

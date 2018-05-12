@@ -1,6 +1,9 @@
 # Integrating a FAKE build script into TeamCity
 
-**Note:  This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found [here](buildserver.html)**
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE before version 5 (or the non-netcore version). The new documentation can be found <a href="buildserver.html">here</a></p>
+</div>
 
 Easy [TeamCity](http://www.jetbrains.com/teamcity/) integration was one of the major goals for the FAKE build system.
 

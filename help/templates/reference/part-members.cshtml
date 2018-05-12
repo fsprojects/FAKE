@@ -21,9 +21,24 @@
             @if (!it.Details.TypeArguments.IsEmpty) {
               <strong>Type parameters:</strong> @it.Details.FormatTypeArguments
             }
+            @if (Enumerable.Any(it.Attributes)) {
+                <span>
+                    <strong>Attributes:</strong><br />
+                    @foreach (var attr in it.Attributes)
+                    {
+                        @Html.Encode(@attr.Format())<br />
+                    }
+                </span>
+            }
           </div>
         </td>
         <td class="xmldoc">
+        @if (it.IsObsolete) {
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>@Html.Encode(@it.ObsoleteMessage)</p>
+            </div> 
+        }
           @if (!String.IsNullOrEmpty(it.Details.FormatSourceLocation))
           {
             <a href="@it.Details.FormatSourceLocation" class="github-link">

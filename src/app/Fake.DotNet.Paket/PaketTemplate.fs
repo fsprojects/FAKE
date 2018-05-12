@@ -281,3 +281,4 @@ let create setParams =
                    | _ -> "paket.template"
 
     File.writeString false filePath (Rendering.createLines parameters)
+    __.MarkSuccess()

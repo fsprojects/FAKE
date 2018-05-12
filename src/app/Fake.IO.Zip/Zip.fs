@@ -131,11 +131,13 @@ let unzip target (fileName : string) =
     use stream = new FileStream(fileName, FileMode.Open)
     use zipFile = new ZipArchive(stream)
     for zipEntry in zipFile.Entries do
-        let unzipPath = Path.Combine(target, zipEntry.Name)
+        let unzipPath = Path.Combine(target, zipEntry.FullName)
+        let directoryPath = Path.GetDirectoryName(unzipPath)
         if unzipPath.EndsWith "/" then
             Directory.CreateDirectory(unzipPath) |> ignore
         else
             // unzip the file
+            Directory.ensure directoryPath
             let zipStream = zipEntry.Open()
             if unzipPath.EndsWith "/" |> not then 
                 use unzippedFileStream = File.Create(unzipPath)
