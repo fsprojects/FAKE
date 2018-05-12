@@ -74,6 +74,7 @@ type RunArguments = {
    Debug : bool
    //SingleTarget : bool
    NoCache : bool
+   RestoreOnlyGroup : bool
    VerboseLevel : VerboseLevel
    IsBuild : bool // Did the user call `fake build` or `fake run`?
 }
@@ -149,7 +150,8 @@ let runOrBuild (args : RunArguments) =
 
     let useCache = not args.NoCache
     try
-      if not (FakeRuntime.prepareAndRunScript args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache) then false
+      let config = FakeRuntime.createConfigSimple args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache args.RestoreOnlyGroup
+      if not (FakeRuntime.prepareAndRunScript config) then false
       else
           if args.VerboseLevel.PrintVerbose then log "Ready."
           true
@@ -237,6 +239,7 @@ let parseAction (results:DocoptMap) =
 
        Debug = DocoptResult.hasFlag "--debug" results
        NoCache = DocoptResult.hasFlag "--nocache" results
+       RestoreOnlyGroup = DocoptResult.hasFlag "--partial-restore" results || Environment.GetEnvironmentVariable ("FAKE_PARTIAL_RESTORE") = "true"
        VerboseLevel = verboseLevel
        IsBuild = not isRun // Did the user call `fake build` or `fake run`?
     }

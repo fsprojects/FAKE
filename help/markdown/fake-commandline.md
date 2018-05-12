@@ -21,11 +21,17 @@ Fake Options [fake_opts]:
 Fake Run Options [run_opts]:
   -d, --debug           Debug the script.
   -n, --nocache         Disable fake cache for this run.
+  -p, --partial-restore
+                        Only restore the required group instead of a full restore, 
+                        can be set globally by setting the environment variable FAKE_PARTIAL_RESTORE to true.
   --fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
 
 Fake Build Options [build_opts]:
   -d, --debug           Debug the script.
   -n, --nocache         Disable fake cache for this run.
+  -p, --partial-restore
+                        Only restore the required group instead of a full restore, 
+                        can be set globally by setting the environment variable FAKE_PARTIAL_RESTORE to true.
   --fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
   -f, --script <script.fsx>
                         The script to execute (defaults to `build.fsx`).

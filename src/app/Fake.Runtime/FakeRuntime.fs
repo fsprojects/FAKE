@@ -3,6 +3,7 @@
 open System
 open System.IO
 open Fake.Runtime
+open Fake.Runtime.Runners
 open Paket
 
 type FakeSection =
@@ -134,8 +135,10 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
+let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
   use __ = Fake.Profile.startCategory Fake.Profile.Category.Paket
+  let logLevel = config.VerboseLevel
+  let script = config.ScriptFilePath
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -359,8 +362,10 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       if needLocalLock then File.Copy(lockFilePath.FullName, localLock, true)
     
     // Restore
-    paketApi.Restore((*false, group, [], false, true*))
-    |> ignore
+    if config.RestoreOnlyGroup then 
+        paketApi.Restore(false,group,[],false,false,false,None)
+    else
+        paketApi.Restore()
     
   // https://github.com/fsharp/FAKE/issues/1908
   writeIntellisenseFile cacheDir // write intellisense.fsx immediately
@@ -463,10 +468,10 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
           if writeIntellisenseTask.IsValueCreated then 
             writeIntellisenseTask.Value.Wait() }
 
-let restoreDependencies script logLevel cacheDir section =
+let restoreDependencies config cacheDir section =
   match section with
   | PaketDependencies (paketDependencies, paketDependenciesFile, group) ->
-    paketCachingProvider script logLevel cacheDir paketDependencies paketDependenciesFile group
+    paketCachingProvider config cacheDir paketDependencies paketDependenciesFile group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -498,8 +503,9 @@ let tryFindGroupFromDepsFile scriptDir =
         | _ -> None
     else None
 
-let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) logLevel script =
-    // read dependencies from the top
+let prepareFakeScript (config:FakeConfig) =
+        // read dependencies from the top
+    let script = config.ScriptFilePath
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
@@ -508,7 +514,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
     let scriptSectionCacheFile = Path.Combine(cacheDir, "fake-section.txt")
     let inline getSectionUncached () =
         use __ = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
-        let newSection = tryReadPaketDependenciesFromScript tokenized.Value cacheDir script
+        let newSection = tryReadPaketDependenciesFromScript config.ScriptTokens.Value cacheDir script
         match newSection with
         | Some s -> Some s
         | None ->
@@ -551,7 +557,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
 
     match section with
     | Some section ->
-        restoreDependencies script logLevel cacheDir section
+        restoreDependencies config cacheDir section
     | None ->
         let defaultPaketCode = """
 source https://api.nuget.org/v3/index.json
@@ -567,10 +573,10 @@ If you know what you are doing you can silence this warning by setting the envir
           { Header = "paket-inline"
             Section = defaultPaketCode }
           |> writeFixedPaketDependencies cacheDir        
-        restoreDependencies script logLevel cacheDir section
+        restoreDependencies config cacheDir section
 
-let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache =
 
+let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
   if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
   let newFsiOptions =
@@ -584,19 +590,22 @@ let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
   let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
-  let config =
-    { Runners.FakeConfig.VerboseLevel = logLevel
-      Runners.FakeConfig.ScriptFilePath = scriptPath
-      Runners.FakeConfig.ScriptTokens = tokenized
-      Runners.FakeConfig.CompileOptions = 
-        { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
-      Runners.FakeConfig.UseCache = useCache
-      Runners.FakeConfig.Out = out
-      Runners.FakeConfig.Err = err
-      Runners.FakeConfig.ScriptArgs = scriptArgs }
-  let provider = prepareFakeScript tokenized logLevel scriptPath
-  CoreCache.runScriptWithCacheProvider config provider
 
-let inline prepareAndRunScript logLevel fsiOptions scriptPath scriptArgs useCache =
-  prepareAndRunScriptRedirect logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache
+  { Runners.FakeConfig.VerboseLevel = logLevel
+    Runners.FakeConfig.ScriptFilePath = scriptPath
+    Runners.FakeConfig.ScriptTokens = tokenized
+    Runners.FakeConfig.CompileOptions = 
+      { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
+    Runners.FakeConfig.UseCache = useCache
+    Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup
+    Runners.FakeConfig.Out = out
+    Runners.FakeConfig.Err = err
+    Runners.FakeConfig.ScriptArgs = scriptArgs }
+
+let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
+    createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
+
+let prepareAndRunScript (config:FakeConfig) =
+  let provider = prepareFakeScript config
+  CoreCache.runScriptWithCacheProvider config provider
 
