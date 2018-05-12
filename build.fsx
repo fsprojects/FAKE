@@ -1352,7 +1352,12 @@ Target.create "PrepareArtifacts" (fun _ ->
     if not fromArtifacts then
         Trace.trace "empty artifactsDir."
     else
-        !! (artifactsDir </> "fake-dotnetcore-*.zip")
+        Trace.trace "ensure artifacts."
+        let files =
+            !! (artifactsDir </> "fake-dotnetcore-*.zip")
+            |> Seq.toList
+        Trace.tracefn "files: %A" files
+        files
         |> Shell.copy "nuget/dotnetcore/Fake.netcore"
 
         unzip "nuget/dotnetcore" (artifactsDir </> "fake-dotnetcore-packages.zip")
