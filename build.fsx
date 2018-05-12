@@ -1560,11 +1560,16 @@ Target.create "PrepareArtifacts" (fun _ ->
             unzip "temp/build" pack
         )
         Shell.copyDir "build" "temp/build" (fun _ -> true)
-        
-        Directory.ensure "help"
-        unzip "help" (artifactsDir </> "help-markdown.zip")
 
-        unzip "src/test" (artifactsDir </> "tests.zip")
+        let unzipIfExists dir file =
+            Directory.ensure dir
+            if File.Exists file then
+                unzip dir file
+
+        // File is not available in case we already have build the full docs
+        unzipIfExists "help" (artifactsDir </> "help-markdown.zip")
+        unzipIfExists "docs" (artifactsDir </> "docs.zip")
+        unzipIfExists "src/test" (artifactsDir </> "tests.zip")
 )
 
 Target.create "BuildArtifacts" (fun args ->
