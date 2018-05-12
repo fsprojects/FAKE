@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -184,6 +189,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -237,7 +245,10 @@
 									<!-- Content -->
                       <article>
 <h1><a name="NuGet-package-restore" class="anchor" href="#NuGet-package-restore">NuGet package restore</a></h1>
-<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 <p>If you are using a source control system like <a href="http://git-scm.com/">git</a> you probably don't want to store all binary dependencies in it.
 With FAKE you can use <a href="http://nuget.codeplex.com/">NuGet</a> to download all dependent packages during the build.</p>
 <h2><a name="Setting-the-stage-for-NuGet" class="anchor" href="#Setting-the-stage-for-NuGet">Setting the stage for NuGet</a></h2>
@@ -249,121 +260,73 @@ This will use the default parameters to retrieve all NuGet packages specified in
 <p>If you need to use different parameters please use the <a href="apidocs/v5/legacy/fake-restorepackagehelper.html">RestorePackage</a> task directly.</p>
 <h2><a name="Download-latest-version-of-FAKE-via-NuGet" class="anchor" href="#Download-latest-version-of-FAKE-via-NuGet">Download latest version of FAKE via NuGet</a></h2>
 <p>If you don't want to store FAKE.exe and its components in your repository, you can use a batch file which downloads it before the build:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
+<p><pre><code class="language-bash">
+@echo off
 cls
 "tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
 "tools\FAKE\tools\Fake.exe" build.fsx
 pause
-</code></pre></td></tr></table>
+</code></pre></p>
 <h1><a name="Creating-NuGet-packages" class="anchor" href="#Creating-NuGet-packages">Creating NuGet packages</a></h1>
-<p><strong>Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! </strong></p>
 <h2><a name="Creating-a-nuspec-template" class="anchor" href="#Creating-a-nuspec-template">Creating a .nuspec template</a></h2>
 <p>The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
 The following code shows such .nuspec file from the <a href="https://github.com/octokit/octokit.net">OctoKit</a> project.</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="prep">&lt;?</span>xml version=<span class="s">"1.0"</span> encoding=<span class="s">"utf-8"</span><span class="prep">?&gt;</span>
-<span class="k">&lt;</span><span class="i">package</span> <span class="o">xmlns:xsi</span><span class="k">="http://www.w3.org/2001/XMLSchema-instance"</span>     <span class="o">xmlns:xsd</span><span class="k">="http://www.w3.org/2001/XMLSchema"</span><span class="k">&gt;</span>
-  <span class="k">&lt;</span><span class="i">metadata</span> <span class="o">xmlns</span><span class="k">="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">id</span><span class="k">&gt;</span>@project@<span class="k">&lt;/</span><span class="i">id</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">version</span><span class="k">&gt;</span>@build.number@<span class="k">&lt;/</span><span class="i">version</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">authors</span><span class="k">&gt;</span>@authors@<span class="k">&lt;/</span><span class="i">authors</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">owners</span><span class="k">&gt;</span>@authors@<span class="k">&lt;/</span><span class="i">owners</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">summary</span><span class="k">&gt;</span>@summary@<span class="k">&lt;/</span><span class="i">summary</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">licenseUrl</span><span class="k">&gt;</span>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt<span class="k">&lt;/</span><span class="i">licenseUrl</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">projectUrl</span><span class="k">&gt;</span>https://github.com/octokit/octokit.net<span class="k">&lt;/</span><span class="i">projectUrl</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">iconUrl</span><span class="k">&gt;</span>https://github.com/octokit/octokit.net/icon.png<span class="k">&lt;/</span><span class="i">iconUrl</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">requireLicenseAcceptance</span><span class="k">&gt;</span>false<span class="k">&lt;/</span><span class="i">requireLicenseAcceptance</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">description</span><span class="k">&gt;</span>@description@<span class="k">&lt;/</span><span class="i">description</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">releaseNotes</span><span class="k">&gt;</span>@releaseNotes@<span class="k">&lt;/</span><span class="i">releaseNotes</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">copyright</span><span class="k">&gt;</span>Copyright GitHub 2013<span class="k">&lt;/</span><span class="i">copyright</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">tags</span><span class="k">&gt;</span>GitHub API Octokit<span class="k">&lt;/</span><span class="i">tags</span><span class="k">&gt;</span>
-    @dependencies@
-    @references@
-  <span class="k">&lt;/</span><span class="i">metadata</span><span class="k">&gt;</span>
-  @files@
-<span class="k">&lt;/</span><span class="i">package</span><span class="k">&gt;</span>
-</code></pre></td></tr></table>
-<p>The .nuspec template contains some placeholders like <code>@build.number@</code> which can be replaced later by the build script.
+<pre data-src="nuspec-example.xml"><code class="language-xml">
+<p></code></pre>
+The .nuspec template contains some placeholders like <code>@build.number@</code> which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.</p>
 <p>The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.</p>
 <table>
 <thead>
 <tr class="header">
-<th><p>Placeholder</p></th>
-<th><p>replaced by (<code>NuGetParams</code> record field)</p></th>
+<th align="left"><p>Placeholder</p></th>
+<th align="left"><p>replaced by (<code>NuGetParams</code> record field)</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><p><code>@build.number@</code></p></td>
-<td><p><code>Version</code></p></td>
+<td align="left"><p><code>@build.number@</code></p></td>
+<td align="left"><p><code>Version</code></p></td>
 </tr>
 <tr class="even">
-<td><p><code>@authors@</code></p></td>
-<td><p><code>Authors</code></p></td>
+<td align="left"><p><code>@authors@</code></p></td>
+<td align="left"><p><code>Authors</code></p></td>
 </tr>
 <tr class="odd">
-<td><p><code>@project@</code></p></td>
-<td><p><code>Project</code></p></td>
+<td align="left"><p><code>@project@</code></p></td>
+<td align="left"><p><code>Project</code></p></td>
 </tr>
 <tr class="even">
-<td><p><code>@summary@</code></p></td>
-<td><p><code>Summary</code></p></td>
+<td align="left"><p><code>@summary@</code></p></td>
+<td align="left"><p><code>Summary</code></p></td>
 </tr>
 <tr class="odd">
-<td><p><code>@description@</code></p></td>
-<td><p><code>Description</code></p></td>
+<td align="left"><p><code>@description@</code></p></td>
+<td align="left"><p><code>Description</code></p></td>
 </tr>
 <tr class="even">
-<td><p><code>@tags@</code></p></td>
-<td><p><code>Tags</code></p></td>
+<td align="left"><p><code>@tags@</code></p></td>
+<td align="left"><p><code>Tags</code></p></td>
 </tr>
 <tr class="odd">
-<td><p><code>@releaseNotes@</code></p></td>
-<td><p><code>ReleaseNotes</code></p></td>
+<td align="left"><p><code>@releaseNotes@</code></p></td>
+<td align="left"><p><code>ReleaseNotes</code></p></td>
 </tr>
 <tr class="even">
-<td><p><code>@copyright@</code></p></td>
-<td><p><code>Copyright</code></p></td>
+<td align="left"><p><code>@copyright@</code></p></td>
+<td align="left"><p><code>Copyright</code></p></td>
 </tr>
 <tr class="odd">
-<td><p><code>@dependencies@</code></p></td>
-<td><p>a combination of <code>Dependencies</code> and <code>DependenciesByFramework</code></p></td>
+<td align="left"><p><code>@dependencies@</code></p></td>
+<td align="left"><p>a combination of <code>Dependencies</code> and <code>DependenciesByFramework</code></p></td>
 </tr>
 <tr class="even">
-<td><p><code>@references@</code></p></td>
-<td><p>a combination of <code>References</code> and <code>ReferencesByFramework</code></p></td>
+<td align="left"><p><code>@references@</code></p></td>
+<td align="left"><p>a combination of <code>References</code> and <code>ReferencesByFramework</code></p></td>
 </tr>
 <tr class="odd">
-<td><p><code>@files@</code></p></td>
-<td><p>a list of source, target, and exclude strings for files to be included in the nuget package</p></td>
+<td align="left"><p><code>@files@</code></p></td>
+<td align="left"><p>a list of source, target, and exclude strings for files to be included in the nuget package</p></td>
 </tr>
 </tbody>
 </table>
@@ -630,7 +593,7 @@ Here is a code snippet showing how to use this:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -652,6 +615,17 @@ Here is a code snippet showing how to use this:</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

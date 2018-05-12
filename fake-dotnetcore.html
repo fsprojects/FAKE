@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -184,6 +189,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -248,18 +256,20 @@ Just install the corresponding package for your system:</p>
 <p>Install chocolatey (a windows package manager) if you have not installed it yet (see <a href="https://chocolatey.org).
 Basically">https://chocolatey.org).
 Basically</a> open an admin <code>cmd.exe</code> and paste</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batch">@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-</code></pre></td></tr></table>
+<p><pre>
+<code class="lang-batch">
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('<a href="https://chocolatey.org/install.ps1'))"">https://chocolatey.org/install.ps1'))"</a> &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+</code>
+</pre></p>
 </li>
 <li>
 <p>Install fake via chocolatey</p>
 <p>In an admin <code>cmd.exe</code> enter:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="ps">choco install fake -pre
-</code></pre></td></tr></table>
+<pre>
+    <code class="lang-bash">
+    choco install fake -pre
+    </code>
+</pre>
 </li>
 <li><p>There are <a href="fake-gettingstarted.html#Install-FAKE">other ways to get started</a> if chocolatey / an administrator-cmd or global installation is not an option.</p></li>
 </ul>
@@ -271,10 +281,7 @@ Please consider <a href="https://github.com/fsharp/FAKE/issues/1828">helping out
 </li>
 </ul>
 <p>now you can use</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="ps">fake --help
-</code></pre></td></tr></table>
+<pre><code class="lang-bash">fake --help</code></pre>
 <p>This is basically it. You can now execute fake commands. Follow the <a href="fake-dotnetcore.html#Minimal-example">minimal example below</a> for a quick start.</p>
 <h2><a name="CLI" class="anchor" href="#CLI">CLI</a></h2>
 <p>See <a href="fake-commandline.html">Fake command line</a></p>
@@ -299,10 +306,7 @@ Travis: <a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml"><a href
 <p>We distrubute a dotnetcore version of FAKE without the dotnetcore runtime.
 This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.</p>
 <p>Just use the <code>-portable</code> version of the downloads, extract it and execute.</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="shell">dotnet fake.dll &lt;regular-arguments&gt;
-</code></pre></td></tr></table>
+<pre><code class="lang-bash">dotnet fake.dll <regular-arguments></code></pre>
 <p>The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
 The disadvantage is that you need to have a dotnet sdk installed.</p>
 <h2><a name="Examples" class="anchor" href="#Examples">Examples</a></h2>
@@ -376,17 +380,17 @@ Therefore this example is actually pretty bad because it just opened everything 
 </tr>
 </table>
 <p>Run this file by executing</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="shell">fake run build.fsx
-</code></pre></td></tr></table>
+<pre><code class="lang-bash">
+fake run build.fsx
+</code></pre>
 <h2><a name="Downloads" class="anchor" href="#Downloads">Downloads</a></h2>
 <p>Get the latest packages from GitHub: <a href="https://github.com/fsharp/FAKE/releases">https://github.com/fsharp/FAKE/releases</a></p>
 <p>Get the latest binaries from chocolatey: <a href="https://chocolatey.org/packages/fake">https://chocolatey.org/packages/fake</a></p>
 <p>Get the latest dotnet-fake cli tool by adding <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies (<a href="https://www.nuget.org/packages/dotnet-fake)">https://www.nuget.org/packages/dotnet-fake)</a></p>
-<blockquote>
-<p>Note that <code>Version="5.*"</code> is working only after we released the first stable release. For now use <code>Version="5.0.0-*"</code> to get the latest non-stable release</p>
-</blockquote>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-*"` to get the latest non-stable release</p>
+</div>
 
 
                       </article>
@@ -493,7 +497,7 @@ Therefore this example is actually pretty bad because it just opened everything 
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -515,6 +519,17 @@ Therefore this example is actually pretty bad because it just opened everything 
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

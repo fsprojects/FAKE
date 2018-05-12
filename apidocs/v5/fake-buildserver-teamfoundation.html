@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -232,25 +240,51 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-                                    <p>
-                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
-                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/Fake.BuildServer.TeamFoundation" >Fake.BuildServer.TeamFoundation</a> module.</strong>
-                                    </p>
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.BuildServer.TeamFoundation" >Fake.BuildServer.TeamFoundation</a> module.
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
 									<!-- Content -->
                       <article>
           			
 
 
+<p>
 
+</p>
 <a name="TeamFoundation" class="anchor" href="#TeamFoundation"><h1>TeamFoundation</h1></a>
+
 <div class="xmldoc">
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-buildserver-teamfoundation-environment.html">Environment</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
   <table class="table table-bordered member-list">
@@ -261,15 +295,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '79', 79)" onmouseover="showTip(event, '79', 79)">
+          <code onmouseout="hideTip(event, '93', 93)" onmouseover="showTip(event, '93', 93)">
             defaultTraceListener
           </code>
-          <div class="tip" id="79">
+          <div class="tip" id="93">
             <strong>Signature:</strong> ITraceListener<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L126-126" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L137-137" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,15 +313,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
+          <code onmouseout="hideTip(event, '94', 94)" onmouseover="showTip(event, '94', 94)">
             detect()
           </code>
-          <div class="tip" id="80">
+          <div class="tip" id="94">
             <strong>Signature:</strong> unit -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L128-128" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L139-139" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -297,15 +331,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
+          <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
             install(force)
           </code>
-          <div class="tip" id="81">
+          <div class="tip" id="95">
             <strong>Signature:</strong> force:bool -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L130-130" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L141-141" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -315,15 +349,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
+          <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
             Installer
           </code>
-          <div class="tip" id="82">
+          <div class="tip" id="96">
             <strong>Signature:</strong> BuildServerInstaller<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L135-135" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L146-146" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -333,15 +367,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
+          <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
             logIssue(...)
           </code>
-          <div class="tip" id="83">
+          <div class="tip" id="97">
             <strong>Signature:</strong> isWarning:bool -&gt; sourcePath:string option -&gt; lineNumber:string option -&gt; columnNumber:string option -&gt; code:string option -&gt; message:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L31-31" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -351,15 +385,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
+          <code onmouseout="hideTip(event, '98', 98)" onmouseover="showTip(event, '98', 98)">
             setLogDetailProgress(id progress)
           </code>
-          <div class="tip" id="84">
+          <div class="tip" id="98">
             <strong>Signature:</strong> id:Guid -&gt; progress:int -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L74-74" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L74-74" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -369,15 +403,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
+          <code onmouseout="hideTip(event, '99', 99)" onmouseover="showTip(event, '99', 99)">
             write(action properties message)
           </code>
-          <div class="tip" id="85">
+          <div class="tip" id="99">
             <strong>Signature:</strong> action:string -&gt; properties:seq&lt;string * string&gt; -&gt; message:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L13-13" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L13-13" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -491,7 +525,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -513,6 +547,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

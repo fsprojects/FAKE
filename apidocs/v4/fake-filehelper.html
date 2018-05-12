@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="FileHelper" class="anchor" href="#FileHelper"><h1>FileHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains helper function which allow to deal with files and directories.</p>
 
@@ -266,10 +277,10 @@
           </code>
           <div class="tip" id="346">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Includes all files</p>
+                    <p>Includes all files</p>
 
 
         </td>
@@ -282,10 +293,10 @@
           </code>
           <div class="tip" id="347">
             <strong>Signature:</strong> newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends all given files to one file.</p>
+                    <p>Appends all given files to one file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>newFileName</code> - The target FileName.</li>
@@ -303,10 +314,10 @@
           </code>
           <div class="tip" id="348">
             <strong>Signature:</strong> extension:string -&gt; fileName:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Change the extension of the file.</p>
+                    <p>Change the extension of the file.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'extension' - The new extension containing the leading '.'.</li>
@@ -324,10 +335,10 @@
           </code>
           <div class="tip" id="349">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Cleans a directory by removing all files and sub-directories.</p>
+                    <p>Cleans a directory by removing all files and sub-directories.</p>
 
 
         </td>
@@ -340,10 +351,10 @@
           </code>
           <div class="tip" id="350">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Cleans multiple directories</p>
+                    <p>Cleans multiple directories</p>
 
 
         </td>
@@ -356,10 +367,10 @@
           </code>
           <div class="tip" id="351">
             <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Compares the given files for changes.
+                    <p>Compares the given files for changes.
 If delete is set to true then equal files will be removed.</p>
 
 
@@ -373,10 +384,10 @@ If delete is set to true then equal files will be removed.</p>
           </code>
           <div class="tip" id="352">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies the files to the target.</p>
+                    <p>Copies the files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -394,10 +405,10 @@ If delete is set to true then equal files will be removed.</p>
           </code>
           <div class="tip" id="353">
             <strong>Signature:</strong> target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies the files from a cache folder.
+                    <p>Copies the files from a cache folder.
 If the files are not cached or the original files have a different write time the cache will be refreshed.</p>
 <h2>Parameters</h2>
 <ul>
@@ -417,10 +428,10 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="354">
             <strong>Signature:</strong> target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
+                    <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -439,10 +450,10 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="355">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies a single file to the target and overwrites the existing file.</p>
+                    <p>Copies a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory or file.</li>
@@ -460,10 +471,10 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="356">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies a single file to a relative subfolder of the target.</p>
+                    <p>Copies a single file to a relative subfolder of the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory</li>
@@ -481,10 +492,10 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="357">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies the files to the target - Alias for Copy</p>
+                    <p>Copies the files to the target - Alias for Copy</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -502,10 +513,10 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="358">
             <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies a single file to the target folder preserving the folder structure
+                    <p>Copies a single file to the target folder preserving the folder structure
 starting from the specified base folder.</p>
 <h2>Parameters</h2>
 <ul>
@@ -525,10 +536,10 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="359">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; outputDir:DirectoryInfo -&gt; overwrite:bool -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 
 
         </td>
@@ -541,10 +552,10 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="360">
             <strong>Signature:</strong> dir:string -&gt; outputDir:string -&gt; bool -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies the file structure recursively.</p>
+                    <p>Copies the file structure recursively.</p>
 
 
         </td>
@@ -557,10 +568,10 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="361">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies the given files to the target.</p>
+                    <p>Copies the given files to the target.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -578,10 +589,10 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="362">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;FileIncludes&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies several file groups, each represented by a FileIncludes object,
+                    <p>Copies several file groups, each represented by a FileIncludes object,
 to the target folder preserving the folder structure
 starting from the BaseDirectory of each FileIncludes.</p>
 <h2>Parameters</h2>
@@ -601,10 +612,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="363">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a directory if it does not exist.</p>
+                    <p>Creates a directory if it does not exist.</p>
 
 
         </td>
@@ -617,10 +628,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="364">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a file if it does not exist.</p>
+                    <p>Creates a file if it does not exist.</p>
 
 
         </td>
@@ -633,10 +644,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="365">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes a directory if it exists.</p>
+                    <p>Deletes a directory if it exists.</p>
 
 
         </td>
@@ -649,10 +660,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="366">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes multiple directories</p>
+                    <p>Deletes multiple directories</p>
 
 
         </td>
@@ -665,10 +676,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="367">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes a file if it exists.</p>
+                    <p>Deletes a file if it exists.</p>
 
 
         </td>
@@ -681,10 +692,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="368">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes the given files.</p>
+                    <p>Deletes the given files.</p>
 
 
         </td>
@@ -697,10 +708,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="369">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get the directory of the specified path</p>
+                    <p>Get the directory of the specified path</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the directory is retrieved.</li>
@@ -717,10 +728,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="370">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Exclude SVN files (path with .svn)</p>
+                    <p>Exclude SVN files (path with .svn)</p>
 
 
         </td>
@@ -733,10 +744,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="371">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get the filename extension including the leading '.', or an empty string if the file has no extension.</p>
+                    <p>Get the filename extension including the leading '.', or an empty string if the file has no extension.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'fileName' - Name of the file from which the extension is retrieved.</li>
@@ -753,10 +764,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="372">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get the filename for the specified path</p>
+                    <p>Get the filename for the specified path</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the filename is retrieved.</li>
@@ -773,10 +784,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="373">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This was a typo - please use fileNameWithoutExt&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This was a typo - please use fileNameWithoutExt</p>
+            </div> 
+                    
         </td>
       </tr>
       <tr>
@@ -787,10 +806,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="374">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get the filename for the specified path without it's extension</p>
+                    <p>Get the filename for the specified path without it's extension</p>
 <h2>Parameters</h2>
 <ul>
 <li>'path' - The path from which the filename is retrieved.</li>
@@ -807,10 +826,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="375">
             <strong>Signature:</strong> first:FileInfo -&gt; second:FileInfo -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the two files are byte-to-byte equal.</p>
+                    <p>Checks if the two files are byte-to-byte equal.</p>
 
 
         </td>
@@ -823,10 +842,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="376">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get the version a file.</p>
+                    <p>Get the version a file.</p>
 <h2>Parameters</h2>
 <ul>
 <li>'fileName' - Name of file from which the version is retrieved. The path can be relative.</li>
@@ -843,10 +862,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="377">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release.</li>
@@ -865,10 +884,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="378">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks the srcFiles for changes to the last release.</p>
+                    <p>Checks the srcFiles for changes to the last release.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>lastReleaseDir</code> - The directory of the last release</li>
@@ -888,10 +907,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="379">
             <strong>Signature:</strong> extension:string -&gt; fileName:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Tests whether the file has specified extensions (containing the leading '.')</p>
+                    <p>Tests whether the file has specified extensions (containing the leading '.')</p>
 <h2>Parameters</h2>
 <ul>
 <li>'extension' - The extension to fine containing the leading '.'.</li>
@@ -909,10 +928,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="380">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Moves a single file to the target and overwrites the existing file.</p>
+                    <p>Moves a single file to the target and overwrites the existing file.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -930,10 +949,10 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="381">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string []&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reads a csv file line by line
+                    <p>Reads a csv file line by line
 delimiter is a ,</p>
 
 
@@ -947,10 +966,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="382">
             <strong>Signature:</strong> dirF:(DirectoryInfo -&gt; unit) -&gt; fileF:(FileInfo -&gt; unit) -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Performs the given actions on all files and subdirectories</p>
+                    <p>Performs the given actions on all files and subdirectories</p>
 
 
         </td>
@@ -963,10 +982,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="383">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -986,10 +1005,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="384">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
+                    <p>Replace all occurences of the regex pattern with the given replacement in the specified file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>pattern</code> - The string to search for a match</li>
@@ -1009,10 +1028,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="385">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Renames the file or directory to the target name.</p>
+                    <p>Renames the file or directory to the target name.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target file or directory name.</li>
@@ -1030,10 +1049,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="386">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
+                    <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>replacements</code> - A sequence of tuples with the patterns and the replacements.</li>
@@ -1051,10 +1070,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="387">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the directory readonly</p>
+                    <p>Sets the directory readonly</p>
 
 
         </td>
@@ -1067,10 +1086,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="388">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets all files in the directory readonly.</p>
+                    <p>Sets all files in the directory readonly.</p>
 
 
         </td>
@@ -1083,10 +1102,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="389">
             <strong>Signature:</strong> readOnly:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets all given files readonly.</p>
+                    <p>Sets all given files readonly.</p>
 
 
         </td>
@@ -1099,10 +1118,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="390">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copies a list of files to the specified directory without any output.</p>
+                    <p>Copies a list of files to the specified directory without any output.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>target</code> - The target directory.</li>
@@ -1120,10 +1139,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="391">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the directory exists</p>
+                    <p>Checks if the directory exists</p>
 
 
         </td>
@@ -1136,10 +1155,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="392">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the file exists</p>
+                    <p>Checks if the file exists</p>
 
 
         </td>
@@ -1152,10 +1171,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="393">
             <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?12646 * &#39;?12647&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12646, '?12647          </div>
+                          <strong>Type parameters:</strong> '?12646, '?12647                      </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a config file with the parameters as "key;value" lines</p>
+                    <p>Creates a config file with the parameters as "key;value" lines</p>
 
 
         </td>
@@ -1176,10 +1195,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="394">
             <strong>Signature:</strong> extension:string -&gt; file:string -&gt; unit option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Active Pattern for determining file extension.</p>
+                    <p>Active Pattern for determining file extension.</p>
 
 
         </td>
@@ -1192,10 +1211,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="395">
             <strong>Signature:</strong> fileSysInfo:FileSystemInfo -&gt; Choice&lt;FileInfo,(DirectoryInfo * IEnumerable&lt;FileSystemInfo&gt;)&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Active pattern which discriminates between files and directories.</p>
+                    <p>Active pattern which discriminates between files and directories.</p>
 
 
         </td>
@@ -1208,10 +1227,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="396">
             <strong>Signature:</strong> f:FileInfo -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Active Pattern for determining file name.</p>
+                    <p>Active Pattern for determining file name.</p>
 
 
         </td>
@@ -1224,10 +1243,10 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="397">
             <strong>Signature:</strong> f:FileInfo -&gt; string * string * string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Active Pattern for determining FileInfoNameSections.</p>
+                    <p>Active Pattern for determining FileInfoNameSections.</p>
 
 
         </td>
@@ -1339,7 +1358,7 @@ delimiter is a ,</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1361,6 +1380,17 @@ delimiter is a ,</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -232,20 +240,26 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-                                    <p>
-                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
-                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/Fake.Core.Environment" >Fake.Core.Environment</a> module.</strong>
-                                    </p>
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.Core.Environment" >Fake.Core.Environment</a> module.
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
 									<!-- Content -->
                       <article>
           			
 
 
+<p>
 
+</p>
 <a name="Environment" class="anchor" href="#Environment" ><h1>Environment</h1></a>
 <div class="xmldoc">
 </div>
@@ -258,281 +272,281 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2494', 2494)" onmouseover="showTip(event, '2494', 2494)">
+          <code onmouseout="hideTip(event, '2661', 2661)" onmouseover="showTip(event, '2661', 2661)">
             CommandLine
           </code>
-          <div class="tip" id="2494">
+          <div class="tip" id="2661">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2495', 2495)" onmouseover="showTip(event, '2495', 2495)">
+          <code onmouseout="hideTip(event, '2662', 2662)" onmouseover="showTip(event, '2662', 2662)">
             CurrentDirectory()
           </code>
-          <div class="tip" id="2495">
+          <div class="tip" id="2662">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2496', 2496)" onmouseover="showTip(event, '2496', 2496)">
+          <code onmouseout="hideTip(event, '2663', 2663)" onmouseover="showTip(event, '2663', 2663)">
             CurrentManagedThreadId
           </code>
-          <div class="tip" id="2496">
+          <div class="tip" id="2663">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2497', 2497)" onmouseover="showTip(event, '2497', 2497)">
+          <code onmouseout="hideTip(event, '2664', 2664)" onmouseover="showTip(event, '2664', 2664)">
             ExitCode()
           </code>
-          <div class="tip" id="2497">
+          <div class="tip" id="2664">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2498', 2498)" onmouseover="showTip(event, '2498', 2498)">
+          <code onmouseout="hideTip(event, '2665', 2665)" onmouseover="showTip(event, '2665', 2665)">
             HasShutdownStarted
           </code>
-          <div class="tip" id="2498">
+          <div class="tip" id="2665">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2499', 2499)" onmouseover="showTip(event, '2499', 2499)">
+          <code onmouseout="hideTip(event, '2666', 2666)" onmouseover="showTip(event, '2666', 2666)">
             Is64BitOperatingSystem
           </code>
-          <div class="tip" id="2499">
+          <div class="tip" id="2666">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2500', 2500)" onmouseover="showTip(event, '2500', 2500)">
+          <code onmouseout="hideTip(event, '2667', 2667)" onmouseover="showTip(event, '2667', 2667)">
             Is64BitProcess
           </code>
-          <div class="tip" id="2500">
+          <div class="tip" id="2667">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2501', 2501)" onmouseover="showTip(event, '2501', 2501)">
+          <code onmouseout="hideTip(event, '2668', 2668)" onmouseover="showTip(event, '2668', 2668)">
             MachineName
           </code>
-          <div class="tip" id="2501">
+          <div class="tip" id="2668">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2502', 2502)" onmouseover="showTip(event, '2502', 2502)">
+          <code onmouseout="hideTip(event, '2669', 2669)" onmouseover="showTip(event, '2669', 2669)">
             NewLine
           </code>
-          <div class="tip" id="2502">
+          <div class="tip" id="2669">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2503', 2503)" onmouseover="showTip(event, '2503', 2503)">
+          <code onmouseout="hideTip(event, '2670', 2670)" onmouseover="showTip(event, '2670', 2670)">
             OSVersion
           </code>
-          <div class="tip" id="2503">
+          <div class="tip" id="2670">
             <strong>Signature:</strong> OperatingSystem<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2504', 2504)" onmouseover="showTip(event, '2504', 2504)">
+          <code onmouseout="hideTip(event, '2671', 2671)" onmouseover="showTip(event, '2671', 2671)">
             ProcessorCount
           </code>
-          <div class="tip" id="2504">
+          <div class="tip" id="2671">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2505', 2505)" onmouseover="showTip(event, '2505', 2505)">
+          <code onmouseout="hideTip(event, '2672', 2672)" onmouseover="showTip(event, '2672', 2672)">
             StackTrace
           </code>
-          <div class="tip" id="2505">
+          <div class="tip" id="2672">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2506', 2506)" onmouseover="showTip(event, '2506', 2506)">
+          <code onmouseout="hideTip(event, '2673', 2673)" onmouseover="showTip(event, '2673', 2673)">
             SystemDirectory
           </code>
-          <div class="tip" id="2506">
+          <div class="tip" id="2673">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2507', 2507)" onmouseover="showTip(event, '2507', 2507)">
+          <code onmouseout="hideTip(event, '2674', 2674)" onmouseover="showTip(event, '2674', 2674)">
             SystemPageSize
           </code>
-          <div class="tip" id="2507">
+          <div class="tip" id="2674">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2508', 2508)" onmouseover="showTip(event, '2508', 2508)">
+          <code onmouseout="hideTip(event, '2675', 2675)" onmouseover="showTip(event, '2675', 2675)">
             TickCount
           </code>
-          <div class="tip" id="2508">
+          <div class="tip" id="2675">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2509', 2509)" onmouseover="showTip(event, '2509', 2509)">
+          <code onmouseout="hideTip(event, '2676', 2676)" onmouseover="showTip(event, '2676', 2676)">
             UserDomainName
           </code>
-          <div class="tip" id="2509">
+          <div class="tip" id="2676">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2510', 2510)" onmouseover="showTip(event, '2510', 2510)">
+          <code onmouseout="hideTip(event, '2677', 2677)" onmouseover="showTip(event, '2677', 2677)">
             UserInteractive
           </code>
-          <div class="tip" id="2510">
+          <div class="tip" id="2677">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2511', 2511)" onmouseover="showTip(event, '2511', 2511)">
+          <code onmouseout="hideTip(event, '2678', 2678)" onmouseover="showTip(event, '2678', 2678)">
             UserName
           </code>
-          <div class="tip" id="2511">
+          <div class="tip" id="2678">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2512', 2512)" onmouseover="showTip(event, '2512', 2512)">
+          <code onmouseout="hideTip(event, '2679', 2679)" onmouseover="showTip(event, '2679', 2679)">
             Version
           </code>
-          <div class="tip" id="2512">
+          <div class="tip" id="2679">
             <strong>Signature:</strong> Version<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2513', 2513)" onmouseover="showTip(event, '2513', 2513)">
+          <code onmouseout="hideTip(event, '2680', 2680)" onmouseover="showTip(event, '2680', 2680)">
             WorkingSet
           </code>
-          <div class="tip" id="2513">
+          <div class="tip" id="2680">
             <strong>Signature:</strong> int64<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -642,7 +656,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -664,6 +678,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -232,21 +240,28 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-                                    <p>
-                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
-                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/Fake.Documentation.DocFx" >Fake.Documentation.DocFx</a> module.</strong>
-                                    </p>
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.Documentation.DocFx" >Fake.Documentation.DocFx</a> module.
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
 									<!-- Content -->
                       <article>
           			
 
 
+<p>
 
+</p>
 <a name="DocFx" class="anchor" href="#DocFx"><h1>DocFx</h1></a>
+
 <div class="xmldoc">
 <p>Contains helper functions to use DocFx <a href="https://dotnet.github.io/docfx/.">https://dotnet.github.io/docfx/.</a></p>
 
@@ -264,77 +279,97 @@
           <td class="type-name">
             <a href="fake-documentation-docfx-buildparams.html">BuildParams</a>
           </td>
-          <td class="xmldoc"><p>Build-Command parameters</p>
+          <td class="xmldoc">
+            <p>Build-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-commonparams.html">CommonParams</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-downloadparams.html">DownloadParams</a>
           </td>
-          <td class="xmldoc"><p>Download-Command parameters</p>
+          <td class="xmldoc">
+            <p>Download-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-exporttemplateparams.html">ExportTemplateParams</a>
           </td>
-          <td class="xmldoc"><p>ExportTemplate-Command parameters</p>
+          <td class="xmldoc">
+            <p>ExportTemplate-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-initparams.html">InitParams</a>
           </td>
-          <td class="xmldoc"><p>Init-Command parameters</p>
+          <td class="xmldoc">
+            <p>Init-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-loglevel.html">LogLevel</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-logparams.html">LogParams</a>
           </td>
-          <td class="xmldoc"><p>Parameters for logging</p>
+          <td class="xmldoc">
+            <p>Parameters for logging</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-metadataparams.html">MetadataParams</a>
           </td>
-          <td class="xmldoc"><p>Metadata-Command parameters</p>
+          <td class="xmldoc">
+            <p>Metadata-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-pdfparams.html">PdfParams</a>
           </td>
-          <td class="xmldoc"><p>Pdf-Command parameters</p>
+          <td class="xmldoc">
+            <p>Pdf-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-documentation-docfx-serveparams.html">ServeParams</a>
           </td>
-          <td class="xmldoc"><p>Serve-Command parameters</p>
+          <td class="xmldoc">
+            <p>Serve-Command parameters</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -350,15 +385,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
+          <code onmouseout="hideTip(event, '489', 489)" onmouseover="showTip(event, '489', 489)">
             build(setParams)
           </code>
-          <div class="tip" id="468">
+          <div class="tip" id="489">
             <strong>Signature:</strong> setParams:(BuildParams -&gt; BuildParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L398-398" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L399-399" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -391,15 +426,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
+          <code onmouseout="hideTip(event, '490', 490)" onmouseover="showTip(event, '490', 490)">
             download(setParams)
           </code>
-          <div class="tip" id="469">
+          <div class="tip" id="490">
             <strong>Signature:</strong> setParams:(DownloadParams -&gt; DownloadParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L602-602" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L603-603" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -432,15 +467,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
+          <code onmouseout="hideTip(event, '491', 491)" onmouseover="showTip(event, '491', 491)">
             exec(setParams command args)
           </code>
-          <div class="tip" id="470">
+          <div class="tip" id="491">
             <strong>Signature:</strong> setParams:(CommonParams -&gt; CommonParams) -&gt; command:string -&gt; args:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L54-54" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L54-54" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -450,15 +485,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
+          <code onmouseout="hideTip(event, '492', 492)" onmouseover="showTip(event, '492', 492)">
             exportTemplate(setParams)
           </code>
-          <div class="tip" id="471">
+          <div class="tip" id="492">
             <strong>Signature:</strong> setParams:(ExportTemplateParams -&gt; ExportTemplateParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L557-557" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L558-558" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -491,15 +526,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+          <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
             init(setParams)
           </code>
-          <div class="tip" id="472">
+          <div class="tip" id="493">
             <strong>Signature:</strong> setParams:(InitParams -&gt; InitParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L124-124" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L125-125" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -532,15 +567,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+          <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
             metadata(setParams)
           </code>
-          <div class="tip" id="473">
+          <div class="tip" id="494">
             <strong>Signature:</strong> setParams:(MetadataParams -&gt; MetadataParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L753-753" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L754-754" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -573,15 +608,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+          <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
             pdf(setParams)
           </code>
-          <div class="tip" id="474">
+          <div class="tip" id="495">
             <strong>Signature:</strong> setParams:(PdfParams -&gt; PdfParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L501-501" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L502-502" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -620,15 +655,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+          <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
             serve(setParams)
           </code>
-          <div class="tip" id="475">
+          <div class="tip" id="496">
             <strong>Signature:</strong> setParams:(ServeParams -&gt; ServeParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L656-656" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Documentation.DocFx/DocFx.fs#L657-657" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -768,7 +803,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -790,6 +825,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

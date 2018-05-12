@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="NuSpecPackage" class="anchor" href="#NuSpecPackage" ><h1>NuSpecPackage</h1></a>
 <div class="xmldoc">
 <p>NuSpec metadata type</p>
@@ -259,15 +269,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5208', 5208)" onmouseover="showTip(event, '5208', 5208)">
+          <code onmouseout="hideTip(event, '5330', 5330)" onmouseover="showTip(event, '5330', 5330)">
             Authors
           </code>
-          <div class="tip" id="5208">
+          <div class="tip" id="5330">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L462-462" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L466-466" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -277,15 +287,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5209', 5209)" onmouseover="showTip(event, '5209', 5209)">
+          <code onmouseout="hideTip(event, '5331', 5331)" onmouseover="showTip(event, '5331', 5331)">
             Created
           </code>
-          <div class="tip" id="5209">
+          <div class="tip" id="5331">
             <strong>Signature:</strong> DateTime<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L466-466" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L470-470" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -295,15 +305,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5210', 5210)" onmouseover="showTip(event, '5210', 5210)">
+          <code onmouseout="hideTip(event, '5332', 5332)" onmouseover="showTip(event, '5332', 5332)">
             Description
           </code>
-          <div class="tip" id="5210">
+          <div class="tip" id="5332">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L473-473" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L477-477" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -313,15 +323,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5211', 5211)" onmouseover="showTip(event, '5211', 5211)">
+          <code onmouseout="hideTip(event, '5333', 5333)" onmouseover="showTip(event, '5333', 5333)">
             Id
           </code>
-          <div class="tip" id="5211">
+          <div class="tip" id="5333">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L460-460" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L464-464" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -331,15 +341,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5212', 5212)" onmouseover="showTip(event, '5212', 5212)">
+          <code onmouseout="hideTip(event, '5334', 5334)" onmouseover="showTip(event, '5334', 5334)">
             IsLatestVersion
           </code>
-          <div class="tip" id="5212">
+          <div class="tip" id="5334">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L465-465" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L469-469" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -349,15 +359,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5213', 5213)" onmouseover="showTip(event, '5213', 5213)">
+          <code onmouseout="hideTip(event, '5335', 5335)" onmouseover="showTip(event, '5335', 5335)">
             Language
           </code>
-          <div class="tip" id="5213">
+          <div class="tip" id="5335">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L474-474" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L478-478" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,15 +377,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5214', 5214)" onmouseover="showTip(event, '5214', 5214)">
+          <code onmouseout="hideTip(event, '5336', 5336)" onmouseover="showTip(event, '5336', 5336)">
             LicenseUrl
           </code>
-          <div class="tip" id="5214">
+          <div class="tip" id="5336">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L470-470" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L474-474" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -385,15 +395,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5215', 5215)" onmouseover="showTip(event, '5215', 5215)">
+          <code onmouseout="hideTip(event, '5337', 5337)" onmouseover="showTip(event, '5337', 5337)">
             Owners
           </code>
-          <div class="tip" id="5215">
+          <div class="tip" id="5337">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L463-463" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L467-467" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -403,15 +413,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5216', 5216)" onmouseover="showTip(event, '5216', 5216)">
+          <code onmouseout="hideTip(event, '5338', 5338)" onmouseover="showTip(event, '5338', 5338)">
             PackageHash
           </code>
-          <div class="tip" id="5216">
+          <div class="tip" id="5338">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L468-468" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L472-472" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -421,15 +431,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5217', 5217)" onmouseover="showTip(event, '5217', 5217)">
+          <code onmouseout="hideTip(event, '5339', 5339)" onmouseover="showTip(event, '5339', 5339)">
             PackageHashAlgorithm
           </code>
-          <div class="tip" id="5217">
+          <div class="tip" id="5339">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L469-469" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L473-473" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -439,15 +449,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5218', 5218)" onmouseover="showTip(event, '5218', 5218)">
+          <code onmouseout="hideTip(event, '5340', 5340)" onmouseover="showTip(event, '5340', 5340)">
             ProjectUrl
           </code>
-          <div class="tip" id="5218">
+          <div class="tip" id="5340">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L471-471" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L475-475" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -457,15 +467,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5219', 5219)" onmouseover="showTip(event, '5219', 5219)">
+          <code onmouseout="hideTip(event, '5341', 5341)" onmouseover="showTip(event, '5341', 5341)">
             Published
           </code>
-          <div class="tip" id="5219">
+          <div class="tip" id="5341">
             <strong>Signature:</strong> DateTime<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L467-467" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L471-471" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -475,15 +485,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5220', 5220)" onmouseover="showTip(event, '5220', 5220)">
+          <code onmouseout="hideTip(event, '5342', 5342)" onmouseover="showTip(event, '5342', 5342)">
             ReleaseNotes
           </code>
-          <div class="tip" id="5220">
+          <div class="tip" id="5342">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L475-475" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L479-479" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -493,15 +503,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5221', 5221)" onmouseover="showTip(event, '5221', 5221)">
+          <code onmouseout="hideTip(event, '5343', 5343)" onmouseover="showTip(event, '5343', 5343)">
             RequireLicenseAcceptance
           </code>
-          <div class="tip" id="5221">
+          <div class="tip" id="5343">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L472-472" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L476-476" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -511,15 +521,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5222', 5222)" onmouseover="showTip(event, '5222', 5222)">
+          <code onmouseout="hideTip(event, '5344', 5344)" onmouseover="showTip(event, '5344', 5344)">
             Tags
           </code>
-          <div class="tip" id="5222">
+          <div class="tip" id="5344">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L476-476" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L480-480" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -529,15 +539,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5223', 5223)" onmouseover="showTip(event, '5223', 5223)">
+          <code onmouseout="hideTip(event, '5345', 5345)" onmouseover="showTip(event, '5345', 5345)">
             Url
           </code>
-          <div class="tip" id="5223">
+          <div class="tip" id="5345">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L464-464" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L468-468" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -547,15 +557,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5224', 5224)" onmouseover="showTip(event, '5224', 5224)">
+          <code onmouseout="hideTip(event, '5346', 5346)" onmouseover="showTip(event, '5346', 5346)">
             Version
           </code>
-          <div class="tip" id="5224">
+          <div class="tip" id="5346">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L461-461" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L465-465" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -573,15 +583,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5225', 5225)" onmouseover="showTip(event, '5225', 5225)">
+          <code onmouseout="hideTip(event, '5347', 5347)" onmouseover="showTip(event, '5347', 5347)">
             DirectoryName
           </code>
-          <div class="tip" id="5225">
+          <div class="tip" id="5347">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L479-479" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L483-483" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -591,15 +601,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5226', 5226)" onmouseover="showTip(event, '5226', 5226)">
+          <code onmouseout="hideTip(event, '5348', 5348)" onmouseover="showTip(event, '5348', 5348)">
             FileName
           </code>
-          <div class="tip" id="5226">
+          <div class="tip" id="5348">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L480-480" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L484-484" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -609,15 +619,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5227', 5227)" onmouseover="showTip(event, '5227', 5227)">
+          <code onmouseout="hideTip(event, '5349', 5349)" onmouseover="showTip(event, '5349', 5349)">
             Name
           </code>
-          <div class="tip" id="5227">
+          <div class="tip" id="5349">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L477-477" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.NuGet/NuGet.fs#L481-481" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -731,7 +741,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -753,6 +763,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

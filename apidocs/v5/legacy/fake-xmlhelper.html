@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+        </div> 
 
+</p>
 <a name="XMLHelper" class="anchor" href="#XMLHelper"><h1>XMLHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains functions to read and write XML files.</p>
 
@@ -267,10 +282,18 @@
           </code>
           <div class="tip" id="1028">
             <strong>Signature:</strong> doc:XmlDocument -&gt; XmlElement<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L130-130" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L130-130" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -287,10 +310,18 @@
           </code>
           <div class="tip" id="1029">
             <strong>Signature:</strong> name:string -&gt; node:&#39;a -&gt; string<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L91-91" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L91-91" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -307,10 +338,18 @@
           </code>
           <div class="tip" id="1030">
             <strong>Signature:</strong> node:&#39;a -&gt; seq&lt;XmlNode&gt;<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L97-97" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L97-97" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -327,10 +366,18 @@
           </code>
           <div class="tip" id="1031">
             <strong>Signature:</strong> name:string -&gt; node:XmlNode -&gt; XmlNode<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L104-104" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L104-104" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -347,10 +394,18 @@
           </code>
           <div class="tip" id="1032">
             <strong>Signature:</strong> name:string -&gt; f:(&#39;a -&gt; &#39;b) -&gt; node:&#39;a -&gt; &#39;b<br />
-                          <strong>Type parameters:</strong> 'a, 'b          </div>
+                          <strong>Type parameters:</strong> 'a, 'b                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L111-111" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L111-111" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,10 +422,18 @@
           </code>
           <div class="tip" id="1033">
             <strong>Signature:</strong> name:string -&gt; f:(XmlNode -&gt; &#39;a) -&gt; XmlNode -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L117-117" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L117-117" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -387,10 +450,18 @@
           </code>
           <div class="tip" id="1034">
             <strong>Signature:</strong> name:string -&gt; value:&#39;?13517 -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
-                          <strong>Type parameters:</strong> '?13517          </div>
+                          <strong>Type parameters:</strong> '?13517                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L78-78" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L78-78" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -407,10 +478,18 @@
           </code>
           <div class="tip" id="1035">
             <strong>Signature:</strong> elementName:string -&gt; data:string -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L84-84" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L84-84" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -427,10 +506,18 @@
           </code>
           <div class="tip" id="1036">
             <strong>Signature:</strong> comment:string -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L60-60" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L60-60" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -447,10 +534,18 @@
           </code>
           <div class="tip" id="1037">
             <strong>Signature:</strong> text:string -&gt; XmlDocument<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L121-121" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L121-121" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -467,10 +562,18 @@
           </code>
           <div class="tip" id="1038">
             <strong>Signature:</strong> writer:XmlTextWriter -&gt; XmlTextWriter<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L72-72" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L72-72" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -487,10 +590,18 @@
           </code>
           <div class="tip" id="1039">
             <strong>Signature:</strong> fileName:string -&gt; xpath:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L161-161" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L161-161" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -507,10 +618,18 @@
           </code>
           <div class="tip" id="1040">
             <strong>Signature:</strong> fileName:string -&gt; xpath:string -&gt; innerTextValue:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L168-168" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L168-168" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -527,10 +646,18 @@
           </code>
           <div class="tip" id="1041">
             <strong>Signature:</strong> fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; innerTextValue:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L204-204" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L204-204" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -547,10 +674,18 @@
           </code>
           <div class="tip" id="1042">
             <strong>Signature:</strong> fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L197-197" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L197-197" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -567,10 +702,18 @@
           </code>
           <div class="tip" id="1043">
             <strong>Signature:</strong> failOnError:bool -&gt; xmlFileName:string -&gt; nameSpace:string -&gt; prefix:string -&gt; xPath:string -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L17-17" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L17-17" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -587,10 +730,18 @@
           </code>
           <div class="tip" id="1044">
             <strong>Signature:</strong> failOnError:bool -&gt; xmlFileName:string -&gt; nameSpace:string -&gt; prefix:string -&gt; xPath:string -&gt; bool * int<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L41-41" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L41-41" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -608,10 +759,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1045">
             <strong>Signature:</strong> name:string -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L66-66" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L66-66" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -628,10 +787,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1046">
             <strong>Signature:</strong> stylesheetUri:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L243-243" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L243-243" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -653,10 +820,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1047">
             <strong>Signature:</strong> fileName:string -&gt; XmlTextWriter<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L53-53" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L53-53" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -673,10 +848,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1048">
             <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L134-134" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L134-134" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -693,10 +876,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1049">
             <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L143-143" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L143-143" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -713,10 +904,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1050">
             <strong>Signature:</strong> xpath:string -&gt; innerTextValue:string -&gt; namespaces:&#39;?13540 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                          <strong>Type parameters:</strong> '?13540          </div>
+                          <strong>Type parameters:</strong> '?13540                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L186-186" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L186-186" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -733,10 +932,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1051">
             <strong>Signature:</strong> xpath:string -&gt; value:string -&gt; namespaces:&#39;?13538 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                          <strong>Type parameters:</strong> '?13538          </div>
+                          <strong>Type parameters:</strong> '?13538                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L175-175" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L175-175" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -753,10 +960,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1052">
             <strong>Signature:</strong> xpath:string -&gt; namespaces:&#39;a -&gt; doc:XmlDocument -&gt; string<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L152-152" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L152-152" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -773,10 +988,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1053">
             <strong>Signature:</strong> xsl:XslCompiledTransform -&gt; doc:XmlDocument -&gt; XmlDocument<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L224-224" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L224-224" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -798,10 +1021,18 @@ Returns if the value is an int and the value</p>
           </code>
           <div class="tip" id="1054">
             <strong>Signature:</strong> text:string -&gt; XslCompiledTransform<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L211-211" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Xml instead (open Fake.Core and use &#39;Xml.&lt;name&gt;&#39; instead of directly calling Xml&lt;name&gt; - ie add a dot)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/XMLHelper.fs#L211-211" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -917,7 +1148,7 @@ Returns if the value is an int and the value</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -939,6 +1170,17 @@ Returns if the value is an int and the value</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

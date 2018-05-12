@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -184,6 +189,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -237,7 +245,10 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Running-targets-in-FAKE-F-Make" class="anchor" href="#Running-targets-in-FAKE-F-Make">Running targets in "FAKE - F# Make"</a></h1>
-<p><strong>Note:  This documentation is for FAKE 5. The old documentation can be found <a href="legacy-core-targets.html">here</a>! </strong></p>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-core-targets.html">here</a></p>
+</div>
 <p><a href="apidocs/v5/fake-core-target.html">API-Reference</a>, <a href="apidocs/v5/fake-core-targetoperators.html">Operators</a></p>
 <h2><a name="Command-line-interface-for-the-target-module" class="anchor" href="#Command-line-interface-for-the-target-module">Command line interface for the target module</a></h2>
 <p>If you use the <code>Fake.Core.Target</code> module and call <code>Target.runOrDefault</code> or <code>Target.runOrList</code> in your build script you will have the following CLI options:</p>
@@ -255,7 +266,7 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="help">Usage:
+<td class="snippet"><pre class="fssnip"><code lang="bash">Usage:
   fake-run --list
   fake-run --version
   fake-run --help | -h
@@ -269,20 +280,24 @@ Target Module Options [target_opts]:
     -s, --single-target    Run only the specified target.
     -p, --parallel &lt;num&gt;  Run parallel with the given number of tasks.
 </code></pre></td></tr></table>
-<blockquote>
-<p>please refer to the general <a href="fake-commandline.html">FAKE 5 runner command line interface</a> or the <a href="core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a> for details.</p>
-</blockquote>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Please refer to the general <a href="fake-commandline.html">FAKE 5 runner command line interface</a> or the <a href="core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a></p> 
+</div>
 <p>This means you can - for example - run <code>fake run build.fsx --list</code>
 or <code>fake build --list</code> to list your targets.</p>
 <p>To run a target <code>MyTarget</code> you could use  <code>fake run build.fsx -t MyTarget</code> or <code>fake build target MyTarget</code> (or the other way around <code>fake run build.fsx target MyTarget</code>)</p>
 <p>All parameters after <code>--</code> or <code>target &lt;target&gt;</code> are given to the target as paramters. Note that this feature needs to be enabled by using <code>Target.runOrDefaultWithArguments</code> instead of <code>Target.runOrDefault</code>!</p>
-<blockquote>
-<p>Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
-- <code>fake run -t Target build.fsx</code> - because of ordering fake will assume <code>-t</code> to be the script name
-- <code>fake build -v</code> - It will not run FAKE in verbose mode but give the parameter <code>-v</code> to the target parameters. This is because there is no <code>-v</code> in the above CLI.</p>
-<p>In general you should use the command-line in a way to not be broken when new parameters are added.
-Use longer forms in your scripts and shorter forms on your shell!</p>
-</blockquote>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Note that the ordering of the parameters matters! This means the following are invalid (which is different to pre FAKE 5 versions):
+    <ul>
+        <li><code>fake run -t Target build.fs</code> - because of ordering fake will assume <code>-t</code> to be the script name </li>
+        <li> <code>fake build -v</code> - It will not run FAKE in verbose mode but give the parameter <code>-v</code> to the target parameters. This is because there is no <code>-v</code> in the above CLI.</li>
+    </ul>
+    In general you should use the command-line in a way to not be broken when new parameters are added.
+    Use longer forms in your scripts and shorter forms on your shell!</p>
+</div>
 <h2><a name="Running-specific-targets" class="anchor" href="#Running-specific-targets">Running specific targets</a></h2>
 <p>FAKE has a special param "target" which can be used to run specific targets in a build. We assume the following build script (<code>build.fsx</code>):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -343,11 +358,14 @@ Use longer forms in your scripts and shorter forms on your shell!</p>
 </code></pre></td>
 </tr>
 </table>
-<blockquote>
-<p>Warning: Previous versions of FAKE 5 used <code>(fun () -&gt; ...)</code> instead of <code>(fun _ -&gt; ...)</code>.
-We decided to change the syntax here to introduce some parameters or other features at a later point.
-Using the current parameter object is not supported yet.</p>
-</blockquote>
+<div class="alert alert-warning">
+    <h5>WARNING</h5>
+    <p>
+    Previous versions of FAKE 5 used <code>(fun () -> ...)</code> instead of <code>(fun _ -> ...)</code>.
+    We decided to change the syntax here to introduce some parameters or other features at a later point.
+    Using the current parameter object is not supported yet.
+    </p> 
+</div>
 <p>Now we have the following options:</p>
 <ul>
 <li><code>fake run build.fsx -t "Build"</code> --&gt; starts the <em>Build</em> target and runs the dependency <em>Clean</em></li>
@@ -645,7 +663,7 @@ say that target B has a soft dependency on target A:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -667,6 +685,17 @@ say that target B has a soft dependency on target A:</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

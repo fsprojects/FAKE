@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="PackOptions" class="anchor" href="#PackOptions" ><h1>PackOptions</h1></a>
 <div class="xmldoc">
 <p>dotnet pack command options</p>
@@ -259,15 +269,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4884', 4884)" onmouseover="showTip(event, '4884', 4884)">
+          <code onmouseout="hideTip(event, '4927', 4927)" onmouseover="showTip(event, '4927', 4927)">
             BuildBasePath
           </code>
-          <div class="tip" id="4884">
+          <div class="tip" id="4927">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L737-737" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L740-740" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,15 +289,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4885', 4885)" onmouseover="showTip(event, '4885', 4885)">
+          <code onmouseout="hideTip(event, '4928', 4928)" onmouseover="showTip(event, '4928', 4928)">
             Common
           </code>
-          <div class="tip" id="4885">
+          <div class="tip" id="4928">
             <strong>Signature:</strong> Options<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L731-731" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L734-734" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -299,15 +309,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4886', 4886)" onmouseover="showTip(event, '4886', 4886)">
+          <code onmouseout="hideTip(event, '4929', 4929)" onmouseover="showTip(event, '4929', 4929)">
             Configuration
           </code>
-          <div class="tip" id="4886">
+          <div class="tip" id="4929">
             <strong>Signature:</strong> BuildConfiguration<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L733-733" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L736-736" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -319,15 +329,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4887', 4887)" onmouseover="showTip(event, '4887', 4887)">
+          <code onmouseout="hideTip(event, '4930', 4930)" onmouseover="showTip(event, '4930', 4930)">
             NoBuild
           </code>
-          <div class="tip" id="4887">
+          <div class="tip" id="4930">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L741-741" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L744-744" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -339,15 +349,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4888', 4888)" onmouseover="showTip(event, '4888', 4888)">
+          <code onmouseout="hideTip(event, '4931', 4931)" onmouseover="showTip(event, '4931', 4931)">
             OutputPath
           </code>
-          <div class="tip" id="4888">
+          <div class="tip" id="4931">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L739-739" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L742-742" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -359,15 +369,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4889', 4889)" onmouseover="showTip(event, '4889', 4889)">
+          <code onmouseout="hideTip(event, '4932', 4932)" onmouseover="showTip(event, '4932', 4932)">
             VersionSuffix
           </code>
-          <div class="tip" id="4889">
+          <div class="tip" id="4932">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L735-735" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L738-738" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -387,15 +397,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4890', 4890)" onmouseover="showTip(event, '4890', 4890)">
+          <code onmouseout="hideTip(event, '4933', 4933)" onmouseover="showTip(event, '4933', 4933)">
             Environment
           </code>
-          <div class="tip" id="4890">
+          <div class="tip" id="4933">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L756-756" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L759-759" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -407,15 +417,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4891', 4891)" onmouseover="showTip(event, '4891', 4891)">
+          <code onmouseout="hideTip(event, '4934', 4934)" onmouseover="showTip(event, '4934', 4934)">
             WithCommon(f)
           </code>
-          <div class="tip" id="4891">
+          <div class="tip" id="4934">
             <strong>Signature:</strong> (f:(Options -&gt; Options)) -&gt; PackOptions<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L765-765" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L768-768" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -427,15 +437,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4892', 4892)" onmouseover="showTip(event, '4892', 4892)">
+          <code onmouseout="hideTip(event, '4935', 4935)" onmouseover="showTip(event, '4935', 4935)">
             WithEnvironment(map)
           </code>
-          <div class="tip" id="4892">
+          <div class="tip" id="4935">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; PackOptions<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L758-758" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L761-761" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -447,15 +457,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4893', 4893)" onmouseover="showTip(event, '4893', 4893)">
+          <code onmouseout="hideTip(event, '4936', 4936)" onmouseover="showTip(event, '4936', 4936)">
             WithRedirectOutput(shouldRedirect)
           </code>
-          <div class="tip" id="4893">
+          <div class="tip" id="4936">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; PackOptions<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L761-761" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L764-764" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -475,15 +485,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4894', 4894)" onmouseover="showTip(event, '4894', 4894)">
+          <code onmouseout="hideTip(event, '4937', 4937)" onmouseover="showTip(event, '4937', 4937)">
             Create()
           </code>
-          <div class="tip" id="4894">
+          <div class="tip" id="4937">
             <strong>Signature:</strong> unit -&gt; PackOptions<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L745-745" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L748-748" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -495,15 +505,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4895', 4895)" onmouseover="showTip(event, '4895', 4895)">
+          <code onmouseout="hideTip(event, '4938', 4938)" onmouseover="showTip(event, '4938', 4938)">
             Default
           </code>
-          <div class="tip" id="4895">
+          <div class="tip" id="4938">
             <strong>Signature:</strong> PackOptions<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use PackOptions.Create instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L754-754" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use PackOptions.Create instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L757-757" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -617,7 +635,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -639,6 +657,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

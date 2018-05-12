@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="FscParam" class="anchor" href="#FscParam" ><h1>FscParam</h1></a>
 <div class="xmldoc">
 </div>
@@ -261,10 +271,10 @@
           </code>
           <div class="tip" id="1815">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Base address for the library to be built</p>
+                    <p>Base address for the library to be built</p>
 
 
         </td>
@@ -277,10 +287,10 @@
           </code>
           <div class="tip" id="1816">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Generate overflow checks</p>
+                    <p>Generate overflow checks</p>
 
 
         </td>
@@ -293,10 +303,10 @@
           </code>
           <div class="tip" id="1817">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify the codepage used to read source files</p>
+                    <p>Specify the codepage used to read source files</p>
 
 
         </td>
@@ -309,10 +319,10 @@
           </code>
           <div class="tip" id="1818">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Output warning and error messages in color</p>
+                    <p>Output warning and error messages in color</p>
 
 
         </td>
@@ -325,10 +335,10 @@
           </code>
           <div class="tip" id="1819">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Enable or disable cross-module optimizations</p>
+                    <p>Enable or disable cross-module optimizations</p>
 
 
         </td>
@@ -341,10 +351,10 @@
           </code>
           <div class="tip" id="1820">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Emit debug information</p>
+                    <p>Emit debug information</p>
 
 
         </td>
@@ -357,10 +367,10 @@
           </code>
           <div class="tip" id="1821">
             <strong>Signature:</strong> DebugType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify debugging type: full, pdbonly.
+                    <p>Specify debugging type: full, pdbonly.
 ('full' is the default and enables attaching a debugger to a running program).</p>
 
 
@@ -374,10 +384,10 @@
           </code>
           <div class="tip" id="1822">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Define a conditional compilation symbols</p>
+                    <p>Define a conditional compilation symbols</p>
 
 
         </td>
@@ -390,10 +400,10 @@
           </code>
           <div class="tip" id="1823">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Define a list of conditional compilation symbols</p>
+                    <p>Define a list of conditional compilation symbols</p>
 
 
         </td>
@@ -406,10 +416,10 @@
           </code>
           <div class="tip" id="1824">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Delay-sign the assembly using only the public portion of the strong name key</p>
+                    <p>Delay-sign the assembly using only the public portion of the strong name key</p>
 
 
         </td>
@@ -422,10 +432,10 @@
           </code>
           <div class="tip" id="1825">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Write the xmldoc of the assembly to the given file</p>
+                    <p>Write the xmldoc of the assembly to the given file</p>
 
 
         </td>
@@ -438,10 +448,10 @@
           </code>
           <div class="tip" id="1826">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Output messages with fully qualified paths</p>
+                    <p>Output messages with fully qualified paths</p>
 
 
         </td>
@@ -454,10 +464,10 @@
           </code>
           <div class="tip" id="1827">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Display the commandline flags and their usage</p>
+                    <p>Display the commandline flags and their usage</p>
 
 
         </td>
@@ -470,10 +480,10 @@
           </code>
           <div class="tip" id="1828">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Enable high-entropy ASLR</p>
+                    <p>Enable high-entropy ASLR</p>
 
 
         </td>
@@ -486,10 +496,10 @@
           </code>
           <div class="tip" id="1829">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify a strong name key container</p>
+                    <p>Specify a strong name key container</p>
 
 
         </td>
@@ -502,10 +512,10 @@
           </code>
           <div class="tip" id="1830">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify a strong name key file</p>
+                    <p>Specify a strong name key file</p>
 
 
         </td>
@@ -518,10 +528,10 @@
           </code>
           <div class="tip" id="1831">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify a directory for the include path which is used to resolve source files and assemblies</p>
+                    <p>Specify a directory for the include path which is used to resolve source files and assemblies</p>
 
 
         </td>
@@ -534,10 +544,10 @@
           </code>
           <div class="tip" id="1832">
             <strong>Signature:</strong> ResourceInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Link the specified resource to this assembly</p>
+                    <p>Link the specified resource to this assembly</p>
 
 
         </td>
@@ -550,10 +560,10 @@
           </code>
           <div class="tip" id="1833">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Ignore ML compatibility warnings</p>
+                    <p>Ignore ML compatibility warnings</p>
 
 
         </td>
@@ -566,10 +576,10 @@
           </code>
           <div class="tip" id="1834">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Do not reference the default CLI assemblies by default</p>
+                    <p>Do not reference the default CLI assemblies by default</p>
 
 
         </td>
@@ -582,10 +592,10 @@
           </code>
           <div class="tip" id="1835">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Don't add a resource to the generated assembly containing F#-specific metadata</p>
+                    <p>Don't add a resource to the generated assembly containing F#-specific metadata</p>
 
 
         </td>
@@ -598,10 +608,10 @@
           </code>
           <div class="tip" id="1836">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Suppress compiler copyright message</p>
+                    <p>Suppress compiler copyright message</p>
 
 
         </td>
@@ -614,10 +624,10 @@
           </code>
           <div class="tip" id="1837">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Only include optimization information essential for implementing inlined constructs.
+                    <p>Only include optimization information essential for implementing inlined constructs.
 Inhibits cross-module inlining but improves binary compatibility.</p>
 
 
@@ -631,10 +641,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1838">
             <strong>Signature:</strong> int list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Disable specific warning messages</p>
+                    <p>Disable specific warning messages</p>
 
 
         </td>
@@ -647,10 +657,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1839">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Do not include the default Win32 manifest</p>
+                    <p>Do not include the default Win32 manifest</p>
 
 
         </td>
@@ -663,10 +673,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1840">
             <strong>Signature:</strong> bool * Optimization list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Enable optimizations</p>
+                    <p>Enable optimizations</p>
 
 
         </td>
@@ -679,10 +689,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1841">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Name of the output file</p>
+                    <p>Name of the output file</p>
 
 
         </td>
@@ -695,10 +705,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1842">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Name the output debug file</p>
+                    <p>Name the output debug file</p>
 
 
         </td>
@@ -711,10 +721,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1843">
             <strong>Signature:</strong> PlatformType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Limit which platforms the compiled code can run on:</p>
+                    <p>Limit which platforms the compiled code can run on:</p>
 
 
         </td>
@@ -727,10 +737,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1844">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Emit debug information in quotations</p>
+                    <p>Emit debug information in quotations</p>
 
 
         </td>
@@ -743,10 +753,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1845">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reference an assembly</p>
+                    <p>Reference an assembly</p>
 
 
         </td>
@@ -759,10 +769,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1846">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reference assemblies in the order listed</p>
+                    <p>Reference assemblies in the order listed</p>
 
 
         </td>
@@ -775,10 +785,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1847">
             <strong>Signature:</strong> ResourceInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Embed the specified managed resource</p>
+                    <p>Embed the specified managed resource</p>
 
 
         </td>
@@ -791,10 +801,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1848">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Print the inferred interface of the assembly to a file</p>
+                    <p>Print the inferred interface of the assembly to a file</p>
 
 
         </td>
@@ -807,10 +817,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1849">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Resolve assembly references using directory-based rules rather than MSBuild resolution</p>
+                    <p>Resolve assembly references using directory-based rules rather than MSBuild resolution</p>
 
 
         </td>
@@ -823,10 +833,10 @@ Inhibits cross-module inlining but improves binary compatibility.</p>
           </code>
           <div class="tip" id="1850">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Statically link the F# library and all referenced DLLs
+                    <p>Statically link the F# library and all referenced DLLs
 that depend on it into the assembly being generated</p>
 
 
@@ -840,10 +850,10 @@ that depend on it into the assembly being generated</p>
           </code>
           <div class="tip" id="1851">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Statically link the given assembly and all referenced DLLs that depend on this assembly.
+                    <p>Statically link the given assembly and all referenced DLLs that depend on this assembly.
 Use an assembly name e.g. mylib, not a DLL name.</p>
 
 
@@ -857,10 +867,10 @@ Use an assembly name e.g. mylib, not a DLL name.</p>
           </code>
           <div class="tip" id="1852">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specifies the version of the OS subsystem to be used by the generated executable.
+                    <p>Specifies the version of the OS subsystem to be used by the generated executable.
 Use 6.02 for Windows 8, 6.01 for Windows 7, 6.00 for Windows Vista.
 This option only applies to executables, not DLL  and need only be used if your application
 depends on specific security features available only on certain versions of the OS</p>
@@ -876,10 +886,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1853">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Enable or disable tailcalls</p>
+                    <p>Enable or disable tailcalls</p>
 
 
         </td>
@@ -892,10 +902,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1854">
             <strong>Signature:</strong> TargetType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The 'fsc.exe' output target types : exe, winexe, library, module</p>
+                    <p>The 'fsc.exe' output target types : exe, winexe, library, module</p>
 
 
         </td>
@@ -908,10 +918,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1855">
             <strong>Signature:</strong> Profile<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify target framework profile of this assembly.</p>
+                    <p>Specify target framework profile of this assembly.</p>
 
 
         </td>
@@ -924,10 +934,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1856">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Displays timing information for compilation.</p>
+                    <p>Displays timing information for compilation.</p>
 
 
         </td>
@@ -940,10 +950,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1857">
             <strong>Signature:</strong> <br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Output messages in UTF-8 encoding</p>
+                    <p>Output messages in UTF-8 encoding</p>
 
 
         </td>
@@ -956,10 +966,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1858">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set a warning level (0-5)</p>
+                    <p>Set a warning level (0-5)</p>
 
 
         </td>
@@ -972,10 +982,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1859">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Report all warnings as errors</p>
+                    <p>Report all warnings as errors</p>
 
 
         </td>
@@ -988,10 +998,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1860">
             <strong>Signature:</strong> bool * int list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Report specific warnings as errors</p>
+                    <p>Report specific warnings as errors</p>
 
 
         </td>
@@ -1004,10 +1014,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1861">
             <strong>Signature:</strong> int list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Enable specific warnings that may be off by default</p>
+                    <p>Enable specific warnings that may be off by default</p>
 
 
         </td>
@@ -1020,10 +1030,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1862">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify a Win32 manifest file</p>
+                    <p>Specify a Win32 manifest file</p>
 
 
         </td>
@@ -1036,10 +1046,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1863">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify a Win32 resource file (.res)</p>
+                    <p>Specify a Win32 resource file (.res)</p>
 
 
         </td>
@@ -1060,10 +1070,10 @@ depends on specific security features available only on certain versions of the 
           </code>
           <div class="tip" id="1864">
             <strong>Signature:</strong> FscParam list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -1173,7 +1183,7 @@ depends on specific security features available only on certain versions of the 
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1195,6 +1205,17 @@ depends on specific security features available only on certain versions of the 
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

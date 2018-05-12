@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,13 @@
           			
 
 
+<p>
 
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        </div> 
+</p>
 <a name="CMakeGenerateParams" class="anchor" href="#CMakeGenerateParams" ><h1>CMakeGenerateParams</h1></a>
 <div class="xmldoc">
 <p>The CMakeGenerate parameter type.</p>
@@ -259,15 +273,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4346', 4346)" onmouseover="showTip(event, '4346', 4346)">
+          <code onmouseout="hideTip(event, '4373', 4373)" onmouseover="showTip(event, '4373', 4373)">
             AdditionalArgs
           </code>
-          <div class="tip" id="4346">
+          <div class="tip" id="4373">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L68-68" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L68-68" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,15 +293,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4347', 4347)" onmouseover="showTip(event, '4347', 4347)">
+          <code onmouseout="hideTip(event, '4374', 4374)" onmouseover="showTip(event, '4374', 4374)">
             BinaryDirectory
           </code>
-          <div class="tip" id="4347">
+          <div class="tip" id="4374">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L36-36" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -299,15 +313,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4348', 4348)" onmouseover="showTip(event, '4348', 4348)">
+          <code onmouseout="hideTip(event, '4375', 4375)" onmouseover="showTip(event, '4375', 4375)">
             CacheEntriesToRemove
           </code>
-          <div class="tip" id="4348">
+          <div class="tip" id="4375">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L64-64" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -320,15 +334,15 @@ Equivalent to the <code>-U &lt;globbing_expr&gt;</code> options.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4349', 4349)" onmouseover="showTip(event, '4349', 4349)">
+          <code onmouseout="hideTip(event, '4376', 4376)" onmouseover="showTip(event, '4376', 4376)">
             Caches
           </code>
-          <div class="tip" id="4349">
+          <div class="tip" id="4376">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L55-55" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -341,15 +355,15 @@ Equivalent to the <code>-C &lt;initial-cache&gt;</code> options.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4350', 4350)" onmouseover="showTip(event, '4350', 4350)">
+          <code onmouseout="hideTip(event, '4377', 4377)" onmouseover="showTip(event, '4377', 4377)">
             Generator
           </code>
-          <div class="tip" id="4350">
+          <div class="tip" id="4377">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L44-44" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L44-44" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -364,15 +378,15 @@ Equivalent to the <code>-G &lt;generator-name&gt;</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4351', 4351)" onmouseover="showTip(event, '4351', 4351)">
+          <code onmouseout="hideTip(event, '4378', 4378)" onmouseover="showTip(event, '4378', 4378)">
             InstallDirectory
           </code>
-          <div class="tip" id="4351">
+          <div class="tip" id="4378">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L58-58" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L58-58" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -385,15 +399,15 @@ Equivalent to the <code>-D CMAKE_INSTALL_PREFIX:DIRPATH="&lt;install-directory&g
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4352', 4352)" onmouseover="showTip(event, '4352', 4352)">
+          <code onmouseout="hideTip(event, '4379', 4379)" onmouseover="showTip(event, '4379', 4379)">
             Platform
           </code>
-          <div class="tip" id="4352">
+          <div class="tip" id="4379">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L52-52" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L52-52" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -407,15 +421,15 @@ Not supported by every generator.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4353', 4353)" onmouseover="showTip(event, '4353', 4353)">
+          <code onmouseout="hideTip(event, '4380', 4380)" onmouseover="showTip(event, '4380', 4380)">
             SourceDirectory
           </code>
-          <div class="tip" id="4353">
+          <div class="tip" id="4380">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L34-34" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L34-34" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -427,15 +441,15 @@ Not supported by every generator.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4354', 4354)" onmouseover="showTip(event, '4354', 4354)">
+          <code onmouseout="hideTip(event, '4381', 4381)" onmouseover="showTip(event, '4381', 4381)">
             Timeout
           </code>
-          <div class="tip" id="4354">
+          <div class="tip" id="4381">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L66-66" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L66-66" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -447,15 +461,15 @@ Not supported by every generator.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4355', 4355)" onmouseover="showTip(event, '4355', 4355)">
+          <code onmouseout="hideTip(event, '4382', 4382)" onmouseover="showTip(event, '4382', 4382)">
             Toolchain
           </code>
-          <div class="tip" id="4355">
+          <div class="tip" id="4382">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L39-39" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L39-39" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -468,15 +482,15 @@ Equivalent to the <code>-D CMAKE_TOOLCHAIN_FILE:FILEPATH="&lt;toolchain-file&gt;
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4356', 4356)" onmouseover="showTip(event, '4356', 4356)">
+          <code onmouseout="hideTip(event, '4383', 4383)" onmouseover="showTip(event, '4383', 4383)">
             ToolPath
           </code>
-          <div class="tip" id="4356">
+          <div class="tip" id="4383">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L32-32" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L32-32" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -488,15 +502,15 @@ Equivalent to the <code>-D CMAKE_TOOLCHAIN_FILE:FILEPATH="&lt;toolchain-file&gt;
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4357', 4357)" onmouseover="showTip(event, '4357', 4357)">
+          <code onmouseout="hideTip(event, '4384', 4384)" onmouseover="showTip(event, '4384', 4384)">
             Toolset
           </code>
-          <div class="tip" id="4357">
+          <div class="tip" id="4384">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L48-48" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L48-48" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -510,15 +524,15 @@ Not supported by every generator.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4358', 4358)" onmouseover="showTip(event, '4358', 4358)">
+          <code onmouseout="hideTip(event, '4385', 4385)" onmouseover="showTip(event, '4385', 4385)">
             Variables
           </code>
-          <div class="tip" id="4358">
+          <div class="tip" id="4385">
             <strong>Signature:</strong> CMakeVariable list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/CMake.fs#L61-61" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -635,7 +649,7 @@ Equivalent to the <code>-D &lt;var&gt;:&lt;type&gt;=&lt;value&gt;</code> options
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -657,6 +671,17 @@ Equivalent to the <code>-D &lt;var&gt;:&lt;type&gt;=&lt;value&gt;</code> options
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

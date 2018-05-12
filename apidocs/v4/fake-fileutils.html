@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="FileUtils" class="anchor" href="#FileUtils"><h1>FileUtils</h1></a>
+
 <div class="xmldoc">
 <p>Shell-like functions. Similar to <a href="http://www.ruby-doc.org/stdlib-2.0.0/libdoc/rake/rdoc/FileUtils.html">Ruby's FileUtils</a>.</p>
 
@@ -266,10 +277,10 @@
           </code>
           <div class="tip" id="430">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Changes working directory</p>
+                    <p>Changes working directory</p>
 
 
         </td>
@@ -282,10 +293,10 @@
           </code>
           <div class="tip" id="431">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Changes working directory</p>
+                    <p>Changes working directory</p>
 
 
         </td>
@@ -298,10 +309,10 @@
           </code>
           <div class="tip" id="432">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Like "cp" in a shell. Copies a single file.
+                    <p>Like "cp" in a shell. Copies a single file.
 <param name="src">The source</param>
 <param name="dest">The destination</param></p>
 
@@ -316,10 +327,10 @@
           </code>
           <div class="tip" id="433">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
+                    <p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
 
 
         </td>
@@ -332,10 +343,10 @@
           </code>
           <div class="tip" id="434">
             <strong>Signature:</strong> Stack&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The stack of directories operated on by pushd and popd</p>
+                    <p>The stack of directories operated on by pushd and popd</p>
 
 
         </td>
@@ -348,10 +359,10 @@
           </code>
           <div class="tip" id="435">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a directory if it doesn't exist.</p>
+                    <p>Creates a directory if it doesn't exist.</p>
 
 
         </td>
@@ -364,10 +375,10 @@
           </code>
           <div class="tip" id="436">
             <strong>Signature:</strong> src:string -&gt; dest:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Like "mv" in a shell. Moves/renames a file
+                    <p>Like "mv" in a shell. Moves/renames a file
 <param name="src">The source</param>
 <param name="dest">The destination</param></p>
 
@@ -382,10 +393,10 @@
           </code>
           <div class="tip" id="437">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Restore the previous directory stored in the stack</p>
+                    <p>Restore the previous directory stored in the stack</p>
 
 
         </td>
@@ -398,10 +409,10 @@
           </code>
           <div class="tip" id="438">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Store the current directory in the directory stack before changing to a new one</p>
+                    <p>Store the current directory in the directory stack before changing to a new one</p>
 
 
         </td>
@@ -414,10 +425,10 @@
           </code>
           <div class="tip" id="439">
             <strong>Signature:</strong> unit -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets working directory</p>
+                    <p>Gets working directory</p>
 
 
         </td>
@@ -430,10 +441,10 @@
           </code>
           <div class="tip" id="440">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes a file if it exists</p>
+                    <p>Deletes a file if it exists</p>
 
 
         </td>
@@ -446,10 +457,10 @@
           </code>
           <div class="tip" id="441">
             <strong>Signature:</strong> f:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
+                    <p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
 
 
         </td>
@@ -561,7 +572,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -583,6 +594,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

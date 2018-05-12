@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="ChocoPackParams" class="anchor" href="#ChocoPackParams" ><h1>ChocoPackParams</h1></a>
 <div class="xmldoc">
 <p>The choco pack parameter type.</p>
@@ -263,10 +273,10 @@
           </code>
           <div class="tip" id="1587">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A character string containing additional arguments to give to choco.</p>
+                    <p>A character string containing additional arguments to give to choco.</p>
 
 
         </td>
@@ -279,10 +289,10 @@
           </code>
           <div class="tip" id="1588">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Authors of the package.
+                    <p>Authors of the package.
 Used for the nuspec creation.</p>
 
 
@@ -296,10 +306,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1589">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url pointing to the location where issues and tickets can be accessed.
+                    <p>Url pointing to the location where issues and tickets can be accessed.
 Used for the nuspec creation.</p>
 
 
@@ -313,10 +323,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1590">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The checksum hash value of the PackageDownloadUrl resource
+                    <p>The checksum hash value of the PackageDownloadUrl resource
 This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType.
 Equivalent to the <code>--checksum &lt;string&gt;</code> option of Install-Chocolatey<a href="fake-archivehelper-zip.html" title="Zip">Zip</a>Package functions.
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
@@ -332,10 +342,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1591">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The checksum hash value of the PackageDownload64Url resource
+                    <p>The checksum hash value of the PackageDownload64Url resource
 This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType64.
 Equivalent to the <code>--checksum &lt;string&gt;</code> option of Install-Chocolatey<a href="fake-archivehelper-zip.html" title="Zip">Zip</a>Package functions.
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
@@ -351,10 +361,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1592">
             <strong>Signature:</strong> ChocolateyChecksumType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The type of checksum that the file is validated with. Default: Sha256
+                    <p>The type of checksum that the file is validated with. Default: Sha256
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
 
 
@@ -368,10 +378,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1593">
             <strong>Signature:</strong> ChocolateyChecksumType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The type of checksum that the file is validated with. Default: Sha256
+                    <p>The type of checksum that the file is validated with. Default: Sha256
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
 
 
@@ -385,10 +395,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1594">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Copyright of the package.
+                    <p>Copyright of the package.
 Used for the nuspec creation.</p>
 
 
@@ -402,10 +412,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1595">
             <strong>Signature:</strong> NugetDependencies<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Dependencies of the package.
+                    <p>Dependencies of the package.
 Used for the nuspec creation.</p>
 
 
@@ -419,10 +429,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1596">
             <strong>Signature:</strong> NugetFrameworkDependencies list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Dependencies by framework of the package.
+                    <p>Dependencies by framework of the package.
 Used for the nuspec creation.</p>
 
 
@@ -436,10 +446,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1597">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Description of the package.
+                    <p>Description of the package.
 Used for the nuspec creation.</p>
 
 
@@ -453,10 +463,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1598">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Boolean specifying whether the package will be marked as a <a href="https://docs.nuget.org/Release-Notes/NuGet-2.7#development-only-dependencies">development-only dependency</a>. Default: false.
+                    <p>Boolean specifying whether the package will be marked as a <a href="https://docs.nuget.org/Release-Notes/NuGet-2.7#development-only-dependencies">development-only dependency</a>. Default: false.
 Used for the nuspec creation.</p>
 
 
@@ -470,10 +480,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1599">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url pointing to the location of the wiki or docs of the software.
+                    <p>Url pointing to the location of the wiki or docs of the software.
 Used for the nuspec creation.</p>
 
 
@@ -487,10 +497,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1600">
             <strong>Signature:</strong> (string * string option * string option) list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Files of the package.
+                    <p>Files of the package.
 Used for the nuspec creation.</p>
 
 
@@ -504,10 +514,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1601">
             <strong>Signature:</strong> NugetFrameworkAssemblyReferences list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Framework assemblies of the package.
+                    <p>Framework assemblies of the package.
 Used for the nuspec creation.</p>
 
 
@@ -521,10 +531,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1602">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url to the icon of the package.
+                    <p>Url to the icon of the package.
 Used for the nuspec creation.</p>
 
 
@@ -538,10 +548,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1603">
             <strong>Signature:</strong> ChocolateyInstallerType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Installer type. Default: Zip.
+                    <p>Installer type. Default: Zip.
 Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.</p>
 
 
@@ -555,10 +565,10 @@ Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn'
           </code>
           <div class="tip" id="1604">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url to the license of the software.
+                    <p>Url to the license of the software.
 Used for the nuspec creation.</p>
 
 
@@ -572,10 +582,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1605">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url pointing to the forum or email list group for the software.
+                    <p>Url pointing to the forum or email list group for the software.
 Used for the nuspec creation.</p>
 
 
@@ -589,10 +599,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1606">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Do not prompt for user input or confirmations. Default <code>true</code>.
+                    <p>Do not prompt for user input or confirmations. Default <code>true</code>.
 Equivalent to the <code>-y</code> option.</p>
 
 
@@ -606,10 +616,10 @@ Equivalent to the <code>-y</code> option.</p>
           </code>
           <div class="tip" id="1607">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Output directory for the files (nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1) creation.</p>
+                    <p>Output directory for the files (nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1) creation.</p>
 
 
         </td>
@@ -622,10 +632,10 @@ Equivalent to the <code>-y</code> option.</p>
           </code>
           <div class="tip" id="1608">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Owners of the package.
+                    <p>Owners of the package.
 Used for the nuspec creation.</p>
 
 
@@ -639,10 +649,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1609">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url pointing to the installer (exe, msi, zip) of the 64 bits version of the package.
+                    <p>Url pointing to the installer (exe, msi, zip) of the 64 bits version of the package.
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
 
 
@@ -656,10 +666,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1610">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url pointing to the installer (exe, msi, zip) of the package.
+                    <p>Url pointing to the installer (exe, msi, zip) of the package.
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
 
 
@@ -673,10 +683,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1611">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Id of the package. Should be lowercase, not contains weird chars and use dash (-) instead of spaces.
+                    <p>Id of the package. Should be lowercase, not contains weird chars and use dash (-) instead of spaces.
 Used for the nuspec creation.</p>
 
 
@@ -690,10 +700,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1612">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url to the chocolatey package repository, not the software (unless they are the same).
+                    <p>Url to the chocolatey package repository, not the software (unless they are the same).
 Used for the nuspec creation.</p>
 
 
@@ -707,10 +717,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1613">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url pointing to the location of the underlying software source.
+                    <p>Url pointing to the location of the underlying software source.
 Used for the nuspec creation.</p>
 
 
@@ -724,10 +734,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1614">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Url to the software.
+                    <p>Url to the software.
 Used for the nuspec creation.</p>
 
 
@@ -741,10 +751,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1615">
             <strong>Signature:</strong> NugetReferences<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>References of the package.
+                    <p>References of the package.
 Used for the nuspec creation.</p>
 
 
@@ -758,10 +768,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1616">
             <strong>Signature:</strong> NugetFrameworkReferences list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>References by framework of the package.
+                    <p>References by framework of the package.
 Used for the nuspec creation.</p>
 
 
@@ -775,10 +785,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1617">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Release notes of the package.
+                    <p>Release notes of the package.
 Used for the nuspec creation.</p>
 
 
@@ -792,10 +802,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1618">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>True if the software needs license acceptance. Default: false.
+                    <p>True if the software needs license acceptance. Default: false.
 Used for the nuspec creation.</p>
 
 
@@ -809,10 +819,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1619">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Silent args for the installer.
+                    <p>Silent args for the installer.
 Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn't exists.</p>
 
 
@@ -826,10 +836,10 @@ Used to create chocolateyInstall.ps1 and/or chocolateyUninstall.ps1 if it doesn'
           </code>
           <div class="tip" id="1620">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Summary of the package.
+                    <p>Summary of the package.
 Used for the nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 creation.</p>
 
 
@@ -843,10 +853,10 @@ Used for the nuspec, chocolateyInstall.ps1 and chocolateyUninstall.ps1 creation.
           </code>
           <div class="tip" id="1621">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Tags of the package.
+                    <p>Tags of the package.
 Used for the nuspec creation.</p>
 
 
@@ -860,10 +870,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1622">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The choco execution timeout.</p>
+                    <p>The choco execution timeout.</p>
 
 
         </td>
@@ -876,10 +886,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1623">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Title of the package.
+                    <p>Title of the package.
 Used for the nuspec creation.</p>
 
 
@@ -893,10 +903,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1624">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The location of the choco executable. Automatically found if null or empty.</p>
+                    <p>The location of the choco executable. Automatically found if null or empty.</p>
 
 
         </td>
@@ -909,10 +919,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1625">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Either:</p>
+                    <p>Either:</p>
 <ul>
 <li>For zip: the zip filename originally installed</li>
 <li>For exe or msi: the full path to the native uninstaller to run</li>
@@ -929,10 +939,10 @@ Used for the nuspec creation.</p>
           </code>
           <div class="tip" id="1626">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Unzip location for zip package. Default: Chocolatey install folder.
+                    <p>Unzip location for zip package. Default: Chocolatey install folder.
 Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
 
 
@@ -946,10 +956,10 @@ Used to create chocolateyInstall.ps1 if it doesn't exists.</p>
           </code>
           <div class="tip" id="1627">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The version you would like to insert into the package.
+                    <p>The version you would like to insert into the package.
 Equivalent to the <code>--version &lt;version&gt;</code> option.</p>
 
 
@@ -1062,7 +1072,7 @@ Equivalent to the <code>--version &lt;version&gt;</code> option.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1084,6 +1094,17 @@ Equivalent to the <code>--version &lt;version&gt;</code> option.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

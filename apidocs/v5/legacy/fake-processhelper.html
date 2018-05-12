@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+        </div> 
 
+</p>
 <a name="ProcessHelper" class="anchor" href="#ProcessHelper"><h1>ProcessHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains functions which can be used to start other tools.</p>
 
@@ -263,33 +278,57 @@
           <td class="type-name">
             <a href="fake-processhelper-consolemessage.html">ConsoleMessage</a>
           </td>
-          <td class="xmldoc"><p>A record type which captures console messages</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+                </div> 
+            <p>A record type which captures console messages</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-processhelper-execparams.html">ExecParams</a>
           </td>
-          <td class="xmldoc"><p>Parameter type for process execution.</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+                </div> 
+            <p>Parameter type for process execution.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-processhelper-processresult.html">ProcessResult</a>
           </td>
-          <td class="xmldoc"><p>A process result including error code, message log and errors.</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+                </div> 
+            <p>A process result including error code, message log and errors.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-processhelper-shell.html">Shell</a>
           </td>
-          <td class="xmldoc"><p>Allows to exec shell operations synchronously and asynchronously.</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use `open Fake.Core` and `Process.Shell`</p>
+                </div> 
+            <p>Allows to exec shell operations synchronously and asynchronously.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -310,10 +349,18 @@
           </code>
           <div class="tip" id="583">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L21-21" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L21-21" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -331,10 +378,18 @@ If set to false (default) only mono processes will be changed.</p>
           </code>
           <div class="tip" id="584">
             <strong>Signature:</strong> args:ExecParams -&gt; Async&lt;int&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L494-494" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L494-494" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -354,10 +409,18 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="585">
             <strong>Signature:</strong> ExecParams<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L475-475" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L475-475" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -374,10 +437,18 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="586">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L261-261" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L261-261" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -394,10 +465,18 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="587">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L604-604" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L604-604" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -419,10 +498,18 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="588">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L210-210" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L210-210" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -452,10 +539,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="589">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; ProcessResult<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L138-138" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L138-138" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -477,10 +572,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="590">
             <strong>Signature:</strong> cmd:string -&gt; args:string -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L220-220" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L220-220" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -503,10 +606,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="591">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L150-150" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L150-150" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -528,10 +639,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="592">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L91-91" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L91-91" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -556,10 +675,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="593">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L251-251" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L251-251" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -576,10 +703,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="594">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L540-540" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L540-540" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -596,10 +731,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="595">
             <strong>Signature:</strong> proc:Process -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L528-528" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L528-528" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -616,10 +759,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="596">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L576-576" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L576-576" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -636,10 +787,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="597">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L564-564" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L564-564" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -656,10 +815,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="598">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L568-568" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L568-568" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -676,10 +843,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="599">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L553-553" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L553-553" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -696,10 +871,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="600">
             <strong>Signature:</strong> id:int -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L536-536" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L536-536" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -716,10 +899,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="601">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L229-229" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L229-229" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -736,10 +927,18 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="602">
             <strong>Signature:</strong> Encoding<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L26-26" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L26-26" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -757,10 +956,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="603">
             <strong>Signature:</strong> command:string -&gt; host:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L281-281" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L281-281" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -777,10 +984,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="604">
             <strong>Signature:</strong> command:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L295-295" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L295-295" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -797,10 +1012,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="605">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L273-273" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L273-273" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -817,10 +1040,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="606">
             <strong>Signature:</strong> host:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L318-318" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L318-318" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -837,10 +1068,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="607">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L312-312" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L312-312" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -857,10 +1096,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="608">
             <strong>Signature:</strong> host:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L306-306" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L306-306" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -877,10 +1124,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="609">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L300-300" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L300-300" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -897,10 +1152,18 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="610">
             <strong>Signature:</strong> file:string -&gt; string option<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use the Fake.Core.Process module instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L416-416" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use the Fake.Core.Process module instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/ProcessHelper.fs#L416-416" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1022,7 +1285,7 @@ path to the file.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1044,6 +1307,17 @@ path to the file.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="RoundhouseParams" class="anchor" href="#RoundhouseParams" ><h1>RoundhouseParams</h1></a>
 <div class="xmldoc">
 <p>Parameter type to configure the RoundhousE runner</p>
@@ -263,10 +273,10 @@
           </code>
           <div class="tip" id="2563">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your alter database scripts. Read up on token replacement. You will want to use {{DatabaseName}} here instead of specifying a database name.</p>
+                    <p>The name of the folder where you keep your alter database scripts. Read up on token replacement. You will want to use {{DatabaseName}} here instead of specifying a database name.</p>
 
 
         </td>
@@ -279,10 +289,10 @@
           </code>
           <div class="tip" id="2564">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This is the timeout when commands are run. This is not for admin commands or restore.</p>
+                    <p>This is the timeout when commands are run. This is not for admin commands or restore.</p>
 
 
         </td>
@@ -295,10 +305,10 @@
           </code>
           <div class="tip" id="2565">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This is the timeout when administration commands are run (except for restore, which has its own).</p>
+                    <p>This is the timeout when administration commands are run (except for restore, which has its own).</p>
 
 
         </td>
@@ -311,10 +321,10 @@
           </code>
           <div class="tip" id="2566">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>As an alternative to ServerName and Database - You can provide an entire connection string instead.</p>
+                    <p>As an alternative to ServerName and Database - You can provide an entire connection string instead.</p>
 
 
         </td>
@@ -327,10 +337,10 @@
           </code>
           <div class="tip" id="2567">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This is used for connecting to master when you may have a different uid and password than normal.</p>
+                    <p>This is used for connecting to master when you may have a different uid and password than normal.</p>
 
 
         </td>
@@ -343,10 +353,10 @@
           </code>
           <div class="tip" id="2568">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This instructs RH to use this script for creating a database instead of the default based on the SQLType.</p>
+                    <p>This instructs RH to use this script for creating a database instead of the default based on the SQLType.</p>
 
 
         </td>
@@ -359,10 +369,10 @@
           </code>
           <div class="tip" id="2569">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The database you want to create/migrate.</p>
+                    <p>The database you want to create/migrate.</p>
 
 
         </td>
@@ -375,10 +385,10 @@
           </code>
           <div class="tip" id="2570">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Database Type (fully qualified class name implementing [roundhouse.sql.Database, roundhouse])</p>
+                    <p>Database Type (fully qualified class name implementing [roundhouse.sql.Database, roundhouse])</p>
 
 
         </td>
@@ -391,10 +401,10 @@
           </code>
           <div class="tip" id="2571">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This instructs RH to remove a database and not run migration scripts.</p>
+                    <p>This instructs RH to remove a database and not run migration scripts.</p>
 
 
         </td>
@@ -407,10 +417,10 @@
           </code>
           <div class="tip" id="2572">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This allows RH to be environment aware and only run scripts that are in a particular environment based on the namingof the script. LOCAL.something<strong>.ENV.</strong>sql would only be run in the LOCAL environment.</p>
+                    <p>This allows RH to be environment aware and only run scripts that are in a particular environment based on the namingof the script. LOCAL.something<strong>.ENV.</strong>sql would only be run in the LOCAL environment.</p>
 
 
         </td>
@@ -423,10 +433,10 @@
           </code>
           <div class="tip" id="2573">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your functions.</p>
+                    <p>The name of the folder where you keep your functions.</p>
 
 
         </td>
@@ -439,10 +449,10 @@
           </code>
           <div class="tip" id="2574">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your indexes.</p>
+                    <p>The name of the folder where you keep your indexes.</p>
 
 
         </td>
@@ -455,10 +465,10 @@
           </code>
           <div class="tip" id="2575">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Output path. Path to where migration artifacts are stored.</p>
+                    <p>Output path. Path to where migration artifacts are stored.</p>
 
 
         </td>
@@ -471,10 +481,10 @@
           </code>
           <div class="tip" id="2576">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your permissions scripts.</p>
+                    <p>The name of the folder where you keep your permissions scripts.</p>
 
 
         </td>
@@ -487,10 +497,10 @@
           </code>
           <div class="tip" id="2577">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Path to code repository to be able to correlate versions</p>
+                    <p>Path to code repository to be able to correlate versions</p>
 
 
         </td>
@@ -503,10 +513,10 @@
           </code>
           <div class="tip" id="2578">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This instructs RH to do a restore (with the restorefrompath parameter) of a database before running migration scripts.</p>
+                    <p>This instructs RH to do a restore (with the restorefrompath parameter) of a database before running migration scripts.</p>
 
 
         </td>
@@ -519,10 +529,10 @@
           </code>
           <div class="tip" id="2579">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>File path of back when Restore is set to true</p>
+                    <p>File path of back when Restore is set to true</p>
 
 
         </td>
@@ -535,10 +545,10 @@
           </code>
           <div class="tip" id="2580">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you will keep scripts that ONLY run after a database is created.</p>
+                    <p>The name of the folder where you will keep scripts that ONLY run after a database is created.</p>
 
 
         </td>
@@ -551,10 +561,10 @@
           </code>
           <div class="tip" id="2581">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep scripts that will be run after all of the other any time scripts complete.</p>
+                    <p>The name of the folder where you keep scripts that will be run after all of the other any time scripts complete.</p>
 
 
         </td>
@@ -567,10 +577,10 @@
           </code>
           <div class="tip" id="2582">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep scripts that you want to run before your update scripts.</p>
+                    <p>The name of the folder where you keep scripts that you want to run before your update scripts.</p>
 
 
         </td>
@@ -583,10 +593,10 @@
           </code>
           <div class="tip" id="2583">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep any functions, views, or sprocs that are order dependent. If you have a function that depends on a view, you definitely need the view in this folder.</p>
+                    <p>The name of the folder where you keep any functions, views, or sprocs that are order dependent. If you have a function that depends on a view, you definitely need the view in this folder.</p>
 
 
         </td>
@@ -599,10 +609,10 @@
           </code>
           <div class="tip" id="2584">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The schema where RH stores it's tables</p>
+                    <p>The schema where RH stores it's tables</p>
 
 
         </td>
@@ -615,10 +625,10 @@
           </code>
           <div class="tip" id="2585">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The server and instance you would like to run on. (local) and (local)\SQL2008 are both valid values.</p>
+                    <p>The server and instance you would like to run on. (local) and (local)\SQL2008 are both valid values.</p>
 
 
         </td>
@@ -631,10 +641,10 @@
           </code>
           <div class="tip" id="2586">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Tells RH not to ask for any input when it runs.</p>
+                    <p>Tells RH not to ask for any input when it runs.</p>
 
 
         </td>
@@ -647,10 +657,10 @@
           </code>
           <div class="tip" id="2587">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This instructs RH to set the database recovery mode to simple recovery. Only works with SqlServer.</p>
+                    <p>This instructs RH to set the database recovery mode to simple recovery. Only works with SqlServer.</p>
 
 
         </td>
@@ -663,10 +673,10 @@
           </code>
           <div class="tip" id="2588">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your stored procedures.</p>
+                    <p>The name of the folder where you keep your stored procedures.</p>
 
 
         </td>
@@ -679,10 +689,10 @@
           </code>
           <div class="tip" id="2589">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The directory where your SQL scripts are.</p>
+                    <p>The directory where your SQL scripts are.</p>
 
 
         </td>
@@ -695,10 +705,10 @@
           </code>
           <div class="tip" id="2590">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A timeout for the runner.</p>
+                    <p>A timeout for the runner.</p>
 
 
         </td>
@@ -711,10 +721,10 @@
           </code>
           <div class="tip" id="2591">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>FileName of the Roundhouse runner.</p>
+                    <p>FileName of the Roundhouse runner.</p>
 
 
         </td>
@@ -727,10 +737,10 @@
           </code>
           <div class="tip" id="2592">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your update scripts.</p>
+                    <p>The name of the folder where you keep your update scripts.</p>
 
 
         </td>
@@ -743,10 +753,10 @@
           </code>
           <div class="tip" id="2593">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Path to the file to use for versioning. Either a .XML file, a .DLL or a .TXT file that a version can be resolved from.</p>
+                    <p>Path to the file to use for versioning. Either a .XML file, a .DLL or a .TXT file that a version can be resolved from.</p>
 
 
         </td>
@@ -759,10 +769,10 @@
           </code>
           <div class="tip" id="2594">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Works in conjunction with an XML version file.</p>
+                    <p>Works in conjunction with an XML version file.</p>
 
 
         </td>
@@ -775,10 +785,10 @@
           </code>
           <div class="tip" id="2595">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name of the folder where you keep your views.</p>
+                    <p>The name of the folder where you keep your views.</p>
 
 
         </td>
@@ -791,10 +801,10 @@
           </code>
           <div class="tip" id="2596">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Instructs RH to execute changed one time scripts (DDL/DML in Up folder) that have previously been run against the database instead of failing. A warning is logged for each one time scripts that is rerun.</p>
+                    <p>Instructs RH to execute changed one time scripts (DDL/DML in Up folder) that have previously been run against the database instead of failing. A warning is logged for each one time scripts that is rerun.</p>
 
 
         </td>
@@ -807,10 +817,10 @@
           </code>
           <div class="tip" id="2597">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This instructs RH to run inside of a transaction.</p>
+                    <p>This instructs RH to run inside of a transaction.</p>
 
 
         </td>
@@ -823,10 +833,10 @@
           </code>
           <div class="tip" id="2598">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Working directory (optional).</p>
+                    <p>Working directory (optional).</p>
 
 
         </td>
@@ -938,7 +948,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -960,6 +970,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

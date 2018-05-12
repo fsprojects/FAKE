@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -184,6 +189,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -237,8 +245,11 @@
 									<!-- Content -->
                       <article>
 <h1><a name="FAKE-Command-Line" class="anchor" href="#FAKE-Command-Line">FAKE Command Line</a></h1>
-<p><strong>Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found <a href="legacy-commandline.html">here</a></strong></p>
-<p>The <code>fake.exe</code> command line interface (CLI) is defined as follows:`</p>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-commandline.html">here</a></p>
+</div>
+<p>The <code>fake.exe</code> command line interface (CLI) is defined as follows:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -264,29 +275,29 @@
 <span class="l">23: </span>
 <span class="l">24: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="help">Usage:
-  fake.exe [fake_opts] run [run_opts] [&lt;script.fsx&gt;] [--] [&lt;scriptargs&gt;...]
-  fake.exe [fake_opts] build [build_opts] [--] [&lt;scriptargs&gt;...]
-  fake.exe --version
-  fake.exe --help | -h
+<td class="snippet"><pre class="fssnip"><code lang="bash">Usage:
+fake.exe [fake_opts] run [run_opts] [&lt;script.fsx&gt;] [--] [&lt;scriptargs&gt;...]
+fake.exe [fake_opts] build [build_opts] [--] [&lt;scriptargs&gt;...]
+fake.exe --version
+fake.exe --help | -h
 
 Fake Options [fake_opts]:
-  -v, --verbose [*]     Verbose (can be used multiple times)
+-v, --verbose [*]     Verbose (can be used multiple times)
                         Is ignored if -s is used.
                         * -v: Log verbose but only for FAKE
                         * -vv: Log verbose for Paket as well
-  -s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.
+-s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.
 
 Fake Run Options [run_opts]:
-  -d, --debug           Debug the script.
-  -n, --nocache         Disable fake cache for this run.
-  --fsiargs &lt;fsiargs&gt; [*]  Arguments passed to the f# interactive.
+-d, --debug           Debug the script.
+-n, --nocache         Disable fake cache for this run.
+--fsiargs &lt;fsiargs&gt; [*]  Arguments passed to the f# interactive.
 
 Fake Build Options [build_opts]:
-  -d, --debug           Debug the script.
-  -n, --nocache         Disable fake cache for this run.
-  --fsiargs &lt;fsiargs&gt; [*]  Arguments passed to the f# interactive.
-  -f, --script &lt;script.fsx&gt;
+-d, --debug           Debug the script.
+-n, --nocache         Disable fake cache for this run.
+--fsiargs &lt;fsiargs&gt; [*]  Arguments passed to the f# interactive.
+-f, --script &lt;script.fsx&gt;
                         The script to execute (defaults to `build.fsx`).
 </code></pre></td></tr></table>
 <p>Please refer to the <a href="core-commandlineparsing.html">Fake.Core.CommandLineParsing documentation</a> for a explanation of the synax.</p>
@@ -343,7 +354,7 @@ For example <code>fake run --help</code> to get help about the <code>run</code> 
 <span class="l">12: </span>
 <span class="l">13: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="help">Usage:
+<td class="snippet"><pre class="fssnip"><code lang="bash">Usage:
   fake-run --list
   fake-run --version
   fake-run --help | -h
@@ -464,7 +475,7 @@ Target Module Options [target_opts]:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -486,6 +497,17 @@ Target Module Options [target_opts]:
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

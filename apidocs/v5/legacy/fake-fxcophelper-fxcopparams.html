@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,13 @@
           			
 
 
+<p>
 
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        </div> 
+</p>
 <a name="FxCopParams" class="anchor" href="#FxCopParams" ><h1>FxCopParams</h1></a>
 <div class="xmldoc">
 <p>Parameter type for the FxCop tool</p>
@@ -259,15 +273,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2885', 2885)" onmouseover="showTip(event, '2885', 2885)">
+          <code onmouseout="hideTip(event, '2908', 2908)" onmouseover="showTip(event, '2908', 2908)">
             ApplyOutXsl
           </code>
-          <div class="tip" id="2885">
+          <div class="tip" id="2908">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L27-27" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L27-27" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -277,15 +291,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2886', 2886)" onmouseover="showTip(event, '2886', 2886)">
+          <code onmouseout="hideTip(event, '2909', 2909)" onmouseover="showTip(event, '2909', 2909)">
             ConsoleXslFileName
           </code>
-          <div class="tip" id="2886">
+          <div class="tip" id="2909">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L35-35" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L35-35" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -295,15 +309,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2887', 2887)" onmouseover="showTip(event, '2887', 2887)">
+          <code onmouseout="hideTip(event, '2910', 2910)" onmouseover="showTip(event, '2910', 2910)">
             CustomDictionary
           </code>
-          <div class="tip" id="2887">
+          <div class="tip" id="2910">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L50-50" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L50-50" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -313,15 +327,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2888', 2888)" onmouseover="showTip(event, '2888', 2888)">
+          <code onmouseout="hideTip(event, '2911', 2911)" onmouseover="showTip(event, '2911', 2911)">
             CustomRuleset
           </code>
-          <div class="tip" id="2888">
+          <div class="tip" id="2911">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L33-33" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -331,15 +345,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2889', 2889)" onmouseover="showTip(event, '2889', 2889)">
+          <code onmouseout="hideTip(event, '2912', 2912)" onmouseover="showTip(event, '2912', 2912)">
             DependencyDirectories
           </code>
-          <div class="tip" id="2889">
+          <div class="tip" id="2912">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L29-29" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L29-29" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -349,15 +363,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2890', 2890)" onmouseover="showTip(event, '2890', 2890)">
+          <code onmouseout="hideTip(event, '2913', 2913)" onmouseover="showTip(event, '2913', 2913)">
             DirectOutputToConsole
           </code>
-          <div class="tip" id="2890">
+          <div class="tip" id="2913">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L28-28" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L28-28" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,15 +381,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2891', 2891)" onmouseover="showTip(event, '2891', 2891)">
+          <code onmouseout="hideTip(event, '2914', 2914)" onmouseover="showTip(event, '2914', 2914)">
             FailOnError
           </code>
-          <div class="tip" id="2891">
+          <div class="tip" id="2914">
             <strong>Signature:</strong> FxCopErrorLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L46-46" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L46-46" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -385,15 +399,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2892', 2892)" onmouseover="showTip(event, '2892', 2892)">
+          <code onmouseout="hideTip(event, '2915', 2915)" onmouseover="showTip(event, '2915', 2915)">
             ForceOutput
           </code>
-          <div class="tip" id="2892">
+          <div class="tip" id="2915">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L49-49" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L49-49" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -403,15 +417,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2893', 2893)" onmouseover="showTip(event, '2893', 2893)">
+          <code onmouseout="hideTip(event, '2916', 2916)" onmouseover="showTip(event, '2916', 2916)">
             IgnoreGeneratedCode
           </code>
-          <div class="tip" id="2893">
+          <div class="tip" id="2916">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L34-34" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L34-34" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -421,15 +435,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2894', 2894)" onmouseover="showTip(event, '2894', 2894)">
+          <code onmouseout="hideTip(event, '2917', 2917)" onmouseover="showTip(event, '2917', 2917)">
             ImportFiles
           </code>
-          <div class="tip" id="2894">
+          <div class="tip" id="2917">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L30-30" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L30-30" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -439,15 +453,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2895', 2895)" onmouseover="showTip(event, '2895', 2895)">
+          <code onmouseout="hideTip(event, '2918', 2918)" onmouseover="showTip(event, '2918', 2918)">
             IncludeSummaryReport
           </code>
-          <div class="tip" id="2895">
+          <div class="tip" id="2918">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L40-40" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L40-40" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -457,15 +471,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2896', 2896)" onmouseover="showTip(event, '2896', 2896)">
+          <code onmouseout="hideTip(event, '2919', 2919)" onmouseover="showTip(event, '2919', 2919)">
             OutputXslFileName
           </code>
-          <div class="tip" id="2896">
+          <div class="tip" id="2919">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L37-37" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L37-37" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -475,15 +489,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2897', 2897)" onmouseover="showTip(event, '2897', 2897)">
+          <code onmouseout="hideTip(event, '2920', 2920)" onmouseover="showTip(event, '2920', 2920)">
             PlatformDirectory
           </code>
-          <div class="tip" id="2897">
+          <div class="tip" id="2920">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L38-38" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L38-38" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -493,15 +507,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2898', 2898)" onmouseover="showTip(event, '2898', 2898)">
+          <code onmouseout="hideTip(event, '2921', 2921)" onmouseover="showTip(event, '2921', 2921)">
             ProjectFile
           </code>
-          <div class="tip" id="2898">
+          <div class="tip" id="2921">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L39-39" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L39-39" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -511,15 +525,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2899', 2899)" onmouseover="showTip(event, '2899', 2899)">
+          <code onmouseout="hideTip(event, '2922', 2922)" onmouseover="showTip(event, '2922', 2922)">
             ReportFileName
           </code>
-          <div class="tip" id="2899">
+          <div class="tip" id="2922">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L36-36" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -529,15 +543,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2900', 2900)" onmouseover="showTip(event, '2900', 2900)">
+          <code onmouseout="hideTip(event, '2923', 2923)" onmouseover="showTip(event, '2923', 2923)">
             RuleLibraries
           </code>
-          <div class="tip" id="2900">
+          <div class="tip" id="2923">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L31-31" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L31-31" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -547,15 +561,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2901', 2901)" onmouseover="showTip(event, '2901', 2901)">
+          <code onmouseout="hideTip(event, '2924', 2924)" onmouseover="showTip(event, '2924', 2924)">
             Rules
           </code>
-          <div class="tip" id="2901">
+          <div class="tip" id="2924">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L32-32" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L32-32" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -565,15 +579,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2902', 2902)" onmouseover="showTip(event, '2902', 2902)">
+          <code onmouseout="hideTip(event, '2925', 2925)" onmouseover="showTip(event, '2925', 2925)">
             SaveResultsInProjectFile
           </code>
-          <div class="tip" id="2902">
+          <div class="tip" id="2925">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L43-43" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L43-43" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -583,15 +597,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2903', 2903)" onmouseover="showTip(event, '2903', 2903)">
+          <code onmouseout="hideTip(event, '2926', 2926)" onmouseover="showTip(event, '2926', 2926)">
             TimeOut
           </code>
-          <div class="tip" id="2903">
+          <div class="tip" id="2926">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L47-47" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L47-47" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -601,15 +615,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2904', 2904)" onmouseover="showTip(event, '2904', 2904)">
+          <code onmouseout="hideTip(event, '2927', 2927)" onmouseover="showTip(event, '2927', 2927)">
             ToolPath
           </code>
-          <div class="tip" id="2904">
+          <div class="tip" id="2927">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L48-48" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L48-48" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -619,15 +633,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2905', 2905)" onmouseover="showTip(event, '2905', 2905)">
+          <code onmouseout="hideTip(event, '2928', 2928)" onmouseover="showTip(event, '2928', 2928)">
             TypeList
           </code>
-          <div class="tip" id="2905">
+          <div class="tip" id="2928">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L42-42" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L42-42" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -637,15 +651,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2906', 2906)" onmouseover="showTip(event, '2906', 2906)">
+          <code onmouseout="hideTip(event, '2929', 2929)" onmouseover="showTip(event, '2929', 2929)">
             UseGACSwitch
           </code>
-          <div class="tip" id="2906">
+          <div class="tip" id="2929">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L41-41" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L41-41" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -655,15 +669,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2907', 2907)" onmouseover="showTip(event, '2907', 2907)">
+          <code onmouseout="hideTip(event, '2930', 2930)" onmouseover="showTip(event, '2930', 2930)">
             Verbose
           </code>
-          <div class="tip" id="2907">
+          <div class="tip" id="2930">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L45-45" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L45-45" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -673,15 +687,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2908', 2908)" onmouseover="showTip(event, '2908', 2908)">
+          <code onmouseout="hideTip(event, '2931', 2931)" onmouseover="showTip(event, '2931', 2931)">
             WorkingDir
           </code>
-          <div class="tip" id="2908">
+          <div class="tip" id="2931">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L44-44" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FXCopHelper.fs#L44-44" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -795,7 +809,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -817,6 +831,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

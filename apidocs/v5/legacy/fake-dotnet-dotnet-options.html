@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="Options" class="anchor" href="#Options" ><h1>Options</h1></a>
 <div class="xmldoc">
 <p>dotnet cli command execution options</p>
@@ -259,15 +269,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4872', 4872)" onmouseover="showTip(event, '4872', 4872)">
+          <code onmouseout="hideTip(event, '4915', 4915)" onmouseover="showTip(event, '4915', 4915)">
             CustomParams
           </code>
-          <div class="tip" id="4872">
+          <div class="tip" id="4915">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L341-341" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L341-341" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,15 +289,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4873', 4873)" onmouseover="showTip(event, '4873', 4873)">
+          <code onmouseout="hideTip(event, '4916', 4916)" onmouseover="showTip(event, '4916', 4916)">
             Diagnostics
           </code>
-          <div class="tip" id="4873">
+          <div class="tip" id="4916">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L345-345" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L345-345" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -299,15 +309,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4874', 4874)" onmouseover="showTip(event, '4874', 4874)">
+          <code onmouseout="hideTip(event, '4917', 4917)" onmouseover="showTip(event, '4917', 4917)">
             DotNetCliPath
           </code>
-          <div class="tip" id="4874">
+          <div class="tip" id="4917">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L337-337" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L337-337" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -319,15 +329,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4875', 4875)" onmouseover="showTip(event, '4875', 4875)">
+          <code onmouseout="hideTip(event, '4918', 4918)" onmouseover="showTip(event, '4918', 4918)">
             Environment
           </code>
-          <div class="tip" id="4875">
+          <div class="tip" id="4918">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L351-351" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L351-351" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -341,15 +351,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4876', 4876)" onmouseover="showTip(event, '4876', 4876)">
+          <code onmouseout="hideTip(event, '4919', 4919)" onmouseover="showTip(event, '4919', 4919)">
             RedirectOutput
           </code>
-          <div class="tip" id="4876">
+          <div class="tip" id="4919">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L347-347" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L347-347" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -361,15 +371,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4877', 4877)" onmouseover="showTip(event, '4877', 4877)">
+          <code onmouseout="hideTip(event, '4920', 4920)" onmouseover="showTip(event, '4920', 4920)">
             Verbosity
           </code>
-          <div class="tip" id="4877">
+          <div class="tip" id="4920">
             <strong>Signature:</strong> Verbosity option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L343-343" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L343-343" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -381,15 +391,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4878', 4878)" onmouseover="showTip(event, '4878', 4878)">
+          <code onmouseout="hideTip(event, '4921', 4921)" onmouseover="showTip(event, '4921', 4921)">
             WorkingDirectory
           </code>
-          <div class="tip" id="4878">
+          <div class="tip" id="4921">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L339-339" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L339-339" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -409,15 +419,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4879', 4879)" onmouseover="showTip(event, '4879', 4879)">
+          <code onmouseout="hideTip(event, '4922', 4922)" onmouseover="showTip(event, '4922', 4922)">
             WithCommon(f)
           </code>
-          <div class="tip" id="4879">
-            <strong>Signature:</strong> (f:(Options -&gt; &#39;?15700)) -&gt; &#39;?15700<br />
-                          <strong>Type parameters:</strong> '?15700          </div>
+          <div class="tip" id="4922">
+            <strong>Signature:</strong> (f:(Options -&gt; &#39;?14876)) -&gt; &#39;?14876<br />
+                          <strong>Type parameters:</strong> '?14876                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L380-380" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L380-380" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -429,15 +439,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4880', 4880)" onmouseover="showTip(event, '4880', 4880)">
+          <code onmouseout="hideTip(event, '4923', 4923)" onmouseover="showTip(event, '4923', 4923)">
             WithEnvironment(map)
           </code>
-          <div class="tip" id="4880">
+          <div class="tip" id="4923">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; Options<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L372-372" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L372-372" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -449,15 +459,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4881', 4881)" onmouseover="showTip(event, '4881', 4881)">
+          <code onmouseout="hideTip(event, '4924', 4924)" onmouseover="showTip(event, '4924', 4924)">
             WithRedirectOutput(shouldRedirect)
           </code>
-          <div class="tip" id="4881">
+          <div class="tip" id="4924">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; Options<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L376-376" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L376-376" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -477,15 +487,15 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4882', 4882)" onmouseover="showTip(event, '4882', 4882)">
+          <code onmouseout="hideTip(event, '4925', 4925)" onmouseover="showTip(event, '4925', 4925)">
             Create()
           </code>
-          <div class="tip" id="4882">
+          <div class="tip" id="4925">
             <strong>Signature:</strong> unit -&gt; Options<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L353-353" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L353-353" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -495,15 +505,23 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4883', 4883)" onmouseover="showTip(event, '4883', 4883)">
+          <code onmouseout="hideTip(event, '4926', 4926)" onmouseover="showTip(event, '4926', 4926)">
             Default
           </code>
-          <div class="tip" id="4883">
+          <div class="tip" id="4926">
             <strong>Signature:</strong> Options<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Options.Create instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L369-369" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Options.Create instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L369-369" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -617,7 +635,7 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -639,6 +657,17 @@ NOTE: This field is ignored when UseShellExecute is true.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

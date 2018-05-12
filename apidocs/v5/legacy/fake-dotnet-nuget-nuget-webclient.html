@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="WebClient" class="anchor" href="#WebClient" ><h1>WebClient</h1></a>
 <div class="xmldoc">
 </div>
@@ -257,337 +267,364 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5249', 5249)" onmouseover="showTip(event, '5249', 5249)">
+          <code onmouseout="hideTip(event, '5371', 5371)" onmouseover="showTip(event, '5371', 5371)">
             AllowReadStreamBuffering()
           </code>
-          <div class="tip" id="5249">
+          <div class="tip" id="5371">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.&quot;, true)&gt;]<br />
+[&lt;EditorBrowsable(1)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</p>
+            </div> 
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5250', 5250)" onmouseover="showTip(event, '5250', 5250)">
+          <code onmouseout="hideTip(event, '5372', 5372)" onmouseover="showTip(event, '5372', 5372)">
             AllowWriteStreamBuffering()
           </code>
-          <div class="tip" id="5250">
+          <div class="tip" id="5372">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.&quot;, true)&gt;]<br />
+[&lt;EditorBrowsable(1)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</p>
+            </div> 
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5251', 5251)" onmouseover="showTip(event, '5251', 5251)">
+          <code onmouseout="hideTip(event, '5373', 5373)" onmouseover="showTip(event, '5373', 5373)">
             BaseAddress()
           </code>
-          <div class="tip" id="5251">
+          <div class="tip" id="5373">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5252', 5252)" onmouseover="showTip(event, '5252', 5252)">
+          <code onmouseout="hideTip(event, '5374', 5374)" onmouseover="showTip(event, '5374', 5374)">
             CachePolicy()
           </code>
-          <div class="tip" id="5252">
+          <div class="tip" id="5374">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5253', 5253)" onmouseover="showTip(event, '5253', 5253)">
+          <code onmouseout="hideTip(event, '5375', 5375)" onmouseover="showTip(event, '5375', 5375)">
             Credentials()
           </code>
-          <div class="tip" id="5253">
+          <div class="tip" id="5375">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5254', 5254)" onmouseover="showTip(event, '5254', 5254)">
+          <code onmouseout="hideTip(event, '5376', 5376)" onmouseover="showTip(event, '5376', 5376)">
             DownloadDataCompleted
           </code>
-          <div class="tip" id="5254">
+          <div class="tip" id="5376">
             <strong>Signature:</strong> IEvent&lt;DownloadDataCompletedEventHandler,DownloadDataCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5255', 5255)" onmouseover="showTip(event, '5255', 5255)">
+          <code onmouseout="hideTip(event, '5377', 5377)" onmouseover="showTip(event, '5377', 5377)">
             DownloadFileCompleted
           </code>
-          <div class="tip" id="5255">
+          <div class="tip" id="5377">
             <strong>Signature:</strong> IEvent&lt;AsyncCompletedEventHandler,AsyncCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5256', 5256)" onmouseover="showTip(event, '5256', 5256)">
+          <code onmouseout="hideTip(event, '5378', 5378)" onmouseover="showTip(event, '5378', 5378)">
             DownloadProgressChanged
           </code>
-          <div class="tip" id="5256">
+          <div class="tip" id="5378">
             <strong>Signature:</strong> IEvent&lt;DownloadProgressChangedEventHandler,DownloadProgressChangedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5257', 5257)" onmouseover="showTip(event, '5257', 5257)">
+          <code onmouseout="hideTip(event, '5379', 5379)" onmouseover="showTip(event, '5379', 5379)">
             DownloadStringCompleted
           </code>
-          <div class="tip" id="5257">
+          <div class="tip" id="5379">
             <strong>Signature:</strong> IEvent&lt;DownloadStringCompletedEventHandler,DownloadStringCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5258', 5258)" onmouseover="showTip(event, '5258', 5258)">
+          <code onmouseout="hideTip(event, '5380', 5380)" onmouseover="showTip(event, '5380', 5380)">
             Encoding()
           </code>
-          <div class="tip" id="5258">
+          <div class="tip" id="5380">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5259', 5259)" onmouseover="showTip(event, '5259', 5259)">
+          <code onmouseout="hideTip(event, '5381', 5381)" onmouseover="showTip(event, '5381', 5381)">
             Headers()
           </code>
-          <div class="tip" id="5259">
+          <div class="tip" id="5381">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5260', 5260)" onmouseover="showTip(event, '5260', 5260)">
+          <code onmouseout="hideTip(event, '5382', 5382)" onmouseover="showTip(event, '5382', 5382)">
             IsBusy
           </code>
-          <div class="tip" id="5260">
+          <div class="tip" id="5382">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5261', 5261)" onmouseover="showTip(event, '5261', 5261)">
+          <code onmouseout="hideTip(event, '5383', 5383)" onmouseover="showTip(event, '5383', 5383)">
             OpenReadCompleted
           </code>
-          <div class="tip" id="5261">
+          <div class="tip" id="5383">
             <strong>Signature:</strong> IEvent&lt;OpenReadCompletedEventHandler,OpenReadCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5262', 5262)" onmouseover="showTip(event, '5262', 5262)">
+          <code onmouseout="hideTip(event, '5384', 5384)" onmouseover="showTip(event, '5384', 5384)">
             OpenWriteCompleted
           </code>
-          <div class="tip" id="5262">
+          <div class="tip" id="5384">
             <strong>Signature:</strong> IEvent&lt;OpenWriteCompletedEventHandler,OpenWriteCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5263', 5263)" onmouseover="showTip(event, '5263', 5263)">
+          <code onmouseout="hideTip(event, '5385', 5385)" onmouseover="showTip(event, '5385', 5385)">
             Proxy()
           </code>
-          <div class="tip" id="5263">
+          <div class="tip" id="5385">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5264', 5264)" onmouseover="showTip(event, '5264', 5264)">
+          <code onmouseout="hideTip(event, '5386', 5386)" onmouseover="showTip(event, '5386', 5386)">
             QueryString()
           </code>
-          <div class="tip" id="5264">
+          <div class="tip" id="5386">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5265', 5265)" onmouseover="showTip(event, '5265', 5265)">
+          <code onmouseout="hideTip(event, '5387', 5387)" onmouseover="showTip(event, '5387', 5387)">
             ResponseHeaders
           </code>
-          <div class="tip" id="5265">
+          <div class="tip" id="5387">
             <strong>Signature:</strong> WebHeaderCollection<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5266', 5266)" onmouseover="showTip(event, '5266', 5266)">
+          <code onmouseout="hideTip(event, '5388', 5388)" onmouseover="showTip(event, '5388', 5388)">
             UploadDataCompleted
           </code>
-          <div class="tip" id="5266">
+          <div class="tip" id="5388">
             <strong>Signature:</strong> IEvent&lt;UploadDataCompletedEventHandler,UploadDataCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5267', 5267)" onmouseover="showTip(event, '5267', 5267)">
+          <code onmouseout="hideTip(event, '5389', 5389)" onmouseover="showTip(event, '5389', 5389)">
             UploadFileCompleted
           </code>
-          <div class="tip" id="5267">
+          <div class="tip" id="5389">
             <strong>Signature:</strong> IEvent&lt;UploadFileCompletedEventHandler,UploadFileCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5268', 5268)" onmouseover="showTip(event, '5268', 5268)">
+          <code onmouseout="hideTip(event, '5390', 5390)" onmouseover="showTip(event, '5390', 5390)">
             UploadProgressChanged
           </code>
-          <div class="tip" id="5268">
+          <div class="tip" id="5390">
             <strong>Signature:</strong> IEvent&lt;UploadProgressChangedEventHandler,UploadProgressChangedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5269', 5269)" onmouseover="showTip(event, '5269', 5269)">
+          <code onmouseout="hideTip(event, '5391', 5391)" onmouseover="showTip(event, '5391', 5391)">
             UploadStringCompleted
           </code>
-          <div class="tip" id="5269">
+          <div class="tip" id="5391">
             <strong>Signature:</strong> IEvent&lt;UploadStringCompletedEventHandler,UploadStringCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5270', 5270)" onmouseover="showTip(event, '5270', 5270)">
+          <code onmouseout="hideTip(event, '5392', 5392)" onmouseover="showTip(event, '5392', 5392)">
             UploadValuesCompleted
           </code>
-          <div class="tip" id="5270">
+          <div class="tip" id="5392">
             <strong>Signature:</strong> IEvent&lt;UploadValuesCompletedEventHandler,UploadValuesCompletedEventArgs&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5271', 5271)" onmouseover="showTip(event, '5271', 5271)">
+          <code onmouseout="hideTip(event, '5393', 5393)" onmouseover="showTip(event, '5393', 5393)">
             UseDefaultCredentials()
           </code>
-          <div class="tip" id="5271">
+          <div class="tip" id="5393">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5272', 5272)" onmouseover="showTip(event, '5272', 5272)">
+          <code onmouseout="hideTip(event, '5394', 5394)" onmouseover="showTip(event, '5394', 5394)">
             WriteStreamClosed
           </code>
-          <div class="tip" id="5272">
+          <div class="tip" id="5394">
             <strong>Signature:</strong> IEvent&lt;WriteStreamClosedEventHandler,WriteStreamClosedEventArgs&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.&quot;, true)&gt;]<br />
+[&lt;EditorBrowsable(1)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</p>
+            </div> 
+                    
         </td>
       </tr>
     </tbody>
@@ -697,7 +734,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -719,6 +756,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="DynamicsNavFile" class="anchor" href="#DynamicsNavFile"><h1>DynamicsNavFile</h1></a>
+
 <div class="xmldoc">
 <p>Provides an abstraction over Dynamics NAV object files.</p>
 
@@ -262,9 +273,11 @@
           <td class="type-name">
             <a href="fake-dynamicsnavfile-navobject.html">NavObject</a>
           </td>
-          <td class="xmldoc"><p>A type definition of a Dynamics NAV object.</p>
+          <td class="xmldoc">
+            <p>A type definition of a Dynamics NAV object.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -285,10 +298,10 @@
           </code>
           <div class="tip" id="246">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; fileName:string -&gt; string * string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks a Dynamics NAV file for missing required and invalid tags and raises this as errors</p>
+                    <p>Checks a Dynamics NAV file for missing required and invalid tags and raises this as errors</p>
 
 
         </td>
@@ -301,10 +314,10 @@
           </code>
           <div class="tip" id="247">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; objectString:string -&gt; name:string -&gt; string * string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors</p>
+                    <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors</p>
 
 
         </td>
@@ -317,10 +330,10 @@
           </code>
           <div class="tip" id="248">
             <strong>Signature:</strong> Regex<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A Regex which allows to retrieve modified date.</p>
+                    <p>A Regex which allows to retrieve modified date.</p>
 
 
         </td>
@@ -333,10 +346,10 @@
           </code>
           <div class="tip" id="249">
             <strong>Signature:</strong> (navObject:NavObject * fileEnding:string) -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns a standardized filename based on the given NavObject.</p>
+                    <p>Returns a standardized filename based on the given NavObject.</p>
 
 
         </td>
@@ -349,10 +362,10 @@
           </code>
           <div class="tip" id="250">
             <strong>Signature:</strong> versionTag:string -&gt; fileNames:seq&lt;string&gt; -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files</p>
+                    <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files</p>
 
 
         </td>
@@ -365,10 +378,10 @@
           </code>
           <div class="tip" id="251">
             <strong>Signature:</strong> versionTag:string -&gt; sourceCode:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects</p>
+                    <p>Gets the highest version number for a specified version tag in a number of Dynamics NAV objects</p>
 
 
         </td>
@@ -381,10 +394,10 @@
           </code>
           <div class="tip" id="252">
             <strong>Signature:</strong> invalidTags:seq&lt;string&gt; -&gt; versionTags:seq&lt;string&gt; -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get all invalid tags from a Dynamics NAV version tag list</p>
+                    <p>Get all invalid tags from a Dynamics NAV version tag list</p>
 
 
         </td>
@@ -397,10 +410,10 @@
           </code>
           <div class="tip" id="253">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; versionTags:seq&lt;string&gt; -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get all missing required tags from a Dynamics NAV version tag list</p>
+                    <p>Get all missing required tags from a Dynamics NAV version tag list</p>
 
 
         </td>
@@ -413,10 +426,10 @@
           </code>
           <div class="tip" id="254">
             <strong>Signature:</strong> versionTag:string -&gt; sourceCode:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the version number for the specified version tag in a Dynamics NAV object</p>
+                    <p>Gets the version number for the specified version tag in a Dynamics NAV object</p>
 
 
         </td>
@@ -429,10 +442,10 @@
           </code>
           <div class="tip" id="255">
             <strong>Signature:</strong> versionTag:string -&gt; tagList:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the version number for the specified version tag in a Dynamics NAV version tag list</p>
+                    <p>Gets the version number for the specified version tag in a Dynamics NAV version tag list</p>
 
 
         </td>
@@ -445,10 +458,10 @@
           </code>
           <div class="tip" id="256">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the version tag list from Dynamics NAV object.</p>
+                    <p>Returns the version tag list from Dynamics NAV object.</p>
 
 
         </td>
@@ -461,10 +474,10 @@
           </code>
           <div class="tip" id="257">
             <strong>Signature:</strong> Regex<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A Regex which allows to retrieve the modified flag.</p>
+                    <p>A Regex which allows to retrieve the modified flag.</p>
 
 
         </td>
@@ -477,10 +490,10 @@
           </code>
           <div class="tip" id="258">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; versionTag:string -&gt; newVersion:string -&gt; removeModified:bool -&gt; newDateTime:DateTime -&gt; fileNames:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
+                    <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 It also changes the given tag, resets the modified flag and time stamp.</p>
 
 
@@ -494,10 +507,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="259">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A NAV culture-specific date format.</p>
+                    <p>A NAV culture-specific date format.</p>
 
 
         </td>
@@ -510,10 +523,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="260">
             <strong>Signature:</strong> Regex<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A Regex which allows to parse objects in a Dynamics NAV file.</p>
+                    <p>A Regex which allows to parse objects in a Dynamics NAV file.</p>
 
 
         </td>
@@ -526,10 +539,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="261">
             <strong>Signature:</strong> text:string -&gt; NavObject list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Splits an object string into multiple Dynamics NAV objects of type NavObject.</p>
+                    <p>Splits an object string into multiple Dynamics NAV objects of type NavObject.</p>
 
 
         </td>
@@ -542,10 +555,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="262">
             <strong>Signature:</strong> Regex<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A Regex which allows to find objects in a Dynamics NAV file.</p>
+                    <p>A Regex which allows to find objects in a Dynamics NAV file.</p>
 
 
         </td>
@@ -558,10 +571,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="263">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Removes the modified flag from a Dynamics NAV object.</p>
+                    <p>Removes the modified flag from a Dynamics NAV object.</p>
 
 
         </td>
@@ -574,10 +587,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="264">
             <strong>Signature:</strong> dateTime:DateTime -&gt; text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces the timestamp in a Dynamics NAV object.</p>
+                    <p>Replaces the timestamp in a Dynamics NAV object.</p>
 
 
         </td>
@@ -590,10 +603,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="265">
             <strong>Signature:</strong> dateTime:DateTime -&gt; dateFormat:string -&gt; text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -604,10 +617,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="266">
             <strong>Signature:</strong> versionTag:string -&gt; newVersion:string -&gt; tagList:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces a version tag in a version tag list from Dynamics NAV object</p>
+                    <p>Replaces a version tag in a version tag list from Dynamics NAV object</p>
 
 
         </td>
@@ -620,10 +633,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="267">
             <strong>Signature:</strong> versionTag:string -&gt; newVersion:string -&gt; sourceCode:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces a version tag in a Dynamics NAV</p>
+                    <p>Replaces a version tag in a Dynamics NAV</p>
 
 
         </td>
@@ -636,10 +649,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="268">
             <strong>Signature:</strong> text:string -&gt; newTags:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces a version tag list from a complete Dynamics NAV object with a new version tag list</p>
+                    <p>Replaces a version tag list from a complete Dynamics NAV object with a new version tag list</p>
 
 
         </td>
@@ -652,10 +665,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="269">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; versionTag:string -&gt; newVersion:string -&gt; removeModifiedFlag:bool -&gt; newDateTime:DateTime -&gt; fileNames:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
+                    <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 It also changes the given tag, resets the modified flag and time stamp.</p>
 
 
@@ -669,10 +682,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="270">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; destDir:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Splits the given files into individual object files in the specified destination directory.</p>
+                    <p>Splits the given files into individual object files in the specified destination directory.</p>
 
 
         </td>
@@ -685,10 +698,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="271">
             <strong>Signature:</strong> tagList:string -&gt; string []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Splits a version tag list from Dynamics NAV object into single tags</p>
+                    <p>Splits a version tag list from Dynamics NAV object into single tags</p>
 
 
         </td>
@@ -701,10 +714,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="272">
             <strong>Signature:</strong> Regex<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A Regex which allows to retrieve the modified time.</p>
+                    <p>A Regex which allows to retrieve the modified time.</p>
 
 
         </td>
@@ -717,10 +730,10 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
           </code>
           <div class="tip" id="273">
             <strong>Signature:</strong> Regex<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A Regex which allows to retrieve the version list.</p>
+                    <p>A Regex which allows to retrieve the version list.</p>
 
 
         </td>
@@ -832,7 +845,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -854,6 +867,17 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

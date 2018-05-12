@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="EnvironmentHelper" class="anchor" href="#EnvironmentHelper"><h1>EnvironmentHelper</h1></a>
+
 <div class="xmldoc">
 <p>This module contains functions which allow to read and write environment variables and build parameters</p>
 
@@ -262,17 +273,21 @@
           <td class="type-name">
             <a href="fake-environmenthelper-environtarget.html">EnvironTarget</a>
           </td>
-          <td class="xmldoc"><p>Type alias for System.EnvironmentVariableTarget</p>
+          <td class="xmldoc">
+            <p>Type alias for System.EnvironmentVariableTarget</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-environmenthelper-machinedetails.html">MachineDetails</a>
           </td>
-          <td class="xmldoc"><p>A record which allows to display lots of machine specific information like machine name, processor count etc.</p>
+          <td class="xmldoc">
+            <p>A record which allows to display lots of machine specific information like machine name, processor count etc.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -293,10 +308,10 @@
           </code>
           <div class="tip" id="274">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
+                    <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
 
 
         </td>
@@ -309,10 +324,10 @@
           </code>
           <div class="tip" id="275">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Combines two path strings using Path.Combine</p>
+                    <p>Combines two path strings using Path.Combine</p>
 
 
         </td>
@@ -325,10 +340,10 @@
           </code>
           <div class="tip" id="276">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the application settings variable with the given name</p>
+                    <p>Retrieves the application settings variable with the given name</p>
 
 
         </td>
@@ -341,10 +356,10 @@
           </code>
           <div class="tip" id="277">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Clears the environment variable with the given name for the current process.</p>
+                    <p>Clears the environment variable with the given name for the current process.</p>
 
 
         </td>
@@ -357,10 +372,10 @@
           </code>
           <div class="tip" id="278">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
+                    <p>Combines two path strings using Path.Combine after removing leading slashes from the second path</p>
 
 
         </td>
@@ -373,10 +388,10 @@
           </code>
           <div class="tip" id="279">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Combines two path strings using Path.Combine</p>
+                    <p>Combines two path strings using Path.Combine</p>
 
 
         </td>
@@ -389,10 +404,10 @@
           </code>
           <div class="tip" id="280">
             <strong>Signature:</strong> windowsPath:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Convert the given windows path to a path in the current system</p>
+                    <p>Convert the given windows path to a path in the current system</p>
 
 
         </td>
@@ -405,10 +420,10 @@
           </code>
           <div class="tip" id="281">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The directory separator string. On most systems / or \</p>
+                    <p>The directory separator string. On most systems / or \</p>
 
 
         </td>
@@ -421,10 +436,10 @@
           </code>
           <div class="tip" id="282">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The path to the personal documents</p>
+                    <p>The path to the personal documents</p>
 
 
         </td>
@@ -437,10 +452,10 @@
           </code>
           <div class="tip" id="283">
             <strong>Signature:</strong> Encoding<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
+                    <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
 
 
         </td>
@@ -453,10 +468,10 @@
           </code>
           <div class="tip" id="284">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the environment variable with the given name</p>
+                    <p>Retrieves the environment variable with the given name</p>
 
 
         </td>
@@ -469,10 +484,10 @@
           </code>
           <div class="tip" id="285">
             <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
 
 
         </td>
@@ -485,10 +500,10 @@
           </code>
           <div class="tip" id="286">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the environment variable with the given name or fails if not found</p>
+                    <p>Retrieves the environment variable with the given name or fails if not found</p>
 
 
         </td>
@@ -501,10 +516,10 @@
           </code>
           <div class="tip" id="287">
             <strong>Signature:</strong> name:string -&gt; string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the environment variable or None if no value was set</p>
+                    <p>Retrieves the environment variable or None if no value was set</p>
 
 
         </td>
@@ -517,10 +532,10 @@
           </code>
           <div class="tip" id="288">
             <strong>Signature:</strong> target:EnvironmentVariableTarget -&gt; (obj * obj) list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves all environment variables from the given target</p>
+                    <p>Retrieves all environment variables from the given target</p>
 
 
         </td>
@@ -533,10 +548,10 @@
           </code>
           <div class="tip" id="289">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
+                    <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
 
 
         </td>
@@ -549,10 +564,10 @@
           </code>
           <div class="tip" id="290">
             <strong>Signature:</strong> name:string -&gt; defaultParam:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
+                    <p>Returns the value of the build parameter with the given name if it was set and otherwise the given default value</p>
 
 
         </td>
@@ -565,10 +580,10 @@
           </code>
           <div class="tip" id="291">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves information about the hard drives</p>
+                    <p>Retrieves information about the hard drives</p>
 
 
         </td>
@@ -581,10 +596,10 @@
           </code>
           <div class="tip" id="292">
             <strong>Signature:</strong> varName:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the environment variable with the given name or returns false if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns false if no value was set</p>
 
 
         </td>
@@ -597,10 +612,10 @@
           </code>
           <div class="tip" id="293">
             <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves the environment variable with the given name or returns the default value if no value was set</p>
+                    <p>Retrieves the environment variable with the given name or returns the default value if no value was set</p>
 
 
         </td>
@@ -613,10 +628,10 @@
           </code>
           <div class="tip" id="294">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns a sequence with all installed .NET framework versions</p>
+                    <p>Returns a sequence with all installed .NET framework versions</p>
 
 
         </td>
@@ -629,10 +644,10 @@
           </code>
           <div class="tip" id="295">
             <strong>Signature:</strong> unit -&gt; MachineDetails<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
+                    <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
 
 
         </td>
@@ -645,10 +660,10 @@
           </code>
           <div class="tip" id="296">
             <strong>Signature:</strong> possibleToolPaths:seq&lt;&#39;a&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Helper function to help find framework or sdk tools from the
+                    <p>Helper function to help find framework or sdk tools from the
 newest toolkit available</p>
 
 
@@ -662,10 +677,10 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="297">
             <strong>Signature:</strong> platformVersion:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the local directory for the given target platform</p>
+                    <p>Gets the local directory for the given target platform</p>
 
 
         </td>
@@ -678,10 +693,10 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="298">
             <strong>Signature:</strong> name:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns if the build parameter with the given name was set</p>
+                    <p>Returns if the build parameter with the given name was set</p>
 
 
         </td>
@@ -694,10 +709,10 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="299">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines if the current system is a Linux system</p>
+                    <p>Determines if the current system is a Linux system</p>
 
 
         </td>
@@ -710,10 +725,10 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="300">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines if the current system is a MacOs system</p>
+                    <p>Determines if the current system is a MacOs system</p>
 
 
         </td>
@@ -726,10 +741,10 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="301">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines if the current system is a mono system
+                    <p>Determines if the current system is a mono system
 Todo: Detect mono on windows</p>
 
 
@@ -743,10 +758,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="302">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines if the current system is an Unix system</p>
+                    <p>Determines if the current system is an Unix system</p>
 
 
         </td>
@@ -759,10 +774,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="303">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines if the current system is a Windows system</p>
+                    <p>Determines if the current system is a Windows system</p>
 
 
         </td>
@@ -775,10 +790,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="304">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Arguments on the Mono executable</p>
+                    <p>Arguments on the Mono executable</p>
 
 
         </td>
@@ -791,10 +806,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="305">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -805,10 +820,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="306">
             <strong>Signature:</strong> (string * Version option) option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>required sometimes to workaround mono crashes
+                    <p>required sometimes to workaround mono crashes
 <a href="http://stackoverflow.com/a/8414517/1269722">http://stackoverflow.com/a/8414517/1269722</a></p>
 
 
@@ -822,10 +837,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="307">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Base path for getting tools from Microsoft SDKs</p>
+                    <p>Base path for getting tools from Microsoft SDKs</p>
 
 
         </td>
@@ -838,10 +853,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="308">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -852,10 +867,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="309">
             <strong>Signature:</strong> psi:ProcessStartInfo -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Modifies the ProcessStartInfo according to the platform semantics</p>
+                    <p>Modifies the ProcessStartInfo according to the platform semantics</p>
 
 
         </td>
@@ -868,10 +883,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="310">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
+                    <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
 
 
         </td>
@@ -884,10 +899,10 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="311">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The path of Program Files (x86)
+                    <p>The path of Program Files (x86)
 It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable
 PROCESSOR_ARCHITEW6432 can be null</p>
 
@@ -902,10 +917,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="312">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Base path for getting tools from Windows SDKs</p>
+                    <p>Base path for getting tools from Windows SDKs</p>
 
 
         </td>
@@ -918,10 +933,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="313">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the build parameter with the given name for the current process.</p>
+                    <p>Sets the build parameter with the given name for the current process.</p>
 
 
         </td>
@@ -934,10 +949,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="314">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the environment variable with the given name</p>
+                    <p>Sets the environment variable with the given name</p>
 
 
         </td>
@@ -950,10 +965,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="315">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the environment variable with the given name for the current machine.</p>
+                    <p>Sets the environment variable with the given name for the current machine.</p>
 
 
         </td>
@@ -966,10 +981,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="316">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the environment variable with the given name for the current process.</p>
+                    <p>Sets the environment variable with the given name for the current process.</p>
 
 
         </td>
@@ -982,10 +997,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="317">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the environment variable with the given name for the current user.</p>
+                    <p>Sets the environment variable with the given name for the current user.</p>
 
 
         </td>
@@ -998,10 +1013,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="318">
             <strong>Signature:</strong> name:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Splits the entries of an environment variable and removes the empty ones.</p>
+                    <p>Splits the entries of an environment variable and removes the empty ones.</p>
 
 
         </td>
@@ -1014,10 +1029,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="319">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The system root environment variable. Typically "C:\Windows"</p>
+                    <p>The system root environment variable. Typically "C:\Windows"</p>
 
 
         </td>
@@ -1030,10 +1045,10 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="320">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The path of the current target platform</p>
+                    <p>The path of the current target platform</p>
 
 
         </td>
@@ -1145,7 +1160,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1167,6 +1182,17 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

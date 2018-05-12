@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - module: Fake.Core.Target)</p>
+        </div> 
 
+</p>
 <a name="TargetHelper" class="anchor" href="#TargetHelper"><h1>TargetHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains infrastructure code and helper functions for FAKE's target feature.</p>
 
@@ -263,17 +278,29 @@
           <td class="type-name">
             <a href="fake-targethelper-builderror.html">BuildError</a>
           </td>
-          <td class="xmldoc"><p>Represents build errors</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.BuildError)</p>
+                </div> 
+            <p>Represents build errors</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-targethelper-target.html">Target</a>
           </td>
-          <td class="xmldoc"><p>A Target can be run during the build</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - type: Fake.Core.Target.Target)</p>
+                </div> 
+            <p>A Target can be run during the build</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -286,7 +313,13 @@
           <td class="module-name">
             <a href="fake-targethelper-exitcode.html">ExitCode</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
+            </div> 
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -307,10 +340,18 @@
           </code>
           <div class="tip" id="778">
             <strong>Signature:</strong> x:string -&gt; ys:string list -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - open Fake.Core.TargetOperators)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L205-205" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - open Fake.Core.TargetOperators)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L205-205" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -327,10 +368,18 @@
           </code>
           <div class="tip" id="779">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateBuildFailure)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L757-757" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateBuildFailure)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L757-757" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -347,10 +396,18 @@
           </code>
           <div class="tip" id="780">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateFinal)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L769-769" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ActivateFinal)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L769-769" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,10 +424,18 @@
           </code>
           <div class="tip" id="781">
             <strong>Signature:</strong> target:string -&gt; time:TimeSpan -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L349-349" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L349-349" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -385,10 +450,18 @@
           </code>
           <div class="tip" id="782">
             <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateBuildFailure)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L751-751" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateBuildFailure)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L751-751" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -405,10 +478,18 @@
           </code>
           <div class="tip" id="783">
             <strong>Signature:</strong> Dictionary&lt;string,bool&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L66-66" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L66-66" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -425,10 +506,18 @@
           </code>
           <div class="tip" id="784">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - package: Fake.Core.Target - no longer supported)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L90-90" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - package: Fake.Core.Target - no longer supported)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L90-90" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -443,10 +532,18 @@
           </code>
           <div class="tip" id="785">
             <strong>Signature:</strong> string list list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L88-88" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L88-88" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -461,10 +558,18 @@
           </code>
           <div class="tip" id="786">
             <strong>Signature:</strong> target:&#39;?10373 TargetTemplate -&gt; string<br />
-                          <strong>Type parameters:</strong> '?10373          </div>
+                          <strong>Type parameters:</strong> '?10373                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L109-109" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L109-109" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -481,10 +586,18 @@
           </code>
           <div class="tip" id="787">
             <strong>Signature:</strong> target:string -&gt; parallelJobs:int -&gt; unit TargetTemplate [] list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.determineBuildOrder)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L583-583" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.determineBuildOrder)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L583-583" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -501,10 +614,18 @@
           </code>
           <div class="tip" id="788">
             <strong>Signature:</strong> target:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L573-573" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L573-573" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -519,10 +640,18 @@
           </code>
           <div class="tip" id="789">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.DoNothing)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L127-127" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.DoNothing)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L127-127" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -539,10 +668,18 @@
           </code>
           <div class="tip" id="790">
             <strong>Signature:</strong> HashSet&lt;string&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L70-70" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L70-70" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -559,10 +696,18 @@
           </code>
           <div class="tip" id="791">
             <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateFinal)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L763-763" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.CreateFinal)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L763-763" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -579,10 +724,18 @@
           </code>
           <div class="tip" id="792">
             <strong>Signature:</strong> Dictionary&lt;string,bool&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L62-62" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L62-62" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -599,10 +752,18 @@
           </code>
           <div class="tip" id="793">
             <strong>Signature:</strong> unit -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L94-94" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L94-94" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -619,10 +780,18 @@
           </code>
           <div class="tip" id="794">
             <strong>Signature:</strong> unit -&gt; BuildError list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L319-319" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L319-319" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -639,10 +808,18 @@
           </code>
           <div class="tip" id="795">
             <strong>Signature:</strong> name:string -&gt; unit TargetTemplate<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Get)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L98-98" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Get)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L98-98" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -659,10 +836,18 @@
           </code>
           <div class="tip" id="796">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L564-564" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L564-564" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -679,10 +864,18 @@
           </code>
           <div class="tip" id="797">
             <strong>Signature:</strong> verbose:bool -&gt; target:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDependencyGraph)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L443-443" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDependencyGraph)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L443-443" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -699,10 +892,18 @@
           </code>
           <div class="tip" id="798">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDotDependencyGraph to be created)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L481-481" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintDotDependencyGraph to be created)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L481-481" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -719,10 +920,18 @@
           </code>
           <div class="tip" id="799">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintRunningOrder to be created)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L466-466" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Not yet migrated, waiting for your contribution ;) (FAKE0004 - package: Fake.Core.Target - member: Fake.Core.Target.PrintRunningOrder to be created)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L466-466" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -737,10 +946,18 @@
           </code>
           <div class="tip" id="800">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L392-392" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.ListAvailable)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L392-392" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -757,10 +974,18 @@
           </code>
           <div class="tip" id="801">
             <strong>Signature:</strong> targetName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Run)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L712-712" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Run)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L712-712" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -777,10 +1002,18 @@
           </code>
           <div class="tip" id="802">
             <strong>Signature:</strong> target:unit TargetTemplate -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L676-676" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L676-676" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -797,10 +1030,18 @@
           </code>
           <div class="tip" id="803">
             <strong>Signature:</strong> targets:unit TargetTemplate array -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L700-700" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L700-700" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -815,10 +1056,18 @@
           </code>
           <div class="tip" id="804">
             <strong>Signature:</strong> count:int -&gt; targets:Target [] -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L692-692" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L692-692" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -835,10 +1084,18 @@
           </code>
           <div class="tip" id="805">
             <strong>Signature:</strong> target:&#39;?10375 TargetTemplate -&gt; string<br />
-                          <strong>Type parameters:</strong> '?10375          </div>
+                          <strong>Type parameters:</strong> '?10375                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L118-118" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L118-118" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -855,10 +1112,18 @@
           </code>
           <div class="tip" id="806">
             <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Create)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L307-307" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Create)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L307-307" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -875,10 +1140,18 @@
           </code>
           <div class="tip" id="807">
             <strong>Signature:</strong> body:(&#39;?10397 -&gt; unit) -&gt; string -&gt; &#39;?10397 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10397          </div>
+                          <strong>Type parameters:</strong> '?10397                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L303-303" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L303-303" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -895,10 +1168,18 @@
           </code>
           <div class="tip" id="808">
             <strong>Signature:</strong> dependencies:string list -&gt; (&#39;?10395 -&gt; unit) -&gt; string -&gt; &#39;?10395 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10395          </div>
+                          <strong>Type parameters:</strong> '?10395                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L299-299" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L299-299" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -913,10 +1194,18 @@
           </code>
           <div class="tip" id="809">
             <strong>Signature:</strong> dependencies:string list -&gt; body:(&#39;?10393 -&gt; unit) -&gt; name:string -&gt; parameters:&#39;?10393 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10393          </div>
+                          <strong>Type parameters:</strong> '?10393                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L289-289" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case. Note you can create Template with functions that Target.Create using a closure on function parameters + defines dependencies with TargetOperators.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L289-289" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1010,10 +1299,18 @@
           </code>
           <div class="tip" id="810">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L501-501" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Internal state is no more accessible now (FAKE0003 - package: Fake.Core.Target). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L501-501" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1030,10 +1327,18 @@
           </code>
           <div class="tip" id="811">
             <strong>Signature:</strong> total:&#39;?10424 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10424          </div>
+                          <strong>Type parameters:</strong> '?10424                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.WriteTaskTimeSummary)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L510-510" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.WriteTaskTimeSummary)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TargetHelper.fs#L510-510" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1149,7 +1454,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1171,6 +1476,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

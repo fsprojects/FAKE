@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
 															</ul>
 														</li>
 														<li>
@@ -300,7 +308,7 @@ The strong ordering enables you to have a nice CLI on your script or to write yo
 </code></pre></td>
 </tr>
 </table>
-<p>A more sophisticated example can be in the fake runner: <a href="https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259">https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259</a></p>
+<p>A more sophisticated example can be found in the fake runner: <a href="https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259">https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259</a></p>
 <p>Or the target module:</p>
 <ul>
 <li><a href="https://github.com/fsharp/FAKE/blob/rc_1/src/app/Fake.Core.Target/Target.fs#L9-L26">https://github.com/fsharp/FAKE/blob/rc_1/src/app/Fake.Core.Target/Target.fs#L9-L26</a></li>
@@ -313,51 +321,48 @@ The strong ordering enables you to have a nice CLI on your script or to write yo
 <h2><a name="Differences-to-the-python-reference-Docopt-implementation" class="anchor" href="#Differences-to-the-python-reference-Docopt-implementation">Differences to the python reference Docopt implementation</a></h2>
 <ul>
 <li>
-<p>The parser doesn't differentiate between arguments with and without <code>-</code> with regards to ordering. They are subject to the same rules as other arguments. The only exception is when defining multiple arguments like <code>[-a -b -c]</code>, then the ordering of the group doesn't matter.
-(So in other words: If a group <code>()</code> or <code>[]</code> only has options then the order doesn't matter)</p>
+The parser doesn't differentiate between arguments with and without <code>-</code> with regards to ordering. They are subject to the same rules as other arguments. The only exception is when defining multiple arguments like <code>[-a -b -c]</code>, then the ordering of the group doesn't matter.
+(So in other words: If a group <code>()</code> or <code>[]</code> only has options then the order doesn't matter)
 </li>
-<li><p>Uniquely identifiable prefixes like <code>--fsia</code> are not supported</p></li>
-<li><p>We return the arguments in the user given order in the result map (difference to <code>docopt.fs</code>)</p></li>
-<li>
-<p>We parse arguments starting with <code>-</code> as positional arguments. For example consider:</p>
+<li>Uniquely identifiable prefixes like <code>--fsia</code> are not supported</li>
+<li>We return the arguments in the user given order in the result map (difference to <code>docopt.fs</code>)</li>
+<li>We parse arguments starting with <code>-</code> as positional arguments. For example consider:</li>
+</ul>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="help">usage: prog (NAME | --foo NAME)
+<td class="snippet"><pre class="fssnip"><code lang="bash">usage: prog (NAME | --foo NAME)
 
 options: --foo
 </code></pre></td></tr></table>
-<blockquote>
-<p>Note that --foo has no argument because it was not specified in the options section!</p>
-</blockquote>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Note that --foo has no argument because it was not specified in the options section!</p>
+</div>
 <p>In this scenario <code>prog --foo 10</code> is parsed as <code>--foo</code> and <code>NAME</code> argument because that is the only option. However <code>prog --foo=10</code> is parsed as <code>NAME</code> argument without any <code>--foo</code> option. Usually to prefer <code>--foo</code> you should put it first in the usage string:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="help">usage: prog (--foo NAME | NAME)
+<td class="snippet"><pre class="fssnip"><code lang="bash">usage: prog (--foo NAME | NAME)
 
 options: --foo
 </code></pre></td></tr></table>
-<p>However, in this particular case it doesn't make any difference.</p>
-</li>
-<li><p><code>[]</code> is not inherited for all items, only for the group. To have all items optional use <code>[]</code> on every item. For example <code>usage: prog [go go]</code> means to have either two <code>go</code> or none. A single one is not allowed.</p></li>
-<li>
-<p>We do not merge external "options" in the usage string with <code>[options]</code>. For example:</p>
+<p>However, in this particular case it doesn't make any difference.
+- <code>[]</code> is not inherited for all items, only for the group. To have all items optional use <code>[]</code> on every item. For example <code>usage: prog [go go]</code> means to have either two <code>go</code> or none. A single one is not allowed.
+- We do not merge external "options" in the usage string with <code>[options]</code>. For example:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="help">usage: prog [options] [-a]
+<td class="snippet"><pre class="fssnip"><code lang="bash">usage: prog [options] [-a]
 
 options: -a
          -b
 </code></pre></td></tr></table>
 <p>Means that <code>-a</code> is actually allowed twice.</p>
-</li>
-</ul>
 
 <div class="tip" id="fs1">val cli : string</div>
 <div class="tip" id="fs2">val ctx : obj</div>
@@ -473,7 +478,7 @@ options: -a
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -495,6 +500,17 @@ options: -a
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

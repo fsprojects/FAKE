@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="Script" class="anchor" href="#Script" ><h1>Script</h1></a>
 <div class="xmldoc">
 <p>Parameters for WiX Script properties, use ToString for creating the string xml nodes</p>
@@ -263,10 +273,10 @@
           </code>
           <div class="tip" id="2871">
             <strong>Signature:</strong> seq&lt;WiXCustomActionExecution&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>You can nest InstallExecuteSequence actions in here</p>
+                    <p>You can nest InstallExecuteSequence actions in here</p>
 
 
         </td>
@@ -279,10 +289,10 @@
           </code>
           <div class="tip" id="2872">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Build Number of product</p>
+                    <p>Build Number of product</p>
 
 
         </td>
@@ -295,10 +305,10 @@
           </code>
           <div class="tip" id="2873">
             <strong>Signature:</strong> seq&lt;WiXDirectoryComponent&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Nest Components in here</p>
+                    <p>Nest Components in here</p>
 
 
         </td>
@@ -311,10 +321,10 @@
           </code>
           <div class="tip" id="2874">
             <strong>Signature:</strong> seq&lt;WiXCustomAction&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>You can nest custom actions in here</p>
+                    <p>You can nest custom actions in here</p>
 
 
         </td>
@@ -327,10 +337,10 @@
           </code>
           <div class="tip" id="2875">
             <strong>Signature:</strong> seq&lt;string * string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>You can add custom replacements for the wix xml here.</p>
+                    <p>You can add custom replacements for the wix xml here.</p>
 
 
         </td>
@@ -343,10 +353,10 @@
           </code>
           <div class="tip" id="2876">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Product description</p>
+                    <p>Product description</p>
 
 
         </td>
@@ -359,10 +369,10 @@
           </code>
           <div class="tip" id="2877">
             <strong>Signature:</strong> seq&lt;WiXDir&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Nest directories in here</p>
+                    <p>Nest directories in here</p>
 
 
         </td>
@@ -375,10 +385,10 @@
           </code>
           <div class="tip" id="2878">
             <strong>Signature:</strong> seq&lt;WiXDirectoryRef&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>You can nest DirectoryRefs in here</p>
+                    <p>You can nest DirectoryRefs in here</p>
 
 
         </td>
@@ -391,10 +401,10 @@
           </code>
           <div class="tip" id="2879">
             <strong>Signature:</strong> seq&lt;Feature&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>You can nest feature elements in here</p>
+                    <p>You can nest feature elements in here</p>
 
 
         </td>
@@ -407,10 +417,10 @@
           </code>
           <div class="tip" id="2880">
             <strong>Signature:</strong> seq&lt;WiXMajorUpgrade&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Nest major upgrade elements in here</p>
+                    <p>Nest major upgrade elements in here</p>
 
 
         </td>
@@ -423,10 +433,10 @@
           </code>
           <div class="tip" id="2881">
             <strong>Signature:</strong> Architecture<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.</p>
+                    <p>Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.</p>
 
 
         </td>
@@ -439,10 +449,10 @@
           </code>
           <div class="tip" id="2882">
             <strong>Signature:</strong> Guid<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The product code GUID for the product.</p>
+                    <p>The product code GUID for the product.</p>
 
 
         </td>
@@ -455,10 +465,10 @@
           </code>
           <div class="tip" id="2883">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The decimal language ID (LCID) for the product.</p>
+                    <p>The decimal language ID (LCID) for the product.</p>
 
 
         </td>
@@ -471,10 +481,10 @@
           </code>
           <div class="tip" id="2884">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The descriptive name of the product.</p>
+                    <p>The descriptive name of the product.</p>
 
 
         </td>
@@ -487,10 +497,10 @@
           </code>
           <div class="tip" id="2885">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The manufacturer of the product.</p>
+                    <p>The manufacturer of the product.</p>
 
 
         </td>
@@ -503,10 +513,10 @@
           </code>
           <div class="tip" id="2886">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The product's version string.</p>
+                    <p>The product's version string.</p>
 
 
         </td>
@@ -519,10 +529,10 @@
           </code>
           <div class="tip" id="2887">
             <strong>Signature:</strong> ProgramFilesFolder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The program files folder</p>
+                    <p>The program files folder</p>
 
 
         </td>
@@ -535,10 +545,10 @@
           </code>
           <div class="tip" id="2888">
             <strong>Signature:</strong> seq&lt;WiXUIRef&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Nest UIRefs in here</p>
+                    <p>Nest UIRefs in here</p>
 
 
         </td>
@@ -551,10 +561,10 @@
           </code>
           <div class="tip" id="2889">
             <strong>Signature:</strong> seq&lt;WiXUpgrade&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>You can nest upgrade elements in here</p>
+                    <p>You can nest upgrade elements in here</p>
 
 
         </td>
@@ -567,10 +577,10 @@
           </code>
           <div class="tip" id="2890">
             <strong>Signature:</strong> Guid<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The upgrade code GUID for the product.</p>
+                    <p>The upgrade code GUID for the product.</p>
 
 
         </td>
@@ -583,10 +593,10 @@
           </code>
           <div class="tip" id="2891">
             <strong>Signature:</strong> seq&lt;WiXVariable&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Nest WiXVariables in here</p>
+                    <p>Nest WiXVariables in here</p>
 
 
         </td>
@@ -698,7 +708,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -720,6 +730,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

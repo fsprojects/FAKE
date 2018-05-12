@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>FAKE0001 Use Fake.DotNet.AssemblyInfoFile instead</p>
+        </div> 
 
+</p>
 <a name="AssemblyInfoFile" class="anchor" href="#AssemblyInfoFile"><h1>AssemblyInfoFile</h1></a>
+
 <div class="xmldoc">
 <p>Contains tasks to generate AssemblyInfo files for C# and F#.
 There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo tasks</a> available.</p>
@@ -264,17 +279,29 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
           <td class="type-name">
             <a href="fake-assemblyinfofile-assemblyinfofileconfig.html">AssemblyInfoFileConfig</a>
           </td>
-          <td class="xmldoc"><p>Represents options for configuring the emission of AssemblyInfo</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use Fake.DotNet.AssemblyInfoFileConfig instead</p>
+                </div> 
+            <p>Represents options for configuring the emission of AssemblyInfo</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-assemblyinfofile-attribute.html">Attribute</a>
           </td>
-          <td class="xmldoc"><p>Represents AssemblyInfo attributes</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfo.___&#39; instead</p>
+                </div> 
+            <p>Represents AssemblyInfo attributes</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -295,10 +322,18 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
           </code>
           <div class="tip" id="114">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCppCli&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L359-359" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCppCli&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L359-359" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -315,10 +350,18 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
           </code>
           <div class="tip" id="115">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCppCliWithConfig&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L323-323" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCppCliWithConfig&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L323-323" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -336,10 +379,18 @@ Does not generate an AssemblyVersionInformation class.</p>
           </code>
           <div class="tip" id="116">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCSharp&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L342-342" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCSharp&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L342-342" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -357,10 +408,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="117">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCSharpWithConfig&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L217-217" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createCSharpWithConfig&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L217-217" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -378,10 +437,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="118">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createFSharp&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L348-348" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createFSharp&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L348-348" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -399,10 +466,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="119">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createFSharpWithConfig&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L265-265" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createFSharpWithConfig&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L265-265" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -420,10 +495,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="120">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createVisualBasic&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L354-354" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createVisualBasic&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L354-354" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -441,10 +524,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="121">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createVisualBasicWithConfig&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L296-296" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.createVisualBasicWithConfig&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L296-296" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -462,10 +553,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="122">
             <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; Attribute option<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttribute&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L400-400" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttribute&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L400-400" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -487,10 +586,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="123">
             <strong>Signature:</strong> assemblyInfoFile:string -&gt; seq&lt;Attribute&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttributes&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L372-372" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttributes&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L372-372" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -511,10 +618,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="124">
             <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; string option<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttributeValue&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L408-408" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.getAttributeValue&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L408-408" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -536,10 +651,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="125">
             <strong>Signature:</strong> assemblyInfoFile:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.updateAttributes&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L437-437" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use &#39;open Fake.DotNet&#39; and &#39;AssemblyInfoFile.updateAttributes&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L437-437" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -569,10 +692,18 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
           </code>
           <div class="tip" id="126">
             <strong>Signature:</strong> projFileName:string -&gt; Choice&lt;unit,unit,unit,unit&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;FAKE0001 Use Fake.DotNet.AssemblyInfoFile instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L12-12" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>FAKE0001 Use Fake.DotNet.AssemblyInfoFile instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AssemblyInfoFile.fs#L12-12" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -686,7 +817,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -708,6 +839,17 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

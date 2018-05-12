@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="TargetHelper" class="anchor" href="#TargetHelper"><h1>TargetHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains infrastructure code and helper functions for FAKE's target feature.</p>
 
@@ -262,17 +273,21 @@
           <td class="type-name">
             <a href="fake-targethelper-builderror.html">BuildError</a>
           </td>
-          <td class="xmldoc"><p>Represents build errors</p>
+          <td class="xmldoc">
+            <p>Represents build errors</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-targethelper-target.html">Target</a>
           </td>
-          <td class="xmldoc"><p>A Target can be run during the build</p>
+          <td class="xmldoc">
+            <p>A Target can be run during the build</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -285,7 +300,9 @@
           <td class="module-name">
             <a href="fake-targethelper-exitcode.html">ExitCode</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -306,10 +323,10 @@
           </code>
           <div class="tip" id="770">
             <strong>Signature:</strong> x:string -&gt; ys:string list -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Backwards dependencies operator - x is dependent on ys.</p>
+                    <p>Backwards dependencies operator - x is dependent on ys.</p>
 
 
         </td>
@@ -322,10 +339,10 @@
           </code>
           <div class="tip" id="771">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Activates the BuildFailureTarget.</p>
+                    <p>Activates the BuildFailureTarget.</p>
 
 
         </td>
@@ -338,10 +355,10 @@
           </code>
           <div class="tip" id="772">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Activates the FinalTarget.</p>
+                    <p>Activates the FinalTarget.</p>
 
 
         </td>
@@ -354,10 +371,10 @@
           </code>
           <div class="tip" id="773">
             <strong>Signature:</strong> target:string -&gt; time:TimeSpan -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -368,10 +385,10 @@
           </code>
           <div class="tip" id="774">
             <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Registers a BuildFailureTarget (not activated).</p>
+                    <p>Registers a BuildFailureTarget (not activated).</p>
 
 
         </td>
@@ -384,10 +401,10 @@
           </code>
           <div class="tip" id="775">
             <strong>Signature:</strong> Dictionary&lt;string,bool&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>BuildFailureTargets - stores build failure targets and if they are activated.</p>
+                    <p>BuildFailureTargets - stores build failure targets and if they are activated.</p>
 
 
         </td>
@@ -400,10 +417,10 @@
           </code>
           <div class="tip" id="776">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -414,10 +431,10 @@
           </code>
           <div class="tip" id="777">
             <strong>Signature:</strong> string list list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -428,10 +445,10 @@
           </code>
           <div class="tip" id="778">
             <strong>Signature:</strong> target:&#39;?10266 TargetTemplate -&gt; string<br />
-                          <strong>Type parameters:</strong> '?10266          </div>
+                          <strong>Type parameters:</strong> '?10266                      </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the DependencyString for the given target.</p>
+                    <p>Returns the DependencyString for the given target.</p>
 
 
         </td>
@@ -444,10 +461,10 @@
           </code>
           <div class="tip" id="779">
             <strong>Signature:</strong> target:string -&gt; parallelJobs:int -&gt; unit TargetTemplate [] list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines a parallel build order for the given set of targets</p>
+                    <p>Determines a parallel build order for the given set of targets</p>
 
 
         </td>
@@ -460,10 +477,10 @@
           </code>
           <div class="tip" id="780">
             <strong>Signature:</strong> target:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -474,10 +491,10 @@
           </code>
           <div class="tip" id="781">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
+                    <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
 
 
         </td>
@@ -490,10 +507,10 @@
           </code>
           <div class="tip" id="782">
             <strong>Signature:</strong> HashSet&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The executed targets.</p>
+                    <p>The executed targets.</p>
 
 
         </td>
@@ -506,10 +523,10 @@
           </code>
           <div class="tip" id="783">
             <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Registers a final target (not activated).</p>
+                    <p>Registers a final target (not activated).</p>
 
 
         </td>
@@ -522,10 +539,10 @@
           </code>
           <div class="tip" id="784">
             <strong>Signature:</strong> Dictionary&lt;string,bool&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Final Targets - stores final targets and if they are activated.</p>
+                    <p>Final Targets - stores final targets and if they are activated.</p>
 
 
         </td>
@@ -538,10 +555,10 @@
           </code>
           <div class="tip" id="785">
             <strong>Signature:</strong> unit -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns a list with all target names.</p>
+                    <p>Returns a list with all target names.</p>
 
 
         </td>
@@ -554,10 +571,10 @@
           </code>
           <div class="tip" id="786">
             <strong>Signature:</strong> unit -&gt; BuildError list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get Errors - Returns the errors that occured during execution</p>
+                    <p>Get Errors - Returns the errors that occured during execution</p>
 
 
         </td>
@@ -570,10 +587,10 @@
           </code>
           <div class="tip" id="787">
             <strong>Signature:</strong> name:string -&gt; unit TargetTemplate<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets a target with the given name from the target dictionary.</p>
+                    <p>Gets a target with the given name from the target dictionary.</p>
 
 
         </td>
@@ -586,10 +603,10 @@
           </code>
           <div class="tip" id="788">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Prints all available targets.</p>
+                    <p>Prints all available targets.</p>
 
 
         </td>
@@ -602,10 +619,10 @@
           </code>
           <div class="tip" id="789">
             <strong>Signature:</strong> verbose:bool -&gt; target:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a dependency graph.</p>
+                    <p>Writes a dependency graph.</p>
 
 
         </td>
@@ -618,10 +635,10 @@
           </code>
           <div class="tip" id="790">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a dependency graph of all targets in the DOT format.</p>
+                    <p>Writes a dependency graph of all targets in the DOT format.</p>
 
 
         </td>
@@ -634,10 +651,10 @@
           </code>
           <div class="tip" id="791">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -648,10 +665,10 @@
           </code>
           <div class="tip" id="792">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Prints all targets.</p>
+                    <p>Prints all targets.</p>
 
 
         </td>
@@ -664,10 +681,10 @@
           </code>
           <div class="tip" id="793">
             <strong>Signature:</strong> targetName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs a target and its dependencies.</p>
+                    <p>Runs a target and its dependencies.</p>
 
 
         </td>
@@ -680,10 +697,10 @@
           </code>
           <div class="tip" id="794">
             <strong>Signature:</strong> target:unit TargetTemplate -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs a single target without its dependencies</p>
+                    <p>Runs a single target without its dependencies</p>
 
 
         </td>
@@ -696,10 +713,10 @@
           </code>
           <div class="tip" id="795">
             <strong>Signature:</strong> targets:unit TargetTemplate array -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -710,10 +727,10 @@
           </code>
           <div class="tip" id="796">
             <strong>Signature:</strong> count:int -&gt; targets:Target [] -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given array of targets in parallel using count tasks</p>
+                    <p>Runs the given array of targets in parallel using count tasks</p>
 
 
         </td>
@@ -726,10 +743,10 @@
           </code>
           <div class="tip" id="797">
             <strong>Signature:</strong> target:&#39;?10268 TargetTemplate -&gt; string<br />
-                          <strong>Type parameters:</strong> '?10268          </div>
+                          <strong>Type parameters:</strong> '?10268                      </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the soft  DependencyString for the given target.</p>
+                    <p>Returns the soft  DependencyString for the given target.</p>
 
 
         </td>
@@ -742,10 +759,10 @@
           </code>
           <div class="tip" id="798">
             <strong>Signature:</strong> name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a Target.</p>
+                    <p>Creates a Target.</p>
 
 
         </td>
@@ -758,10 +775,10 @@
           </code>
           <div class="tip" id="799">
             <strong>Signature:</strong> body:(&#39;?10290 -&gt; unit) -&gt; string -&gt; &#39;?10290 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10290          </div>
+                          <strong>Type parameters:</strong> '?10290                      </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a TargetTemplate.</p>
+                    <p>Creates a TargetTemplate.</p>
 
 
         </td>
@@ -774,10 +791,18 @@
           </code>
           <div class="tip" id="800">
             <strong>Signature:</strong> dependencies:string list -&gt; (&#39;?10288 -&gt; unit) -&gt; string -&gt; &#39;?10288 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10288          </div>
+                          <strong>Type parameters:</strong> '?10288                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use TargetTemplateWithDependencies&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use TargetTemplateWithDependencies</p>
+            </div> 
+                    
         </td>
       </tr>
       <tr>
@@ -788,10 +813,10 @@
           </code>
           <div class="tip" id="801">
             <strong>Signature:</strong> dependencies:string list -&gt; body:(&#39;?10286 -&gt; unit) -&gt; name:string -&gt; parameters:&#39;?10286 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10286          </div>
+                          <strong>Type parameters:</strong> '?10286                      </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a TargetTemplate with dependencies.</p>
+                    <p>Creates a TargetTemplate with dependencies.</p>
 <h2>Sample</h2>
 <p>The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -881,10 +906,10 @@
           </code>
           <div class="tip" id="802">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a summary of errors reported during build.</p>
+                    <p>Writes a summary of errors reported during build.</p>
 
 
         </td>
@@ -897,10 +922,10 @@
           </code>
           <div class="tip" id="803">
             <strong>Signature:</strong> total:&#39;?10317 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10317          </div>
+                          <strong>Type parameters:</strong> '?10317                      </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a build time report.</p>
+                    <p>Writes a build time report.</p>
 
 
         </td>
@@ -1012,7 +1037,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1034,6 +1059,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -232,21 +240,28 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-                                    <p>
-                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
-                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/Fake.Api.HockeyApp" >Fake.Api.HockeyApp</a> module.</strong>
-                                    </p>
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.Api.HockeyApp" >Fake.Api.HockeyApp</a> module.
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
 									<!-- Content -->
                       <article>
           			
 
 
+<p>
 
+</p>
 <a name="HockeyApp" class="anchor" href="#HockeyApp"><h1>HockeyApp</h1></a>
+
 <div class="xmldoc">
 <p>Contains tasks to interact with <a href="http://hockeyapp.com">HockeyApp</a></p>
 
@@ -264,82 +279,102 @@
           <td class="type-name">
             <a href="fake-api-hockeyapp-downloadstatusoption.html">DownloadStatusOption</a>
           </td>
-          <td class="xmldoc"><p>The release download status</p>
+          <td class="xmldoc">
+            <p>The release download status</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-hockeyappuploadparams.html">HockeyAppUploadParams</a>
           </td>
-          <td class="xmldoc"><p>The HockeyApp parameter type
+          <td class="xmldoc">
+            <p>The HockeyApp parameter type
 Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http://support.hockeyapp.net/kb/api/api-apps#upload-app</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-hockeyappversionparams.html">HockeyAppVersionParams</a>
           </td>
-          <td class="xmldoc"><p>The HockeyAppVersion parameter type
+          <td class="xmldoc">
+            <p>The HockeyAppVersion parameter type
 Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-version">https://support.hockeyapp.net/kb/api/api-versions#create-version</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-hockeyresponse.html">HockeyResponse</a>
           </td>
-          <td class="xmldoc"><p>HockeyApp's success response</p>
+          <td class="xmldoc">
+            <p>HockeyApp's success response</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-hockeyversionresponse.html">HockeyVersionResponse</a>
           </td>
-          <td class="xmldoc"><p>HockeyAppVersion's success response
+          <td class="xmldoc">
+            <p>HockeyAppVersion's success response
 <a href="https://support.hockeyapp.net/kb/api/api-versions#create-version">https://support.hockeyapp.net/kb/api/api-versions#create-version</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-ibasehockeyappparams.html">IBaseHockeyAppParams</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-mandatoryoption.html">MandatoryOption</a>
           </td>
-          <td class="xmldoc"><p>The mandatory options</p>
+          <td class="xmldoc">
+            <p>The mandatory options</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-notetype.html">NoteType</a>
           </td>
-          <td class="xmldoc"><p>The note types</p>
+          <td class="xmldoc">
+            <p>The note types</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-notifyoption.html">NotifyOption</a>
           </td>
-          <td class="xmldoc"><p>The notification options</p>
+          <td class="xmldoc">
+            <p>The notification options</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-api-hockeyapp-releasetype.html">ReleaseType</a>
           </td>
-          <td class="xmldoc"><p>The release type of the app</p>
+          <td class="xmldoc">
+            <p>The release type of the app</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -355,15 +390,15 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
             createAppVersion(setParams)
           </code>
-          <div class="tip" id="14">
+          <div class="tip" id="20">
             <strong>Signature:</strong> setParams:(HockeyAppVersionParams -&gt; HockeyAppVersionParams) -&gt; HockeyVersionResponse<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L355-355" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L355-355" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -398,15 +433,15 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
             HockeyAppUploadDefaults
           </code>
-          <div class="tip" id="15">
+          <div class="tip" id="21">
             <strong>Signature:</strong> HockeyAppUploadParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L197-197" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L197-197" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -418,15 +453,15 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
             HockeyAppVersionDefaults
           </code>
-          <div class="tip" id="16">
+          <div class="tip" id="22">
             <strong>Signature:</strong> HockeyAppVersionParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L219-219" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L219-219" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -438,15 +473,15 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
+          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
             uploadApp(setParams)
           </code>
-          <div class="tip" id="17">
+          <div class="tip" id="23">
             <strong>Signature:</strong> setParams:(HockeyAppUploadParams -&gt; HockeyAppUploadParams) -&gt; HockeyResponse<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L339-339" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L339-339" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -583,7 +618,7 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -605,6 +640,17 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

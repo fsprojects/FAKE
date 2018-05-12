@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="FileSystemHelper" class="anchor" href="#FileSystemHelper"><h1>FileSystemHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains helpers which allow to interact with the file system.</p>
 
@@ -266,10 +277,10 @@
           </code>
           <div class="tip" id="405">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if all given files exist.</p>
+                    <p>Checks if all given files exist.</p>
 
 
         </td>
@@ -282,10 +293,10 @@
           </code>
           <div class="tip" id="406">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Raises an exception if the file doesn't exist on disk.</p>
+                    <p>Raises an exception if the file doesn't exist on disk.</p>
 
 
         </td>
@@ -298,10 +309,10 @@
           </code>
           <div class="tip" id="407">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the current directory.</p>
+                    <p>Gets the current directory.</p>
 
 
         </td>
@@ -314,10 +325,10 @@
           </code>
           <div class="tip" id="408">
             <strong>Signature:</strong> dir:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the directory exists on disk.</p>
+                    <p>Checks if the directory exists on disk.</p>
 
 
         </td>
@@ -330,10 +341,10 @@
           </code>
           <div class="tip" id="409">
             <strong>Signature:</strong> path:string -&gt; DirectoryInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a DirectoryInfo for the given path.</p>
+                    <p>Creates a DirectoryInfo for the given path.</p>
 
 
         </td>
@@ -346,10 +357,10 @@
           </code>
           <div class="tip" id="410">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the directory part of a filename.</p>
+                    <p>Gets the directory part of a filename.</p>
 
 
         </td>
@@ -362,10 +373,10 @@
           </code>
           <div class="tip" id="411">
             <strong>Signature:</strong> dir:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the given directory exists. If not then this functions creates the directory.</p>
+                    <p>Checks if the given directory exists. If not then this functions creates the directory.</p>
 
 
         </td>
@@ -378,10 +389,10 @@
           </code>
           <div class="tip" id="412">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Ensure that directory chain exists. Create necessary directories if necessary.</p>
+                    <p>Ensure that directory chain exists. Create necessary directories if necessary.</p>
 
 
         </td>
@@ -394,10 +405,10 @@
           </code>
           <div class="tip" id="413">
             <strong>Signature:</strong> fileName:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the file exists on disk.</p>
+                    <p>Checks if the file exists on disk.</p>
 
 
         </td>
@@ -410,10 +421,10 @@
           </code>
           <div class="tip" id="414">
             <strong>Signature:</strong> path:string -&gt; FileInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a FileInfo for the given path.</p>
+                    <p>Creates a FileInfo for the given path.</p>
 
 
         </td>
@@ -426,10 +437,10 @@
           </code>
           <div class="tip" id="415">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; FileInfo []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets all files in the directory.</p>
+                    <p>Gets all files in the directory.</p>
 
 
         </td>
@@ -442,10 +453,10 @@
           </code>
           <div class="tip" id="416">
             <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Finds all the files in the directory matching the search pattern.</p>
+                    <p>Finds all the files in the directory matching the search pattern.</p>
 
 
         </td>
@@ -458,10 +469,10 @@
           </code>
           <div class="tip" id="417">
             <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Finds all the files in the directory and in all subdirectories matching the search pattern.</p>
+                    <p>Finds all the files in the directory and in all subdirectories matching the search pattern.</p>
 
 
         </td>
@@ -474,10 +485,10 @@
           </code>
           <div class="tip" id="418">
             <strong>Signature:</strong> path:string -&gt; FileSystemInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a FileInfo or a DirectoryInfo for the given path</p>
+                    <p>Creates a FileInfo or a DirectoryInfo for the given path</p>
 
 
         </td>
@@ -490,10 +501,10 @@
           </code>
           <div class="tip" id="419">
             <strong>Signature:</strong> pattern:string -&gt; dir:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the first file in the directory matching the search pattern or throws an error if nothing was found.</p>
+                    <p>Gets the first file in the directory matching the search pattern or throws an error if nothing was found.</p>
 
 
         </td>
@@ -506,10 +517,10 @@
           </code>
           <div class="tip" id="420">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Get the full location of the current assembly.</p>
+                    <p>Get the full location of the current assembly.</p>
 
 
         </td>
@@ -522,10 +533,10 @@
           </code>
           <div class="tip" id="421">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Converts a filename to it's full file system name.</p>
+                    <p>Converts a filename to it's full file system name.</p>
 
 
         </td>
@@ -538,10 +549,10 @@
           </code>
           <div class="tip" id="422">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Detects whether the given path is a directory.</p>
+                    <p>Detects whether the given path is a directory.</p>
 
 
         </td>
@@ -554,10 +565,10 @@
           </code>
           <div class="tip" id="423">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Detects whether the given path is a file.</p>
+                    <p>Detects whether the given path is a file.</p>
 
 
         </td>
@@ -570,10 +581,10 @@
           </code>
           <div class="tip" id="424">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; fileInfo:FileInfo -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if the file is in a subfolder of the dir.</p>
+                    <p>Checks if the file is in a subfolder of the dir.</p>
 
 
         </td>
@@ -586,10 +597,10 @@
           </code>
           <div class="tip" id="425">
             <strong>Signature:</strong> dir2:DirectoryInfo -&gt; dir1:DirectoryInfo -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</p>
+                    <p>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</p>
 
 
         </td>
@@ -602,10 +613,10 @@
           </code>
           <div class="tip" id="426">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Detects whether the given path does not contains invalid characters.</p>
+                    <p>Detects whether the given path does not contains invalid characters.</p>
 
 
         </td>
@@ -618,10 +629,10 @@
           </code>
           <div class="tip" id="427">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Normalizes a filename.</p>
+                    <p>Normalizes a filename.</p>
 
 
         </td>
@@ -634,10 +645,10 @@
           </code>
           <div class="tip" id="428">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; DirectoryInfo []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets all subdirectories of a given directory.</p>
+                    <p>Gets all subdirectories of a given directory.</p>
 
 
         </td>
@@ -650,10 +661,10 @@
           </code>
           <div class="tip" id="429">
             <strong>Signature:</strong> pattern:string -&gt; dir:string -&gt; string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the first file in the directory matching the search pattern as an option value.</p>
+                    <p>Gets the first file in the directory matching the search pattern as an option value.</p>
 
 
         </td>
@@ -765,7 +776,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -787,6 +798,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

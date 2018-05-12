@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="StringHelper" class="anchor" href="#StringHelper"><h1>StringHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains basic functions for string manipulation.</p>
 
@@ -266,10 +277,10 @@
           </code>
           <div class="tip" id="694">
             <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks whether the given text starts with the given prefix</p>
+                    <p>Checks whether the given text starts with the given prefix</p>
 
 
         </td>
@@ -282,10 +293,10 @@
           </code>
           <div class="tip" id="695">
             <strong>Signature:</strong> pattern:string -&gt; text:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines if a text matches a given regex pattern.</p>
+                    <p>Determines if a text matches a given regex pattern.</p>
 
 
         </td>
@@ -298,10 +309,10 @@
           </code>
           <div class="tip" id="696">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Find a regex pattern in a text and replaces it with the given replacement.</p>
+                    <p>Find a regex pattern in a text and replaces it with the given replacement.</p>
 
 
         </td>
@@ -314,10 +325,10 @@
           </code>
           <div class="tip" id="697">
             <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text to a StringBuilder.</p>
+                    <p>Appends a text to a StringBuilder.</p>
 
 
         </td>
@@ -330,10 +341,10 @@
           </code>
           <div class="tip" id="698">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends all notnull fileNames.</p>
+                    <p>Appends all notnull fileNames.</p>
 
 
         </td>
@@ -346,10 +357,10 @@
           </code>
           <div class="tip" id="699">
             <strong>Signature:</strong> p:bool -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text if the predicate is false.</p>
+                    <p>Appends a text if the predicate is false.</p>
 
 
         </td>
@@ -362,10 +373,10 @@
           </code>
           <div class="tip" id="700">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text if the value is not null.</p>
+                    <p>Appends a text if the value is not null.</p>
 
 
         </td>
@@ -378,10 +389,10 @@
           </code>
           <div class="tip" id="701">
             <strong>Signature:</strong> value:string -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text if the value is not null or empty.</p>
+                    <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
@@ -394,10 +405,10 @@
           </code>
           <div class="tip" id="702">
             <strong>Signature:</strong> o:&#39;a option -&gt; f:(&#39;a -&gt; string) -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Appends string of function value if option has some value</p>
+                    <p>Appends string of function value if option has some value</p>
 
 
         </td>
@@ -410,10 +421,10 @@
           </code>
           <div class="tip" id="703">
             <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text if the predicate is true.</p>
+                    <p>Appends a text if the predicate is true.</p>
 
 
         </td>
@@ -426,10 +437,10 @@
           </code>
           <div class="tip" id="704">
             <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -440,10 +451,10 @@
           </code>
           <div class="tip" id="705">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a quoted text if the value is not null.</p>
+                    <p>Appends a quoted text if the value is not null.</p>
 
 
         </td>
@@ -456,10 +467,10 @@
           </code>
           <div class="tip" id="706">
             <strong>Signature:</strong> value:&#39;?13435 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
-                          <strong>Type parameters:</strong> '?13435          </div>
+                          <strong>Type parameters:</strong> '?13435                      </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text if the value is not null.</p>
+                    <p>Appends a text if the value is not null.</p>
 
 
         </td>
@@ -472,10 +483,10 @@
           </code>
           <div class="tip" id="707">
             <strong>Signature:</strong> value:string -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text if the value is not null or empty.</p>
+                    <p>Appends a text if the value is not null or empty.</p>
 
 
         </td>
@@ -488,10 +499,10 @@
           </code>
           <div class="tip" id="708">
             <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends all lines to a file line by line</p>
+                    <p>Appends all lines to a file line by line</p>
 
 
         </td>
@@ -504,10 +515,10 @@
           </code>
           <div class="tip" id="709">
             <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text to a StringBuilder without surrounding quotes.</p>
+                    <p>Appends a text to a StringBuilder without surrounding quotes.</p>
 
 
         </td>
@@ -520,10 +531,10 @@
           </code>
           <div class="tip" id="710">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Appends a text without quoting if the value is not null.</p>
+                    <p>Appends a text without quoting if the value is not null.</p>
 
 
         </td>
@@ -536,10 +547,10 @@
           </code>
           <div class="tip" id="711">
             <strong>Signature:</strong> char list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns all standard chars and digits.</p>
+                    <p>Returns all standard chars and digits.</p>
 
 
         </td>
@@ -552,10 +563,10 @@
           </code>
           <div class="tip" id="712">
             <strong>Signature:</strong> char<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -566,10 +577,10 @@
           </code>
           <div class="tip" id="713">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reads a file line by line and replaces all line breaks to windows line breaks
+                    <p>Reads a file line by line and replaces all line breaks to windows line breaks
 - uses a temp file to store the contents in order to prevent OutOfMemory exceptions</p>
 
 
@@ -583,10 +594,10 @@
           </code>
           <div class="tip" id="714">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Converts all line breaks in a text to windows line breaks</p>
+                    <p>Converts all line breaks in a text to windows line breaks</p>
 
 
         </td>
@@ -599,10 +610,10 @@
           </code>
           <div class="tip" id="715">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Decodes a Base64-encoded UTF-8-encoded string</p>
+                    <p>Decodes a Base64-encoded UTF-8-encoded string</p>
 
 
         </td>
@@ -615,10 +626,10 @@
           </code>
           <div class="tip" id="716">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Encapsulates the Apostrophe</p>
+                    <p>Encapsulates the Apostrophe</p>
 
 
         </td>
@@ -631,10 +642,10 @@
           </code>
           <div class="tip" id="717">
             <strong>Signature:</strong> suffix:string -&gt; text:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks whether the given text ends with the given suffix</p>
+                    <p>Checks whether the given text ends with the given suffix</p>
 
 
         </td>
@@ -647,10 +658,10 @@
           </code>
           <div class="tip" id="718">
             <strong>Signature:</strong> string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines whether the last character of the given <see cref="string" />
+                    <p>Determines whether the last character of the given <see cref="string" />
 matches Path.DirectorySeparatorChar.</p>
 
 
@@ -664,10 +675,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="719">
             <strong>Signature:</strong> c:char -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks whether the given char is a standard char or digit.</p>
+                    <p>Checks whether the given char is a standard char or digit.</p>
 
 
         </td>
@@ -680,10 +691,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="720">
             <strong>Signature:</strong> value:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns if the string is not null or empty</p>
+                    <p>Returns if the string is not null or empty</p>
 
 
         </td>
@@ -696,10 +707,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="721">
             <strong>Signature:</strong> value:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns if the string is null or empty</p>
+                    <p>Returns if the string is null or empty</p>
 
 
         </td>
@@ -712,10 +723,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="722">
             <strong>Signature:</strong> value:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns if the string is null or empty or completely whitespace</p>
+                    <p>Returns if the string is null or empty or completely whitespace</p>
 
 
         </td>
@@ -728,10 +739,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="723">
             <strong>Signature:</strong> c:char -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks whether the given char is a german umlaut.</p>
+                    <p>Checks whether the given char is a german umlaut.</p>
 
 
         </td>
@@ -744,10 +755,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="724">
             <strong>Signature:</strong> x:string -&gt; string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Lifts a string to an option</p>
+                    <p>Lifts a string to an option</p>
 
 
         </td>
@@ -760,10 +771,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="725">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Represents Linux line breaks</p>
+                    <p>Represents Linux line breaks</p>
 
 
         </td>
@@ -776,10 +787,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="726">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Represents Mac line breaks</p>
+                    <p>Represents Mac line breaks</p>
 
 
         </td>
@@ -792,10 +803,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="727">
             <strong>Signature:</strong> version:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Removes all trailing .0 from a version string</p>
+                    <p>Removes all trailing .0 from a version string</p>
 
 
         </td>
@@ -808,10 +819,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="728">
             <strong>Signature:</strong> baseLocation:string -&gt; targetLocation:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Produces relative path when possible to go from baseLocation to targetLocation.</p>
+                    <p>Produces relative path when possible to go from baseLocation to targetLocation.</p>
 
 
         </td>
@@ -824,10 +835,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="729">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reads a file line by line</p>
+                    <p>Reads a file line by line</p>
 
 
         </td>
@@ -840,10 +851,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="730">
             <strong>Signature:</strong> file:string -&gt; byte []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reads a file as one array of bytes</p>
+                    <p>Reads a file as one array of bytes</p>
 
 
         </td>
@@ -856,10 +867,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="731">
             <strong>Signature:</strong> file:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reads a file as one text</p>
+                    <p>Reads a file as one text</p>
 
 
         </td>
@@ -872,10 +883,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="732">
             <strong>Signature:</strong> file:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
+                    <p>Reads the first line of a file. This can be helpful to read a password from file.</p>
 
 
         </td>
@@ -888,10 +899,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="733">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Removes linebreaks from the given string</p>
+                    <p>Removes linebreaks from the given string</p>
 
 
         </td>
@@ -904,10 +915,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="734">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces the given pattern in the given text with the replacement</p>
+                    <p>Replaces the given pattern in the given text with the replacement</p>
 
 
         </td>
@@ -920,10 +931,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="735">
             <strong>Signature:</strong> fileName:string -&gt; text:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces the file with the given string</p>
+                    <p>Replaces the file with the given string</p>
 
 
         </td>
@@ -936,10 +947,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="736">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces the first occurrence of the pattern with the given replacement.</p>
+                    <p>Replaces the first occurrence of the pattern with the given replacement.</p>
 
 
         </td>
@@ -952,10 +963,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="737">
             <strong>Signature:</strong> replaceF:(string -&gt; string) -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces the text in the given file</p>
+                    <p>Replaces the text in the given file</p>
 
 
         </td>
@@ -968,10 +979,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="738">
             <strong>Signature:</strong> delimiter:string -&gt; items:seq&lt;string&gt; -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Converts a sequence of strings to a string with delimiters</p>
+                    <p>Converts a sequence of strings to a string with delimiters</p>
 
 
         </td>
@@ -984,10 +995,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="739">
             <strong>Signature:</strong> value:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces any occurence of the currentDirectory with .</p>
+                    <p>Replaces any occurence of the currentDirectory with .</p>
 
 
         </td>
@@ -1000,10 +1011,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="740">
             <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Splits the given string at the given char delimiter</p>
+                    <p>Splits the given string at the given char delimiter</p>
 
 
         </td>
@@ -1016,10 +1027,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="741">
             <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -1030,10 +1041,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="742">
             <strong>Signature:</strong> delimiterStr:string -&gt; text:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Splits the given string at the given string delimiter</p>
+                    <p>Splits the given string at the given string delimiter</p>
 
 
         </td>
@@ -1046,10 +1057,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="743">
             <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Checks whether the given text starts with the given prefix</p>
+                    <p>Checks whether the given text starts with the given prefix</p>
 
 
         </td>
@@ -1062,10 +1073,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="744">
             <strong>Signature:</strong> text:seq&lt;string&gt; -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Converts a sequence of strings into a string separated with line ends</p>
+                    <p>Converts a sequence of strings into a string separated with line ends</p>
 
 
         </td>
@@ -1078,10 +1089,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="745">
             <strong>Signature:</strong> s:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Converts all characters in a string to lower case.</p>
+                    <p>Converts all characters in a string to lower case.</p>
 
 
         </td>
@@ -1094,10 +1105,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="746">
             <strong>Signature:</strong> value:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Replaces the absolute path to a relative path.</p>
+                    <p>Replaces the absolute path to a relative path.</p>
 
 
         </td>
@@ -1110,10 +1121,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="747">
             <strong>Signature:</strong> builder:StringBuilder -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the text from the StringBuilder</p>
+                    <p>Returns the text from the StringBuilder</p>
 
 
         </td>
@@ -1126,10 +1137,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="748">
             <strong>Signature:</strong> x:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Trims the given string</p>
+                    <p>Trims the given string</p>
 
 
         </td>
@@ -1142,10 +1153,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="749">
             <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Trims the given string</p>
+                    <p>Trims the given string</p>
 
 
         </td>
@@ -1158,10 +1169,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="750">
             <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Trims the end of the given string</p>
+                    <p>Trims the end of the given string</p>
 
 
         </td>
@@ -1174,10 +1185,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="751">
             <strong>Signature:</strong> s:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Trims the given string with the DirectorySeparatorChar</p>
+                    <p>Trims the given string with the DirectorySeparatorChar</p>
 
 
         </td>
@@ -1190,10 +1201,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="752">
             <strong>Signature:</strong> s:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Removes the slashes from the end of the given string</p>
+                    <p>Removes the slashes from the end of the given string</p>
 
 
         </td>
@@ -1206,10 +1217,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="753">
             <strong>Signature:</strong> text:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Trims all special characters from a string.</p>
+                    <p>Trims all special characters from a string.</p>
 
 
         </td>
@@ -1222,10 +1233,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="754">
             <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Trims the start of the given string</p>
+                    <p>Trims the start of the given string</p>
 
 
         </td>
@@ -1238,10 +1249,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="755">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Represents Windows line breaks</p>
+                    <p>Represents Windows line breaks</p>
 
 
         </td>
@@ -1254,10 +1265,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="756">
             <strong>Signature:</strong> file:string -&gt; bytes:byte [] -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a byte array to a file</p>
+                    <p>Writes a byte array to a file</p>
 
 
         </td>
@@ -1270,10 +1281,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="757">
             <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a file line by line</p>
+                    <p>Writes a file line by line</p>
 
 
         </td>
@@ -1286,10 +1297,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="758">
             <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a string to a file</p>
+                    <p>Writes a string to a file</p>
 
 
         </td>
@@ -1302,10 +1313,10 @@ matches Path.DirectorySeparatorChar.</p>
           </code>
           <div class="tip" id="759">
             <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a file line by line</p>
+                    <p>Writes a file line by line</p>
 
 
         </td>
@@ -1417,7 +1428,7 @@ matches Path.DirectorySeparatorChar.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1439,6 +1450,17 @@ matches Path.DirectorySeparatorChar.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

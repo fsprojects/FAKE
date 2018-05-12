@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="HockeyAppUploadParams" class="anchor" href="#HockeyAppUploadParams" ><h1>HockeyAppUploadParams</h1></a>
 <div class="xmldoc">
 <p>The HockeyApp parameter type
@@ -264,10 +274,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1972">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>(Required) API token</p>
+                    <p>(Required) API token</p>
 
 
         </td>
@@ -280,10 +290,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1973">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set to your App Id (required for UWP apps targeting windows phone)</p>
+                    <p>Set to your App Id (required for UWP apps targeting windows phone)</p>
 
 
         </td>
@@ -296,10 +306,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1974">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set to the URL of the build job on your build server</p>
+                    <p>Set to the URL of the build job on your build server</p>
 
 
         </td>
@@ -312,10 +322,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1975">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set to the git commit sha for this build</p>
+                    <p>Set to the git commit sha for this build</p>
 
 
         </td>
@@ -328,10 +338,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1976">
             <strong>Signature:</strong> DownloadStatusOption<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Release download status (can only be set with full-access tokens)</p>
+                    <p>Release download status (can only be set with full-access tokens)</p>
 
 
         </td>
@@ -344,10 +354,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1977">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>file data for dsym (IOS: *.dysm.zip or Android: mapping.txt)</p>
+                    <p>file data for dsym (IOS: *.dysm.zip or Android: mapping.txt)</p>
 
 
         </td>
@@ -360,10 +370,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1978">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>(Required) file data for the build (.ipa or .apk)</p>
+                    <p>(Required) file data for the build (.ipa or .apk)</p>
 
 
         </td>
@@ -376,10 +386,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1979">
             <strong>Signature:</strong> MandatoryOption<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set version as mandatory</p>
+                    <p>Set version as mandatory</p>
 
 
         </td>
@@ -392,10 +402,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1980">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Release notes for the build</p>
+                    <p>Release notes for the build</p>
 
 
         </td>
@@ -408,10 +418,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1981">
             <strong>Signature:</strong> NoteType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Release notes type for the build</p>
+                    <p>Release notes type for the build</p>
 
 
         </td>
@@ -424,10 +434,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1982">
             <strong>Signature:</strong> NotifyOption<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set the notify option</p>
+                    <p>Set the notify option</p>
 
 
         </td>
@@ -440,10 +450,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1983">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set the owner of the app</p>
+                    <p>Set the owner of the app</p>
 
 
         </td>
@@ -456,10 +466,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1984">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set to true to enable the private download page (default is false)</p>
+                    <p>Set to true to enable the private download page (default is false)</p>
 
 
         </td>
@@ -472,10 +482,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1985">
             <strong>Signature:</strong> ReleaseType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set the release type of the app</p>
+                    <p>Set the release type of the app</p>
 
 
         </td>
@@ -488,10 +498,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1986">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set to your source repository</p>
+                    <p>Set to your source repository</p>
 
 
         </td>
@@ -504,10 +514,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1987">
             <strong>Signature:</strong> string []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Restrict download to specific teams</p>
+                    <p>Restrict download to specific teams</p>
 
 
         </td>
@@ -520,10 +530,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1988">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set maximum upload delay</p>
+                    <p>Set maximum upload delay</p>
 
 
         </td>
@@ -536,10 +546,10 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
           </code>
           <div class="tip" id="1989">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>When uploading a build, specify to which version (hockeyapp version id)</p>
+                    <p>When uploading a build, specify to which version (hockeyapp version id)</p>
 
 
         </td>
@@ -651,7 +661,7 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -673,6 +683,17 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

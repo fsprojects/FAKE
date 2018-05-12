@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="ChocoInstallParams" class="anchor" href="#ChocoInstallParams" ><h1>ChocoInstallParams</h1></a>
 <div class="xmldoc">
 <p>The choco install parameter type.</p>
@@ -259,15 +269,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5865', 5865)" onmouseover="showTip(event, '5865', 5865)">
+          <code onmouseout="hideTip(event, '5987', 5987)" onmouseover="showTip(event, '5987', 5987)">
             AdditionalArgs
           </code>
-          <div class="tip" id="5865">
+          <div class="tip" id="5987">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L64-64" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,15 +289,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5866', 5866)" onmouseover="showTip(event, '5866', 5866)">
+          <code onmouseout="hideTip(event, '5988', 5988)" onmouseover="showTip(event, '5988', 5988)">
             ForceX86
           </code>
-          <div class="tip" id="5866">
+          <div class="tip" id="5988">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L43-43" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L43-43" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -300,15 +310,15 @@ Equivalent to the <code>--forcex86</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5867', 5867)" onmouseover="showTip(event, '5867', 5867)">
+          <code onmouseout="hideTip(event, '5989', 5989)" onmouseover="showTip(event, '5989', 5989)">
             InstallArgs
           </code>
-          <div class="tip" id="5867">
+          <div class="tip" id="5989">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L46-46" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L46-46" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -321,15 +331,15 @@ Equivalent to the <code>--installargs &lt;args&gt;</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5868', 5868)" onmouseover="showTip(event, '5868', 5868)">
+          <code onmouseout="hideTip(event, '5990', 5990)" onmouseover="showTip(event, '5990', 5990)">
             NonInteractive
           </code>
-          <div class="tip" id="5868">
+          <div class="tip" id="5990">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L67-67" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -342,15 +352,15 @@ Equivalent to the <code>-y</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5869', 5869)" onmouseover="showTip(event, '5869', 5869)">
+          <code onmouseout="hideTip(event, '5991', 5991)" onmouseover="showTip(event, '5991', 5991)">
             OverrideArgs
           </code>
-          <div class="tip" id="5869">
+          <div class="tip" id="5991">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L49-49" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L49-49" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -363,15 +373,15 @@ Equivalent to the <code>--overrideargs</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5870', 5870)" onmouseover="showTip(event, '5870', 5870)">
+          <code onmouseout="hideTip(event, '5992', 5992)" onmouseover="showTip(event, '5992', 5992)">
             PackageParameters
           </code>
-          <div class="tip" id="5870">
+          <div class="tip" id="5992">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L36-36" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -384,15 +394,15 @@ Equivalent to the <code>--params &lt;params&gt;</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5871', 5871)" onmouseover="showTip(event, '5871', 5871)">
+          <code onmouseout="hideTip(event, '5993', 5993)" onmouseover="showTip(event, '5993', 5993)">
             Password
           </code>
-          <div class="tip" id="5871">
+          <div class="tip" id="5993">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L58-58" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L58-58" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -405,15 +415,15 @@ Equivalent to the <code>--password &lt;password&gt;</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5872', 5872)" onmouseover="showTip(event, '5872', 5872)">
+          <code onmouseout="hideTip(event, '5994', 5994)" onmouseover="showTip(event, '5994', 5994)">
             Prerelease
           </code>
-          <div class="tip" id="5872">
+          <div class="tip" id="5994">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L33-33" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -426,15 +436,15 @@ Equivalent to the <code>--pre</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5873', 5873)" onmouseover="showTip(event, '5873', 5873)">
+          <code onmouseout="hideTip(event, '5995', 5995)" onmouseover="showTip(event, '5995', 5995)">
             SkipPowershell
           </code>
-          <div class="tip" id="5873">
+          <div class="tip" id="5995">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L52-52" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L52-52" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -447,15 +457,15 @@ Equivalent to the <code>--skippowershell</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5874', 5874)" onmouseover="showTip(event, '5874', 5874)">
+          <code onmouseout="hideTip(event, '5996', 5996)" onmouseover="showTip(event, '5996', 5996)">
             Source
           </code>
-          <div class="tip" id="5874">
+          <div class="tip" id="5996">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L40-40" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L40-40" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -467,15 +477,15 @@ Equivalent to the <code>--skippowershell</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5875', 5875)" onmouseover="showTip(event, '5875', 5875)">
+          <code onmouseout="hideTip(event, '5997', 5997)" onmouseover="showTip(event, '5997', 5997)">
             Timeout
           </code>
-          <div class="tip" id="5875">
+          <div class="tip" id="5997">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L60-60" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L60-60" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -487,15 +497,15 @@ Equivalent to the <code>--skippowershell</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5876', 5876)" onmouseover="showTip(event, '5876', 5876)">
+          <code onmouseout="hideTip(event, '5998', 5998)" onmouseover="showTip(event, '5998', 5998)">
             ToolPath
           </code>
-          <div class="tip" id="5876">
+          <div class="tip" id="5998">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L62-62" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L62-62" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -507,15 +517,15 @@ Equivalent to the <code>--skippowershell</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5877', 5877)" onmouseover="showTip(event, '5877', 5877)">
+          <code onmouseout="hideTip(event, '5999', 5999)" onmouseover="showTip(event, '5999', 5999)">
             User
           </code>
-          <div class="tip" id="5877">
+          <div class="tip" id="5999">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L55-55" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -528,15 +538,15 @@ Equivalent to the <code>--user &lt;user&gt;</code> option.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5878', 5878)" onmouseover="showTip(event, '5878', 5878)">
+          <code onmouseout="hideTip(event, '6000', 6000)" onmouseover="showTip(event, '6000', 6000)">
             Version
           </code>
-          <div class="tip" id="5878">
+          <div class="tip" id="6000">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L30-30" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Windows.Chocolatey/Chocolatey.fs#L30-30" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -653,7 +663,7 @@ Equivalent to the <code>--version &lt;version&gt;</code> option.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -675,6 +685,17 @@ Equivalent to the <code>--version &lt;version&gt;</code> option.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

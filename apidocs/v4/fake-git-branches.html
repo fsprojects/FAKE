@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="Branches" class="anchor" href="#Branches"><h1>Branches</h1></a>
+
 <div class="xmldoc">
 <p>Contains helper functions which allow to deal with git branches.</p>
 
@@ -266,10 +277,10 @@
           </code>
           <div class="tip" id="1106">
             <strong>Signature:</strong> repositoryDir:string -&gt; create:bool -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Performs a checkout of the given branch to the working copy.</p>
+                    <p>Performs a checkout of the given branch to the working copy.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -288,10 +299,10 @@
           </code>
           <div class="tip" id="1107">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Performs a checkout of the given branch to the working copy.</p>
+                    <p>Performs a checkout of the given branch to the working copy.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -309,10 +320,10 @@
           </code>
           <div class="tip" id="1108">
             <strong>Signature:</strong> repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
+                    <p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -331,10 +342,10 @@
           </code>
           <div class="tip" id="1109">
             <strong>Signature:</strong> repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Performs a checkout of the given branch with an additional tracking branch.</p>
+                    <p>Performs a checkout of the given branch with an additional tracking branch.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -353,10 +364,10 @@
           </code>
           <div class="tip" id="1110">
             <strong>Signature:</strong> repositoryDir:string -&gt; newBranchName:string -&gt; commit:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a new branch from the given commit.</p>
+                    <p>Creates a new branch from the given commit.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -375,10 +386,10 @@
           </code>
           <div class="tip" id="1111">
             <strong>Signature:</strong> repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes the given branch.</p>
+                    <p>Deletes the given branch.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -397,10 +408,10 @@
           </code>
           <div class="tip" id="1112">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Deletes the given tag.</p>
+                    <p>Deletes the given tag.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -418,10 +429,10 @@
           </code>
           <div class="tip" id="1113">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
+                    <p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -440,10 +451,10 @@
           </code>
           <div class="tip" id="1114">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets all local and remote branches from the given repository.</p>
+                    <p>Gets all local and remote branches from the given repository.</p>
 
 
         </td>
@@ -456,10 +467,10 @@
           </code>
           <div class="tip" id="1115">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets all local branches from the given repository.</p>
+                    <p>Gets all local branches from the given repository.</p>
 
 
         </td>
@@ -472,10 +483,10 @@
           </code>
           <div class="tip" id="1116">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets all remote branches from the given repository.</p>
+                    <p>Gets all remote branches from the given repository.</p>
 
 
         </td>
@@ -488,10 +499,10 @@
           </code>
           <div class="tip" id="1117">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the SHA1 of the given commit from the given repository.</p>
+                    <p>Returns the SHA1 of the given commit from the given repository.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -509,10 +520,10 @@
           </code>
           <div class="tip" id="1118">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Pulls a given branch from the given remote.</p>
+                    <p>Pulls a given branch from the given remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -531,10 +542,10 @@
           </code>
           <div class="tip" id="1119">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Pushes all branches to the default remote.</p>
+                    <p>Pushes all branches to the default remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -551,10 +562,10 @@
           </code>
           <div class="tip" id="1120">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Pushes the given branch to the given remote.</p>
+                    <p>Pushes the given branch to the given remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -573,10 +584,10 @@
           </code>
           <div class="tip" id="1121">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; tag:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Pushes the given tag to the given remote.</p>
+                    <p>Pushes the given tag to the given remote.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -595,10 +606,10 @@
           </code>
           <div class="tip" id="1122">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns the number of revisions between the two given commits.</p>
+                    <p>Returns the number of revisions between the two given commits.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -617,10 +628,10 @@
           </code>
           <div class="tip" id="1123">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Tags the current branch.</p>
+                    <p>Tags the current branch.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
@@ -737,7 +748,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -759,6 +770,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

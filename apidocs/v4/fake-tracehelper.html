@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="TraceHelper" class="anchor" href="#TraceHelper"><h1>TraceHelper</h1></a>
+
 <div class="xmldoc">
 <p>This module contains function which allow to trace build output</p>
 
@@ -262,7 +273,9 @@
           <td class="type-name">
             <a href="fake-tracehelper-fakeexception.html">FAKEException</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -283,10 +296,10 @@
           </code>
           <div class="tip" id="885">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -297,10 +310,10 @@
           </code>
           <div class="tip" id="886">
             <strong>Signature:</strong> tag:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Removes an opening tag from the internal tag stack</p>
+                    <p>Removes an opening tag from the internal tag stack</p>
 
 
         </td>
@@ -313,10 +326,10 @@
           </code>
           <div class="tip" id="887">
             <strong>Signature:</strong> ITraceListener<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -327,10 +340,10 @@
           </code>
           <div class="tip" id="888">
             <strong>Signature:</strong> ex:Exception -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Converts an exception and its inner exceptions to a nice string.</p>
+                    <p>Converts an exception and its inner exceptions to a nice string.</p>
 
 
         </td>
@@ -343,10 +356,10 @@
           </code>
           <div class="tip" id="889">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the path of the current FAKE instance</p>
+                    <p>Gets the path of the current FAKE instance</p>
 
 
         </td>
@@ -359,10 +372,10 @@
           </code>
           <div class="tip" id="890">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the FAKE version no.</p>
+                    <p>Gets the FAKE version no.</p>
 
 
         </td>
@@ -375,10 +388,10 @@
           </code>
           <div class="tip" id="891">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the FAKE Version string</p>
+                    <p>Gets the FAKE Version string</p>
 
 
         </td>
@@ -391,10 +404,10 @@
           </code>
           <div class="tip" id="892">
             <strong>Signature:</strong> message:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Logs the specified string</p>
+                    <p>Logs the specified string</p>
 
 
         </td>
@@ -407,10 +420,10 @@
           </code>
           <div class="tip" id="893">
             <strong>Signature:</strong> message:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Logs the given files with the message.</p>
+                    <p>Logs the given files with the message.</p>
 
 
         </td>
@@ -423,10 +436,10 @@
           </code>
           <div class="tip" id="894">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?13044,unit&gt; -&gt; &#39;?13044<br />
-                          <strong>Type parameters:</strong> '?13044          </div>
+                          <strong>Type parameters:</strong> '?13044                      </div>
         </td>
         <td class="xmldoc">
-          <p>Logs the specified message (without line break)</p>
+                    <p>Logs the specified message (without line break)</p>
 
 
         </td>
@@ -439,10 +452,10 @@
           </code>
           <div class="tip" id="895">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Logs the specified message</p>
+                    <p>Logs the specified message</p>
 
 
         </td>
@@ -455,10 +468,10 @@
           </code>
           <div class="tip" id="896">
             <strong>Signature:</strong> (msg:string * eventLogEntry:EventLogEntryType) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the message to the console</p>
+                    <p>Traces the message to the console</p>
 
 
         </td>
@@ -471,10 +484,10 @@
           </code>
           <div class="tip" id="897">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Logs the specified string if the verbose mode is activated.</p>
+                    <p>Logs the specified string if the verbose mode is activated.</p>
 
 
         </td>
@@ -487,10 +500,10 @@
           </code>
           <div class="tip" id="898">
             <strong>Signature:</strong> tag:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Puts an opening tag on the internal tag stack</p>
+                    <p>Puts an opening tag on the internal tag stack</p>
 
 
         </td>
@@ -503,10 +516,10 @@
           </code>
           <div class="tip" id="899">
             <strong>Signature:</strong> message:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a trace to the command line (in green)</p>
+                    <p>Writes a trace to the command line (in green)</p>
 
 
         </td>
@@ -519,10 +532,10 @@
           </code>
           <div class="tip" id="900">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the end of the build</p>
+                    <p>Traces the end of the build</p>
 
 
         </td>
@@ -535,10 +548,10 @@
           </code>
           <div class="tip" id="901">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the end of a target</p>
+                    <p>Traces the end of a target</p>
 
 
         </td>
@@ -551,10 +564,18 @@
           </code>
           <div class="tip" id="902">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;use &#39;traceStartTaskUsing&#39; with the &#39;use&#39; pattern instead of traceStartTask / traceEndTask&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the end of a task</p>
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>use &#39;traceStartTaskUsing&#39; with the &#39;use&#39; pattern instead of traceStartTask / traceEndTask</p>
+            </div> 
+                    <p>Traces the end of a task</p>
 
 
         </td>
@@ -567,10 +588,10 @@
           </code>
           <div class="tip" id="903">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the EnvironmentVariables</p>
+                    <p>Traces the EnvironmentVariables</p>
 
 
         </td>
@@ -583,10 +604,10 @@
           </code>
           <div class="tip" id="904">
             <strong>Signature:</strong> error:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces an error (in red)</p>
+                    <p>Traces an error (in red)</p>
 
 
         </td>
@@ -599,10 +620,10 @@
           </code>
           <div class="tip" id="905">
             <strong>Signature:</strong> ex:Exception -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces an exception details (in red)</p>
+                    <p>Traces an exception details (in red)</p>
 
 
         </td>
@@ -615,10 +636,10 @@
           </code>
           <div class="tip" id="906">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a message to the command line (in green) and without a line break</p>
+                    <p>Writes a message to the command line (in green) and without a line break</p>
 
 
         </td>
@@ -631,10 +652,10 @@
           </code>
           <div class="tip" id="907">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a trace to the command line (in yellow)</p>
+                    <p>Writes a trace to the command line (in yellow)</p>
 
 
         </td>
@@ -647,10 +668,10 @@
           </code>
           <div class="tip" id="908">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a message to the command line (in green)</p>
+                    <p>Writes a message to the command line (in green)</p>
 
 
         </td>
@@ -663,10 +684,10 @@
           </code>
           <div class="tip" id="909">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces a header</p>
+                    <p>Traces a header</p>
 
 
         </td>
@@ -679,10 +700,10 @@
           </code>
           <div class="tip" id="910">
             <strong>Signature:</strong> text:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a trace to stderr (in yellow)</p>
+                    <p>Writes a trace to stderr (in yellow)</p>
 
 
         </td>
@@ -695,10 +716,10 @@
           </code>
           <div class="tip" id="911">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces a line</p>
+                    <p>Traces a line</p>
 
 
         </td>
@@ -711,10 +732,10 @@
           </code>
           <div class="tip" id="912">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the begin of the build</p>
+                    <p>Traces the begin of the build</p>
 
 
         </td>
@@ -727,10 +748,10 @@
           </code>
           <div class="tip" id="913">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the begin of a target</p>
+                    <p>Traces the begin of a target</p>
 
 
         </td>
@@ -743,10 +764,18 @@
           </code>
           <div class="tip" id="914">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;use &#39;traceStartTaskUsing&#39; with the &#39;use&#39; pattern instead of traceStartTask / traceEndTask&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the begin of a task</p>
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>use &#39;traceStartTaskUsing&#39; with the &#39;use&#39; pattern instead of traceStartTask / traceEndTask</p>
+            </div> 
+                    <p>Traces the begin of a task</p>
 
 
         </td>
@@ -759,10 +788,10 @@
           </code>
           <div class="tip" id="915">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; IDisposable<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Traces the begin of a task and closes it again after disposing of the return value
+                    <p>Traces the begin of a task and closes it again after disposing of the return value
 (call it with 'use')</p>
 
 
@@ -776,10 +805,10 @@
           </code>
           <div class="tip" id="916">
             <strong>Signature:</strong> s:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Writes a trace to the command line (in green) if the verbose mode is activated.</p>
+                    <p>Writes a trace to the command line (in green) if the verbose mode is activated.</p>
 
 
         </td>
@@ -891,7 +920,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -913,6 +942,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

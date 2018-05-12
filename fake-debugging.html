@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -184,6 +189,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -238,9 +246,10 @@
                       <article>
 <h1><a name="Debugging-of-FAKE-5-build-scripts" class="anchor" href="#Debugging-of-FAKE-5-build-scripts">Debugging of FAKE 5 build scripts</a></h1>
 <p>Currently debugging support (and documentation around it) is limited. Please help to improve the situation by improving the code and the docs!</p>
-<blockquote>
-<p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
-</blockquote>
+<div class="alert alert-warning">
+    <h5>WARNING</h5>
+    <p>Currently debugging via the <code>chocolatey</code> installation is not possible. This is because we currently do not distribute the x64 version on x64 versions of windows and the .NET Core debugger currently only supports x64!</p>
+</div>
 <h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
 <ul>
 <li>Run with more verbose logging <code>-v</code></li>
@@ -253,32 +262,24 @@
 <li>Open Visual Studio Code</li>
 <li>
 <p>Open "The Debugger" view and add the following configuration</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="json">      {
-          "name": "Debug My Build Script",
-          "type": "coreclr",
-          "request": "launch",
-          "program": "E:\\fake-dotnetcore-portable\\fake.dll",
-          "args": ["run", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
-          "cwd": "${workspaceRoot}",
-          "stopAtEntry": false,
-          "console": "internalConsole"
-      }
-</code></pre></td></tr></table>
-<blockquote>
-<p>It is important to specify <code>--debug:portable --optimize-</code><br>
-To get debugging support for .NET Core you need <a href="https://github.com/OmniSharp/omnisharp-vscode">C# for Visual Studio Code</a></p>
-</blockquote>
+<pre><code class="lang-json">
+{
+  "name": "Debug My Build Script",
+  "type": "coreclr",
+  "request": "launch",
+  "program": "E:\\fake-dotnetcore-portable\\fake.dll",
+  "args": ["run", "--fsiargs", "--debug:portable --optimize-", "build.fsx"],
+  "cwd": "${workspaceRoot}",
+  "stopAtEntry": false,
+  "console": "internalConsole"
+}
+</code></pre>
+<div class="alert alert-info">
+   <h5>INFO</h5>
+   <p>It is important to specify <code>--debug:portable --optimize</code><br>
+   To get debugging support for .NET Core you need <a href="https://github.com/OmniSharp/omnisharp-vscode">C# for Visual Studio Code</a> 
+   </p>
+</div>
 </li>
 <li><p>Delete the <code>.fake</code> directory</p></li>
 <li>Set a breakpoint in your script and run the new configuration</li>
@@ -288,8 +289,8 @@ To get debugging support for .NET Core you need <a href="https://github.com/Omni
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">printfn</span> <span class="s">&quot;Press any key to continue...&quot;</span>
-<span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Console</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">ReadKey</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">ignore</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">printfn</span> <span class="s">&quot;Press any key to continue...&quot;</span>
+<span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="fn">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="rt">Console</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">ReadKey</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="fn">ignore</span>
 </code></pre></td>
 </tr>
 </table>
@@ -313,8 +314,8 @@ To get debugging support for .NET Core you need <a href="https://github.com/Omni
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Regular header and `#load &quot;.fake/build.fsx/intellisense.fsx&quot;`</span>
 
 <span class="pp">#if</span> <span class="id">!FAKE</span>
-<span class="k">let</span> <span class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
-<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span class="id">execContext</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
+<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">execContext</span><span class="pn">)</span>
 <span class="pp">#endif</span>
 
 <span class="c">// Your Script code...</span>
@@ -328,9 +329,9 @@ To get debugging support for .NET Core you need <a href="https://github.com/Omni
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">execContext</span><span class="pn">.</span><span class="id">Dispose</span><span class="pn">(</span><span class="pn">)</span>
-<span class="k">let</span> <span class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
-<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span class="id">execContext</span><span class="pn">)</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="id">execContext</span><span class="pn">.</span><span class="id">Dispose</span><span class="pn">(</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="id">execContext</span> <span class="o">=</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">FakeExecutionContext</span><span class="pn">.</span><span class="id">Create</span> <span class="k">false</span> <span class="s">&quot;build.fsx&quot;</span> <span class="pn">[</span><span class="pn">]</span>
+<span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">setExecutionContext</span> <span class="pn">(</span><span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">Context</span><span class="pn">.</span><span class="id">RuntimeContext</span><span class="pn">.</span><span class="id">Fake</span> <span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="id">execContext</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
 </table>
@@ -340,6 +341,7 @@ To get debugging support for .NET Core you need <a href="https://github.com/Omni
 <div class="tip" id="fs3">type Console =<br />&#160;&#160;static member BackgroundColor : ConsoleColor with get, set<br />&#160;&#160;static member Beep : unit -&gt; unit + 1 overload<br />&#160;&#160;static member BufferHeight : int with get, set<br />&#160;&#160;static member BufferWidth : int with get, set<br />&#160;&#160;static member CapsLock : bool<br />&#160;&#160;static member Clear : unit -&gt; unit<br />&#160;&#160;static member CursorLeft : int with get, set<br />&#160;&#160;static member CursorSize : int with get, set<br />&#160;&#160;static member CursorTop : int with get, set<br />&#160;&#160;static member CursorVisible : bool with get, set<br />&#160;&#160;...</div>
 <div class="tip" id="fs4">System.Console.ReadKey() : System.ConsoleKeyInfo<br />System.Console.ReadKey(intercept: bool) : System.ConsoleKeyInfo</div>
 <div class="tip" id="fs5">val ignore : value:&#39;T -&gt; unit</div>
+<div class="tip" id="fs6">val execContext : obj</div>
 
                       </article>
 								</div>
@@ -445,7 +447,7 @@ To get debugging support for .NET Core you need <a href="https://github.com/Omni
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -467,6 +469,17 @@ To get debugging support for .NET Core you need <a href="https://github.com/Omni
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

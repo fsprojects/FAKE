@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -232,21 +240,28 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-                                    <p>
-                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
-                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/Fake.Core.CommandLineParsing" >Fake.Core.CommandLineParsing</a> module.</strong>
-                                    </p>
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.Core.CommandLineParsing" >Fake.Core.CommandLineParsing</a> module.
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
 									<!-- Content -->
                       <article>
           			
 
 
+<p>
 
+</p>
 <a name="ArgParser" class="anchor" href="#ArgParser"><h1>ArgParser</h1></a>
+
 <div class="xmldoc">
 </div>
 
@@ -262,7 +277,9 @@
           <td class="type-name">
             <a href="fake-core-commandlineparsing-argparser-inline.html">Inline</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -278,393 +295,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
             ( .&gt;&gt; ) p1 p2
           </code>
-          <div class="tip" id="427">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10557,&#39;?10558&gt; -&gt; p2:ArgumentParser&lt;&#39;?10557,&#39;?10559&gt; -&gt; IArgumentStream&lt;&#39;?10557&gt; -&gt; Reply&lt;&#39;?10558&gt;<br />
-                          <strong>Type parameters:</strong> '?10557, '?10558, '?10559          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L290-290" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '428', 428)" onmouseover="showTip(event, '428', 428)">
-            ( .&gt;&gt;. ) p1 p2
-          </code>
-          <div class="tip" id="428">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10561,&#39;?10562&gt; -&gt; p2:ArgumentParser&lt;&#39;?10561,&#39;?10563&gt; -&gt; IArgumentStream&lt;&#39;?10561&gt; -&gt; Reply&lt;&#39;?10562 * &#39;?10563&gt;<br />
-                          <strong>Type parameters:</strong> '?10561, '?10562, '?10563          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L291-291" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '429', 429)" onmouseover="showTip(event, '429', 429)">
-            ( |&gt;&gt; ) p f
-          </code>
-          <div class="tip" id="429">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10569,&#39;?10570&gt; -&gt; f:(&#39;?10570 -&gt; &#39;?10571) -&gt; IArgumentStream&lt;&#39;?10569&gt; -&gt; Reply&lt;&#39;?10571&gt;<br />
-                          <strong>Type parameters:</strong> '?10569, '?10570, '?10571          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L294-294" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '430', 430)" onmouseover="showTip(event, '430', 430)">
-            ( &lt;?&gt; ) p label
-          </code>
-          <div class="tip" id="430">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;u,&#39;a&gt; -&gt; label:string -&gt; ArgumentParser&lt;&#39;u,&#39;a&gt;<br />
-                          <strong>Type parameters:</strong> 'u, 'a          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L297-297" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '431', 431)" onmouseover="showTip(event, '431', 431)">
-            ( &lt;|&gt; ) p1 p2
-          </code>
-          <div class="tip" id="431">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10582,&#39;?10583&gt; -&gt; p2:ArgumentParser&lt;&#39;?10582,&#39;?10583&gt; -&gt; IArgumentStream&lt;&#39;?10582&gt; -&gt; Reply&lt;&#39;?10583&gt;<br />
-                          <strong>Type parameters:</strong> '?10582, '?10583          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L357-357" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '432', 432)" onmouseover="showTip(event, '432', 432)">
-            ( &gt;&gt;% ) p x
-          </code>
-          <div class="tip" id="432">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10549,&#39;?10550&gt; -&gt; x:&#39;?10551 -&gt; IArgumentStream&lt;&#39;?10549&gt; -&gt; Reply&lt;&#39;?10551&gt;<br />
-                          <strong>Type parameters:</strong> '?10549, '?10550, '?10551          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L288-288" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '433', 433)" onmouseover="showTip(event, '433', 433)">
-            ( &gt;&gt;. ) p1 p2
-          </code>
-          <div class="tip" id="433">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10553,&#39;?10554&gt; -&gt; p2:ArgumentParser&lt;&#39;?10553,&#39;?10555&gt; -&gt; IArgumentStream&lt;&#39;?10553&gt; -&gt; Reply&lt;&#39;?10555&gt;<br />
-                          <strong>Type parameters:</strong> '?10553, '?10554, '?10555          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L289-289" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '434', 434)" onmouseover="showTip(event, '434', 434)">
-            ( &gt;&gt;= ) p f stream
-          </code>
-          <div class="tip" id="434">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;u,&#39;a&gt; -&gt; f:(&#39;a -&gt; ArgumentParser&lt;&#39;u,&#39;b&gt;) -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;b&gt;<br />
-                          <strong>Type parameters:</strong> 'u, 'a, 'b          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L276-276" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '435', 435)" onmouseover="showTip(event, '435', 435)">
-            between popen pclose p
-          </code>
-          <div class="tip" id="435">
-            <strong>Signature:</strong> popen:ArgumentParser&lt;&#39;u,&#39;u&gt; -&gt; pclose:ArgumentParser&lt;&#39;u,&#39;?10566&gt; -&gt; p:ArgumentParser&lt;&#39;u,&#39;?10567&gt; -&gt; IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;?10567&gt;<br />
-                          <strong>Type parameters:</strong> 'u, '?10566, '?10567          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L292-292" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '436', 436)" onmouseover="showTip(event, '436', 436)">
-            choice ps stream
-          </code>
-          <div class="tip" id="436">
-            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a&gt;<br />
-                          <strong>Type parameters:</strong> 'u, 'a          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L338-338" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '437', 437)" onmouseover="showTip(event, '437', 437)">
-            choiceBest ps stream
-          </code>
-          <div class="tip" id="437">
-            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a&gt;<br />
-                          <strong>Type parameters:</strong> 'u, 'a          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L306-306" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
-            chooseParser itemType chooser stream
-          </code>
-          <div class="tip" id="438">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10636 option) -&gt; stream:IArgumentStream&lt;&#39;?10637&gt; -&gt; Reply&lt;&#39;?10636&gt;<br />
-                          <strong>Type parameters:</strong> '?10636, '?10637          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L454-454" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
-            chooseParser&#39; itemType chooser
-          </code>
-          <div class="tip" id="439">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10642 option) -&gt; IArgumentStream&lt;&#39;?10643&gt; -&gt; Reply&lt;&#39;?10642&gt;<br />
-                          <strong>Type parameters:</strong> '?10642, '?10643          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L478-478" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
-            chooseParserFull itemType chooser stream
-          </code>
-          <div class="tip" id="440">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10639 option) -&gt; stream:IArgumentStream&lt;&#39;?10640&gt; -&gt; Reply&lt;&#39;?10639&gt;<br />
-                          <strong>Type parameters:</strong> '?10639, '?10640          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L466-466" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
-            chooseParserFull&#39; itemType chooser
-          </code>
-          <div class="tip" id="441">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10645 option) -&gt; IArgumentStream&lt;&#39;?10646&gt; -&gt; Reply&lt;&#39;?10645&gt;<br />
-                          <strong>Type parameters:</strong> '?10645, '?10646          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L484-484" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
-            debug map&#39; arg&#39; stream&#39;
-          </code>
-          <div class="tip" id="442">
-            <strong>Signature:</strong> map&#39;:(&#39;a -&gt; IArgumentStream&lt;&#39;state&gt; -&gt; unit) -&gt; arg&#39;:&#39;a -&gt; stream&#39;:IArgumentStream&lt;&#39;state&gt; -&gt; Reply&lt;&#39;a&gt;<br />
-                          <strong>Type parameters:</strong> 'a, 'state          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L506-506" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
-            getParser ast
-          </code>
-          <div class="tip" id="443">
-            <strong>Signature:</strong> ast:UsageAst -&gt; ArgumentParser&lt;DocoptMap,Map&lt;string,DocoptResult&gt;&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L639-639" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
-            many p
-          </code>
-          <div class="tip" id="444">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10590,&#39;?10591&gt; -&gt; ArgumentParser&lt;&#39;?10590,&#39;?10591 list&gt;<br />
-                          <strong>Type parameters:</strong> '?10590, '?10591          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L401-401" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
-            many1 p
-          </code>
-          <div class="tip" id="445">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10593,&#39;?10594&gt; -&gt; ArgumentParser&lt;&#39;?10593,&#39;?10594 list&gt;<br />
-                          <strong>Type parameters:</strong> '?10593, '?10594          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L402-402" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
-            mergeMap m1 m2
-          </code>
-          <div class="tip" id="446">
-            <strong>Signature:</strong> m1:Map&lt;&#39;?10665,&#39;?10666&gt; -&gt; m2:Map&lt;&#39;?10665,&#39;?10666&gt; -&gt; Map&lt;&#39;?10665,&#39;?10666&gt;<br />
-                          <strong>Type parameters:</strong> '?10665, '?10666          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L550-550" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
-            mergeMaps maps
-          </code>
-          <div class="tip" id="447">
-            <strong>Signature:</strong> maps:seq&lt;Map&lt;&#39;?10668,&#39;?10669&gt;&gt; -&gt; Map&lt;&#39;?10668,&#39;?10669&gt;<br />
-                          <strong>Type parameters:</strong> '?10668, '?10669          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L552-552" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
-            multipleSaveInMap f
-          </code>
           <div class="tip" id="448">
-            <strong>Signature:</strong> f:(&#39;?10662 -&gt; &#39;?10663) -&gt; &#39;?10662 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> '?10662, '?10663          </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10784,&#39;?10785&gt; -&gt; p2:ArgumentParser&lt;&#39;?10784,&#39;?10786&gt; -&gt; IArgumentStream&lt;&#39;?10784&gt; -&gt; Reply&lt;&#39;?10785&gt;<br />
+                          <strong>Type parameters:</strong> '?10784, '?10785, '?10786                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L546-546" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L290-290" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -675,14 +314,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
-            parg argName
+            ( .&gt;&gt;. ) p1 p2
           </code>
           <div class="tip" id="449">
-            <strong>Signature:</strong> argName:string -&gt; IArgumentStream&lt;&#39;?10650&gt; -&gt; Reply&lt;string&gt;<br />
-                          <strong>Type parameters:</strong> '?10650          </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10788,&#39;?10789&gt; -&gt; p2:ArgumentParser&lt;&#39;?10788,&#39;?10790&gt; -&gt; IArgumentStream&lt;&#39;?10788&gt; -&gt; Reply&lt;&#39;?10789 * &#39;?10790&gt;<br />
+                          <strong>Type parameters:</strong> '?10788, '?10789, '?10790                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L497-497" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L291-291" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -693,14 +332,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
-            pcmd cmd
+            ( |&gt;&gt; ) p f
           </code>
           <div class="tip" id="450">
-            <strong>Signature:</strong> cmd:string -&gt; IArgumentStream&lt;&#39;?10648&gt; -&gt; Reply&lt;string&gt;<br />
-                          <strong>Type parameters:</strong> '?10648          </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10796,&#39;?10797&gt; -&gt; f:(&#39;?10797 -&gt; &#39;?10798) -&gt; IArgumentStream&lt;&#39;?10796&gt; -&gt; Reply&lt;&#39;?10798&gt;<br />
+                          <strong>Type parameters:</strong> '?10796, '?10797, '?10798                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L492-492" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L294-294" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -711,14 +350,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '451', 451)" onmouseover="showTip(event, '451', 451)">
-            pLongFlag flag
+            ( &lt;?&gt; ) p label
           </code>
           <div class="tip" id="451">
-            <strong>Signature:</strong> flag:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                      </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;u,&#39;a&gt; -&gt; label:string -&gt; ArgumentParser&lt;&#39;u,&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'u, 'a                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L556-556" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L297-297" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -729,14 +368,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '452', 452)" onmouseover="showTip(event, '452', 452)">
-            pOption includeShort o&#39;
+            ( &lt;|&gt; ) p1 p2
           </code>
           <div class="tip" id="452">
-            <strong>Signature:</strong> includeShort:bool -&gt; o&#39;:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                      </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10809,&#39;?10810&gt; -&gt; p2:ArgumentParser&lt;&#39;?10809,&#39;?10810&gt; -&gt; IArgumentStream&lt;&#39;?10809&gt; -&gt; Reply&lt;&#39;?10810&gt;<br />
+                          <strong>Type parameters:</strong> '?10809, '?10810                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L624-624" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L357-357" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -747,14 +386,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '453', 453)" onmouseover="showTip(event, '453', 453)">
-            pOptions allowMissing flags
+            ( &gt;&gt;% ) p x
           </code>
           <div class="tip" id="453">
-            <strong>Signature:</strong> allowMissing:bool -&gt; flags:SafeOptions -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                      </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10776,&#39;?10777&gt; -&gt; x:&#39;?10778 -&gt; IArgumentStream&lt;&#39;?10776&gt; -&gt; Reply&lt;&#39;?10778&gt;<br />
+                          <strong>Type parameters:</strong> '?10776, '?10777, '?10778                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L633-633" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L288-288" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -765,14 +404,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '454', 454)" onmouseover="showTip(event, '454', 454)">
-            preturn x stream
+            ( &gt;&gt;. ) p1 p2
           </code>
           <div class="tip" id="454">
-            <strong>Signature:</strong> x:&#39;?10539 -&gt; stream:IArgumentStream&lt;&#39;?10540&gt; -&gt; Reply&lt;&#39;?10539&gt;<br />
-                          <strong>Type parameters:</strong> '?10539, '?10540          </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10780,&#39;?10781&gt; -&gt; p2:ArgumentParser&lt;&#39;?10780,&#39;?10782&gt; -&gt; IArgumentStream&lt;&#39;?10780&gt; -&gt; Reply&lt;&#39;?10782&gt;<br />
+                          <strong>Type parameters:</strong> '?10780, '?10781, '?10782                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L273-273" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L289-289" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -783,14 +422,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '455', 455)" onmouseover="showTip(event, '455', 455)">
-            pseq ps
+            ( &gt;&gt;= ) p f stream
           </code>
           <div class="tip" id="455">
-            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;?10596,Map&lt;&#39;?10597,&#39;?10598&gt;&gt;&gt; -&gt; ArgumentParser&lt;&#39;?10596,Map&lt;&#39;?10597,&#39;?10598&gt;&gt;<br />
-                          <strong>Type parameters:</strong> '?10596, '?10597, '?10598          </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;u,&#39;a&gt; -&gt; f:(&#39;a -&gt; ArgumentParser&lt;&#39;u,&#39;b&gt;) -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;b&gt;<br />
+                          <strong>Type parameters:</strong> 'u, 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L404-404" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L276-276" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -801,14 +440,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '456', 456)" onmouseover="showTip(event, '456', 456)">
-            pShortFlag flag
+            between popen pclose p
           </code>
           <div class="tip" id="456">
-            <strong>Signature:</strong> flag:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                      </div>
+            <strong>Signature:</strong> popen:ArgumentParser&lt;&#39;u,&#39;u&gt; -&gt; pclose:ArgumentParser&lt;&#39;u,&#39;?10793&gt; -&gt; p:ArgumentParser&lt;&#39;u,&#39;?10794&gt; -&gt; IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;?10794&gt;<br />
+                          <strong>Type parameters:</strong> 'u, '?10793, '?10794                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L579-579" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L292-292" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -819,14 +458,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '457', 457)" onmouseover="showTip(event, '457', 457)">
-            punorderedseq allowEmpty allowMissing ps
+            choice ps stream
           </code>
           <div class="tip" id="457">
-            <strong>Signature:</strong> allowEmpty:bool -&gt; allowMissing:bool -&gt; ps:seq&lt;ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; ArgumentParser&lt;&#39;u,&#39;a list&gt;<br />
-                          <strong>Type parameters:</strong> 'u, 'a          </div>
+            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'u, 'a                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L452-452" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L338-338" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -837,14 +476,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
-            punorderedseqWithMany (...)
+            choiceBest ps stream
           </code>
           <div class="tip" id="458">
-            <strong>Signature:</strong> allowEmpty:bool -&gt; allowMissing:bool -&gt; ps:seq&lt;bool * ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a list&gt;<br />
-                          <strong>Type parameters:</strong> 'u, 'a          </div>
+            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'u, 'a                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L420-420" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L306-306" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -855,14 +494,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
-            pzero stream
+            chooseParser itemType chooser stream
           </code>
           <div class="tip" id="459">
-            <strong>Signature:</strong> stream:IArgumentStream&lt;&#39;?10542&gt; -&gt; Reply&lt;&#39;?10543&gt;<br />
-                          <strong>Type parameters:</strong> '?10542, '?10543          </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10863 option) -&gt; stream:IArgumentStream&lt;&#39;?10864&gt; -&gt; Reply&lt;&#39;?10863&gt;<br />
+                          <strong>Type parameters:</strong> '?10863, '?10864                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L274-274" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L454-454" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -873,14 +512,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '460', 460)" onmouseover="showTip(event, '460', 460)">
-            saveInMap key f
+            chooseParser&#39; itemType chooser
           </code>
           <div class="tip" id="460">
-            <strong>Signature:</strong> key:string -&gt; f:(&#39;?10658 -&gt; DocoptResult) -&gt; &#39;?10658 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> '?10658          </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10869 option) -&gt; IArgumentStream&lt;&#39;?10870&gt; -&gt; Reply&lt;&#39;?10869&gt;<br />
+                          <strong>Type parameters:</strong> '?10869, '?10870                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L535-535" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L478-478" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -891,14 +530,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '461', 461)" onmouseover="showTip(event, '461', 461)">
-            saveInMapM keys f
+            chooseParserFull itemType chooser stream
           </code>
           <div class="tip" id="461">
-            <strong>Signature:</strong> keys:seq&lt;string&gt; -&gt; f:(&#39;?10660 -&gt; DocoptResult) -&gt; &#39;?10660 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> '?10660          </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10866 option) -&gt; stream:IArgumentStream&lt;&#39;?10867&gt; -&gt; Reply&lt;&#39;?10866&gt;<br />
+                          <strong>Type parameters:</strong> '?10866, '?10867                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L540-540" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L466-466" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -909,14 +548,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '462', 462)" onmouseover="showTip(event, '462', 462)">
-            updateMap key newItem map
+            chooseParserFull&#39; itemType chooser
           </code>
           <div class="tip" id="462">
-            <strong>Signature:</strong> key:string -&gt; newItem:DocoptResult -&gt; map:Map&lt;string,DocoptResult&gt; -&gt; Map&lt;string,DocoptResult&gt;<br />
-                      </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10872 option) -&gt; IArgumentStream&lt;&#39;?10873&gt; -&gt; Reply&lt;&#39;?10872&gt;<br />
+                          <strong>Type parameters:</strong> '?10872, '?10873                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L512-512" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L484-484" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -927,14 +566,392 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
-            updateUserState map&#39; arg&#39; stream&#39;
+            debug map&#39; arg&#39; stream&#39;
           </code>
           <div class="tip" id="463">
-            <strong>Signature:</strong> map&#39;:(&#39;a -&gt; DocoptMap -&gt; DocoptMap) -&gt; arg&#39;:&#39;a -&gt; stream&#39;:IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+            <strong>Signature:</strong> map&#39;:(&#39;a -&gt; IArgumentStream&lt;&#39;state&gt; -&gt; unit) -&gt; arg&#39;:&#39;a -&gt; stream&#39;:IArgumentStream&lt;&#39;state&gt; -&gt; Reply&lt;&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'a, 'state                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L499-499" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L506-506" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '464', 464)" onmouseover="showTip(event, '464', 464)">
+            getParser ast
+          </code>
+          <div class="tip" id="464">
+            <strong>Signature:</strong> ast:UsageAst -&gt; ArgumentParser&lt;DocoptMap,Map&lt;string,DocoptResult&gt;&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L639-639" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
+            many p
+          </code>
+          <div class="tip" id="465">
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10817,&#39;?10818&gt; -&gt; ArgumentParser&lt;&#39;?10817,&#39;?10818 list&gt;<br />
+                          <strong>Type parameters:</strong> '?10817, '?10818                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L401-401" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '466', 466)" onmouseover="showTip(event, '466', 466)">
+            many1 p
+          </code>
+          <div class="tip" id="466">
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10820,&#39;?10821&gt; -&gt; ArgumentParser&lt;&#39;?10820,&#39;?10821 list&gt;<br />
+                          <strong>Type parameters:</strong> '?10820, '?10821                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L402-402" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
+            mergeMap m1 m2
+          </code>
+          <div class="tip" id="467">
+            <strong>Signature:</strong> m1:Map&lt;&#39;?10892,&#39;?10893&gt; -&gt; m2:Map&lt;&#39;?10892,&#39;?10893&gt; -&gt; Map&lt;&#39;?10892,&#39;?10893&gt;<br />
+                          <strong>Type parameters:</strong> '?10892, '?10893                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L550-550" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
+            mergeMaps maps
+          </code>
+          <div class="tip" id="468">
+            <strong>Signature:</strong> maps:seq&lt;Map&lt;&#39;?10895,&#39;?10896&gt;&gt; -&gt; Map&lt;&#39;?10895,&#39;?10896&gt;<br />
+                          <strong>Type parameters:</strong> '?10895, '?10896                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L552-552" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
+            multipleSaveInMap f
+          </code>
+          <div class="tip" id="469">
+            <strong>Signature:</strong> f:(&#39;?10889 -&gt; &#39;?10890) -&gt; &#39;?10889 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> '?10889, '?10890                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L546-546" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
+            parg argName
+          </code>
+          <div class="tip" id="470">
+            <strong>Signature:</strong> argName:string -&gt; IArgumentStream&lt;&#39;?10877&gt; -&gt; Reply&lt;string&gt;<br />
+                          <strong>Type parameters:</strong> '?10877                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L497-497" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
+            pcmd cmd
+          </code>
+          <div class="tip" id="471">
+            <strong>Signature:</strong> cmd:string -&gt; IArgumentStream&lt;&#39;?10875&gt; -&gt; Reply&lt;string&gt;<br />
+                          <strong>Type parameters:</strong> '?10875                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L492-492" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+            pLongFlag flag
+          </code>
+          <div class="tip" id="472">
+            <strong>Signature:</strong> flag:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L556-556" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+            pOption includeShort o&#39;
+          </code>
+          <div class="tip" id="473">
+            <strong>Signature:</strong> includeShort:bool -&gt; o&#39;:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L624-624" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+            pOptions allowMissing flags
+          </code>
+          <div class="tip" id="474">
+            <strong>Signature:</strong> allowMissing:bool -&gt; flags:SafeOptions -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L633-633" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+            preturn x stream
+          </code>
+          <div class="tip" id="475">
+            <strong>Signature:</strong> x:&#39;?10766 -&gt; stream:IArgumentStream&lt;&#39;?10767&gt; -&gt; Reply&lt;&#39;?10766&gt;<br />
+                          <strong>Type parameters:</strong> '?10766, '?10767                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L273-273" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
+            pseq ps
+          </code>
+          <div class="tip" id="476">
+            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;?10823,Map&lt;&#39;?10824,&#39;?10825&gt;&gt;&gt; -&gt; ArgumentParser&lt;&#39;?10823,Map&lt;&#39;?10824,&#39;?10825&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?10823, '?10824, '?10825                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L404-404" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '477', 477)" onmouseover="showTip(event, '477', 477)">
+            pShortFlag flag
+          </code>
+          <div class="tip" id="477">
+            <strong>Signature:</strong> flag:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L579-579" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
+            punorderedseq allowEmpty allowMissing ps
+          </code>
+          <div class="tip" id="478">
+            <strong>Signature:</strong> allowEmpty:bool -&gt; allowMissing:bool -&gt; ps:seq&lt;ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; ArgumentParser&lt;&#39;u,&#39;a list&gt;<br />
+                          <strong>Type parameters:</strong> 'u, 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L452-452" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '479', 479)" onmouseover="showTip(event, '479', 479)">
+            punorderedseqWithMany (...)
+          </code>
+          <div class="tip" id="479">
+            <strong>Signature:</strong> allowEmpty:bool -&gt; allowMissing:bool -&gt; ps:seq&lt;bool * ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a list&gt;<br />
+                          <strong>Type parameters:</strong> 'u, 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L420-420" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '480', 480)" onmouseover="showTip(event, '480', 480)">
+            pzero stream
+          </code>
+          <div class="tip" id="480">
+            <strong>Signature:</strong> stream:IArgumentStream&lt;&#39;?10769&gt; -&gt; Reply&lt;&#39;?10770&gt;<br />
+                          <strong>Type parameters:</strong> '?10769, '?10770                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L274-274" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '481', 481)" onmouseover="showTip(event, '481', 481)">
+            saveInMap key f
+          </code>
+          <div class="tip" id="481">
+            <strong>Signature:</strong> key:string -&gt; f:(&#39;?10885 -&gt; DocoptResult) -&gt; &#39;?10885 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> '?10885                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L535-535" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '482', 482)" onmouseover="showTip(event, '482', 482)">
+            saveInMapM keys f
+          </code>
+          <div class="tip" id="482">
+            <strong>Signature:</strong> keys:seq&lt;string&gt; -&gt; f:(&#39;?10887 -&gt; DocoptResult) -&gt; &#39;?10887 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> '?10887                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L540-540" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '483', 483)" onmouseover="showTip(event, '483', 483)">
+            updateMap key newItem map
+          </code>
+          <div class="tip" id="483">
+            <strong>Signature:</strong> key:string -&gt; newItem:DocoptResult -&gt; map:Map&lt;string,DocoptResult&gt; -&gt; Map&lt;string,DocoptResult&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L512-512" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '484', 484)" onmouseover="showTip(event, '484', 484)">
+            updateUserState map&#39; arg&#39; stream&#39;
+          </code>
+          <div class="tip" id="484">
+            <strong>Signature:</strong> map&#39;:(&#39;a -&gt; DocoptMap -&gt; DocoptMap) -&gt; arg&#39;:&#39;a -&gt; stream&#39;:IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L499-499" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1048,7 +1065,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1070,6 +1087,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

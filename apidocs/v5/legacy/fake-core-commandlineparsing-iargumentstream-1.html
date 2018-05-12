@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="IArgumentStream<'TUserState>" class="anchor" href="#IArgumentStream<'TUserState>" ><h1>IArgumentStream<'TUserState></h1></a>
 <div class="xmldoc">
 </div>
@@ -257,16 +267,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4611', 4611)" onmouseover="showTip(event, '4611', 4611)">
+          <code onmouseout="hideTip(event, '4654', 4654)" onmouseover="showTip(event, '4654', 4654)">
             Argv
           </code>
-          <div class="tip" id="4611">
+          <div class="tip" id="4654">
             <strong>Signature:</strong> string array<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L144-144" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L144-144" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -276,16 +286,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4612', 4612)" onmouseover="showTip(event, '4612', 4612)">
+          <code onmouseout="hideTip(event, '4655', 4655)" onmouseover="showTip(event, '4655', 4655)">
             CurrentState
           </code>
-          <div class="tip" id="4612">
+          <div class="tip" id="4655">
             <strong>Signature:</strong> IArgumentStreamState&lt;&#39;TUserState&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L128-128" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L128-128" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -295,16 +305,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4613', 4613)" onmouseover="showTip(event, '4613', 4613)">
+          <code onmouseout="hideTip(event, '4656', 4656)" onmouseover="showTip(event, '4656', 4656)">
             IsEnd
           </code>
-          <div class="tip" id="4613">
+          <div class="tip" id="4656">
             <strong>Signature:</strong> bool<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L137-137" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L137-137" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -314,16 +324,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4614', 4614)" onmouseover="showTip(event, '4614', 4614)">
+          <code onmouseout="hideTip(event, '4657', 4657)" onmouseover="showTip(event, '4657', 4657)">
             Peek()
           </code>
-          <div class="tip" id="4614">
+          <div class="tip" id="4657">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L135-135" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L135-135" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -333,16 +343,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4615', 4615)" onmouseover="showTip(event, '4615', 4615)">
+          <code onmouseout="hideTip(event, '4658', 4658)" onmouseover="showTip(event, '4658', 4658)">
             PeekFull()
           </code>
-          <div class="tip" id="4615">
+          <div class="tip" id="4658">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L136-136" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L136-136" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -352,16 +362,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4616', 4616)" onmouseover="showTip(event, '4616', 4616)">
+          <code onmouseout="hideTip(event, '4659', 4659)" onmouseover="showTip(event, '4659', 4659)">
             Position
           </code>
-          <div class="tip" id="4616">
+          <div class="tip" id="4659">
             <strong>Signature:</strong> ArgumentStreamPosition<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L129-129" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L129-129" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -371,16 +381,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4617', 4617)" onmouseover="showTip(event, '4617', 4617)">
+          <code onmouseout="hideTip(event, '4660', 4660)" onmouseover="showTip(event, '4660', 4660)">
             Read()
           </code>
-          <div class="tip" id="4617">
+          <div class="tip" id="4660">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L142-142" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L142-142" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -390,16 +400,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4618', 4618)" onmouseover="showTip(event, '4618', 4618)">
+          <code onmouseout="hideTip(event, '4661', 4661)" onmouseover="showTip(event, '4661', 4661)">
             ReadFull()
           </code>
-          <div class="tip" id="4618">
+          <div class="tip" id="4661">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L143-143" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -409,16 +419,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4619', 4619)" onmouseover="showTip(event, '4619', 4619)">
+          <code onmouseout="hideTip(event, '4662', 4662)" onmouseover="showTip(event, '4662', 4662)">
             RestoreState(arg1)
           </code>
-          <div class="tip" id="4619">
+          <div class="tip" id="4662">
             <strong>Signature:</strong> IArgumentStreamState&lt;&#39;TUserState&gt; -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L130-130" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L130-130" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -428,16 +438,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4620', 4620)" onmouseover="showTip(event, '4620', 4620)">
+          <code onmouseout="hideTip(event, '4663', 4663)" onmouseover="showTip(event, '4663', 4663)">
             Seek(arg1)
           </code>
-          <div class="tip" id="4620">
+          <div class="tip" id="4663">
             <strong>Signature:</strong> ArgumentStreamPosition -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L134-134" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L134-134" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -447,16 +457,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4621', 4621)" onmouseover="showTip(event, '4621', 4621)">
+          <code onmouseout="hideTip(event, '4664', 4664)" onmouseover="showTip(event, '4664', 4664)">
             Skip()
           </code>
-          <div class="tip" id="4621">
+          <div class="tip" id="4664">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L138-138" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L138-138" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -466,16 +476,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4622', 4622)" onmouseover="showTip(event, '4622', 4622)">
+          <code onmouseout="hideTip(event, '4665', 4665)" onmouseover="showTip(event, '4665', 4665)">
             SkipAndPeek()
           </code>
-          <div class="tip" id="4622">
+          <div class="tip" id="4665">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L140-140" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L140-140" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -485,16 +495,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4623', 4623)" onmouseover="showTip(event, '4623', 4623)">
+          <code onmouseout="hideTip(event, '4666', 4666)" onmouseover="showTip(event, '4666', 4666)">
             SkipAndPeekFull()
           </code>
-          <div class="tip" id="4623">
+          <div class="tip" id="4666">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L141-141" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -504,16 +514,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4624', 4624)" onmouseover="showTip(event, '4624', 4624)">
+          <code onmouseout="hideTip(event, '4667', 4667)" onmouseover="showTip(event, '4667', 4667)">
             SkipFull()
           </code>
-          <div class="tip" id="4624">
+          <div class="tip" id="4667">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L139-139" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L139-139" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -523,16 +533,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4625', 4625)" onmouseover="showTip(event, '4625', 4625)">
+          <code onmouseout="hideTip(event, '4668', 4668)" onmouseover="showTip(event, '4668', 4668)">
             StateTag
           </code>
-          <div class="tip" id="4625">
+          <div class="tip" id="4668">
             <strong>Signature:</strong> int64<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L131-131" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L131-131" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -542,16 +552,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4626', 4626)" onmouseover="showTip(event, '4626', 4626)">
+          <code onmouseout="hideTip(event, '4669', 4669)" onmouseover="showTip(event, '4669', 4669)">
             UpdateStateTag()
           </code>
-          <div class="tip" id="4626">
+          <div class="tip" id="4669">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L133-133" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L133-133" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -561,16 +571,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4627', 4627)" onmouseover="showTip(event, '4627', 4627)">
+          <code onmouseout="hideTip(event, '4670', 4670)" onmouseover="showTip(event, '4670', 4670)">
             UserState()
           </code>
-          <div class="tip" id="4627">
+          <div class="tip" id="4670">
             <strong>Signature:</strong> unit -&gt; &#39;TUserState<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L132-132" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L132-132" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -580,16 +590,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4628', 4628)" onmouseover="showTip(event, '4628', 4628)">
+          <code onmouseout="hideTip(event, '4671', 4671)" onmouseover="showTip(event, '4671', 4671)">
             UserState()
           </code>
-          <div class="tip" id="4628">
+          <div class="tip" id="4671">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L132-132" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L132-132" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -703,7 +713,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -725,6 +735,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

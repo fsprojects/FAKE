@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="PaketTemplateParams" class="anchor" href="#PaketTemplateParams" ><h1>PaketTemplateParams</h1></a>
 <div class="xmldoc">
 <p>Contains the different parameters to create a paket.template file</p>
@@ -263,10 +273,10 @@
           </code>
           <div class="tip" id="2430">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>a list of authors for the nuget package.
+                    <p>a list of authors for the nuget package.
 If omitted, <code>paket</code>will use reflection to obtain the value of the <code>AssemblyCompanyAttribute</code>.</p>
 
 
@@ -280,10 +290,10 @@ If omitted, <code>paket</code>will use reflection to obtain the value of the <co
           </code>
           <div class="tip" id="2431">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>the copyright information</p>
+                    <p>the copyright information</p>
 
 
         </td>
@@ -296,10 +306,10 @@ If omitted, <code>paket</code>will use reflection to obtain the value of the <co
           </code>
           <div class="tip" id="2432">
             <strong>Signature:</strong> PaketDependency list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A list of dependencies to other packages</p>
+                    <p>A list of dependencies to other packages</p>
 
 
         </td>
@@ -312,10 +322,10 @@ If omitted, <code>paket</code>will use reflection to obtain the value of the <co
           </code>
           <div class="tip" id="2433">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The package description
+                    <p>The package description
 If omitted, <code>paket</code> will use reflection to obtain the value of the <code>AssemblyDescriptionAttribute</code>.</p>
 
 
@@ -329,10 +339,10 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
           </code>
           <div class="tip" id="2434">
             <strong>Signature:</strong> bool option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> that this is a development dependency</p>
+                    <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> that this is a development dependency</p>
 
 
         </td>
@@ -345,10 +355,10 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
           </code>
           <div class="tip" id="2435">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A list of excluded dependencies</p>
+                    <p>A list of excluded dependencies</p>
 
 
         </td>
@@ -361,10 +371,10 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
           </code>
           <div class="tip" id="2436">
             <strong>Signature:</strong> PaketFileInfo list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The included or excluded files (use this if the <code>TemplateType</code> is <code>File</code>)</p>
+                    <p>The included or excluded files (use this if the <code>TemplateType</code> is <code>File</code>)</p>
 
 
         </td>
@@ -377,10 +387,10 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
           </code>
           <div class="tip" id="2437">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A list of referenced framework assemblies
+                    <p>A list of referenced framework assemblies
 if omitted all used Framework assemblies will be used by <code>paket</code></p>
 
 
@@ -394,10 +404,10 @@ if omitted all used Framework assemblies will be used by <code>paket</code></p>
           </code>
           <div class="tip" id="2438">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>URL to an icon</p>
+                    <p>URL to an icon</p>
 
 
         </td>
@@ -410,10 +420,10 @@ if omitted all used Framework assemblies will be used by <code>paket</code></p>
           </code>
           <div class="tip" id="2439">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The NuGet Package ID
+                    <p>The NuGet Package ID
 If omitted, <code>paket</code> will use reflection to determine the assembly name.</p>
 
 
@@ -427,10 +437,10 @@ If omitted, <code>paket</code> will use reflection to determine the assembly nam
           </code>
           <div class="tip" id="2440">
             <strong>Signature:</strong> bool option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>With the <code>IncludePDBs</code> switch you can tell <code>paket</code> to pack pdbs into the package.
+                    <p>With the <code>IncludePDBs</code> switch you can tell <code>paket</code> to pack pdbs into the package.
 this only works for paket.template files of type 'Project'.</p>
 
 
@@ -444,10 +454,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2441">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The package language</p>
+                    <p>The package language</p>
 
 
         </td>
@@ -460,10 +470,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2442">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>URL to the license of the package</p>
+                    <p>URL to the license of the package</p>
 
 
         </td>
@@ -476,10 +486,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2443">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A list of package owners</p>
+                    <p>A list of package owners</p>
 
 
         </td>
@@ -492,10 +502,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2444">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>URL to the where the project of the package is hosted</p>
+                    <p>URL to the where the project of the package is hosted</p>
 
 
         </td>
@@ -508,10 +518,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2445">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A list of references</p>
+                    <p>A list of references</p>
 
 
         </td>
@@ -524,10 +534,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2446">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>the release notes (line by line)</p>
+                    <p>the release notes (line by line)</p>
 
 
         </td>
@@ -540,10 +550,10 @@ this only works for paket.template files of type 'Project'.</p>
           </code>
           <div class="tip" id="2447">
             <strong>Signature:</strong> bool option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> to prompt the user for
+                    <p>If set to <code>true</code> this will tell <code>nuget</code>/<code>paket</code> to prompt the user for
 the acceptance of the provided license</p>
 
 
@@ -557,10 +567,10 @@ the acceptance of the provided license</p>
           </code>
           <div class="tip" id="2448">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>a short summary (line by line)</p>
+                    <p>a short summary (line by line)</p>
 
 
         </td>
@@ -573,10 +583,10 @@ the acceptance of the provided license</p>
           </code>
           <div class="tip" id="2449">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>a list of tags</p>
+                    <p>a list of tags</p>
 
 
         </td>
@@ -589,10 +599,10 @@ the acceptance of the provided license</p>
           </code>
           <div class="tip" id="2450">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The file path to the <code>paket.template</code> file
+                    <p>The file path to the <code>paket.template</code> file
 if omitted, a <code>paket.template</code> file will be created in the current directory</p>
 
 
@@ -606,10 +616,10 @@ if omitted, a <code>paket.template</code> file will be created in the current di
           </code>
           <div class="tip" id="2451">
             <strong>Signature:</strong> PaketTemplateType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The type of the template (<code>File</code> or <a href="fake-teamcityresthelper-project.html" title="Project"><code>Project</code></a>)</p>
+                    <p>The type of the template (<code>File</code> or <a href="fake-teamcityresthelper-project.html" title="Project"><code>Project</code></a>)</p>
 
 
         </td>
@@ -622,10 +632,10 @@ if omitted, a <code>paket.template</code> file will be created in the current di
           </code>
           <div class="tip" id="2452">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The title of the package
+                    <p>The title of the package
 If omitted, <code>paket</code> will use reflection to obtain the value of the <code>AssemblyTitleAttribute</code>.</p>
 
 
@@ -639,10 +649,10 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
           </code>
           <div class="tip" id="2453">
             <strong>Signature:</strong> string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The package version.
+                    <p>The package version.
 If omitted, <code>paket</code> will use reflection to obtain the value of the <code>AssemblyInformationalVersionAttribute</code> or if that is missing the <code>AssemblyVersionAttribute</code>.</p>
 
 
@@ -755,7 +765,7 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -777,6 +787,17 @@ If omitted, <code>paket</code> will use reflection to obtain the value of the <c
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

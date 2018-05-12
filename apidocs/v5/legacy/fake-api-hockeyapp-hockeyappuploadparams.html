@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="HockeyAppUploadParams" class="anchor" href="#HockeyAppUploadParams" ><h1>HockeyAppUploadParams</h1></a>
 <div class="xmldoc">
 <p>The HockeyApp parameter type
@@ -260,15 +270,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4189', 4189)" onmouseover="showTip(event, '4189', 4189)">
+          <code onmouseout="hideTip(event, '4212', 4212)" onmouseover="showTip(event, '4212', 4212)">
             ApiToken
           </code>
-          <div class="tip" id="4189">
+          <div class="tip" id="4212">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L138-138" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L138-138" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -280,15 +290,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4190', 4190)" onmouseover="showTip(event, '4190', 4190)">
+          <code onmouseout="hideTip(event, '4213', 4213)" onmouseover="showTip(event, '4213', 4213)">
             AppId
           </code>
-          <div class="tip" id="4190">
+          <div class="tip" id="4213">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L186-186" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L186-186" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -300,15 +310,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4191', 4191)" onmouseover="showTip(event, '4191', 4191)">
+          <code onmouseout="hideTip(event, '4214', 4214)" onmouseover="showTip(event, '4214', 4214)">
             BuildServerUrl
           </code>
-          <div class="tip" id="4191">
+          <div class="tip" id="4214">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L171-171" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L171-171" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -320,15 +330,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4192', 4192)" onmouseover="showTip(event, '4192', 4192)">
+          <code onmouseout="hideTip(event, '4215', 4215)" onmouseover="showTip(event, '4215', 4215)">
             CommitSHA
           </code>
-          <div class="tip" id="4192">
+          <div class="tip" id="4215">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L168-168" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L168-168" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -340,15 +350,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4193', 4193)" onmouseover="showTip(event, '4193', 4193)">
+          <code onmouseout="hideTip(event, '4216', 4216)" onmouseover="showTip(event, '4216', 4216)">
             DownloadStatus
           </code>
-          <div class="tip" id="4193">
+          <div class="tip" id="4216">
             <strong>Signature:</strong> DownloadStatusOption<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L177-177" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L177-177" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -360,15 +370,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4194', 4194)" onmouseover="showTip(event, '4194', 4194)">
+          <code onmouseout="hideTip(event, '4217', 4217)" onmouseover="showTip(event, '4217', 4217)">
             Dsym
           </code>
-          <div class="tip" id="4194">
+          <div class="tip" id="4217">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L144-144" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L144-144" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -380,15 +390,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4195', 4195)" onmouseover="showTip(event, '4195', 4195)">
+          <code onmouseout="hideTip(event, '4218', 4218)" onmouseover="showTip(event, '4218', 4218)">
             File
           </code>
-          <div class="tip" id="4195">
+          <div class="tip" id="4218">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L141-141" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -400,15 +410,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4196', 4196)" onmouseover="showTip(event, '4196', 4196)">
+          <code onmouseout="hideTip(event, '4219', 4219)" onmouseover="showTip(event, '4219', 4219)">
             Mandatory
           </code>
-          <div class="tip" id="4196">
+          <div class="tip" id="4219">
             <strong>Signature:</strong> MandatoryOption<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L162-162" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -420,15 +430,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4197', 4197)" onmouseover="showTip(event, '4197', 4197)">
+          <code onmouseout="hideTip(event, '4220', 4220)" onmouseover="showTip(event, '4220', 4220)">
             Notes
           </code>
-          <div class="tip" id="4197">
+          <div class="tip" id="4220">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L147-147" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L147-147" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -440,15 +450,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4198', 4198)" onmouseover="showTip(event, '4198', 4198)">
+          <code onmouseout="hideTip(event, '4221', 4221)" onmouseover="showTip(event, '4221', 4221)">
             NotesType
           </code>
-          <div class="tip" id="4198">
+          <div class="tip" id="4221">
             <strong>Signature:</strong> NoteType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L150-150" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L150-150" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -460,15 +470,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4199', 4199)" onmouseover="showTip(event, '4199', 4199)">
+          <code onmouseout="hideTip(event, '4222', 4222)" onmouseover="showTip(event, '4222', 4222)">
             Notify
           </code>
-          <div class="tip" id="4199">
+          <div class="tip" id="4222">
             <strong>Signature:</strong> NotifyOption<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L159-159" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -480,15 +490,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4200', 4200)" onmouseover="showTip(event, '4200', 4200)">
+          <code onmouseout="hideTip(event, '4223', 4223)" onmouseover="showTip(event, '4223', 4223)">
             OwnerId
           </code>
-          <div class="tip" id="4200">
+          <div class="tip" id="4223">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L156-156" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L156-156" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -500,15 +510,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4201', 4201)" onmouseover="showTip(event, '4201', 4201)">
+          <code onmouseout="hideTip(event, '4224', 4224)" onmouseover="showTip(event, '4224', 4224)">
             Private
           </code>
-          <div class="tip" id="4201">
+          <div class="tip" id="4224">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L165-165" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L165-165" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -520,15 +530,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4202', 4202)" onmouseover="showTip(event, '4202', 4202)">
+          <code onmouseout="hideTip(event, '4225', 4225)" onmouseover="showTip(event, '4225', 4225)">
             ReleaseType
           </code>
-          <div class="tip" id="4202">
+          <div class="tip" id="4225">
             <strong>Signature:</strong> ReleaseType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L153-153" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L153-153" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -540,15 +550,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4203', 4203)" onmouseover="showTip(event, '4203', 4203)">
+          <code onmouseout="hideTip(event, '4226', 4226)" onmouseover="showTip(event, '4226', 4226)">
             RepositoryUrl
           </code>
-          <div class="tip" id="4203">
+          <div class="tip" id="4226">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L174-174" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L174-174" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -560,15 +570,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4204', 4204)" onmouseover="showTip(event, '4204', 4204)">
+          <code onmouseout="hideTip(event, '4227', 4227)" onmouseover="showTip(event, '4227', 4227)">
             Teams
           </code>
-          <div class="tip" id="4204">
+          <div class="tip" id="4227">
             <strong>Signature:</strong> string []<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L180-180" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L180-180" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -580,15 +590,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4205', 4205)" onmouseover="showTip(event, '4205', 4205)">
+          <code onmouseout="hideTip(event, '4228', 4228)" onmouseover="showTip(event, '4228', 4228)">
             UploadTimeout
           </code>
-          <div class="tip" id="4205">
+          <div class="tip" id="4228">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L183-183" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L183-183" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -600,15 +610,15 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4206', 4206)" onmouseover="showTip(event, '4206', 4206)">
+          <code onmouseout="hideTip(event, '4229', 4229)" onmouseover="showTip(event, '4229', 4229)">
             VersionId
           </code>
-          <div class="tip" id="4206">
+          <div class="tip" id="4229">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L189-189" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Api.HockeyApp/HockeyApp.fs#L189-189" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -724,7 +734,7 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -746,6 +756,17 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

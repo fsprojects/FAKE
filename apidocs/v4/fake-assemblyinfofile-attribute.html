@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="Attribute" class="anchor" href="#Attribute" ><h1>Attribute</h1></a>
 <div class="xmldoc">
 <p>Represents AssemblyInfo attributes</p>
@@ -263,10 +273,10 @@
           </code>
           <div class="tip" id="1426">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropType:string) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -277,10 +287,10 @@
           </code>
           <div class="tip" id="1427">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticPropName:string * staticPropType:string * staticPropValue:string) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -299,10 +309,10 @@
           </code>
           <div class="tip" id="1428">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -313,10 +323,10 @@
           </code>
           <div class="tip" id="1429">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -327,10 +337,10 @@
           </code>
           <div class="tip" id="1430">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -341,10 +351,10 @@
           </code>
           <div class="tip" id="1431">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -355,10 +365,10 @@
           </code>
           <div class="tip" id="1432">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -369,10 +379,10 @@
           </code>
           <div class="tip" id="1433">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -391,10 +401,10 @@
           </code>
           <div class="tip" id="1434">
             <strong>Signature:</strong> (name:string * value:bool * inNamespace:string) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a simple attribute with boolean values. Used as base for other attributes</p>
+                    <p>Creates a simple attribute with boolean values. Used as base for other attributes</p>
 
 
         </td>
@@ -407,10 +417,10 @@
           </code>
           <div class="tip" id="1435">
             <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which specifies if the assembly is CLS compliant</p>
+                    <p>Creates an attribute which specifies if the assembly is CLS compliant</p>
 
 
         </td>
@@ -423,10 +433,10 @@
           </code>
           <div class="tip" id="1436">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the company information</p>
+                    <p>Creates an attribute which holds the company information</p>
 
 
         </td>
@@ -439,10 +449,10 @@
           </code>
           <div class="tip" id="1437">
             <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which specifies if the assembly is visible via COM</p>
+                    <p>Creates an attribute which specifies if the assembly is visible via COM</p>
 
 
         </td>
@@ -455,10 +465,10 @@
           </code>
           <div class="tip" id="1438">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the assembly configuration</p>
+                    <p>Creates an attribute which holds the assembly configuration</p>
 
 
         </td>
@@ -471,10 +481,10 @@
           </code>
           <div class="tip" id="1439">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the copyright information</p>
+                    <p>Creates an attribute which holds the copyright information</p>
 
 
         </td>
@@ -487,10 +497,10 @@
           </code>
           <div class="tip" id="1440">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the assembly culture information</p>
+                    <p>Creates an attribute which holds the assembly culture information</p>
 
 
         </td>
@@ -503,10 +513,10 @@
           </code>
           <div class="tip" id="1441">
             <strong>Signature:</strong> (value:bool option) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which specifies if the assembly uses delayed signing</p>
+                    <p>Creates an attribute which specifies if the assembly uses delayed signing</p>
 
 
         </td>
@@ -519,10 +529,10 @@
           </code>
           <div class="tip" id="1442">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the product description</p>
+                    <p>Creates an attribute which holds the product description</p>
 
 
         </td>
@@ -535,10 +545,10 @@
           </code>
           <div class="tip" id="1443">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the assembly file version</p>
+                    <p>Creates an attribute which holds the assembly file version</p>
 
 
         </td>
@@ -551,10 +561,10 @@
           </code>
           <div class="tip" id="1444">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the Guid</p>
+                    <p>Creates an attribute which holds the Guid</p>
 
 
         </td>
@@ -567,10 +577,10 @@
           </code>
           <div class="tip" id="1445">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds an assembly information version</p>
+                    <p>Creates an attribute which holds an assembly information version</p>
 
 
         </td>
@@ -583,10 +593,10 @@
           </code>
           <div class="tip" id="1446">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the "InternalVisibleTo" data</p>
+                    <p>Creates an attribute which holds the "InternalVisibleTo" data</p>
 
 
         </td>
@@ -599,10 +609,10 @@
           </code>
           <div class="tip" id="1447">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the assembly key file</p>
+                    <p>Creates an attribute which holds the assembly key file</p>
 
 
         </td>
@@ -615,10 +625,10 @@
           </code>
           <div class="tip" id="1448">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the assembly key name</p>
+                    <p>Creates an attribute which holds the assembly key name</p>
 
 
         </td>
@@ -631,10 +641,10 @@
           </code>
           <div class="tip" id="1449">
             <strong>Signature:</strong> (name:string * value:string) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Create an attribute which specifies metadata about the assembly</p>
+                    <p>Create an attribute which specifies metadata about the assembly</p>
 
 
         </td>
@@ -647,10 +657,10 @@
           </code>
           <div class="tip" id="1450">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the product name</p>
+                    <p>Creates an attribute which holds the product name</p>
 
 
         </td>
@@ -663,10 +673,10 @@
           </code>
           <div class="tip" id="1451">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticName:string option * staticValue:string option) -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates a simple attribute with string values. Used as base for other attributes</p>
+                    <p>Creates a simple attribute with string values. Used as base for other attributes</p>
 
 
         </td>
@@ -679,10 +689,10 @@
           </code>
           <div class="tip" id="1452">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the product title</p>
+                    <p>Creates an attribute which holds the product title</p>
 
 
         </td>
@@ -695,10 +705,10 @@
           </code>
           <div class="tip" id="1453">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the trademark</p>
+                    <p>Creates an attribute which holds the trademark</p>
 
 
         </td>
@@ -711,10 +721,10 @@
           </code>
           <div class="tip" id="1454">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Creates an attribute which holds the assembly version</p>
+                    <p>Creates an attribute which holds the assembly version</p>
 
 
         </td>
@@ -826,7 +836,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -848,6 +858,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

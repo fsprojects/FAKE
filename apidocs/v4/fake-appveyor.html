@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="AppVeyor" class="anchor" href="#AppVeyor"><h1>AppVeyor</h1></a>
+
 <div class="xmldoc">
 <p>Contains code to configure FAKE for AppVeyor integration</p>
 
@@ -262,41 +273,51 @@
           <td class="type-name">
             <a href="fake-appveyor-appveyorenvironment.html">AppVeyorEnvironment</a>
           </td>
-          <td class="xmldoc"><p>AppVeyor environment variables as <a href="http://www.appveyor.com/docs/environment-variables">described</a></p>
+          <td class="xmldoc">
+            <p>AppVeyor environment variables as <a href="http://www.appveyor.com/docs/environment-variables">described</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-appveyor-artifacttype.html">ArtifactType</a>
           </td>
-          <td class="xmldoc"><p>Type of artifact that is pushed</p>
+          <td class="xmldoc">
+            <p>Type of artifact that is pushed</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-appveyor-pushartifactparams.html">PushArtifactParams</a>
           </td>
-          <td class="xmldoc"><p>AppVeyor parameters for artifact push as <a href="https://www.appveyor.com/docs/build-worker-api/#push-artifact">described</a></p>
+          <td class="xmldoc">
+            <p>AppVeyor parameters for artifact push as <a href="https://www.appveyor.com/docs/build-worker-api/#push-artifact">described</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-appveyor-testresultstype.html">TestResultsType</a>
           </td>
-          <td class="xmldoc"><p>Union type representing the available test result formats accepted by AppVeyor.</p>
+          <td class="xmldoc">
+            <p>Union type representing the available test result formats accepted by AppVeyor.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-appveyor-updatebuildparams.html">UpdateBuildParams</a>
           </td>
-          <td class="xmldoc"><p>AppVeyor parameters for update build as <a href="https://www.appveyor.com/docs/build-worker-api/#update-build-details">described</a></p>
+          <td class="xmldoc">
+            <p>AppVeyor parameters for update build as <a href="https://www.appveyor.com/docs/build-worker-api/#update-build-details">described</a></p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -317,10 +338,10 @@
           </code>
           <div class="tip" id="38">
             <strong>Signature:</strong> PushArtifactParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>AppVeyor artifact push default parameters</p>
+                    <p>AppVeyor artifact push default parameters</p>
 
 
         </td>
@@ -333,10 +354,10 @@
           </code>
           <div class="tip" id="39">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Finishes the test case.</p>
+                    <p>Finishes the test case.</p>
 
 
         </td>
@@ -349,10 +370,10 @@
           </code>
           <div class="tip" id="40">
             <strong>Signature:</strong> testSuiteName:&#39;a -&gt; unit<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Finishes the test suite.</p>
+                    <p>Finishes the test suite.</p>
 
 
         </td>
@@ -365,10 +386,10 @@
           </code>
           <div class="tip" id="41">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; message:&#39;a -&gt; unit<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Ignores the test case.</p>
+                    <p>Ignores the test case.</p>
 
 
         </td>
@@ -381,10 +402,10 @@
           </code>
           <div class="tip" id="42">
             <strong>Signature:</strong> setParams:(PushArtifactParams -&gt; PushArtifactParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Push an artifact</p>
+                    <p>Push an artifact</p>
 
 
         </td>
@@ -397,10 +418,10 @@
           </code>
           <div class="tip" id="43">
             <strong>Signature:</strong> paths:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Push multiple artifacts</p>
+                    <p>Push multiple artifacts</p>
 
 
         </td>
@@ -413,10 +434,10 @@
           </code>
           <div class="tip" id="44">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set environment variable</p>
+                    <p>Set environment variable</p>
 
 
         </td>
@@ -429,10 +450,10 @@
           </code>
           <div class="tip" id="45">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Starts the test case.</p>
+                    <p>Starts the test case.</p>
 
 
         </td>
@@ -445,10 +466,10 @@
           </code>
           <div class="tip" id="46">
             <strong>Signature:</strong> testSuiteName:&#39;a -&gt; unit<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-          <p>Starts the test suite.</p>
+                    <p>Starts the test suite.</p>
 
 
         </td>
@@ -461,10 +482,10 @@
           </code>
           <div class="tip" id="47">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; message:string -&gt; details:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reports a failed test.</p>
+                    <p>Reports a failed test.</p>
 
 
         </td>
@@ -477,10 +498,10 @@
           </code>
           <div class="tip" id="48">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Reports a succeeded test.</p>
+                    <p>Reports a succeeded test.</p>
 
 
         </td>
@@ -493,10 +514,10 @@
           </code>
           <div class="tip" id="49">
             <strong>Signature:</strong> setParams:(UpdateBuildParams -&gt; UpdateBuildParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Update build details</p>
+                    <p>Update build details</p>
 
 
         </td>
@@ -509,10 +530,10 @@
           </code>
           <div class="tip" id="50">
             <strong>Signature:</strong> version:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Update build version. This must be unique for the current project.</p>
+                    <p>Update build version. This must be unique for the current project.</p>
 
 
         </td>
@@ -525,10 +546,10 @@
           </code>
           <div class="tip" id="51">
             <strong>Signature:</strong> testResultsType:TestResultsType -&gt; file:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Uploads a test result file to make them visible in Test tab of the build console.</p>
+                    <p>Uploads a test result file to make them visible in Test tab of the build console.</p>
 
 
         </td>
@@ -541,10 +562,10 @@
           </code>
           <div class="tip" id="52">
             <strong>Signature:</strong> testResultsType:TestResultsType -&gt; outputDir:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.</p>
+                    <p>Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.</p>
 
 
         </td>
@@ -656,7 +677,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -678,6 +699,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

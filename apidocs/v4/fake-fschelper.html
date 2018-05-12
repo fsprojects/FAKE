@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="FscHelper" class="anchor" href="#FscHelper"><h1>FscHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains tasks to compiles F# source file with the <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
 There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> available.</p>
@@ -263,92 +274,126 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
           <td class="type-name">
             <a href="fake-fschelper-access.html">Access</a>
           </td>
-          <td class="xmldoc"><p>Used to set the Accessiblity of an embeded or linked resource</p>
+          <td class="xmldoc">
+            <p>Used to set the Accessiblity of an embeded or linked resource</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-debugtype.html">DebugType</a>
           </td>
-          <td class="xmldoc"><p>Specify debugging type: full, pdbonly.
+          <td class="xmldoc">
+            <p>Specify debugging type: full, pdbonly.
 ('full' is the default and enables attaching a debugger to a running program).</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-fscparam.html">FscParam</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-fscparams.html">FscParams</a>
           </td>
-          <td class="xmldoc"><p>'fsc.exe' command line parameters</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use FscHelper.FscParam instead</p>
+                </div> 
+            <p>'fsc.exe' command line parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-fscplatform.html">FscPlatform</a>
           </td>
-          <td class="xmldoc"><p>The 'fsc.exe' output platforms</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use FscHelper.PlatformType instead</p>
+                </div> 
+            <p>The 'fsc.exe' output platforms</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-fsctarget.html">FscTarget</a>
           </td>
-          <td class="xmldoc"><p>The 'fsc.exe' output target types</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use the FscHelper.TargetType instead</p>
+                </div> 
+            <p>The 'fsc.exe' output target types</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-optimization.html">Optimization</a>
           </td>
-          <td class="xmldoc"><p>Optimization options that can be disabled or enabled selectively by listing them
+          <td class="xmldoc">
+            <p>Optimization options that can be disabled or enabled selectively by listing them
 with the optimize compiler flag</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-platformtype.html">PlatformType</a>
           </td>
-          <td class="xmldoc"><p>Limit which platforms the compiled code can run on:
+          <td class="xmldoc">
+            <p>Limit which platforms the compiled code can run on:
 x86, Itanium, x64, anycpu32bitpreferred, or anycpu.
 The default is anycpu.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-profile.html">Profile</a>
           </td>
-          <td class="xmldoc"><p>Specify target framework profile of this assembly.
+          <td class="xmldoc">
+            <p>Specify target framework profile of this assembly.
 Valid values are mscorlib or netcore. Default - mscorlib</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-resourceinfo.html">ResourceInfo</a>
           </td>
-          <td class="xmldoc"><p>Specified path of a managed resource with an optional name alias and accessiblity flag
+          <td class="xmldoc">
+            <p>Specified path of a managed resource with an optional name alias and accessiblity flag
 resinfo format is <file>[,<stringname>[,public|private]]
 e.g. <code>resource.dat,rezName,public</code></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-fschelper-targettype.html">TargetType</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -369,10 +414,10 @@ e.g. <code>resource.dat,rezName,public</code></p>
           </code>
           <div class="tip" id="444">
             <strong>Signature:</strong> fscParams:FscParam list -&gt; inputFiles:string list -&gt; int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Compiles the given F# source files with the specified parameters.</p>
+                    <p>Compiles the given F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -411,10 +456,10 @@ e.g. <code>resource.dat,rezName,public</code></p>
           </code>
           <div class="tip" id="445">
             <strong>Signature:</strong> fscParams:FscParam list -&gt; inputFiles:string list -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Compiles one or more F# source files with the specified parameters.</p>
+                    <p>Compiles one or more F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -451,10 +496,10 @@ e.g. <code>resource.dat,rezName,public</code></p>
           </code>
           <div class="tip" id="446">
             <strong>Signature:</strong> srcFiles:string list -&gt; opts:string list -&gt; int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Compiles the given source file with the given options. If no options
+                    <p>Compiles the given source file with the given options. If no options
 given (i.e. the second argument is an empty list), by default tries
 to behave the same way as would the command-line 'fsc.exe' tool.</p>
 
@@ -469,10 +514,18 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
           </code>
           <div class="tip" id="447">
             <strong>Signature:</strong> setParams:(FscParams -&gt; FscParams) -&gt; inputFiles:string list -&gt; int<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use FscHelper.compile instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          <p>Compiles the given F# source files with the specified parameters.</p>
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use FscHelper.compile instead</p>
+            </div> 
+                    <p>Compiles the given F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -507,10 +560,18 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
           </code>
           <div class="tip" id="448">
             <strong>Signature:</strong> setParams:(FscParams -&gt; FscParams) -&gt; inputFiles:string list -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use FscHelper.Compile instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          <p>Compiles one or more F# source files with the specified parameters.</p>
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use FscHelper.Compile instead</p>
+            </div> 
+                    <p>Compiles one or more F# source files with the specified parameters.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
@@ -543,10 +604,18 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
           </code>
           <div class="tip" id="449">
             <strong>Signature:</strong> srcFiles:string list -&gt; opts:string list -&gt; int<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use FscHelper.compileFiles instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-          <p>Compiles the given source file with the given options. If no options
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use FscHelper.compileFiles instead</p>
+            </div> 
+                    <p>Compiles the given source file with the given options. If no options
 given (i.e. the second argument is an empty list), by default tries
 to behave the same way as would the command-line 'fsc.exe' tool.</p>
 
@@ -561,10 +630,10 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
           </code>
           <div class="tip" id="450">
             <strong>Signature:</strong> (string * string option * Access option) -&gt; string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -674,7 +743,7 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -696,6 +765,17 @@ to behave the same way as would the command-line 'fsc.exe' tool.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

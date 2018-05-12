@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="ProcessHelper" class="anchor" href="#ProcessHelper"><h1>ProcessHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains functions which can be used to start other tools.</p>
 
@@ -262,33 +273,41 @@
           <td class="type-name">
             <a href="fake-processhelper-consolemessage.html">ConsoleMessage</a>
           </td>
-          <td class="xmldoc"><p>A record type which captures console messages</p>
+          <td class="xmldoc">
+            <p>A record type which captures console messages</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-processhelper-execparams.html">ExecParams</a>
           </td>
-          <td class="xmldoc"><p>Parameter type for process execution.</p>
+          <td class="xmldoc">
+            <p>Parameter type for process execution.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-processhelper-processresult.html">ProcessResult</a>
           </td>
-          <td class="xmldoc"><p>A process result including error code, message log and errors.</p>
+          <td class="xmldoc">
+            <p>A process result including error code, message log and errors.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-processhelper-shell.html">Shell</a>
           </td>
-          <td class="xmldoc"><p>Allows to exec shell operations synchronously and asynchronously.</p>
+          <td class="xmldoc">
+            <p>Allows to exec shell operations synchronously and asynchronously.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -309,10 +328,10 @@
           </code>
           <div class="tip" id="582">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
+                    <p>If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
 If set to false (default) only mono processes will be changed.</p>
 
 
@@ -326,10 +345,10 @@ If set to false (default) only mono processes will be changed.</p>
           </code>
           <div class="tip" id="583">
             <strong>Signature:</strong> args:ExecParams -&gt; Async&lt;int&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Execute an external program asynchronously and return the exit code,
+                    <p>Execute an external program asynchronously and return the exit code,
 logging output and error messages to FAKE output. You can compose the result
 with Async.Parallel to run multiple external programs at once, but be
 sure that none of them depend on the output of another.</p>
@@ -345,10 +364,10 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="584">
             <strong>Signature:</strong> ExecParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Default parameters for process execution.</p>
+                    <p>Default parameters for process execution.</p>
 
 
         </td>
@@ -361,10 +380,10 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="585">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
+                    <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
 
 
         </td>
@@ -377,10 +396,10 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="586">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
+                    <p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>name</code> - The name of the processes in question.</li>
@@ -398,10 +417,10 @@ sure that none of them depend on the output of another.</p>
           </code>
           <div class="tip" id="587">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given process and returns the exit code.</p>
+                    <p>Runs the given process and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><p><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</p></li>
@@ -427,10 +446,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="588">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; ProcessResult<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given process and returns the process result.</p>
+                    <p>Runs the given process and returns the process result.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -448,10 +467,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="589">
             <strong>Signature:</strong> cmd:string -&gt; args:string -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given process in an elevated context and returns the exit code.</p>
+                    <p>Runs the given process in an elevated context and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>cmd</code> - The command which should be run in elavated context.</li>
@@ -470,10 +489,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="590">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given process and returns the process result.</p>
+                    <p>Runs the given process and returns the process result.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -491,10 +510,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="591">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Runs the given process and returns the exit code.</p>
+                    <p>Runs the given process and returns the exit code.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
@@ -515,10 +534,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="592">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Starts the given process and returns immediatly.</p>
+                    <p>Starts the given process and returns immediatly.</p>
 
 
         </td>
@@ -531,10 +550,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="593">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Returns all processes with the given name</p>
+                    <p>Returns all processes with the given name</p>
 
 
         </td>
@@ -547,10 +566,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="594">
             <strong>Signature:</strong> proc:Process -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Kills the given process</p>
+                    <p>Kills the given process</p>
 
 
         </td>
@@ -563,10 +582,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="595">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
+                    <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
 
 
         </td>
@@ -579,10 +598,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="596">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Kills the F# Interactive (FSI) process.</p>
+                    <p>Kills the F# Interactive (FSI) process.</p>
 
 
         </td>
@@ -595,10 +614,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="597">
             <strong>Signature:</strong> unit -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Kills the MSBuild process.</p>
+                    <p>Kills the MSBuild process.</p>
 
 
         </td>
@@ -611,10 +630,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="598">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Kills all processes with the given name</p>
+                    <p>Kills all processes with the given name</p>
 
 
         </td>
@@ -627,10 +646,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="599">
             <strong>Signature:</strong> id:int -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Kills all processes with the given id</p>
+                    <p>Kills all processes with the given id</p>
 
 
         </td>
@@ -643,10 +662,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="600">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Gets the list of valid directories included in the PATH environment variable.</p>
+                    <p>Gets the list of valid directories included in the PATH environment variable.</p>
 
 
         </td>
@@ -659,10 +678,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
           </code>
           <div class="tip" id="601">
             <strong>Signature:</strong> Encoding<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
+                    <p>The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
 If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.</p>
 
 
@@ -676,10 +695,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="602">
             <strong>Signature:</strong> command:string -&gt; host:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sends a command to a remote windows service.</p>
+                    <p>Sends a command to a remote windows service.</p>
 
 
         </td>
@@ -692,10 +711,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="603">
             <strong>Signature:</strong> command:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sends a command to a local windows service.</p>
+                    <p>Sends a command to a local windows service.</p>
 
 
         </td>
@@ -708,10 +727,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="604">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Starts the given process and forgets about it.</p>
+                    <p>Starts the given process and forgets about it.</p>
 
 
         </td>
@@ -724,10 +743,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="605">
             <strong>Signature:</strong> host:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
+                    <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -740,10 +759,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="606">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Starts a local windows service. Waits up to two minutes for a response.</p>
+                    <p>Starts a local windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -756,10 +775,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="607">
             <strong>Signature:</strong> host:string -&gt; serviceName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
+                    <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -772,10 +791,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="608">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Stops a local windows service. Waits up to two minutes for a response.</p>
+                    <p>Stops a local windows service. Waits up to two minutes for a response.</p>
 
 
         </td>
@@ -788,10 +807,10 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
           </code>
           <div class="tip" id="609">
             <strong>Signature:</strong> file:string -&gt; string option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Searches the current directory and the directories within the PATH
+                    <p>Searches the current directory and the directories within the PATH
 environment variable for the given file. If successful returns the full
 path to the file.</p>
 <h2>Parameters</h2>
@@ -909,7 +928,7 @@ path to the file.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -931,6 +950,17 @@ path to the file.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

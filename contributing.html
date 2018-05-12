@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
 															</ul>
 														</li>
 														<li>
@@ -263,13 +271,14 @@ It turns <code>*.md</code> (Markdown with embedded code snippets) and <code>*.fs
 <li><p>Fork the <a href="https://github.com/fsharp/FAKE">FAKE repo on GitHub</a>.</p></li>
 <li>Clone your personal fork locally.</li>
 <li>
-<p>Add a new git remote in order to retrieve upstream changes.</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="id">git</span> <span class="id">remote</span> <span class="id">add</span> <span class="id">upstream</span> <span class="id">https</span><span class="pn">:</span><span class="c">//github.com/fsharp/FAKE.git</span>
-</code></pre></td>
-</tr>
-</table>
+<p>Add a new git remote in order to retrieve upstream changes.
+<pre>
+<code class="lang-bash">
+git remote add upstream <a href="https://github.com/fsharp/FAKE.git
+&lt;/code&gt;
+&lt;/pre&gt;">https://github.com/fsharp/FAKE.git
+</code>
+</pre></a></p>
 </li>
 </ul>
 <h4><a name="Build-tools" class="anchor" href="#Build-tools">Build tools</a></h4>
@@ -277,12 +286,15 @@ It turns <code>*.md</code> (Markdown with embedded code snippets) and <code>*.fs
 <li>
 <p>Windows users can install Visual Studio 2017 (the <a href="https://www.visualstudio.com/de/vs/community/">Community Edition</a>
 is freely available for open-source projects).</p>
-<blockquote>
-<p>Make sure to have long path enabled: <a href="https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
+<p><div class="alert alert-info">
+<h5>INFO</h5>
+Make sure to have long path enabled: <a href="https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
 Otherwise">https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
-Otherwise</a> the test-suite will fail (However, the build should work)</p>
-</blockquote>
+Otherwise</a> the test-suite will fail (However, the build should work)
+</div></p>
 </li>
+</ul>
+<ul>
 <li>
 <p>Linux and Mac users can read "<a href="http://fsharp.org/guides/mac-linux-cross-platform/">Guide - Cross-Platform Development with F#</a>"
 to find out the required tools.</p>
@@ -298,22 +310,28 @@ to find out the required tools.</p>
 <li>
 <p>Alternately, you can use <a href="https://www.vagrantup.com/">Vagrant</a> in-pair with <a href="https://www.virtualbox.org/">VirtualBox</a>
 to automatically deploy a preconfigured virtual machine. See the <a href="vagrant.html">Vagrant docs</a> to get in touch with the tool.</p>
+<p><div class="alert alert-warning">
+<h5>WARNING</h5>
+The vagrant file might be outdated at this time, please help updating it and removing this banner.
+</div></p>
 </li>
-</ul>
-<blockquote>
-<p>Note: The vagrant file might be outdated at this time, please help updating it and removing this banner.</p>
-</blockquote>
-<ul>
 <li>
-Ubuntu / Windows Subsystem for Linux:
+<p>Ubuntu / Windows Subsystem for Linux:</p>
 <ul>
-<li>Install Mono, as of today 2017-09-30 you need at least alpha to have the msbuild package (<a href="http://www.mono-project.com/download/beta/#download-lin)">http://www.mono-project.com/download/beta/#download-lin)</a></li>
-<li><code>apt-get install msbuild mono-complete</code></li>
-<li><code>apt-cache search libunwind</code></li>
-<li><code># apt-get Install the libunwind runtime (one of the search results)</code></li>
-<li><code>apt-cache search libcurl # Install</code></li>
-<li><code># apt-get Install the libcurl library (one of the search results)</code></li>
-<li><code>./build.sh</code></li>
+<li><p>Install Mono, as of today 2017-09-30 you need at least alpha to have the msbuild package (<a href="http://www.mono-project.com/download/beta/#download-lin)">http://www.mono-project.com/download/beta/#download-lin)</a></p></li>
+<li>
+<p>Run the following
+<pre>
+<code class="lang-bash">
+apt-get install msbuild mono-complete
+apt-cache search libunwind</p>
+<h1><a name="apt-get-Install-the-libunwind-runtime-one-of-the-search-results" class="anchor" href="#apt-get-Install-the-libunwind-runtime-one-of-the-search-results">apt-get Install the libunwind runtime (one of the search results)</a></h1>
+<p>apt-cache search libcurl # Install</p>
+<h1><a name="apt-get-Install-the-libcurl-library-one-of-the-search-results" class="anchor" href="#apt-get-Install-the-libcurl-library-one-of-the-search-results">apt-get Install the libcurl library (one of the search results)</a></h1>
+<p>./build.sh
+</code>
+</pre></p>
+</li>
 </ul>
 </li>
 </ul>
@@ -322,13 +340,12 @@ Ubuntu / Windows Subsystem for Linux:
 <li><p>Checkout the <code>master</code> branch.</p></li>
 <li><p>Run the build via <code>fake run build.fsx</code> in order to check if everything works.</p></li>
 <li>
-<p>Create a new feature branch.</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="id">git</span> <span class="id">checkout</span> <span class="o">-</span><span class="id">b</span> <span class="id">myfeature</span>
-</code></pre></td>
-</tr>
-</table>
+<p>Create a new feature branch.
+<pre>
+<code class="lang-bash">
+git checkout -b myfeature
+</code>
+</pre></p>
 </li>
 <li>Implement your bugfix/feature.</li>
 <li>Add a bit of documentation (see above).</li>
@@ -339,17 +356,14 @@ Ubuntu / Windows Subsystem for Linux:
 Write "WIP" into the pull request description if it's not completely ready</p>
 </li>
 <li>
-<p>If you need to rebase you can do:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  <span class="id">git</span> <span class="id">fetch</span> <span class="id">upstream</span>
-  <span class="id">git</span> <span class="id">rebase</span> <span class="id">upstream</span><span class="o">/</span><span class="id">master</span>
-  <span class="id">git</span> <span class="id">push</span> <span class="id">origin</span> <span class="id">myfeature</span> <span class="o">-</span><span class="id">f</span>
-</code></pre></td>
-</tr>
-</table>
+<p>If you need to rebase you can do:
+<pre>
+<code class="lang-bash">
+git fetch upstream
+git rebase upstream/master
+git push origin myfeature -f
+</code>
+</pre></p>
 </li>
 <li>The pull request will be updated automatically.</li>
 </ul>
@@ -358,15 +372,13 @@ Write "WIP" into the pull request description if it's not completely ready</p>
 <li>If you make a change to a module and would like to test it in a fake script, the easiest way to do this is to create a local nuget package and reference it in your script. To do this, follow the steps below</li>
 <li>
 <p>Create a local nuget package for the module you've changed.<br />
-e.g: Using dotnet cli</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="id">cd</span> <span class="id">path</span><span class="o">/</span><span class="k">to</span><span class="o">/</span><span class="id">project</span>
- <span class="id">dotnet</span> <span class="id">pack</span>
-</code></pre></td>
-</tr>
-</table>
+e.g: Using dotnet cli
+<pre>
+<code class="lang-bash">
+cd path/to/project
+dotnet pack
+</code>
+</pre></p>
 </li>
 <li>
 <p>Dotnet pack will create a default nuget package with version of 1.0.0 in the <code>bin/Debug</code> of your project. Set an additional paket source in your build script to this directory, and require this exact version in your paket references</p>
@@ -456,11 +468,14 @@ and make sure the code looks nice and structured on the caller side.</p>
 <li>Open <code>Fake.sln</code> and go from there. Because in F# you can only reference stuff defines in files ABOVE, this is ALMOST perfect</li>
 <li>Once stuff compiles in the (<code>Fake.sln</code>) solution the remaining changes to make the netcore project compile are usually straightforward (you basically only need to fix project references or add framework nuget packages if needed). Let us know if you struggle at this point (in the PR or a new issue).</li>
 <li>Add the info about the new module to the <code>dotnetAssemblyInfos</code> variable in <code>build.fsx</code>. From this point on the build script will let you know if anything is missing. Again, if you have problems let us know.</li>
-<li>Mark the old module with the <code>Obsolete</code> attribute.</li>
+<li>
+Mark the old module with the <code>Obsolete</code> attribute.
+
+  <div class="alert alert-info">
+  <h5>INFO</h5> <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that yet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.
+  </div>
+</li>
 </ul>
-<blockquote>
-<p>Note that <code>src/Fake-netcore.sln</code> is currently not used (as IDEs don't support that yet). However it is used so speed up the build, <code>fake run build.fsx</code> will let you know what to do in the error message.</p>
-</blockquote>
 <p>These steps will ensure:</p>
 <ul>
 <li>People using the NuGet package will get the warnings to update the new API</li>
@@ -573,7 +588,7 @@ and make sure the code looks nice and structured on the caller side.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -595,6 +610,17 @@ and make sure the code looks nice and structured on the caller side.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

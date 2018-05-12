@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+        </div> 
 
+</p>
 <a name="EnvironmentHelper" class="anchor" href="#EnvironmentHelper"><h1>EnvironmentHelper</h1></a>
+
 <div class="xmldoc">
 <p>This module contains functions which allow to read and write environment variables and build parameters</p>
 
@@ -263,17 +278,29 @@
           <td class="type-name">
             <a href="fake-environmenthelper-environtarget.html">EnvironTarget</a>
           </td>
-          <td class="xmldoc"><p>Type alias for System.EnvironmentVariableTarget</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+                </div> 
+            <p>Type alias for System.EnvironmentVariableTarget</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-environmenthelper-machinedetails.html">MachineDetails</a>
           </td>
-          <td class="xmldoc"><p>A record which allows to display lots of machine specific information like machine name, processor count etc.</p>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+                </div> 
+            <p>A record which allows to display lots of machine specific information like machine name, processor count etc.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -294,10 +321,18 @@
           </code>
           <div class="tip" id="273">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L32-32" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L32-32" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -314,10 +349,18 @@
           </code>
           <div class="tip" id="274">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L35-35" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO.FileSystemOperators instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L35-35" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -334,10 +377,18 @@
           </code>
           <div class="tip" id="275">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L115-115" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L115-115" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -354,10 +405,18 @@
           </code>
           <div class="tip" id="276">
             <strong>Signature:</strong> name:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L67-67" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L67-67" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -374,10 +433,18 @@
           </code>
           <div class="tip" id="277">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L25-25" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L25-25" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -394,10 +461,18 @@
           </code>
           <div class="tip" id="278">
             <strong>Signature:</strong> path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L28-28" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L28-28" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -414,10 +489,18 @@
           </code>
           <div class="tip" id="279">
             <strong>Signature:</strong> windowsPath:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L276-276" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L276-276" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -434,10 +517,18 @@
           </code>
           <div class="tip" id="280">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L272-272" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L272-272" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -454,10 +545,18 @@
           </code>
           <div class="tip" id="281">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L268-268" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L268-268" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -474,10 +573,18 @@
           </code>
           <div class="tip" id="282">
             <strong>Signature:</strong> Encoding<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L282-282" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L282-282" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -494,10 +601,18 @@
           </code>
           <div class="tip" id="283">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L21-21" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L21-21" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -514,10 +629,18 @@
           </code>
           <div class="tip" id="284">
             <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L75-75" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L75-75" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -534,10 +657,18 @@
           </code>
           <div class="tip" id="285">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L82-82" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L82-82" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -554,10 +685,18 @@
           </code>
           <div class="tip" id="286">
             <strong>Signature:</strong> name:string -&gt; string option<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L101-101" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L101-101" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -574,10 +713,18 @@
           </code>
           <div class="tip" id="287">
             <strong>Signature:</strong> target:EnvironmentVariableTarget -&gt; (obj * obj) list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L44-44" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L44-44" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -594,10 +741,18 @@
           </code>
           <div class="tip" id="288">
             <strong>Signature:</strong> name:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L129-129" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L129-129" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -614,10 +769,18 @@
           </code>
           <div class="tip" id="289">
             <strong>Signature:</strong> name:string -&gt; defaultParam:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L123-123" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L123-123" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -634,10 +797,18 @@
           </code>
           <div class="tip" id="290">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L326-326" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L326-326" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -654,10 +825,18 @@
           </code>
           <div class="tip" id="291">
             <strong>Signature:</strong> varName:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L97-97" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L97-97" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -674,10 +853,18 @@
           </code>
           <div class="tip" id="292">
             <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L89-89" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L89-89" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -694,10 +881,18 @@
           </code>
           <div class="tip" id="293">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L289-289" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L289-289" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -714,10 +909,18 @@
           </code>
           <div class="tip" id="294">
             <strong>Signature:</strong> unit -&gt; MachineDetails<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L338-338" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L338-338" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -734,10 +937,18 @@
           </code>
           <div class="tip" id="295">
             <strong>Signature:</strong> possibleToolPaths:seq&lt;&#39;a&gt; -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+                          <strong>Type parameters:</strong> 'a                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L252-252" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L252-252" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -755,10 +966,18 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="296">
             <strong>Signature:</strong> platformVersion:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L262-262" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L262-262" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -775,10 +994,18 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="297">
             <strong>Signature:</strong> name:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L119-119" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L119-119" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -795,10 +1022,18 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="298">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L180-180" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L180-180" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -815,10 +1050,18 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="299">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L168-168" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L168-168" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -835,10 +1078,18 @@ newest toolkit available</p>
           </code>
           <div class="tip" id="300">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L185-185" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L185-185" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -856,10 +1107,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="301">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L164-164" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L164-164" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -876,10 +1135,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="302">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L160-160" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L160-160" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -896,10 +1163,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="303">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L219-219" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L219-219" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -916,10 +1191,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="304">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L211-211" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L211-211" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -934,10 +1217,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="305">
             <strong>Signature:</strong> (string * Version option) option<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L190-190" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L190-190" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -955,10 +1246,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="306">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L243-243" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L243-243" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -975,10 +1274,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="307">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L39-39" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L39-39" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -993,10 +1300,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="308">
             <strong>Signature:</strong> psi:ProcessStartInfo -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L223-223" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Process instead (FAKE0001 - package: Fake.Core.Process)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L223-223" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1013,10 +1328,18 @@ Todo: Detect mono on windows</p>
           </code>
           <div class="tip" id="309">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L135-135" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L135-135" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1035,10 +1358,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="310">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L152-152" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L152-152" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1055,10 +1386,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="311">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L247-247" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L247-247" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1075,10 +1414,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="312">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L71-71" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L71-71" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1095,10 +1442,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="313">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L51-51" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L51-51" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1115,10 +1470,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="314">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L59-59" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L59-59" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1135,10 +1498,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="315">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L63-63" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L63-63" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1155,10 +1526,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="316">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L55-55" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L55-55" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1175,10 +1554,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="317">
             <strong>Signature:</strong> name:string -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L108-108" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L108-108" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1195,10 +1582,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="318">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L156-156" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L156-156" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1215,10 +1610,18 @@ PROCESSOR_ARCHITEW6432 can be null</p>
           </code>
           <div class="tip" id="319">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L230-230" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/EnvironmentHelper.fs#L230-230" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1334,7 +1737,7 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1356,6 +1759,17 @@ PROCESSOR_ARCHITEW6432 can be null</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        </div> 
 
+</p>
 <a name="SqlServer" class="anchor" href="#SqlServer"><h1>SqlServer</h1></a>
+
 <div class="xmldoc">
 </div>
 
@@ -261,7 +276,13 @@
           <td class="type-name">
             <a href="fake-sql-sqlserver-serverinfo.html">ServerInfo</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                </div> 
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -277,15 +298,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2067', 2067)" onmouseover="showTip(event, '2067', 2067)">
+          <code onmouseout="hideTip(event, '2079', 2079)" onmouseover="showTip(event, '2079', 2079)">
             Attach serverInfo attachOptions files
           </code>
-          <div class="tip" id="2067">
+          <div class="tip" id="2079">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; attachOptions:AttachOptions -&gt; files:seq&lt;string&gt; -&gt; ServerInfo<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L107-107" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L107-107" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -297,15 +326,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2068', 2068)" onmouseover="showTip(event, '2068', 2068)">
+          <code onmouseout="hideTip(event, '2080', 2080)" onmouseover="showTip(event, '2080', 2080)">
             CreateDb serverInfo
           </code>
-          <div class="tip" id="2068">
+          <div class="tip" id="2080">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L121-121" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L121-121" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -317,15 +354,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2069', 2069)" onmouseover="showTip(event, '2069', 2069)">
+          <code onmouseout="hideTip(event, '2081', 2081)" onmouseover="showTip(event, '2081', 2081)">
             Detach serverInfo
           </code>
-          <div class="tip" id="2069">
+          <div class="tip" id="2081">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L96-96" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L96-96" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -337,15 +382,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2070', 2070)" onmouseover="showTip(event, '2070', 2070)">
+          <code onmouseout="hideTip(event, '2082', 2082)" onmouseover="showTip(event, '2082', 2082)">
             Disconnect serverInfo
           </code>
-          <div class="tip" id="2070">
+          <div class="tip" id="2082">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L138-138" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L138-138" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -357,15 +410,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2071', 2071)" onmouseover="showTip(event, '2071', 2071)">
+          <code onmouseout="hideTip(event, '2083', 2083)" onmouseover="showTip(event, '2083', 2083)">
             DropAndCreateDatabase connectionString
           </code>
-          <div class="tip" id="2071">
+          <div class="tip" id="2083">
             <strong>Signature:</strong> connectionString:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L180-180" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L180-180" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -377,15 +438,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2072', 2072)" onmouseover="showTip(event, '2072', 2072)">
+          <code onmouseout="hideTip(event, '2084', 2084)" onmouseover="showTip(event, '2084', 2084)">
             DropDb serverInfo
           </code>
-          <div class="tip" id="2072">
+          <div class="tip" id="2084">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L79-79" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L79-79" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -397,15 +466,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2073', 2073)" onmouseover="showTip(event, '2073', 2073)">
+          <code onmouseout="hideTip(event, '2085', 2085)" onmouseover="showTip(event, '2085', 2085)">
             existDBOnServer serverInfo dbName
           </code>
-          <div class="tip" id="2073">
+          <div class="tip" id="2085">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; dbName:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L57-57" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L57-57" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -417,15 +494,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2074', 2074)" onmouseover="showTip(event, '2074', 2074)">
+          <code onmouseout="hideTip(event, '2086', 2086)" onmouseover="showTip(event, '2086', 2086)">
             getDatabase serverInfo
           </code>
-          <div class="tip" id="2074">
+          <div class="tip" id="2086">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; Database<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L69-69" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L69-69" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -437,15 +522,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2075', 2075)" onmouseover="showTip(event, '2075', 2075)">
+          <code onmouseout="hideTip(event, '2087', 2087)" onmouseover="showTip(event, '2087', 2087)">
             getDatabaseNamesFromServer serverInfo
           </code>
-          <div class="tip" id="2075">
+          <div class="tip" id="2087">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; seq&lt;string&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L43-43" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L43-43" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -457,15 +550,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2076', 2076)" onmouseover="showTip(event, '2076', 2076)">
+          <code onmouseout="hideTip(event, '2088', 2088)" onmouseover="showTip(event, '2088', 2088)">
             getDatabasesFromServer serverInfo
           </code>
-          <div class="tip" id="2076">
+          <div class="tip" id="2088">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; seq&lt;Database&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L38-38" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L38-38" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -477,15 +578,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2077', 2077)" onmouseover="showTip(event, '2077', 2077)">
+          <code onmouseout="hideTip(event, '2089', 2089)" onmouseover="showTip(event, '2089', 2089)">
             getDBName serverInfo
           </code>
-          <div class="tip" id="2077">
+          <div class="tip" id="2089">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L49-49" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L49-49" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -497,15 +606,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2078', 2078)" onmouseover="showTip(event, '2078', 2078)">
+          <code onmouseout="hideTip(event, '2090', 2090)" onmouseover="showTip(event, '2090', 2090)">
             getServerInfo connectionString
           </code>
-          <div class="tip" id="2078">
+          <div class="tip" id="2090">
             <strong>Signature:</strong> connectionString:string -&gt; ServerInfo<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L19-19" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L19-19" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -517,15 +634,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2079', 2079)" onmouseover="showTip(event, '2079', 2079)">
+          <code onmouseout="hideTip(event, '2091', 2091)" onmouseover="showTip(event, '2091', 2091)">
             getServerName serverInfo
           </code>
-          <div class="tip" id="2079">
+          <div class="tip" id="2091">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L53-53" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L53-53" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -537,15 +662,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2080', 2080)" onmouseover="showTip(event, '2080', 2080)">
+          <code onmouseout="hideTip(event, '2092', 2092)" onmouseover="showTip(event, '2092', 2092)">
             intitialCatalogExistsOnServer serverInfo
           </code>
-          <div class="tip" id="2080">
+          <div class="tip" id="2092">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L73-73" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L73-73" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -557,15 +690,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2081', 2081)" onmouseover="showTip(event, '2081', 2081)">
+          <code onmouseout="hideTip(event, '2093', 2093)" onmouseover="showTip(event, '2093', 2093)">
             KillAllProcesses serverInfo
           </code>
-          <div class="tip" id="2081">
+          <div class="tip" id="2093">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; ServerInfo<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L88-88" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L88-88" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -577,15 +718,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2082', 2082)" onmouseover="showTip(event, '2082', 2082)">
+          <code onmouseout="hideTip(event, '2094', 2094)" onmouseover="showTip(event, '2094', 2094)">
             ReplaceDatabaseFiles (...)
           </code>
-          <div class="tip" id="2082">
+          <div class="tip" id="2094">
             <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L156-156" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L156-156" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -597,15 +746,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2083', 2083)" onmouseover="showTip(event, '2083', 2083)">
+          <code onmouseout="hideTip(event, '2095', 2095)" onmouseover="showTip(event, '2095', 2095)">
             ReplaceDatabaseFilesWithCache (...)
           </code>
-          <div class="tip" id="2083">
+          <div class="tip" id="2095">
             <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L173-173" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L173-173" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -618,15 +775,23 @@ If the files in the cache are not up to date, they will be refreshed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2084', 2084)" onmouseover="showTip(event, '2084', 2084)">
+          <code onmouseout="hideTip(event, '2096', 2096)" onmouseover="showTip(event, '2096', 2096)">
             runScript serverInfo sqlFile
           </code>
-          <div class="tip" id="2084">
+          <div class="tip" id="2096">
             <strong>Signature:</strong> serverInfo:ServerInfo -&gt; sqlFile:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L130-130" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L130-130" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -638,15 +803,23 @@ If the files in the cache are not up to date, they will be refreshed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2085', 2085)" onmouseover="showTip(event, '2085', 2085)">
+          <code onmouseout="hideTip(event, '2097', 2097)" onmouseover="showTip(event, '2097', 2097)">
             RunScripts connectionString scripts
           </code>
-          <div class="tip" id="2085">
+          <div class="tip" id="2097">
             <strong>Signature:</strong> connectionString:string -&gt; scripts:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L191-191" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L191-191" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -658,15 +831,23 @@ If the files in the cache are not up to date, they will be refreshed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2086', 2086)" onmouseover="showTip(event, '2086', 2086)">
+          <code onmouseout="hideTip(event, '2098', 2098)" onmouseover="showTip(event, '2098', 2098)">
             RunScriptsFromDirectory (...)
           </code>
-          <div class="tip" id="2086">
+          <div class="tip" id="2098">
             <strong>Signature:</strong> connectionString:string -&gt; scriptDirectory:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L200-200" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/Fake.SQL/SQLServer.fs#L200-200" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -782,7 +963,7 @@ If the files in the cache are not up to date, they will be refreshed.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -804,6 +985,17 @@ If the files in the cache are not up to date, they will be refreshed.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

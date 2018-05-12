@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,13 @@
           			
 
 
+<p>
 
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        </div> 
+</p>
 <a name="ProjectFile" class="anchor" href="#ProjectFile" ><h1>ProjectFile</h1></a>
 <div class="xmldoc">
 <p>A small abstraction over MSBuild project files.</p>
@@ -259,15 +273,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5576', 5576)" onmouseover="showTip(event, '5576', 5576)">
+          <code onmouseout="hideTip(event, '5698', 5698)" onmouseover="showTip(event, '5698', 5698)">
             new(projectFileName, documentContent)
           </code>
-          <div class="tip" id="5576">
+          <div class="tip" id="5698">
             <strong>Signature:</strong> (projectFileName:string * documentContent:string) -&gt; ProjectFile<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L14-14" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L14-14" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -285,15 +299,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5577', 5577)" onmouseover="showTip(event, '5577', 5577)">
+          <code onmouseout="hideTip(event, '5699', 5699)" onmouseover="showTip(event, '5699', 5699)">
             AddContentFile(fileName)
           </code>
-          <div class="tip" id="5577">
+          <div class="tip" id="5699">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L53-53" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L53-53" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -305,15 +327,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5578', 5578)" onmouseover="showTip(event, '5578', 5578)">
+          <code onmouseout="hideTip(event, '5700', 5700)" onmouseover="showTip(event, '5700', 5700)">
             AddFile(fileName)
           </code>
-          <div class="tip" id="5578">
+          <div class="tip" id="5700">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L42-42" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L42-42" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -325,15 +355,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5579', 5579)" onmouseover="showTip(event, '5579', 5579)">
+          <code onmouseout="hideTip(event, '5701', 5701)" onmouseover="showTip(event, '5701', 5701)">
             ContentFiles
           </code>
-          <div class="tip" id="5579">
+          <div class="tip" id="5701">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L94-94" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L94-94" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -345,15 +383,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5580', 5580)" onmouseover="showTip(event, '5580', 5580)">
+          <code onmouseout="hideTip(event, '5702', 5702)" onmouseover="showTip(event, '5702', 5702)">
             Files
           </code>
-          <div class="tip" id="5580">
+          <div class="tip" id="5702">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L90-90" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L90-90" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -365,15 +411,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5581', 5581)" onmouseover="showTip(event, '5581', 5581)">
+          <code onmouseout="hideTip(event, '5703', 5703)" onmouseover="showTip(event, '5703', 5703)">
             FindDuplicateContentFiles()
           </code>
-          <div class="tip" id="5581">
+          <div class="tip" id="5703">
             <strong>Signature:</strong> unit -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L114-114" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L114-114" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -385,15 +439,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5582', 5582)" onmouseover="showTip(event, '5582', 5582)">
+          <code onmouseout="hideTip(event, '5704', 5704)" onmouseover="showTip(event, '5704', 5704)">
             FindDuplicateFiles()
           </code>
-          <div class="tip" id="5582">
+          <div class="tip" id="5704">
             <strong>Signature:</strong> unit -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L98-98" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L98-98" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -405,15 +467,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5583', 5583)" onmouseover="showTip(event, '5583', 5583)">
+          <code onmouseout="hideTip(event, '5705', 5705)" onmouseover="showTip(event, '5705', 5705)">
             ProjectFileName
           </code>
-          <div class="tip" id="5583">
+          <div class="tip" id="5705">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L130-130" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L130-130" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -425,15 +495,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5584', 5584)" onmouseover="showTip(event, '5584', 5584)">
+          <code onmouseout="hideTip(event, '5706', 5706)" onmouseover="showTip(event, '5706', 5706)">
             RemoveContentFile(fileName)
           </code>
-          <div class="tip" id="5584">
+          <div class="tip" id="5706">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L77-77" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L77-77" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -445,15 +523,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5585', 5585)" onmouseover="showTip(event, '5585', 5585)">
+          <code onmouseout="hideTip(event, '5707', 5707)" onmouseover="showTip(event, '5707', 5707)">
             RemoveDuplicates()
           </code>
-          <div class="tip" id="5585">
+          <div class="tip" id="5707">
             <strong>Signature:</strong> unit -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L107-107" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L107-107" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -463,15 +549,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5586', 5586)" onmouseover="showTip(event, '5586', 5586)">
+          <code onmouseout="hideTip(event, '5708', 5708)" onmouseover="showTip(event, '5708', 5708)">
             RemoveDuplicatesContent()
           </code>
-          <div class="tip" id="5586">
+          <div class="tip" id="5708">
             <strong>Signature:</strong> unit -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L124-124" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L124-124" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -481,15 +575,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5587', 5587)" onmouseover="showTip(event, '5587', 5587)">
+          <code onmouseout="hideTip(event, '5709', 5709)" onmouseover="showTip(event, '5709', 5709)">
             RemoveFile(fileName)
           </code>
-          <div class="tip" id="5587">
+          <div class="tip" id="5709">
             <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L64-64" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L64-64" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -501,15 +603,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5588', 5588)" onmouseover="showTip(event, '5588', 5588)">
+          <code onmouseout="hideTip(event, '5710', 5710)" onmouseover="showTip(event, '5710', 5710)">
             Save(fileName)
           </code>
-          <div class="tip" id="5588">
+          <div class="tip" id="5710">
             <strong>Signature:</strong> (fileName:string option) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L38-38" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L38-38" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -529,15 +639,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5589', 5589)" onmouseover="showTip(event, '5589', 5589)">
+          <code onmouseout="hideTip(event, '5711', 5711)" onmouseover="showTip(event, '5711', 5711)">
             FromFile(projectFileName)
           </code>
-          <div class="tip" id="5589">
+          <div class="tip" id="5711">
             <strong>Signature:</strong> projectFileName:string -&gt; ProjectFile<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L34-34" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/MSBuild/ProjectSystem.fs#L34-34" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -653,7 +771,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -675,6 +793,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,8 +252,15 @@
           			
 
 
+<p>
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem)</p>
+        </div> 
 
+</p>
 <a name="FileHelper" class="anchor" href="#FileHelper"><h1>FileHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains helper function which allow to deal with files and directories.</p>
 
@@ -267,10 +282,18 @@
           </code>
           <div class="tip" id="346">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L263-263" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L263-263" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -287,10 +310,18 @@
           </code>
           <div class="tip" id="347">
             <strong>Signature:</strong> newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.AppendTextFiles)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L331-331" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.AppendTextFiles)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L331-331" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -312,10 +343,18 @@
           </code>
           <div class="tip" id="348">
             <strong>Signature:</strong> extension:string -&gt; fileName:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Open System.IO and use Path.ChangeExtension&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L528-528" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Open System.IO and use Path.ChangeExtension</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L528-528" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -337,10 +376,18 @@
           </code>
           <div class="tip" id="349">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDir)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L290-290" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDir)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L290-290" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -357,10 +404,18 @@
           </code>
           <div class="tip" id="350">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDirs)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L310-310" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CleanDirs)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L310-310" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -377,10 +432,18 @@
           </code>
           <div class="tip" id="351">
             <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CompareFiles)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L357-357" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CompareFiles)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L357-357" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -398,10 +461,18 @@ If delete is set to true then equal files will be removed.</p>
           </code>
           <div class="tip" id="352">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Copy)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L180-180" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Copy)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L180-180" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -423,10 +494,18 @@ If delete is set to true then equal files will be removed.</p>
           </code>
           <div class="tip" id="353">
             <strong>Signature:</strong> target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyCached)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L200-200" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyCached)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L200-200" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -450,10 +529,18 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="354">
             <strong>Signature:</strong> target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyDir)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L272-272" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyDir)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L272-272" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -476,10 +563,18 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="355">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFile)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L119-119" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFile)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L119-119" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -501,10 +596,18 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="356">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileIntoSubFolder)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L144-144" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileIntoSubFolder)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L144-144" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -526,10 +629,18 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="357">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFiles)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L255-255" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFiles)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L255-255" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -551,10 +662,18 @@ If the files are not cached or the original files have a different write time th
           </code>
           <div class="tip" id="358">
             <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileWithSubfolder)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L156-156" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyFileWithSubfolder)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L156-156" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -578,10 +697,18 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="359">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; outputDir:DirectoryInfo -&gt; overwrite:bool -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.copyRecursiveTo. NB: parameters order changed)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L423-423" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.copyRecursiveTo. NB: parameters order changed)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L423-423" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -598,10 +725,18 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="360">
             <strong>Signature:</strong> dir:string -&gt; outputDir:string -&gt; bool -&gt; string list<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyRecursive)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L443-443" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyRecursive)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L443-443" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -618,10 +753,18 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="361">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyTo)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L190-190" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.CopyTo)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L190-190" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -643,10 +786,18 @@ starting from the specified base folder.</p>
           </code>
           <div class="tip" id="362">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;FileIncludes&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L170-170" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L170-170" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -670,10 +821,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="363">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.create)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L61-61" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.create)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L61-61" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -690,10 +849,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="364">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.create)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L70-70" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.create)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L70-70" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -710,10 +877,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="365">
             <strong>Signature:</strong> path:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.delete)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L48-48" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Directory.delete)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L48-48" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -730,10 +905,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="366">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.DeleteDirs)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L314-314" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.DeleteDirs)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L314-314" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -750,10 +933,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="367">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.delete)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L80-80" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.delete)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L80-80" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -770,10 +961,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="368">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.deleteAll)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L89-89" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.deleteAll)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L89-89" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -790,10 +989,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="369">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Open System.IO and use Path.GetDirectoryName&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L560-560" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Open System.IO and use Path.GetDirectoryName</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L560-560" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -814,10 +1021,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="370">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L259-259" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L259-259" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -834,10 +1049,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="371">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Open System.IO and use Path.GetExtension&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L520-520" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Open System.IO and use Path.GetExtension</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L520-520" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -858,10 +1081,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="372">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Open System.IO and use Path.GetFileName&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L543-543" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Open System.IO and use Path.GetFileName</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L543-543" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -882,10 +1113,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="373">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;This was a typo - please use fileNameWithoutExt&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L553-553" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>This was a typo - please use fileNameWithoutExt</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L553-553" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -900,10 +1139,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="374">
             <strong>Signature:</strong> path:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Open System.IO and use Path.GetFileNameWithoutExtension&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L550-550" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Open System.IO and use Path.GetFileNameWithoutExtension</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L550-550" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -924,10 +1171,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="375">
             <strong>Signature:</strong> first:FileInfo -&gt; second:FileInfo -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.contentIsEqualTo)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L341-341" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.contentIsEqualTo)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L341-341" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -944,10 +1199,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="376">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.getVersion)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L510-510" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.getVersion)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L510-510" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -968,10 +1231,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="377">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatch)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L418-418" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatch)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L418-418" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -994,10 +1265,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="378">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatchWithFindOldFileFunction)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L399-399" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.GeneratePatchWithFindOldFileFunction)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L399-399" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1021,10 +1300,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="379">
             <strong>Signature:</strong> extension:string -&gt; fileName:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Open System.IO and use System.String.Equals(Path.GetExtension fileName, extension, System.StringComparison.InvariantCultureIgnoreCase)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L536-536" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Open System.IO and use System.String.Equals(Path.GetExtension fileName, extension, System.StringComparison.InvariantCultureIgnoreCase)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L536-536" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1046,10 +1333,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="380">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.MoveFile)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L451-451" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.MoveFile)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L451-451" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1071,10 +1366,18 @@ starting from the BaseDirectory of each FileIncludes.</p>
           </code>
           <div class="tip" id="381">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string []&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L319-319" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L319-319" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1092,10 +1395,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="382">
             <strong>Signature:</strong> dirF:(DirectoryInfo -&gt; unit) -&gt; fileF:(FileInfo -&gt; unit) -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Function is no more accessible (FAKE0003 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.recursively). If you consider, it is still useful, please open an issue and explain your use case&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L12-12" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Function is no more accessible (FAKE0003 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.recursively). If you consider, it is still useful, please open an issue and explain your use case</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L12-12" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1112,10 +1423,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="383">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L502-502" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L502-502" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1139,10 +1458,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="384">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L489-489" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.RegexReplaceInFileWithEncoding)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L489-489" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1166,10 +1493,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="385">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Rename)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L230-230" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.Rename)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L230-230" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1191,10 +1526,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="386">
             <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.ReplaceInFiles)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L479-479" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.ReplaceInFiles)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L479-479" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1216,10 +1559,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="387">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L24-24" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L24-24" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1236,10 +1587,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="388">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.setReadOnlyRecursive)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L32-32" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.DirectoryInfo.setReadOnlyRecursive)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L32-32" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1256,10 +1615,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="389">
             <strong>Signature:</strong> readOnly:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L37-37" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L37-37" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1276,10 +1643,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="390">
             <strong>Signature:</strong> target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L238-238" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.SilentCopy)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L238-238" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1301,10 +1676,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="391">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestDir)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L375-375" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestDir)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L375-375" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1321,10 +1704,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="392">
             <strong>Signature:</strong> path:string -&gt; bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestFile)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L384-384" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.TestFile)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L384-384" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1341,10 +1732,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="393">
             <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?12796 * &#39;?12797&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12796, '?12797          </div>
+                          <strong>Type parameters:</strong> '?12796, '?12797                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.WriteConfigFile)&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L464-464" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Shell.WriteConfigFile)</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L464-464" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1369,10 +1768,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="394">
             <strong>Signature:</strong> extension:string -&gt; file:string -&gt; unit option<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.(|EndsWith|_|))&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L101-101" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.File.(|EndsWith|_|))</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L101-101" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1389,10 +1796,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="395">
             <strong>Signature:</strong> fileSysInfo:FileSystemInfo -&gt; Choice&lt;FileInfo,(DirectoryInfo * IEnumerable&lt;FileSystemInfo&gt;)&gt;<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystemInfo.(|File|Directory|))&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L93-93" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileSystemInfo.(|File|Directory|))</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L93-93" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1409,10 +1824,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="396">
             <strong>Signature:</strong> f:FileInfo -&gt; string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|FullName|))&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L107-107" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|FullName|))</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L107-107" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1429,10 +1852,18 @@ delimiter is a ,</p>
           </code>
           <div class="tip" id="397">
             <strong>Signature:</strong> f:FileInfo -&gt; string * string * string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|NameSections|))&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L111-111" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.IO instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.FileInfo.(|NameSections|))</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/FileHelper.fs#L111-111" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1548,7 +1979,7 @@ delimiter is a ,</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1570,6 +2001,17 @@ delimiter is a ,</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

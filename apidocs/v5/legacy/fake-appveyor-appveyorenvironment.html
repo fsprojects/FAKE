@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,13 @@
           			
 
 
+<p>
 
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+        </div> 
+</p>
 <a name="AppVeyorEnvironment" class="anchor" href="#AppVeyorEnvironment" ><h1>AppVeyorEnvironment</h1></a>
 <div class="xmldoc">
 <p>AppVeyor environment variables as <a href="http://www.appveyor.com/docs/environment-variables">described</a></p>
@@ -259,15 +273,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2315', 2315)" onmouseover="showTip(event, '2315', 2315)">
+          <code onmouseout="hideTip(event, '2338', 2338)" onmouseover="showTip(event, '2338', 2338)">
             AccountName
           </code>
-          <div class="tip" id="2315">
+          <div class="tip" id="2338">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L18-18" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L18-18" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -279,15 +301,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2316', 2316)" onmouseover="showTip(event, '2316', 2316)">
+          <code onmouseout="hideTip(event, '2339', 2339)" onmouseover="showTip(event, '2339', 2339)">
             ApiUrl
           </code>
-          <div class="tip" id="2316">
+          <div class="tip" id="2339">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L14-14" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L14-14" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -299,15 +329,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2317', 2317)" onmouseover="showTip(event, '2317', 2317)">
+          <code onmouseout="hideTip(event, '2340', 2340)" onmouseover="showTip(event, '2340', 2340)">
             ArtifactUploadTimeout
           </code>
-          <div class="tip" id="2317">
+          <div class="tip" id="2340">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L160-160" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L160-160" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -319,15 +357,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2318', 2318)" onmouseover="showTip(event, '2318', 2318)">
+          <code onmouseout="hideTip(event, '2341', 2341)" onmouseover="showTip(event, '2341', 2341)">
             BuildFolder
           </code>
-          <div class="tip" id="2318">
+          <div class="tip" id="2341">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L34-34" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L34-34" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -339,15 +385,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2319', 2319)" onmouseover="showTip(event, '2319', 2319)">
+          <code onmouseout="hideTip(event, '2342', 2342)" onmouseover="showTip(event, '2342', 2342)">
             BuildId
           </code>
-          <div class="tip" id="2319">
+          <div class="tip" id="2342">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L38-38" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L38-38" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -359,15 +413,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2320', 2320)" onmouseover="showTip(event, '2320', 2320)">
+          <code onmouseout="hideTip(event, '2343', 2343)" onmouseover="showTip(event, '2343', 2343)">
             BuildNumber
           </code>
-          <div class="tip" id="2320">
+          <div class="tip" id="2343">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L42-42" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L42-42" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -379,15 +441,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2321', 2321)" onmouseover="showTip(event, '2321', 2321)">
+          <code onmouseout="hideTip(event, '2344', 2344)" onmouseover="showTip(event, '2344', 2344)">
             BuildVersion
           </code>
-          <div class="tip" id="2321">
+          <div class="tip" id="2344">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L46-46" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L46-46" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -399,15 +469,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2322', 2322)" onmouseover="showTip(event, '2322', 2322)">
+          <code onmouseout="hideTip(event, '2345', 2345)" onmouseover="showTip(event, '2345', 2345)">
             BuildWorkerImage
           </code>
-          <div class="tip" id="2322">
+          <div class="tip" id="2345">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L156-156" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L156-156" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -419,15 +497,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2323', 2323)" onmouseover="showTip(event, '2323', 2323)">
+          <code onmouseout="hideTip(event, '2346', 2346)" onmouseover="showTip(event, '2346', 2346)">
             CacheEntryUploadDownloadTimeout
           </code>
-          <div class="tip" id="2323">
+          <div class="tip" id="2346">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L172-172" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L172-172" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -439,15 +525,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2324', 2324)" onmouseover="showTip(event, '2324', 2324)">
+          <code onmouseout="hideTip(event, '2347', 2347)" onmouseover="showTip(event, '2347', 2347)">
             CacheSkipRestore
           </code>
-          <div class="tip" id="2324">
+          <div class="tip" id="2347">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L148-148" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L148-148" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -459,15 +553,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2325', 2325)" onmouseover="showTip(event, '2325', 2325)">
+          <code onmouseout="hideTip(event, '2348', 2348)" onmouseover="showTip(event, '2348', 2348)">
             CacheSkipSave
           </code>
-          <div class="tip" id="2325">
+          <div class="tip" id="2348">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L152-152" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L152-152" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -479,15 +581,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2326', 2326)" onmouseover="showTip(event, '2326', 2326)">
+          <code onmouseout="hideTip(event, '2349', 2349)" onmouseover="showTip(event, '2349', 2349)">
             Configuration
           </code>
-          <div class="tip" id="2326">
+          <div class="tip" id="2349">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L136-136" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L136-136" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -499,15 +609,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2327', 2327)" onmouseover="showTip(event, '2327', 2327)">
+          <code onmouseout="hideTip(event, '2350', 2350)" onmouseover="showTip(event, '2350', 2350)">
             FileDownloadTimeout
           </code>
-          <div class="tip" id="2327">
+          <div class="tip" id="2350">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L164-164" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L164-164" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -519,15 +637,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2328', 2328)" onmouseover="showTip(event, '2328', 2328)">
+          <code onmouseout="hideTip(event, '2351', 2351)" onmouseover="showTip(event, '2351', 2351)">
             IsForcedBuild
           </code>
-          <div class="tip" id="2328">
+          <div class="tip" id="2351">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L114-114" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L114-114" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -539,15 +665,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2329', 2329)" onmouseover="showTip(event, '2329', 2329)">
+          <code onmouseout="hideTip(event, '2352', 2352)" onmouseover="showTip(event, '2352', 2352)">
             IsReBuild
           </code>
-          <div class="tip" id="2329">
+          <div class="tip" id="2352">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L118-118" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L118-118" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -559,15 +693,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2330', 2330)" onmouseover="showTip(event, '2330', 2330)">
+          <code onmouseout="hideTip(event, '2353', 2353)" onmouseover="showTip(event, '2353', 2353)">
             IsScheduledBuild
           </code>
-          <div class="tip" id="2330">
+          <div class="tip" id="2353">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L110-110" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L110-110" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -579,15 +721,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2331', 2331)" onmouseover="showTip(event, '2331', 2331)">
+          <code onmouseout="hideTip(event, '2354', 2354)" onmouseover="showTip(event, '2354', 2354)">
             JobId
           </code>
-          <div class="tip" id="2331">
+          <div class="tip" id="2354">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L66-66" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L66-66" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -599,15 +749,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2332', 2332)" onmouseover="showTip(event, '2332', 2332)">
+          <code onmouseout="hideTip(event, '2355', 2355)" onmouseover="showTip(event, '2355', 2355)">
             JobName
           </code>
-          <div class="tip" id="2332">
+          <div class="tip" id="2355">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L140-140" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L140-140" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -619,15 +777,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2333', 2333)" onmouseover="showTip(event, '2333', 2333)">
+          <code onmouseout="hideTip(event, '2356', 2356)" onmouseover="showTip(event, '2356', 2356)">
             JobNumber
           </code>
-          <div class="tip" id="2333">
+          <div class="tip" id="2356">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L144-144" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L144-144" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -639,15 +805,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2334', 2334)" onmouseover="showTip(event, '2334', 2334)">
+          <code onmouseout="hideTip(event, '2357', 2357)" onmouseover="showTip(event, '2357', 2357)">
             Platform
           </code>
-          <div class="tip" id="2334">
+          <div class="tip" id="2357">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L132-132" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L132-132" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -659,15 +833,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2335', 2335)" onmouseover="showTip(event, '2335', 2335)">
+          <code onmouseout="hideTip(event, '2358', 2358)" onmouseover="showTip(event, '2358', 2358)">
             ProjectId
           </code>
-          <div class="tip" id="2335">
+          <div class="tip" id="2358">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L22-22" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L22-22" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -679,15 +861,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2336', 2336)" onmouseover="showTip(event, '2336', 2336)">
+          <code onmouseout="hideTip(event, '2359', 2359)" onmouseover="showTip(event, '2359', 2359)">
             ProjectName
           </code>
-          <div class="tip" id="2336">
+          <div class="tip" id="2359">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L26-26" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L26-26" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -699,15 +889,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2337', 2337)" onmouseover="showTip(event, '2337', 2337)">
+          <code onmouseout="hideTip(event, '2360', 2360)" onmouseover="showTip(event, '2360', 2360)">
             ProjectSlug
           </code>
-          <div class="tip" id="2337">
+          <div class="tip" id="2360">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L30-30" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L30-30" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -719,15 +917,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2338', 2338)" onmouseover="showTip(event, '2338', 2338)">
+          <code onmouseout="hideTip(event, '2361', 2361)" onmouseover="showTip(event, '2361', 2361)">
             PullRequestNumber
           </code>
-          <div class="tip" id="2338">
+          <div class="tip" id="2361">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L50-50" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L50-50" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -739,15 +945,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2339', 2339)" onmouseover="showTip(event, '2339', 2339)">
+          <code onmouseout="hideTip(event, '2362', 2362)" onmouseover="showTip(event, '2362', 2362)">
             PullRequestRepoBranch
           </code>
-          <div class="tip" id="2339">
+          <div class="tip" id="2362">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L62-62" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L62-62" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -759,15 +973,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2340', 2340)" onmouseover="showTip(event, '2340', 2340)">
+          <code onmouseout="hideTip(event, '2363', 2363)" onmouseover="showTip(event, '2363', 2363)">
             PullRequestRepoName
           </code>
-          <div class="tip" id="2340">
+          <div class="tip" id="2363">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L58-58" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L58-58" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -779,15 +1001,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2341', 2341)" onmouseover="showTip(event, '2341', 2341)">
+          <code onmouseout="hideTip(event, '2364', 2364)" onmouseover="showTip(event, '2364', 2364)">
             PullRequestTitle
           </code>
-          <div class="tip" id="2341">
+          <div class="tip" id="2364">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L54-54" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L54-54" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -799,15 +1029,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2342', 2342)" onmouseover="showTip(event, '2342', 2342)">
+          <code onmouseout="hideTip(event, '2365', 2365)" onmouseover="showTip(event, '2365', 2365)">
             RepoBranch
           </code>
-          <div class="tip" id="2342">
+          <div class="tip" id="2365">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L82-82" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L82-82" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -819,15 +1057,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2343', 2343)" onmouseover="showTip(event, '2343', 2343)">
+          <code onmouseout="hideTip(event, '2366', 2366)" onmouseover="showTip(event, '2366', 2366)">
             RepoCommit
           </code>
-          <div class="tip" id="2343">
+          <div class="tip" id="2366">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L86-86" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L86-86" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -839,15 +1085,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2344', 2344)" onmouseover="showTip(event, '2344', 2344)">
+          <code onmouseout="hideTip(event, '2367', 2367)" onmouseover="showTip(event, '2367', 2367)">
             RepoCommitAuthor
           </code>
-          <div class="tip" id="2344">
+          <div class="tip" id="2367">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L90-90" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L90-90" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -859,15 +1113,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2345', 2345)" onmouseover="showTip(event, '2345', 2345)">
+          <code onmouseout="hideTip(event, '2368', 2368)" onmouseover="showTip(event, '2368', 2368)">
             RepoCommitAuthorEmail
           </code>
-          <div class="tip" id="2345">
+          <div class="tip" id="2368">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L94-94" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L94-94" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -879,15 +1141,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2346', 2346)" onmouseover="showTip(event, '2346', 2346)">
+          <code onmouseout="hideTip(event, '2369', 2369)" onmouseover="showTip(event, '2369', 2369)">
             RepoCommitMessage
           </code>
-          <div class="tip" id="2346">
+          <div class="tip" id="2369">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L102-102" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L102-102" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -899,15 +1169,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2347', 2347)" onmouseover="showTip(event, '2347', 2347)">
+          <code onmouseout="hideTip(event, '2370', 2370)" onmouseover="showTip(event, '2370', 2370)">
             RepoCommitMessageExtended
           </code>
-          <div class="tip" id="2347">
+          <div class="tip" id="2370">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L106-106" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L106-106" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -919,15 +1197,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2348', 2348)" onmouseover="showTip(event, '2348', 2348)">
+          <code onmouseout="hideTip(event, '2371', 2371)" onmouseover="showTip(event, '2371', 2371)">
             RepoCommitTimestamp
           </code>
-          <div class="tip" id="2348">
+          <div class="tip" id="2371">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L98-98" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L98-98" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -939,15 +1225,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2349', 2349)" onmouseover="showTip(event, '2349', 2349)">
+          <code onmouseout="hideTip(event, '2372', 2372)" onmouseover="showTip(event, '2372', 2372)">
             RepoName
           </code>
-          <div class="tip" id="2349">
+          <div class="tip" id="2372">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L78-78" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L78-78" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -959,15 +1253,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2350', 2350)" onmouseover="showTip(event, '2350', 2350)">
+          <code onmouseout="hideTip(event, '2373', 2373)" onmouseover="showTip(event, '2373', 2373)">
             RepoProvider
           </code>
-          <div class="tip" id="2350">
+          <div class="tip" id="2373">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L70-70" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L70-70" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -979,15 +1281,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2351', 2351)" onmouseover="showTip(event, '2351', 2351)">
+          <code onmouseout="hideTip(event, '2374', 2374)" onmouseover="showTip(event, '2374', 2374)">
             RepoScm
           </code>
-          <div class="tip" id="2351">
+          <div class="tip" id="2374">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L74-74" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L74-74" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -999,15 +1309,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2352', 2352)" onmouseover="showTip(event, '2352', 2352)">
+          <code onmouseout="hideTip(event, '2375', 2375)" onmouseover="showTip(event, '2375', 2375)">
             RepositoryShallowCloneTimeout
           </code>
-          <div class="tip" id="2352">
+          <div class="tip" id="2375">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L168-168" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L168-168" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1019,15 +1337,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2353', 2353)" onmouseover="showTip(event, '2353', 2353)">
+          <code onmouseout="hideTip(event, '2376', 2376)" onmouseover="showTip(event, '2376', 2376)">
             RepoTag
           </code>
-          <div class="tip" id="2353">
+          <div class="tip" id="2376">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L122-122" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L122-122" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1039,15 +1365,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2354', 2354)" onmouseover="showTip(event, '2354', 2354)">
+          <code onmouseout="hideTip(event, '2377', 2377)" onmouseover="showTip(event, '2377', 2377)">
             RepoTagName
           </code>
-          <div class="tip" id="2354">
+          <div class="tip" id="2377">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                        <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead&quot;)&gt;]<br />
+                </span>
+          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L128-128" class="github-link">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>please use nuget &#39;Fake.BuildServer.AppVeyor&#39;, open Fake.BuildServer and use AppVeyor.Environment instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/AppVeyor.fs#L128-128" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1163,7 +1497,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1185,6 +1519,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

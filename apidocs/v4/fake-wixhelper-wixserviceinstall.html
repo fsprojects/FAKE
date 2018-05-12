@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="WiXServiceInstall" class="anchor" href="#WiXServiceInstall" ><h1>WiXServiceInstall</h1></a>
 <div class="xmldoc">
 <p>Adds services for parent Component. Use the ServiceControl element to remove services.</p>
@@ -263,10 +273,10 @@
           </code>
           <div class="tip" id="3018">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.</p>
+                    <p>Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.</p>
 
 
         </td>
@@ -279,10 +289,10 @@
           </code>
           <div class="tip" id="3019">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Contains any command line arguments or properties required to run the service.</p>
+                    <p>Contains any command line arguments or properties required to run the service.</p>
 
 
         </td>
@@ -295,10 +305,10 @@
           </code>
           <div class="tip" id="3020">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Sets the description of the service.</p>
+                    <p>Sets the description of the service.</p>
 
 
         </td>
@@ -311,10 +321,10 @@
           </code>
           <div class="tip" id="3021">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>This column is the localizable string that user interface programs use to identify the service.</p>
+                    <p>This column is the localizable string that user interface programs use to identify the service.</p>
 
 
         </td>
@@ -327,10 +337,10 @@
           </code>
           <div class="tip" id="3022">
             <strong>Signature:</strong> YesOrNo option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.</p>
+                    <p>Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.</p>
 
 
         </td>
@@ -343,10 +353,10 @@
           </code>
           <div class="tip" id="3023">
             <strong>Signature:</strong> ErrorControl<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
 
         </td>
       </tr>
@@ -358,10 +368,10 @@
           </code>
           <div class="tip" id="3024">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Unique identifier for this service configuration. This value will default to the Name attribute if not specified.</p>
+                    <p>Unique identifier for this service configuration. This value will default to the Name attribute if not specified.</p>
 
 
         </td>
@@ -374,10 +384,10 @@
           </code>
           <div class="tip" id="3025">
             <strong>Signature:</strong> YesOrNo option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Whether or not the service interacts with the desktop.</p>
+                    <p>Whether or not the service interacts with the desktop.</p>
 
 
         </td>
@@ -390,10 +400,10 @@
           </code>
           <div class="tip" id="3026">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The load ordering group that this service should be a part of.</p>
+                    <p>The load ordering group that this service should be a part of.</p>
 
 
         </td>
@@ -406,10 +416,10 @@
           </code>
           <div class="tip" id="3027">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
 
         </td>
       </tr>
@@ -421,10 +431,10 @@
           </code>
           <div class="tip" id="3028">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The password for the account. Valid only when the account has a password.</p>
+                    <p>The password for the account. Valid only when the account has a password.</p>
 
 
         </td>
@@ -437,10 +447,10 @@
           </code>
           <div class="tip" id="3029">
             <strong>Signature:</strong> seq&lt;WiXServiceConfig&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Service configuration information for failure actions.</p>
+                    <p>Service configuration information for failure actions.</p>
 
 
         </td>
@@ -453,10 +463,10 @@
           </code>
           <div class="tip" id="3030">
             <strong>Signature:</strong> seq&lt;WiXServiceDependency&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Services or groups of services that must start before the parent service.</p>
+                    <p>Services or groups of services that must start before the parent service.</p>
 
 
         </td>
@@ -469,10 +479,10 @@
           </code>
           <div class="tip" id="3031">
             <strong>Signature:</strong> ServiceInstallStart<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
 
         </td>
       </tr>
@@ -484,10 +494,10 @@
           </code>
           <div class="tip" id="3032">
             <strong>Signature:</strong> ServiceInstallType<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
 
         </td>
       </tr>
@@ -499,10 +509,10 @@
           </code>
           <div class="tip" id="3033">
             <strong>Signature:</strong> YesOrNo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The overall install should fail if this service fails to install. (Default: Yes)</p>
+                    <p>The overall install should fail if this service fails to install. (Default: Yes)</p>
 
 
         </td>
@@ -523,10 +533,10 @@
           </code>
           <div class="tip" id="3034">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
     </tbody>
@@ -636,7 +646,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -658,6 +668,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

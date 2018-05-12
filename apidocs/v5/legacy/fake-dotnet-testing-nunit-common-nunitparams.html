@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="NUnitParams" class="anchor" href="#NUnitParams" ><h1>NUnitParams</h1></a>
 <div class="xmldoc">
 <p>The <a href="http://www.nunit.org/">NUnit</a> Console Parameters type.
@@ -261,15 +271,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5475', 5475)" onmouseover="showTip(event, '5475', 5475)">
+          <code onmouseout="hideTip(event, '5597', 5597)" onmouseover="showTip(event, '5597', 5597)">
             DisableShadowCopy
           </code>
-          <div class="tip" id="5475">
+          <div class="tip" id="5597">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L100-100" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L100-100" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -281,15 +291,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5476', 5476)" onmouseover="showTip(event, '5476', 5476)">
+          <code onmouseout="hideTip(event, '5598', 5598)" onmouseover="showTip(event, '5598', 5598)">
             Domain
           </code>
-          <div class="tip" id="5476">
+          <div class="tip" id="5598">
             <strong>Signature:</strong> NUnitDomainModel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L103-103" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L103-103" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -301,15 +311,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5477', 5477)" onmouseover="showTip(event, '5477', 5477)">
+          <code onmouseout="hideTip(event, '5599', 5599)" onmouseover="showTip(event, '5599', 5599)">
             DontTestInNewThread
           </code>
-          <div class="tip" id="5477">
+          <div class="tip" id="5599">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L67-67" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L67-67" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -321,15 +331,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5478', 5478)" onmouseover="showTip(event, '5478', 5478)">
+          <code onmouseout="hideTip(event, '5600', 5600)" onmouseover="showTip(event, '5600', 5600)">
             ErrorLevel
           </code>
-          <div class="tip" id="5478">
+          <div class="tip" id="5600">
             <strong>Signature:</strong> NUnitErrorLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L105-105" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L105-105" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -341,15 +351,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5479', 5479)" onmouseover="showTip(event, '5479', 5479)">
+          <code onmouseout="hideTip(event, '5601', 5601)" onmouseover="showTip(event, '5601', 5601)">
             ErrorOutputFile
           </code>
-          <div class="tip" id="5479">
+          <div class="tip" id="5601">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L79-79" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -361,15 +371,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5480', 5480)" onmouseover="showTip(event, '5480', 5480)">
+          <code onmouseout="hideTip(event, '5602', 5602)" onmouseover="showTip(event, '5602', 5602)">
             ExcludeCategory
           </code>
-          <div class="tip" id="5480">
+          <div class="tip" id="5602">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L58-58" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L58-58" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -381,15 +391,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5481', 5481)" onmouseover="showTip(event, '5481', 5481)">
+          <code onmouseout="hideTip(event, '5603', 5603)" onmouseover="showTip(event, '5603', 5603)">
             Fixture
           </code>
-          <div class="tip" id="5481">
+          <div class="tip" id="5603">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L107-107" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L107-107" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -401,15 +411,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5482', 5482)" onmouseover="showTip(event, '5482', 5482)">
+          <code onmouseout="hideTip(event, '5604', 5604)" onmouseover="showTip(event, '5604', 5604)">
             Framework
           </code>
-          <div class="tip" id="5482">
+          <div class="tip" id="5604">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L82-82" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L82-82" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -421,15 +431,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5483', 5483)" onmouseover="showTip(event, '5483', 5483)">
+          <code onmouseout="hideTip(event, '5605', 5605)" onmouseover="showTip(event, '5605', 5605)">
             IncludeCategory
           </code>
-          <div class="tip" id="5483">
+          <div class="tip" id="5605">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L55-55" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L55-55" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -441,15 +451,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5484', 5484)" onmouseover="showTip(event, '5484', 5484)">
+          <code onmouseout="hideTip(event, '5606', 5606)" onmouseover="showTip(event, '5606', 5606)">
             Out
           </code>
-          <div class="tip" id="5484">
+          <div class="tip" id="5606">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L76-76" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L76-76" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -461,15 +471,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5485', 5485)" onmouseover="showTip(event, '5485', 5485)">
+          <code onmouseout="hideTip(event, '5607', 5607)" onmouseover="showTip(event, '5607', 5607)">
             OutputFile
           </code>
-          <div class="tip" id="5485">
+          <div class="tip" id="5607">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L73-73" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L73-73" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -481,15 +491,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5486', 5486)" onmouseover="showTip(event, '5486', 5486)">
+          <code onmouseout="hideTip(event, '5608', 5608)" onmouseover="showTip(event, '5608', 5608)">
             ProcessModel
           </code>
-          <div class="tip" id="5486">
+          <div class="tip" id="5608">
             <strong>Signature:</strong> NUnitProcessModel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L85-85" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L85-85" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -501,15 +511,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5487', 5487)" onmouseover="showTip(event, '5487', 5487)">
+          <code onmouseout="hideTip(event, '5609', 5609)" onmouseover="showTip(event, '5609', 5609)">
             ShowLabels
           </code>
-          <div class="tip" id="5487">
+          <div class="tip" id="5609">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L88-88" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L88-88" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -521,15 +531,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5488', 5488)" onmouseover="showTip(event, '5488', 5488)">
+          <code onmouseout="hideTip(event, '5610', 5610)" onmouseover="showTip(event, '5610', 5610)">
             StopOnError
           </code>
-          <div class="tip" id="5488">
+          <div class="tip" id="5610">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L70-70" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L70-70" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -541,15 +551,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5489', 5489)" onmouseover="showTip(event, '5489', 5489)">
+          <code onmouseout="hideTip(event, '5611', 5611)" onmouseover="showTip(event, '5611', 5611)">
             TimeOut
           </code>
-          <div class="tip" id="5489">
+          <div class="tip" id="5611">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L97-97" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L97-97" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -561,15 +571,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5490', 5490)" onmouseover="showTip(event, '5490', 5490)">
+          <code onmouseout="hideTip(event, '5612', 5612)" onmouseover="showTip(event, '5612', 5612)">
             ToolName
           </code>
-          <div class="tip" id="5490">
+          <div class="tip" id="5612">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L64-64" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L64-64" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -581,15 +591,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5491', 5491)" onmouseover="showTip(event, '5491', 5491)">
+          <code onmouseout="hideTip(event, '5613', 5613)" onmouseover="showTip(event, '5613', 5613)">
             ToolPath
           </code>
-          <div class="tip" id="5491">
+          <div class="tip" id="5613">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L61-61" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L61-61" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -601,15 +611,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5492', 5492)" onmouseover="showTip(event, '5492', 5492)">
+          <code onmouseout="hideTip(event, '5614', 5614)" onmouseover="showTip(event, '5614', 5614)">
             WorkingDir
           </code>
-          <div class="tip" id="5492">
+          <div class="tip" id="5614">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L91-91" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L91-91" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -621,15 +631,15 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5493', 5493)" onmouseover="showTip(event, '5493', 5493)">
+          <code onmouseout="hideTip(event, '5615', 5615)" onmouseover="showTip(event, '5615', 5615)">
             XsltTransformFile
           </code>
-          <div class="tip" id="5493">
+          <div class="tip" id="5615">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L94-94" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.NUnit/Common.fs#L94-94" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -745,7 +755,7 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -767,6 +777,17 @@ FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not p
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

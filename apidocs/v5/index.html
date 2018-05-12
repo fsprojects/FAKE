@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -232,20 +240,40 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-                                    <p>
-                                        <strong>Note: This API documentation is for FAKE version 5.0 or later. The old API documentation can be found 
-                                            <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Note: This is part of the <a href="https://www.nuget.org/packages/" ></a> module.</strong>
-                                    </p>
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
 									<!-- Content -->
                       <article>
           			
 
 <a name="FAKE - F# Make" class="anchor" href="#FAKE - F# Make"><h1>FAKE - F# Make</h1></a>
 
+    <a name="Fake" class="anchor" href="#Fake"><h2>Fake Namespace</h2></a>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-profile.html">Profile</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
     <a name="Fake.Api" class="anchor" href="#Fake.Api"><h2>Fake.Api Namespace</h2></a>
     <div>
         <table class="table table-bordered module-list">
@@ -257,7 +285,8 @@
           <td class="module-name">
             <a href="fake-api-github.html">GitHub</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to interact with <a href="https://github.com/">GitHub</a> releases</p>
+          <td class="xmldoc">
+          <p>Contains tasks to interact with <a href="https://github.com/">GitHub</a> releases</p>
 <h3>Sample</h3>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -305,23 +334,28 @@
 <div class="tip" id="fs10">Multiple items<br />type Async =<br />&#160;&#160;static member AsBeginEnd : computation:(&#39;Arg -&gt; Async&lt;&#39;T&gt;) -&gt; (&#39;Arg * AsyncCallback * obj -&gt; IAsyncResult) * (IAsyncResult -&gt; &#39;T) * (IAsyncResult -&gt; unit)<br />&#160;&#160;static member AwaitEvent : event:IEvent&lt;&#39;Del,&#39;T&gt; * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt; (requires delegate and &#39;Del :&gt; Delegate)<br />&#160;&#160;static member AwaitIAsyncResult : iar:IAsyncResult * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member AwaitTask : task:Task -&gt; Async&lt;unit&gt;<br />&#160;&#160;static member AwaitTask : task:Task&lt;&#39;T&gt; -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;static member AwaitWaitHandle : waitHandle:WaitHandle * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member CancelDefaultToken : unit -&gt; unit<br />&#160;&#160;static member Catch : computation:Async&lt;&#39;T&gt; -&gt; Async&lt;Choice&lt;&#39;T,exn&gt;&gt;<br />&#160;&#160;static member Choice : computations:seq&lt;Async&lt;&#39;T option&gt;&gt; -&gt; Async&lt;&#39;T option&gt;<br />&#160;&#160;static member FromBeginEnd : beginAction:(AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;...<br /><br />--------------------<br />type Async&lt;&#39;T&gt; =</div>
 <div class="tip" id="fs11">static member Async.RunSynchronously : computation:Async&lt;&#39;T&gt; * ?timeout:int * ?cancellationToken:System.Threading.CancellationToken -&gt; &#39;T</div>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-api-hockeyapp.html">HockeyApp</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to interact with <a href="http://hockeyapp.com">HockeyApp</a></p>
+          <td class="xmldoc">
+          <p>Contains tasks to interact with <a href="http://hockeyapp.com">HockeyApp</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-api-slack.html">Slack</a>
           </td>
-          <td class="xmldoc"><p>Contains a task to send notification messages to a <a href="https://slack.com/">Slack</a> webhook</p>
+          <td class="xmldoc">
+          <p>Contains a task to send notification messages to a <a href="https://slack.com/">Slack</a> webhook</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -338,35 +372,43 @@
           <td class="module-name">
             <a href="fake-azure-cloudservices.html">CloudServices</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to package Azure Cloud Services.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to package Azure Cloud Services.</p>
 <p><strong>Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="/legacy-azurecloudservices.html">here</a></strong></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-azure-emulators.html">Emulators</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to control the local Azure Emulator</p>
+          <td class="xmldoc">
+          <p>Contains tasks to control the local Azure Emulator</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-azure-kudu.html">Kudu</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to stage and deploy Azure website and webjobs using source code deployment with Kudu Sync.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to stage and deploy Azure website and webjobs using source code deployment with Kudu Sync.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-azure-webjobs.html">WebJobs</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to package and deploy <a href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</a> via the <a href="https://github.com/projectkudu/kudu">Kudu</a> Zip controller</p>
+          <td class="xmldoc">
+          <p>Contains tasks to package and deploy <a href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</a> via the <a href="https://github.com/projectkudu/kudu">Kudu</a> Zip controller</p>
 <p><strong>Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="/legacy-azurewebjobs.html">here</a></strong></p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -383,37 +425,65 @@
           <td class="module-name">
             <a href="fake-buildserver-appveyor.html">AppVeyor</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-buildserver-appveyorimportextensions.html">AppVeyorImportExtensions</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-gitlab.html">GitLab</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-buildserver-gitlabimportextensions.html">GitLabImportExtensions</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-buildserver-teamcity.html">TeamCity</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-buildserver-teamcityimportextensions.html">TeamCityImportExtensions</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-buildserver-teamfoundation.html">TeamFoundation</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-buildserver-travis.html">Travis</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -430,271 +500,361 @@
           <td class="type-name">
             <a href="fake-core-buildserver.html">BuildServer</a>
           </td>
-          <td class="xmldoc"><p>The server type option.</p>
+          <td class="xmldoc">
+            <p>The server type option.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-buildserverinstaller.html">BuildServerInstaller</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-tracemode.html">TraceMode</a>
           </td>
-          <td class="xmldoc"><p>The trace mode option.</p>
+          <td class="xmldoc">
+            <p>The trace mode option.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-arguments.html">Arguments</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-command.html">Command</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-consolemessage.html">ConsoleMessage</a>
           </td>
-          <td class="xmldoc"><p>A record type which captures console messages</p>
+          <td class="xmldoc">
+            <p>A record type which captures console messages</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-createprocess-1.html">CreateProcess<'TRes></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-dataref-1.html">DataRef<'T></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-execparams.html">ExecParams</a>
           </td>
-          <td class="xmldoc"><p>Parameter type for process execution.</p>
+          <td class="xmldoc">
+            <p>Parameter type for process execution.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-filepath.html">FilePath</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-iprocesshook.html">IProcessHook</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-iprocessstarter.html">IProcessStarter</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-procstartinfo.html">ProcStartInfo</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-processoutput.html">ProcessOutput</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-processresult.html">ProcessResult</a>
           </td>
-          <td class="xmldoc"><p>A process result including error code, message log and errors.</p>
+          <td class="xmldoc">
+            <p>A process result including error code, message log and errors.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-processresults-1.html">ProcessResults<'a></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-rawcreateprocess.html">RawCreateProcess</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-resultgenerator-1.html">ResultGenerator<'TRes></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-shell.html">Shell</a>
           </td>
-          <td class="xmldoc"><p>Allows to exec shell operations synchronously and asynchronously.</p>
+          <td class="xmldoc">
+            <p>Allows to exec shell operations synchronously and asynchronously.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-streamref.html">StreamRef</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-streamspecification.html">StreamSpecification</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-consoletracelistener.html">ConsoleTraceListener</a>
           </td>
-          <td class="xmldoc"><p>Implements a TraceListener for System.Console.</p>
+          <td class="xmldoc">
+            <p>Implements a TraceListener for System.Console.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-dotnetcoveragetool.html">DotNetCoverageTool</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-itracelistener.html">ITraceListener</a>
           </td>
-          <td class="xmldoc"><p>Defines a TraceListener interface</p>
+          <td class="xmldoc">
+            <p>Defines a TraceListener interface</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-importdata.html">ImportData</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-knowntags.html">KnownTags</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-nunitdataversion.html">NunitDataVersion</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-core-tagstatus.html">TagStatus</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-teststatus.html">TestStatus</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-tracedata.html">TraceData</a>
           </td>
-          <td class="xmldoc"><p>Defines Tracing information for TraceListeners</p>
+          <td class="xmldoc">
+            <p>Defines Tracing information for TraceListeners</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-tracesecret.html">TraceSecret</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-docopt.html">Docopt</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-docoptexception.html">DocoptException</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-docoptmap.html">DocoptMap</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-docoptresult.html">DocoptResult</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-prerelease.html">PreRelease</a>
           </td>
-          <td class="xmldoc"><p>Information about PreRelease packages.</p>
+          <td class="xmldoc">
+            <p>Information about PreRelease packages.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-prereleasesegment.html">PreReleaseSegment</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-semverinfo.html">SemVerInfo</a>
           </td>
-          <td class="xmldoc"><p>Contains the version information.</p>
+          <td class="xmldoc">
+            <p>Contains the version information.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-buildfailedexception.html">BuildFailedException</a>
           </td>
-          <td class="xmldoc"><p>Exception for request errors</p>
+          <td class="xmldoc">
+            <p>Exception for request errors</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-targetcontext.html">TargetContext</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-targetparameter.html">TargetParameter</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-targetresult.html">TargetResult</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -707,198 +867,264 @@
           <td class="module-name">
             <a href="fake-core-context.html">Context</a>
           </td>
-          <td class="xmldoc"><p>This module tracks the context of the build.
+          <td class="xmldoc">
+          <p>This module tracks the context of the build.
 This allows us to run some modules without any context and change behavior depending on the context
 (For example <code>Fake.Process</code> kills all processes when the Fake Context exists, but it should not when used as library)</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-buildservermodule.html">BuildServer</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-environment.html">Environment</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-operators.html">Operators</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-args.html">Args</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-createprocess.html">CreateProcess</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-mono.html">Mono</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-proc.html">Proc</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-procstartinfoextensions.html">ProcStartInfoExtensions</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-process.html">Process</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-rawproc.html">RawProc</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-streamextensions.html">StreamExtensions</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-string.html">String</a>
           </td>
-          <td class="xmldoc"><p>Contains basic functions for string manipulation.</p>
+          <td class="xmldoc">
+          <p>Contains basic functions for string manipulation.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-stringbuilder.html">StringBuilder</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-consolewriter.html">ConsoleWriter</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-coretracing.html">CoreTracing</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-teststatusmodule.html">TestStatus</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-trace.html">Trace</a>
           </td>
-          <td class="xmldoc"><p>This module contains function which allow to trace build output</p>
+          <td class="xmldoc">
+          <p>This module contains function which allow to trace build output</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-tracedatamodule.html">TraceData</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-tracesecrets.html">TraceSecrets</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-xml.html">Xml</a>
           </td>
-          <td class="xmldoc"><p>Contains functions to read and write XML files.</p>
+          <td class="xmldoc">
+          <p>Contains functions to read and write XML files.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-dochelper.html">DocHelper</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-docoptresultmodule.html">DocoptResult</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-changelog.html">Changelog</a>
           </td>
-          <td class="xmldoc"><p>Contains helpers which allow to parse Change log text files.
+          <td class="xmldoc">
+          <p>Contains helpers which allow to parse Change log text files.
 These files have to be in a format as described on <a href="http://keepachangelog.com/en/0.1.0/">http://keepachangelog.com/en/0.1.0/</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-releasenotes.html">ReleaseNotes</a>
           </td>
-          <td class="xmldoc"><p>Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.</p>
+          <td class="xmldoc">
+          <p>Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-semver.html">SemVer</a>
           </td>
-          <td class="xmldoc"><p>Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
+          <td class="xmldoc">
+          <p>Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-semveractivepattern.html">SemVerActivePattern</a>
           </td>
-          <td class="xmldoc"><p>Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
+          <td class="xmldoc">
+          <p>Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-targetmodule.html">Target</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-targetoperators.html">TargetOperators</a>
           </td>
-          <td class="xmldoc"><p>Provides functions and operators to deal with FAKE targets and target dependencies.</p>
+          <td class="xmldoc">
+          <p>Provides functions and operators to deal with FAKE targets and target dependencies.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-taskrunner.html">TaskRunner</a>
           </td>
-          <td class="xmldoc"><p>Contains a helper which can be used to implement timeouts and retries.</p>
+          <td class="xmldoc">
+          <p>Contains a helper which can be used to implement timeouts and retries.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -915,103 +1141,137 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="type-name">
             <a href="fake-core-commandlineparsing-argumentparser-2.html">ArgumentParser<'TUserState, 'TResult></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-argumentstream-1.html">ArgumentStream<'TUserState></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-argumentstreamposition.html">ArgumentStreamPosition</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-argumentstreamstate-1.html">ArgumentStreamState<'TUserState></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-iargumentstream-1.html">IArgumentStream<'TUserState></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-iargumentstreamstate-1.html">IArgumentStreamState<'TUserState></a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-optionsection.html">OptionSection</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-optionsparser.html">OptionsParser</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-optionsparserstate.html">OptionsParserState</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-safeoption.html">SafeOption</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-safeoptions.html">SafeOptions</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-tag.html">Tag</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-usageast.html">UsageAst</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-usageastbuilder.html">UsageAstBuilder</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-usageastcell.html">UsageAstCell</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-usageexception.html">UsageException</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-core-commandlineparsing-usageparser.html">UsageParser</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1024,19 +1284,25 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="module-name">
             <a href="fake-core-commandlineparsing-argparser.html">ArgParser</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-commandlineparsing-argumentarray.html">ArgumentArray</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-core-commandlineparsing-argumentstream.html">ArgumentStream</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1053,9 +1319,11 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="module-name">
             <a href="fake-documentation-docfx.html">DocFx</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions to use DocFx <a href="https://dotnet.github.io/docfx/.">https://dotnet.github.io/docfx/.</a></p>
+          <td class="xmldoc">
+          <p>Contains helper functions to use DocFx <a href="https://dotnet.github.io/docfx/.">https://dotnet.github.io/docfx/.</a></p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1072,69 +1340,99 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="type-name">
             <a href="fake-dotnet-assemblyinfofileconfig.html">AssemblyInfoFileConfig</a>
           </td>
-          <td class="xmldoc"><p>Represents options for configuring the emission of AssemblyInfo</p>
+          <td class="xmldoc">
+            <p>Represents options for configuring the emission of AssemblyInfo</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-buildexception.html">BuildException</a>
           </td>
-          <td class="xmldoc"><p>An exception type to signal build errors.</p>
-
-</td>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Using this is a BUG as this exception is no longer thrown! Use MSBuildException instead!</p>
+                </div> 
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuilddistributedloggerconfig.html">MSBuildDistributedLoggerConfig</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuildentry.html">MSBuildEntry</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildexception.html">MSBuildException</a>
+          </td>
+          <td class="xmldoc">
+            <p>An exception type to signal build errors.</p>
+
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuildfileloggerconfig.html">MSBuildFileLoggerConfig</a>
           </td>
-          <td class="xmldoc"><p>A type for MSBuild configuration</p>
+          <td class="xmldoc">
+            <p>A type for MSBuild configuration</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuildlogparameter.html">MSBuildLogParameter</a>
           </td>
-          <td class="xmldoc"><p>MSBuild log option</p>
+          <td class="xmldoc">
+            <p>MSBuild log option</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuildparams.html">MSBuildParams</a>
           </td>
-          <td class="xmldoc"><p>A type for MSBuild task parameters</p>
+          <td class="xmldoc">
+            <p>A type for MSBuild task parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuildproject.html">MSBuildProject</a>
           </td>
-          <td class="xmldoc"><p>A type to represent MSBuild project files.</p>
+          <td class="xmldoc">
+            <p>A type to represent MSBuild project files.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-dotnet-msbuildverbosity.html">MSBuildVerbosity</a>
           </td>
-          <td class="xmldoc"><p>MSBuild verbosity option</p>
+          <td class="xmldoc">
+            <p>MSBuild verbosity option</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1147,75 +1445,106 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="module-name">
             <a href="fake-dotnet-assemblyinfo.html">AssemblyInfo</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-assemblyinfofile.html">AssemblyInfoFile</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-dotnet.html">DotNet</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-fsc.html">Fsc</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains tasks to compiles F# source file with the <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
+There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> available.</p>
+
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-fsformatting.html">FSFormatting</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
+          <td class="xmldoc">
+          <p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-mage.html">Mage</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow FAKE to call the <a href="http://msdn.microsoft.com/en-us/library/acz3y3te.aspx">Manifest Generation and Editing Tool</a>, in short 'MAGE'.
+          <td class="xmldoc">
+          <p>Contains helper functions which allow FAKE to call the <a href="http://msdn.microsoft.com/en-us/library/acz3y3te.aspx">Manifest Generation and Editing Tool</a>, in short 'MAGE'.
 The intentional use is the creation of a clickonce application.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-msbuild.html">MSBuild</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-msbuildlogger.html">MSBuildLogger</a>
           </td>
-          <td class="xmldoc"><p>Contains Logger implementations for MSBuild.</p>
+          <td class="xmldoc">
+          <p>Contains Logger implementations for MSBuild.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-paket.html">Paket</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages with <a href="http://fsprojects.github.io/Paket/index.html">Paket</a>.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages with <a href="http://fsprojects.github.io/Paket/index.html">Paket</a>.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-pakettemplate.html">PaketTemplate</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions and task which allow it to generate a paket.template
+          <td class="xmldoc">
+          <p>Contains helper functions and task which allow it to generate a paket.template
 file for <a href="http://fsprojects.github.io/Paket/index.html">Paket</a></p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-xamarin.html">Xamarin</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks for building Xamarin.iOS and Xamarin.Android apps</p>
+          <td class="xmldoc">
+          <p>Contains tasks for building Xamarin.iOS and Xamarin.Android apps</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1232,41 +1561,51 @@ file for <a href="http://fsprojects.github.io/Paket/index.html">Paket</a></p>
           <td class="module-name">
             <a href="fake-dotnet-nuget-install.html">Install</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks for installing NuGet packages using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Install_Command">nuget.exe install command</a>.</p>
+          <td class="xmldoc">
+          <p>Contains tasks for installing NuGet packages using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Install_Command">nuget.exe install command</a>.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-nuget-nuget.html">NuGet</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages.
+          <td class="xmldoc">
+          <p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages.
 There is also a tutorial about <a href="../create-nuget-package.html">nuget package creating</a> available.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-nuget-restore.html">Restore</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.
+          <td class="xmldoc">
+          <p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.
 There is also a tutorial about <a href="../nuget.html">nuget package restore</a> available.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-nuget-update.html">Update</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks for updating NuGet packages including assembly hint paths in the project files using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Update_Command">nuget.exe update command</a>.</p>
+          <td class="xmldoc">
+          <p>Contains tasks for updating NuGet packages including assembly hint paths in the project files using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Update_Command">nuget.exe update command</a>.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-nuget-version.html">Version</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1283,57 +1622,71 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <td class="module-name">
             <a href="fake-dotnet-testing-expecto.html">Expecto</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run <a href="https://github.com/haf/expecto">Expecto</a> unit tests.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="https://github.com/haf/expecto">Expecto</a> unit tests.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-mspec.html">MSpec</a>
           </td>
-          <td class="xmldoc"><p>Contains a task to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> tests.</p>
+          <td class="xmldoc">
+          <p>Contains a task to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> tests.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-mstest.html">MSTest</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run <a href="http://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework/">MSTest</a> unit tests.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="http://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework/">MSTest</a> unit tests.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-nunit3.html">NUnit3</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-opencover.html">OpenCover</a>
           </td>
-          <td class="xmldoc"><p>Contains a task which can be used to run <a href="https://github.com/sawilde/opencover">OpenCover</a> on .NET assemblies.</p>
+          <td class="xmldoc">
+          <p>Contains a task which can be used to run <a href="https://github.com/sawilde/opencover">OpenCover</a> on .NET assemblies.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-specflow.html">SpecFlow</a>
           </td>
-          <td class="xmldoc"><p>Contains a task which allows to run <a href="http://www.specflow.org/">SpecFlow</a> tests.</p>
+          <td class="xmldoc">
+          <p>Contains a task which allows to run <a href="http://www.specflow.org/">SpecFlow</a> tests.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-xunit2.html">XUnit2</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1350,33 +1703,41 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <td class="module-name">
             <a href="fake-dotnet-testing-nunit-common.html">Common</a>
           </td>
-          <td class="xmldoc"><p>Contains types and utility functions relaited to running <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+          <td class="xmldoc">
+          <p>Contains types and utility functions relaited to running <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-nunit-parallel.html">Parallel</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests in parallel.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-nunit-sequential.html">Sequential</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-nunit-xml.html">Xml</a>
           </td>
-          <td class="xmldoc"><p>Contains types and functions for working with <a href="http://www.nunit.org/">NUnit</a> unit tests result xml.</p>
+          <td class="xmldoc">
+          <p>Contains types and functions for working with <a href="http://www.nunit.org/">NUnit</a> unit tests result xml.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1393,19 +1754,25 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <td class="type-name">
             <a href="fake-io-filechange.html">FileChange</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-io-filestatus.html">FileStatus</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-io-iglobbingpattern.html">IGlobbingPattern</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1418,94 +1785,122 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <td class="module-name">
             <a href="fake-io-changewatcher.html">ChangeWatcher</a>
           </td>
-          <td class="xmldoc"><p>This module is part of the <code>Fake.IO.FileSystem</code> package</p>
+          <td class="xmldoc">
+          <p>This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-directory.html">Directory</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-directoryinfo.html">DirectoryInfo</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-file.html">File</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-filefilter.html">FileFilter</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-fileinfo.html">FileInfo</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-filesysteminfo.html">FileSystemInfo</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-filesystemoperators.html">FileSystemOperators</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-globbingpatternmodule.html">GlobbingPattern</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-globbingpatternextensions.html">GlobbingPatternExtensions</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-path.html">Path</a>
           </td>
-          <td class="xmldoc"><p>Contains helper function which allow to deal with files and directories.</p>
+          <td class="xmldoc">
+          <p>Contains helper function which allow to deal with files and directories.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-shell.html">Shell</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-templates.html">Templates</a>
           </td>
-          <td class="xmldoc"><p>NOTE: Maybe this should be an extra module?
+          <td class="xmldoc">
+          <p>NOTE: Maybe this should be an extra module?
 Contains basic templating functions. Used in other helpers.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-zip.html">Zip</a>
           </td>
-          <td class="xmldoc"><p>This module contains helper function to create and extract zip archives.</p>
+          <td class="xmldoc">
+          <p>This module contains helper function to create and extract zip archives.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1522,19 +1917,29 @@ Contains basic templating functions. Used in other helpers.</p>
           <td class="type-name">
             <a href="fake-io-globbing-fileincludes.html">FileIncludes</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please use IGlobbingPattern instead</p>
+                </div> 
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-io-globbing-lazyglobbingpattern.html">LazyGlobbingPattern</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-io-globbing-resolvedglobbingpattern.html">ResolvedGlobbingPattern</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1547,22 +1952,31 @@ Contains basic templating functions. Used in other helpers.</p>
           <td class="module-name">
             <a href="fake-io-globbing-fileincludesmodule.html">FileIncludes</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please use GlobbingPattern instead</p>
+            </div> 
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-globbing-glob.html">Glob</a>
           </td>
-          <td class="xmldoc"><p>This module contains a file pattern globbing implementation.
+          <td class="xmldoc">
+          <p>This module contains a file pattern globbing implementation.
 This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-globbing-operators.html">Operators</a>
           </td>
-          <td class="xmldoc"><p>Contains operators to find and process files.
+          <td class="xmldoc">
+          <p>Contains operators to find and process files.
 This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 <h3>Simple glob using as list</h3>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -1643,13 +2057,16 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
 <div class="tip" id="fs12">module File<br /><br />from Fake.IO</div>
 <div class="tip" id="fs13">val deleteAll : files:seq&lt;string&gt; -&gt; unit</div>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-io-globbing-tools.html">Tools</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1666,9 +2083,11 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-installer-innosetup.html">InnoSetup</a>
           </td>
-          <td class="xmldoc"><p>This module contains helper functions to create <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a> installers.</p>
+          <td class="xmldoc">
+          <p>This module contains helper functions to create <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a> installers.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1685,17 +2104,21 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-javascript-npm.html">Npm</a>
           </td>
-          <td class="xmldoc"><p>Helpers to run the npm tool.</p>
+          <td class="xmldoc">
+          <p>Helpers to run the npm tool.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-javascript-yarn.html">Yarn</a>
           </td>
-          <td class="xmldoc"><p>Helpers for running the yarn tool</p>
+          <td class="xmldoc">
+          <p>Helpers for running the yarn tool</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1712,9 +2135,11 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-net-http.html">Http</a>
           </td>
-          <td class="xmldoc"><p>HTTP Client for downloading files</p>
+          <td class="xmldoc">
+          <p>HTTP Client for downloading files</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1731,69 +2156,97 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-runtime-compilerunner.html">CompileRunner</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to interact with the F# Interactive.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-environment.html">Environment</a>
           </td>
-          <td class="xmldoc"><p>This module contains functions which allow to read and write environment variables and build parameters</p>
+          <td class="xmldoc">
+          <p>This module contains functions which allow to read and write environment variables and build parameters</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-fsharpparser.html">FSharpParser</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-runtime-hashgeneration.html">HashGeneration</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to interact with the F# Interactive.</p>
+
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-legacyapihelper.html">LegacyApiHelper</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-path.html">Path</a>
           </td>
-          <td class="xmldoc"><p>Contains basic functions for string manipulation.</p>
+          <td class="xmldoc">
+          <p>Contains basic functions for string manipulation.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-runners.html">Runners</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to interact with the F# Interactive.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-scriptrunner.html">ScriptRunner</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to interact with the F# Interactive.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to interact with the F# Interactive.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-string.html">String</a>
           </td>
-          <td class="xmldoc"><p>Contains basic functions for string manipulation.</p>
+          <td class="xmldoc">
+          <p>Contains basic functions for string manipulation.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-runtime-trace.html">Trace</a>
           </td>
-          <td class="xmldoc"><p>This module contains function which allow to trace build output</p>
+          <td class="xmldoc">
+          <p>This module contains function which allow to trace build output</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1810,9 +2263,11 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-sql-dacpac.html">DacPac</a>
           </td>
-          <td class="xmldoc"><p>Contains helpers around deploying databases.</p>
+          <td class="xmldoc">
+          <p>Contains helpers around deploying databases.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1829,7 +2284,9 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-systemhelper-environment.html">Environment</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1846,24 +2303,30 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="module-name">
             <a href="fake-testing-common.html">Common</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-testing-reportgenerator.html">ReportGenerator</a>
           </td>
-          <td class="xmldoc"><p>Contains a task which can be used to run <a href="https://github.com/danielpalme/ReportGenerator">ReportGenerator</a>,
+          <td class="xmldoc">
+          <p>Contains a task which can be used to run <a href="https://github.com/danielpalme/ReportGenerator">ReportGenerator</a>,
 which converts XML reports generated by PartCover, OpenCover or NCover into a readable report in various formats.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-testing-sonarqube.html">SonarQube</a>
           </td>
-          <td class="xmldoc"><p>Contains a task to run the msbuild runner of <a href="http://sonarqube.org">SonarQube analyzer</a>.</p>
+          <td class="xmldoc">
+          <p>Contains a task to run the msbuild runner of <a href="http://sonarqube.org">SonarQube analyzer</a>.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1880,9 +2343,11 @@ which converts XML reports generated by PartCover, OpenCover or NCover into a re
           <td class="module-name">
             <a href="fake-tools-pickles.html">Pickles</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks to run the <a href="http://www.picklesdoc.com/">Pickles</a> living documentation generator</p>
+          <td class="xmldoc">
+          <p>Contains tasks to run the <a href="http://www.picklesdoc.com/">Pickles</a> living documentation generator</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1899,122 +2364,152 @@ which converts XML reports generated by PartCover, OpenCover or NCover into a re
           <td class="module-name">
             <a href="fake-tools-git-branches.html">Branches</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git branches.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git branches.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-commandhelper.html">CommandHelper</a>
           </td>
-          <td class="xmldoc"><p>Contains helpers which allow to interact with <a href="http://git-scm.com/">git</a> via the command line.</p>
+          <td class="xmldoc">
+          <p>Contains helpers which allow to interact with <a href="http://git-scm.com/">git</a> via the command line.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-commit.html">Commit</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to commit to git repositories.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to commit to git repositories.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-commitmessage.html">CommitMessage</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to get and set the git commit message.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to get and set the git commit message.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-filestatus.html">FileStatus</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which can be used to retrieve file status information from git.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which can be used to retrieve file status information from git.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-information.html">Information</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which can be used to retrieve status information from git.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which can be used to retrieve status information from git.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-merge.html">Merge</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git merge.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git merge.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-rebase.html">Rebase</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git rebase.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git rebase.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-repository.html">Repository</a>
           </td>
-          <td class="xmldoc"><p>Contains functions which allow basic operations on git repositories.
+          <td class="xmldoc">
+          <p>Contains functions which allow basic operations on git repositories.
 All operations assume that the CommandHelper can find git.exe.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-reset.html">Reset</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git reset.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git reset.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-sha1.html">SHA1</a>
           </td>
-          <td class="xmldoc"><p>Contains functions which allow the SHA1 of a file with git and without it.</p>
+          <td class="xmldoc">
+          <p>Contains functions which allow the SHA1 of a file with git and without it.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-sanitychecks.html">SanityChecks</a>
           </td>
-          <td class="xmldoc"><p>Contains helper function which can be used for sanity checks.</p>
+          <td class="xmldoc">
+          <p>Contains helper function which can be used for sanity checks.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-staging.html">Staging</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git's staging area.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git's staging area.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-stash.html">Stash</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git stash.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git stash.</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="module-name">
             <a href="fake-tools-git-submodule.html">Submodule</a>
           </td>
-          <td class="xmldoc"><p>Contains helper functions which allow to deal with git submodules.</p>
+          <td class="xmldoc">
+          <p>Contains helper functions which allow to deal with git submodules.</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2031,9 +2526,21 @@ All operations assume that the CommandHelper can find git.exe.</p>
           <td class="module-name">
             <a href="fake-windows-choco.html">Choco</a>
           </td>
-          <td class="xmldoc"><p>Contains tasks which allow to call <a href="https://chocolatey.org">Chocolatey</a></p>
+          <td class="xmldoc">
+          <p>Contains tasks which allow to call <a href="https://chocolatey.org">Chocolatey</a></p>
 
-</td>
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-windows-registry.html">Registry</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains functions which allow to read and write information from/to the registry.</p>
+
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2050,7 +2557,24 @@ All operations assume that the CommandHelper can find git.exe.</p>
           <td class="type-name">
             <a href="yaaf-fsharp-scripting-outputdata.html">OutputData</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-fsharp-scripting-log.html">Log</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2161,7 +2685,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -2183,6 +2707,17 @@ All operations assume that the CommandHelper can find git.exe.</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

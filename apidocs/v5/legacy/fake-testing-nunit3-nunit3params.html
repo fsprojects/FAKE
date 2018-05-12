@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -244,7 +252,13 @@
           			
 
 
+<p>
 
+        <div class="alert alert-warning">
+        <h5>OBSOLETE</h5>
+        <p>use Fake.DotNet.Testing.NUnit instead</p>
+        </div> 
+</p>
 <a name="NUnit3Params" class="anchor" href="#NUnit3Params" ><h1>NUnit3Params</h1></a>
 <div class="xmldoc">
 <p>The NUnit 3 Console Parameters type. FAKE will use <a href="fake-testing-nunit3.html">NUnit3Defaults</a> for values not provided.</p>
@@ -260,15 +274,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5742', 5742)" onmouseover="showTip(event, '5742', 5742)">
+          <code onmouseout="hideTip(event, '5864', 5864)" onmouseover="showTip(event, '5864', 5864)">
             Agents
           </code>
-          <div class="tip" id="5742">
+          <div class="tip" id="5864">
             <strong>Signature:</strong> int option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L152-152" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -282,15 +296,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5743', 5743)" onmouseover="showTip(event, '5743', 5743)">
+          <code onmouseout="hideTip(event, '5865', 5865)" onmouseover="showTip(event, '5865', 5865)">
             Config
           </code>
-          <div class="tip" id="5743">
+          <div class="tip" id="5865">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L144-144" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L144-144" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -302,15 +316,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5744', 5744)" onmouseover="showTip(event, '5744', 5744)">
+          <code onmouseout="hideTip(event, '5866', 5866)" onmouseover="showTip(event, '5866', 5866)">
             DisposeRunners
           </code>
-          <div class="tip" id="5744">
+          <div class="tip" id="5866">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L165-165" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L165-165" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -322,15 +336,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5745', 5745)" onmouseover="showTip(event, '5745', 5745)">
+          <code onmouseout="hideTip(event, '5867', 5867)" onmouseover="showTip(event, '5867', 5867)">
             Domain
           </code>
-          <div class="tip" id="5745">
+          <div class="tip" id="5867">
             <strong>Signature:</strong> NUnit3DomainModel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L155-155" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L155-155" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -342,15 +356,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5746', 5746)" onmouseover="showTip(event, '5746', 5746)">
+          <code onmouseout="hideTip(event, '5868', 5868)" onmouseover="showTip(event, '5868', 5868)">
             ErrorDir
           </code>
-          <div class="tip" id="5746">
+          <div class="tip" id="5868">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L188-188" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L188-188" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -362,15 +376,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5747', 5747)" onmouseover="showTip(event, '5747', 5747)">
+          <code onmouseout="hideTip(event, '5869', 5869)" onmouseover="showTip(event, '5869', 5869)">
             ErrorLevel
           </code>
-          <div class="tip" id="5747">
+          <div class="tip" id="5869">
             <strong>Signature:</strong> NUnit3ErrorLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L205-205" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L205-205" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -382,15 +396,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5748', 5748)" onmouseover="showTip(event, '5748', 5748)">
+          <code onmouseout="hideTip(event, '5870', 5870)" onmouseover="showTip(event, '5870', 5870)">
             Force32bit
           </code>
-          <div class="tip" id="5748">
+          <div class="tip" id="5870">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L162-162" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -402,15 +416,15 @@ This setting is used to control running your assemblies in parallel.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5749', 5749)" onmouseover="showTip(event, '5749', 5749)">
+          <code onmouseout="hideTip(event, '5871', 5871)" onmouseover="showTip(event, '5871', 5871)">
             Framework
           </code>
-          <div class="tip" id="5749">
+          <div class="tip" id="5871">
             <strong>Signature:</strong> NUnit3Runtime<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L159-159" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -423,15 +437,15 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5750', 5750)" onmouseover="showTip(event, '5750', 5750)">
+          <code onmouseout="hideTip(event, '5872', 5872)" onmouseover="showTip(event, '5872', 5872)">
             Labels
           </code>
-          <div class="tip" id="5750">
+          <div class="tip" id="5872">
             <strong>Signature:</strong> LabelsLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L202-202" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L202-202" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -443,15 +457,15 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5751', 5751)" onmouseover="showTip(event, '5751', 5751)">
+          <code onmouseout="hideTip(event, '5873', 5873)" onmouseover="showTip(event, '5873', 5873)">
             OutputDir
           </code>
-          <div class="tip" id="5751">
+          <div class="tip" id="5873">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L185-185" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L185-185" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -463,15 +477,15 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5752', 5752)" onmouseover="showTip(event, '5752', 5752)">
+          <code onmouseout="hideTip(event, '5874', 5874)" onmouseover="showTip(event, '5874', 5874)">
             Params
           </code>
-          <div class="tip" id="5752">
+          <div class="tip" id="5874">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L214-214" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L214-214" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -483,15 +497,15 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5753', 5753)" onmouseover="showTip(event, '5753', 5753)">
+          <code onmouseout="hideTip(event, '5875', 5875)" onmouseover="showTip(event, '5875', 5875)">
             ProcessModel
           </code>
-          <div class="tip" id="5753">
+          <div class="tip" id="5875">
             <strong>Signature:</strong> NUnit3ProcessModel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L147-147" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L147-147" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -503,15 +517,15 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5754', 5754)" onmouseover="showTip(event, '5754', 5754)">
+          <code onmouseout="hideTip(event, '5876', 5876)" onmouseover="showTip(event, '5876', 5876)">
             ResultSpecs
           </code>
-          <div class="tip" id="5754">
+          <div class="tip" id="5876">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L193-193" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L193-193" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -525,15 +539,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5755', 5755)" onmouseover="showTip(event, '5755', 5755)">
+          <code onmouseout="hideTip(event, '5877', 5877)" onmouseover="showTip(event, '5877', 5877)">
             Seed
           </code>
-          <div class="tip" id="5755">
+          <div class="tip" id="5877">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L171-171" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L171-171" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -545,15 +559,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5756', 5756)" onmouseover="showTip(event, '5756', 5756)">
+          <code onmouseout="hideTip(event, '5878', 5878)" onmouseover="showTip(event, '5878', 5878)">
             ShadowCopy
           </code>
-          <div class="tip" id="5756">
+          <div class="tip" id="5878">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L196-196" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L196-196" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -565,15 +579,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5757', 5757)" onmouseover="showTip(event, '5757', 5757)">
+          <code onmouseout="hideTip(event, '5879', 5879)" onmouseover="showTip(event, '5879', 5879)">
             SkipNonTestAssemblies
           </code>
-          <div class="tip" id="5757">
+          <div class="tip" id="5879">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L211-211" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -585,15 +599,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5758', 5758)" onmouseover="showTip(event, '5758', 5758)">
+          <code onmouseout="hideTip(event, '5880', 5880)" onmouseover="showTip(event, '5880', 5880)">
             StopOnError
           </code>
-          <div class="tip" id="5758">
+          <div class="tip" id="5880">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L179-179" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L179-179" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -605,15 +619,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5759', 5759)" onmouseover="showTip(event, '5759', 5759)">
+          <code onmouseout="hideTip(event, '5881', 5881)" onmouseover="showTip(event, '5881', 5881)">
             TeamCity
           </code>
-          <div class="tip" id="5759">
+          <div class="tip" id="5881">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L199-199" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -625,15 +639,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5760', 5760)" onmouseover="showTip(event, '5760', 5760)">
+          <code onmouseout="hideTip(event, '5882', 5882)" onmouseover="showTip(event, '5882', 5882)">
             Testlist
           </code>
-          <div class="tip" id="5760">
+          <div class="tip" id="5882">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L136-136" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L136-136" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -645,15 +659,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5761', 5761)" onmouseover="showTip(event, '5761', 5761)">
+          <code onmouseout="hideTip(event, '5883', 5883)" onmouseover="showTip(event, '5883', 5883)">
             TimeOut
           </code>
-          <div class="tip" id="5761">
+          <div class="tip" id="5883">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L168-168" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L168-168" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -665,15 +679,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5762', 5762)" onmouseover="showTip(event, '5762', 5762)">
+          <code onmouseout="hideTip(event, '5884', 5884)" onmouseover="showTip(event, '5884', 5884)">
             ToolPath
           </code>
-          <div class="tip" id="5762">
+          <div class="tip" id="5884">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L133-133" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L133-133" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -685,15 +699,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5763', 5763)" onmouseover="showTip(event, '5763', 5763)">
+          <code onmouseout="hideTip(event, '5885', 5885)" onmouseover="showTip(event, '5885', 5885)">
             TraceLevel
           </code>
-          <div class="tip" id="5763">
+          <div class="tip" id="5885">
             <strong>Signature:</strong> NUnit3TraceLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L208-208" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L208-208" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -705,15 +719,15 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5764', 5764)" onmouseover="showTip(event, '5764', 5764)">
+          <code onmouseout="hideTip(event, '5886', 5886)" onmouseover="showTip(event, '5886', 5886)">
             Where
           </code>
-          <div class="tip" id="5764">
+          <div class="tip" id="5886">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L141-141" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L141-141" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -727,15 +741,15 @@ See <a href="https://github.com/nunit/docs/wiki/Test-Selection-Language">NUnit d
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5765', 5765)" onmouseover="showTip(event, '5765', 5765)">
+          <code onmouseout="hideTip(event, '5887', 5887)" onmouseover="showTip(event, '5887', 5887)">
             Workers
           </code>
-          <div class="tip" id="5765">
+          <div class="tip" id="5887">
             <strong>Signature:</strong> int option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L176-176" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L176-176" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -749,15 +763,15 @@ If not specified, workers defaults to the number of processors on the machine, o
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5766', 5766)" onmouseover="showTip(event, '5766', 5766)">
+          <code onmouseout="hideTip(event, '5888', 5888)" onmouseover="showTip(event, '5888', 5888)">
             WorkingDir
           </code>
-          <div class="tip" id="5766">
+          <div class="tip" id="5888">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L182-182" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/UnitTest/NUnit/NUnit3.fs#L182-182" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -873,7 +887,7 @@ If not specified, workers defaults to the number of processors on the machine, o
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -895,6 +909,17 @@ If not specified, workers defaults to the number of processors on the machine, o
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

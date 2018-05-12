@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,8 +251,11 @@
           			
 
 
+<p>
 
+</p>
 <a name="XamarinHelper" class="anchor" href="#XamarinHelper"><h1>XamarinHelper</h1></a>
+
 <div class="xmldoc">
 <p>Contains tasks for building Xamarin.iOS and Xamarin.Android apps</p>
 
@@ -262,63 +273,81 @@
           <td class="type-name">
             <a href="fake-xamarinhelper-androidabitarget.html">AndroidAbiTarget</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-androidabitargetconfig.html">AndroidAbiTargetConfig</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-androidpackageabiparam.html">AndroidPackageAbiParam</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-androidpackageparams.html">AndroidPackageParams</a>
           </td>
-          <td class="xmldoc"><p>The Android packaging parameter type</p>
+          <td class="xmldoc">
+            <p>The Android packaging parameter type</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-androidsignandalignparams.html">AndroidSignAndAlignParams</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-incrementerversion.html">IncrementerVersion</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc">
+            
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-xamarincomponentrestoreparams.html">XamarinComponentRestoreParams</a>
           </td>
-          <td class="xmldoc"><p>The package restore paramater type</p>
+          <td class="xmldoc">
+            <p>The package restore paramater type</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-iosarchiveparams.html">iOSArchiveParams</a>
           </td>
-          <td class="xmldoc"><p>The iOS archive paramater type</p>
+          <td class="xmldoc">
+            <p>The iOS archive paramater type</p>
 
-</td>
+
+          </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xamarinhelper-iosbuildparams.html">iOSBuildParams</a>
           </td>
-          <td class="xmldoc"><p>The iOS build paramater type</p>
+          <td class="xmldoc">
+            <p>The iOS build paramater type</p>
 
-</td>
+
+          </td>
         </tr>
     </tbody>
   </table>
@@ -339,10 +368,10 @@
           </code>
           <div class="tip" id="1050">
             <strong>Signature:</strong> AndroidPackageAbiParam<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          
+                    
         </td>
       </tr>
       <tr>
@@ -353,10 +382,10 @@
           </code>
           <div class="tip" id="1051">
             <strong>Signature:</strong> setParams:(AndroidPackageParams -&gt; AndroidPackageParams) -&gt; FileInfo list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files</p>
+                    <p>Packages a Xamarin.Android app, returning a multiple FileInfo objects for the unsigned APK files</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -373,10 +402,10 @@
           </code>
           <div class="tip" id="1052">
             <strong>Signature:</strong> setParams:(AndroidPackageParams -&gt; AndroidPackageParams) -&gt; FileInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file</p>
+                    <p>Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -393,10 +422,10 @@
           </code>
           <div class="tip" id="1053">
             <strong>Signature:</strong> AndroidPackageParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The default Android packaging parameters</p>
+                    <p>The default Android packaging parameters</p>
 
 
         </td>
@@ -409,10 +438,10 @@
           </code>
           <div class="tip" id="1054">
             <strong>Signature:</strong> setParams:(AndroidSignAndAlignParams -&gt; AndroidSignAndAlignParams) -&gt; apkFile:FileInfo -&gt; FileInfo<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file</p>
+                    <p>Signs and aligns a Xamarin.Android package, returning a FileInfo object for the signed APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -430,10 +459,10 @@
           </code>
           <div class="tip" id="1055">
             <strong>Signature:</strong> AndroidSignAndAlignParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The default Android signing and aligning parameters</p>
+                    <p>The default Android signing and aligning parameters</p>
 
 
         </td>
@@ -446,10 +475,10 @@
           </code>
           <div class="tip" id="1056">
             <strong>Signature:</strong> setParams:(AndroidSignAndAlignParams -&gt; AndroidSignAndAlignParams) -&gt; apkFiles:seq&lt;FileInfo&gt; -&gt; seq&lt;FileInfo&gt;<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file</p>
+                    <p>Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -467,10 +496,10 @@
           </code>
           <div class="tip" id="1057">
             <strong>Signature:</strong> setParams:(iOSArchiveParams -&gt; iOSArchiveParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Archive a project using Xamarin's iOS archive tools</p>
+                    <p>Archive a project using Xamarin's iOS archive tools</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default archive parameters</li>
@@ -487,10 +516,10 @@
           </code>
           <div class="tip" id="1058">
             <strong>Signature:</strong> iOSArchiveParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The default iOS archive parameters</p>
+                    <p>The default iOS archive parameters</p>
 
 
         </td>
@@ -503,10 +532,10 @@
           </code>
           <div class="tip" id="1059">
             <strong>Signature:</strong> setParams:(iOSBuildParams -&gt; iOSBuildParams) -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Builds a project or solution using Xamarin's iOS build tools</p>
+                    <p>Builds a project or solution using Xamarin's iOS build tools</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default build parameters</li>
@@ -523,10 +552,10 @@
           </code>
           <div class="tip" id="1060">
             <strong>Signature:</strong> iOSBuildParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The default iOS build parameters</p>
+                    <p>The default iOS build parameters</p>
 
 
         </td>
@@ -539,10 +568,10 @@
           </code>
           <div class="tip" id="1061">
             <strong>Signature:</strong> setParams:(XamarinComponentRestoreParams -&gt; XamarinComponentRestoreParams) -&gt; projectFile:string -&gt; unit<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Restores NuGet packages and Xamarin Components for a project or solution</p>
+                    <p>Restores NuGet packages and Xamarin Components for a project or solution</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to override the default package restore parameters</li>
@@ -559,10 +588,10 @@
           </code>
           <div class="tip" id="1062">
             <strong>Signature:</strong> XamarinComponentRestoreParams<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The default package restore parameters</p>
+                    <p>The default package restore parameters</p>
 
 
         </td>
@@ -674,7 +703,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -696,6 +725,17 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

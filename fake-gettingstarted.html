@@ -8,8 +8,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -95,7 +99,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -119,6 +123,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -184,6 +189,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -237,7 +245,10 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Getting-started-with-FAKE-F-Make" class="anchor" href="#Getting-started-with-FAKE-F-Make">Getting started with FAKE - F# Make</a></h1>
-<p><strong>Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-gettingstarted.html">here</a></strong></p>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-gettingstarted.html">here</a></p>
+</div>
 <p>In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:</p>
 <ul>
 <li>how to install the latest FAKE version</li>
@@ -256,10 +267,11 @@ Example <code>choco install fake -pre</code></p>
 <li><p>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/matthid/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
 <li>
 <p>Bootstrap via shell script (fake.cmd/fake.sh),
-see this <a href="https://github.com/matthid/fake-bootstrap">example project</a></p>
-<blockquote>
-<p>DISCLAIMER: These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
-</blockquote>
+see this <a href="https://github.com/matthid/fake-bootstrap">example project</a>
+<div class="alert alert-warning">
+<h5>WARNING</h5>
+<p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
+</div></p>
 </li>
 <li><p>Bootstrap via paket <code>clitool</code>, basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/matthid/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code> branch of <code>fake-bootstrap</code></a> in particular the <a href="https://github.com/matthid/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
 </ul>
@@ -278,24 +290,31 @@ see this <a href="https://github.com/matthid/fake-bootstrap">example project</a>
 </code></pre></td>
 </tr>
 </table>
-<blockquote>
-<p>Note: <code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
-</blockquote>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p><code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
+</div>
 <p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need.</p>
 <ul>
 <li>
 <p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
-This might take some seconds depending on your internet connection</p>
-<blockquote>
+This might take some seconds depending on your internet connection
+<div class="alert alert-info">
+<h5>INFO</h5>
 <p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
-</blockquote>
+</div></p>
 </li>
-<li>now open the script in VS Code with ionide-fsharp extension or Visual Studio.</li>
+<li>
+<p>now open the script in VS Code with ionide-fsharp extension or Visual Studio.
+<div class="alert alert-info">
+<h5>INFO</h5>
+<p>
+If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
+Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
+</p>
+</div></p>
+</li>
 </ul>
-<blockquote>
-<p>Note: If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
-Note: Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.</p>
-</blockquote>
 <h2><a name="Example-Compiling-and-building-your-NET-application" class="anchor" href="#Example-Compiling-and-building-your-NET-application">Example - Compiling and building your .NET application</a></h2>
 <p>This example will guide you by adding a fake script to your existing .NET application.</p>
 <h3><a name="Getting-started" class="anchor" href="#Getting-started">Getting started</a></h3>
@@ -365,10 +384,6 @@ Create a new file with Visual Studio or Visual Studio Code (with ionide) and pas
 </table>
 <p>Now we remove the <code>build.fsx.lock</code> file and run <code>fake build</code> in order to restore the newly added <code>Fake.IO.FileSystem</code> module.</p>
 <p>As we can now work with intellisense we can easily discover the various modules and functions in <code>Fake.IO</code>, for example the <code>Shell</code> module provides various functions you expect from regular shell scripting, but we use <code>Shell.CleanDir</code> which will ensure the given directory is empty by deleting everything within or creating the directory if required:</p>
-<blockquote>
-<p>Hint: you can explore the APIs for example by writing <code>Fake.IO.</code> and waiting for intellisense (or pressing <code>Strg+Space</code>).
-You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on top.</p>
-</blockquote>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -429,6 +444,11 @@ You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on to
 </code></pre></td>
 </tr>
 </table>
+<div class="alert alert-info">
+    <h5>HINT</h5>
+    You can explore the APIs for example by writing <code>Fake.IO.</code> and waiting for intellisense (or pressing <code>Strg+Space</code>).
+    You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on top.
+</div>
 <p>We introduced some new concepts in this snippet. At first we defined a global property called <code>buildDir</code> with the relative path of a temporary build folder.</p>
 <p>In the <code>Clean</code> target we use the <code>Shell.CleanDir</code> task to clean up this build directory. As explained above this simply deletes all files in the folder or creates the directory if necessary.</p>
 <p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will be run before the execution of <em>Default</em>:</p>
@@ -855,7 +875,7 @@ Now edit the script like this:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -877,6 +897,17 @@ Now edit the script like this:</p>
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>

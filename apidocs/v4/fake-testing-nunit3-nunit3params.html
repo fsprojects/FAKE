@@ -7,8 +7,12 @@
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
-		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
 		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -94,7 +98,7 @@
 															<a href="/core.html">Core</a>
 															<ul>
 																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html.html">Environment</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
 																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
@@ -118,6 +122,7 @@
 															<ul>
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -183,6 +188,9 @@
 															<ul>
 																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
 															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
 														</li>
 														<li>
 															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
@@ -243,7 +251,9 @@
           			
 
 
+<p>
 
+</p>
 <a name="NUnit3Params" class="anchor" href="#NUnit3Params" ><h1>NUnit3Params</h1></a>
 <div class="xmldoc">
 <p>The NUnit 3 Console Parameters type. FAKE will use <a href="fake-testing-nunit3.html">NUnit3Defaults</a> for values not provided.</p>
@@ -264,10 +274,10 @@
           </code>
           <div class="tip" id="3310">
             <strong>Signature:</strong> int option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Number of agents that may be allowed to run simultaneously assuming you are not running inprocess.
+                    <p>Number of agents that may be allowed to run simultaneously assuming you are not running inprocess.
 If not specified, all agent processes run tests at the same time, whatever the number of assemblies.
 This setting is used to control running your assemblies in parallel.</p>
 
@@ -282,10 +292,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3311">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Name of a project configuration to load (e.g.: Debug)</p>
+                    <p>Name of a project configuration to load (e.g.: Debug)</p>
 
 
         </td>
@@ -298,10 +308,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3312">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Dispose each test runner after it has finished running its tests</p>
+                    <p>Dispose each test runner after it has finished running its tests</p>
 
 
         </td>
@@ -314,10 +324,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3313">
             <strong>Signature:</strong> NUnit3DomainModel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Controls how NUnit loads tests in processes. See: <a href="fake-testing-nunit3-nunit3domainmodel.html">NUnit3ProcessModel</a>.</p>
+                    <p>Controls how NUnit loads tests in processes. See: <a href="fake-testing-nunit3-nunit3domainmodel.html">NUnit3ProcessModel</a>.</p>
 
 
         </td>
@@ -330,10 +340,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3314">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>File path to contain error output from the tests.</p>
+                    <p>File path to contain error output from the tests.</p>
 
 
         </td>
@@ -346,10 +356,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3315">
             <strong>Signature:</strong> NUnit3ErrorLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Default: <a href="fake-unittestcommon-testrunnererrorlevel.html">TestRunnerErrorLevel</a>.Error</p>
+                    <p>Default: <a href="fake-unittestcommon-testrunnererrorlevel.html">TestRunnerErrorLevel</a>.Error</p>
 
 
         </td>
@@ -362,10 +372,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3316">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Run tests in a 32-bit process on 64-bit systems.</p>
+                    <p>Run tests in a 32-bit process on 64-bit systems.</p>
 
 
         </td>
@@ -378,10 +388,10 @@ This setting is used to control running your assemblies in parallel.</p>
           </code>
           <div class="tip" id="3317">
             <strong>Signature:</strong> NUnit3Runtime<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Allows you to specify the version of the runtime to be used in executing tests.
+                    <p>Allows you to specify the version of the runtime to be used in executing tests.
 Default value is runtime under which the assembly was built. See: <a href="fake-testing-nunit3-nunit3runtime.html">NUnit3Runtime</a>.</p>
 
 
@@ -395,10 +405,10 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
           </code>
           <div class="tip" id="3318">
             <strong>Signature:</strong> LabelsLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify whether to write test case names to the output.</p>
+                    <p>Specify whether to write test case names to the output.</p>
 
 
         </td>
@@ -411,10 +421,10 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
           </code>
           <div class="tip" id="3319">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>File path to contain text output from the tests.</p>
+                    <p>File path to contain text output from the tests.</p>
 
 
         </td>
@@ -427,10 +437,10 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
           </code>
           <div class="tip" id="3320">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons</p>
+                    <p>A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons</p>
 
 
         </td>
@@ -443,10 +453,10 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
           </code>
           <div class="tip" id="3321">
             <strong>Signature:</strong> NUnit3ProcessModel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Controls how NUnit loads tests in processes. See <a href="fake-testing-nunit3-nunit3processmodel.html">NUnit3ProcessModel</a></p>
+                    <p>Controls how NUnit loads tests in processes. See <a href="fake-testing-nunit3-nunit3processmodel.html">NUnit3ProcessModel</a></p>
 
 
         </td>
@@ -459,10 +469,10 @@ Default value is runtime under which the assembly was built. See: <a href="fake-
           </code>
           <div class="tip" id="3322">
             <strong>Signature:</strong> string list<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Output specs for saving the test results. Default value is TestResult.xml
+                    <p>Output specs for saving the test results. Default value is TestResult.xml
 Passing empty list does not save any result (--noresult option in NUnit)
 For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-Command-Line">NUnit3 command line options</a></p>
 
@@ -477,10 +487,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3323">
             <strong>Signature:</strong> int<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Set the random seed used to generate test cases</p>
+                    <p>Set the random seed used to generate test cases</p>
 
 
         </td>
@@ -493,10 +503,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3324">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
+                    <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
 
 
         </td>
@@ -509,10 +519,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3325">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Causes execution of the test run to terminate immediately on the first test failure or error.</p>
+                    <p>Causes execution of the test run to terminate immediately on the first test failure or error.</p>
 
 
         </td>
@@ -525,10 +535,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3326">
             <strong>Signature:</strong> bool<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Turns on use of TeamCity service messages.</p>
+                    <p>Turns on use of TeamCity service messages.</p>
 
 
         </td>
@@ -541,10 +551,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3327">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The name (or path) of a file containing a list of tests to run or explore, one per line.</p>
+                    <p>The name (or path) of a file containing a list of tests to run or explore, one per line.</p>
 
 
         </td>
@@ -557,10 +567,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3328">
             <strong>Signature:</strong> TimeSpan<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.</p>
+                    <p>The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.</p>
 
 
         </td>
@@ -573,10 +583,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3329">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>The path to the NUnit3 console runner: <code>nunit3-console.exe</code></p>
+                    <p>The path to the NUnit3 console runner: <code>nunit3-console.exe</code></p>
 
 
         </td>
@@ -589,10 +599,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3330">
             <strong>Signature:</strong> NUnit3TraceLevel<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Controls the trace logs NUnit3 will output, defaults to Off</p>
+                    <p>Controls the trace logs NUnit3 will output, defaults to Off</p>
 
 
         </td>
@@ -605,10 +615,10 @@ For more information, see: <a href="https://github.com/nunit/docs/wiki/Console-C
           </code>
           <div class="tip" id="3331">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>An expression indicating which tests to run. It may specify test names, classes, methods,
+                    <p>An expression indicating which tests to run. It may specify test names, classes, methods,
 catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~.
 See <a href="https://github.com/nunit/docs/wiki/Test-Selection-Language">NUnit documentation</a> for a full description of the syntax.</p>
 
@@ -623,10 +633,10 @@ See <a href="https://github.com/nunit/docs/wiki/Test-Selection-Language">NUnit d
           </code>
           <div class="tip" id="3332">
             <strong>Signature:</strong> int option<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Specify the NUMBER of worker threads to be used in running tests.
+                    <p>Specify the NUMBER of worker threads to be used in running tests.
 This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute.
 If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
 
@@ -641,10 +651,10 @@ If not specified, workers defaults to the number of processors on the machine, o
           </code>
           <div class="tip" id="3333">
             <strong>Signature:</strong> string<br />
-                      </div>
+                                  </div>
         </td>
         <td class="xmldoc">
-          <p>Path of the directory to use for output files.</p>
+                    <p>Path of the directory to use for output files.</p>
 
 
         </td>
@@ -756,7 +766,7 @@ If not specified, workers defaults to the number of processors on the machine, o
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc011</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
 									</ul>
 								</div>
 							</div>
@@ -778,6 +788,17 @@ If not specified, workers defaults to the number of processors on the machine, o
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
 
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
 	</body>
 </html>
