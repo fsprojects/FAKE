@@ -98,3 +98,4 @@ let exec setParams assemblies =
         sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
                                                         | Error | FailOnFirstError -> failwith
                                                         | DontFailBuild -> Trace.traceImportant
+    __.MarkSuccess()

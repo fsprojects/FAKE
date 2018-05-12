@@ -82,3 +82,4 @@ let run setParams =
     match Process.execSimple processStartInfo System.TimeSpan.MaxValue with
     | 0 -> ()
     | errorNumber -> failwithf "SpecFlow %s failed. Process finished with exit code %i" parameters.SubCommand errorNumber
+    __.MarkSuccess()

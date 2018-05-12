@@ -348,11 +348,12 @@ let private compileFiles (compiler: CompilerFunc) (srcFiles : string list) (opts
 let private doCompile (compiler: CompilerFunc) (fscParams : FscParam list) (inputFiles : string list) : int = 
     let inputFiles = inputFiles |> Seq.toList
     let taskDesc = inputFiles |> String.separated ", "
-    let fscParams = if fscParams = [] then FscParam.Defaults else fscParams
+    let fscParams = if List.isEmpty fscParams then FscParam.Defaults else fscParams
     let argList = fscParams |> List.map string
 
     use __ = Trace.traceTask "Fsc " taskDesc
     let res = compileFiles compiler inputFiles argList
+    __.MarkSuccess()
     res
 
 

@@ -56,3 +56,4 @@ let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
+    __.MarkSuccess()

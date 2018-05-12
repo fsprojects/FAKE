@@ -517,6 +517,7 @@ module DotNet =
 
         if rid.IsNone then failwithf "could not read rid from output: \n%s" (System.String.Join("\n", result.Messages))
 
+        __.MarkSuccess()
         { RID = rid.Value }
 
 
@@ -565,6 +566,7 @@ module DotNet =
 
         if String.isNullOrWhiteSpace version then failwithf "could not read version from output: \n%s" (System.String.Join("\n", result.Messages))
 
+        __.MarkSuccess()
         version
 
     /// Install .NET Core SDK if required
@@ -709,6 +711,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildRestoreArgs param)
         let result = exec (fun _ -> param.Common) "restore" args
         if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// build configuration
     type BuildConfiguration =
@@ -787,6 +790,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildPackArgs param)
         let result = exec (fun _ -> param.Common) "pack" args
         if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// dotnet publish command options
     type PublishOptions =
@@ -859,6 +863,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildPublishArgs param)
         let result = exec (fun _ -> param.Common) "publish" args
         if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// dotnet build command options
     type BuildOptions =
@@ -928,6 +933,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildBuildArgs param)
         let result = exec (fun _ -> param.Common) "build" args
         if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// dotnet build command options
     type TestOptions =
@@ -1033,6 +1039,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildTestArgs param)
         let result = exec (fun _ -> param.Common) "test" args
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// Gets the DotNet SDK from the global.json
     let getSDKVersionFromGlobalJson() : string =

@@ -138,6 +138,7 @@ let pack setParams =
             parameters.TimeOut
 
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
+    __.MarkSuccess()
 
 /// Pushes the given NuGet packages to the server by using Paket push.
 /// ## Parameters
@@ -201,6 +202,7 @@ let pushFiles setParams files =
                         >> Process.withFramework)
                     parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
+    __.MarkSuccess()
 
 /// Pushes all NuGet packages in the working dir to the server by using Paket push.
 /// ## Parameters
@@ -272,3 +274,4 @@ let restore setParams =
             parameters.TimeOut
 
     if restoreResult <> 0 then failwithf "Error during restore %s." parameters.WorkingDir
+    __.MarkSuccess()

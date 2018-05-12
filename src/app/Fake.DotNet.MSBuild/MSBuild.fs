@@ -494,6 +494,7 @@ module MSBuild =
 
         let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
         raise (MSBuildException(errorMessage, errors))
+    __.MarkSuccess()
 
   /// Builds the given project files and collects the output files.
   /// ## Parameters
@@ -612,6 +613,7 @@ module MSBuild =
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
     !! (projectDir + "/bin/*.*") |> Shell.copy(outputPath + "/" + projectName + "/bin/")
+    __.MarkSuccess()
 
   /// Builds the given web project file with debug configuration and copies it to the given outputPath.
   /// ## Parameters

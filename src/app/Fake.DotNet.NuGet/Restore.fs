@@ -161,6 +161,7 @@ let RestorePackageId setParams packageId =
 
     let args = buildNuGetArgs setParams packageId
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of package %s failed." packageId)
+    __.MarkSuccess()
 
 /// Restores the packages in the given packages.config file from NuGet.
 /// ## Parameters
@@ -192,6 +193,7 @@ let RestorePackage setParams packageFile =
         ] |> joinArgs
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
+    __.MarkSuccess()
 
 /// Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.
 let RestorePackages() =
@@ -228,3 +230,4 @@ let RestoreMSSolutionPackages setParams solutionFile =
         ] |> joinArgs
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)
+    __.MarkSuccess()

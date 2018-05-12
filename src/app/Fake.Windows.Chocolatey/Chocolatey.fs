@@ -366,6 +366,7 @@ module Fake.Windows.Choco
                 Arguments = args }
         let result = Process.execSimple (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
+        __.MarkSuccess()
 
     let private getTempFolder =
         // temp folder in current working directory has the advantage of being compatible
