@@ -368,7 +368,9 @@ module Fake.Windows.Choco
         if result <> 0 then failwithf "choco failed with exit code %i." result
 
     let private getTempFolder =
-        let tempFolder = DirectoryInfo.ofPath (Path.GetTempPath() @@ "FakeChocolateyPack")
+        // temp folder in current working directory has the advantage of being compatible
+        // with chocolatey on docker on mono...
+        let tempFolder = DirectoryInfo.ofPath (".fake" @@ "temp" @@ "FakeChocolateyPack")
 
         if tempFolder.Exists
         then tempFolder.Delete(true)
@@ -761,7 +763,7 @@ module Fake.Windows.Choco
 
         callChocoPack nuspecFile parameters
 
-        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.MoveFile parameters.OutputDir
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package
     /// ## Parameters
@@ -802,7 +804,7 @@ module Fake.Windows.Choco
 
         callChocoPack nuspecFile parameters
 
-        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.MoveFile parameters.OutputDir
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [push](https://github.com/chocolatey/choco/wiki/CommandsPush) a package
     /// ## Parameters
