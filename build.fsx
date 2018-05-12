@@ -267,7 +267,7 @@ module MyTeamFoundation =
         let mutable openTags = System.Threading.AsyncLocal<_>()
         do openTags.Value <- []
         let mutable order = 1
-        let mutable artifactCreated = 0
+
         interface ITraceListener with
             /// Writes the given message to the Console.
             member __.Write msg = 
@@ -298,11 +298,7 @@ module MyTeamFoundation =
                     openTags.Value <- rest                
                     setLogDetailFinished id Succeeded
                 | TraceData.ImportData (typ, path) ->
-                    let artifactName =
-                        if 0 = System.Threading.Interlocked.CompareExchange(&artifactCreated, 1, 0)
-                        then Some "fake-artifacts"
-                        else None
-                    publishArtifact typ.Name artifactName path
+                    publishArtifact typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number ->
