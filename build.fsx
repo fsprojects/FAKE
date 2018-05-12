@@ -1285,6 +1285,9 @@ Target.create "ReleaseDocs" (fun _ ->
     Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
     Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     Git.Staging.stageAll "gh-pages"
+    if not BuildServer.isLocalBuild then
+        Git.CommandHelper.directRunGitCommandAndFail "gh-pages" "config user.email matthi.d@gmail.com"
+        Git.CommandHelper.directRunGitCommandAndFail "gh-pages" "config user.name \"Matthias Dittrich\""
     Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" nugetVersion)
     Git.Branches.pushBranch "gh-pages" url "gh-pages"
 )
@@ -1300,6 +1303,9 @@ Target.create "FastRelease" (fun _ ->
     let url = Environment.environVarOrDefault "fake_git_url" (sprintf "https://%sgithub.com/fsharp/FAKE.git" auth)
     
     let gitDirectory = Environment.environVarOrDefault "git_directory" ""
+    if not BuildServer.isLocalBuild then
+        Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
+        Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
     if gitDirectory <> "" && BuildServer.buildServer = BuildServer.TeamFoundation then
         Trace.trace "Prepare git directory"
         Git.Branches.checkout gitDirectory false TeamFoundation.Environment.BuildSourceVersion
