@@ -156,7 +156,11 @@ module MyGitLab =
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
                     write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+#if BOOTSTRAP
+                | TraceData.CloseTag (tag, time, _) ->
+#else
                 | TraceData.CloseTag (tag, time) ->
+#endif
                     write false color true (sprintf "Finished '%s' in %O" tag.Name time)
                 | TraceData.ImportData (typ, path) ->
                     let name = Path.GetFileName path
@@ -287,7 +291,11 @@ module MyTeamFoundation =
                     openTags.Value <- (tag,id) :: openTags.Value
                     let order = System.Threading.Interlocked.Increment(&order)
                     createLogDetail id parentId tag.Type tag.Name order descr
+#if BOOTSTRAP
+                | TraceData.CloseTag (tag, time, _) ->
+#else
                 | TraceData.CloseTag (tag, time) ->
+#endif
                     ignore time
                     let id, rest =
                         match openTags.Value with
