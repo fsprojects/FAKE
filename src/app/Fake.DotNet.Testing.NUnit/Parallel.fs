@@ -122,3 +122,4 @@ let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
             match aggResult.WorseReturnCode with
             | OK -> ()
             | _ -> fail()
+    __.MarkSuccess()

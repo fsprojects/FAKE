@@ -339,3 +339,4 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
+    __.MarkSuccess()

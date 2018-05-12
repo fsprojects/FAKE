@@ -113,3 +113,4 @@ let generateReports setParams (reports : string list) =
     match Process.execSimple processStartInfo param.TimeOut with
     | 0 -> ()
     | v -> failwithf "ReportGenerator reported errors: %i" v
+    __.MarkSuccess()

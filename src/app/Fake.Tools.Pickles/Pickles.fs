@@ -223,3 +223,4 @@ let convert setParams =
     let result = Process.execSimple makeProcessStartInfo parameters.TimeOut
     
     ResultHandling.failBuildIfPicklesReportedError parameters.ErrorLevel result
+    __.MarkSuccess()

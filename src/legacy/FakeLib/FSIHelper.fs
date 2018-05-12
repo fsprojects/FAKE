@@ -54,23 +54,26 @@ let rec getAllScripts scriptPath : seq<Script> =
     let loadedContents =
         extractDirectives loadRegex scriptContents
         |> Seq.collect (fun path ->
-            let path =
-                if Path.IsPathRooted path then
-                    path
-                else
-                    let pathMaybe =
-                        ["./"] @ searchPaths
-                        |> List.map(fun searchPath ->
-                            if Path.IsPathRooted searchPath then
-                                Path.Combine(searchPath, path)
-                            else
-                                Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
-                        |> List.tryFind File.Exists
+            if path.StartsWith ".fake" then
+                Seq.empty
+            else
+                let path =
+                    if Path.IsPathRooted path then
+                        path
+                    else
+                        let pathMaybe =
+                            ["./"] @ searchPaths
+                            |> List.map(fun searchPath ->
+                                if Path.IsPathRooted searchPath then
+                                    Path.Combine(searchPath, path)
+                                else
+                                    Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
+                            |> List.tryFind File.Exists
 
-                    match pathMaybe with
-                    | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
-                    | Some x -> x
-            getAllScripts path
+                        match pathMaybe with
+                        | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
+                        | Some x -> x
+                getAllScripts path
         )
     let s =
       { Location = scriptPath

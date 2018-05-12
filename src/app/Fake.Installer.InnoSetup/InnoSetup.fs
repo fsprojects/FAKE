@@ -85,6 +85,7 @@ let private run toolPath workingDirectory timeout command =
                 WorkingDirectory = workingDirectory
                 Arguments = command })) timeout
     then failwithf "InnoSetup command %s failed." command
+    __.MarkSuccess()
     
 let private serializeInnoSetupParams p = 
     let appendDefine (key,value) _ sb =

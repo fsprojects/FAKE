@@ -1,6 +1,6 @@
 ﻿/// Contains tasks to compiles F# source file with the [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).
 /// There is also a tutorial about the [F# compiler tasks](../fsc.html) available.
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("Use Fake.DotNet.Fsc instead (FAKE0001 - package: Fake.DotNet.Fsc - module: Fake.DotNet.Fsc)")>]
 module Fake.FscHelper
 
 open System
@@ -159,8 +159,7 @@ let Fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : unit =
 
 
 // FSCHELPER vNEXT
-
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type TargetType = 
     /// Build a console executable
     | Exe
@@ -181,7 +180,7 @@ type TargetType =
 /// Limit which platforms the compiled code can run on: 
 ///     x86, Itanium, x64, anycpu32bitpreferred, or anycpu. 
 /// The default is anycpu.
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type PlatformType = 
     | X86 | Itanium | X64 | AnyCpu32BitPreferred | AnyCpu
     override self.ToString () =
@@ -194,7 +193,7 @@ type PlatformType =
 
 /// Specify debugging type: full, pdbonly. 
 /// ('full' is the default and enables attaching a debugger to a running program).
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type DebugType = 
     | Full | PdbOnly
     override self.ToString () =
@@ -202,14 +201,14 @@ type DebugType =
 
 /// Specify target framework profile of this assembly. 
 /// Valid values are mscorlib or netcore. Default - mscorlib
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type Profile = 
     | MsCorlib | Netcore
     override self.ToString () =
         (function MsCorlib -> "mscorlib" | Netcore -> "netcore") self
 
 /// Used to set the Accessiblity of an embeded or linked resource 
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type Access = 
     | Public | Private
     override self.ToString () =
@@ -218,7 +217,7 @@ type Access =
 
 /// Optimization options that can be disabled or enabled selectively by listing them
 /// with the optimize compiler flag
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type Optimization =
     | NoJitOptimize | NoJitTracking | NoLocalOptimize | NoCrossoptimize | NoTailcalls
     override self.ToString () =
@@ -233,10 +232,10 @@ type Optimization =
 /// Specified path of a managed resource with an optional name alias and accessiblity flag
 /// resinfo format is <file>[,<stringname>[,public|private]]
 /// e.g. `resource.dat,rezName,public`
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type ResourceInfo = string * string option * Access option
 
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 let resourceStr ((file, name, access):ResourceInfo) =
     match file, name, access with
     | f, None   , None      -> f
@@ -244,7 +243,7 @@ let resourceStr ((file, name, access):ResourceInfo) =
     | f, None   , Some a    -> sprintf "%s,%s" f (string a)
     | f, Some n , Some a    -> sprintf "%s,%s,%s" f n (string a)
 
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type FscParam =
 (* - OUTPUT FILES - *)
     /// Name of the output file
@@ -447,7 +446,7 @@ type FscParam =
         | QuotationsDebug on -> togl "quotations-debug" on
         | Times -> arg "times"
 
-    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+    [<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
     static member Defaults =
         [   Out "" 
             Target Exe
@@ -459,7 +458,7 @@ type FscParam =
 /// Compiles the given source file with the given options. If no options
 /// given (i.e. the second argument is an empty list), by default tries
 /// to behave the same way as would the command-line 'fsc.exe' tool.
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 let compileFiles (srcFiles : string list) (opts : string list) : int = 
     let scs = FSharpChecker.Create()
     
@@ -507,7 +506,7 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
 ///                 References []
 ///                 Debug false 
 ///             ]
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the function CompileWithResult in the Fake.DotNet.Fsc module instead")>]
 let compile (fscParams : FscParam list) (inputFiles : string list) : int = 
     let inputFiles = inputFiles |> Seq.toList
     let taskDesc = inputFiles |> separated ", "
@@ -532,7 +531,7 @@ let compile (fscParams : FscParam list) (inputFiles : string list) : int =
 ///                 References []
 ///                 Debug false 
 ///             ]
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 let Compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
     let res = compile fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])

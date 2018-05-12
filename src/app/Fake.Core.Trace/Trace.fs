@@ -123,27 +123,38 @@ let openTagUnsafe tag description =
     openTags.Value <- (sw, tag) :: openTags.Value
     TraceData.OpenTag(tag, description) |> CoreTracing.postMessage
 
+type ISafeDisposable =
+    inherit System.IDisposable
+    abstract MarkSuccess : unit -> unit
+    abstract MarkFailed : unit -> unit
+
 let private asSafeDisposable f =
+    let mutable state = TagStatus.Failed
     let mutable isDisposed = false
-    { new System.IDisposable with
+    { new ISafeDisposable with
+        member __.MarkSuccess () = state <- TagStatus.Success
+        member __.MarkFailed () = state <- TagStatus.Failed
         member __.Dispose () =
             if not isDisposed then
               isDisposed <- true
-              f() }
+              f state }
 
 /// Puts an opening tag on the internal tag stack
 [<System.Obsolete("Consider using traceTag instead and 'use' to properly call closeTag in case of exceptions. To remove this warning use 'openTagUnsafe'.")>]
 let openTag tag description = openTagUnsafe tag description
 
 /// Removes an opening tag from the internal tag stack
-let closeTagUnsafe tag =
+let closeTagUnsafeEx status tag =
     let time =
         match openTags.Value with
         | (sw, x) :: rest when x = tag -> 
             openTags.Value <- rest
             sw.Elapsed
         | _ -> failwithf "Invalid tag structure. Trying to close %A tag but stack is %A" tag openTags
-    TraceData.CloseTag (tag, time) |> CoreTracing.postMessage
+    TraceData.CloseTag (tag, time, status) |> CoreTracing.postMessage
+
+let closeTagUnsafe tag =
+    closeTagUnsafeEx TagStatus.Success tag
 
 /// Removes an opening tag from the internal tag stack
 [<System.Obsolete("Consider using traceTag instead and 'use' to properly call closeTag in case of exceptions. To remove this warning use 'closeTagUnsafe'.")>]
@@ -151,7 +162,7 @@ let closeTag tag = closeTagUnsafe tag
 
 let traceTag tag description =
     openTagUnsafe tag description
-    asSafeDisposable (fun () -> closeTagUnsafe tag)
+    asSafeDisposable (fun state -> closeTagUnsafeEx state tag)
 
 
 let testStatus testName testStatus =
@@ -167,7 +178,7 @@ let publish typ path =
 let setBuildNumber number =
     TraceData.BuildNumber number |> CoreTracing.postMessage
 
-let closeAllOpenTags() = Seq.iter (fun (_, tag) -> closeTagUnsafe tag) openTags.Value
+let closeAllOpenTags() = Seq.iter (fun (_, tag) -> closeTagUnsafeEx TagStatus.Failed tag) openTags.Value
 
 /// Traces the begin of a target
 let traceStartTargetUnsafe name description dependencyString =
@@ -180,8 +191,13 @@ let traceStartTarget name description dependencyString =
     traceStartTargetUnsafe name description dependencyString
 
 /// Traces the end of a target
+let traceEndTargetUnsafeEx state name = 
+    closeTagUnsafeEx state (KnownTags.Target name)
+
+/// Traces the end of a target
 let traceEndTargetUnsafe name = 
-    closeTagUnsafe (KnownTags.Target name)
+    traceEndTargetUnsafeEx TagStatus.Success name
+
 
 /// Traces the end of a target
 [<System.Obsolete("Consider using traceTarget instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTargetUnsafe'.")>]
@@ -189,7 +205,7 @@ let traceEndTarget name = traceEndTargetUnsafe name
 
 let traceTarget name description dependencyString =
     traceStartTargetUnsafe name description dependencyString
-    asSafeDisposable (fun () -> traceEndTargetUnsafe name)
+    asSafeDisposable (fun state -> traceEndTargetUnsafeEx state name)
 
 /// Traces the begin of a task
 let traceStartTaskUnsafe task description = 
@@ -200,8 +216,11 @@ let traceStartTaskUnsafe task description =
 let traceStartTask task description = traceStartTaskUnsafe task description
 
 /// Traces the end of a task
-let traceEndTaskUnsafe task = 
-    closeTagUnsafe (KnownTags.Task task)
+let traceEndTaskUnsafeEx state task = 
+    closeTagUnsafeEx state (KnownTags.Task task)
+
+/// Traces the end of a task
+let traceEndTaskUnsafe task = traceEndTaskUnsafeEx TagStatus.Success task
    
 /// Traces the end of a task
 [<System.Obsolete("Consider using traceTask instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTask'.")>]
@@ -209,7 +228,7 @@ let traceEndTask task = traceEndTaskUnsafe task
      
 let traceTask name description =
     traceStartTaskUnsafe name description
-    asSafeDisposable (fun _ -> traceEndTaskUnsafe name)
+    asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
 
 open System.Diagnostics
 #if DOTNETCORE

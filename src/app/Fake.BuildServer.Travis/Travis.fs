@@ -27,8 +27,8 @@ module Travis =
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
                     write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-                | TraceData.CloseTag (tag, time) ->
-                    write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.CloseTag (tag, time, state) ->
+                    write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
                 | TraceData.ImportData (typ, path) ->
                     write false color true (sprintf "Import data '%O': %s" typ path)
                 | TraceData.TestOutput (test, out, err) ->
@@ -46,7 +46,7 @@ module Travis =
         if not (detect()) then failwithf "Cannot run 'install()' on a non-Travis environment"
         if force || not (CoreTracing.areListenersSet()) then
             CoreTracing.setTraceListeners [defaultTraceListener]
-        () 
+        ()
     let Installer =
         { new BuildServerInstaller() with
             member __.Install () = install (false)

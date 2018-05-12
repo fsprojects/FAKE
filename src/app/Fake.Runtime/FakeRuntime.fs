@@ -210,7 +210,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
     // Write loadDependencies file (basically only for editor support)
     async {
       try
-        let intellisenseLazyFile = Path.Combine (cacheDir, Runners.loadScriptName)
+        let intellisenseLazyFile = Path.Combine (cacheDir, Runners.loadScriptLazyName)
         let cache = context.Cache
         cache.StartSetupGroup(groupName) |> ignore
         do! cache.AwaitFinishSetup()

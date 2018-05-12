@@ -1,20 +1,166 @@
-image: mono:5.8.0.127
+stages:
+ - build
+# - test_package
+# - staging
+# - approve_prod
+# - prod
 
-before_script:
-  - apt-get update
-  - apt-get install -y libunwind8 libicu52 unzip wget git
-  - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-beta024/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
-  - mkdir fake-dotnetcore
-  - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
-  - chmod +x $PWD/fake-dotnetcore/fake
+do_build:
+  stage: build
+  image: mono:5.8.0.127
+  before_script:
+    - apt-get update
+    - apt-get install -y libunwind8 libicu52 unzip wget git
+    - wget https://github.com/fsharp/FAKE/releases/download/5.0.0-rc011/fake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+    - mkdir fake-dotnetcore
+    - unzip -n /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
+    - chmod +x $PWD/fake-dotnetcore/fake
 
-build_all:
   variables:
     TERM: "xterm-256color"
-    # PATH: $PATH:$PWD/fake-dotnetcore/
     MSBUILDDISABLENODEREUSE: "1"
     BuildInParallel: "false"
-
+  
   script: |
     export PATH=$PATH:$PWD/fake-dotnetcore/
-    fake run build.fsx
+    fake run build.fsx target Release_BuildAndTest
+
+  artifacts:
+    paths:
+    - artifacts/
+
+#do_choco_pack:
+#  stage: test_package
+#  dependencies:
+#    - do_build
+#  image: mono:5.8.0.127
+#  before_script:
+#    - apt-get update
+#    - apt-get install -y libunwind8 libicu52 unzip wget git apt-transport-https ca-certificates curl software-properties-common
+#    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+#    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+#    - apt-get update
+#    - apt-get install -y docker-ce
+#  services:
+#    - docker:dind
+#  variables:
+#    DOCKER_HOST: "tcp://docker:2375"
+#  script: |
+#    docker version
+#    unzip -n artifacts/build-cache.zip || echo unzip returned $?
+#    mkdir fake-bin
+#    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
+#    chmod +x fake-bin/fake
+#    mkdir -p nuget/dotnetcore/Fake.netcore/win7-x86
+#    unzip -n artifacts/fake-dotnetcore-win7-x86.zip -d nuget/dotnetcore/Fake.netcore/win7-x86 || echo unzip returned $?
+#    unzip -n artifacts/chocolatey-requirements.zip || echo unzip returned $?
+#    export artifactsdirectory=$PWD/artifacts
+#    fake-bin/fake build target DotNetCoreCreateChocolateyPackage
+#
+#    #- docker build -t $CI_REGISTRY_IMAGE:latest .
+#    #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+#    #- docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+#
+#do_staging:
+#  stage: staging
+#  image: mono:5.8.0.127
+#  dependencies:
+#    - do_build
+#  before_script:
+#    - apt-get update
+#    - apt-get install -y libunwind8 libicu52 unzip wget git
+#  variables:
+#    TERM: "xterm-256color"
+#    MSBUILDDISABLENODEREUSE: "1"
+#    BuildInParallel: "false"
+#    nugetsource: "https://www.myget.org/F/fake/api/v2/package"
+#  
+#  script: |
+#    unzip -n artifacts/build-cache.zip || echo unzip returned $?
+#    mkdir fake-bin
+#    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
+#    chmod +x fake-bin/fake
+#    export PATH=$PATH:$PWD/fake-bin/
+#    export artifactsdirectory=$PWD/artifacts
+#    fake run build.fsx target Release_Staging
+#  only:
+#   - /^release.*$/
+#  when: manual
+#
+#  environment:
+#    name: staging
+#    url: https://staging.fake.build
+#
+#do_approve_prod:
+#  stage: approve_prod
+#  image: mono:5.8.0.127
+#  dependencies: []
+#  script: |
+#    echo "Approved!"
+#  only:
+#   - /^release.*$/
+#  when: manual
+#
+#  environment:
+#    name: production
+#    url: https://fake.build
+#
+#do_choco_push:
+#  stage: prod
+#  dependencies:
+#    - do_build
+#    - do_choco_pack
+#    - do_approve_prod
+#  image: mono:5.8.0.127
+#  before_script:
+#    - apt-get update
+#    - apt-get install -y libunwind8 libicu52 unzip wget git apt-transport-https ca-certificates curl software-properties-common
+#    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+#    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+#    - apt-get update
+#    - apt-get install -y docker-ce
+#  services:
+#    - docker:dind
+#  variables:
+#    DOCKER_HOST: "tcp://docker:2375"
+#  script: |
+#    docker version
+#    unzip -n artifacts/build-cache.zip || echo unzip returned $?
+#    mkdir fake-bin
+#    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
+#    chmod +x fake-bin/fake
+#    export artifactsdirectory=$PWD/artifacts
+#    fake-bin/fake build target DotNetCorePushChocolateyPackage
+#  only:
+#   - /^release.*$/
+#
+#do_prod:
+#  stage: prod
+#  image: mono:5.8.0.127
+#  dependencies:
+#    - do_build
+#    - do_staging
+#    - do_approve_prod
+#
+#  before_script:
+#    - apt-get update
+#    - apt-get install -y libunwind8 libicu52 unzip wget git
+#
+#  variables:
+#    TERM: "xterm-256color"
+#    MSBUILDDISABLENODEREUSE: "1"
+#    BuildInParallel: "false"
+#  
+#  script: |
+#    unzip -n artifacts/build-cache.zip || echo unzip returned $?
+#    mkdir fake-bin
+#    unzip -n artifacts/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-bin || echo unzip returned $?
+#    chmod +x fake-bin/fake
+#    export PATH=$PATH:$PWD/fake-bin/
+#    export artifactsdirectory=$PWD/artifacts
+#    fake run build.fsx target FastRelease
+#  only:
+#   - /^release.*$/
+#  environment:
+#    name: production
+#    url: https://fake.build

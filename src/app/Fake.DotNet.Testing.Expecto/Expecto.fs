@@ -129,3 +129,4 @@ let run (setParams : Params -> Params) (assemblies : string seq) =
             sprintf "Expecto test of assembly '%s' failed. Process finished with exit code %d." testAssembly exitCode )
         |> String.concat System.Environment.NewLine
         |> FailedTestsException |> raise
+    __.MarkSuccess()

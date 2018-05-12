@@ -102,6 +102,11 @@ module TestStatus =
             TestStatus.Failed (f message, f details, None)
         | _ -> t        
 
+[<RequireQualifiedAccess>]
+type TagStatus =
+    | Success
+    | Warning
+    | Failed
 
 /// Defines Tracing information for TraceListeners
 [<RequireQualifiedAccess>]
@@ -115,7 +120,7 @@ type TraceData =
     | OpenTag of KnownTags * description:string
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
-    | CloseTag of KnownTags * time:TimeSpan
+    | CloseTag of KnownTags * time:TimeSpan * TagStatus
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -236,8 +241,8 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write false color newLine text
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-            | TraceData.CloseTag (tag, time) ->
-                write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+            | TraceData.CloseTag (tag, time, status) ->
+                write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
             | TraceData.TestOutput (test, out, err) ->

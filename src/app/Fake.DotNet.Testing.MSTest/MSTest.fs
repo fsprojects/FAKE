@@ -118,3 +118,4 @@ let exec (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) =
             WorkingDirectory = parameters.WorkingDir
             Arguments = args }) >> Process.withFramework) parameters.TimeOut
         |> failIfError assembly
+    __.MarkSuccess()

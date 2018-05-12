@@ -33,14 +33,17 @@ type TargetResult =
 
 and TargetContext =
     { PreviousTargets : TargetResult list
+      AllExecutingTargets : Target list
       FinalTarget : string
       Arguments : string list }
-    static member Create ft args = { FinalTarget = ft; PreviousTargets = []; Arguments = args }
+    static member Create ft all args = { FinalTarget = ft; AllExecutingTargets = all; PreviousTargets = []; Arguments = args }
     member x.HasError =
         x.PreviousTargets
         |> List.exists (fun t -> t.Error.IsSome)
     member x.TryFindPrevious name =
-        x.PreviousTargets |> List.tryFind (fun t -> t.Target.Name = name)        
+        x.PreviousTargets |> List.tryFind (fun t -> t.Target.Name = name)      
+    member x.TryFindTarget name =
+        x.AllExecutingTargets |> List.tryFind (fun t -> t.Name = name)        
 
 and TargetParameter =
     { TargetInfo : Target
@@ -172,9 +175,16 @@ module Target =
 
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
     let runSimple name args =
-        get name
-        |> runSimpleInternal (TargetContext.Create name args)
-
+        let target = get name
+        target
+        |> runSimpleInternal (TargetContext.Create name [target] args)
+    
+    /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
+    let runSimpleWithContext name ctx =
+        let target = get name
+        target
+        |> runSimpleInternal ctx
+        
     /// Returns the DependencyString for the given target.
     let internal dependencyString target =
         if target.Dependencies.IsEmpty then String.Empty else
@@ -503,17 +513,19 @@ module Target =
         printfn "run %s" targetName
         let watch = new System.Diagnostics.Stopwatch()
         watch.Start()
-        let context = TargetContext.Create targetName args
+        
+        Trace.tracefn "Building project with version: %s" BuildServer.buildVersion
+        printDependencyGraph false targetName
+
+        // determine a build order
+        let order = determineBuildOrder targetName
+        printRunningOrder order
+        if singleTarget
+        then Trace.traceImportant "Single target mode ==> Skipping dependencies."
+        let allTargets = List.collect Seq.toList order
+        let context = TargetContext.Create targetName allTargets args
+        
         let context =
-            Trace.tracefn "Building project with version: %s" BuildServer.buildVersion
-            printDependencyGraph false targetName
-
-            // determine a build order
-            let order = determineBuildOrder targetName
-            if singleTarget
-            then Trace.traceImportant "Single target mode ==> Skipping dependencies."
-            else printRunningOrder order
-
             // Figure out the order in in which targets can be run, and which can be run in parallel.
             if parallelJobs > 1 && not singleTarget then
                 Trace.tracefn "Running parallel build with %d workers" parallelJobs
@@ -649,7 +661,7 @@ module Target =
                 | None -> fDefault singleTarget parallelJobs arguments
         | Choice2Of2 e ->
             // To ensure exit code.
-            failwithf "Usage error: %s\n%s" e.Message TargetCli.targetCli
+            raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
