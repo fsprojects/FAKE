@@ -1343,6 +1343,7 @@ Target.create "BuildArtifacts" (fun args ->
     ++ "build.fsx"
     ++ "paket.dependencies"
     ++ "paket.lock"
+    ++ "RELEASE_NOTES.md"
     |> Zip.zip "." buildCache
     publish buildCache
 
