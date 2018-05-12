@@ -842,7 +842,7 @@ Target.create "CreateNuGet" (fun _ ->
             let exitCode =
                 Process.execSimple (fun proc -> 
                 { proc with
-                    FileName = path
+                    FileName = Path.GetFullPath path
                     WorkingDirectory = Path.GetDirectoryName file
                     Arguments = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
                     }
