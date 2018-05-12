@@ -1,12 +1,12 @@
 /// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
 /// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.OctoTools
 
 open System
 
 /// Octo.exe server options
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type OctoServerOptions = {
     /// The base URL for your Octopus server
     Server: string
@@ -15,7 +15,7 @@ type OctoServerOptions = {
     ApiKey: string }
     
 /// Options for creating a new release
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CreateReleaseOptions = {
     /// Name of the project
     Project                 : string
@@ -48,7 +48,7 @@ type CreateReleaseOptions = {
     IgnoreChannelRules      : bool }
 
 /// Options for deploying a release to an environment
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DeployReleaseOptions = {
     /// Name of the project
     Project                     : string
@@ -88,7 +88,7 @@ type DeployReleaseOptions = {
     SpecificMachines            : string option }
 
 /// Options for deleting a range of releases in a project
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DeleteReleaseOptions = {
     /// Name of the project
     Project     : string
@@ -99,7 +99,7 @@ type DeleteReleaseOptions = {
     /// Maximum (inclusive) version number for the range of versions to delete
     MaxVersion  : string }
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type PushOptions = {
     // paths to one or more packages to push to the server
     Packages : string list 
@@ -108,7 +108,7 @@ type PushOptions = {
 }
 
 /// Option type for selecting one command
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type OctoCommand = 
 | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
 | DeployRelease of DeployReleaseOptions
@@ -118,7 +118,7 @@ type OctoCommand =
 
 /// Complete Octo.exe CLI params
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type OctoParams = {
     ToolName            : string
     ToolPath            : string
@@ -129,30 +129,30 @@ type OctoParams = {
 
 
 /// Default server options.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let serverOptions = { Server = ""; ApiKey = ""; }
 
 /// Default options for 'CreateRelease'
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
     IgnoreExisting = false; Channel = None; IgnoreChannelRules = false }
 
 /// Default options for 'DeployRelease'
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
     DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
     NoRawLog = false; Progress = false }
 
 /// Default options for 'DeleteReleases'
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let deleteOptions = { 
     Project = ""; MinVersion = ""; MaxVersion = "" }
 
 /// Default parameters to call octo.exe.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let octoParams =
     let toolName = "Octo.exe"
     { ToolPath = findToolFolderInSubPath toolName (currentDirectory @@ "tools" @@ "OctopusTools")
@@ -163,21 +163,21 @@ let octoParams =
       WorkingDirectory = "" }
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let optionalStringParam p o = 
     match o with
     | Some s -> sprintf " --%s=\"%s\"" p s
     | None -> ""
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let optionalObjParam p o = 
     match o with
     | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
     | None -> ""
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
@@ -185,12 +185,12 @@ let stringListParam p os =
     sb.ToString()
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let flag p b = if b then sprintf " --%s" p else ""
     
 /// [omit]
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "version" (liftString opts.Version))
@@ -205,7 +205,7 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let deployCommandLine (opts:DeployReleaseOptions) = 
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "deployto" (liftString opts.DeployTo))
@@ -220,7 +220,7 @@ let deployCommandLine (opts:DeployReleaseOptions) =
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let deleteCommandLine (opts:DeleteReleaseOptions) =
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "minversion" (liftString opts.MinVersion))
@@ -228,21 +228,21 @@ let deleteCommandLine (opts:DeleteReleaseOptions) =
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let serverCommandLine (opts:OctoServerOptions) = 
     [ (optionalStringParam "server" (liftString opts.Server))
       (optionalStringParam "apikey" (liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let pushCommandLine (opts : PushOptions) =
     [ stringListParam "package" opts.Packages
       flag "replace-existing" opts.ReplaceExisting ]
     |> List.fold (+) ""     
 
 /// Maps a command to string input for the octopus tools cli.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let commandLine command =
     match command with
     | CreateRelease (opts, None) ->        
@@ -258,7 +258,7 @@ let commandLine command =
     | Push opts -> 
         sprintf " push%s" (pushCommandLine opts)
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
 /// This task calls the Octo.exe CLI.
@@ -266,7 +266,7 @@ let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { 
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the OctoTools default parameters.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Octo setParams =
     let octoParams = setParams(octoParams)
     let command = (octoParams.Command.ToString())

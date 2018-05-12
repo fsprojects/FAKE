@@ -58,7 +58,7 @@ Target.create "ChocoPack" (fun _ ->
 It adds Chocolatey specific fields:
 
 Placeholder | replaced by (`ChocoPackParams` record field)
---- | ---
+:--- | :---
 `@docsUrl@` | `DocsUrl`: Url pointing to the location of the wiki or docs of the software.
 `@mailingListUrl@` | `MailingListUrl`: Url pointing to the forum or email list group for the software.
 `@bugTrackerUrl@` | `BugTrackerUrl`: Url pointing to the location where issues and tickets can be accessed.
@@ -70,7 +70,7 @@ To use a chocolateyInstall.ps1 template, a file with the same name must exists i
 If it doesn't exists but at least `Title` and `PackageDownloadUrl` are defined, the chocolateyInstall.ps1 will be created
 
 Placeholder | replaced by (`ChocoPackParams` record field)
---- | ---
+:--- | :---
 `@packageName@` | `Title`: Title of the package.
 `@url@` | `PackageDownloadUrl`: Url pointing to the installer (exe, msi, zip) of the package.
 `@url64@` | `PackageDownload64Url`: Url pointing to the installer (exe, msi, zip) of the 64 bits version of the package.
@@ -87,7 +87,7 @@ To use a chocolateyUninstall.ps1 template, a file with the same name must exists
 If it doesn't exists but at least `Title` and `UninstallPath` are defined, the chocolateyUninstall.ps1 will be created
 
 Placeholder | replaced by (`ChocoPackParams` record field)
---- | ---
+:--- | :---
 `@packageName@` | `Title`: Title of the package.
 `@silentArgs@` | `SilentArgs`: Silent args for the installer.
 `@installerType@` | `InstallerType`: Installer type. Default: Zip.

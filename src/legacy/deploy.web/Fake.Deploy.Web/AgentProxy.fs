@@ -6,7 +6,7 @@ open System.Net
 open System.Web
 open log4net
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type AgentProxy(dataProvider : IDataProvider) as this = 
     let logger = LogManager.GetLogger(this.GetType().Name)
 
@@ -27,7 +27,7 @@ type AgentProxy(dataProvider : IDataProvider) as this =
             | None -> ()
             | Some x -> authToken <- x
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member public this.CallAgent (agentId : string) (urlPart : string) (f : string -> 'T) = 
         match getAgent agentId with
         | None -> failwith (sprintf "Agent %s not found!" agentId)

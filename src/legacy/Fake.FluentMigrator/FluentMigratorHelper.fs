@@ -1,5 +1,5 @@
 ﻿/// Contains functions to run FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.FluentMigratorHelper
 
 open System
@@ -33,7 +33,7 @@ type internal FakeAnnouncer() =
         log message
 
 /// MS SQL Server driver version
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type SqlServerVersion = 
     | Default
     | V2000
@@ -44,14 +44,14 @@ type SqlServerVersion =
     | CE
 
 /// Oracle database driver version
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type OracleVersion =
     | Default
     | Managed
     | DotConnect
 
 /// Fluent Migrator SQL syntax provider
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DatabaseProvider =
     | SqlServer of version: SqlServerVersion
     | Oracle of version: OracleVersion
@@ -64,7 +64,7 @@ type DatabaseProvider =
     | SQLite
 
 /// Database connection configuration
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DatabaseConnection =
     ///Explicit connection string
     | ConnectionString of connectionString: string * provider: DatabaseProvider
@@ -72,7 +72,7 @@ type DatabaseConnection =
     | ConnectionStringFromConfig of name: string * configPath: string * provider: DatabaseProvider
 
 /// Fluent Migrator execution mode
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type MigrationRunningMode =
     /// Execute migrations on the target database
     | Execute of connection: DatabaseConnection
@@ -84,7 +84,7 @@ type MigrationRunningMode =
     | Script of startVersion: int64 * outputFileName: string * provider: DatabaseProvider
 
 /// Database operation to execute
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DatabaseTask =
     | MigrateUp of mode: MigrationRunningMode * version: Option<int64>
     | MigrateDown of mode: MigrationRunningMode * version: int64
@@ -92,7 +92,7 @@ type DatabaseTask =
     | ListAppliedMigrations of connection: DatabaseConnection
 
 /// Fluent Migrator options
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type MigrationOptions = {
     Namespace: Option<string * bool>;
     Profile: string;
@@ -106,7 +106,7 @@ type MigrationOptions = {
 }
 
 /// Default migration options
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DefaultMigrationOptions = {
     Namespace = None;
     Profile = null;
@@ -259,7 +259,7 @@ let private toRunnerContext task assemblies options =
 ///  - `task` - Database task to execute
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ExecuteDatabaseTask task (assemblies: seq<string>) options =
     let (context, writer) = toRunnerContext task assemblies options
     try
@@ -274,7 +274,7 @@ let ExecuteDatabaseTask task (assemblies: seq<string>) options =
 ///  - `connection` - Database connection
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let MigrateUp version connection assemblies options = 
     let task = MigrateUp(Execute(connection), Some(version))
     ExecuteDatabaseTask task assemblies options
@@ -284,7 +284,7 @@ let MigrateUp version connection assemblies options =
 ///  - `connection` - Database connection
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let MigrateToLatest connection assemblies options = 
     let task = DatabaseTask.MigrateUp(Execute(connection), None)
     ExecuteDatabaseTask task assemblies options
@@ -295,7 +295,7 @@ let MigrateToLatest connection assemblies options =
 ///  - `connection` - Database connection
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let MigrateDown version connection assemblies options =
     let task = MigrateDown(Execute(connection), version)
     ExecuteDatabaseTask task assemblies options
@@ -306,7 +306,7 @@ let MigrateDown version connection assemblies options =
 ///  - `connection` - Database connection
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Rollback steps connection assemblies options =
     let task = Rollback(Execute(connection), steps)
     ExecuteDatabaseTask task assemblies options
@@ -315,14 +315,14 @@ let Rollback steps connection assemblies options =
 ///  - `connection` - Database connection
 ///  - `assemblies` - Assembly files which contain migrations
 ///  - `options` - Migration options which are passed to FluentMigrator
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let RollbackLatest connection assemblies options = 
     Rollback 1 connection assemblies options
 
 /// Lists all migrations which were applied to the database
 ///  - `connection` - Database connection
 ///  - `assemblies` - Assembly files which contain migrations
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ListAppliedMigrations connection assemblies =
     let task = ListAppliedMigrations(connection)
     ExecuteDatabaseTask task assemblies DefaultMigrationOptions

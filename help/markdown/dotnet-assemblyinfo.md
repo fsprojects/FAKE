@@ -1,6 +1,9 @@
 # Generating AssemblyInfo files
 
-**Note:  This documentation is for FAKE.exe after version 5. The documentation for previous version (<=4) can be found [here](legacy-assemblyinfo.html)! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-assemblyinfo.html">here</a></p>
+</div>
 
 In this article the AssemblyInfo task is used in order to set specific version information to .NET assemblies.
 

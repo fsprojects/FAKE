@@ -6,7 +6,7 @@ open System.Diagnostics
 open System.IO
 
 /// The possible variable value types for CMake variables.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CMakeValue =
     | CMakeBoolean of bool
     | CMakeString of string
@@ -14,7 +14,7 @@ type CMakeValue =
     | CMakeDirPath of string
 
 /// A CMake variable.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CMakeVariable = {
     /// The name of the variable.
     /// It cannot contains spaces and special characters.
@@ -26,7 +26,7 @@ type CMakeVariable = {
 
 /// The CMakeGenerate parameter type.
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CMakeGenerateParams = {
     /// The location of the CMake executable. Automatically found if null or empty.
     ToolPath:string
@@ -70,7 +70,7 @@ type CMakeGenerateParams = {
 
 /// The CMakeBuild parameter type.
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type CMakeBuildParams = {
     /// The location of the CMake executable. Automatically found if null or empty.
     ToolPath:string
@@ -91,10 +91,10 @@ type CMakeBuildParams = {
 
 /// Contains tasks which allow to use CMake to build CMakeLists files.
 /// See `Samples/CMakeSupport` for usage examples.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module CMake =
     /// The default option set given to CMakeGenerate.
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let CMakeGenerateDefaults = {
         ToolPath = ""
         SourceDirectory = currentDirectory
@@ -112,7 +112,7 @@ module CMake =
     }
 
     /// The default option set given to CMakeBuild.
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let CMakeBuildDefaults = {
         ToolPath = ""
         BinaryDirectory = currentDirectory @@ "build"
@@ -131,7 +131,7 @@ module CMake =
     /// ## Parameters
     ///  - `exeName` - The name of the CMake executable (e.g. `cmake`, `ctest`, etc.) to find.
     ///    The `.exe` suffix will be automatically appended on Windows.
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let FindExe exeName =
         let fullName = exeName + if isUnix then "" else ".exe"
         [
@@ -182,7 +182,7 @@ module CMake =
     /// Calls `cmake` to generate a project.
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeGenerateParams`.
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let Generate setParams =
         let parameters = setParams CMakeGenerateDefaults
         // CMake expects an existing source directory.
@@ -217,7 +217,7 @@ module CMake =
     /// Calls `cmake --build` to build a project.
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default CMake parameters. See `CMakeBuildParams`.
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let Build setParams =
         let parameters = setParams CMakeBuildDefaults
         let targetArgs =

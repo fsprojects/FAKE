@@ -36,7 +36,7 @@ match DocoptResult.tryGetArgument "-m" results with
 | Some arg -> printfn "%s" arg
 ```
 
-A more sophisticated example can be in the fake runner: https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259
+A more sophisticated example can be found in the fake runner: https://github.com/fsharp/FAKE/blob/64d871f5065412fe7b233025e454ccf3b89e46d7/src/app/Fake.netcore/Program.fs#L204-L259
 
 Or the target module:
 
@@ -55,31 +55,33 @@ You can also take a look at the test-suite:
 - We return the arguments in the user given order in the result map (difference to `docopt.fs`)
 - We parse arguments starting with `-` as positional arguments. For example consider:
 
-  ```help
-  usage: prog (NAME | --foo NAME)
+```bash
+usage: prog (NAME | --foo NAME)
 
-  options: --foo
-  ```
+options: --foo
+```
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>Note that --foo has no argument because it was not specified in the options section!</p>
+</div>
 
-  > Note that --foo has no argument because it was not specified in the options section!
+In this scenario `prog --foo 10` is parsed as `--foo` and `NAME` argument because that is the only option. However `prog --foo=10` is parsed as `NAME` argument without any `--foo` option. Usually to prefer `--foo` you should put it first in the usage string:
 
-  In this scenario `prog --foo 10` is parsed as `--foo` and `NAME` argument because that is the only option. However `prog --foo=10` is parsed as `NAME` argument without any `--foo` option. Usually to prefer `--foo` you should put it first in the usage string:
+```bash
+usage: prog (--foo NAME | NAME)
 
-  ```help
-  usage: prog (--foo NAME | NAME)
-
-  options: --foo
-  ```
+options: --foo
+```
 
   However, in this particular case it doesn't make any difference.
 - `[]` is not inherited for all items, only for the group. To have all items optional use `[]` on every item. For example `usage: prog [go go]` means to have either two `go` or none. A single one is not allowed.
 - We do not merge external "options" in the usage string with `[options]`. For example:
 
-  ```help
-  usage: prog [options] [-a]
+```bash
+usage: prog [options] [-a]
 
-  options: -a
-           -b
-  ```
+options: -a
+         -b
+```
 
-  Means that `-a` is actually allowed twice.
+Means that `-a` is actually allowed twice.

@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains a task which allows to use [HTML Help Workshop](http://msdn.microsoft.com/en-us/library/windows/desktop/ms670169(v=vs.85).aspx) in order to compile a help project.
 module Fake.HTMLHelpWorkShopHelper
 
@@ -10,7 +10,7 @@ open System
 ///
 ///  - `helpCompiler` - The filename of the HTML Help WorkShop tool.
 ///  - `projectFile` - The fileName of the help project.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let CompileHTMLHelpProject helpCompiler projectFile =
     use __ = traceStartTaskUsing "HTMLHelpWorkshop" projectFile
     let fi = new IO.FileInfo(projectFile)

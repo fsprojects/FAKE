@@ -1,5 +1,5 @@
 /// Contains a task to send notification messages to a [HipChat](https://www.hipchat.com/) room
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.HipChatNotificationHelper
 
 open System
@@ -8,7 +8,7 @@ open Fake
 
 /// The HipChat notification paramater type
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type HipChatNotificationParams = {
     /// (Required) Auth token from HipChat
     AuthToken: string
@@ -27,7 +27,7 @@ type HipChatNotificationParams = {
 }
 
 /// The default HipChat notification parameters
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let HipChatNotificationDefaults = {
     AuthToken = ""
     RoomId = ""
@@ -39,7 +39,7 @@ let HipChatNotificationDefaults = {
 }
 
 /// [omit]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let validateParams param =
     if param.AuthToken = "" then failwith "You must provide your auth token"
     if param.RoomId = "" then failwith "You must specify which room to notify"
@@ -51,7 +51,7 @@ let validateParams param =
 /// Sends a notification to a HipChat room
 /// ## Parameters
 ///  - `setParams` - Function used to override the default notification parameters
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let HipChatNotification (setParams: HipChatNotificationParams -> HipChatNotificationParams) =
     let sendNotification param =
         ["room_id", param.RoomId

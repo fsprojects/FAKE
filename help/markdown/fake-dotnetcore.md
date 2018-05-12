@@ -10,17 +10,21 @@ Just install the corresponding package for your system:
   - Install chocolatey (a windows package manager) if you have not installed it yet (see https://chocolatey.org).
     Basically open an admin `cmd.exe` and paste 
 
-    ```batch
-    @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-    ```
+    <pre>
+        <code class="lang-batch">
+        @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+        </code>
+    </pre>
 
   - Install fake via chocolatey
 
     In an admin `cmd.exe` enter:
 
-    ```ps
-    choco install fake -pre
-    ```
+    <pre>
+        <code class="lang-bash">
+        choco install fake -pre
+        </code>
+    </pre>
 
   - There are [other ways to get started](fake-gettingstarted.html#Install-FAKE) if chocolatey / an administrator-cmd or global installation is not an option.
 
@@ -31,9 +35,7 @@ Just install the corresponding package for your system:
 
 now you can use
 
-```ps
-fake --help
-```
+<pre><code class="lang-bash">fake --help</code></pre>
 
 This is basically it. You can now execute fake commands. Follow the [minimal example below](fake-dotnetcore.html#Minimal-example) for a quick start.
 
@@ -73,9 +75,7 @@ This version assumes an existing dotnet sdk installation while the non-portable 
 
 Just use the `-portable` version of the downloads, extract it and execute.
 
-```shell
-dotnet fake.dll <regular-arguments>
-```
+<pre><code class="lang-bash">dotnet fake.dll <regular-arguments></code></pre>
 
 The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
 The disadvantage is that you need to have a dotnet sdk installed.
@@ -123,9 +123,9 @@ Target.runOrDefault "Deploy"
 
 Run this file by executing
 
-```shell
+<pre><code class="lang-bash">
 fake run build.fsx
-```
+</code></pre>
 
 ## Downloads
 
@@ -135,4 +135,7 @@ Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
 
 Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)
 
-> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-*"` to get the latest non-stable release
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-*"` to get the latest non-stable release</p>
+</div>

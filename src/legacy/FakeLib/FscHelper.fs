@@ -159,7 +159,6 @@ let Fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : unit =
 
 
 // FSCHELPER vNEXT
-
 [<System.Obsolete("FAKE0001 Use the Fake.DotNet.Fsc module instead")>]
 type TargetType = 
     /// Build a console executable

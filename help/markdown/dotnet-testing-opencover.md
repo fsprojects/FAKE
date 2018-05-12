@@ -1,7 +1,7 @@
 # Analyze your code coverage with OpenCover
 
 From the [project](https://github.com/OpenCover/opencover):
-"A code coverage tool for .NET 2 and above (WINDOWS OS only), support for 32 and 64 processes with both branch and sequence points."
+>"A code coverage tool for .NET 2 and above (WINDOWS OS only), support for 32 and 64 processes with both branch and sequence points."
 
 It will analyze the code coverage during testing and generates an XML report which can be used to generates HTML pages or uploaded to online services like [coveralls](https://coveralls.io/) or [codecov](https://codecov.io/).
 

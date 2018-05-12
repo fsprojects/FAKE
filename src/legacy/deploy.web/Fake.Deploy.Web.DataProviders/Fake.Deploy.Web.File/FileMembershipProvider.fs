@@ -9,7 +9,7 @@ open System.Security.Cryptography
 open System.Web.Security
 open System.Web
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type FileMembershipProvider () =
 
     let saltSize = 16
@@ -33,21 +33,21 @@ type FileMembershipProvider () =
         hash = (computeHash salt password)
 
     interface IMembershipProvider with
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.Id with get() = "File"
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.ParameterDescriptions 
             with get() =
                 [ { ParameterName = "datafolder"; 
                     Description = "Path to where you want data to be stored. Ex: C:\\Data" }
                 ] |> Seq.ofList
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.Initialize(settings) =
               Provider.init settings.["datafolder"]
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.AddUserToRoles(username, roles) =
             let allRoles = Provider.getRoles()
             match Provider.tryGetUser username with
@@ -61,12 +61,12 @@ type FileMembershipProvider () =
                 Provider.saveUsers [user]
             | None -> failwithf "Could not find user %s" username
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.CreateRole(role) =
                let role : Role = { Id = role }
                Provider.saveRoles [role]
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.CreateUser(username, password, email) =
             match Provider.tryGetUser username with
             | None ->
@@ -83,21 +83,21 @@ type FileMembershipProvider () =
                 MembershipCreateStatus.Success, user
             | Some(u) -> failwithf "User already exists"
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.DeleteUser(username) =
             Provider.deleteUser username
             true
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.GetUsers() = Provider.getAllUsers()
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.GetAllRoles() = Provider.getRoles() |> Array.map (fun r -> r.Id)
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.GetUser(username) = Provider.tryGetUser username
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.Login(username, password, rememberme) =
             match Provider.tryGetUser username with
             | Some(user) -> 
@@ -108,10 +108,10 @@ type FileMembershipProvider () =
                 else false
             | None -> false
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.Logout() = FormsAuthentication.SignOut()
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.RemoveUserFromRoles(username, roles) =
             match Provider.tryGetUser username with
             | Some(user) ->
@@ -120,7 +120,7 @@ type FileMembershipProvider () =
                 Provider.saveUsers [user]
             | None -> failwithf "Could not find user %s" username
 
-        [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.Dispose() = 
             ()
             

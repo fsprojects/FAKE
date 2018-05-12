@@ -1,5 +1,5 @@
 ﻿/// Contains tasks to run [RoundhousE](http://projectroundhouse.org/) database migrations.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.RoundhouseHelper
 
 open Fake
@@ -8,7 +8,7 @@ open System
 
 /// Parameter type to configure the RoundhousE runner
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type RoundhouseParams = {
 
     /// The database you want to create/migrate.
@@ -121,7 +121,7 @@ type RoundhouseParams = {
     }
 
 /// Roundhouse default parameters - tries to locate rh.exe in any subfolder.
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let RoundhouseDefaults = { 
     DatabaseName = null
     SqlFilesDirectory = null
@@ -239,7 +239,7 @@ let private getParamPairs (rh: RoundhouseParams) =
 ///        DatabaseName = "atxc"
 ///        WarnOnOneTimeScriptChanges = true })
 ///
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Roundhouse setParams = 
     let parameters = setParams RoundhouseDefaults
 

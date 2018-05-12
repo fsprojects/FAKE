@@ -1,11 +1,11 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Conatins a task which allows to perform file copies using [SCP](http://en.wikipedia.org/wiki/Secure_copy), which is based on the Secure Shell (SSH) protocol.
 module Fake.SCPHelper
 
 /// The SCP parameter type.
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type SCPParams = 
     { /// Path of the scp.exe 
       ToolPath : string
@@ -13,7 +13,7 @@ type SCPParams =
       PrivateKeyPath : string }
 
 /// The SCP default parameters
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let SCPDefaults : SCPParams = 
     { ToolPath = if isMono then "scp" else "scp.exe"
       PrivateKeyPath = null }
@@ -28,7 +28,7 @@ let SCPDefaults : SCPParams =
 /// ## Sample
 ///
 ///     SCP (fun p -> { p with ToolPath = "tools/scp.exe" }) source target
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let SCP setParams source target = 
     let (p : SCPParams) = setParams SCPDefaults
     let source = FullName source

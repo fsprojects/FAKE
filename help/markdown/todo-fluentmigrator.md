@@ -1,6 +1,9 @@
 # Running database migrations with FluentMigrator
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 [FluentMigrator](https://github.com/schambers/fluentmigrator/) is a .NET library which helps to version database schema using incremental migrations which are described in C#.
 The basic idea of the FAKE helper is to run FluentMigrator over the existing database using compiled assembly with migrations.

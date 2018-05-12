@@ -1,6 +1,9 @@
 # Starting processes in "FAKE - F# Make"
 
-**Note:  This documentation is for FAKE 5! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later.</p>
+</div>
 
 [API-Reference](apidocs/v5/fake-core-process.html)
 

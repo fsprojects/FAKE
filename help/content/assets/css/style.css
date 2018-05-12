@@ -1,82 +1,129 @@
 @import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Open+Sans:400,600,700);
-
 /*-------------------------------------------------------------------------- 
   Formatting for F# code snippets 
 /*--------------------------------------------------------------------------*/
 
 /* identifier */
-span.i { color:#d1d1d1; }
+
+span.i {
+    color: #d1d1d1;
+}
+
 /* string */
-span.s { color:#d4b43c; }
+
+span.s {
+    color: #d4b43c;
+}
+
 /* keywords */
-span.k { color:#4e98dc; }
+
+span.k {
+    color: #4e98dc;
+}
+
 /* comment */
-span.c { color:#96C71D; }
+
+span.c {
+    color: #96C71D;
+}
+
 /* operators */
-span.o { color:#af75c1; }
+
+span.o {
+    color: #af75c1;
+}
+
 /* numbers */
-span.n { color:#96C71D; }
+
+span.n {
+    color: #96C71D;
+}
+
 /* line number */
-span.l { color:#80b0b0; }
+
+span.l {
+    color: #80b0b0;
+}
 
 /* inactive code */
-span.inactive { color:#808080; }
+
+span.inactive {
+    color: #808080;
+}
+
 /* preprocessor */
-span.prep { color:#af75c1; }
+
+span.prep {
+    color: #af75c1;
+}
+
 /* fsi output */
-span.fsi { color:#808080; }
+
+span.fsi {
+    color: #808080;
+}
 
 /* omitted */
-span.omitted { 
-	background:#3c4e52;
-  border-radius:5px;
-	color:#808080;
-	padding:0px 0px 1px 0px;
+
+span.omitted {
+    background: #3c4e52;
+    border-radius: 5px;
+    color: #808080;
+    padding: 0px 0px 1px 0px;
 }
+
 /* tool tip */
+
 div.tip {
-	background:#475b5f;
-  border-radius:4px;
-  font:11pt 'Droid Sans', arial, sans-serif;
-	padding:6px 8px 6px 8px;
-	display:none;
-  color:#d1d1d1;
+    background: #475b5f;
+    border-radius: 4px;
+    font: 11pt 'Droid Sans', arial, sans-serif;
+    padding: 6px 8px 6px 8px;
+    display: none;
+    color: #d1d1d1;
 }
+
 div.tip strong {
-  color:#d1d1d1;
+    color: #d1d1d1;
 }
+
 table.pre pre {
-  padding:0px;
-  margin:0px;
-  border:none;
-} 
-table.pre, pre.fssnip, pre {
-  line-height:13pt;
-  border:1px solid #d8d8d8;
-  border-collapse:separate;
-  white-space:pre;
-  font: 9pt 'Droid Sans Mono',consolas,monospace;
-  width:90%;
-  margin:10px 20px 20px 20px;
-  background-color:#212d30;
-  padding:10px;
-  border-radius:5px;
-  color:#d1d1d1;  
+    padding: 0px;
+    margin: 0px;
+    border: none;
 }
+
+table.pre,
+pre.fssnip,
+pre {
+    line-height: 13pt;
+    border: 1px solid #d8d8d8;
+    border-collapse: separate;
+    white-space: pre;
+    font: 9pt 'Droid Sans Mono', consolas, monospace;
+    width: 90%;
+    background-color: #2d2d2d;
+    padding: 10px;
+    border-radius: 5px;
+    color: #d1d1d1;
+}
+
 table.pre pre {
-  padding:0px;
-  margin:0px;
-  border-radius:0px;
-  width: 100%;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    width: 100%;
 }
+
 table.pre td {
-  padding:0px;
-  white-space:normal;
-  margin:0px;
-  border:none;
+    padding: 0px;
+    white-space: normal;
+    margin: 0px;
+    border: none;
 }
+
 table.pre td.lines {
-  width:30px;
+    width: 30px;
 }
 
 /*-------------------------------------------------------------------------- 
@@ -84,9 +131,9 @@ table.pre td.lines {
 /*--------------------------------------------------------------------------*/
 
 body {
-  font-family: 'Open Sans', serif;
-  padding-top: 0px;
-  padding-bottom: 40px;
+    font-family: 'Open Sans', serif;
+    padding-top: 0px;
+    padding-bottom: 40px;
 }
 
 pre {
@@ -94,44 +141,56 @@ pre {
 }
 
 /* Format the heading - nicer spacing etc. */
+
 .masthead {
-  overflow: hidden;
+    overflow: hidden;
 }
+
 .masthead .muted a {
-  text-decoration:none;
-  color:#999999;
+    text-decoration: none;
+    color: #999999;
 }
-.masthead ul, .masthead li {
-  margin-bottom:0px;
+
+.masthead ul,
+.masthead li {
+    margin-bottom: 0px;
 }
+
 .masthead .nav li {
-  margin-top: 15px;
-  font-size:110%;
+    margin-top: 15px;
+    font-size: 110%;
 }
+
 .masthead h3 {
-  margin-bottom:5px;
-  font-size:170%;
+    margin-bottom: 5px;
+    font-size: 170%;
 }
+
 hr {
-  margin:0px 0px 20px 0px;
+    margin: 0px 0px 20px 0px;
 }
 
 /* Style for articles (content) */
 
 #content h2 {
-  margin: 1em 0 .5em 0;
+    margin: 1em 0 .5em 0;
 }
 
-#content p, #content ul, #content ol, #content dl, #content table {
-  margin-bottom: 0.9em;
+#content p,
+#content ul,
+#content ol,
+#content dl,
+#content table {
+    margin-bottom: 0.9em;
 }
 
 #content ul {
-  margin-left: 2em;
+    margin-left: 2em;
 }
 
-#content ul, #content ol {
-  list-style: disc;
+#content ul,
+#content ol {
+    list-style: disc;
 }
 
 #content blockquote p {
@@ -146,95 +205,146 @@ hr {
 }
 
 /* Make table headings and td.title bold */
-td.title, thead tr td {
-  font-weight:bold;
+
+td.title,
+thead tr td {
+    font-weight: bold;
 }
 
 /* Format the right-side menu */
+
 #menu {
-  margin-top:50px;
-  font-size:11pt;
-  padding-left:20px;
+    margin-top: 50px;
+    font-size: 11pt;
+    padding-left: 20px;
 }
 
 #menu .nav-header {
-  font-size:12pt;
-  color:#606060;
-  margin-top:20px;
+    font-size: 12pt;
+    color: #606060;
+    margin-top: 20px;
 }
 
 #menu li {
-  line-height:25px;
+    line-height: 25px;
 }
 
 /* Change font sizes for headings etc. */
-#main h1 { font-size: 26pt; margin:10px 0px 15px 0px; font-weight:400; }
-#main h2 { font-size: 20pt; margin:20px 0px 0px 0px; font-weight:400; }
-#main h3 { font-size: 14pt; margin:15px 0px 0px 0px; font-weight:600; }
-#main p  { font-size: 11pt; margin:5px 0px 15px 0px; }
-#main ul { font-size: 11pt; margin-top:10px; }
-#main li { font-size: 11pt; margin: 5px 0px 5px 0px; }
-#main strong { font-weight:700; }
+
+#main h1 {
+    font-size: 26pt;
+    margin: 10px 0px 15px 0px;
+    font-weight: 400;
+}
+
+#main h2 {
+    font-size: 20pt;
+    margin: 20px 0px 0px 0px;
+    font-weight: 400;
+}
+
+#main h3 {
+    font-size: 14pt;
+    margin: 15px 0px 0px 0px;
+    font-weight: 600;
+}
+
+#main p {
+    font-size: 11pt;
+    margin: 5px 0px 15px 0px;
+}
+
+#main ul {
+    font-size: 11pt;
+    margin-top: 10px;
+}
+
+#main li {
+    font-size: 11pt;
+    margin: 5px 0px 5px 0px;
+}
+
+#main strong {
+    font-weight: 700;
+}
 
 /*-------------------------------------------------------------------------- 
   Formatting for API reference
 /*--------------------------------------------------------------------------*/
 
-.type-list .type-name, .module-list .module-name {
-  width:25%;
-  font-weight:bold;
+.type-list .type-name,
+.module-list .module-name {
+    width: 25%;
+    font-weight: bold;
 }
+
 .member-list .member-name {
-  width:35%;
+    width: 35%;
 }
+
 #main .xmldoc h2 {
-  font-size:14pt;
-  margin:10px 0px 0px 0px;
+    font-size: 14pt;
+    margin: 10px 0px 0px 0px;
 }
+
 #main .xmldoc h3 {
-  font-size:12pt;
-  margin:10px 0px 0px 0px;
+    font-size: 12pt;
+    margin: 10px 0px 0px 0px;
 }
+
 .github-link {
-  float:right;
-  text-decoration:none;
+    float: right;
+    text-decoration: none;
 }
+
 .github-link img {
-  border-style:none;
-  margin-left:10px;
+    border-style: none;
+    margin-left: 10px;
 }
-.github-link .hover { display:none; }
-.github-link:hover .hover { display:block; }
-.github-link .normal { display: block; }
-.github-link:hover .normal { display: none; }
+
+.github-link .hover {
+    display: none;
+}
+
+.github-link:hover .hover {
+    display: block;
+}
+
+.github-link .normal {
+    display: block;
+}
+
+.github-link:hover .normal {
+    display: none;
+}
 
 #content .member-list .xmldoc h2 {
-  margin-top: 0;
-  font-size: 1em;
+    margin-top: 0;
+    font-size: 1em;
 }
 
-.member-list td > code,
-.member-list li > code {
-  padding: 2px 4px;
-  color: #d14;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
-  font-family: Monaco,Menlo,Consolas,'Courier New', monospace;
-  font-size: 12px;
-  border-radius: 3px;
+.member-list td>code,
+.member-list li>code {
+    padding: 2px 4px;
+    color: #d14;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
+    font-size: 12px;
+    border-radius: 3px;
 }
 
 table {
-  max-width: 100%;
-  background-color: transparent;
-  border-spacing: 0;
+    max-width: 100%;
+    background-color: transparent;
+    border-spacing: 0;
 }
 
 .table-bordered {
-  border: 1px solid #dddddd;
-  border-collapse: separate;
-  border-left: 0;
-  border-radius: 4px;
+    border: 1px solid #dddddd;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 4px;
 }
 
 .table caption+thead tr:first-child th,
@@ -243,39 +353,40 @@ table {
 .table colgroup+thead tr:first-child td,
 .table thead:first-child tr:first-child th,
 .table thead:first-child tr:first-child td {
-  border-top: 0;
+    border-top: 0;
 }
 
-.table th, .table td {
-  padding: 8px;
-  line-height: 20px;
-  text-align: left;
-  vertical-align: top;
-  border-top: 1px solid #dddddd;
+.table th,
+.table td {
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid #dddddd;
 }
 
-.table-bordered th, .table-bordered td {
-  border-left: 1px solid #dddddd;
+.table-bordered th,
+.table-bordered td {
+    border-left: 1px solid #dddddd;
 }
-
 
 /*-------------------------------------------------------------------------- 
   Additional formatting for the homepage 
 /*--------------------------------------------------------------------------*/
 
-#nuget { 
-  margin-top:20px;
-  font-size: 11pt; 
-  padding:20px; 
+#nuget {
+    margin-top: 20px;
+    font-size: 11pt;
+    padding: 20px;
 }
 
 #nuget pre {
-  font-size:11pt;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  border-radius: 0px;
-  background: #404040;
-  border-style:none;
-  color: #e0e0e0;
-  margin-top:15px;
+    font-size: 11pt;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: #404040;
+    border-style: none;
+    color: #e0e0e0;
+    margin-top: 15px;
 }

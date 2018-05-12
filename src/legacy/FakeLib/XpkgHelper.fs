@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]        
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
 /// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
 module Fake.XpkgHelper
 
@@ -8,7 +8,7 @@ open System.Text
 
 /// Parameter type for xpkg tasks
 [<CLIMutable>]
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]        
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
 type xpkgParams = 
     { ToolPath : string
       WorkingDir : string
@@ -28,7 +28,7 @@ type xpkgParams =
       Samples : (string * string) list }
 
 /// Creates xpkg default parameters
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]        
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
 let XpkgDefaults() = 
     { ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
       WorkingDir = "./"
@@ -77,7 +77,7 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 ///              }
 ///          )
 ///      )
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]        
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
 let xpkgPack setParams = 
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters
@@ -115,7 +115,7 @@ let xpkgPack setParams =
     else failwithf "Create xpkg package failed. Process finished with exit code %d." result
 
 /// Validates a xpkg package based on the package file name
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]        
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]        
 let xpkgValidate setParams = 
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters

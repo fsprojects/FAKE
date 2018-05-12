@@ -2,7 +2,7 @@
 open DeploymentHelper
 open HttpListenerHelper
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DeployCommand = {
     Name :  string;
     Parameters : string list
@@ -10,13 +10,13 @@ type DeployCommand = {
     Function: string array -> unit
 }  
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Main = 
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let registeredCommands = System.Collections.Generic.Dictionary<_,_>()
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let register command = registeredCommands.Add("/" + command.Name.ToLower(), command)
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let printUsage() =
         printfn "---- Usage -----"
 
@@ -25,7 +25,7 @@ module Main =
         |> Seq.iter (printfn "%s\r\n")
             
         printfn "Otherwise the service is just started as a command line process"
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let listen args =
         use srv = new Services.FakeDeployService()
         srv.Start(args)
@@ -61,7 +61,7 @@ module Main =
       Function = listen }
         |> register
 
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     let traceDeploymentResult server fileName = function
         | FakeDeployAgentHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
         | FakeDeployAgentHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%s" fileName server (FakeDeployAgentHelper.buildExceptionString exn)

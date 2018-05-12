@@ -1,4 +1,4 @@
-﻿[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+﻿[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Deploy.Auth
 
 open System
@@ -10,19 +10,19 @@ open Fake.AppConfig
 open Nancy
 open Nancy.Security
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let AuthTokenName = "AuthToken"
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type LoginChallange = 
     { UserId : string
       Challenge : string
       ValidTo : DateTime }
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let NotAuthenticated = AuthenticatedUser("anonymous", ["none"])
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type LoginRequests() = 
     let requests = ConcurrentDictionary<string, LoginChallange>()
     
@@ -30,7 +30,7 @@ type LoginRequests() =
         let stale = requests |> Seq.filter (fun r -> r.Value.ValidTo <= DateTime.Now)
         stale |> Seq.iter (fun s -> requests.TryRemove(s.Key) |> ignore)
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member this.Add (userId : string) (challenge : string) = 
         removeStale()
         let c = 
@@ -39,7 +39,7 @@ type LoginRequests() =
               ValidTo = DateTime.Now.AddMinutes 2. }
         requests.TryAdd(challenge, c) |> ignore
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member this.Get challenge = 
         if challenge = null then None
         else 
@@ -48,12 +48,12 @@ type LoginRequests() =
             if c && x.ValidTo > DateTime.Now then Some x.UserId
             else None
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member this.Remove challenge = requests.TryRemove challenge |> ignore
 
 let private loginRequest = LoginRequests()
 
-[<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type AuthModule(userMapper : UserMapper, users : list<PublicKey>) as http = 
     inherit FakeModule("/fake")
     
@@ -70,14 +70,14 @@ type AuthModule(userMapper : UserMapper, users : list<PublicKey>) as http =
             http.Logout(http.Request.Headers.Item(AuthTokenName) |> Seq.head)
             http.Response.AsText("logged out"))
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member public http.Logout(ticket : string) = 
         (ticket
          |> Guid.Parse
          |> userMapper.RemoveByToken)
         |> ignore
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member public http.CreateLoginRequest userId = 
         use rnd = new System.Security.Cryptography.RNGCryptoServiceProvider()
         let bytes = Array.zeroCreate 256
@@ -86,7 +86,7 @@ type AuthModule(userMapper : UserMapper, users : list<PublicKey>) as http =
         loginRequest.Add userId value
         value
     
-    [<System.Obsolete("This function, type or module is obsolete. There is no alternative in FAKE 5 yet. If you need this functionality consider porting the module (https://fake.build/contributing.html#Porting-a-module-to-FAKE-5).")>]
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     member public http.HandleLoginRequest valueToSign signature = 
         let failLogin() = http.Response.AsText("").WithStatusCode 401
         match AppConfig.Authorization, (loginRequest.Get valueToSign) with
