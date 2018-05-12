@@ -393,6 +393,16 @@ let version =
             Some ({p with Values = p.Values @ source; Origin = p.Origin + toAdd })
     { semVer with PreRelease = prerelease; Original = None }
 let nugetVersion = version.AsString
+let chocoVersion =
+    // Replace "." with "-" in the prerelease-string
+    let build = 
+        if version.Build > 0I then ("." + version.Build.ToString("D")) else ""
+    let pre = 
+        match version.PreRelease with
+        | Some preRelease -> ("-" + preRelease.Origin.Replace(".", "-"))
+        | None -> ""
+    sprintf "%d.%d.%d%s%s" version.Major version.Minor version.Patch build pre
+    
 Trace.setBuildNumber nugetVersion
 
 //let current = CoreTracing.getListeners()
@@ -1287,7 +1297,7 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
             PackageId = "fake"
             ReleaseNotes = release.Notes |> String.toLines
             InstallerType = Choco.ChocolateyInstallerType.SelfContained
-            Version = nugetVersion
+            Version = chocoVersion
             Files =
                 [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None
                   (System.IO.Path.GetFullPath @"src\VERIFICATION.txt"), Some "VERIFICATION.txt", None
@@ -1295,13 +1305,14 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
             OutputDir = "nuget/dotnetcore/chocolatey" }
         |> changeToolPath) "src/Fake-choco-template.nuspec"
 
-    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" nugetVersion
-    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.%s.nupkg" "fake" nugetVersion
+    let name = sprintf "%s.%s" "fake" chocoVersion
+    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.nupkg" name
+    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.nupkg" name
     File.Copy(chocoPackage, chocoTargetPackage, true)
     publish chocoTargetPackage
 )
 Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
-    let name = sprintf "%s.%s.nupkg" "fake" nugetVersion
+    let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
     let path = sprintf "nuget/dotnetcore/chocolatey/%s" name
     if not Environment.isWindows && not (File.exists path) && fromArtifacts then
         Directory.ensure "nuget/dotnetcore/chocolatey"
@@ -1505,7 +1516,7 @@ Target.create "PrepareArtifacts" (fun _ ->
 
         if Environment.isWindows then
             Directory.ensure "nuget/dotnetcore/chocolatey"
-            let name = sprintf "%s.%s.nupkg" "fake" nugetVersion
+            let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
             Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
             unzip "." (artifactsDir </> "chocolatey-requirements.zip")
