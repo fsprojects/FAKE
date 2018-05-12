@@ -353,8 +353,8 @@ let version =
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
     let createAlphaNum (s:string) =
-        PreReleaseSegment.AlphaNumeric (s.Replace("_", "-"))
-    let source, overwrite =
+        PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
+    let source, buildMeta =
         match BuildServer.buildServer with 
         | _ when MyGitLab.isGitLabCi ->
             // Workaround for now
@@ -364,8 +364,9 @@ let version =
             //    MyGitLab.Environment.CommitRefName.Split('/')
             //    |> Seq.map createAlphaNum
             [ //yield! branchPath
-              yield PreReleaseSegment.AlphaNumeric "gitlab"
-              yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId ], false
+              //yield PreReleaseSegment.AlphaNumeric "gitlab"
+              yield PreReleaseSegment.AlphaNumeric MyGitLab.Environment.PipelineId
+            ], sprintf "gitlab.%s" MyGitLab.Environment.CommitSha
         | BuildServer.TeamFoundation ->
             let sourceBranch = MyTeamFoundation.Environment.BuildSourceBranch
             let isPr = sourceBranch.StartsWith "refs/pull/"
@@ -381,10 +382,10 @@ let version =
                     []
             let buildId = bigint (int MyTeamFoundation.Environment.BuildId)
             [ yield! firstSegment
-              yield PreReleaseSegment.AlphaNumeric "vsts"
+              //yield PreReleaseSegment.AlphaNumeric "vsts"
               yield PreReleaseSegment.Numeric buildId
-            ], isPr
-        | _ -> [], false
+            ], sprintf "vsts.%s" MyTeamFoundation.Environment.BuildSourceVersion
+        | _ -> [], ""
     
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =
@@ -392,12 +393,15 @@ let version =
         | None -> None
         | Some p ->
             let toAdd = System.String.Join(".", source |> Seq.map segToString)
-            let toAdd = if System.String.IsNullOrEmpty toAdd || overwrite then toAdd else "." + toAdd
+            let toAdd = if System.String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
             Some ({p with 
-                        Values = if overwrite then source else p.Values @ source
-                        Origin = if overwrite then toAdd else p.Origin + toAdd })
-    { semVer with PreRelease = prerelease; Original = None }
-let nugetVersion = version.AsString
+                        Values = p.Values @ source
+                        Origin = p.Origin + toAdd })
+    { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+let nugetVersion =
+    if System.String.IsNullOrEmpty version.BuildMetaData
+    then version.AsString
+    else sprintf "%s+%s" version.AsString version.BuildMetaData
 let chocoVersion =
     // Replace "." with "-" in the prerelease-string
     let build = 
