@@ -11,6 +11,7 @@
 * BUGFIX: Zip.unzip was flattening the result - https://github.com/fsharp/FAKE/pull/1920
 * BUGFIX: Fake complained that Intellisense.fsx didn't exist - https://github.com/fsharp/FAKE/issues/1917
 * ENHANCEMENT: Targets now retrieve the current execution list as context parameter - https://github.com/fsharp/FAKE/pull/1920
+* DOCS: Huge update to the documentation, adds obsolete warnings thanks @kblohm - https://github.com/fsharp/FAKE/pull/1923
 
 ## 5.0.0-rc011 - 2018-05-06
 
