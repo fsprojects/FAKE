@@ -199,6 +199,9 @@ let version =
                         Values = p.Values @ source
                         Origin = p.Origin + toAdd })
     { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+
+let simpleVersion = version.AsString
+
 let nugetVersion =
     if System.String.IsNullOrEmpty version.BuildMetaData
     then version.AsString
@@ -485,7 +488,7 @@ Target.create "GenerateDocs" (fun _ ->
         "page-author", String.separated ", " authors
         "project-author", String.separated ", " authors
         "github-link", githubLink
-        "version", nugetVersion
+        "version", simpleVersion
         "project-github", "http://github.com/fsharp/fake"
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
@@ -1288,7 +1291,7 @@ Target.create "ReleaseDocs" (fun _ ->
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail "gh-pages" "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail "gh-pages" "config user.name \"Matthias Dittrich\""
-    Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" nugetVersion)
+    Git.Commit.exec "gh-pages" (sprintf "Update generated documentation %s" simpleVersion)
     Git.Branches.pushBranch "gh-pages" url "gh-pages"
 )
 
@@ -1311,19 +1314,19 @@ Target.create "FastRelease" (fun _ ->
         Git.Branches.checkout gitDirectory false TeamFoundation.Environment.BuildSourceVersion
     else
         Git.Staging.stageAll gitDirectory
-        Git.Commit.exec gitDirectory (sprintf "Bump version to %s" nugetVersion)
+        Git.Commit.exec gitDirectory (sprintf "Bump version to %s" simpleVersion)
         let branch = Git.Information.getBranchName gitDirectory
         Git.Branches.pushBranch gitDirectory "origin" branch
 
-    Git.Branches.tag gitDirectory nugetVersion
-    Git.Branches.pushTag gitDirectory url nugetVersion
+    Git.Branches.tag gitDirectory simpleVersion
+    Git.Branches.pushTag gitDirectory url simpleVersion
 
     let files =
         runtimes @ [ "portable"; "packages" ]
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
 
     GitHub.createClientWithToken token
-    |> GitHub.draftNewRelease gitOwner gitName nugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    |> GitHub.draftNewRelease gitOwner gitName simpleVersion (release.SemVer.PreRelease <> None) release.Notes
     |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
