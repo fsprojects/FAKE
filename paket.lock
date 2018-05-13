@@ -313,7 +313,7 @@ NUGET
     NUnit.Extension.VSProjectLoader (3.7)
     Octokit (0.29)
       NETStandard.Library (>= 1.6) - restriction: && (< net45) (>= netstandard1.1)
-    Paket.Core (5.157.0-alpha003)
+    Paket.Core (5.162.0-alpha001)
       Chessie (>= 0.6) - restriction: || (>= net45) (>= netstandard2.0)
       FSharp.Compiler.Tools  - restriction: >= net45
       FSharp.Core  - restriction: >= net45
@@ -1936,7 +1936,7 @@ NUGET
       System.Xml.XmlDocument (>= 4.3) - restriction: || (&& (== net46) (== netcoreapp2.0)) (&& (== net46) (== netstandard2.0)) (&& (== net46) (< net20)) (&& (== net462) (== netcoreapp2.0)) (&& (== net462) (== netstandard2.0)) (&& (== net462) (< net20)) (&& (== netcoreapp2.0) (< netstandard2.0)) (== netstandard1.6)
     Octokit (0.29)
       NETStandard.Library (>= 1.6) - restriction: || (&& (== net46) (< net45)) (&& (== net462) (< net45)) (== netcoreapp2.0) (== netstandard1.6) (== netstandard2.0)
-    Paket.Core (5.157.0-alpha003)
+    Paket.Core (5.162.0-alpha001)
       Chessie (>= 0.6) - restriction: || (== net46) (== net462) (== netcoreapp2.0) (&& (== netstandard1.6) (>= net45)) (&& (== netstandard1.6) (>= netstandard2.0)) (== netstandard2.0)
       FSharp.Compiler.Tools  - restriction: || (== net46) (== net462) (&& (== netcoreapp2.0) (>= net45)) (&& (== netstandard1.6) (>= net45)) (&& (== netstandard2.0) (>= net45))
       FSharp.Core  - restriction: || (== net46) (== net462) (&& (== netcoreapp2.0) (>= net45)) (&& (== netstandard1.6) (>= net45)) (&& (== netstandard2.0) (>= net45))
@@ -3052,7 +3052,7 @@ NUGET
       System.Xml.XmlDocument (>= 4.3) - restriction: && (< net20) (>= netstandard1.3) (< netstandard2.0)
     Octokit (0.29)
       NETStandard.Library (>= 1.6) - restriction: && (< net45) (>= netstandard1.1)
-    Paket.Core (5.161.3)
+    Paket.Core (5.162.0-alpha001)
       Chessie (>= 0.6) - restriction: || (>= net45) (>= netstandard2.0)
       FSharp.Compiler.Tools  - restriction: >= net45
       FSharp.Core  - restriction: >= net45
