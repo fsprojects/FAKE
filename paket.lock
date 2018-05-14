@@ -3402,7 +3402,6 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3) - restriction: && (< monoandroid) (< monotouch) (< net46) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
       System.Xml.XmlDocument (>= 4.3) - restriction: || (&& (< monoandroid) (< monotouch) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)) (>= net46)
       System.Xml.XPath (>= 4.3) - restriction: || (&& (< monoandroid) (< monotouch) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)) (>= net46)
-  remote: https://www.myget.org/F/fake-vsts/api/v3/index.json
     Fake.Api.GitHub (5.0.0-rc012.95)
       FSharp.Core (>= 4.3.4) - restriction: || (>= net46) (>= netstandard1.6)
       NETStandard.Library (>= 1.6.1) - restriction: && (< net46) (>= netstandard1.6) (< netstandard2.0)
