@@ -317,7 +317,7 @@ module Process =
         addStartedProcess(proc.Id, proc.StartTime) |> ignore
 
     /// [omit]
-    [<Obsolete("Do not use or open an issue")>]
+    [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
     let startProcess (proc : Process) =
         try
             let result = proc.Start()
