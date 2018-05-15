@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.0.0-rc013 - 2018-05-20
+
+* FAKE5: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
+
 ## 5.0.0-rc012 - 2018-05-12
 
 * FAKE5: New module `Fake.Windows.Registry` - https://github.com/fsharp/FAKE/pull/1909
