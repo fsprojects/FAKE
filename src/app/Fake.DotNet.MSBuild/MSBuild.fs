@@ -230,7 +230,9 @@ type MSBuildParams =
           Environment =
             Process.createEnvironmentMap()
             |> Map.remove "MSBUILD_EXE_PATH"
-            |> Map.remove "MSBuildExtensionsPath" }
+            |> Map.remove "MSBuildExtensionsPath"
+            |> Map.remove "MSBuildLoadMicrosoftTargetsReadOnly"
+            |> Map.remove "MSBuildSDKsPath" }
     [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]
     static member Empty = MSBuildParams.Create()
 
