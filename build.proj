@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <Target Name="Build">
-    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake -v build $(FakeParallel) $(FakeTargetArg)' WorkingDirectory="$(RepoRootDir)" />
+    <Exec IgnoreStandardErrorWarningFormat="true" Command='dotnet fake build $(FakeParallel) $(FakeTargetArg)' WorkingDirectory="$(RepoRootDir)" />
   </Target>
 
   <Target Name="Pack">

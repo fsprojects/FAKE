@@ -901,7 +901,7 @@ Target.create "CreateNuGet" (fun _ ->
                     Trace.tracefn "%sFile: %s" space f
                 for sd in Directory.EnumerateDirectories d do
                     Trace.tracefn "%sDirectory: %s" space sd
-                    printDir (space + "  ") d
+                    printDir (space + "  ") sd
             printDir "  " (Path.GetFullPath "packages")
             match !! "packages/**/NuGet.exe" |> Seq.tryHead with
             | Some e ->
