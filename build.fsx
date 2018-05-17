@@ -893,9 +893,13 @@ Target.create "CreateNuGet" (fun _ ->
             Project = package.Project + ".x64" }
 
     let nugetExe =
-        let pref = Path.GetFullPath "packages/build/NuGet.CommandLine/tools/NuGet.exe"
-        if File.Exists pref then pref
-        else
+        let prefs = 
+           [ "packages/build/Nuget.CommandLine/tools/NuGet.exe"
+             "packages/build/NuGet.CommandLine/tools/NuGet.exe" ]
+           |> List.map Path.GetFullPath 
+        match Seq.tryFind (File.Exists) prefs with
+        | Some pref -> pref
+        | None ->
             let rec printDir space d =
                 for f in Directory.EnumerateFiles d do
                     Trace.tracefn "%sFile: %s" space f
@@ -908,7 +912,7 @@ Target.create "CreateNuGet" (fun _ ->
                 Trace.tracefn "Found %s" e
                 e
             | None ->
-                pref
+                prefs |> List.head
         
     for package,description in packages do
         let nugetDocsDir = nugetLegacyDir @@ "docs"
