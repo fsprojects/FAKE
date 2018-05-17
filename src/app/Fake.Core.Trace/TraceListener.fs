@@ -239,6 +239,12 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write importantMessagesToStdErr color true text
             | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                 write false color newLine text
+            | TraceData.OpenTag(KnownTags.Target _ as tag, description) ->
+                write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
+                if not (isNull description) then
+                    let msg = TraceData.TraceMessage("", true)
+                    let color2 = colorMap msg
+                    write false color2 true (sprintf "  %s" description)
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time, status) ->
