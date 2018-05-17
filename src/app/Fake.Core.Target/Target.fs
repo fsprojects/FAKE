@@ -481,7 +481,11 @@ module Target =
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
             use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
-            runSimpleContextInternal target context
+            let res = runSimpleContextInternal target context
+            if res.HasError
+            then t.MarkFailed()
+            else t.MarkSuccess()
+            res
         else
             { context with PreviousTargets = context.PreviousTargets @ [{ Error = None; Time = TimeSpan.Zero; Target = target; WasSkipped = true }] }
 
@@ -511,56 +515,66 @@ module Target =
                 let mutable waitList = []
                 let mutable runningTasks = []
                 //let mutable remainingOrders = order
-                while true do
-                    let! msg = inbox.Receive()
-                    match msg with
-                    | GetNextTarget (newCtx, reply) ->
-                        // semantic is:
-                        // - We never return a target twice!
-                        // - we fill up the waitlist first
-                        ctx <- mergeContext ctx newCtx
-                        let known =
-                            ctx.PreviousTargets
-                            |> Seq.map (fun tres -> tres.Target.Name, tres)
-                            |> dict
-                        runningTasks <-
-                            runningTasks
-                            |> List.filter (fun t -> not(known.ContainsKey t.Name))
-                        if known.Count = targetCount then
-                            for (w:System.Threading.Tasks.TaskCompletionSource<Target option>) in waitList do
-                                w.SetResult None
-                            waitList <- []
-                            reply.Reply (ctx, async.Return None)
-                        else
-                            let isRunnable (t:Target) =
-                                not (known.ContainsKey t.Name) && // not already finised
-                                not (runningTasks |> Seq.exists (fun r -> r.Name = t.Name)) && // not already running
-                                t.Dependencies // all dependencies finished
-                                |> Seq.forall (fun d -> known.ContainsKey d)
-                            let runnable =
-                                order
-                                |> Seq.concat
-                                |> Seq.filter isRunnable
-                                |> Seq.toList
+                try
+                    while true do
+                        let! msg = inbox.Receive()
+                        match msg with
+                        | GetNextTarget (newCtx, reply) ->
+                            // semantic is:
+                            // - We never return a target twice!
+                            // - we fill up the waitlist first
+                            ctx <- mergeContext ctx newCtx
+                            let known =
+                                ctx.PreviousTargets
+                                |> Seq.map (fun tres -> tres.Target.Name, tres)
+                                |> dict
+                            runningTasks <-
+                                runningTasks
+                                |> List.filter (fun t -> not(known.ContainsKey t.Name))
+                            if known.Count = targetCount then
+                                for (w:System.Threading.Tasks.TaskCompletionSource<Target option>) in waitList do
+                                    w.SetResult None
+                                waitList <- []
+                                reply.Reply (ctx, async.Return None)
+                            else
+                                let isRunnable (t:Target) =
+                                    not (known.ContainsKey t.Name) && // not already finised
+                                    not (runningTasks |> Seq.exists (fun r -> r.Name = t.Name)) && // not already running
+                                    t.Dependencies // all dependencies finished
+                                    |> Seq.forall (fun d -> known.ContainsKey d)
+                                let runnable =
+                                    order
+                                    |> Seq.concat
+                                    |> Seq.filter isRunnable
+                                    |> Seq.toList
 
-                            let rec getNextFreeRunableTarget (r) =
-                                match r with
-                                | t :: rest ->
-                                    match waitList with
-                                    | h :: restwait ->
-                                        h.SetResult (Some t)
-                                        waitList <- restwait
-                                        getNextFreeRunableTarget rest
-                                    | [] -> Some t
-                                | [] -> None
-                            match getNextFreeRunableTarget runnable with
-                            | Some free ->
-                                reply.Reply (ctx, async.Return(Some free))
-                            | None ->
-                                // queue work
-                                let tcs = new TaskCompletionSource<Target option>()
-                                waitList <- waitList @ [ tcs ]
-                                reply.Reply (ctx, tcs.Task |> Async.AwaitTask)
+                                let rec getNextFreeRunableTarget (r) =
+                                    match r with
+                                    | t :: rest ->
+                                        match waitList with
+                                        | h :: restwait ->
+                                            // fill some idle worker
+                                            runningTasks <- t :: runningTasks
+                                            h.SetResult (Some t)
+                                            waitList <- restwait
+                                            getNextFreeRunableTarget rest
+                                        | [] -> Some t
+                                    | [] -> None
+                                match getNextFreeRunableTarget runnable with
+                                | Some free ->
+                                    runningTasks <- free :: runningTasks
+                                    reply.Reply (ctx, async.Return(Some free))
+                                | None ->
+                                    // queue work
+                                    let tcs = new TaskCompletionSource<Target option>()
+                                    waitList <- waitList @ [ tcs ]
+                                    reply.Reply (ctx, tcs.Task |> Async.AwaitTask)
+                with e ->
+                    while true do
+                        let! msg = inbox.Receive()
+                        match msg with
+                        | GetNextTarget (_, reply) ->
+                            reply.Reply (ctx, async { return raise <| exn("mailbox failed", e) })
             }
 
             let mbox = MailboxProcessor.Start(body)
