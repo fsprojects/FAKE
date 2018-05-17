@@ -511,6 +511,8 @@ module Target =
             let body (inbox:MailboxProcessor<RunnerHelper>) = async {
                 let targetCount =
                     order |> Seq.sumBy (fun t -> t.Length)
+                let resolution = Set.ofSeq(order |> Seq.concat |> Seq.map (fun t -> t.Name))
+                let inResolution (t:string) = resolution.Contains t               
                 let mutable ctx = ctx
                 let mutable waitList = []
                 let mutable runningTasks = []
@@ -537,10 +539,11 @@ module Target =
                                 waitList <- []
                                 reply.Reply (ctx, async.Return None)
                             else
+
                                 let isRunnable (t:Target) =
                                     not (known.ContainsKey t.Name) && // not already finised
                                     not (runningTasks |> Seq.exists (fun r -> r.Name = t.Name)) && // not already running
-                                    t.Dependencies // all dependencies finished
+                                    t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
                                     |> Seq.forall (fun d -> known.ContainsKey d)
                                 let runnable =
                                     order
