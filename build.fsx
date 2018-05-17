@@ -134,6 +134,7 @@ let additionalFiles = [
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 let apikey = Environment.environVarOrDefault "nugetkey" ""
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
@@ -1153,7 +1154,7 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
         if Environment.isWindows then p else { p with ToolPath = altToolPath }
     path |> Choco.push (fun p ->
         { p with
-            Source = "https://push.chocolatey.org/"
+            Source = chocosource
             ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" }
         |> changeToolPath)
 )
@@ -1655,6 +1656,8 @@ prevDocs ?=> "GenerateDocs"
 "PublishNuget"
     ==> "Release_Staging"
 "DotNetCorePushNuGet"
+    ==> "Release_Staging"
+"DotNetCorePushChocolateyPackage"
     ==> "Release_Staging"
 
 // If 'Default' happens it needs to happen before 'EnsureTestsRun'
