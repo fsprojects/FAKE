@@ -2,7 +2,11 @@
 
 ## 5.0.0-rc013 - 2018-05-20
 
-* FAKE5: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
+* ENHANCEMENT: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
+* FAKE5: Xake now supports FAKE 5 and is advertised as module - https://github.com/xakebuild/Xake
+- ENHANCEMENT: Parallelize targets even more - https://github.com/fsharp/FAKE/pull/1934
+- COSMETICS: Targets are always shown as "failed" - https://github.com/fsharp/FAKE/issues/1929
+- COSMETICS: Target description was printed twice - https://github.com/fsharp/FAKE/issues/1931
 
 ## 5.0.0-rc012 - 2018-05-12
 
