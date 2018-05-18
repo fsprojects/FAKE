@@ -133,6 +133,7 @@ let apikey = Environment.environVarOrDefault "nugetkey" ""
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
+let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
 BuildServer.install [
@@ -489,7 +490,7 @@ Target.create "GenerateDocs" (fun _ ->
         "version", simpleVersion
         "project-github", sprintf "http://github.com/%s/%s" github_release_user gitName
         "project-nuget", "https://www.nuget.org/packages/FAKE"
-        "root", "https://fake.build"
+        "root", sprintf "https://%s" docsDomain
         "project-name", "FAKE - F# Make" ]
 
     let layoutRoots = [ "./help/templates"; "./help/templates/reference"]
@@ -503,7 +504,7 @@ Target.create "GenerateDocs" (fun _ ->
     Directory.ensure docsCircleCi
     Shell.copyDir docsCircleCi ".circleci" FileFilter.allFiles
     File.writeString false "./docs/.nojekyll" ""
-    File.writeString false "./docs/CNAME" "fake.build"
+    File.writeString false "./docs/CNAME" docsDomain
     //CopyDir (docsDir @@ "pics") "help/pics" FileFilter.allFiles
 
     Shell.copy (source @@ "markdown") ["RELEASE_NOTES.md"]
@@ -1288,6 +1289,7 @@ Target.create "ReleaseDocs" (fun _ ->
     Git.Repository.fullclean "gh-pages"
     Shell.copyRecursive "docs" "gh-pages" true |> printfn "%A"
     Shell.copyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
+    File.writeString false "./gh-pages/CNAME" docsDomain
     Git.Staging.stageAll "gh-pages"
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail "gh-pages" "config user.email matthi.d@gmail.com"
