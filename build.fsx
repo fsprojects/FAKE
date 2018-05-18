@@ -81,10 +81,7 @@ let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
-let gitRaw = Environment.environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
-
-let gitOwner = "fsharp"
-let gitHome = "https://github.com/" + gitOwner
+let github_release_user = Environment.environVarOrDefault "github_release_user" "fsharp"
 
 // The name of the project on GitHub
 let gitName = "FAKE"
@@ -483,16 +480,16 @@ Target.create "GenerateDocs" (fun _ ->
     let source = "./help"
     let docsTemplate = "docpage.cshtml"
     let indexTemplate = "indexpage.cshtml"
-    let githubLink = "https://github.com/fsharp/FAKE"
+    let githubLink = sprintf "https://github.com/%s/%s" github_release_user gitName
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", String.separated ", " authors
         "project-author", String.separated ", " authors
         "github-link", githubLink
         "version", simpleVersion
-        "project-github", "http://github.com/fsharp/fake"
+        "project-github", sprintf "http://github.com/%s/%s" github_release_user gitName
         "project-nuget", "https://www.nuget.org/packages/FAKE"
-        "root", "http://fsharp.github.io/FAKE"
+        "root", "https://fake.build"
         "project-name", "FAKE - F# Make" ]
 
     let layoutRoots = [ "./help/templates"; "./help/templates/reference"]
@@ -1162,7 +1159,6 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
 Target.create "CheckReleaseSecrets" (fun _ ->
     Environment.environVarOrFail "CHOCOLATEY_API_KEY" |> ignore
     Environment.environVarOrFail "nugetkey" |> ignore
-    Environment.environVarOrFail "github_user" |> ignore
     Environment.environVarOrFail "github_token" |> ignore
 )
 
@@ -1286,7 +1282,7 @@ Target.create "ReleaseDocs" (fun _ ->
             TraceSecrets.register "<token>"  s
             sprintf "%s:x-oauth-basic@" s
         | _ -> ""
-    let url = Environment.environVarOrDefault "fake_git_url" (sprintf "https://%sgithub.com/fsharp/FAKE.git" auth)
+    let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
     Git.Repository.fullclean "gh-pages"
@@ -1308,8 +1304,8 @@ Target.create "FastRelease" (fun _ ->
             s
         | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
     let auth = sprintf "%s:x-oauth-basic@" token
-    let url = Environment.environVarOrDefault "fake_git_url" (sprintf "https://%sgithub.com/fsharp/FAKE.git" auth)
-    
+    let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
+
     let gitDirectory = Environment.environVarOrDefault "git_directory" ""
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
@@ -1331,7 +1327,7 @@ Target.create "FastRelease" (fun _ ->
         |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
 
     GitHub.createClientWithToken token
-    |> GitHub.draftNewRelease gitOwner gitName simpleVersion (release.SemVer.PreRelease <> None) release.Notes
+    |> GitHub.draftNewRelease github_release_user gitName simpleVersion (release.SemVer.PreRelease <> None) release.Notes
     |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
@@ -1363,6 +1359,7 @@ Target.create "PrepareArtifacts" (fun _ ->
         Trace.trace "ensure artifacts."
         let files =
             !! (artifactsDir </> "fake-dotnetcore-*.zip")
+            |> GlobbingPattern.setBaseDir "C:\\" // workaround a globbing bug, remove me with 5.0.0-rc014
             |> Seq.toList
         Trace.tracefn "files: %A" files
         files

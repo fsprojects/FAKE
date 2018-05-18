@@ -100,16 +100,30 @@ let internal getRoot (baseDirectory : string) (pattern : string) =
 let internal search (baseDir : string) (input : string) = 
     let baseDir = normalizePath baseDir
     let input = normalizePath input
-    let input = input.Replace(baseDir, "")
+    let input = input.Replace(baseDir + string Path.DirectorySeparatorChar, "")
 
     let filePattern = Path.GetFileName(input)
-    input.Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries)
-    |> Seq.map (function 
-           | "**" -> Recursive
-           | a when a = filePattern -> FilePattern(a)
-           | a when driveRegex.IsMatch a -> Directory(a + "\\")
-           | a -> Directory(a))
-    |> Seq.toList
+
+    let splits = input.Split([| '/'; '\\' |], StringSplitOptions.None)
+    let baseItems =
+        let start, rest =
+            if input.StartsWith "\\\\" && splits.Length >= 4 then
+                let serverName = splits.[2]
+                let share = splits.[3]
+                [ Directory (sprintf "\\\\%s\\%s" serverName share) ], splits |> Seq.skip 4
+            else
+                [], splits |> Array.toSeq
+        let restList =
+            rest    
+            |> Seq.filter (String.IsNullOrEmpty >> not)
+            |> Seq.map (function 
+                   | "**" -> Recursive
+                   | a when a = filePattern -> FilePattern(a)
+                   | a when driveRegex.IsMatch a -> Directory(a + "\\")
+                   | a -> Directory(a))
+            |> Seq.toList
+        start @ restList
+    baseItems    
     |> buildPaths [ baseDir ]
     |> List.map normalizeOutputPath
 
