@@ -137,6 +137,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="/core-targets.html">DSL</a>
+															<ul>
+																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
 																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
@@ -274,6 +280,12 @@
 <span class="l">22: </span>
 <span class="l">23: </span>
 <span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip"><code lang="bash">Usage:
 fake.exe [fake_opts] run [run_opts] [&lt;script.fsx&gt;] [--] [&lt;scriptargs&gt;...]
@@ -291,11 +303,17 @@ Fake Options [fake_opts]:
 Fake Run Options [run_opts]:
 -d, --debug           Debug the script.
 -n, --nocache         Disable fake cache for this run.
+-p, --partial-restore
+                      Only restore the required group instead of a full restore,
+                      can be set globally by setting the environment variable FAKE_PARTIAL_RESTORE to true.
 --fsiargs &lt;fsiargs&gt; [*]  Arguments passed to the f# interactive.
 
 Fake Build Options [build_opts]:
 -d, --debug           Debug the script.
 -n, --nocache         Disable fake cache for this run.
+-p, --partial-restore
+                      Only restore the required group instead of a full restore,
+                      can be set globally by setting the environment variable FAKE_PARTIAL_RESTORE to true.
 --fsiargs &lt;fsiargs&gt; [*]  Arguments passed to the f# interactive.
 -f, --script &lt;script.fsx&gt;
                         The script to execute (defaults to `build.fsx`).
@@ -475,7 +493,7 @@ Target Module Options [target_opts]:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc013.141</a></li>
 									</ul>
 								</div>
 							</div>

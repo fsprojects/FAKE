@@ -136,6 +136,12 @@
 															</ul>
 														</li>
 														<li>
+															<a href="/core-targets.html">DSL</a>
+															<ul>
+																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
+															</ul>
+														</li>
+														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
 																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
@@ -272,10 +278,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2661', 2661)" onmouseover="showTip(event, '2661', 2661)">
+          <code onmouseout="hideTip(event, '2662', 2662)" onmouseover="showTip(event, '2662', 2662)">
             CommandLine
           </code>
-          <div class="tip" id="2661">
+          <div class="tip" id="2662">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -286,25 +292,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2662', 2662)" onmouseover="showTip(event, '2662', 2662)">
+          <code onmouseout="hideTip(event, '2663', 2663)" onmouseover="showTip(event, '2663', 2663)">
             CurrentDirectory()
           </code>
-          <div class="tip" id="2662">
-            <strong>Signature:</strong> unit -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2663', 2663)" onmouseover="showTip(event, '2663', 2663)">
-            CurrentManagedThreadId
-          </code>
           <div class="tip" id="2663">
-            <strong>Signature:</strong> int<br />
+            <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -315,10 +307,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2664', 2664)" onmouseover="showTip(event, '2664', 2664)">
-            ExitCode()
+            CurrentManagedThreadId
           </code>
           <div class="tip" id="2664">
-            <strong>Signature:</strong> unit -&gt; unit<br />
+            <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -329,10 +321,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2665', 2665)" onmouseover="showTip(event, '2665', 2665)">
-            HasShutdownStarted
+            ExitCode()
           </code>
           <div class="tip" id="2665">
-            <strong>Signature:</strong> bool<br />
+            <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -343,7 +335,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2666', 2666)" onmouseover="showTip(event, '2666', 2666)">
-            Is64BitOperatingSystem
+            HasShutdownStarted
           </code>
           <div class="tip" id="2666">
             <strong>Signature:</strong> bool<br />
@@ -357,7 +349,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2667', 2667)" onmouseover="showTip(event, '2667', 2667)">
-            Is64BitProcess
+            Is64BitOperatingSystem
           </code>
           <div class="tip" id="2667">
             <strong>Signature:</strong> bool<br />
@@ -371,10 +363,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2668', 2668)" onmouseover="showTip(event, '2668', 2668)">
-            MachineName
+            Is64BitProcess
           </code>
           <div class="tip" id="2668">
-            <strong>Signature:</strong> string<br />
+            <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -385,7 +377,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2669', 2669)" onmouseover="showTip(event, '2669', 2669)">
-            NewLine
+            MachineName
           </code>
           <div class="tip" id="2669">
             <strong>Signature:</strong> string<br />
@@ -399,37 +391,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2670', 2670)" onmouseover="showTip(event, '2670', 2670)">
-            OSVersion
+            NewLine
           </code>
           <div class="tip" id="2670">
-            <strong>Signature:</strong> OperatingSystem<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2671', 2671)" onmouseover="showTip(event, '2671', 2671)">
-            ProcessorCount
-          </code>
-          <div class="tip" id="2671">
-            <strong>Signature:</strong> int<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2672', 2672)" onmouseover="showTip(event, '2672', 2672)">
-            StackTrace
-          </code>
-          <div class="tip" id="2672">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -440,8 +404,36 @@
       <tr>
         <td class="member-name">
 
+          <code onmouseout="hideTip(event, '2671', 2671)" onmouseover="showTip(event, '2671', 2671)">
+            OSVersion
+          </code>
+          <div class="tip" id="2671">
+            <strong>Signature:</strong> OperatingSystem<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2672', 2672)" onmouseover="showTip(event, '2672', 2672)">
+            ProcessorCount
+          </code>
+          <div class="tip" id="2672">
+            <strong>Signature:</strong> int<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
           <code onmouseout="hideTip(event, '2673', 2673)" onmouseover="showTip(event, '2673', 2673)">
-            SystemDirectory
+            StackTrace
           </code>
           <div class="tip" id="2673">
             <strong>Signature:</strong> string<br />
@@ -455,10 +447,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2674', 2674)" onmouseover="showTip(event, '2674', 2674)">
-            SystemPageSize
+            SystemDirectory
           </code>
           <div class="tip" id="2674">
-            <strong>Signature:</strong> int<br />
+            <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -469,7 +461,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2675', 2675)" onmouseover="showTip(event, '2675', 2675)">
-            TickCount
+            SystemPageSize
           </code>
           <div class="tip" id="2675">
             <strong>Signature:</strong> int<br />
@@ -483,10 +475,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2676', 2676)" onmouseover="showTip(event, '2676', 2676)">
-            UserDomainName
+            TickCount
           </code>
           <div class="tip" id="2676">
-            <strong>Signature:</strong> string<br />
+            <strong>Signature:</strong> int<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -497,23 +489,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2677', 2677)" onmouseover="showTip(event, '2677', 2677)">
-            UserInteractive
+            UserDomainName
           </code>
           <div class="tip" id="2677">
-            <strong>Signature:</strong> bool<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                    
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2678', 2678)" onmouseover="showTip(event, '2678', 2678)">
-            UserName
-          </code>
-          <div class="tip" id="2678">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -524,11 +502,25 @@
       <tr>
         <td class="member-name">
 
+          <code onmouseout="hideTip(event, '2678', 2678)" onmouseover="showTip(event, '2678', 2678)">
+            UserInteractive
+          </code>
+          <div class="tip" id="2678">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
           <code onmouseout="hideTip(event, '2679', 2679)" onmouseover="showTip(event, '2679', 2679)">
-            Version
+            UserName
           </code>
           <div class="tip" id="2679">
-            <strong>Signature:</strong> Version<br />
+            <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -539,9 +531,23 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2680', 2680)" onmouseover="showTip(event, '2680', 2680)">
-            WorkingSet
+            Version
           </code>
           <div class="tip" id="2680">
+            <strong>Signature:</strong> Version<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                    
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2681', 2681)" onmouseover="showTip(event, '2681', 2681)">
+            WorkingSet
+          </code>
+          <div class="tip" id="2681">
             <strong>Signature:</strong> int64<br />
                                   </div>
         </td>
@@ -656,7 +662,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc012.95+vsts.617e5c3e3ac66e15fd822f03d531fe4dce04dd85</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc013.141</a></li>
 									</ul>
 								</div>
 							</div>
