@@ -244,7 +244,7 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 if not (isNull description) then
                     let msg = TraceData.TraceMessage("", true)
                     let color2 = colorMap msg
-                    write false color2 true (sprintf "  %s" description)
+                    write false color2 true description
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time, status) ->
