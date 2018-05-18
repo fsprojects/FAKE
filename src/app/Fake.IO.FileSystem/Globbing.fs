@@ -100,7 +100,10 @@ let internal getRoot (baseDirectory : string) (pattern : string) =
 let internal search (baseDir : string) (input : string) = 
     let baseDir = normalizePath baseDir
     let input = normalizePath input
-    let input = input.Replace(baseDir + string Path.DirectorySeparatorChar, "")
+    let input =
+        if String.IsNullOrEmpty baseDir
+        then input
+        else input.Replace(baseDir.TrimEnd([|Path.DirectorySeparatorChar|]) + string Path.DirectorySeparatorChar, "")
 
     let filePattern = Path.GetFileName(input)
 
