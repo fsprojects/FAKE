@@ -2,7 +2,7 @@
 
 ## 5.0.0-rc014 - 2018-05-20
 
-* BUGFIX: Globbing now works correctly outside the working directory - https://github.com/fsharp/FAKE/pull/1927
+* BUGFIX: Globbing is now more robust (especially outside the working directory) - https://github.com/fsharp/FAKE/issues/1925 https://github.com/fsharp/FAKE/issues/1750 and some not tracked issues
 * COSMETICS: Fake is printing target description twice - https://github.com/fsharp/FAKE/issues/1931
 * ENHANCEMENT: Fake parallel logic is not even smarter in running targets parallel - https://github.com/fsharp/FAKE/pull/1934
 * DOCS: We now have a full staging environment in place - https://fake.build/contributing.html#Staging-environment

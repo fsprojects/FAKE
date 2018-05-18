@@ -103,7 +103,13 @@ let internal search (baseDir : string) (input : string) =
     let input =
         if String.IsNullOrEmpty baseDir
         then input
-        else input.Replace(baseDir.TrimEnd([|Path.DirectorySeparatorChar|]) + string Path.DirectorySeparatorChar, "")
+        else
+            // The final \ (or /) makes sure to only match complete folder names (as one folder name could be a substring of the other)
+            let start = baseDir.TrimEnd([|Path.DirectorySeparatorChar|]) + string Path.DirectorySeparatorChar
+            // See https://github.com/fsharp/FAKE/issues/1925
+            if input.StartsWith start then
+                input.Substring start.Length
+            else input           
 
     let filePattern = Path.GetFileName(input)
 
