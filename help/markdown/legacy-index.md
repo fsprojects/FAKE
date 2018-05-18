@@ -62,7 +62,7 @@ You can find more users [here](users.html).
 </div>
 
 * [Release Notes](RELEASE_NOTES.html)
-* [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
+* [![NuGet Status](https://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
 
 # Using FAKE
 
