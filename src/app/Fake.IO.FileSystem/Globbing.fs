@@ -114,7 +114,12 @@ let internal search (baseDir : string) (input : string) =
                 let serverName = splits.[2]
                 let share = splits.[3]
                 [ Directory (sprintf "\\\\%s\\%s" serverName share) ], splits |> Seq.skip 4
+            elif splits.Length >= 2 && Path.IsPathRooted input && driveRegex.IsMatch splits.[0] then
+                [ Directory(splits.[0] + "\\") ], splits |> Seq.skip 1
+            elif splits.Length >= 2 && Path.IsPathRooted input && input.StartsWith "/" then
+                [ Directory("/") ], splits |> Array.toSeq
             else
+                if Path.IsPathRooted input then failwithf "Unknown globbing input '%s', try to use a relative path and report an issue!" input
                 [], splits |> Array.toSeq
         let restList =
             rest    
@@ -122,7 +127,6 @@ let internal search (baseDir : string) (input : string) =
             |> Seq.map (function 
                    | "**" -> Recursive
                    | a when a = filePattern -> FilePattern(a)
-                   | a when driveRegex.IsMatch a -> Directory(a + "\\")
                    | a -> Directory(a))
             |> Seq.toList
         start @ restList
