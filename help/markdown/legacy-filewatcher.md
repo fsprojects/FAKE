@@ -1,5 +1,10 @@
 # Watching for file changes with "FAKE - F# Make"
 
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="/apidocs/v5/fake-io-changewatcher.html">here </a></p>
+</div>
+
 FAKE makes it easy to setup monitoring for filesystem changes. Using the standard glob patterns you can
 watch for changes, and automatically run a function or another target.
 

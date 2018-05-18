@@ -1,5 +1,6 @@
 ﻿/// Contains tasks to compiles F# source file with the [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).
-/// There is also a tutorial about the [F# compiler tasks](../fsc.html) available.
+///
+/// **Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found [here](/legacy-fsc.html)**
 [<RequireQualifiedAccess>]
 module Fake.DotNet.Fsc
 

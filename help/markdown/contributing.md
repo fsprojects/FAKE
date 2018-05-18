@@ -10,6 +10,8 @@ This page should provide you with some basic information if you're thinking abou
 
 * Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the Apache 2.0 license. See License.txt for details.
 
+* TLDR: Send a pull request with either documentation (`/help` folder) or code changes.
+
 ## Documentation
 
 The documentation for FAKE is automatically generated using the amazing [F# Formatting](https://github.com/tpetricek/FSharp.Formatting) library.
@@ -135,6 +137,23 @@ e.g: Using dotnet cli
         source https://api.nuget.org/v3/index.json
         ...Other Dependencies...
         nuget Fake.DotNet.NuGet == 1.0.0 //" //Require version 1.0.0, which is the local build
+
+## Staging environment
+
+In order to test and preview our changes faster we have a fully automated release process in place.
+This staging environment is based on VSTS and MyGet.
+
+If you ever need a release/bugfix fast, make sure to mention that in your PR, we can quickly provide a build on the following infrastructure:
+
+* Website: https://staging.fake.build
+* Chocolatey package: `choco install fake --version <version> --source https://www.myget.org/F/fake-chocolatey-vsts/api/v2`
+* NuGet feed: https://www.myget.org/F/fake-vsts/api/v3/index.json
+
+  <div class="alert alert-info">
+    <h5>INFO</h5>
+        Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works
+        Those bits should be considered for "unblocking"-purposes or testing only.
+  </div>
 
 ## General considerations
 
