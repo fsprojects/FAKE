@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Compiling F# Sources
+		<title>This is our (probably non exhaustive) list of supporters
 </title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
@@ -46,7 +46,7 @@
 													</ul>
 												</li>
                                                 <li >
-                                                    <a href="/fake-what-is-fake.html">Tutorials</a>
+                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
                                                     <ul>
                                                         <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
@@ -60,6 +60,7 @@
 													<a href="/fake-what-is-fake.html">Project</a>
 													<ul>
 														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="/help-supporters.html">Supporters</a></li>
 														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
 														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
 														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
@@ -211,7 +212,6 @@
 																<li><a href="/todo-iis.html">?.?.IIS</a></li>
 																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
 																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
-																<li><a href="/todo-fsc.html">DotNet.Fsc</a></li>
 																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
@@ -250,122 +250,48 @@
 
 									<!-- Content -->
                       <article>
-<h1><a name="Compiling-F-Sources" class="anchor" href="#Compiling-F-Sources">Compiling F# Sources</a></h1>
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
-</div>
-<p>The <a href="apidocs/v5/legacy/fake-fschelper.html">Fsc task set</a> in FAKE can be used to build F# source files and output libraries, modules,
-and executables by using the bundled
-<a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
-In this tutorial we will look at these compile tasks.</p>
-<h2><a name="The-Fsc-task" class="anchor" href="#The-Fsc-task">The Fsc task</a></h2>
-<p>The <code>Fsc</code> task can be used in standard FAKE targets:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;/path/to/FakeLib.dll&quot;</span>
-<span class="k">open</span> <span class="id">Fake</span>
+<h1><a name="This-is-our-probably-non-exhaustive-list-of-supporters" class="anchor" href="#This-is-our-probably-non-exhaustive-list-of-supporters">This is our (probably non exhaustive) list of supporters</a></h1>
+<p>Note: Not everything is directly support. Most of the times fake tries to get along with the free service plans.</p>
+<p>Thanks to:</p>
+<ul>
+<li>
+<a href="https://www.microsoft.com">Microsoft</a>
+For providing free VSTS-Build-Agents and powering our release-process.
+</li>
+<li>
+<a href="https://www.myget.org/">MyGet</a>
+For providing our staging environment for package hosting.
+</li>
+<li>
+<a href="https://www.nuget.org/">NuGet</a>
+For hosting our stable packages.
+</li>
+<li>
+<a href="https://github.com/">GitHub</a>
+For hosting the source code and our documentation pages
+</li>
+<li>
+<a href="https://www.appveyor.com/">AppVeyor</a>
+For checking pull requests for errors
+</li>
+<li>
+<a href="https://www.travis-ci.org/">Travis Ci</a>
+For checking pull requests for errors
+</li>
+<li>
+<a href="https://gitlab.com/">GitLab</a>
+For building and an alternative release pipeline
+</li>
+<li>
+<a href="https://circleci.com/">CircleCi</a>
+For checking our releases
+</li>
+<li>
+<a href="https://www.cloudflare.com/">CloudFlare</a>
+For providing SSL and basic protections on our <a href="https://fake.build">https://fake.build</a> page.
+</li>
+</ul>
 
-<span class="id">Target</span> <span class="s">&quot;Otherthing.dll&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="pn">[</span><span class="s">&quot;Otherthing.fs&quot;</span><span class="pn">;</span> <span class="s">&quot;Otherthing2.fs&quot;</span><span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">[</span>
-        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Target</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">TargetType</span><span class="pn">.</span><span class="id">Library</span>
-    <span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> <span class="pn">(</span><span class="pn">)</span> <span class="pn">|</span> <span class="id">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="id">c</span>
-<span class="pn">)</span>
-
-<span class="id">Target</span> <span class="s">&quot;Main.exe&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="pn">[</span><span class="s">&quot;Main.fs&quot;</span><span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">[</span>
-        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">References</span> <span class="pn">[</span><span class="s">&quot;Something.dll&quot;</span><span class="pn">;</span> <span class="s">&quot;Otherthing.dll&quot;</span><span class="pn">]</span>
-    <span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> <span class="pn">(</span><span class="pn">)</span> <span class="pn">|</span> <span class="id">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="id">c</span>
-<span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
-<p>The <code>FscHelper.compile</code> task takes two arguments:</p>
-<ol>
-<li>a list of compile parameters (<code>FscParam</code>), and</li>
-<li>a list of source files.</li>
-</ol>
-<p>We start with the list of source files, and send it into the <code>FscHelper.compile</code> task using F#'s
-<code>|&gt;</code> operator. The list of parameters included in the first argument will override the
-default parameters.</p>
-<p>In the above examples, notice that we don't always override the output
-file name. By default <code>FscHelper.compile</code> will behave exactly the same way as
-<code>fsc.exe</code>. If you don't specify an output file: it will use the name of
-the first input file, and the appropriate filename extension.</p>
-<p><code>FscParam.Target</code> also behaves in the same way as the <code>fsc.exe</code>
-<code>--target:</code> switch: if you don't override it, it defaults to an
-executable output type.</p>
-<p>You can override all <code>fsc.exe</code> default compile parameters by explicitly passing the values
-you want to use. All F# compiler parameters are available as <code>FscParam</code> union cases:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;Something.dll&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-    <span class="pn">[</span><span class="s">&quot;Something.fs&quot;</span><span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">compile</span> <span class="pn">[</span>
-        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Out</span> <span class="s">&quot;Something.dll&quot;</span>
-        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Target</span> <span class="id">FscHelper</span><span class="pn">.</span><span class="id">TargetType</span><span class="pn">.</span><span class="id">Library</span>
-        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">NoOptimizationData</span>
-        <span class="id">FscHelper</span><span class="pn">.</span><span class="id">Checked</span> <span class="k">true</span>
-    <span class="pn">]</span>
-    <span class="o">|&gt;</span> <span class="k">function</span> <span class="n">0</span> <span class="k">-&gt;</span> <span class="pn">(</span><span class="pn">)</span> <span class="pn">|</span> <span class="id">c</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">failwithf</span> <span class="s">&quot;F# compiler return code: %i&quot;</span> <span class="id">c</span>
-<span class="pn">)</span>
-</code></pre></td>
-</tr>
-</table>
-<p>See the <a href="apidocs/v5/legacy/fake-fschelper.html">API docs for FscHelper</a> for details of
-the available parameters.</p>
-<p>The <code>FscHelper.compile</code> task will print any compile warnings or errors. If there's any
-compile error, it won't raise any error to interrupt the build process,
-instead, it returns the exit status of the compile process.</p>
-<p>Having an exit status code returned can be useful when you're trying to
-integrate FAKE with other build management tools, e.g. your own CI
-server or a test runner.</p>
-<h2><a name="FscHelper-compileFiles" class="anchor" href="#FscHelper-compileFiles">FscHelper.compileFiles</a></h2>
-<p>This task is lower level than the previous one. It takes a list of
-source files and a list of strings which contains the same arguments
-you'd pass in to the <code>fsc.exe</code> command-line tool. It too prints warnings
-and errors, and returns a compile exit status code. E.g.:</p>
-<p>Target "Something.dll" (fun _ -&gt;
-["Something.fs"]
-|&gt; FscHelper.compileFiles ["-o"; "Something.dll"; "--target:library"]
-|&gt; ignore
-)</p>
-<p>This task may be useful when you already have compile options in string
-format and just need to pass them in to your build tool. You'd just need
-to split the string on whitespace, and pass the resulting list into
-<code>FscHelper.compileFiles</code>.</p>
-
-<div class="tip" id="fs1">val failwithf : format:Printf.StringFormat&lt;&#39;T,&#39;Result&gt; -&gt; &#39;T</div>
 
                       </article>
 								</div>
@@ -471,7 +397,7 @@ to split the string on whitespace, and pass the resulting list into
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc013.141</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc014.167</a></li>
 									</ul>
 								</div>
 							</div>

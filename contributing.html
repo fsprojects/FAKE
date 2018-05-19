@@ -46,7 +46,7 @@
 													</ul>
 												</li>
                                                 <li >
-                                                    <a href="/fake-what-is-fake.html">Tutorials</a>
+                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
                                                     <ul>
                                                         <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
@@ -60,6 +60,7 @@
 													<a href="/fake-what-is-fake.html">Project</a>
 													<ul>
 														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="/help-supporters.html">Supporters</a></li>
 														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
 														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
 														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
@@ -211,7 +212,6 @@
 																<li><a href="/todo-iis.html">?.?.IIS</a></li>
 																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
 																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
-																<li><a href="/todo-fsc.html">DotNet.Fsc</a></li>
 																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
 																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
 																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
@@ -262,6 +262,7 @@
 </ul>
 </li>
 <li>Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the Project shall be under the terms and conditions of the Apache 2.0 license. See License.txt for details.</li>
+<li><p>TLDR: Send a pull request with either documentation (<code>/help</code> folder) or code changes.</p></li>
 </ul>
 <h2><a name="Documentation" class="anchor" href="#Documentation">Documentation</a></h2>
 <p>The documentation for FAKE is automatically generated using the amazing <a href="https://github.com/tpetricek/FSharp.Formatting">F# Formatting</a> library.
@@ -405,6 +406,21 @@ dotnet pack
 </table>
 </li>
 </ul>
+<h2><a name="Staging-environment" class="anchor" href="#Staging-environment">Staging environment</a></h2>
+<p>In order to test and preview our changes faster we have a fully automated release process in place.
+This staging environment is based on VSTS and MyGet.</p>
+<p>If you ever need a release/bugfix fast, make sure to mention that in your PR, we can quickly provide a build on the following infrastructure:</p>
+<ul>
+<li>Website: <a href="https://staging.fake.build">https://staging.fake.build</a></li>
+<li>Chocolatey package: <code>choco install fake --version &lt;version&gt; --source https://www.myget.org/F/fake-chocolatey-vsts/api/v2</code></li>
+<li>NuGet feed: <a href="https://www.myget.org/F/fake-vsts/api/v3/index.json">https://www.myget.org/F/fake-vsts/api/v3/index.json</a></li>
+<li>GitHub Releases: <a href="https://github.com/fake-staging/FAKE/releases">https://github.com/fake-staging/FAKE/releases</a> (if needed)</li>
+</ul>
+<div class="alert alert-info">
+  <h5>INFO</h5>
+     Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
+     Those bits should be considered for "unblocking"-purposes or testing only.
+</div>
 <h2><a name="General-considerations" class="anchor" href="#General-considerations">General considerations</a></h2>
 <ul>
 <li>Fake 4 (FakeLib) is in maintainance mode. Therefore new features need to be at least available as new FAKE 5 module (that might mean that the old module needs to be migrated as part of the PR).</li>
@@ -594,7 +610,7 @@ Mark the old module with the <code>Obsolete</code> attribute.
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc013.141</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc014.167</a></li>
 									</ul>
 								</div>
 							</div>
