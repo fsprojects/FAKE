@@ -142,6 +142,16 @@ let private load (fileName:string) (doc:XmlDocument) =
     use fs = File.OpenRead(fileName)
     doc.Load fs
 let private save (fileName:string) (doc:XmlDocument) =
+    // https://stackoverflow.com/questions/284394/net-xmldocument-why-doctype-changes-after-save
+    // https://stackoverflow.com/a/16451790
+    // https://github.com/fsharp/FAKE/issues/1692
+
+    let docType = doc.DocumentType
+    if not (isNull docType) then
+        if System.String.IsNullOrWhiteSpace docType.InternalSubset then
+            let documentTypeWithNullInternalSubset =
+                doc.CreateDocumentType(docType.Name, docType.PublicId, docType.SystemId, null)
+            docType.ParentNode.ReplaceChild(documentTypeWithNullInternalSubset, docType) |> ignore
     use fs = File.Open(fileName, FileMode.Truncate, FileAccess.Write)
     doc.Save fs
 

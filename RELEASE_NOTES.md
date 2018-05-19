@@ -5,6 +5,7 @@
 * FAKE5: Global dotnet cli-tool `fake-cli` - https://github.com/fsharp/FAKE/pull/1932
   Install via `dotnet tool install fake-cli -g`
 * BUGFIX: Some issues when running latest `dotnet cli` via the Fake.DotNet.Cli module.
+* BUGFIX: Fake.Core.Xml changed DOCTYPE - https://github.com/fsharp/FAKE/issues/1692
 
 ## 5.0.0-rc014 - 2018-05-20
 
