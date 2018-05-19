@@ -30,6 +30,7 @@ nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
 nuget Suave
+nuget Newtonsoft.Json
 nuget Octokit //"
 #endif
 
@@ -49,6 +50,7 @@ open System.Reflection
 #r "Paket.Core.dll"
 #r "packages/build/System.Net.Http/lib/net46/System.Net.Http.dll"
 #r "packages/build/Octokit/lib/net45/Octokit.dll"
+#r "packages/build/Newtonsoft.Json/lib/net45/Newtonsoft.Json.dll"
 #I "packages/build/SourceLink.Fake/tools/"
 
 #r "System.IO.Compression"
@@ -60,7 +62,7 @@ open System.Reflection
 //let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
 //Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 //#endif
-// #load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
+#load "src/app/Fake.DotNet.Cli/DotNet.fs"
 open System.IO
 open Fake.Api
 open Fake.Core
@@ -226,7 +228,8 @@ Trace.setBuildNumber nugetVersion
 //if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
 //    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 
-let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
+
+let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_300_RC1
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
@@ -347,6 +350,7 @@ let common = [
 // New FAKE libraries
 let dotnetAssemblyInfos =
     [ "dotnet-fake", "Fake dotnet-cli command line tool"
+      "fake-cli", "Fake global dotnet-cli command line tool"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
       "Fake.Api.HockeyApp", "HockeyApp Integration Support"
       "Fake.Api.Slack", "Slack Integration Support"

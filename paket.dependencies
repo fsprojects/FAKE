@@ -95,7 +95,7 @@ group Build
     nuget SourceLink.Fake
     nuget ILRepack
     nuget RoslynTools.ReferenceAssemblies
-
+    nuget Newtonsoft.Json
     github fsharp/FAKE modules/Octokit/Octokit.fsx
 
 // [ FAKE GROUP ]
@@ -133,7 +133,7 @@ group NetcoreBuild
     nuget Fake.Tools.Git prerelease
     nuget Mono.Cecil prerelease
     nuget Octokit
-
+    nuget Newtonsoft.Json
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
