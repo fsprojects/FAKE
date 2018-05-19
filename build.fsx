@@ -129,14 +129,27 @@ let additionalFiles = [
     "RELEASE_NOTES.md"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
-
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
-let apikey = Environment.environVarOrDefault "nugetkey" ""
+
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
 let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
+
+let mutable secrets = []
+let releaseSecret replacement name =
+    let secret =
+        lazy
+            let env = Environment.environVarOrFail name
+            TraceSecrets.register replacement name
+            env
+    secrets <- secret :: secrets
+    secret
+
+let apikey = releaseSecret "<nugetkey>" "nugetkey"
+let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
+let githubtoken = releaseSecret "<githubtoken>" "github_token"
 
 BuildServer.install [
     AppVeyor.Installer
@@ -1157,14 +1170,13 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
     path |> Choco.push (fun p ->
         { p with
             Source = chocosource
-            ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" }
+            ApiKey = chocoKey.Value }
         |> changeToolPath)
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
-    Environment.environVarOrFail "CHOCOLATEY_API_KEY" |> ignore
-    Environment.environVarOrFail "nugetkey" |> ignore
-    Environment.environVarOrFail "github_token" |> ignore
+    for secret in secrets do
+        secret.Force() |> ignore
 )
 
 let executeFPM args =
@@ -1243,11 +1255,11 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
 
 let rec nugetPush tries nugetpackage =
     try
-        if not <| System.String.IsNullOrEmpty apikey then
+        if not <| System.String.IsNullOrEmpty apikey.Value then
             Process.execSimple (fun info ->
             { info with
                 FileName = nuget_exe
-                Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource) }
+                Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey.Value) (Process.toParam nugetsource) }
             )
                 (System.TimeSpan.FromMinutes 10.)
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
@@ -1281,12 +1293,7 @@ Target.create "PublishNuget" (fun _ ->
 
 Target.create "ReleaseDocs" (fun _ ->
     Shell.cleanDir "gh-pages"
-    let auth = 
-        match Environment.environVarOrDefault "github_token" "" with
-        | s when not (System.String.IsNullOrWhiteSpace s) ->
-            TraceSecrets.register "<token>"  s
-            sprintf "%s:x-oauth-basic@" s
-        | _ -> ""
+    let auth = sprintf "%s:x-oauth-basic@" githubtoken.Value
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
@@ -1303,12 +1310,7 @@ Target.create "ReleaseDocs" (fun _ ->
 )
 
 Target.create "FastRelease" (fun _ ->
-    let token = 
-        match Environment.environVarOrDefault "github_token" "" with
-        | s when not (System.String.IsNullOrWhiteSpace s) ->
-            TraceSecrets.register "<token>"  s
-            s
-        | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    let token = githubtoken.Value
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
 

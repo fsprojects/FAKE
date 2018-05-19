@@ -132,6 +132,7 @@ module DotNet =
         | Version of string
 
     /// .NET Core SDK install options
+    [<NoComparison>]
     type CliInstallOptions =
         {
             /// Custom installer obtain (download) options
