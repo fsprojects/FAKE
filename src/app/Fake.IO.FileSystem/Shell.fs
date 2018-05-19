@@ -132,6 +132,26 @@ module Shell =
     ///  - `files` - The orginal file names.
     let copyFiles target files = copy target files
 
+    /// Copies the given glob-matches into another directory by leaving relative paths in place based on the globbing base-directory
+    ///
+    /// ## Sample
+    /// 
+    ///      !! "**/My*Glob*.exe"
+    ///      |> GlobbingPattern.setBaseDir "baseDir"
+    ///      |> Shell.copyFilesWithSubFolder "targetDir"
+    ///
+    let copyFilesWithSubFolder targetDir (files:IGlobbingPattern) =
+      let baseFull = (Path.GetFullPath files.BaseDirectory).TrimEnd [|'/';'\\'|]
+      for item in files do
+        let info = FileInfo.ofPath item
+        let itemSpec =
+          // first get relative path from the globbing
+          let relative = (info.FullName.Substring (baseFull.Length+1))
+          relative
+        let parent = Path.GetDirectoryName (targetDir</>itemSpec)
+        Directory.ensure parent
+        File.Copy(item, targetDir</>itemSpec, true)
+
 
     /// Copies a directory recursivly. If the target directory does not exist, it will be created.
     /// ## Parameters
