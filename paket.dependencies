@@ -1,4 +1,4 @@
-version 5.156.5
+version 5.165.0
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -44,7 +44,24 @@ nuget xunit
 nuget Newtonsoft.Json redirects:force
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
-nuget FluentMigrator.Runner
+nuget FluentMigrator                        2.0.6
+nuget FluentMigrator.Abstractions           2.0.6
+nuget FluentMigrator.Extensions.SqlAnywhere 2.0.6
+nuget FluentMigrator.Extensions.SqlServer   2.0.6
+nuget FluentMigrator.Runner                 2.0.6
+nuget FluentMigrator.Runner.Core            2.0.6
+nuget FluentMigrator.Runner.Db2             2.0.6
+nuget FluentMigrator.Runner.Firebird        2.0.6
+nuget FluentMigrator.Runner.Hana            2.0.6
+nuget FluentMigrator.Runner.Jet             2.0.6
+nuget FluentMigrator.Runner.MySql           2.0.6
+nuget FluentMigrator.Runner.Oracle          2.0.6
+nuget FluentMigrator.Runner.Postgres        2.0.6
+nuget FluentMigrator.Runner.Redshift        2.0.6
+nuget FluentMigrator.Runner.SqlAnywhere     2.0.6
+nuget FluentMigrator.Runner.SQLite          2.0.6
+nuget FluentMigrator.Runner.SqlServer       2.0.6
+nuget FluentMigrator.Runner.SqlServerCe     2.0.6
 nuget HashLib
 nuget FSharp.Compiler.Service content: none
 nuget Octokit
@@ -84,7 +101,7 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
-    source https://www.myget.org/F/fake-vsts/api/v3/index.json
+    //source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 

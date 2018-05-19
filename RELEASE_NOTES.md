@@ -1,5 +1,21 @@
 # Release Notes
 
+## 5.0.0-rc014 - 2018-05-20
+
+* BUGFIX: Globbing is now more robust (especially outside the working directory) - https://github.com/fsharp/FAKE/issues/1925 https://github.com/fsharp/FAKE/issues/1750 and some not tracked issues
+* COSMETICS: Fake is printing target description twice - https://github.com/fsharp/FAKE/issues/1931
+* ENHANCEMENT: Fake parallel logic is not even smarter in running targets parallel - https://github.com/fsharp/FAKE/pull/1934
+* DOCS: We now have a full staging environment in place - https://fake.build/contributing.html#Staging-environment
+* DOCS: We now have a place to thank our supporters - https://fake.build/help-supporters.html
+
+## 5.0.0-rc013 - 2018-05-20
+
+* ENHANCEMENT: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
+* FAKE5: Xake now supports FAKE 5 and is advertised as module - https://github.com/xakebuild/Xake
+- ENHANCEMENT: Parallelize targets even more - https://github.com/fsharp/FAKE/pull/1934
+- COSMETICS: Targets are always shown as "failed" - https://github.com/fsharp/FAKE/issues/1929
+- COSMETICS: Target description was printed twice - https://github.com/fsharp/FAKE/issues/1931
+
 ## 5.0.0-rc012 - 2018-05-12
 
 * FAKE5: New module `Fake.Windows.Registry` - https://github.com/fsharp/FAKE/pull/1909
