@@ -44,6 +44,9 @@ module TeamFoundation =
     let private setBuildNumber number =
         write "build.updatebuildnumber" [] number
 
+    let setBuildState state message =
+        write "task.complete" ["result", state] message
+
     type internal LogDetailState =
         | Unknown
         | Initialized
@@ -125,6 +128,13 @@ module TeamFoundation =
                         | TagStatus.Failed -> LogDetailResult.Failed
                         | TagStatus.Success -> LogDetailResult.Succeeded               
                     setLogDetailFinished id result
+                | TraceData.BuildState state ->
+                    let vsoState, msg =
+                        match state with
+                        | TagStatus.Success -> "Succeeded", "OK" 
+                        | TagStatus.Warning -> "SucceededWithIssues", "WARN"
+                        | TagStatus.Failed -> "Failed", "ERROR"
+                    setBuildState vsoState msg
                 | TraceData.ImportData (typ, path) ->
                     publishArtifact typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
