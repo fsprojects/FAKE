@@ -83,7 +83,7 @@ group TestAdapter
 group Build
     content: none
     source https://api.nuget.org/v3/index.json
-    source https://ci.appveyor.com/nuget/fake
+    //source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
     source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
