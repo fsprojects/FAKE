@@ -21,12 +21,12 @@ There are various ways to install FAKE 5
 * Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
   Example `choco install fake -pre`
 
-* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/matthid/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/matthid/fake-bootstrap/blob/master/dotnet-fake.csproj)
 
-* Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path` to install fake into `your_tool_path`. Pass `--version` to install a specific version of fake.
+* Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g --version=5.0.0-*` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*` to install fake into `your_tool_path`. Use `--version` to specify the version of fake.
 <div class="alert alert-info">
     <h5>INFO</h5>
-    <p>To install a pre-release version, you have to specify the <code>--version</code> parameter. For example <code>--version=5.0.0-rc013</code></p>
+    <p>As FAKE 5 is still in pre-release, you have to specify the <code>--version</code> parameter.</p>
 </div>
 
 * Bootstrap via shell script (fake.cmd/fake.sh),
