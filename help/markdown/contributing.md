@@ -152,7 +152,7 @@ If you ever need a release/bugfix fast, make sure to mention that in your PR, we
 
 <div class="alert alert-info">
   <h5>INFO</h5>
-     Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works
+     Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works.
      Those bits should be considered for "unblocking"-purposes or testing only.
 </div>
 
