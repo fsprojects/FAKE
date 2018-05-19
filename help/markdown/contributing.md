@@ -148,13 +148,13 @@ If you ever need a release/bugfix fast, make sure to mention that in your PR, we
 * Website: https://staging.fake.build
 * Chocolatey package: `choco install fake --version <version> --source https://www.myget.org/F/fake-chocolatey-vsts/api/v2`
 * NuGet feed: https://www.myget.org/F/fake-vsts/api/v3/index.json
-* GitHub Releases: https://github.com/fake-staging/FAKE/releases
+* GitHub Releases: https://github.com/fake-staging/FAKE/releases (if needed)
 
-  <div class="alert alert-info">
-    <h5>INFO</h5>
-        Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works
-        Those bits should be considered for "unblocking"-purposes or testing only.
-  </div>
+<div class="alert alert-info">
+  <h5>INFO</h5>
+     Because of package retention policies those builds will not be available forever! We will quickly release the builds once everything works
+     Those bits should be considered for "unblocking"-purposes or testing only.
+</div>
 
 ## General considerations
 
