@@ -314,16 +314,23 @@ module Process =
             let result = proc.Start()
             if not result then failwithf "Could not start process (Start() returned false)."
         with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
-        addStartedProcess(proc.Id, proc.StartTime) |> ignore
+        let startTime =
+            try proc.StartTime with
+            | :? System.InvalidOperationException
+            | :? System.ComponentModel.Win32Exception as e ->
+                let hasExited =
+                    try proc.HasExited with
+                    | :? System.InvalidOperationException
+                    | :? System.ComponentModel.Win32Exception -> false
+                if not hasExited then
+                    Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
+                DateTime.Now               
+        addStartedProcess(proc.Id, startTime) |> ignore
 
     /// [omit]
     [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
     let startProcess (proc : Process) =
-        try
-            let result = proc.Start()
-            if not result then failwithf "Could not start process (Start() returned false)."
-        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
-        addStartedProcess(proc.Id, proc.StartTime) |> ignore
+        rawStartProcess proc
         true
 
     /// [omit]
