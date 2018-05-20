@@ -151,10 +151,20 @@ let runOrBuild (args : RunArguments) =
     let useCache = not args.NoCache
     try
       let config = FakeRuntime.createConfigSimple args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache args.RestoreOnlyGroup
-      if not (FakeRuntime.prepareAndRunScript config) then false
-      else
+      
+      match FakeRuntime.prepareAndRunScript config with
+      | Runners.RunResult.SuccessRun warnings ->
+          if warnings <> "" then
+              traceFAKE "%O" warnings
           if args.VerboseLevel.PrintVerbose then log "Ready."
           true
+      | Runners.RunResult.CompilationError err ->
+        reportExn args.VerboseLevel err
+        false
+
+      | Runners.RunResult.RuntimeError err ->
+        reportExn args.VerboseLevel err
+        false
     finally
       sw.Stop()
       if args.VerboseLevel.PrintNormal then

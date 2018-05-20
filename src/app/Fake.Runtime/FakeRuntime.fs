@@ -605,7 +605,7 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
 let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
     createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
 
-let prepareAndRunScript (config:FakeConfig) =
+let prepareAndRunScript (config:FakeConfig) : RunResult =
   let provider = prepareFakeScript config
   CoreCache.runScriptWithCacheProvider config provider
 

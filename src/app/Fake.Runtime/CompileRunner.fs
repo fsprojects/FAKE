@@ -37,7 +37,7 @@ let nameParser cachedAssemblyFileName scriptFileName =
         else None
     className, parseName
 
-let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
+let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     use untilInvoke = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
     if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
@@ -77,9 +77,11 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
 
     use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
     (execContext :> System.IDisposable).Dispose()
-    result
+    match result with
+    | None -> RunResult.SuccessRun c.Warnings
+    | Some e -> RunResult.RuntimeError e
 
-let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     use untilCompileFinished  = Fake.Profile.startCategory Fake.Profile.Category.Compiling
     let wishPath = context.CachedAssemblyFilePath + ".dll"
 
@@ -115,7 +117,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
         |> Seq.toList
     let compilationExn = CompilationException errors
-    let cacheInfo = handleCoreCaching context wishPath compilationExn.Message
+    let cacheInfo = handleCoreCaching context wishPath compilationExn.FormattedErrors
     if returnCode = 0 then
         use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
         Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
@@ -123,9 +125,9 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
         | None -> failwithf "Expected caching to work after a successfull compilation"
         | Some c ->
             cacheInfo, tryRunCached c context
-    else cacheInfo, Some (compilationExn:>exn)
+    else cacheInfo, RunResult.CompilationError compilationExn
 
-let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     match cache with
     | Some c when context.Config.UseCache ->
         try c.AsResult, tryRunCached c context

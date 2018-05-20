@@ -388,7 +388,7 @@ let setupAssemblyResolverLogger (context:FakeContext) =
         null
         ))
 
-let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
+let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) : RunResult =
     let newContext, cacheInfo =  prepareContext config cache
 
     setupAssemblyResolverLogger newContext
@@ -397,27 +397,10 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     let resultCache, result = runFakeScript cacheInfo newContext
 
-    match result with
-    | Some err ->
-        use logPaket =
-          // Required when 'silent' because we use paket API for error printing
-          if config.VerboseLevel = Trace.Silent then
-            Paket.Logging.event.Publish
-            |> Observable.subscribe Paket.Logging.traceToConsole
-          else { new IDisposable with member __.Dispose () = () }
-        let printDetails = config.VerboseLevel.PrintVerbose
-        if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
-            Paket.Logging.printErrorExt true true false err
-        else Paket.Logging.printErrorExt printDetails printDetails false err
-    | _ -> ()
-
-    if resultCache.Warnings <> "" then
-        traceFAKE "%O" resultCache.Warnings
-
     match resultCache.AsCacheInfo with
     | Some newCache ->
         cache.SaveCache(newContext, newCache)
     | _ -> ()
 
     // Return if the script suceeded
-    result.IsNone
+    result

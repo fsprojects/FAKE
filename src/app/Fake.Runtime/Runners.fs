@@ -31,12 +31,17 @@ module internal ExnHelper =
 type CompilationException =
     inherit System.Exception
     val private compilerErrors : FSharpErrorInfo list
-    new (msg:string, compilerErrors:FSharpErrorInfo list, inner:System.Exception) = {
+    val private formattedErrors : string
+    new (msg:string, formattedErrors: string , compilerErrors:FSharpErrorInfo list, inner:System.Exception) = {
        inherit System.Exception(
             (if System.String.IsNullOrEmpty msg then
                 ExnHelper.formatErrors compilerErrors |> sprintf "Compilation failed: \n%s"
              else msg),
             inner)
+       formattedErrors =
+          if System.String.IsNullOrEmpty formattedErrors then
+             ExnHelper.formatErrors compilerErrors
+          else formattedErrors
        compilerErrors = compilerErrors }
 #if !NETSTANDARD1_6
     new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
@@ -47,9 +52,13 @@ type CompilationException =
       ()
 #endif
 
-    new (compilerErrors:FSharpErrorInfo list) = CompilationException(null, compilerErrors, null)
+    new (compilerErrors:FSharpErrorInfo list) =
+        let formatted = ExnHelper.formatErrors compilerErrors
+        let msg = sprintf "Compilation failed: \n%s" formatted
+        CompilationException(msg, formatted, compilerErrors, null)
 
     member x.CompilerErrors = x.compilerErrors
+    member x.FormattedErrors = x.formattedErrors
 
 #if !NETSTANDARD1_6
 type AssemblyLoadContext () =
@@ -88,6 +97,11 @@ let cachedAssemblyPrefix = "FAKE_CACHE_"
 let loadScriptName = "intellisense.fsx"
 // This file is created lazily and is not used by fsc (only for intellisense).
 let loadScriptLazyName = "intellisense_lazy.fsx"
+
+type RunResult =
+  | CompilationError of CompilationException
+  | RuntimeError of Exception
+  | SuccessRun of warnings:string
 
 type ResultCoreCacheInfo =
   { MaybeCompiledAssembly : string option
