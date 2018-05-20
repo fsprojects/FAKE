@@ -256,7 +256,7 @@
 Just install the corresponding package for your system:</p>
 <ul>
 <li>
-<p>Windows</p>
+<p>Windows (chocolatey)</p>
 <ul>
 <li>
 <p>Install chocolatey (a windows package manager) if you have not installed it yet (see <a href="https://chocolatey.org).
@@ -278,6 +278,20 @@ Basically</a> open an admin <code>cmd.exe</code> and paste</p>
 </pre>
 </li>
 <li><p>There are <a href="fake-gettingstarted.html#Install-FAKE">other ways to get started</a> if chocolatey / an administrator-cmd or global installation is not an option.</p></li>
+</ul>
+</li>
+<li>
+<p>Windows (dotnet sdk global tool)</p>
+<ul>
+<li><p>Install the .NET sdk (at least <code>2.1.300-RC1</code>)</p></li>
+<li>
+<p>Install FAKE</p>
+<pre>
+    <code class="lang-bash">
+    dotnet tool install fake-cli -g --version=5.0.0-*
+    </code>
+</pre>
+</li>
 </ul>
 </li>
 <li>
@@ -503,7 +517,7 @@ fake run build.fsx
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc014.167</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc015.196</a></li>
 									</ul>
 								</div>
 							</div>

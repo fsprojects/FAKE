@@ -270,36 +270,39 @@
 <p>Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
 Example <code>choco install fake -pre</code></p>
 </li>
-<li><p>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/matthid/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
+<li><p>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
+<li>
+<p>Install fake as a global dotnet tool: run <code>dotnet tool install fake-cli -g --version=5.0.0-*</code> to install fake globally or <code>dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*</code> to install fake into <code>your_tool_path</code>. Use <code>--version</code> to specify the version of fake. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/global_tool"><code>global_tool</code> branch of <code>fake-bootstrap</code></a> for ideas to bootstrap in your CI process.
+<div class="alert alert-info">
+<h5>INFO</h5>
+<p>As FAKE 5 is still in pre-release, you have to specify the <code>--version</code> parameter.</p>
+</div></p>
+</li>
 <li>
 <p>Bootstrap via shell script (fake.cmd/fake.sh),
-see this <a href="https://github.com/matthid/fake-bootstrap">example project</a>
+see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</a>
 <div class="alert alert-warning">
 <h5>WARNING</h5>
 <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
 </div></p>
 </li>
-<li><p>Bootstrap via paket <code>clitool</code>, basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/matthid/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code> branch of <code>fake-bootstrap</code></a> in particular the <a href="https://github.com/matthid/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
+<li><p>Bootstrap via paket <code>clitool</code>, basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code> branch of <code>fake-bootstrap</code></a> in particular the <a href="https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
 </ul>
 <h2><a name="Create-and-Edit-scripts-with-Intellisense" class="anchor" href="#Create-and-Edit-scripts-with-Intellisense">Create and Edit scripts with Intellisense</a></h2>
 <p>Once <code>fake</code> is available you can start creating your script:</p>
 <ul>
-<li>Create a new file <code>myscript.fsx</code> with the following contents:</li>
-</ul>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
-<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
-</code></pre></td>
-</tr>
-</table>
+<li>
+Create a new file <code>myscript.fsx</code> with the following contents:
+<code>fsharp
+#r "paket:
+nuget Fake.Core.Target prerelease"
+#load "./.fake/myscript.fsx/intellisense.fsx"</code>
 <div class="alert alert-info">
-    <h5>INFO</h5>
-    <p><code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
+<h5>INFO</h5>
+<p><code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
 </div>
+</li>
+</ul>
 <p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need.</p>
 <ul>
 <li>
@@ -767,9 +770,11 @@ Now edit the script like this:</p>
 <ul>
 <li>Add more modules specific to your application and discover the Fake-APIs</li>
 <li>look at the <a href="fake-dotnetcore.html">quick start guide</a> which has the same information in a more dense form.</li>
+<li>look at some of the samples in <a href="https://github.com/FakeBuild">FakeBuild</a></li>
+<li>look at <a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">FAKEs own build script</a> or other examples across the F# ecosystem.</li>
 <li>Add fake build scripts to your projects and let us know.</li>
 <li>Automate stuff with FAKE and use standalone scripts.</li>
-<li>Write your own modules and let us know.</li>
+<li>Write your own modules and let us know - we love to add them to the nagivation or announce them on <a href="https://twitter.com/fsharpMake">twitter</a>.</li>
 <li>Contribute :)</li>
 </ul>
 
@@ -881,7 +886,7 @@ Now edit the script like this:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc014.167</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc015.196</a></li>
 									</ul>
 								</div>
 							</div>
