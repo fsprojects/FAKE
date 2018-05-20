@@ -23,7 +23,7 @@ do_build:
   
   script: |
     export PATH=$PATH:$PWD/fake-dotnetcore/
-    fake run build.fsx target Release_BuildAndTest
+    fake run build.fsx --parallel 3 target Release_BuildAndTest
 
   artifacts:
     paths:
