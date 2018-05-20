@@ -165,8 +165,8 @@ let version =
     let segToString = function 
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
-    let createAlphaNum (s:string) =
-        PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
+    //let createAlphaNum (s:string) =
+    //    PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
     let source, buildMeta =
         match BuildServer.buildServer with
 #if DOTNETCORE
@@ -223,7 +223,7 @@ let nugetVersion =
 let chocoVersion =
     // Replace "." with "-" in the prerelease-string
     let build = 
-        if version.Build > 0I then ("." + version.Build.ToString("D")) else ""
+        if version.Build > 0I then ("." + (let bi = version.Build in bi.ToString("D"))) else ""
     let pre = 
         match version.PreRelease with
         | Some preRelease -> ("-" + preRelease.Origin.Replace(".", "-"))
