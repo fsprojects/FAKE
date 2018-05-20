@@ -1563,10 +1563,11 @@ let prevDocs =
     ==> "CreateNuGet"
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-(if fromArtifacts then "PrepareArtifacts" else prevDocs)
+    ==> "Default"
+(if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
     =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
-prevDocs ?=> "GenerateDocs"
+"_AfterBuild" ?=> "GenerateDocs"
 
 "GenerateDocs"
     ==> "Release_GenerateDocs"
