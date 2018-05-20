@@ -1,6 +1,6 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.Runtime.CompileRunner
-open Fake.Runtime.Environment
+
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
 #if NETSTANDARD1_6
@@ -10,14 +10,8 @@ open System.Runtime.Loader
 open System.Reflection
 open System
 open System.IO
-open System.Diagnostics
-open System.Threading
-open System.Text.RegularExpressions
-open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 open Microsoft.FSharp.Compiler.SourceCodeServices
-open Microsoft.FSharp.Compiler
-
 
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
@@ -110,10 +104,6 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let args =
         options.AsArgs |> Seq.toList
         |> List.filter (fun arg -> arg <> "--")
-    let formatError (e:FSharpErrorInfo) =
-         sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
-    let formatErrors errors =
-        System.String.Join("\n", errors |> Seq.map formatError)
     if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSC Args: [\"%s\"]" (String.Join("\";\n\"", args))
 
@@ -123,18 +113,17 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let errors =
         errors
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
-    if returnCode <> 0 then failwithf "Compilation failed: \n%s" (formatErrors errors)
-    
-    use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
-    Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-
-    let errorsString = formatErrors errors
-
-    let cacheInfo = handleCoreCaching context wishPath errorsString
-    match cacheInfo.AsCacheInfo with
-    | None -> failwithf "Expected caching to work after a successfull compilation"
-    | Some c ->
-        cacheInfo, tryRunCached c context
+        |> Seq.toList
+    let compilationExn = CompilationException errors
+    let cacheInfo = handleCoreCaching context wishPath compilationExn.Message
+    if returnCode = 0 then
+        use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
+        Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
+        match cacheInfo.AsCacheInfo with
+        | None -> failwithf "Expected caching to work after a successfull compilation"
+        | Some c ->
+            cacheInfo, tryRunCached c context
+    else cacheInfo, Some (compilationExn:>exn)
 
 let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     match cache with

@@ -16,7 +16,40 @@ open System.Threading.Tasks
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
+open Microsoft.FSharp.Compiler.SourceCodeServices
 
+module internal ExnHelper =
+   let formatError (e:FSharpErrorInfo) =
+     sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
+   let formatErrors errors =
+        System.String.Join("\n", errors |> Seq.map formatError)
+
+/// This exception indicates that an exception happened while compiling or executing given F# code.
+#if !NETSTANDARD1_6
+[<System.Serializable>]
+#endif
+type CompilationException =
+    inherit System.Exception
+    val private compilerErrors : FSharpErrorInfo list
+    new (msg:string, compilerErrors:FSharpErrorInfo list, inner:System.Exception) = {
+       inherit System.Exception(
+            (if System.String.IsNullOrEmpty msg then
+                ExnHelper.formatErrors compilerErrors |> sprintf "Compilation failed: \n%s"
+             else msg),
+            inner)
+       compilerErrors = compilerErrors }
+#if !NETSTANDARD1_6
+    new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
+        inherit System.Exception(info, context)
+        compilerErrors = []
+    }
+    override x.GetObjectData(info, _) =
+      ()
+#endif
+
+    new (compilerErrors:FSharpErrorInfo list) = CompilationException(null, compilerErrors, null)
+
+    member x.CompilerErrors = x.compilerErrors
 
 #if !NETSTANDARD1_6
 type AssemblyLoadContext () =
