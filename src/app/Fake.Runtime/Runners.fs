@@ -27,8 +27,6 @@ module internal ExnHelper =
 type CompilationErrors =
   { Errors : FSharpErrorInfo list }
   member x.FormattedErrors = ExnHelper.formatErrors x.Errors
-  member x.Message = sprintf "Compilation failed: \n%s" x.FormattedErrors
-
   static member ofErrors errors = { Errors = errors }
 
 #if !NETSTANDARD1_6
