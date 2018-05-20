@@ -47,8 +47,11 @@ type CompilationException =
     new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
         inherit System.Exception(info, context)
         compilerErrors = []
+        formattedErrors = info.GetString("FormattedErrors")
     }
     override x.GetObjectData(info, _) =
+      base.GetObjectData(info, ser)
+      info.AddValue("FormattedErrors", x.formattedErrors)
       ()
 #endif
 
