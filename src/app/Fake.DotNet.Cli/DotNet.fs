@@ -133,6 +133,7 @@ module DotNet =
 
     /// .NET Core SDK install options
     [<NoComparison>]
+    [<NoEquality>]
     type CliInstallOptions =
         {
             /// Custom installer obtain (download) options

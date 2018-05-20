@@ -12,7 +12,7 @@ open System.Text
 
 exception private InternalException of ErrorMessageList
 exception UsageException of string
-  with override x.ToString () = sprintf "UsageException: %s" x.Data0
+  with override x.Message = sprintf "UsageException: %s" x.Data0
 
 module private Helpers =
     let raiseArgvException errlist' =

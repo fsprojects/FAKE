@@ -16,7 +16,18 @@ open System.Threading.Tasks
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
+open Microsoft.FSharp.Compiler.SourceCodeServices
 
+module internal ExnHelper =
+   let formatError (e:FSharpErrorInfo) =
+     sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
+   let formatErrors errors =
+        System.String.Join("\n", errors |> Seq.map formatError)
+
+type CompilationErrors =
+  { Errors : FSharpErrorInfo list }
+  member x.FormattedErrors = ExnHelper.formatErrors x.Errors
+  static member ofErrors errors = { Errors = errors }
 
 #if !NETSTANDARD1_6
 type AssemblyLoadContext () =
@@ -55,6 +66,11 @@ let cachedAssemblyPrefix = "FAKE_CACHE_"
 let loadScriptName = "intellisense.fsx"
 // This file is created lazily and is not used by fsc (only for intellisense).
 let loadScriptLazyName = "intellisense_lazy.fsx"
+
+type RunResult =
+  | CompilationError of CompilationErrors
+  | RuntimeError of Exception
+  | SuccessRun of warnings:string
 
 type ResultCoreCacheInfo =
   { MaybeCompiledAssembly : string option

@@ -15,7 +15,7 @@
     <RepoRootDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)"))</RepoRootDir>
     <BuildDependsOn></BuildDependsOn>
     <CoreBuildDependsOn></CoreBuildDependsOn>
-    <FakeParallel Condition="'$(Parallel)' == 'true'">--parallel 5</FakeParallel>
+    <FakeParallel Condition="'$(Parallel)' == 'true'">--parallel 3</FakeParallel>
     <FakeTargetArg Condition="'$(FakeTarget)' != ''">target $(FakeTarget)</FakeTargetArg>
   </PropertyGroup>
 

@@ -86,7 +86,6 @@ let reportExn (verb:VerboseLevel) exn =
       Paket.Logging.event.Publish
       |> Observable.subscribe Paket.Logging.traceToConsole
     else { new IDisposable with member __.Dispose () = () }      
-  traceError "Script failed"
   if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
       Paket.Logging.printErrorExt true true true exn
   else Paket.Logging.printErrorExt verb.PrintVerbose verb.PrintVerbose false exn
@@ -98,6 +97,8 @@ let runOrBuild (args : RunArguments) =
     Diagnostics.Debugger.Launch() |> ignore
     Diagnostics.Debugger.Break() |> ignore
 
+  // This is to ensure we always write these to stderr (even when we are in silent mode).
+  let forceWrite = Trace.defaultConsoleTraceListener.Write
   try
     if args.VerboseLevel.PrintVerbose then printVersion()
 
@@ -151,21 +152,47 @@ let runOrBuild (args : RunArguments) =
     let useCache = not args.NoCache
     try
       let config = FakeRuntime.createConfigSimple args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache args.RestoreOnlyGroup
-      if not (FakeRuntime.prepareAndRunScript config) then false
-      else
+      let runResult = FakeRuntime.prepareAndRunScript config
+      let result =
+        match runResult with
+        | Runners.RunResult.SuccessRun warnings ->
+          if warnings <> "" then
+            traceFAKE "%O" warnings
           if args.VerboseLevel.PrintVerbose then log "Ready."
           true
+        | Runners.RunResult.CompilationError err ->
+          let indentString num (str:string) =
+            let indentString = String('\t', num)
+            let splitMsg = str.Split([|"\r\n"; "\n"|], StringSplitOptions.None)
+            indentString + String.Join(sprintf "%s%s" Environment.NewLine indentString, splitMsg)
+          if args.VerboseLevel.PrintVerbose then
+            // in case stderr is not redirected
+            TraceMessage("Script is not a valid, see standard error for details.", true) |> forceWrite
+
+          ErrorMessage "Script is not a valid:" |> forceWrite
+          ErrorMessage (indentString 1 err.FormattedErrors) |> forceWrite
+          false
+        | Runners.RunResult.RuntimeError err ->
+          if args.VerboseLevel.PrintVerbose then
+            // in case stderr is not redirected
+            TraceMessage ("Script reported an error, see standard error for details.", true) |> forceWrite
+          ErrorMessage "Script reported an error:" |> forceWrite
+          reportExn args.VerboseLevel err
+          false
+      for hint in FakeRuntime.retrieveHints config runResult do
+        tracefn "Hint: %s" hint
+      result        
     finally
       sw.Stop()
       if args.VerboseLevel.PrintNormal then
         Fake.Profile.print true sw.Elapsed
   with
   | exn ->
+      if args.VerboseLevel.PrintVerbose then
+        // in case stderr is not redirected
+        TraceMessage ("There was a problem while setting up the environment, see standard error for details.", true) |> forceWrite
+      ErrorMessage "There was a problem while setting up the environment:" |> forceWrite
       reportExn args.VerboseLevel exn
-      //let isKnownException = exn :? FAKEException
-      //if not isKnownException then
-      //    sendTeamCityError exn.Message
-
       false
 
 type CliAction =
@@ -300,7 +327,7 @@ let main (args:string[]) =
     exitCode <- handleAction verbLevel results
   with
   | exn ->
-    printfn "%s" Cli.fakeUsage
+    printfn "Error while parsing command line, usage is:\n%s" Cli.fakeUsage
     reportExn VerboseLevel.Normal exn
     exitCode <- 1
   Console.OutputEncoding <- encoding
