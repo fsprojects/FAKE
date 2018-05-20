@@ -179,8 +179,9 @@ let runOrBuild (args : RunArguments) =
           ErrorMessage "Script reported an error:" |> forceWrite
           reportExn args.VerboseLevel err
           false
-      for hint in FakeRuntime.retrieveHints config runResult do
-        tracefn "Hint: %s" hint
+      if Environment.GetEnvironmentVariable "FAKE_DISABLE_HINTS" <> "true" then
+        for hint in FakeRuntime.retrieveHints config runResult do
+          tracefn "Hint: %s" hint
       result        
     finally
       sw.Stop()
