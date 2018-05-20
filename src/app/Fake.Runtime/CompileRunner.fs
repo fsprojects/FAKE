@@ -116,8 +116,8 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
         errors
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
         |> Seq.toList
-    let compilationExn = CompilationException errors
-    let cacheInfo = handleCoreCaching context wishPath compilationExn.FormattedErrors
+    let compileErrors = CompilationErrors.ofErrors errors
+    let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
     if returnCode = 0 then
         use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
         Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
@@ -125,7 +125,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
         | None -> failwithf "Expected caching to work after a successfull compilation"
         | Some c ->
             cacheInfo, tryRunCached c context
-    else cacheInfo, RunResult.CompilationError compilationExn
+    else cacheInfo, RunResult.CompilationError compileErrors
 
 let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     match cache with

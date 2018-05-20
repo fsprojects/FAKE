@@ -24,44 +24,12 @@ module internal ExnHelper =
    let formatErrors errors =
         System.String.Join("\n", errors |> Seq.map formatError)
 
-/// This exception indicates that an exception happened while compiling or executing given F# code.
-#if !NETSTANDARD1_6
-[<System.Serializable>]
-#endif
-type CompilationException =
-    inherit System.Exception
-    val private compilerErrors : FSharpErrorInfo list
-    val private formattedErrors : string
-    new (msg:string, formattedErrors: string , compilerErrors:FSharpErrorInfo list, inner:System.Exception) = {
-       inherit System.Exception(
-            (if System.String.IsNullOrEmpty msg then
-                ExnHelper.formatErrors compilerErrors |> sprintf "Compilation failed: \n%s"
-             else msg),
-            inner)
-       formattedErrors =
-          if System.String.IsNullOrEmpty formattedErrors then
-             ExnHelper.formatErrors compilerErrors
-          else formattedErrors
-       compilerErrors = compilerErrors }
-#if !NETSTANDARD1_6
-    new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
-        inherit System.Exception(info, context)
-        compilerErrors = []
-        formattedErrors = info.GetString("FormattedErrors")
-    }
-    override x.GetObjectData(info, _) =
-      base.GetObjectData(info, ser)
-      info.AddValue("FormattedErrors", x.formattedErrors)
-      ()
-#endif
+type CompilationErrors =
+  { Errors : FSharpErrorInfo list }
+  member x.FormattedErrors = ExnHelper.formatErrors x.Errors
+  member x.Message = sprintf "Compilation failed: \n%s" x.FormattedErrors
 
-    new (compilerErrors:FSharpErrorInfo list) =
-        let formatted = ExnHelper.formatErrors compilerErrors
-        let msg = sprintf "Compilation failed: \n%s" formatted
-        CompilationException(msg, formatted, compilerErrors, null)
-
-    member x.CompilerErrors = x.compilerErrors
-    member x.FormattedErrors = x.formattedErrors
+  static member ofErrors errors = { Errors = errors }
 
 #if !NETSTANDARD1_6
 type AssemblyLoadContext () =
@@ -102,7 +70,7 @@ let loadScriptName = "intellisense.fsx"
 let loadScriptLazyName = "intellisense_lazy.fsx"
 
 type RunResult =
-  | CompilationError of CompilationException
+  | CompilationError of CompilationErrors
   | RuntimeError of Exception
   | SuccessRun of warnings:string
 
