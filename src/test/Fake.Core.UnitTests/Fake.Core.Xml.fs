@@ -6,7 +6,7 @@ open Fake.DotNet
 open Expecto
 open Expecto.Flip
 
-let normalize (s:string) = s.Replace("\n", "")
+let normalize (s:string) = s.Replace("\r", "")
 
 [<Tests>]
 let tests =
