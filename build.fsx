@@ -1481,7 +1481,6 @@ Target.create "Release_GenerateDocs" (fun _ ->
 
 Target.Description "Full Build & Test and publish results as artifacts."
 Target.create "Release_BuildAndTest" ignore
-
 open Fake.Core.TargetOperators
 
 "CheckReleaseSecrets"
@@ -1683,6 +1682,5 @@ let prevDocs =
 // A 'Release' includes a 'CheckReleaseSecrets'
 "CheckReleaseSecrets"
     ==> "Release"
-
-// start build
+//start build
 Target.runOrDefault "Default"
