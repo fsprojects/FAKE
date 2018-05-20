@@ -190,8 +190,8 @@ let runOrBuild (args : RunArguments) =
   | exn ->
       if args.VerboseLevel.PrintVerbose then
         // in case stderr is not redirected
-        TraceMessage ("Fake has an internal problem, see standard error for details.", true) |> forceWrite
-      ErrorMessage "Fake has an internal problem:" |> forceWrite
+        TraceMessage ("There was a problem while setting up the environment, see standard error for details.", true) |> forceWrite
+      ErrorMessage "There was a problem while setting up the environment:" |> forceWrite
       reportExn args.VerboseLevel exn
       false
 
