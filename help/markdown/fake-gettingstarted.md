@@ -23,7 +23,7 @@ There are various ways to install FAKE 5
 
 * Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
 
-* Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g --version=5.0.0-*` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*` to install fake into `your_tool_path`. Use `--version` to specify the version of fake.
+* Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g --version=5.0.0-*` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*` to install fake into `your_tool_path`. Use `--version` to specify the version of fake. See the [`global_tool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) for ideas to bootstrap in your CI process.
 <div class="alert alert-info">
     <h5>INFO</h5>
     <p>As FAKE 5 is still in pre-release, you have to specify the <code>--version</code> parameter.</p>
@@ -363,7 +363,9 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 
 * Add more modules specific to your application and discover the Fake-APIs
 * look at the [quick start guide](fake-dotnetcore.html) which has the same information in a more dense form.
+* look at some of the samples in [FakeBuild](https://github.com/FakeBuild)
+* look at [FAKEs own build script](https://github.com/fsharp/FAKE/blob/master/build.fsx) or other examples across the F# ecosystem.
 * Add fake build scripts to your projects and let us know.
 * Automate stuff with FAKE and use standalone scripts.
-* Write your own modules and let us know.
+* Write your own modules and let us know - we love to add them to the nagivation or announce them on [twitter](https://twitter.com/fsharpMake).
 * Contribute :)
