@@ -21,7 +21,7 @@ There are various ways to install FAKE 5
 * Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
   Example `choco install fake -pre`
 
-* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/matthid/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
 
 * Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g --version=5.0.0-*` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*` to install fake into `your_tool_path`. Use `--version` to specify the version of fake.
 <div class="alert alert-info">
@@ -30,13 +30,13 @@ There are various ways to install FAKE 5
 </div>
 
 * Bootstrap via shell script (fake.cmd/fake.sh),
-  see this [example project](https://github.com/matthid/fake-bootstrap)
+  see this [example project](https://github.com/FakeBuild/fake-bootstrap)
     <div class="alert alert-warning">
         <h5>WARNING</h5>
         <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
     </div>
 
-* Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/matthid/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/matthid/fake-bootstrap/blob/paket_clitool/build.proj) file.
+* Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
 
 ## Create and Edit scripts with Intellisense
 
