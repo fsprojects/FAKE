@@ -156,7 +156,7 @@ let runOrBuild (args : RunArguments) =
       let result =
         match runResult with
         | Runners.RunResult.SuccessRun warnings ->
-          if warnings <> "" then
+          if warnings <> "" && args.VerboseLevel.PrintNormal then
             traceFAKE "%O" warnings
           if args.VerboseLevel.PrintVerbose then log "Ready."
           true
@@ -167,9 +167,9 @@ let runOrBuild (args : RunArguments) =
             indentString + String.Join(sprintf "%s%s" Environment.NewLine indentString, splitMsg)
           if args.VerboseLevel.PrintVerbose then
             // in case stderr is not redirected
-            TraceMessage("Script is not a valid, see standard error for details.", true) |> forceWrite
+            TraceMessage("Script is not valid, see standard error for details.", true) |> forceWrite
 
-          ErrorMessage "Script is not a valid:" |> forceWrite
+          ErrorMessage "Script is not valid:" |> forceWrite
           ErrorMessage (indentString 1 err.FormattedErrors) |> forceWrite
           false
         | Runners.RunResult.RuntimeError err ->
