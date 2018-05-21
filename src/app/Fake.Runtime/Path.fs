@@ -20,7 +20,7 @@ let fixPathForCache scriptPath (s:string) =
           sprintf "nugetcache://%s" (norm.Substring (nugetDir.Length))
         else
           let scriptDir = Uri(Path.GetDirectoryName scriptDir + "/")
-          let other = Uri(s)
+          let other = Uri(norm)
           let rel = scriptDir.MakeRelativeUri(other)
           if rel.IsAbsoluteUri then rel.AbsoluteUri
           else
