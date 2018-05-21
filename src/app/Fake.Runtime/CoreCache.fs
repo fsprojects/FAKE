@@ -276,9 +276,9 @@ let findAndLoadInRuntimeDepsCached =
         let result = assemblyCache.GetOrAdd(name.Name, (fun _ ->
             wasCalled <- true
             findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
-        if isNull result then
+        if wasCalled && isNull result then
             failwithf "Could not load '%A'.\nFull framework assemblies are not supported!\nYou might try to load a legacy-script with the new netcore runner.\nPlease take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html" name
-        if not wasCalled then
+        if not wasCalled && not (isNull result) then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
             if logLevel.PrintVerbose then 
