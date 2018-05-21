@@ -2,6 +2,8 @@
 
 ## 5.0.0-rc016 - 2018-05-21
 
+* ENHANCEMENT: Make caches more portable - https://github.com/fsharp/FAKE/issues/1924
+* ENHANCEMENT: Handle Ctrl+C to properly shutdown (for example run final targets) - https://github.com/fsharp/FAKE/pull/1946
 * BUGFIX: Fake had problems with `#load` directives in some scenarios - https://github.com/fsharp/FAKE/issues/1947
 * BUGFIX: Parallel Builds on Team-Foundation would sometimes fail because of racy output of `#vso[]` commands - https://github.com/fsharp/FAKE/pull/1949
 
