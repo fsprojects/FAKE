@@ -116,23 +116,13 @@ let rec runNuGetTrial retries toolPath timeOut args failWith =
     TaskRunner.runWithRetries f retries
 
 /// [omit]
-let buildSources sources =
+let buildSources sources : string list =
     sources
-    |> List.map (fun source -> "\"-Source\" \"" + source + "\"")
-    |> String.separated " "
+    |> List.collect (fun source -> [ "-Source" ; source ] )
 
 
 //Args Helper Functions
-//quotePair wraps a pair of arguments in quotes -- used to pass cli args
-let private quotePair = sprintf "\"%s\" \"%s\""
-let private joinArgs = Seq.filter( not << String.IsNullOrEmpty ) >> String.concat " "
-
-let private install = quotePair "install"
-let private restore = quotePair "restore"
-let private outputDirectory = quotePair "-OutputDirectory"
-let private verbosity (v:NugetRestoreVerbosity) = 
-    quotePair "-verbosity" (match v with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "normal")
-
+let private verbosityToString (v:NugetRestoreVerbosity) = (match v with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "normal")
 
 /// [omit]
 let buildNuGetArgs setParams packageId =
@@ -141,11 +131,11 @@ let buildNuGetArgs setParams packageId =
 
     let args = 
         [
-            install packageId
-            outputDirectory (parameters.OutputPath |> Path.getFullName)
-            sources
-            verbosity parameters.Verbosity
-        ] |> joinArgs
+            yield! ["install"; packageId]
+            yield! ["-OutputDirectory"; parameters.OutputPath |> Path.getFullName]
+            yield! sources
+            yield! ["-verbosity"; (verbosityToString parameters.Verbosity)]
+        ] |> Args.toWindowsCommandLine 
 
     match parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version with
     | (true, false, Some(v))  -> args + " \"-ExcludeVersion\" \"-Version\" \"" + v.ToString() + "\""
@@ -188,10 +178,11 @@ let RestorePackage setParams packageFile =
 
     let args = 
         [
-            install (packageFile |> Path.getFullName)
-            outputDirectory (Path.combine (parameters.OutputPath |> Path.getFullName) sources)
-            verbosity parameters.Verbosity
-        ] |> joinArgs
+            yield! ["install"; (packageFile |> Path.getFullName)]
+            yield! ["-OutputDirectory"; parameters.OutputPath |> Path.getFullName]
+            yield! sources
+            yield! ["-verbosity"; (verbosityToString parameters.Verbosity)]
+        ] |> Args.toWindowsCommandLine
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
     __.MarkSuccess()
@@ -225,10 +216,11 @@ let RestoreMSSolutionPackages setParams solutionFile =
 
     let args =
         [
-            restore (solutionFile |> Path.getFullName)
-            outputDirectory (Path.combine (parameters.OutputPath |> Path.getFullName) sources)
-            verbosity parameters.Verbosity
-        ] |> joinArgs
+            yield! ["restore"; (solutionFile |> Path.getFullName)]
+            yield! ["-OutputDirectory"; parameters.OutputPath |> Path.getFullName]
+            yield! sources
+            yield! ["-verbosity"; (verbosityToString parameters.Verbosity)]
+        ] |> Args.toWindowsCommandLine
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)
     __.MarkSuccess()
