@@ -71,12 +71,12 @@ module internal TeamCityWriter =
     let scrub = String.removeLineBreaks >> encapsulateSpecialChars
 
     /// Send message to TeamCity
-    let sendToTeamCity (format:PrintfFormat<string -> unit, _, _, unit>) message =
+    let sendToTeamCity (format:Printf.StringFormat<string -> string>) message =
         sprintf format (scrub message)
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
 
-    let sendToTeamCity2 (format:PrintfFormat<string -> string -> unit, _, _, unit>) param1 param2 =
+    let sendToTeamCity2 (format:Printf.StringFormat<string -> string -> string>) param1 param2 =
         sprintf format (scrub param1) (scrub param2)
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
