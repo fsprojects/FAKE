@@ -5,6 +5,7 @@ open System.Collections.Generic
 open Fake.Core
 open System.Threading.Tasks
 open System.Threading
+open FSharp.Control.Reactive
 module internal TargetCli =
     let targetCli =
         """
@@ -39,13 +40,13 @@ and [<NoComparison>] [<NoEquality>] TargetContext =
       Arguments : string list
       IsRunningFinalTargets : bool
       CancellationToken : CancellationToken }
-    static member Create ft all args isRunningFinalTargets (token:CancellationToken)= { 
+    static member Create ft all args token = { 
         FinalTarget = ft
         AllExecutingTargets = all
         PreviousTargets = []
         Arguments = args
-        IsRunningFinalTargets = isRunningFinalTargets
-        CancellationToken = token}
+        IsRunningFinalTargets = false
+        CancellationToken = token }
     member x.HasError =
         x.PreviousTargets
         |> List.exists (fun t -> t.Error.IsSome)
@@ -167,7 +168,7 @@ module Target =
                 Trace.traceError  <| sprintf "  - %s" target.Value.Name
             failwithf "Target \"%s\" is not defined." name
     
-    let internal runSimpleInternal context target=
+    let internal runSimpleInternal context target =
         let watch = System.Diagnostics.Stopwatch.StartNew()
         let error =
             try
@@ -187,7 +188,7 @@ module Target =
     let runSimple name args =
         let target = get name
         target
-        |> runSimpleInternal (TargetContext.Create name [target] args false CancellationToken.None)
+        |> runSimpleInternal (TargetContext.Create name [target] args CancellationToken.None)
     
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
     let runSimpleWithContext name ctx =
@@ -596,7 +597,7 @@ module Target =
                 member __.GetNextTarget (ctx) = mbox.PostAndAsyncReply(fun reply -> GetNextTarget(ctx, reply))
             }
 
-        let runOptimal workerNum (order:Target[] list) targetContext=
+        let runOptimal workerNum (order:Target[] list) targetContext =
             let mgr = createCtxMgr order targetContext
             let targetRunner () =
                 async {
@@ -618,58 +619,16 @@ module Target =
             |> Async.AwaitTask
             |> Async.RunSynchronously
             |> Seq.reduce mergeContext
-    module internal Observable =
-        let subscribeOnce callback (observable:IObservable<'T>) =
-            let removeObj : IDisposable option ref = ref None
-            let removeLock = new obj()
-            let setRemover r = 
-                lock removeLock (fun () -> removeObj := Some r)
-                r
-            let remove() = 
-                lock removeLock (fun () -> 
-                    match removeObj.Value with
-                    | Some d -> 
-                        removeObj := None
-                        d.Dispose()
-                    | None -> ())
-            let observer = 
-                { new IObserver<'T> with
-                    member __.OnNext(v) =
-                        remove()
-                        callback v
-                    member __.OnError(_) =
-                        remove()          
-                    member __.OnCompleted()=                           
-                        remove()
-                }
-            observable.Subscribe observer 
-            |> setRemover
-    /// Runs the given array of targets in parallel using count tasks
-    let internal runTargetsParallel (_count : int) (targets : Target[]) context =
-        let known =
-            context.PreviousTargets
-            |> Seq.map (fun tres -> tres.Target.Name, tres)
-            |> dict
-        let filterKnown targets =
-            targets
-            |> List.filter (fun tres -> not (known.ContainsKey tres.Target.Name))
-        targets
-        |> Array.map (fun t -> async { return runSingleTarget t context })
-        |> Async.Parallel
-        |> Async.RunSynchronously
-        |> Seq.reduce (fun ctx1 ctx2 ->
-            { ctx1 with
-                PreviousTargets = 
-                    context.PreviousTargets @ filterKnown ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets
-             })
     
     let private handleUserCancelEvent (cts:CancellationTokenSource) (e:ConsoleCancelEventArgs)=
         e.Cancel <- true
         printfn "Gracefully shutting down.."
         printfn "Press ctrl+c again to force quit"
-        let __ = Console.CancelKeyPress |> Observable.subscribeOnce (fun _ -> 
-            Environment.Exit 1)
-        Process.killAllCreatedProcesses()|>ignore
+        let __ = 
+            Console.CancelKeyPress 
+            |> Observable.first 
+            |> Observable.subscribe (fun _ ->  Environment.Exit 1)
+        Process.killAllCreatedProcesses() |> ignore
         cts.Cancel()
         
     /// Runs a target and its dependencies.
@@ -692,7 +651,7 @@ module Target =
         then Trace.traceImportant "Single target mode ==> Skipping dependencies."
         let allTargets = List.collect Seq.toList order
         use cts = new CancellationTokenSource()    
-        let context = TargetContext.Create targetName allTargets args false cts.Token
+        let context = TargetContext.Create targetName allTargets args cts.Token
           
         let context =
             let captureContext (f:'a->unit) = 
@@ -703,17 +662,17 @@ module Target =
                     f a)
                       
             let cancelHandler  = captureContext (handleUserCancelEvent cts)            
-            use __ = Console.CancelKeyPress |> Observable.subscribeOnce cancelHandler
+            use __ = 
+                Console.CancelKeyPress 
+                |> Observable.first
+                |> Observable.subscribe cancelHandler
             
             let context =
                 // Figure out the order in in which targets can be run, and which can be run in parallel.
                 if parallelJobs > 1 && not singleTarget then
                     Trace.tracefn "Running parallel build with %d workers" parallelJobs
-
                     // always try to keep "parallelJobs" runners busy
                     ParallelRunner.runOptimal parallelJobs order context
-                    //order
-                    //    |> Seq.fold (fun context par -> runTargetsParallel parallelJobs par context) context
                 else
                     let targets = order |> Seq.collect id |> Seq.toArray
                     let lastTarget = targets |> Array.last
