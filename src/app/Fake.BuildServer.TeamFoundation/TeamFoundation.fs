@@ -22,7 +22,9 @@ module TeamFoundation =
                 |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensureProp prop) (ensureProp value))
                 |> String.separated ""
             if String.isNullOrWhiteSpace temp then "" else " " + temp
-        printfn "##vso[%s%s]%s" action formattedProperties message
+        sprintf "##vso[%s%s]%s" action formattedProperties message
+        // printf is racing with others in parallel mode
+        |> fun s -> System.Console.WriteLine("\n{0}", s)
         
     let private toType t o =
         o |> Option.map (fun value -> t, value)
