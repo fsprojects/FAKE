@@ -86,7 +86,7 @@ type PreRelease =
                 | _::AlphaNumeric(a)::_ -> a // fallback to 2nd
                 | _ -> ""
                 
-            let parse segment =
+            let parse (segment: string) =
                 match bigint.TryParse segment with
                 | true, number when number >= 0I -> Numeric number
                 | _ -> AlphaNumeric segment
@@ -245,7 +245,7 @@ module SemVer =
         | _ -> None
         
     /// Matches if str is convertible to big int and not less than zero, and returns the bigint value.
-    let inline private (|Big|_|) str =
+    let inline private (|Big|_|) (str: string) =
         match BigInteger.TryParse (str, NumberStyles.Integer, null) with
         | true, big when big > -1I -> Some big
         | _ -> None
