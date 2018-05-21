@@ -4,8 +4,10 @@
 
 * ENHANCEMENT: Make caches more portable - https://github.com/fsharp/FAKE/issues/1924
 * ENHANCEMENT: Handle Ctrl+C to properly shutdown (for example run final targets) - https://github.com/fsharp/FAKE/pull/1946
+* ENHANCEMENT: Add `Target.deactivateBuildFailure` and `Target.deactivateFinal` - https://github.com/fsharp/FAKE/pull/1949
 * BUGFIX: Fake had problems with `#load` directives in some scenarios - https://github.com/fsharp/FAKE/issues/1947
 * BUGFIX: Parallel Builds on Team-Foundation would sometimes fail because of racy output of `#vso[]` commands - https://github.com/fsharp/FAKE/pull/1949
+* BUGFIX: Parallel runner would run more targets than needed in error case - https://github.com/fsharp/FAKE/pull/1949
 
 ## 5.0.0-rc015 - 2018-05-21
 
