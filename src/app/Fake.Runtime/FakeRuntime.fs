@@ -504,7 +504,6 @@ let tryFindGroupFromDepsFile scriptDir =
     else None
 
 let prepareFakeScript (config:FakeConfig) =
-        // read dependencies from the top
     let script = config.ScriptFilePath
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
@@ -605,7 +604,26 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
 let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
     createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
 
-let prepareAndRunScript (config:FakeConfig) =
+let prepareAndRunScript (config:FakeConfig) : RunResult =
   let provider = prepareFakeScript config
   CoreCache.runScriptWithCacheProvider config provider
 
+let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
+    match runResult with
+    | Runners.RunResult.SuccessRun _ -> []
+    | Runners.RunResult.CompilationError err -> [
+        // Add some hints about the error, for example
+        // detect https://github.com/fsharp/FAKE/issues/1783
+        let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
+        let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
+        if containsNotDefined then
+          yield sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath
+        if containsNotSupportOperator then
+          yield "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators"
+      ]
+    | Runners.RunResult.RuntimeError _ -> [
+        if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
+        if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
+      ]

@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Target\Fake.Core.Target.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
   </ItemGroup>
   <ItemGroup>
@@ -25,6 +26,7 @@
     <Compile Include="Fake.Core.Process.fs" />
     <Compile Include="Fake.Core.Target.fs" />
     <Compile Include="Fake.Core.ReleaseNotes.fs" />
+    <Compile Include="Fake.Core.Xml.fs" />
     <Compile Include="Fake.Runtime.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>

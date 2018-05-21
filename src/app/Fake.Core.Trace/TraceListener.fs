@@ -121,6 +121,7 @@ type TraceData =
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan * TagStatus
+    | BuildState of TagStatus
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -132,6 +133,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
+        | BuildState _
         | CloseTag _ -> None
     member x.Message =
         match x with
@@ -144,6 +146,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
+        | BuildState _
         | CloseTag _ -> None
 
 module TraceData =
@@ -251,6 +254,8 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
+            | TraceData.BuildState state ->
+                write false color true (sprintf "Changing BuildState to: %A" state)
             | TraceData.TestOutput (test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
             | TraceData.BuildNumber number ->

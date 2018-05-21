@@ -35,7 +35,7 @@ Debugging works (on windows) in the following way:
   </code></pre>
   <div class="alert alert-info">
      <h5>INFO</h5>
-     <p>It is important to specify <code>--debug:portable --optimize</code><br>
+     <p>It is important to specify <code>--debug:portable --optimize-</code><br>
      To get debugging support for .NET Core you need <a href="https://github.com/OmniSharp/omnisharp-vscode">C# for Visual Studio Code</a> 
      </p>
   </div>

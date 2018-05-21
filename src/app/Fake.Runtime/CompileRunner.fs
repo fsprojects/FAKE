@@ -1,6 +1,6 @@
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.Runtime.CompileRunner
-open Fake.Runtime.Environment
+
 open Fake.Runtime.Trace
 open Fake.Runtime.Runners
 #if NETSTANDARD1_6
@@ -10,14 +10,8 @@ open System.Runtime.Loader
 open System.Reflection
 open System
 open System.IO
-open System.Diagnostics
-open System.Threading
-open System.Text.RegularExpressions
-open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 open Microsoft.FSharp.Compiler.SourceCodeServices
-open Microsoft.FSharp.Compiler
-
 
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
@@ -43,7 +37,7 @@ let nameParser cachedAssemblyFileName scriptFileName =
         else None
     className, parseName
 
-let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
+let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     use untilInvoke = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
     if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
@@ -83,9 +77,11 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
 
     use __ = Fake.Profile.startCategory Fake.Profile.Category.Cleanup
     (execContext :> System.IDisposable).Dispose()
-    result
+    match result with
+    | None -> RunResult.SuccessRun c.Warnings
+    | Some e -> RunResult.RuntimeError e
 
-let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     use untilCompileFinished  = Fake.Profile.startCategory Fake.Profile.Category.Compiling
     let wishPath = context.CachedAssemblyFilePath + ".dll"
 
@@ -110,10 +106,6 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let args =
         options.AsArgs |> Seq.toList
         |> List.filter (fun arg -> arg <> "--")
-    let formatError (e:FSharpErrorInfo) =
-         sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
-    let formatErrors errors =
-        System.String.Join("\n", errors |> Seq.map formatError)
     if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSC Args: [\"%s\"]" (String.Join("\";\n\"", args))
 
@@ -123,20 +115,19 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let errors =
         errors
         |> Seq.filter (fun e -> e.ErrorNumber <> 213 && not (e.Message.StartsWith "'paket:"))
-    if returnCode <> 0 then failwithf "Compilation failed: \n%s" (formatErrors errors)
-    
-    use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
-    Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
+        |> Seq.toList
+    let compileErrors = CompilationErrors.ofErrors errors
+    let cacheInfo = handleCoreCaching context wishPath compileErrors.FormattedErrors
+    if returnCode = 0 then
+        use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
+        Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
+        match cacheInfo.AsCacheInfo with
+        | None -> failwithf "Expected caching to work after a successfull compilation"
+        | Some c ->
+            cacheInfo, tryRunCached c context
+    else cacheInfo, RunResult.CompilationError compileErrors
 
-    let errorsString = formatErrors errors
-
-    let cacheInfo = handleCoreCaching context wishPath errorsString
-    match cacheInfo.AsCacheInfo with
-    | None -> failwithf "Expected caching to work after a successfull compilation"
-    | Some c ->
-        cacheInfo, tryRunCached c context
-
-let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     match cache with
     | Some c when context.Config.UseCache ->
         try c.AsResult, tryRunCached c context

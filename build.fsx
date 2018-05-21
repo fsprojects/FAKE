@@ -30,6 +30,7 @@ nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
 nuget Suave
+nuget Newtonsoft.Json
 nuget Octokit //"
 #endif
 
@@ -49,6 +50,7 @@ open System.Reflection
 #r "Paket.Core.dll"
 #r "packages/build/System.Net.Http/lib/net46/System.Net.Http.dll"
 #r "packages/build/Octokit/lib/net45/Octokit.dll"
+#r "packages/build/Newtonsoft.Json/lib/net45/Newtonsoft.Json.dll"
 #I "packages/build/SourceLink.Fake/tools/"
 
 #r "System.IO.Compression"
@@ -60,7 +62,7 @@ open System.Reflection
 //let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
 //Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 //#endif
-// #load "src/app/Fake.DotNet.FSFormatting/FSFormatting.fs"
+#load "src/app/Fake.DotNet.Cli/DotNet.fs"
 open System.IO
 open Fake.Api
 open Fake.Core
@@ -127,14 +129,27 @@ let additionalFiles = [
     "RELEASE_NOTES.md"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
     "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
-
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
-let apikey = Environment.environVarOrDefault "nugetkey" ""
+
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
 let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
+
+let mutable secrets = []
+let releaseSecret replacement name =
+    let secret =
+        lazy
+            let env = Environment.environVarOrFail name
+            TraceSecrets.register replacement name
+            env
+    secrets <- secret :: secrets
+    secret
+
+let apikey = releaseSecret "<nugetkey>" "nugetkey"
+let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
+let githubtoken = releaseSecret "<githubtoken>" "github_token"
 
 BuildServer.install [
     AppVeyor.Installer
@@ -150,8 +165,8 @@ let version =
     let segToString = function 
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
-    let createAlphaNum (s:string) =
-        PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
+    //let createAlphaNum (s:string) =
+    //    PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
     let source, buildMeta =
         match BuildServer.buildServer with
 #if DOTNETCORE
@@ -208,7 +223,7 @@ let nugetVersion =
 let chocoVersion =
     // Replace "." with "-" in the prerelease-string
     let build = 
-        if version.Build > 0I then ("." + version.Build.ToString("D")) else ""
+        if version.Build > 0I then ("." + (let bi = version.Build in bi.ToString("D"))) else ""
     let pre = 
         match version.PreRelease with
         | Some preRelease -> ("-" + preRelease.Origin.Replace(".", "-"))
@@ -226,7 +241,8 @@ Trace.setBuildNumber nugetVersion
 //if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
 //    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 
-let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_4
+
+let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_300_RC1
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
@@ -347,6 +363,7 @@ let common = [
 // New FAKE libraries
 let dotnetAssemblyInfos =
     [ "dotnet-fake", "Fake dotnet-cli command line tool"
+      "fake-cli", "Fake global dotnet-cli command line tool"
       "Fake.Api.GitHub", "GitHub Client API Support via Octokit"
       "Fake.Api.HockeyApp", "HockeyApp Integration Support"
       "Fake.Api.Slack", "Slack Integration Support"
@@ -1153,14 +1170,13 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
     path |> Choco.push (fun p ->
         { p with
             Source = chocosource
-            ApiKey = Environment.environVarOrFail "CHOCOLATEY_API_KEY" }
+            ApiKey = chocoKey.Value }
         |> changeToolPath)
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
-    Environment.environVarOrFail "CHOCOLATEY_API_KEY" |> ignore
-    Environment.environVarOrFail "nugetkey" |> ignore
-    Environment.environVarOrFail "github_token" |> ignore
+    for secret in secrets do
+        secret.Force() |> ignore
 )
 
 let executeFPM args =
@@ -1239,11 +1255,11 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
 
 let rec nugetPush tries nugetpackage =
     try
-        if not <| System.String.IsNullOrEmpty apikey then
+        if not <| System.String.IsNullOrEmpty apikey.Value then
             Process.execSimple (fun info ->
             { info with
                 FileName = nuget_exe
-                Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey) (Process.toParam nugetsource) }
+                Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey.Value) (Process.toParam nugetsource) }
             )
                 (System.TimeSpan.FromMinutes 10.)
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
@@ -1277,12 +1293,7 @@ Target.create "PublishNuget" (fun _ ->
 
 Target.create "ReleaseDocs" (fun _ ->
     Shell.cleanDir "gh-pages"
-    let auth = 
-        match Environment.environVarOrDefault "github_token" "" with
-        | s when not (System.String.IsNullOrWhiteSpace s) ->
-            TraceSecrets.register "<token>"  s
-            sprintf "%s:x-oauth-basic@" s
-        | _ -> ""
+    let auth = sprintf "%s:x-oauth-basic@" githubtoken.Value
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
     Git.Repository.cloneSingleBranch "" url "gh-pages" "gh-pages"
 
@@ -1299,12 +1310,7 @@ Target.create "ReleaseDocs" (fun _ ->
 )
 
 Target.create "FastRelease" (fun _ ->
-    let token = 
-        match Environment.environVarOrDefault "github_token" "" with
-        | s when not (System.String.IsNullOrWhiteSpace s) ->
-            TraceSecrets.register "<token>"  s
-            s
-        | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+    let token = githubtoken.Value
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
 
@@ -1557,10 +1563,11 @@ let prevDocs =
     ==> "CreateNuGet"
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-(if fromArtifacts then "PrepareArtifacts" else prevDocs)
+    ==> "Default"
+(if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
     =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
-prevDocs ?=> "GenerateDocs"
+"_AfterBuild" ?=> "GenerateDocs"
 
 "GenerateDocs"
     ==> "Release_GenerateDocs"

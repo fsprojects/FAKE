@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <PackAsTool>true</PackAsTool>
+        <OutputType>Exe</OutputType>
+        <ToolCommandName>fake</ToolCommandName>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="AssemblyInfo.fs" />
+        <Compile Include="..\Fake.netcore\Cli.fs" />
+        <Compile Include="..\Fake.netcore\Program.fs" />
+        <!-- Note: This resource should be moved to Paket.Core... -->
+        <EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj" />
+        <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj">
+            <FromP2P>true</FromP2P>
+        </ProjectReference>
+        <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
+            <FromP2P>true</FromP2P>
+        </ProjectReference>
+    </ItemGroup>
+    <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>

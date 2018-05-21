@@ -160,7 +160,6 @@ module Target =
             failwithf "Target \"%s\" is not defined." name
     
     let internal runSimpleInternal context target =
-        let name = target.Name
         let watch = System.Diagnostics.Stopwatch.StartNew()
         let error =
             try
