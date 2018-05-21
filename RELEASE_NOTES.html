@@ -251,6 +251,15 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-0-0-rc016-2018-05-21" class="anchor" href="#5-0-0-rc016-2018-05-21">5.0.0-rc016 - 2018-05-21</a></h2>
+<ul>
+<li>ENHANCEMENT: Make caches more portable - <a href="https://github.com/fsharp/FAKE/issues/1924">https://github.com/fsharp/FAKE/issues/1924</a></li>
+<li>ENHANCEMENT: Handle Ctrl+C to properly shutdown (for example run final targets) - <a href="https://github.com/fsharp/FAKE/pull/1946">https://github.com/fsharp/FAKE/pull/1946</a></li>
+<li>ENHANCEMENT: Add <code>Target.deactivateBuildFailure</code> and <code>Target.deactivateFinal</code> - <a href="https://github.com/fsharp/FAKE/pull/1949">https://github.com/fsharp/FAKE/pull/1949</a></li>
+<li>BUGFIX: Fake had problems with <code>#load</code> directives in some scenarios - <a href="https://github.com/fsharp/FAKE/issues/1947">https://github.com/fsharp/FAKE/issues/1947</a></li>
+<li>BUGFIX: Parallel Builds on Team-Foundation would sometimes fail because of racy output of <code>#vso[]</code> commands - <a href="https://github.com/fsharp/FAKE/pull/1949">https://github.com/fsharp/FAKE/pull/1949</a></li>
+<li>BUGFIX: Parallel runner would run more targets than needed in error case - <a href="https://github.com/fsharp/FAKE/pull/1949">https://github.com/fsharp/FAKE/pull/1949</a></li>
+</ul>
 <h2><a name="5-0-0-rc015-2018-05-21" class="anchor" href="#5-0-0-rc015-2018-05-21">5.0.0-rc015 - 2018-05-21</a></h2>
 <ul>
 <li>
@@ -1893,7 +1902,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc015.196</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc016.225</a></li>
 									</ul>
 								</div>
 							</div>
