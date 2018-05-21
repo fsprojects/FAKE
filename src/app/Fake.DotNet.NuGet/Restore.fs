@@ -118,8 +118,8 @@ let rec runNuGetTrial retries toolPath timeOut args failWith =
 /// [omit]
 let buildSources sources =
     sources
-    |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-    |> String.separated ""
+    |> List.map (fun source -> "\"-Source\" \"" + source + "\"")
+    |> String.separated " "
 
 
 //Args Helper Functions
@@ -142,7 +142,8 @@ let buildNuGetArgs setParams packageId =
     let args = 
         [
             install packageId
-            outputDirectory (Path.combine (parameters.OutputPath |> Path.getFullName) sources)
+            outputDirectory (parameters.OutputPath |> Path.getFullName)
+            sources
             verbosity parameters.Verbosity
         ] |> joinArgs
 
