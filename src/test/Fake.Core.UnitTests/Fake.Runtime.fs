@@ -10,6 +10,19 @@ open Fake.IO
 [<Tests>]
 let tests = 
   testList "Fake.Runtime.Tests" [
+    testCase "Test that cache helpers work" <| fun _ ->
+      Path.fixPathForCache "build.fsx" "build.fsx"
+      |> Expect.equal "should detect script itself" "scriptpath:///build.fsx"
+      Path.readPathFromCache "build.fsx" "scriptpath:///build.fsx"
+      |> Expect.equal "should detect script itself" (Path.GetFullPath "build.fsx")
+
+    testCase "Test that cache helpers work for nuget cache" <| fun _ ->
+      let nugetLib = Paket.Constants.UserNuGetPackagesFolder </> "MyLib" </> "lib" </> "mylib.dll"
+      Path.fixPathForCache "build.fsx" nugetLib
+      |> Expect.equal "should detect script itself" "nugetcache:///MyLib/lib/mylib.dll"
+      Path.readPathFromCache "build.fsx" "nugetcache:///MyLib/lib/mylib.dll"
+      |> Expect.equal "should detect script itself" nugetLib
+
     testCase "Test that we can properly find type names when the file name contains '.'" <| fun _ ->
       // Add test if everything works with __SOURCE_FILE__
       let name, parser =
