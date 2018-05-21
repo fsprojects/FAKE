@@ -716,6 +716,11 @@ module Target =
     let activateBuildFailure name =
         let _ = get name // test if target is defined
         getBuildFailureTargets().[name] <- true
+        
+    /// Deactivates the build failure target.
+    let deactivateBuildFailure name =
+        let t = get name // test if target is defined
+        getBuildFailureTargets().[name] <- false
 
     /// Creates a final target (not activated).
     let createFinal name body =
@@ -726,6 +731,11 @@ module Target =
     let activateFinal name =
         let _ = get name // test if target is defined
         getFinalTargets().[name] <- true
+
+    /// deactivates the final target.
+    let deactivateFinal name =
+        let t = get name // test if target is defined
+        getFinalTargets().[name] <- false
 
     /// Runs a target and its dependencies, used for testing - usually not called in scripts.
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
