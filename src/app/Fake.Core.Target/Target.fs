@@ -3,9 +3,9 @@
 open System
 open System.Collections.Generic
 open Fake.Core
-open Fake.Core.CommandLineParsing
 open System.Threading.Tasks
-
+open System.Threading
+open FSharp.Control.Reactive
 module internal TargetCli =
     let targetCli =
         """
@@ -25,19 +25,28 @@ Target Module Options [target_opts]:
         """
     let doc = Docopt(targetCli)
     let parseArgs args = doc.Parse args
-
 /// [omit]
 type TargetDescription = string
 
+[<NoComparison>]
+[<NoEquality>]
 type TargetResult =
     { Error : exn option; Time : TimeSpan; Target : Target; WasSkipped : bool }
 
-and TargetContext =
+and [<NoComparison>] [<NoEquality>] TargetContext =
     { PreviousTargets : TargetResult list
       AllExecutingTargets : Target list
       FinalTarget : string
-      Arguments : string list }
-    static member Create ft all args = { FinalTarget = ft; AllExecutingTargets = all; PreviousTargets = []; Arguments = args }
+      Arguments : string list
+      IsRunningFinalTargets : bool
+      CancellationToken : CancellationToken }
+    static member Create ft all args token = { 
+        FinalTarget = ft
+        AllExecutingTargets = all
+        PreviousTargets = []
+        Arguments = args
+        IsRunningFinalTargets = false
+        CancellationToken = token }
     member x.HasError =
         x.PreviousTargets
         |> List.exists (fun t -> t.Error.IsSome)
@@ -46,12 +55,12 @@ and TargetContext =
     member x.TryFindTarget name =
         x.AllExecutingTargets |> List.tryFind (fun t -> t.Name = name)        
 
-and TargetParameter =
+and [<NoComparison>] [<NoEquality>] TargetParameter =
     { TargetInfo : Target
       Context : TargetContext }
 
 /// [omit]
-and Target =
+and [<NoComparison>] [<NoEquality>] Target =
     { Name: string;
       Dependencies: string list;
       SoftDependencies: string list;
@@ -163,6 +172,8 @@ module Target =
         let watch = System.Diagnostics.Stopwatch.StartNew()
         let error =
             try
+                if not context.IsRunningFinalTargets then
+                    context.CancellationToken.ThrowIfCancellationRequested()|>ignore
                 target.Function { TargetInfo = target; Context = context }
                 None
             with e -> Some e
@@ -177,7 +188,7 @@ module Target =
     let runSimple name args =
         let target = get name
         target
-        |> runSimpleInternal (TargetContext.Create name [target] args)
+        |> runSimpleInternal (TargetContext.Create name [target] args CancellationToken.None)
     
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
     let runSimpleWithContext name ctx =
@@ -233,14 +244,14 @@ module Target =
     /// Adds the dependency to the front of the list of dependencies.
     /// [omit]
     let internal dependencyAtFront targetName dependentTargetName =
-        let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
+        let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
 
         getTargetDict().[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
 
     /// Appends the dependency to the list of dependencies.
     /// [omit]
     let internal dependencyAtEnd targetName dependentTargetName =
-        let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
+        let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
 
         getTargetDict().[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
@@ -248,7 +259,7 @@ module Target =
     /// Appends the dependency to the list of soft dependencies.
     /// [omit]
     let internal softDependencyAtEnd targetName dependentTargetName =
-        let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
+        let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
 
         getTargetDict().[targetName] <- { target with SoftDependencies = target.SoftDependencies @ [dependentTargetName] }
 
@@ -373,7 +384,7 @@ module Target =
                     else
                         appendfn "%s<== %s" indent t.Name
 
-            let _, ordered = visitDependencies logDependency target.Name
+            let _ = visitDependencies logDependency target.Name
             //appendfn ""
             //sb.Length <- sb.Length - Environment.NewLine.Length
             Trace.log <| sb.ToString()
@@ -435,9 +446,9 @@ module Target =
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
-        let t = get target
+        let _ = get target
 
-        let rec visitDependenciesAux fGetDependencies (visited:string list) level (depType,targetName) =
+        let rec visitDependenciesAux fGetDependencies (visited:string list) level (_depType, targetName) =
             let target = get targetName
             let isVisited = visited |> Seq.contains targetName
             //fVisit (target, depType, level, isVisited)
@@ -451,8 +462,7 @@ module Target =
 
         // first find the list of targets we "have" to build
         let targets = visitDependenciesAux (fun t -> t.Dependencies |> withDependencyType DependencyType.Hard) [] 0 (DependencyType.Hard, target)
-        let isValidTarget name = targets |> Seq.exists (fun t -> t.Name = name)
-
+        
         // Try to build the optimal tree by starting with the targets without dependencies and remove them from the list iteratively
         let rec findOrder (targetLeft:Target list) =
             let isValidTarget name = targetLeft |> Seq.exists (fun t -> t.Name = name)
@@ -462,7 +472,7 @@ module Target =
                 |> Seq.isEmpty
             let map =
                 targetLeft
-                    |> Seq.groupBy (fun t -> canBeExecuted t)
+                    |> Seq.groupBy canBeExecuted
                     |> Seq.map (fun (t, g) -> t, Seq.toList g)
                     |> dict
             let execute, left =
@@ -501,7 +511,10 @@ module Target =
                 PreviousTargets =
                     ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets
             }
+  
         // Centralized handling of target context and next target logic...
+        [<NoComparison>] 
+        [<NoEquality>]      
         type RunnerHelper =
             | GetNextTarget of TargetContext * AsyncReplyChannel<TargetContext * Async<Target option>>
         type IRunnerHelper =
@@ -588,11 +601,12 @@ module Target =
             let mgr = createCtxMgr order targetContext
             let targetRunner () =
                 async {
+                    let token = targetContext.CancellationToken
                     let! (tctx, att) = mgr.GetNextTarget(targetContext)
                     let! tt = att
                     let mutable ctx = tctx
                     let mutable nextTarget = tt
-                    while nextTarget.IsSome do
+                    while nextTarget.IsSome && not token.IsCancellationRequested do
                         let newCtx = runSingleTarget nextTarget.Value ctx
                         let! (tctx, att) = mgr.GetNextTarget(newCtx)
                         let! tt = att
@@ -605,26 +619,18 @@ module Target =
             |> Async.AwaitTask
             |> Async.RunSynchronously
             |> Seq.reduce mergeContext
-
-    /// Runs the given array of targets in parallel using count tasks
-    let internal runTargetsParallel (count : int) (targets : Target[]) context =
-        let known =
-            context.PreviousTargets
-            |> Seq.map (fun tres -> tres.Target.Name, tres)
-            |> dict
-        let filterKnown targets =
-            targets
-            |> List.filter (fun tres -> not (known.ContainsKey tres.Target.Name))
-        targets
-        |> Array.map (fun t -> async { return runSingleTarget t context })
-        |> Async.Parallel
-        |> Async.RunSynchronously
-        |> Seq.reduce (fun ctx1 ctx2 ->
-            { ctx1 with
-                PreviousTargets = 
-                    context.PreviousTargets @ filterKnown ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets
-             })
-
+    
+    let private handleUserCancelEvent (cts:CancellationTokenSource) (e:ConsoleCancelEventArgs)=
+        e.Cancel <- true
+        printfn "Gracefully shutting down.."
+        printfn "Press ctrl+c again to force quit"
+        let __ = 
+            Console.CancelKeyPress 
+            |> Observable.first 
+            |> Observable.subscribe (fun _ ->  Environment.Exit 1)
+        Process.killAllCreatedProcesses() |> ignore
+        cts.Cancel()
+        
     /// Runs a target and its dependencies.
     let internal runInternal singleTarget parallelJobs targetName args =
         match getLastDescription() with
@@ -644,40 +650,51 @@ module Target =
         if singleTarget
         then Trace.traceImportant "Single target mode ==> Skipping dependencies."
         let allTargets = List.collect Seq.toList order
-        let context = TargetContext.Create targetName allTargets args
-        
+        use cts = new CancellationTokenSource()    
+        let context = TargetContext.Create targetName allTargets args cts.Token
+          
         let context =
-            // Figure out the order in in which targets can be run, and which can be run in parallel.
-            if parallelJobs > 1 && not singleTarget then
-                Trace.tracefn "Running parallel build with %d workers" parallelJobs
-
-                // always try to keep "parallelJobs" runners busy
-                ParallelRunner.runOptimal parallelJobs order context
-                //order
-                //    |> Seq.fold (fun context par -> runTargetsParallel parallelJobs par context) context
-            else
-                let targets = order |> Seq.collect id |> Seq.toArray
-                let lastTarget = targets |> Array.last
-                if singleTarget then
-                    runSingleTarget lastTarget context
+            let captureContext (f:'a->unit) = 
+                let ctx = Context.getExecutionContext()
+                (fun a -> 
+                    let nctx = Context.getExecutionContext()
+                    if ctx <> nctx then Context.setExecutionContext ctx
+                    f a)
+                      
+            let cancelHandler  = captureContext (handleUserCancelEvent cts)            
+            use __ = 
+                Console.CancelKeyPress 
+                |> Observable.first
+                |> Observable.subscribe cancelHandler
+            
+            let context =
+                // Figure out the order in in which targets can be run, and which can be run in parallel.
+                if parallelJobs > 1 && not singleTarget then
+                    Trace.tracefn "Running parallel build with %d workers" parallelJobs
+                    // always try to keep "parallelJobs" runners busy
+                    ParallelRunner.runOptimal parallelJobs order context
                 else
-                    targets |> Array.fold (fun context target -> runSingleTarget target context) context
-
-        let context =        
-            if context.HasError then
-                runBuildFailureTargets context
-            else context            
-        let context = runFinalTargets context
+                    let targets = order |> Seq.collect id |> Seq.toArray
+                    let lastTarget = targets |> Array.last
+                    if singleTarget then
+                        runSingleTarget lastTarget context
+                    else
+                        targets |> Array.fold (fun context target -> runSingleTarget target context) context
+            
+            if context.HasError && not context.CancellationToken.IsCancellationRequested then
+                    runBuildFailureTargets context
+            else context       
+                  
+        let context = runFinalTargets {context with IsRunningFinalTargets=true}
         writeTaskTimeSummary watch.Elapsed context
-        
-        if context.HasError then
+        if context.HasError && not context.CancellationToken.IsCancellationRequested then
             let errorTargets =
                 context.PreviousTargets
                 |> List.choose (fun tres ->
                     match tres.Error with
                     | Some er -> Some (er, tres.Target)
                     | None -> None)
-            let targets = errorTargets |> Seq.map (fun (er, target) -> target.Name) |> Seq.distinct
+            let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
             let targetStr = String.Join(", ", targets)
             let errorMsg =
                 if errorTargets.Length = 1 then
@@ -697,7 +714,7 @@ module Target =
 
     /// Activates the build failure target.
     let activateBuildFailure name =
-        let t = get name // test if target is defined
+        let _ = get name // test if target is defined
         getBuildFailureTargets().[name] <- true
 
     /// Creates a final target (not activated).
@@ -707,7 +724,7 @@ module Target =
 
     /// Activates the final target.
     let activateFinal name =
-        let t = get name // test if target is defined
+        let _ = get name // test if target is defined
         getFinalTargets().[name] <- true
 
     /// Runs a target and its dependencies, used for testing - usually not called in scripts.

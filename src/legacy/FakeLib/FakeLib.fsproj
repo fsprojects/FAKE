@@ -127,12 +127,6 @@
     <Compile Include="..\..\app\Fake.Core.Trace\Trace.fs">
       <Link>Fake.Core.Trace/Trace.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Core.Target\Target.fs">
-      <Link>Fake.Core.Target/Target.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.Core.Target\TargetOperators.fs">
-      <Link>Fake.Core.Target/TargetOperators.fs</Link>
-    </Compile>
     <Compile Include="..\..\app\Fake.IO.FileSystem\Globbing.fs">
       <Link>Fake.IO.FileSystem/Globbing.fs</Link>
     </Compile>
@@ -195,6 +189,12 @@
     </Compile>
     <Compile Include="..\..\app\Fake.Core.Process\Mono.fs">
       <Link>Fake.Core.Process/Mono.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.Target\Target.fs">
+      <Link>Fake.Core.Target/Target.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.Target\TargetOperators.fs">
+      <Link>Fake.Core.Target/TargetOperators.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuildLogger.fs">
       <Link>Fake.DotNet.MSBuild/MSBuildLogger.fs</Link>
@@ -692,6 +692,26 @@
       <ItemGroup>
         <Reference Include="FSharp.Compiler.Service">
           <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\netstandard2.0\FSharp.Compiler.Service.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="FSharp.Control.Reactive">
+          <HintPath>..\..\..\packages\FSharp.Control.Reactive\lib\net45\FSharp.Control.Reactive.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+      <ItemGroup>
+        <Reference Include="FSharp.Control.Reactive">
+          <HintPath>..\..\..\packages\FSharp.Control.Reactive\lib\netstandard2.0\FSharp.Control.Reactive.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1902,6 +1922,186 @@
     </When>
   </Choose>
   <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\..\packages\System.Reactive.Core\lib\net45\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\..\packages\System.Reactive.Core\lib\net46\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\..\packages\System.Reactive.Core\lib\netcoreapp1.0\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\..\packages\System.Reactive.Core\lib\netstandard1.3\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\..\packages\System.Reactive.Core\lib\uap10.0\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\netstandard1.0\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\net45\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\net46\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\netstandard1.3\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\net46\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\netcoreapp1.0\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\netstandard1.3\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\uap10.0\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Windows">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="WindowsBase">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Reactive.Windows.Threading">
+          <HintPath>..\..\..\packages\System.Reactive.Windows.Threading\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Windows.Threading">
+          <HintPath>..\..\..\packages\System.Reactive.Windows.Threading\lib\uap10.0\System.Reactive.Windows.Threading.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.WindowsRuntime">
+          <HintPath>..\..\..\packages\System.Reactive.WindowsRuntime\lib\uap10.0\System.Reactive.WindowsRuntime.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
         <Reference Include="System.Reflection">
@@ -2293,6 +2493,26 @@
       <ItemGroup>
         <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
           <HintPath>..\..\..\packages\System.Runtime.InteropServices.RuntimeInformation\lib\wpa81\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
+      <ItemGroup>
+        <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+          <HintPath>..\..\..\packages\System.Runtime.InteropServices.WindowsRuntime\ref\netstandard1.0\System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
+      <ItemGroup>
+        <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+          <HintPath>..\..\..\packages\System.Runtime.InteropServices.WindowsRuntime\lib\netstandard1.3\System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
