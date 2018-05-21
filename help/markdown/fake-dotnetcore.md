@@ -5,7 +5,7 @@
 Getting started with the Fake dotnetcore version is easy.
 Just install the corresponding package for your system:
 
-- Windows
+- Windows (chocolatey)
 
   - Install chocolatey (a windows package manager) if you have not installed it yet (see https://chocolatey.org).
     Basically open an admin `cmd.exe` and paste 
@@ -27,6 +27,17 @@ Just install the corresponding package for your system:
     </pre>
 
   - There are [other ways to get started](fake-gettingstarted.html#Install-FAKE) if chocolatey / an administrator-cmd or global installation is not an option.
+
+- Windows (dotnet sdk global tool)
+
+  - Install the .NET sdk (at least `2.1.300-RC1`)
+  - Install FAKE
+
+    <pre>
+        <code class="lang-bash">
+        dotnet tool install fake-cli -g --version=5.0.0-*
+        </code>
+    </pre>
 
 - Others
 

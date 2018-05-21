@@ -3,7 +3,9 @@
 open System
 open System.IO
 open Fake.Runtime
+open Fake.Runtime.Runners
 open Paket
+open System
 
 type FakeSection =
  | PaketDependencies of Paket.Dependencies * Lazy<Paket.DependenciesFile> * group : String option
@@ -134,8 +136,10 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
+let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
   use __ = Fake.Profile.startCategory Fake.Profile.Category.Paket
+  let logLevel = config.VerboseLevel
+  let script = config.ScriptFilePath
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -359,8 +363,10 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       if needLocalLock then File.Copy(lockFilePath.FullName, localLock, true)
     
     // Restore
-    paketApi.Restore((*false, group, [], false, true*))
-    |> ignore
+    if config.RestoreOnlyGroup then 
+        paketApi.Restore(false,group,[],false,false,false,None)
+    else
+        paketApi.Restore()
     
   // https://github.com/fsharp/FAKE/issues/1908
   writeIntellisenseFile cacheDir // write intellisense.fsx immediately
@@ -380,7 +386,7 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
         let splits = line.Split(';')
         let isRef = bool.Parse splits.[0]
         let ver = splits.[1]
-        let loc = splits.[2]
+        let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
         let fullName = splits.[3]
         { IsReferenceAssembly = isRef
           Info =
@@ -390,12 +396,12 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
       |> Seq.toList
       
   let writeToCache (list:AssemblyData list) =
-      list 
+      list
       |> Seq.map (fun item -> 
         sprintf "%b;%s;%s;%s" 
             item.IsReferenceAssembly
             item.Info.Version
-            item.Info.Location
+            (Path.fixPathForCache config.ScriptFilePath item.Info.Location)
             item.Info.FullName)
       |> fun lines -> File.WriteAllLines(assemblyCacheFile, lines)
       File.Copy(lockFilePath.FullName, assemblyCacheHashFile, true)
@@ -463,10 +469,10 @@ let paketCachingProvider (script:string) (logLevel:Trace.VerboseLevel) cacheDir 
           if writeIntellisenseTask.IsValueCreated then 
             writeIntellisenseTask.Value.Wait() }
 
-let restoreDependencies script logLevel cacheDir section =
+let restoreDependencies config cacheDir section =
   match section with
   | PaketDependencies (paketDependencies, paketDependenciesFile, group) ->
-    paketCachingProvider script logLevel cacheDir paketDependencies paketDependenciesFile group
+    paketCachingProvider config cacheDir paketDependencies paketDependenciesFile group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -498,8 +504,8 @@ let tryFindGroupFromDepsFile scriptDir =
         | _ -> None
     else None
 
-let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>) logLevel script =
-    // read dependencies from the top
+let prepareFakeScript (config:FakeConfig) =
+    let script = config.ScriptFilePath
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
@@ -508,7 +514,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
     let scriptSectionCacheFile = Path.Combine(cacheDir, "fake-section.txt")
     let inline getSectionUncached () =
         use __ = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
-        let newSection = tryReadPaketDependenciesFromScript tokenized.Value cacheDir script
+        let newSection = tryReadPaketDependenciesFromScript config.ScriptTokens.Value cacheDir script
         match newSection with
         | Some s -> Some s
         | None ->
@@ -516,7 +522,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
     let writeToCache (section : FakeSection option) =
         match section with 
         | Some (PaketDependencies(p, _, group)) ->
-            sprintf "paket: %s, %s" p.DependenciesFile (match group with | Some g -> g | _ -> "<null>")
+            sprintf "paket: %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>")
         | None -> "none"
         |> fun t -> File.WriteAllText(scriptSectionCacheFile, t)
         File.Copy (script, scriptSectionHashFile, true)
@@ -526,7 +532,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
         if t.StartsWith("paket:") then 
             let s = t.Substring("paket: ".Length)
             let splits = s.Split(',')
-            let depsFile = splits.[0]
+            let depsFile = Path.readPathFromCache config.ScriptFilePath splits.[0]
             let group =
                 let trimmed = splits.[1].Trim()
                 if trimmed = "<null>" then None else Some trimmed
@@ -551,7 +557,7 @@ let prepareFakeScript (tokenized:Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
 
     match section with
     | Some section ->
-        restoreDependencies script logLevel cacheDir section
+        restoreDependencies config cacheDir section
     | None ->
         let defaultPaketCode = """
 source https://api.nuget.org/v3/index.json
@@ -567,10 +573,10 @@ If you know what you are doing you can silence this warning by setting the envir
           { Header = "paket-inline"
             Section = defaultPaketCode }
           |> writeFixedPaketDependencies cacheDir        
-        restoreDependencies script logLevel cacheDir section
+        restoreDependencies config cacheDir section
 
-let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache =
 
+let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
   if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
   let newFsiOptions =
@@ -584,19 +590,43 @@ let prepareAndRunScriptRedirect (logLevel:Trace.VerboseLevel) (fsiOptions:string
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
   let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
-  let config =
-    { Runners.FakeConfig.VerboseLevel = logLevel
-      Runners.FakeConfig.ScriptFilePath = scriptPath
-      Runners.FakeConfig.ScriptTokens = tokenized
-      Runners.FakeConfig.CompileOptions = 
-        { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
-      Runners.FakeConfig.UseCache = useCache
-      Runners.FakeConfig.Out = out
-      Runners.FakeConfig.Err = err
-      Runners.FakeConfig.ScriptArgs = scriptArgs }
-  let provider = prepareFakeScript tokenized logLevel scriptPath
+
+  { Runners.FakeConfig.VerboseLevel = logLevel
+    Runners.FakeConfig.ScriptFilePath = scriptPath
+    Runners.FakeConfig.ScriptTokens = tokenized
+    Runners.FakeConfig.CompileOptions = 
+      { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
+    Runners.FakeConfig.UseCache = useCache
+    Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup
+    Runners.FakeConfig.Out = out
+    Runners.FakeConfig.Err = err
+    Runners.FakeConfig.ScriptArgs = scriptArgs }
+
+let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
+    createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
+
+let prepareAndRunScript (config:FakeConfig) : RunResult =
+  let provider = prepareFakeScript config
   CoreCache.runScriptWithCacheProvider config provider
 
-let inline prepareAndRunScript logLevel fsiOptions scriptPath scriptArgs useCache =
-  prepareAndRunScriptRedirect logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache
-
+let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
+    match runResult with
+    | Runners.RunResult.SuccessRun _ -> []
+    | Runners.RunResult.CompilationError err ->
+      [
+        // Add some hints about the error, for example
+        // detect https://github.com/fsharp/FAKE/issues/1783
+        let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
+        let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
+        if containsNotDefined then
+          yield sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath
+        if containsNotSupportOperator then
+          yield "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators"
+      ]
+    | Runners.RunResult.RuntimeError _ ->
+      [
+        if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
+        if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
+      ]

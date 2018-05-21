@@ -1,5 +1,36 @@
 # Release Notes
 
+## 5.0.0-rc016 - 2018-05-21
+
+* BUGFIX: Fake had problems with `#load` directives in some scenarios - https://github.com/fsharp/FAKE/issues/1947
+* BUGFIX: Parallel Builds on Team-Foundation would sometimes fail because of racy output of `#vso[]` commands - https://github.com/fsharp/FAKE/pull/1949
+
+## 5.0.0-rc015 - 2018-05-21
+
+* FAKE5: Global dotnet cli-tool `fake-cli` - https://github.com/fsharp/FAKE/pull/1932
+  Install via `dotnet tool install fake-cli -g --version 5.0.0-*`
+* BUGFIX: Some issues when running latest `dotnet cli` via the Fake.DotNet.Cli module.
+* BUGFIX: Fake.Core.Xml changed DOCTYPE - https://github.com/fsharp/FAKE/issues/1692
+* ENHANCEMENT: Add API to set the build state - https://github.com/fsharp/FAKE/issues/1936
+* ENHANCEMENT: Add `Shell.copyFilesWithSubFolder` to copy files while keeping relative directories in place - https://github.com/fsharp/FAKE/issues/1937
+* ENHANCEMENT: Fake runner will now hint you into success when dependencies are missing - https://github.com/fsharp/FAKE/issues/1783
+
+## 5.0.0-rc014 - 2018-05-20
+
+* BUGFIX: Globbing is now more robust (especially outside the working directory) - https://github.com/fsharp/FAKE/issues/1925 https://github.com/fsharp/FAKE/issues/1750 and some not tracked issues
+* COSMETICS: Fake is printing target description twice - https://github.com/fsharp/FAKE/issues/1931
+* ENHANCEMENT: Fake parallel logic is not even smarter in running targets parallel - https://github.com/fsharp/FAKE/pull/1934
+* DOCS: We now have a full staging environment in place - https://fake.build/contributing.html#Staging-environment
+* DOCS: We now have a place to thank our supporters - https://fake.build/help-supporters.html
+
+## 5.0.0-rc013 - 2018-05-20
+
+* ENHANCEMENT: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
+* FAKE5: Xake now supports FAKE 5 and is advertised as module - https://github.com/xakebuild/Xake
+* ENHANCEMENT: Parallelize targets even more - https://github.com/fsharp/FAKE/pull/1934
+* COSMETICS: Targets are always shown as "failed" - https://github.com/fsharp/FAKE/issues/1929
+* COSMETICS: Target description was printed twice - https://github.com/fsharp/FAKE/issues/1931
+
 ## 5.0.0-rc012 - 2018-05-12
 
 * FAKE5: New module `Fake.Windows.Registry` - https://github.com/fsharp/FAKE/pull/1909

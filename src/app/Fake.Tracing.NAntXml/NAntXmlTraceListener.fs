@@ -54,7 +54,8 @@ type NAntXmlTraceListener(encoding : Encoding, xmlOutputFile) =
         | TraceData.TestOutput _
         | TraceData.TestStatus _
         | TraceData.ImportData _
-        | TraceData.BuildNumber _ -> ""       
+        | TraceData.BuildNumber _
+        | TraceData.BuildState _ -> ""
 
     interface System.IDisposable with
         member __.Dispose () =

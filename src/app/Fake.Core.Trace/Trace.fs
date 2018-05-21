@@ -164,6 +164,8 @@ let traceTag tag description =
     openTagUnsafe tag description
     asSafeDisposable (fun state -> closeTagUnsafeEx state tag)
 
+let setBuildState tag =
+    TraceData.BuildState tag |> CoreTracing.postMessage
 
 let testStatus testName testStatus =
     // TODO: Check if the given test is opened in openTags-stack?
@@ -181,9 +183,8 @@ let setBuildNumber number =
 let closeAllOpenTags() = Seq.iter (fun (_, tag) -> closeTagUnsafeEx TagStatus.Failed tag) openTags.Value
 
 /// Traces the begin of a target
-let traceStartTargetUnsafe name description dependencyString =
+let traceStartTargetUnsafe name description (dependencyString:string) =
     openTagUnsafe (KnownTags.Target name) description
-    if not (isNull description) then tracefn "  %s" description
 
 /// Traces the begin of a target
 [<System.Obsolete("Consider using traceTarget instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceStartTargetUnsafe'.")>]

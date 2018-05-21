@@ -21,23 +21,28 @@ There are various ways to install FAKE 5
 * Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
   Example `choco install fake -pre`
 
-* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/matthid/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
+
+* Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g --version=5.0.0-*` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*` to install fake into `your_tool_path`. Use `--version` to specify the version of fake. See the [`global_tool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) for ideas to bootstrap in your CI process.
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>As FAKE 5 is still in pre-release, you have to specify the <code>--version</code> parameter.</p>
+</div>
 
 * Bootstrap via shell script (fake.cmd/fake.sh),
-  see this [example project](https://github.com/matthid/fake-bootstrap)
+  see this [example project](https://github.com/FakeBuild/fake-bootstrap)
     <div class="alert alert-warning">
         <h5>WARNING</h5>
         <p>These scripts have no versioning story. You either need to take care of versions yourself (and lock them) or your builds might break on major releases.</p>
     </div>
 
-* Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/matthid/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/matthid/fake-bootstrap/blob/paket_clitool/build.proj) file.
+* Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
 
 ## Create and Edit scripts with Intellisense
 
 Once `fake` is available you can start creating your script:
 
 * Create a new file `myscript.fsx` with the following contents:
-
 ```fsharp
 #r "paket:
 nuget Fake.Core.Target prerelease"
@@ -358,7 +363,9 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 
 * Add more modules specific to your application and discover the Fake-APIs
 * look at the [quick start guide](fake-dotnetcore.html) which has the same information in a more dense form.
+* look at some of the samples in [FakeBuild](https://github.com/FakeBuild)
+* look at [FAKEs own build script](https://github.com/fsharp/FAKE/blob/master/build.fsx) or other examples across the F# ecosystem.
 * Add fake build scripts to your projects and let us know.
 * Automate stuff with FAKE and use standalone scripts.
-* Write your own modules and let us know.
+* Write your own modules and let us know - we love to add them to the nagivation or announce them on [twitter](https://twitter.com/fsharpMake).
 * Contribute :)

@@ -37,9 +37,11 @@ module Travis =
                     write false color true (sprintf "Build Number: %s" number)
                 | TraceData.TestStatus (test, status) ->
                     write false color true (sprintf "Test '%s' status: %A" test status)
+                | TraceData.BuildState state ->
+                    write false color true (sprintf "Build State: %A" state)
 
     let defaultTraceListener =
-      TravisTraceListener() :> ITraceListener
+        TravisTraceListener() :> ITraceListener
     let detect () =
         BuildServer.buildServer = BuildServer.Travis
     let install(force:bool) =

@@ -133,7 +133,7 @@ let nameParser scriptFileName =
         else None
     exampleName, fullName, parseName
 
-let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
+let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
     if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, _, parseName = nameParser context.Config.ScriptFilePath
 
@@ -154,13 +154,13 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
         | Some mainMethod ->
           try mainMethod.Invoke(null, [||])
               |> ignore
-              None
+              RunResult.SuccessRun c.Warnings
           with ex ->
-              Some ex
+              RunResult.RuntimeError ex
         | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 
 
-let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     let co = context.Config.CompileOptions
     let options =  co.FsiOptions
     if context.Config.VerboseLevel.PrintVerbose then
@@ -225,14 +225,14 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let result =
         try
             session.EvalScriptAsInteraction context.Config.ScriptFilePath
-            None
+            RunResult.SuccessRun ""
         with :? FsiEvaluationException as eval ->
-            Some (eval :> Exception)
+            RunResult.RuntimeError (eval :> Exception)
 
     let strFsiErrorOutput = fsiErrorOutput.ToString()
     handleCoreCaching context session strFsiErrorOutput, result
 
-let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     match cache with
     | Some c when context.Config.UseCache ->
         try c.AsResult, tryRunCached c context

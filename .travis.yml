@@ -15,7 +15,7 @@ mono:
   - 5.0.1
 
 script: 
-  - dotnet build build.proj /nologo /verbosity:minimal
+  - dotnet build build.proj /nologo /verbosity:minimal /p:Parallel=true
 
 branches:
   except:

@@ -121,6 +121,7 @@ type TraceData =
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan * TagStatus
+    | BuildState of TagStatus
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -132,6 +133,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
+        | BuildState _
         | CloseTag _ -> None
     member x.Message =
         match x with
@@ -144,6 +146,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
+        | BuildState _
         | CloseTag _ -> None
 
 module TraceData =
@@ -239,12 +242,20 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write importantMessagesToStdErr color true text
             | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                 write false color newLine text
+            | TraceData.OpenTag(KnownTags.Target _ as tag, description) ->
+                write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
+                if not (isNull description) then
+                    let msg = TraceData.TraceMessage("", true)
+                    let color2 = colorMap msg
+                    write false color2 true description
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time, status) ->
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
+            | TraceData.BuildState state ->
+                write false color true (sprintf "Changing BuildState to: %A" state)
             | TraceData.TestOutput (test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
             | TraceData.BuildNumber number ->
