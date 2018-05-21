@@ -323,7 +323,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
         |> Seq.map File.ReadAllText
         |> fun texts -> File.WriteAllText(fakeCacheContentsFile, String.Join("", texts))
         // write fakeCacheDepsFile
-        File.WriteAllLines(fakeCacheDepsFile, locations)
+        File.WriteAllLines(fakeCacheDepsFile, locations |> Seq.map (Path.fixPathForCache config.ScriptFilePath))
     
     let readFromCache () =
         File.ReadAllText fakeCacheFile
@@ -340,6 +340,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
         let inline dependencyCacheUpdated () =
             let contents =
                 File.ReadLines fakeCacheDepsFile
+                |> Seq.map (Path.readPathFromCache config.ScriptFilePath)
                 |> Seq.map (fun line -> if File.Exists line then Some (File.ReadAllText line) else None)
                 |> Seq.toList
             if contents |> Seq.exists Option.isNone then false

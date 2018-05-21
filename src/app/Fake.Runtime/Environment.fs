@@ -55,3 +55,4 @@ let environVarOrNone name =
 
 /// Returns if the build parameter with the given name was set
 let inline hasEnvironVar name = environVar name |> isNull |> not
+
