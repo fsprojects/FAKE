@@ -156,7 +156,7 @@ let runOrBuild (args : RunArguments) =
       let result =
         match runResult with
         | Runners.RunResult.SuccessRun warnings ->
-          if warnings <> "" && args.VerboseLevel.PrintNormal then
+          if warnings <> "" then
             traceFAKE "%O" warnings
           if args.VerboseLevel.PrintVerbose then log "Ready."
           true
