@@ -516,9 +516,9 @@ module Target =
         [<NoComparison>] 
         [<NoEquality>]      
         type RunnerHelper =
-            | GetNextTarget of TargetContext * AsyncReplyChannel<TargetContext * Async<Target option>>
+            | GetNextTarget of TargetContext * AsyncReplyChannel<Async<TargetContext * Target option>>
         type IRunnerHelper =
-            abstract GetNextTarget : TargetContext -> Async<TargetContext * Async<Target option>>
+            abstract GetNextTarget : TargetContext -> Async<TargetContext * Target option>
         let createCtxMgr (order:Target[] list) (ctx:TargetContext) =
             let body (inbox:MailboxProcessor<RunnerHelper>) = async {
                 let targetCount =
@@ -546,10 +546,10 @@ module Target =
                                 runningTasks
                                 |> List.filter (fun t -> not(known.ContainsKey t.Name))
                             if known.Count = targetCount then
-                                for (w:System.Threading.Tasks.TaskCompletionSource<Target option>) in waitList do
-                                    w.SetResult None
+                                for (w:System.Threading.Tasks.TaskCompletionSource<TargetContext * Target option>) in waitList do
+                                    w.SetResult (ctx, None)
                                 waitList <- []
-                                reply.Reply (ctx, async.Return None)
+                                reply.Reply (async.Return(ctx, None))
                             else
 
                                 let isRunnable (t:Target) =
@@ -570,7 +570,7 @@ module Target =
                                         | h :: restwait ->
                                             // fill some idle worker
                                             runningTasks <- t :: runningTasks
-                                            h.SetResult (Some t)
+                                            h.SetResult (ctx, Some t)
                                             waitList <- restwait
                                             getNextFreeRunableTarget rest
                                         | [] -> Some t
@@ -578,23 +578,26 @@ module Target =
                                 match getNextFreeRunableTarget runnable with
                                 | Some free ->
                                     runningTasks <- free :: runningTasks
-                                    reply.Reply (ctx, async.Return(Some free))
+                                    reply.Reply (async.Return(ctx, Some free))
                                 | None ->
                                     // queue work
-                                    let tcs = new TaskCompletionSource<Target option>()
+                                    let tcs = new TaskCompletionSource<TargetContext * Target option>()
                                     waitList <- waitList @ [ tcs ]
-                                    reply.Reply (ctx, tcs.Task |> Async.AwaitTask)
+                                    reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->
                     while true do
                         let! msg = inbox.Receive()
                         match msg with
                         | GetNextTarget (_, reply) ->
-                            reply.Reply (ctx, async { return raise <| exn("mailbox failed", e) })
+                            reply.Reply (async { return raise <| exn("mailbox failed", e) })
             }
 
             let mbox = MailboxProcessor.Start(body)
             { new IRunnerHelper with
-                member __.GetNextTarget (ctx) = mbox.PostAndAsyncReply(fun reply -> GetNextTarget(ctx, reply))
+                member __.GetNextTarget (ctx) = async {
+                    let! repl = mbox.PostAndAsyncReply(fun reply -> GetNextTarget(ctx, reply))
+                    return! repl
+                }
             }
 
         let runOptimal workerNum (order:Target[] list) targetContext =
@@ -602,14 +605,12 @@ module Target =
             let targetRunner () =
                 async {
                     let token = targetContext.CancellationToken
-                    let! (tctx, att) = mgr.GetNextTarget(targetContext)
-                    let! tt = att
+                    let! (tctx, tt) = mgr.GetNextTarget(targetContext)
                     let mutable ctx = tctx
                     let mutable nextTarget = tt
                     while nextTarget.IsSome && not token.IsCancellationRequested do
                         let newCtx = runSingleTarget nextTarget.Value ctx
-                        let! (tctx, att) = mgr.GetNextTarget(newCtx)
-                        let! tt = att
+                        let! (tctx, tt) = mgr.GetNextTarget(newCtx)
                         ctx <- tctx
                         nextTarget <- tt
                     return ctx
