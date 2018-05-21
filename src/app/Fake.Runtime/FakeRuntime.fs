@@ -612,7 +612,8 @@ let prepareAndRunScript (config:FakeConfig) : RunResult =
 let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
     match runResult with
     | Runners.RunResult.SuccessRun _ -> []
-    | Runners.RunResult.CompilationError err -> [
+    | Runners.RunResult.CompilationError err ->
+      [
         // Add some hints about the error, for example
         // detect https://github.com/fsharp/FAKE/issues/1783
         let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
@@ -622,7 +623,8 @@ let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
         if containsNotSupportOperator then
           yield "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators"
       ]
-    | Runners.RunResult.RuntimeError _ -> [
+    | Runners.RunResult.RuntimeError _ ->
+      [
         if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
           yield "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
         if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then

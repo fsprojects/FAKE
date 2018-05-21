@@ -317,7 +317,7 @@ module Target =
     /// List all targets available.
     let listAvailable() =
         Trace.log "The following targets are available:"
-        for t in getTargetDict().Values do
+        for t in getTargetDict().Values |> Seq.sortBy (fun t -> t.Name) do
             Trace.logfn "   %s%s" t.Name (match t.Description with Some s -> sprintf " - %s" s | _ -> "")
 
 
