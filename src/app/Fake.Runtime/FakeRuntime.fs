@@ -5,6 +5,7 @@ open System.IO
 open Fake.Runtime
 open Fake.Runtime.Runners
 open Paket
+open System
 
 type FakeSection =
  | PaketDependencies of Paket.Dependencies * Lazy<Paket.DependenciesFile> * group : String option
@@ -385,7 +386,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         let splits = line.Split(';')
         let isRef = bool.Parse splits.[0]
         let ver = splits.[1]
-        let loc = splits.[2]
+        let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
         let fullName = splits.[3]
         { IsReferenceAssembly = isRef
           Info =
@@ -395,12 +396,12 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
       |> Seq.toList
       
   let writeToCache (list:AssemblyData list) =
-      list 
+      list
       |> Seq.map (fun item -> 
         sprintf "%b;%s;%s;%s" 
             item.IsReferenceAssembly
             item.Info.Version
-            item.Info.Location
+            (Path.fixPathForCache config.ScriptFilePath item.Info.Location)
             item.Info.FullName)
       |> fun lines -> File.WriteAllLines(assemblyCacheFile, lines)
       File.Copy(lockFilePath.FullName, assemblyCacheHashFile, true)
@@ -521,7 +522,7 @@ let prepareFakeScript (config:FakeConfig) =
     let writeToCache (section : FakeSection option) =
         match section with 
         | Some (PaketDependencies(p, _, group)) ->
-            sprintf "paket: %s, %s" p.DependenciesFile (match group with | Some g -> g | _ -> "<null>")
+            sprintf "paket: %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>")
         | None -> "none"
         |> fun t -> File.WriteAllText(scriptSectionCacheFile, t)
         File.Copy (script, scriptSectionHashFile, true)
@@ -531,7 +532,7 @@ let prepareFakeScript (config:FakeConfig) =
         if t.StartsWith("paket:") then 
             let s = t.Substring("paket: ".Length)
             let splits = s.Split(',')
-            let depsFile = splits.[0]
+            let depsFile = Path.readPathFromCache config.ScriptFilePath splits.[0]
             let group =
                 let trimmed = splits.[1].Trim()
                 if trimmed = "<null>" then None else Some trimmed
@@ -611,7 +612,8 @@ let prepareAndRunScript (config:FakeConfig) : RunResult =
 let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
     match runResult with
     | Runners.RunResult.SuccessRun _ -> []
-    | Runners.RunResult.CompilationError err -> [
+    | Runners.RunResult.CompilationError err ->
+      [
         // Add some hints about the error, for example
         // detect https://github.com/fsharp/FAKE/issues/1783
         let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
@@ -621,7 +623,8 @@ let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
         if containsNotSupportOperator then
           yield "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators"
       ]
-    | Runners.RunResult.RuntimeError _ -> [
+    | Runners.RunResult.RuntimeError _ ->
+      [
         if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
           yield "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
         if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then

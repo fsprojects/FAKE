@@ -13,6 +13,13 @@ let run targetName =
         | Some context -> context
         | None -> failwithf "No context given!"
 
+let runParallel targetName =
+    try Target.runAndGetContext 3 targetName []
+    with | :? BuildFailedException as bfe ->
+        match bfe.Info with
+        | Some context -> context
+        | None -> failwithf "No context given!"
+
 open Fake.Core.TargetOperators
 
 let (|Target|) (t : Target) =
@@ -31,9 +38,14 @@ let DoNothing = ignore
 let determineBuildOrder a b = Target.determineBuildOrder a
 let validateBuildOrder a b = ignore a; ignore b
 
+let testCaseMultipleRuns name f = [
+    targetTestCase (sprintf "%s - run" name) <| fun c -> f run c 
+    targetTestCase (sprintf "%s - runParallel" name) <| fun c -> f runParallel c 
+]
+
 [<Tests>]
 let tests =
-  testList "Fake.Core.Target.Tests" [
+  testList "Fake.Core.Target.Tests" ([
     targetTestCase "check simple parallelism" <| fun _ ->
         Target.create "a" ignore
         Target.create "b" ignore
@@ -456,3 +468,134 @@ let tests =
       Expect.equal "Expected failure" true context.HasError
       Expect.equal "Expected context to contain both targets" 2 context.PreviousTargets.Length  // second one as "skipped"
   ]
+  @ ([
+      
+    testCaseMultipleRuns "Not activated final target does not run" <| fun myRun _ ->
+      Target.create "a" ignore
+      Target.create "b" ignore
+      Target.create "c" ignore
+      "a" ==> "b" ==> "c" |> ignore
+      let mutable finalTargetResult = 0
+      Target.createFinal "Final" (fun _ -> finalTargetResult <- 1)
+            
+      let context = myRun "c"
+      let actualOrder = 
+        context.PreviousTargets
+        |> List.map (fun tr -> tr.Target.Name)
+      let expectedOrder = ["a";"b";"c"]    
+      Expect.equal "Expected context to contain 3 targets" 3 context.PreviousTargets.Length 
+      Expect.equal "Expected context to contain 3 targets in right order" expectedOrder actualOrder
+      Expect.equal "Expected final target to not run" 0 finalTargetResult
+
+    testCaseMultipleRuns "Final targets run after all targets" <| fun myRun _ ->
+      Target.create "a" DoNothing
+      Target.create "b" DoNothing
+      Target.create "c" DoNothing
+      "a" ==> "b" ==> "c" |> ignore
+      let mutable finalTargetResult = 0
+      Target.createFinal "Final" (fun _ -> finalTargetResult <- 1)
+      Target.createFinal "Final2" (fun _ -> finalTargetResult <- finalTargetResult+1)
+      Target.activateFinal "Final"
+      Target.activateFinal "Final2"
+      let context = myRun "c"
+      let actualOrder = 
+        context.PreviousTargets
+        |> List.map (fun tr -> tr.Target.Name)
+      let expectedOrder = ["a";"b";"c";"Final";"Final2"]    
+      Expect.equal "Expected context to contain 5 targets" 5 context.PreviousTargets.Length 
+      Expect.equal "Expected context to contain 5 targets in right order" expectedOrder actualOrder
+      Expect.equal "Expected final targets to run" 2 finalTargetResult
+
+    testCaseMultipleRuns "BuildFailure targets do not run if nothing fails" <| fun myRun _ ->
+      Target.create "a" ignore
+      Target.create "b" ignore
+      Target.create "c" ignore
+      "a" ==> "b" ==> "c" |> ignore
+      let mutable failureTargetResult = 0
+      Target.createBuildFailure "FailureTarget" (fun _ -> failureTargetResult <- 1)
+      Target.activateBuildFailure "FailureTarget"     
+      let context = myRun "c"
+      let actualOrder = 
+        context.PreviousTargets
+        |> List.map (fun tr -> tr.Target.Name)
+      let expectedOrder = ["a";"b";"c"]    
+      Expect.equal "Expected context to contain 3 targets" 3 context.PreviousTargets.Length 
+      Expect.equal "Expected context to contain 3 targets in right order" expectedOrder actualOrder
+      Expect.equal "Expected buildFailure target to not run" 0 failureTargetResult
+
+    testCaseMultipleRuns "BuildFailure targets do not run if not activated" <| fun myRun _ ->
+      Target.create "a" ignore
+      Target.create "b" (fun _ -> failwith "failed dependency")
+      Target.create "c" ignore
+      "a" ==> "b" ==> "c" |> ignore
+      let mutable failureTargetResult = 0
+      Target.createBuildFailure "FailureTarget" (fun _ -> failureTargetResult <- 1)
+      
+      let context = myRun "c"
+      let actualOrder = 
+        context.PreviousTargets
+        |> List.map (fun tr -> tr.Target.Name)
+      let expectedOrder = ["a";"b";"c"]    
+      Expect.equal "Expected context to contain 3 targets" 3 context.PreviousTargets.Length 
+      Expect.equal "Expected context to contain 3 targets in right order" expectedOrder actualOrder
+      Expect.equal "Expected buildFailure target to not run" 0 failureTargetResult
+
+    testCaseMultipleRuns "BuildFailure targets run after failing targets" <| fun myRun _ ->
+      Target.create "a" DoNothing
+      Target.create "b" (fun _ -> failwith "failed dependency")
+      Target.create "c" DoNothing
+      "a" ==> "b" ==> "c" |> ignore
+      let mutable failureTargetResult = 0
+      Target.createBuildFailure "FailureTarget" (fun _ -> failureTargetResult <- 1)
+      Target.createBuildFailure "FailureTarget2" (fun _ -> failureTargetResult <- failureTargetResult+1)
+      Target.activateBuildFailure "FailureTarget"
+      Target.activateBuildFailure "FailureTarget2"
+      let context = myRun "c"
+      let actualOrder = 
+        context.PreviousTargets
+        |> List.map (fun tr -> tr.Target.Name)
+      let expectedOrder = ["a";"b";"c";"FailureTarget";"FailureTarget2"]
+      let bResult = 
+        context.PreviousTargets
+        |> List.find (fun tr -> tr.Target.Name="b")
+      let cResult = 
+        context.PreviousTargets
+        |> List.find (fun tr -> tr.Target.Name="c")  
+      Expect.equal "Expected failure" true context.HasError  
+      Expect.equal "Expected second target to skip after failure" true context.HasError  
+      Expect.equal "Expected context to contain 5 targets" 5 context.PreviousTargets.Length 
+      Expect.equal "Expected context to contain 5 targets in right order" expectedOrder actualOrder
+      Expect.isSome "Expected target b to error" bResult.Error
+      Expect.isTrue "Expected target c to skip" cResult.WasSkipped
+      Expect.equal "Expected buildFailure targets to run" 2 failureTargetResult
+
+
+    testCaseMultipleRuns "Final targets run after failing targets" <| fun myRun _ ->
+      Target.create "a" DoNothing
+      Target.create "b" (fun _ -> failwith "failed dependency")
+      Target.create "c" DoNothing
+      "a" ==> "b" ==> "c" |> ignore
+      let mutable finalTargetResult = 0
+      Target.createFinal "Final" (fun _ -> finalTargetResult <- 1)
+      Target.createFinal "Final2" (fun _ -> finalTargetResult <- finalTargetResult+1)
+      Target.activateFinal "Final"
+      Target.activateFinal "Final2"
+      let context = myRun "c"
+      let actualOrder = 
+        context.PreviousTargets
+        |> List.map (fun tr -> tr.Target.Name)
+      let expectedOrder = ["a";"b";"c";"Final";"Final2"]
+      let bResult = 
+        context.PreviousTargets
+        |> List.find (fun tr -> tr.Target.Name="b")
+      let cResult = 
+        context.PreviousTargets
+        |> List.find (fun tr -> tr.Target.Name="c")    
+      Expect.equal "Expected failure" true context.HasError  
+      Expect.equal "Expected second target to skip after failure" true context.HasError  
+      Expect.equal "Expected context to contain 5 targets" 5 context.PreviousTargets.Length 
+      Expect.equal "Expected context to contain 5 targets in right order" expectedOrder actualOrder
+      Expect.isSome "Expected target b to error" bResult.Error
+      Expect.isTrue "Expected target c to skip" cResult.WasSkipped
+      Expect.equal "Expected final targets to run" 2 finalTargetResult
+  ] |> List.concat))

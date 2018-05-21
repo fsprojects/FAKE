@@ -276,7 +276,9 @@ let findAndLoadInRuntimeDepsCached =
         let result = assemblyCache.GetOrAdd(name.Name, (fun _ ->
             wasCalled <- true
             findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
-        if not wasCalled then
+        if wasCalled && isNull result then
+            failwithf "Could not load '%A'.\nFull framework assemblies are not supported!\nYou might try to load a legacy-script with the new netcore runner.\nPlease take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html" name
+        if not wasCalled && not (isNull result) then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
             if logLevel.PrintVerbose then 
@@ -307,7 +309,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     
     let getHashUncached () =
         //TODO this is only calculating the hash for the input file, not anything #load-ed
-        let allScriptContents = getAllScripts config.CompileOptions.FsiOptions.Defines config.ScriptTokens config.ScriptFilePath
+        let allScriptContents = getAllScripts config.CompileOptions.FsiOptions.Defines config.ScriptTokens.Value config.ScriptFilePath
         let getOpts (c:CompileOptions) = c.FsiOptions.AsArgs // @ c.CompileReferences
         allScriptContents, getScriptHash allScriptContents (getOpts config.CompileOptions)
     
@@ -321,7 +323,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
         |> Seq.map File.ReadAllText
         |> fun texts -> File.WriteAllText(fakeCacheContentsFile, String.Join("", texts))
         // write fakeCacheDepsFile
-        File.WriteAllLines(fakeCacheDepsFile, locations)
+        File.WriteAllLines(fakeCacheDepsFile, locations |> Seq.map (Path.fixPathForCache config.ScriptFilePath))
     
     let readFromCache () =
         File.ReadAllText fakeCacheFile
@@ -338,6 +340,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
         let inline dependencyCacheUpdated () =
             let contents =
                 File.ReadLines fakeCacheDepsFile
+                |> Seq.map (Path.readPathFromCache config.ScriptFilePath)
                 |> Seq.map (fun line -> if File.Exists line then Some (File.ReadAllText line) else None)
                 |> Seq.toList
             if contents |> Seq.exists Option.isNone then false

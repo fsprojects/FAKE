@@ -34,7 +34,7 @@ let private sameLevels =
 /// Specifies that two targets are on the same level of execution
 let internal targetsAreOnSameLevel x y =
     match sameLevels().TryGetValue y with
-    | true, z -> ()
+    | true, _ -> ()
     | _  -> sameLevels().[y] <- x
 
 /// Specifies that two targets have the same dependencies

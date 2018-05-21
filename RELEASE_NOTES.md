@@ -1,5 +1,14 @@
 # Release Notes
 
+## 5.0.0-rc016 - 2018-05-21
+
+* ENHANCEMENT: Make caches more portable - https://github.com/fsharp/FAKE/issues/1924
+* ENHANCEMENT: Handle Ctrl+C to properly shutdown (for example run final targets) - https://github.com/fsharp/FAKE/pull/1946
+* ENHANCEMENT: Add `Target.deactivateBuildFailure` and `Target.deactivateFinal` - https://github.com/fsharp/FAKE/pull/1949
+* BUGFIX: Fake had problems with `#load` directives in some scenarios - https://github.com/fsharp/FAKE/issues/1947
+* BUGFIX: Parallel Builds on Team-Foundation would sometimes fail because of racy output of `#vso[]` commands - https://github.com/fsharp/FAKE/pull/1949
+* BUGFIX: Parallel runner would run more targets than needed in error case - https://github.com/fsharp/FAKE/pull/1949
+
 ## 5.0.0-rc015 - 2018-05-21
 
 * FAKE5: Global dotnet cli-tool `fake-cli` - https://github.com/fsharp/FAKE/pull/1932
@@ -22,9 +31,9 @@
 
 * ENHANCEMENT: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
 * FAKE5: Xake now supports FAKE 5 and is advertised as module - https://github.com/xakebuild/Xake
-- ENHANCEMENT: Parallelize targets even more - https://github.com/fsharp/FAKE/pull/1934
-- COSMETICS: Targets are always shown as "failed" - https://github.com/fsharp/FAKE/issues/1929
-- COSMETICS: Target description was printed twice - https://github.com/fsharp/FAKE/issues/1931
+* ENHANCEMENT: Parallelize targets even more - https://github.com/fsharp/FAKE/pull/1934
+* COSMETICS: Targets are always shown as "failed" - https://github.com/fsharp/FAKE/issues/1929
+* COSMETICS: Target description was printed twice - https://github.com/fsharp/FAKE/issues/1931
 
 ## 5.0.0-rc012 - 2018-05-12
 

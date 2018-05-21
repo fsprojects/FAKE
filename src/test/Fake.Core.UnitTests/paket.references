@@ -1,5 +1,6 @@
 group netcore
 
+Paket.Core
 FSharp.Core
 NETStandard.Library
 Expecto
