@@ -21,26 +21,25 @@ module DotNet =
     open Newtonsoft.Json.Linq
     open System
 
-    /// .NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location.
+    /// .NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet)). Update this to redirect all tool commands to different location.
     let internal defaultDotNetCliDir =
         if Environment.isUnix
-        then Environment.environVar "HOME" @@ ".dotnet"
-        else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
+        then "/usr/local/share/dotnet"
+        else @"C:\Program Files\dotnet"
 
-    /// Get dotnet cli executable path
+    /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
     /// ## Parameters
     ///
     /// - 'dotnetCliDir' - dotnet cli install directory
-
     let private tryDotnetCliPath dotnetCliDir = 
         let defaultCliPath = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
         match File.Exists defaultCliPath with
         | true -> Some defaultCliPath
-        | _ -> 
-            Process.tryFindFileOnPath "dotnet"
-                |> function
-                    | Some dotnet when File.Exists dotnet -> Some dotnet
-                    | _ -> None
+        | _ ->
+            match Process.tryFindFileOnPath "dotnet" with
+            | Some dotnet when File.Exists dotnet -> Some dotnet
+            | _ -> None
+
     let private dotnetCliPath dotnetCliDir =
         match tryDotnetCliPath dotnetCliDir with
         | Some dotnet -> dotnet
