@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.0.0-rc017 - 2018-05-22
+
+* ENHANCEMENT: Mark `Target.DoNothing` as obsolete
+* ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
+
 ## 5.0.0-rc016 - 2018-05-21
 
 * ENHANCEMENT: Make caches more portable - https://github.com/fsharp/FAKE/issues/1924
@@ -427,7 +432,7 @@
 * Allow REST calls without credentials
 
 #### 4.64.6 - 2018-02-21
-* ConvertFileFromWin7ToWin8 reads file line by line 
+* ConvertFileFromWin7ToWin8 reads file line by line
 
 ## 4.64.4 - 2018-01-17
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758

@@ -218,6 +218,7 @@ module Target =
           |> sprintf "(?=> %s)"
 
     /// Do nothing - Can be used to define empty targets.
+    [<Obsolete("Use ignore instead")>]
     let DoNothing = (fun (_:TargetParameter) -> ())
 
     /// Checks whether the dependency (soft or normal) can be added.
