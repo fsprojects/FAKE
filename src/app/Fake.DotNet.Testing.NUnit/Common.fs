@@ -17,19 +17,19 @@ open Fake
 type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
 /// Process model for nunit to use, see [Project Editor](http://www.nunit.org/index.php?p=projectEditor&r=2.6.4)
-type NUnitProcessModel = 
+type NUnitProcessModel =
     | DefaultProcessModel
     | SingleProcessModel
     | SeparateProcessModel
-    | MultipleProcessModel with 
+    | MultipleProcessModel with
     member x.ParamString =
         match x with
         | DefaultProcessModel -> ""
         | SingleProcessModel -> "Single"
-        | SeparateProcessModel -> "Separate" 
+        | SeparateProcessModel -> "Separate"
         | MultipleProcessModel -> "Multiple"
 /// The /domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
-type NUnitDomainModel = 
+type NUnitDomainModel =
     /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
     /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
@@ -49,8 +49,8 @@ type NUnitDomainModel =
 /// FAKE will use [NUnitDefaults](fake-nunitcommon.html) for values not provided.
 ///
 /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
-type NUnitParams = 
-    { 
+type NUnitParams =
+    {
       /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.
       IncludeCategory : string
 
@@ -68,6 +68,9 @@ type NUnitParams =
 
       /// Causes execution of the test run to terminate immediately on the first test failure or error.
       StopOnError : bool
+
+      /// Gives ability to not error if an assembly with no tests is passed into nunit
+      SkipNonTestAssemblies : bool
 
       /// The output path of the nUnit XML report.
       OutputFile : string
@@ -102,11 +105,11 @@ type NUnitParams =
       /// See [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).
       Domain : NUnitDomainModel
       /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
-      ErrorLevel : NUnitErrorLevel 
+      ErrorLevel : NUnitErrorLevel
       /// Default: ""
       Fixture: string}
 
-/// The [NUnitParams](fake-nunitcommon-nunitparams.html) default parameters. 
+/// The [NUnitParams](fake-nunitcommon-nunitparams.html) default parameters.
 ///
 /// ## Defaults
 /// - `IncludeCategory` - `""`
@@ -115,6 +118,7 @@ type NUnitParams =
 /// - `ToolName` - `"nunit-console.exe"`
 /// - `DontTestInNewThread`- `false`
 /// - `StopOnError` - `false`
+/// - `SkipNonTestAssemblies` - `false`
 /// - `OutputFile` - `"TestResult.xml"`
 /// - `Out` - `""`
 /// - `ErrorOutputFile` - `""`
@@ -128,7 +132,7 @@ type NUnitParams =
 /// - `Domain` - `DefaultDomainModel`
 /// - `ErrorLevel` - `Error`
 /// - `Fixture` - `""`
-let NUnitDefaults = 
+let NUnitDefaults =
     let toolname = "nunit-console.exe"
     { IncludeCategory = ""
       ExcludeCategory = ""
@@ -136,6 +140,7 @@ let NUnitDefaults =
       ToolName = toolname
       DontTestInNewThread = false
       StopOnError = false
+      SkipNonTestAssemblies = false
       OutputFile = Fake.IO.Shell.pwd() @@ "TestResult.xml"
       Out = ""
       ErrorOutputFile = ""
@@ -147,18 +152,19 @@ let NUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
       Domain = DefaultDomainModel
-      ErrorLevel = Error 
+      ErrorLevel = Error
       Fixture = ""}
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let internal buildNUnitdArgs parameters assemblies = 
+let internal buildNUnitdArgs parameters assemblies =
     new StringBuilder()
     |> StringBuilder.append "-nologo"
     |> StringBuilder.appendIfTrue parameters.DisableShadowCopy "-noshadow"
     |> StringBuilder.appendIfTrue parameters.ShowLabels "-labels"
     |> StringBuilder.appendIfTrue parameters.DontTestInNewThread "-nothread"
     |> StringBuilder.appendIfTrue parameters.StopOnError "-stoponerror"
+    |> StringBuilder.appendIfTrue parameters.SkipNonTestAssemblies "-skipnontestassemblies"
     |> StringBuilder.appendFileNamesIfNotNull assemblies
     |> StringBuilder.appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
     |> StringBuilder.appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
@@ -174,15 +180,15 @@ let internal buildNUnitdArgs parameters assemblies =
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
-let getWorkingDir parameters = 
+let getWorkingDir parameters =
     Seq.find String.isNotNullOrEmpty [ parameters.WorkingDir
                                        Fake.Core.Environment.environVar ("teamcity.build.workingDir")
                                        "." ]
     |> Path.GetFullPath
 
-/// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
+/// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise.
 /// Zero means that all tests passed.
-let (|OK|TestsFailed|FatalError|) errorCode = 
+let (|OK|TestsFailed|FatalError|) errorCode =
     match errorCode with
     | 0 -> OK
     | -1 -> FatalError "InvalidArg"
