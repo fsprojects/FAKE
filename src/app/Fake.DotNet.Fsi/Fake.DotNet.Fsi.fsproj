@@ -13,7 +13,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="FsiParams.fs" />
-    <Compile Include="Fsi.fs" />
+    <Compile Include="FsiExe.fs" />
     <!-- <Compile Include="FsiShell.fs" /> -->
   </ItemGroup>
   <ItemGroup>

@@ -3,124 +3,12 @@
 module Fake.DotNet.Fsi.Exe
 
 open System
-open System.IO
 open System.Threading
-open System.Text.RegularExpressions
-open System.Xml.Linq
 open Fake.Core
-open Fake.IO
 open Fake.DotNet
 open Fake.Tools
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\10.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
-
-let createDirectiveRegex id =
-    Regex("^\s*#" + id + "\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", RegexOptions.Compiled ||| RegexOptions.Multiline)
-
-let loadRegex = createDirectiveRegex "load"
-let rAssemblyRegex = createDirectiveRegex "r"
-let searchPathRegex = createDirectiveRegex "I"
-
-let private extractDirectives (regex : Regex) scriptContents =
-    regex.Matches scriptContents
-    |> Seq.cast<Match>
-    |> Seq.map(fun m -> m.Groups.Item("path").Value)
-
-
-type Script = {
-    Content : string
-    Location : string
-    SearchPaths : string seq
-    IncludedAssemblies : Lazy<string seq>
-}
-
-let getAllScriptContents (pathsAndContents : seq<Script>) =
-    pathsAndContents |> Seq.map(fun s -> s.Content)
-
-let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
-
-let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
-
-let rec getAllScripts scriptPath : seq<Script> =
-    let scriptContents = File.ReadAllText scriptPath
-    let searchPaths = getSearchPaths scriptContents |> Seq.toList
-
-    let loadedContents =
-        extractDirectives loadRegex scriptContents
-        |> Seq.collect (fun path ->
-            if path.StartsWith ".fake" then
-                Seq.empty
-            else
-                let path =
-                    if Path.IsPathRooted path then
-                        path
-                    else
-                        let pathMaybe =
-                            ["./"] @ searchPaths
-                            |> List.map(fun searchPath ->
-                                if Path.IsPathRooted searchPath then
-                                    Path.Combine(searchPath, path)
-                                else
-                                    Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
-                            |> List.tryFind File.Exists
-
-                        match pathMaybe with
-                        | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
-                        | Some x -> x
-                getAllScripts path
-        )
-    let s =
-      { Location = scriptPath
-        Content = scriptContents
-        SearchPaths = searchPaths
-        IncludedAssemblies = lazy(getIncludedAssembly scriptContents) }
-    Seq.concat [List.toSeq [s]; loadedContents]
-    
-
-module internal Cache =
-    let xname name = XName.Get(name)
-    let create (loadedAssemblies : Reflection.Assembly seq) =
-        let xelement name = XElement(xname name)
-        let xattribute name value = XAttribute(xname name, value)
-
-        let doc = XDocument()
-        let root = xelement "FAKECache"
-        doc.Add(root)
-        let assemblies = xelement "Assemblies"
-        root.Add(assemblies)
-
-        let assemNodes =
-            loadedAssemblies
-            |> Seq.map(fun assem ->
-                let ele = xelement "Assembly"
-                ele.Add(xattribute "Location" assem.Location)
-                ele.Add(xattribute "FullName" assem.FullName)
-                ele.Add(xattribute "Version" (assem.GetName().Version.ToString()))
-                ele)
-            |> Seq.iter(assemblies.Add)
-        doc
-
-    type AssemblyInfo = {
-        Location : string
-        FullName : string
-        Version : string
-    }
-
-    type CacheConfig = {
-        Assemblies : AssemblyInfo seq
-    }
-    let read (path : string) : CacheConfig =
-        let doc = XDocument.Load(path)
-        //let root = doc.Descendants() |> Seq.exactlyOne
-        let assembliesEle = doc.Descendants(xname "Assemblies") |> Seq.exactlyOne
-        let assemblies =
-            assembliesEle.Descendants()
-            |> Seq.map(fun assemblyEle ->
-                let get name = assemblyEle.Attribute(xname name).Value
-                { Location = get "Location"
-                  FullName = get "FullName"
-                  Version = get "Version" })
-        { Assemblies = assemblies }
 
 /// The path to the F# Interactive tool.
 let fsiPath =
