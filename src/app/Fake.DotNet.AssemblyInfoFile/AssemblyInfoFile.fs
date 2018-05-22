@@ -363,9 +363,28 @@ module AssemblyInfoFile =
             |> Seq.cast<Match>
             |> Seq.map
                 (fun m ->
-                    let v = m.Groups.["value"].Value
+                    let v = m.Groups.["value"].Value.Trim([|'"'|])
+                    let n = m.Groups.["name"].Value |> removeAtEnd "Attribute"
                     let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
-                    Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute", v.Trim([|'"'|]), "", t)
+                    match n.ToLower() with
+                    | "assemblycompany" -> Company(v)
+                    | "assemblyproduct" -> Product(v)
+                    | "assemblycopyright" -> Copyright(v)
+                    | "assemblytitle" > Title(v)
+                    | "assemblydescription" > Description(v)
+                    | "assemblyculture" > Culture(v)
+                    | "assemblyconfiguration" > Configuration(v)
+                    | "assemblytrademark" > Trademark(v)
+                    | "assemblyversion" > Version(v)
+                    | "assemblykeyfile" > KeyFile(v)
+                    | "assemblykeyname" > KeyName(v)
+                    | "assemblyinformationalversion" > InformationalVersion(v)
+                    | "assemblydelaysign" > AssemblyDelaySign(v)
+                    | "internalsvisibleto" > InternalsVisibleTo(v)
+                    | "guid" > Guid(v)
+                    | "comvisible" > ComVisible(v)
+                    | "clscompliant" > CLSCompliant(v)
+                    | _ -> Attribute(n, v, "", t)
                 )
 
     /// Read a single attribute from an AssemblyInfo file.
