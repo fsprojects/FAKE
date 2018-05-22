@@ -316,7 +316,7 @@ module DotNet =
             Process.stringParam ("Channel", channelParamValue)
             Process.stringParam ("Version", versionParamValue)
             Process.optionParam ("Architecture", architectureParamValue |> Option.map Process.quote)
-            Process.optionParam ("InstallDir", param.CustomInstallDir |> Option.map Process.quote) 
+            Process.stringParam ("InstallDir", (defaultArg param.CustomInstallDir defaultDotNetCliDir) |> Process.quote)
             Process.boolParam ("DebugSymbols", param.DebugSymbols)
             Process.boolParam ("DryRun", param.DryRun)
             Process.boolParam ("NoPath", param.NoPath)
