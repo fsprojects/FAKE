@@ -170,6 +170,7 @@ module AssemblyInfoFile =
     let private getDependencies attributes =
         attributes
         |> Seq.map (fun (attr : Attribute) -> attr.Namespace)
+        |> Seq.filter(fun x -> not(String.IsNullOrWhiteSpace x))
         |> Set.ofSeq
         |> Seq.toList
 
