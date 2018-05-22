@@ -629,10 +629,6 @@ module DotNet =
                 })) |> ignore
             failwithf ".NET Core SDK install failed with code %i" exitCode
     
-        let dir =
-            match param.CustomInstallDir with
-            | Some installDir -> installDir
-            | None -> defaultDotNetCliDir
         let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
         Trace.tracefn ".NET Core SDK installed to %s" exe     
         (fun opt -> { opt with DotNetCliPath = exe})
