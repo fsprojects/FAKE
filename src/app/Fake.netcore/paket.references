@@ -5,3 +5,5 @@ Paket.Core
 Mono.Cecil
 Microsoft.NETCore.App
 NETStandard.Library
+
+Packaging.Targets 

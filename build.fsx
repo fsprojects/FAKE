@@ -1089,101 +1089,30 @@ Target.create "CheckReleaseSecrets" (fun _ ->
         secret.Force() |> ignore
 )
 
-let executeFPM args workingDir =
-    printfn "%s %s" "fpm" args
-    Shell.Exec("fpm", args=args, dir=workingDir)
-
-
-type SourceType =
-    | Dir of source:string * target:string
-type DebPackageManifest =
-    {
-        SourceType : SourceType
-        Name : string
-        Version : string
-        Architecture : string
-        Dependencies : (string * string option) list
-        BeforeInstall : string option
-        AfterInstall : string option
-        ConfigFile : string option
-        AdditionalOptions: string list
-        AdditionalArgs : string list
-    }
-(*
-See https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html
-Ask @theangrybyrd (slack)
-
-
-{
-    SourceType = Dir("./MyCoolApp", "/opt/")
-    Name = "mycoolapp"
-    Version = originalVersion
-    Dependencies = [("mono-devel", None)]
-    BeforeInstall = "../deploy/preinst" |> Some
-    AfterInstall = "../deploy/postinst" |> Some
-    ConfigFile = "/etc/mycoolapp/default.conf" |> Some
-    AdditionalOptions = []
-    AdditionalArgs =
-        [ "../deplo/mycoolapp.service=/lib/systemd/system/" ]
-}
-23:08
-so thats stuff i you want to setup like users or what not
-23:09
-adding to your path would be in the after script postinst
-23:10
-setting permissions also, its just a shell script
-23:10
-might also want a prerm and postrm if you want to play nice on cleanup
-*)
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
-    let createDebianPackage (manifest : DebPackageManifest) workingDir =
-        let argsList = ResizeArray<string>()
-        argsList.Add <| match manifest.SourceType with
-                        | Dir (_) -> "-s dir"
-        argsList.Add <| sprintf "-a %s" manifest.Architecture
-        argsList.Add <| "-t deb"
-        argsList.Add <| "-f"
-        argsList.Add <| (sprintf "-n %s" manifest.Name)
-        argsList.Add <| (sprintf "-v %s" (manifest.Version.Replace("-","~")))
-        let dependency name version =
-            match version with
-            | Some v -> sprintf "-d %s %s" name v
-            | None  -> sprintf "-d %s" name
-        argsList.AddRange <| (Seq.map(fun (a,b) -> dependency a b) manifest.Dependencies)
-        manifest.BeforeInstall |> Option.iter(sprintf "--before-install %s" >> argsList.Add)
-        manifest.AfterInstall |> Option.iter(sprintf "--after-install %s" >> argsList.Add)
-        manifest.ConfigFile |> Option.iter(sprintf "--config-files %s" >> argsList.Add)
-        argsList.AddRange <| manifest.AdditionalOptions
-        argsList.Add <| match manifest.SourceType with
-                        | Dir (source,target) -> sprintf "%s=%s" source target
-        argsList.AddRange <| manifest.AdditionalArgs
-        let args  = argsList |> String.concat " "
-        if executeFPM args workingDir <> 0 then
-            failwith "Failed creating deb package"
+    DotNet.restore (fun opt ->
+        { opt with 
+            Common = { opt.Common with WorkingDirectory = "src/app/Fake.netcore/" } |> dtntSmpl
+            Runtime = Some "linux-x64"}) "Fake.netcore.fsproj"
+    let args = 
+        [
+            sprintf "/t:%s" "CreateDeb"  
+            sprintf "/p:TargetFramework=%s" "netcoreapp2.0" 
+            sprintf "/p:RuntimeIdentifier=%s" "linux-x64" 
+            sprintf "/p:Configuration=%s" "Release" 
+            sprintf "/p:PackageVersion=%s" release.NugetVersion
+        ] |> String.concat " "
+    let result =
+        DotNet.exec (fun opt ->
+            { opt with
+                WorkingDirectory = "src/app/Fake.netcore/" } |> dtntSmpl
+        ) "msbuild" args
+    if result.OK |> not then
+        failwith "Debian package creation failed"
 
-    let manifest = {
-        SourceType = Dir(".", "/opt/fake")
-        Name = "fake"
-        Version =  release.NugetVersion
-        Architecture = "amd64"
-        Dependencies = [
-            // https://github.com/dotnet/cli/issues/3390#issuecomment-282488747
-            ("libunwind8", None) 
-            // https://stackoverflow.com/a/49744600/890736
-            ("icu-devtools", None) 
-        ]
-        BeforeInstall =__SOURCE_DIRECTORY__ @@ "packaging/debian/preinst" |> Some
-        AfterInstall = __SOURCE_DIRECTORY__ @@ "packaging/debian/postinst" |> Some
-        ConfigFile = None
-        AdditionalOptions = []
-        AdditionalArgs =
-            [  ]
-    }
-    
-    __SOURCE_DIRECTORY__ @@ "nuget/dotnetcore/Fake.netcore/linux-x64"
-    |> createDebianPackage manifest 
-    
+    [(sprintf "src/app/Fake.netcore/bin/Release/netcoreapp2.0/linux-x64/fake-cli.%s.linux-x64.deb" release.NugetVersion)]   
+    |> Shell.copy artifactsDir   
 
 )
 
@@ -1512,7 +1441,7 @@ let prevDocs =
     ==> "CreateNuGet"
     ==> "CopyLicense"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
-    =?> ("DotNetCoreCreateDebianPackage", Environment.isWindows |> not)
+    ==> "DotNetCoreCreateDebianPackage"
     =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
 (if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
