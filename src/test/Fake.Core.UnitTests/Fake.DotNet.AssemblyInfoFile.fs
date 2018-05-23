@@ -8,7 +8,7 @@ open System.IO
 let currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
 let testFile fileName = Path.Combine(currentDir, "TestFiles", "Fake.DotNet.AssemblyInfoFile", fileName)
 
-let attributeByName info name = info |> Seq.filter(fun a -> a.Name = name) |> Seq.head    
+let attributeByName (info:seq<AssemblyInfoFile.Attribute>) name = info |> Seq.filter(fun a -> a.Name = name) |> Seq.head    
 
 [<Tests>]
 let tests =
