@@ -17,7 +17,7 @@ let nextManifestPath = Environment.environVarOrDefault "NEXT_MANIFEST_PATH" Stri
 /// Used by KuduSync for tracking and diffing deployments.
 let previousManifestPath = Environment.environVarOrDefault "PREVIOUS_MANIFEST_PATH" String.Empty
 /// The path to the KuduSync application.
-let kuduPath = (Environment.environVarOrDefault "GO_WEB_CONFIG_TEMPLATE" ".") |> DirectoryInfo.ofPath
+let kuduPath = (Environment.environVarOrDefault "GO_WEB_CONFIG_TEMPLATE" ".") |> Path.GetDirectoryName 
 
 /// The different types of web jobs.
 type WebJobType = Scheduled | Continuous
@@ -55,7 +55,7 @@ let kuduSync() =
     let result =
         Process.execWithResult(fun psi ->
             { psi with
-                FileName = Path.Combine(kuduPath.FullName, "kudusync.cmd")
+                FileName = Path.Combine(kuduPath, "kudusync.cmd")
                 Arguments = sprintf """-v 50 -f "%s" -t "%s" -n "%s" -p "%s" -i ".git;.hg;.deployment;deploy.cmd""" deploymentTemp deploymentTarget nextManifestPath previousManifestPath })
             (TimeSpan.FromMinutes 5.)
     result.Results |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
