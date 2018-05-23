@@ -11,7 +11,7 @@
             "presentation": {
                 "reveal": "always"
             },
-            "problemMatcher": "$msCompile",
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "dotnet:run:unitTests",            
@@ -21,7 +21,7 @@
             "presentation": {
                 "reveal": "always"
             },
-            "problemMatcher": "$msCompile",
+            "problemMatcher": "$msCompile"
         }
     ]
 }
