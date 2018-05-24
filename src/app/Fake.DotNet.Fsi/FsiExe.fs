@@ -3,15 +3,15 @@
 module Fake.DotNet.Fsi.Exe
 
 open System
-open System.Threading
 open Fake.Core
 open Fake.DotNet
 open Fake.Tools
+open Fake.DotNet.Fsi.Params
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\10.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
 /// The path to the F# Interactive tool.
-let fsiPath =
+let private pathToFsiExe =
     let ev = Environment.environVar "FSI"
     if not (String.isNullOrEmpty ev) then ev else
     if Environment.isUnix then
@@ -30,66 +30,44 @@ let fsiPath =
         // if fi.Exists then fi.FullName else
         Process.findPath "FSIPath" FSIPath "fsi.exe"
 
-type FsiArgs =
-    FsiArgs of string list * string * string list with
-    static member Parse (args:string array) =
-        //Find first arg that does not start with - (as these are fsi options that precede the fsx).
-        match args |> Array.tryFindIndex (fun arg -> not <| arg.StartsWith("-") ) with
-        | Some(i) ->
-            let fsxPath = args.[i]
-            if fsxPath.EndsWith(".fsx", StringComparison.OrdinalIgnoreCase) then
-                let fsiOpts = if i > 0 then args.[0..i-1] else [||]
-                let scriptArgs = if args.Length > (i+1) then args.[i+1..] else [||]
-                Choice1Of2(FsiArgs(fsiOpts |> List.ofArray, fsxPath, scriptArgs |> List.ofArray))
-            else Choice2Of2(sprintf "Expected argument %s to be the build script path, but it does not have the .fsx extension." fsxPath)
-        | None -> Choice2Of2("Unable to locate the build script path.")
+/// Gets the default environment variables and additionally appends user defined vars to it
+let private defaultEnvironmentVars environmentVars = 
+    [
+        ("MSBuild", MSBuild.msBuildExe)
+        ("GIT", Git.CommandHelper.gitPath)
+        // ("FSI", findFsiPath )
+    ]
+    |> Seq.append environmentVars
 
-let private fsiStartInfo workingDirectory (FsiArgs(fsiOptions, scriptPath, scriptArgs)) environmentVars =
-    let environmentVars' = 
-        [
-            ("MSBuild", MSBuild.msBuildExe)
-            ("GIT", Git.CommandHelper.gitPath)
-            ("FSI", fsiPath )
-        ]
-        |> Seq.append environmentVars
+/// Serializes arguments, putting script arguments after an empty "--" arg, which denotes the beginning of script arguments
+let private serializeArgs (fsiParams: FsiParam list) script (scriptArgs: string list) = 
+    let stringParams = List.map string fsiParams
+    let args = 
+        List.concat ([ stringParams; [script;"--"]; scriptArgs]) 
+        |> List.toArray
+        |> Arguments.OfArgs 
+    args.ToWindowsCommandLine
 
-    (fun (info: ProcStartInfo) ->
-        { info with 
-            FileName = fsiPath
-            Arguments = String.concat " " (fsiOptions @ [scriptPath] @ scriptArgs)
-            WorkingDirectory = workingDirectory
-        }.WithEnvironmentVariables environmentVars'
-    )
+/// Executes a user supplied Fsi.exe with the option to set args and environment variables
+let execFsiRaw workingDirectory fsiExe fsiParams script scriptArgs environmentVars = 
+    let args = serializeArgs fsiParams script scriptArgs
+    let environmentVars' = defaultEnvironmentVars environmentVars
+    
+    Trace.trace <| sprintf "Executing FSI at %s with args %s" fsiExe args
 
-/// Creates a ProcessStartInfo which is configured to the F# Interactive.
-let private getFsiStartInfo workingDirectory extraFsiArgs script scriptArgs env info = 
-    fsiStartInfo 
-        workingDirectory 
-        (FsiArgs(extraFsiArgs, script, scriptArgs |> List.ofArray)) 
-        env info
+    let r = Process.execWithResult (fun info -> 
+            { info with
+                FileName = fsiExe
+                Arguments = args
+                WorkingDirectory = workingDirectory
+                RedirectStandardOutput = true
+            }.WithEnvironmentVariables environmentVars' ) TimeSpan.MaxValue
 
-/// Run the given build script with fsi.exe and allows for extra arguments to FSI and to the script. Returns output
-let executeFSIRaw workingDirectory extraFsiArgs script scriptArgs env = 
-    let r = 
-        Process.execWithResult
-            (getFsiStartInfo workingDirectory extraFsiArgs script scriptArgs env)
-            TimeSpan.MaxValue
-    Thread.Sleep 1000
-    (r.ExitCode, r.Messages)  
+    if r.ExitCode <> 0 then
+        List.iter Trace.traceError r.Errors
 
-/// Run the given buildscript with fsi.exe
-let executeFSI workingDirectory script env = 
-    executeFSIRaw workingDirectory [] script [||] env
+    (r.ExitCode, r.Messages)
 
-/// Run the given build script with fsi.exe and allows for extra arguments to FSI.
-let executeFSIWithArgs workingDirectory script extraFsiArgs env = 
-    let result, _ = executeFSIRaw workingDirectory extraFsiArgs script [||] env
-    result = 0
-
-/// Run the given build script with fsi.exe and allows for extra arguments to FSI. Returns output.
-let executeFSIWithArgsAndReturnMessages workingDirectory script extraFsiArgs env =
-    executeFSIRaw workingDirectory extraFsiArgs script [||] env      
-
-/// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
-let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
-    executeFSIRaw "" [] script scriptArgs []
+/// Locates Fsi.exe and executes 
+let execFsiSimple fsiParams script scriptArgs = 
+    execFsiRaw "" pathToFsiExe fsiParams script scriptArgs []

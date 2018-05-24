@@ -1,7 +1,7 @@
-module internal Fake.DotNet.Fsi.Params
+module Fake.DotNet.Fsi.Params
 
-/// Specify debugging type:  ('pdbonly' is the default if no debuggging type specified and enables attaching a debugger
-type DebugType = 
+///  Specify debugging type: full, portable, embedded, pdbonly. ('pdbonly' is the default if no debuggging type specified and enables attaching a debugger to a running program, 'portable' is a cross-platform format, 'embedded' is a cross-platform format embedded into the output file).
+type DebugTypes = 
     | Full | Portable | Embedded | PdbOnly
     override self.ToString () =
         match self with
@@ -27,16 +27,11 @@ type FsiParam =
     /// Reference an assembly (Short form: -r)
     | Reference of file:string
 
-//-- ...                                   
-/// Treat remaining arguments as command line arguments, accessed using fsi.CommandLineArgs
-
 (* - CODE GENERATION - *)
     /// Emit debug information (Short form: -g)
     | Debug of bool
-    /// Specify debugging type: full, portable, embedded, pdbonly. 
-    /// ('pdbonly' is the default if no debuggging type specified and enables attaching a debugger to a running program, 
-    /// 'portable' is a cross-platform format, 'embedded' is a cross-platform format embedded into the output file).
-    | DebugType of DebugType
+    /// Specify debugging type: full, portable, embedded, pdbonly.
+    | DebugType of DebugTypes
     /// Enable optimizations (Short form: -O)
     | Optimize of bool
     /// Enable or disable tailcalls
@@ -141,7 +136,7 @@ type FsiParam =
         (* - ERRORS AND WARNINGS - *)
         | WarnAsError on -> togl "warnaserror" on
         | WarnAsErrors (on, warningCodes) ->  toglls "warnaserror" on warningCodes
-        | Warn lvl -> sprintf "warn %s" <| string (if lvl < 0 then 0 elif lvl > 5 then 5 else lvl)
+        | Warn lvl -> argp "warn" <| string (if lvl < 0 then 0 elif lvl > 5 then 5 else lvl)
         | NoWarn warningCodes -> argls "nowarn" (List.map string warningCodes)
         | WarnOn warningCodes -> argls "warnon" (List.map string warningCodes)
         | ConsoleColors on -> togl "consolecolors" on
