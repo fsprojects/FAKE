@@ -80,3 +80,6 @@ project.lock.json
 
 /testbuild.fsx
 /testbuild.fsx.lock
+/src/legacy/deploy.web/Fake.Deploy.Web/App_Data/Providers/**/*.dll
+/src/legacy/deploy.web/Fake.Deploy.Web/App_Data/Providers/**/*.pdb
+/src/legacy/deploy.web/Fake.Deploy.Web/App_Data/Providers/**/*.xml

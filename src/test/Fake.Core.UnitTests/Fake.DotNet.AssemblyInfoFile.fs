@@ -56,7 +56,7 @@ let tests =
             let originalFilePath = (testFile "AssemblyInfo.cs")
             let newFilePath = (testFile "NewAssemblyInfo.cs")           
 
-            AssemblyInfoFile.createCSharpWithConfig newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (AssemblyInfoFileConfig(false, true, "System"))
+            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
 
             let originalContent = File.ReadAllText originalFilePath            
             let newContent = File.ReadAllText newFilePath
@@ -85,7 +85,7 @@ let tests =
             let originalFilePath = (testFile "AssemblyInfo.fs")
             let newFilePath = (testFile "NewAssemblyInfo.fs")           
 
-            AssemblyInfoFile.createFSharpWithConfig newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (AssemblyInfoFileConfig(false, true, "System"))
+            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
 
             let originalContent = File.ReadAllText originalFilePath            
             let newContent = File.ReadAllText newFilePath
@@ -135,7 +135,7 @@ let tests =
             let originalFilePath = (testFile "AssemblyInfo.vb")
             let newFilePath = (testFile "NewAssemblyInfo.vb")           
 
-            AssemblyInfoFile.createVisualBasicWithConfig newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (AssemblyInfoFileConfig(false, true, "System"))
+            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
 
             let originalContent = File.ReadAllText originalFilePath            
             let newContent = File.ReadAllText newFilePath

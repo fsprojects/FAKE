@@ -93,7 +93,7 @@ module AssemblyInfo =
 
     let StringAttribute(name, value, inNamespace) =
         let quotedValue = quote value
-        Attribute(name, quote quotedValue, inNamespace, name, typeof<string>.FullName, quotedValue)
+        Attribute(name, quotedValue, inNamespace, name, typeof<string>.FullName, quotedValue)
 
     /// Creates a simple attribute with boolean values. Used as base for other attributes
     let BoolAttribute(name, value, inNamespace) =
@@ -210,6 +210,7 @@ module AssemblyInfoFile =
 
     /// Creates a C# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    [<System.Obsolete "Please use 'create' instead">]
     let createCSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace, emitResharperSupressions = config.GenerateClass, config.UseNamespace, config.EmitResharperSuppressions
@@ -256,6 +257,7 @@ module AssemblyInfoFile =
 
     /// Creates a F# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    [<System.Obsolete "Please use 'create' instead">]
     let createFSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
@@ -287,6 +289,7 @@ module AssemblyInfoFile =
 
     /// Creates a VB AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    [<System.Obsolete "Please use 'create' instead">]
     let createVisualBasicWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, _ = config.GenerateClass, config.UseNamespace
@@ -315,6 +318,7 @@ module AssemblyInfoFile =
 
     /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
     /// Does not generate an AssemblyVersionInformation class.
+    [<System.Obsolete "Please use 'create' instead">]
     let createCppCliWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let _, _ = config.GenerateClass, config.UseNamespace
@@ -335,28 +339,52 @@ module AssemblyInfoFile =
 
     /// Creates a C# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    [<System.Obsolete "Please use 'create' instead">]
     let createCSharp outputFileName attributes =
         createCSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a F# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    [<System.Obsolete "Please use 'create' instead">]
     let createFSharp outputFileName attributes =
         createFSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a VB AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    [<System.Obsolete "Please use 'create' instead">]
     let createVisualBasic outputFileName attributes =
         createVisualBasicWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
+    [<System.Obsolete "Please use 'create' instead">]
     let createCppCli outputFileName attributes =
         createCppCliWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+
+    let private (|Suffix|_|) (p:string) (s:string) = 
+        if s.EndsWith p then
+            Some(s)
+        else
+            None
 
     let private removeAtEnd (textToRemove:string) (text:string) =
         if text.EndsWith(textToRemove) then
             text.Substring(0, text.Length - textToRemove.Length)
         else
             text
+
+    /// Creates an AssemblyInfo file based in the correct langugage based on the file name with the given attributes and configuration.
+    /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
+    let create (outputFileName:string) (attributes:seq<Attribute>) (config:AssemblyInfoFileConfig option) = 
+        match outputFileName.ToLower(), config with
+        | Suffix ".cs" _, Some x -> createCSharpWithConfig outputFileName attributes x
+        | Suffix ".cs" _, None -> createCSharp outputFileName attributes
+        | Suffix ".fs" _, Some x -> createFSharpWithConfig outputFileName attributes x
+        | Suffix ".fs" _, None -> createFSharp outputFileName attributes
+        | Suffix ".vb" _, Some x -> createVisualBasicWithConfig outputFileName attributes x
+        | Suffix ".vb" _, None -> createVisualBasic outputFileName attributes
+        | Suffix ".cpp" _, Some x -> createCppCliWithConfig outputFileName attributes x
+        | Suffix ".cpp" _, None -> createCppCli outputFileName attributes
+        | _ -> failwithf "Assembly info file type not supported: %s" outputFileName
 
     /// Read attributes from an AssemblyInfo file and return as a sequence of Attribute.
     /// ## Parameters
@@ -366,43 +394,41 @@ module AssemblyInfoFile =
 
         // VB.NET is case-insensitive. Handle assembly attributes accordingly
         let (regex, additionalRegexOptions) =
-            if assemblyInfoFile.ToLower().EndsWith(".cs") then (regexAttrNameValueCs, RegexOptions.None)
-            elif assemblyInfoFile.ToLower().EndsWith(".fs") then (regexAttrNameValueFs, RegexOptions.None)
-            elif assemblyInfoFile.ToLower().EndsWith(".vb") then (regexAttrNameValueVb, RegexOptions.IgnoreCase)
-            elif assemblyInfoFile.ToLower().EndsWith(".cpp") then (regexAttrNameValueCpp, RegexOptions.None)
-            else
-                failwithf "Assembly info file type not supported: %s" assemblyInfoFile
+            match assemblyInfoFile.ToLower() with
+            | Suffix ".cs" _ -> (regexAttrNameValueCs, RegexOptions.Multiline ||| RegexOptions.None)
+            | Suffix ".fs" _ -> (regexAttrNameValueFs, RegexOptions.Multiline ||| RegexOptions.None)
+            | Suffix ".vb" _ -> (regexAttrNameValueVb, RegexOptions.Multiline ||| RegexOptions.IgnoreCase)
+            | Suffix ".cpp" _ -> (regexAttrNameValueCpp, RegexOptions.Multiline ||| RegexOptions.None)
+            | _ -> failwithf "Assembly info file type not supported: %s" assemblyInfoFile
 
-        let combinedRegexOptions = RegexOptions.Multiline ||| additionalRegexOptions
+        let assemblyMap (m:Match) = 
+            let v = m.Groups.["value"].Value.Trim([|'"'|])
+            let n = m.Groups.["name"].Value |> removeAtEnd "Attribute"
+            let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
+            match n.ToLower() with
+            | "assemblycompany" -> Company(v)
+            | "assemblyproduct" -> Product(v)
+            | "assemblycopyright" -> Copyright(v)
+            | "assemblytitle" -> Title(v)
+            | "assemblydescription" -> Description(v)
+            | "assemblyculture" -> Culture(v)
+            | "assemblyconfiguration" -> Configuration(v)
+            | "assemblytrademark" -> Trademark(v)
+            | "assemblyversion" -> Version(v)
+            | "assemblyfileversion" -> FileVersion(v)
+            | "assemblykeyfile" -> KeyFile(v)
+            | "assemblykeyname" -> KeyName(v)
+            | "assemblyinformationalversion" -> InformationalVersion(v)
+            | "assemblydelaysign" -> DelaySign(v |> bool.Parse)
+            | "internalsvisibleto" -> InternalsVisibleTo(v)
+            | "guid" -> Guid(v)
+            | "comvisible" -> ComVisible(v |> bool.Parse)
+            | "clscompliant" -> CLSCompliant(v |> bool.Parse)
+            | _ -> Attribute(n, v, "", t)
 
-        Regex.Matches(text, regex, combinedRegexOptions)
-            |> Seq.cast<Match>
-            |> Seq.map
-                (fun m ->
-                    let v = m.Groups.["value"].Value.Trim([|'"'|])
-                    let n = m.Groups.["name"].Value |> removeAtEnd "Attribute"
-                    let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
-                    match n.ToLower() with
-                    | "assemblycompany" -> Company(v)
-                    | "assemblyproduct" -> Product(v)
-                    | "assemblycopyright" -> Copyright(v)
-                    | "assemblytitle" -> Title(v)
-                    | "assemblydescription" -> Description(v)
-                    | "assemblyculture" -> Culture(v)
-                    | "assemblyconfiguration" -> Configuration(v)
-                    | "assemblytrademark" -> Trademark(v)
-                    | "assemblyversion" -> Version(v)
-                    | "assemblyfileversion" -> FileVersion(v)
-                    | "assemblykeyfile" -> KeyFile(v)
-                    | "assemblykeyname" -> KeyName(v)
-                    | "assemblyinformationalversion" -> InformationalVersion(v)
-                    | "assemblydelaysign" -> DelaySign(v |> bool.Parse)
-                    | "internalsvisibleto" -> InternalsVisibleTo(v)
-                    | "guid" -> Guid(v)
-                    | "comvisible" -> ComVisible(v |> bool.Parse)
-                    | "clscompliant" -> CLSCompliant(v |> bool.Parse)
-                    | _ -> Attribute(n, v, "", t)
-                )
+        Regex.Matches(text, regex, additionalRegexOptions)
+        |> Seq.cast<Match>
+        |> Seq.map (assemblyMap)
 
     /// Read a single attribute from an AssemblyInfo file.
     /// ## Parameters
@@ -420,15 +446,15 @@ module AssemblyInfoFile =
         | Some attr -> Some attr.Value
         | None -> None
 
-    let private updateAttr regexFactory additionalRegexOptions text (attribute:Attribute) =
+    let private updateAttr regexFactory regexOptions text (attribute:Attribute) =
         let regex = regexFactory attribute.Name
 
-        let m = Regex.Match(text, regex, RegexOptions.Multiline ||| additionalRegexOptions)
+        let m = Regex.Match(text, regex, regexOptions)
 
         // Replace if found with different value
         if m.Success && m.Value <> attribute.Value then
             Trace.tracefn "Attribute '%s' updated: %s" attribute.Name attribute.Value
-            Regex.Replace(text, regex, attribute.Value, RegexOptions.Multiline ||| additionalRegexOptions)
+            Regex.Replace(text, regex, attribute.Value, regexOptions)
 
         // Do nothing if found with the same value
         elif m.Success then
@@ -447,15 +473,15 @@ module AssemblyInfoFile =
         Trace.tracefn "Updating attributes in: %s" assemblyInfoFile
 
         // VB.NET is case-insensitive. Handle assembly attributes accordingly
-        let (regexFactory, additionalRegexOptions) =
-            if assemblyInfoFile.ToLower().EndsWith(".cs") then (regexAttrValueCs, RegexOptions.None)
-            elif assemblyInfoFile.ToLower().EndsWith(".fs") then (regexAttrValueFs, RegexOptions.None)
-            elif assemblyInfoFile.ToLower().EndsWith(".vb") then (regexAttrValueVb, RegexOptions.IgnoreCase)
-            elif assemblyInfoFile.ToLower().EndsWith(".cpp") then (regexAttrValueCpp, RegexOptions.None)
-            else
-                failwithf "Assembly info file type not supported: %s" assemblyInfoFile
+        let (regexFactory, regexOptions) =
+            match assemblyInfoFile.ToLower() with
+            | Suffix ".cs" _ -> (regexAttrValueCs, RegexOptions.Multiline ||| RegexOptions.None)
+            | Suffix ".fs" _ -> (regexAttrValueFs, RegexOptions.Multiline ||| RegexOptions.None)
+            | Suffix ".vb" _ -> (regexAttrValueVb, RegexOptions.Multiline ||| RegexOptions.IgnoreCase)
+            | Suffix ".cpp" _ -> (regexAttrValueCpp, RegexOptions.Multiline ||| RegexOptions.None)
+            | _ -> failwithf "Assembly info file type not supported: %s" assemblyInfoFile
 
         let text = File.ReadAllText assemblyInfoFile
-        let newText = attributes |> Seq.fold (updateAttr regexFactory additionalRegexOptions) text
+        let newText = attributes |> Seq.fold (updateAttr regexFactory regexOptions) text
 
         File.WriteAllText(assemblyInfoFile, newText)
