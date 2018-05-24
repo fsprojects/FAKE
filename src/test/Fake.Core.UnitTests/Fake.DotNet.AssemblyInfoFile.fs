@@ -52,17 +52,6 @@ let tests =
             Expect.equal "\"0.0.0.0\"" (attributeByName info "AssemblyFileVersion").Value "AssemblyFileVersion value is not correct"
             Expect.equal "System.Reflection" (attributeByName info "AssemblyFileVersion").Namespace "AssemblyFileVersion namespace is not correct"
 
-        Fake.ContextHelper.fakeContextTestCase "Test that we can read cs assembly info and re-write assembly info" <| fun _ -> 
-            let originalFilePath = (testFile "AssemblyInfo.cs")
-            let newFilePath = (testFile "NewAssemblyInfo.cs")           
-
-            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
-
-            let originalContent = File.ReadAllText originalFilePath            
-            let newContent = File.ReadAllText newFilePath
-
-            Expect.equal originalContent newContent "File content differs when read and write"
-
         Fake.ContextHelper.fakeContextTestCase "Test that we can read fs assembly info" <| fun _ ->     
             let info = AssemblyInfoFile.getAttributes (testFile "AssemblyInfo.fs")
 
@@ -80,17 +69,6 @@ let tests =
 
             Expect.equal "\"0.0.0.0\"" (attributeByName info "AssemblyInformationalVersion").Value "AssemblyInformationalVersion value is not correct"
             Expect.equal "System.Reflection" (attributeByName info "AssemblyInformationalVersion").Namespace "AssemblyInformationalVersion namespace is not correct"
-
-        Fake.ContextHelper.fakeContextTestCase "Test that we can read fs assembly info and re-write assembly info" <| fun _ -> 
-            let originalFilePath = (testFile "AssemblyInfo.fs")
-            let newFilePath = (testFile "NewAssemblyInfo.fs")           
-
-            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
-
-            let originalContent = File.ReadAllText originalFilePath            
-            let newContent = File.ReadAllText newFilePath
-
-            Expect.equal originalContent newContent "File content differs when read and write"
 
         Fake.ContextHelper.fakeContextTestCase "Test that we can read vb assembly info" <| fun _ ->     
             let info = AssemblyInfoFile.getAttributes (testFile "AssemblyInfo.vb")
@@ -131,14 +109,36 @@ let tests =
             Expect.equal "\"0.0.0.0\"" (attributeByName info "AssemblyFileVersion").Value "AssemblyFileVersion value is not correct"
             Expect.equal "System.Reflection" (attributeByName info "AssemblyFileVersion").Namespace "AssemblyFileVersion namespace is not correct"
 
+        Fake.ContextHelper.fakeContextTestCase "Test that we can read cs assembly info and re-write assembly info" <| fun _ -> 
+            let originalFilePath = (testFile "AssemblyInfo.cs")
+            let newFilePath = (testFile "NewAssemblyInfo.cs")           
+
+            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
+
+            let originalContent = (File.ReadAllText originalFilePath).Replace("\r", "")
+            let newContent = (File.ReadAllText newFilePath).Replace("\r", "")
+
+            Expect.equal originalContent newContent "File content differs when read and write"
+
+        Fake.ContextHelper.fakeContextTestCase "Test that we can read fs assembly info and re-write assembly info" <| fun _ -> 
+            let originalFilePath = (testFile "AssemblyInfo.fs")
+            let newFilePath = (testFile "NewAssemblyInfo.fs")           
+
+            AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
+
+            let originalContent = (File.ReadAllText originalFilePath).Replace("\r", "")
+            let newContent = (File.ReadAllText newFilePath).Replace("\r", "")
+
+            Expect.equal originalContent newContent "File content differs when read and write"
+
         Fake.ContextHelper.fakeContextTestCase "Test that we can read vb assembly info and re-write assembly info" <| fun _ -> 
             let originalFilePath = (testFile "AssemblyInfo.vb")
             let newFilePath = (testFile "NewAssemblyInfo.vb")           
 
             AssemblyInfoFile.create newFilePath (AssemblyInfoFile.getAttributes originalFilePath) (Some(AssemblyInfoFileConfig(false, true, "System")))
 
-            let originalContent = File.ReadAllText originalFilePath            
-            let newContent = File.ReadAllText newFilePath
+            let originalContent = (File.ReadAllText originalFilePath).Replace("\r", "")
+            let newContent = (File.ReadAllText newFilePath).Replace("\r", "")
 
             Expect.equal originalContent newContent "File content differs when read and write"      
     ]
