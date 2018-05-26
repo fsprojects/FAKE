@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\Microsoft.Net.UWPCoreRuntimeSdk\build\Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\Microsoft.Net.UWPCoreRuntimeSdk\build\Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.props')" Label="Paket" />
   <Import Project="..\..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props')" Label="Paket" />
   <Import Project="..\..\..\packages\FSharp.Compiler.Tools\build\FSharp.Compiler.Tools.props" Condition="Exists('..\..\..\packages\FSharp.Compiler.Tools\build\FSharp.Compiler.Tools.props')" Label="Paket" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -1394,7 +1405,7 @@
     <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.5' Or $(TargetFrameworkVersion) == 'v1.6' Or $(TargetFrameworkVersion) == 'v2.0'))">
       <ItemGroup>
         <Reference Include="System.Diagnostics.Process">
-          <HintPath>..\..\..\packages\System.Diagnostics.Process\ref\netstandard1.4\System.Diagnostics.Process.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Diagnostics.Process\ref\netstandard1.3\System.Diagnostics.Process.dll</HintPath>
           <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1922,15 +1933,53 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
-        <Reference Include="System.Reactive.Core">
-          <HintPath>..\..\..\packages\System.Reactive.Core\lib\net45\System.Reactive.Core.dll</HintPath>
+        <Reference Include="System.Windows">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Windows.Forms">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="WindowsBase">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Reactive">
+          <HintPath>..\..\..\packages\System.Reactive\lib\net46\System.Reactive.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+      <ItemGroup>
+        <Reference Include="System.Reactive">
+          <HintPath>..\..\..\packages\System.Reactive\lib\netstandard2.0\System.Reactive.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive">
+          <HintPath>..\..\..\packages\System.Reactive\lib\uap10.0\System.Reactive.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive">
+          <HintPath>..\..\..\packages\System.Reactive\lib\uap10.0.16299\System.Reactive.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
         <Reference Include="System.Reactive.Core">
@@ -1940,19 +1989,10 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Reactive.Core">
-          <HintPath>..\..\..\packages\System.Reactive.Core\lib\netcoreapp1.0\System.Reactive.Core.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
-      <ItemGroup>
-        <Reference Include="System.Reactive.Core">
-          <HintPath>..\..\..\packages\System.Reactive.Core\lib\netstandard1.3\System.Reactive.Core.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Reactive.Core\lib\netstandard2.0\System.Reactive.Core.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1969,10 +2009,30 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Experimental">
+          <HintPath>..\..\..\packages\System.Reactive.Experimental\lib\net46\System.Reactive.Experimental.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
         <Reference Include="System.Reactive.Interfaces">
-          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\net46\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\netstandard2.0\System.Reactive.Interfaces.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1981,7 +2041,7 @@
     <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
       <ItemGroup>
         <Reference Include="System.Reactive.Interfaces">
-          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\netstandard1.0\System.Reactive.Interfaces.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Reactive.Interfaces\lib\uap10.0\System.Reactive.Interfaces.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1989,15 +2049,6 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
-      <ItemGroup>
-        <Reference Include="System.Reactive.Linq">
-          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\net45\System.Reactive.Linq.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
         <Reference Include="System.Reactive.Linq">
@@ -2010,7 +2061,16 @@
     <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Reactive.Linq">
-          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\netstandard1.3\System.Reactive.Linq.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\netstandard2.0\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\..\packages\System.Reactive.Linq\lib\uap10.0\System.Reactive.Linq.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -2018,15 +2078,6 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
-      <ItemGroup>
-        <Reference Include="System.Reactive.PlatformServices">
-          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
         <Reference Include="System.Reactive.PlatformServices">
@@ -2036,19 +2087,10 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Reactive.PlatformServices">
-          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\netcoreapp1.0\System.Reactive.PlatformServices.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
-      <ItemGroup>
-        <Reference Include="System.Reactive.PlatformServices">
-          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\netstandard1.3\System.Reactive.PlatformServices.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Reactive.PlatformServices\lib\netstandard2.0\System.Reactive.PlatformServices.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -2065,16 +2107,61 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
-        <Reference Include="System.Windows">
+        <Reference Include="System.Reactive.Providers">
+          <HintPath>..\..\..\packages\System.Reactive.Providers\lib\net46\System.Reactive.Providers.dll</HintPath>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="WindowsBase">
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Providers">
+          <HintPath>..\..\..\packages\System.Reactive.Providers\lib\netstandard2.0\System.Reactive.Providers.dll</HintPath>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Providers">
+          <HintPath>..\..\..\packages\System.Reactive.Providers\lib\uap10.0\System.Reactive.Providers.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Runtime.Remoting">
+          <HintPath>..\..\..\packages\System.Reactive.Runtime.Remoting\lib\net46\System.Reactive.Runtime.Remoting.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Windows.Forms">
+          <HintPath>..\..\..\packages\System.Reactive.Windows.Forms\lib\net46\System.Reactive.Windows.Forms.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+      <ItemGroup>
         <Reference Include="System.Reactive.Windows.Threading">
-          <HintPath>..\..\..\packages\System.Reactive.Windows.Threading\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+          <HintPath>..\..\..\packages\System.Reactive.Windows.Threading\lib\net46\System.Reactive.Windows.Threading.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -3232,5 +3319,15 @@
       </ItemGroup>
     </When>
   </Choose>
+  <Import Project="..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
   <Import Project="..\..\..\packages\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets" Condition="Exists('..\..\..\packages\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
 </Project>
