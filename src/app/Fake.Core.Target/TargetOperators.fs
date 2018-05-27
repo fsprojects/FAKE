@@ -2,7 +2,6 @@
 module Fake.Core.TargetOperators
 
 open Fake.Core
-open Fake.Core.Target
 open System.Collections.Generic
 
 /// Allows to use Tokens instead of strings
@@ -11,7 +10,7 @@ let (?) f s = f s
 /// Allows to use Tokens instead of strings for TargetNames
 let (?<-) f str action = f str action
 
-let (<==) x y = x <== y
+let (<==) x y = Target.(<==) x y
 
 // Allows to use For? syntax for Dependencies
 // I have no idea, remove and wait for people to complain
@@ -28,7 +27,7 @@ let (<==) x y = x <== y
 
 /// Stores which targets are on the same level
 let private sameLevels = 
-    getVarWithInit "sameLevels" (fun () -> new Dictionary<_,_>(System.StringComparer.OrdinalIgnoreCase))
+    Target.getVarWithInit "sameLevels" (fun () -> new Dictionary<_,_>(System.StringComparer.OrdinalIgnoreCase))
         
 
 /// Specifies that two targets are on the same level of execution
@@ -42,7 +41,7 @@ let rec internal addDependenciesOnSameLevel target dependency =
     match sameLevels().TryGetValue dependency with
     | true, x -> 
         addDependenciesOnSameLevel target x
-        Dependencies target [x]
+        Target.Dependencies target [x]
     | _  -> ()
 
 /// Specifies that two targets have the same dependencies
@@ -50,21 +49,21 @@ let rec internal addSoftDependenciesOnSameLevel target dependency =
     match sameLevels().TryGetValue dependency with
     | true, x -> 
         addSoftDependenciesOnSameLevel target x
-        SoftDependencies target [x]
+        Target.SoftDependencies target [x]
     | _  -> ()
 
 
 /// Defines a dependency - y is dependent on x
 let (==>) x y =
     addDependenciesOnSameLevel y x 
-    Dependencies y [x]
+    Target.Dependencies y [x]
     y
 
 
 /// Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.
 let (?=>) x y = 
    addSoftDependenciesOnSameLevel y x 
-   SoftDependencies y [x]
+   Target.SoftDependencies y [x]
    y
 
 /// Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.
@@ -73,8 +72,8 @@ let (<=?) y x = x ?=> y
 
 /// Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
 let (<=>) x y =   
-    let target_x = get x
-    Dependencies y target_x.Dependencies
+    let target_x = Target.get x
+    Target.Dependencies y target_x.Dependencies
     targetsAreOnSameLevel x y
     y
 
