@@ -94,6 +94,7 @@ type BuildFailedException =
         | None ->
             BuildFailedException(x.Message, x:>exn)
 
+[<RequireQualifiedAccess>]
 module Target =
 
     type private DependencyType =

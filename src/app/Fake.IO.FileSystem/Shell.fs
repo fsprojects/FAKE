@@ -300,7 +300,7 @@ module Shell =
     | ExcludePattern of string
     | Filter of (DirectoryInfo -> FileInfo -> bool)
 
-    open Fake.IO.Globbing.Glob
+    open Fake.IO.Globbing
     /// Copies the file structure recursively.
     /// ## Parameters
     ///
@@ -316,9 +316,9 @@ module Shell =
         | NoOverwrite -> DirectoryInfo.copyRecursiveTo false dirInfo outputDirInfo
         | Skip -> copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
         | IncludePattern(pattern) ->
-            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern)
+            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (Glob.isMatch pattern)
         | ExcludePattern(pattern) ->
-            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (isMatch pattern) |> not
+            copyRecursiveWithFilter <| fun d f -> d.FullName @@ f.Name |> (Glob.isMatch pattern) |> not
         | Filter(f) -> copyRecursiveWithFilter f
 
     /// Moves a single file to the target and overwrites the existing file.

@@ -2,6 +2,7 @@
 
 ## 5.0.0-rc017 - 2018-05-22
 
+* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
 * ENHANCEMENT: Mark `Target.DoNothing` as obsolete
 * ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
 * BUGFIX: Includes fixes from 4.64.12

@@ -61,6 +61,7 @@ type AssemblyInfoFileConfig
             | None -> false
         static member Default = AssemblyInfoFileConfig(true)
 
+[<RequireQualifiedAccess>]
 module AssemblyInfo =
 
     /// Represents AssemblyInfo attributes
@@ -164,11 +165,13 @@ module AssemblyInfo =
         let nameValue = sprintf "\"%s\",\"%s\"" name value
         StringAttributeWithStatic("AssemblyMetadata", nameValue, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")), value)
 
+
+[<RequireQualifiedAccess>]
 module AssemblyInfoFile =
     open Helper
     open Fake.Core
-    open AssemblyInfo
     open Fake.IO
+    type Attribute = AssemblyInfo.Attribute
 
     let private writeToFile outputFileName (lines : seq<string>) =
         let fi = FileInfo.ofPath outputFileName
@@ -406,24 +409,24 @@ module AssemblyInfoFile =
             let n = m.Groups.["name"].Value |> removeAtEnd "Attribute"
             let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
             match n.ToLower() with
-            | "assemblycompany" -> Company(v)
-            | "assemblyproduct" -> Product(v)
-            | "assemblycopyright" -> Copyright(v)
-            | "assemblytitle" -> Title(v)
-            | "assemblydescription" -> Description(v)
-            | "assemblyculture" -> Culture(v)
-            | "assemblyconfiguration" -> Configuration(v)
-            | "assemblytrademark" -> Trademark(v)
-            | "assemblyversion" -> Version(v)
-            | "assemblyfileversion" -> FileVersion(v)
-            | "assemblykeyfile" -> KeyFile(v)
-            | "assemblykeyname" -> KeyName(v)
-            | "assemblyinformationalversion" -> InformationalVersion(v)
-            | "assemblydelaysign" -> DelaySign(v |> bool.Parse)
-            | "internalsvisibleto" -> InternalsVisibleTo(v)
-            | "guid" -> Guid(v)
-            | "comvisible" -> ComVisible(v |> bool.Parse)
-            | "clscompliant" -> CLSCompliant(v |> bool.Parse)
+            | "assemblycompany" -> AssemblyInfo.Company(v)
+            | "assemblyproduct" -> AssemblyInfo.Product(v)
+            | "assemblycopyright" -> AssemblyInfo.Copyright(v)
+            | "assemblytitle" -> AssemblyInfo.Title(v)
+            | "assemblydescription" -> AssemblyInfo.Description(v)
+            | "assemblyculture" -> AssemblyInfo.Culture(v)
+            | "assemblyconfiguration" -> AssemblyInfo.Configuration(v)
+            | "assemblytrademark" -> AssemblyInfo.Trademark(v)
+            | "assemblyversion" -> AssemblyInfo.Version(v)
+            | "assemblyfileversion" -> AssemblyInfo.FileVersion(v)
+            | "assemblykeyfile" -> AssemblyInfo.KeyFile(v)
+            | "assemblykeyname" -> AssemblyInfo.KeyName(v)
+            | "assemblyinformationalversion" -> AssemblyInfo.InformationalVersion(v)
+            | "assemblydelaysign" -> AssemblyInfo.DelaySign(v |> bool.Parse)
+            | "internalsvisibleto" -> AssemblyInfo.InternalsVisibleTo(v)
+            | "guid" -> AssemblyInfo.Guid(v)
+            | "comvisible" -> AssemblyInfo.ComVisible(v |> bool.Parse)
+            | "clscompliant" -> AssemblyInfo.CLSCompliant(v |> bool.Parse)
             | _ -> Attribute(n, v, "", t)
 
         Regex.Matches(text, regex, additionalRegexOptions)
