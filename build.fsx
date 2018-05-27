@@ -143,7 +143,7 @@ let releaseSecret replacement name =
     let secret =
         lazy
             let env = Environment.environVarOrFail name
-            TraceSecrets.register replacement name
+            TraceSecrets.register replacement env
             env
     secrets <- secret :: secrets
     secret
@@ -213,7 +213,11 @@ let version =
             Some ({p with
                         Values = p.Values @ source
                         Origin = p.Origin + toAdd })
-    { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+    let fromRepository = { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+
+    match Environment.environVarOrNone "FAKE_VERSION" with
+    | Some ver -> SemVer.parse ver
+    | None -> fromRepository
 
 let simpleVersion = version.AsString
 
@@ -1255,15 +1259,29 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
 
 
 let rec nugetPush tries nugetpackage =
+    let ignore_conflict = Environment.environVar "IGNORE_CONFLICT" = "true"
     try
         if not <| System.String.IsNullOrEmpty apikey.Value then
-            Process.execSimple (fun info ->
+            Process.execWithResult (fun info ->
             { info with
                 FileName = nuget_exe
                 Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey.Value) (Process.toParam nugetsource) }
-            )
-                (System.TimeSpan.FromMinutes 10.)
-            |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+            ) (System.TimeSpan.FromMinutes 10.)
+            |> (fun r ->
+                 for res in r.Results do
+                    if res.IsError then
+                        Trace.traceFAKE "%s" res.Message
+                    else
+                        Trace.tracefn "%s" res.Message
+                 if r.ExitCode <> 0 then
+                    if not ignore_conflict ||
+                       not (r.Errors |> Seq.exists (fun err -> err.Contains "409"))
+                    then
+                        let msgs = r.Results |> Seq.map (fun c -> (if c.IsError then "(Err) " else "") + c.Message)                    
+                        let msg = System.String.Join ("\n", msgs)
+                 
+                        failwithf "failed to push package %s (code %d): \n%s" nugetpackage r.ExitCode msg
+                    else Trace.traceFAKE "ignore conflict error because IGNORE_CONFLICT=true!")
         else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
     with exn when tries > 1 ->
         Trace.traceFAKE "Error while pushing NuGet package: %s" exn.Message
