@@ -94,6 +94,7 @@ type BuildFailedException =
         | None ->
             BuildFailedException(x.Message, x:>exn)
 
+[<RequireQualifiedAccess>]
 module Target =
 
     type private DependencyType =
@@ -114,12 +115,17 @@ module Target =
 
     /// Sets the Description for the next target.
     /// [omit]
-    let Description text =
+    let description text =
         match getLastDescription() with
         | Some (v:string) ->
             failwithf "You can't set the description for a target twice. There is already a description: %A" v
         | None ->
            setLastDescription text
+
+    /// Sets the Description for the next target.
+    /// [omit]
+    [<Obsolete("Use Target.description instead")>]
+    let Description text = description text
 
     /// TargetDictionary
     /// [omit]
@@ -213,6 +219,7 @@ module Target =
           |> sprintf "(?=> %s)"
 
     /// Do nothing - Can be used to define empty targets.
+    [<Obsolete("Use ignore instead")>]
     let DoNothing = (fun (_:TargetParameter) -> ())
 
     /// Checks whether the dependency (soft or normal) can be added.

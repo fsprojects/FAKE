@@ -209,6 +209,7 @@ module Operators =
     /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
     let inline (!!) x = GlobbingPattern.create x
 
+[<RequireQualifiedAccess>]
 module Tools =
     open Operators
 

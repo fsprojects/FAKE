@@ -29,6 +29,7 @@ nuget Fake.DotNet.Testing.NUnit prerelease
 nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
+nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
 nuget Octokit //"
@@ -142,7 +143,7 @@ let releaseSecret replacement name =
     let secret =
         lazy
             let env = Environment.environVarOrFail name
-            TraceSecrets.register replacement name
+            TraceSecrets.register replacement env
             env
     secrets <- secret :: secrets
     secret
@@ -162,7 +163,7 @@ BuildServer.install [
 ]
 
 let version =
-    let segToString = function 
+    let segToString = function
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
     //let createAlphaNum (s:string) =
@@ -201,7 +202,7 @@ let version =
               yield PreReleaseSegment.Numeric buildId
             ], sprintf "vsts.%s" TeamFoundation.Environment.BuildSourceVersion
         | _ -> [], ""
-    
+
     let semVer = SemVer.parse release.NugetVersion
     let prerelease =
         match semVer.PreRelease with
@@ -209,10 +210,14 @@ let version =
         | Some p ->
             let toAdd = System.String.Join(".", source |> Seq.map segToString)
             let toAdd = if System.String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
-            Some ({p with 
+            Some ({p with
                         Values = p.Values @ source
                         Origin = p.Origin + toAdd })
-    { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+    let fromRepository = { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+
+    match Environment.environVarOrNone "FAKE_VERSION" with
+    | Some ver -> SemVer.parse ver
+    | None -> fromRepository
 
 let simpleVersion = version.AsString
 
@@ -222,9 +227,9 @@ let nugetVersion =
     else sprintf "%s+%s" version.AsString version.BuildMetaData
 let chocoVersion =
     // Replace "." with "-" in the prerelease-string
-    let build = 
+    let build =
         if version.Build > 0I then ("." + (let bi = version.Build in bi.ToString("D"))) else ""
-    let pre = 
+    let pre =
         match version.PreRelease with
         | Some preRelease -> ("-" + preRelease.Origin.Replace(".", "-"))
         | None -> ""
@@ -484,7 +489,7 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
 Target.create "_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
     |> Trace.logItems "AppBuild-Output: "
-    
+
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests-legacy.zip"
@@ -549,28 +554,28 @@ Target.create "GenerateDocs" (fun _ ->
             LayoutRoots = layoutRoots })
 
     Directory.ensure apidocsDir
-    
+
     let baseDir = Path.GetFullPath "."
-    let dllsAndLibDirs (dllPattern:IGlobbingPattern) = 
-        let dlls = 
+    let dllsAndLibDirs (dllPattern:IGlobbingPattern) =
+        let dlls =
             dllPattern
             |> GlobbingPattern.setBaseDir baseDir
             |> Seq.distinctBy Path.GetFileName
             |> List.ofSeq
-        let libDirs = 
+        let libDirs =
             dlls
             |> Seq.map Path.GetDirectoryName
             |> Seq.distinct
             |> List.ofSeq
-        (dlls,libDirs)         
+        (dlls,libDirs)
     // FAKE 5 module documentation
     let fake5ApidocsDir = apidocsDir @@ "v5"
     Directory.ensure fake5ApidocsDir
-    
-    let fake5Dlls, fake5LibDirs = 
-        !! "src/app/Fake.*/bin/Release/**/Fake.*.dll" 
+
+    let fake5Dlls, fake5LibDirs =
+        !! "src/app/Fake.*/bin/Release/**/Fake.*.dll"
         |> dllsAndLibDirs
- 
+
     fake5Dlls
     |> FSFormatting.createDocsForDlls (fun s ->
         { s with
@@ -612,7 +617,7 @@ Target.create "GenerateDocs" (fun _ ->
     // FAKE 5 legacy documentation
     let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
     Directory.ensure fake5LegacyApidocsDir
-    let fake5LegacyDlls, fake5LegacyLibDirs = 
+    let fake5LegacyDlls, fake5LegacyLibDirs =
         !! "build/**/Fake.*.dll"
           ++ "build/FakeLib.dll"
           -- "build/**/Fake.Experimental.dll"
@@ -668,12 +673,12 @@ let startWebServer () =
         if portIsTaken then findPort (port + 1) else port
 
     let port = findPort 8083
-    let serverConfig = 
+    let serverConfig =
         { Suave.Web.defaultConfig with
            homeFolder = Some (Path.GetFullPath docsDir)
            bindings = [ Suave.Http.HttpBinding.createSimple Suave.Http.Protocol.HTTP "127.0.0.1" port ]
         }
-    let (>=>) = Suave.Operators.(>=>)    
+    let (>=>) = Suave.Operators.(>=>)
     let app =
       Suave.WebPart.choose [
         //Filters.path "/websocket" >=> handShake socketHandler
@@ -686,7 +691,7 @@ let startWebServer () =
     psi.UseShellExecute <- true
     System.Diagnostics.Process.Start (psi) |> ignore
 
-Target.create "HostDocs" (fun _ -> 
+Target.create "HostDocs" (fun _ ->
     startWebServer()
     Trace.traceImportant "Press any key to stop."
     System.Console.ReadKey() |> ignore
@@ -887,14 +892,14 @@ Target.create "ILRepack" (fun _ ->
 
 Target.create "CreateNuGet" (fun _ ->
     let path =
-        if Environment.isWindows 
+        if Environment.isWindows
         then "lib" @@ "corflags.exe"
         else "lib" @@ "xCorFlags.exe"
     let set64BitCorFlags files =
         files
         |> Seq.iter (fun file ->
             let exitCode =
-                Process.execSimple (fun proc -> 
+                Process.execSimple (fun proc ->
                 { proc with
                     FileName = Path.GetFullPath path
                     WorkingDirectory = Path.GetDirectoryName file
@@ -909,10 +914,10 @@ Target.create "CreateNuGet" (fun _ ->
             Project = package.Project + ".x64" }
 
     let nugetExe =
-        let prefs = 
+        let prefs =
            [ "packages/build/Nuget.CommandLine/tools/NuGet.exe"
              "packages/build/NuGet.CommandLine/tools/NuGet.exe" ]
-           |> List.map Path.GetFullPath 
+           |> List.map Path.GetFullPath
         match Seq.tryFind (File.Exists) prefs with
         | Some pref -> pref
         | None ->
@@ -929,7 +934,7 @@ Target.create "CreateNuGet" (fun _ ->
                 e
             | None ->
                 prefs |> List.head
-        
+
     for package,description in packages do
         let nugetDocsDir = nugetLegacyDir @@ "docs"
         let nugetToolsDir = nugetLegacyDir @@ "tools"
@@ -1048,7 +1053,7 @@ runtimes
 
 Target.create "_DotNetPublish_portable" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDncDir
-    
+
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = appDir </> "Fake.netcore/Fake.netcore.fsproj"
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
@@ -1113,7 +1118,7 @@ Target.create "DotNetCoreCreateZipPackages" (fun _ ->
         !! (sprintf "%s/**" runtimeDir)
         |> Zip.zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
     )
-    
+
     runtimes @ [ "portable"; "packages" ]
     |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
     |> List.iter publish
@@ -1254,15 +1259,29 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
 
 
 let rec nugetPush tries nugetpackage =
+    let ignore_conflict = Environment.environVar "IGNORE_CONFLICT" = "true"
     try
         if not <| System.String.IsNullOrEmpty apikey.Value then
-            Process.execSimple (fun info ->
+            Process.execWithResult (fun info ->
             { info with
                 FileName = nuget_exe
                 Arguments = sprintf "push %s %s -Source %s" (Process.toParam nugetpackage) (Process.toParam apikey.Value) (Process.toParam nugetsource) }
-            )
-                (System.TimeSpan.FromMinutes 10.)
-            |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
+            ) (System.TimeSpan.FromMinutes 10.)
+            |> (fun r ->
+                 for res in r.Results do
+                    if res.IsError then
+                        Trace.traceFAKE "%s" res.Message
+                    else
+                        Trace.tracefn "%s" res.Message
+                 if r.ExitCode <> 0 then
+                    if not ignore_conflict ||
+                       not (r.Errors |> Seq.exists (fun err -> err.Contains "409"))
+                    then
+                        let msgs = r.Results |> Seq.map (fun c -> (if c.IsError then "(Err) " else "") + c.Message)                    
+                        let msg = System.String.Join ("\n", msgs)
+                 
+                        failwithf "failed to push package %s (code %d): \n%s" nugetpackage r.ExitCode msg
+                    else Trace.traceFAKE "ignore conflict error because IGNORE_CONFLICT=true!")
         else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
     with exn when tries > 1 ->
         Trace.traceFAKE "Error while pushing NuGet package: %s" exn.Message
@@ -1356,7 +1375,7 @@ let unzip target (fileName : string) =
             // unzip the file
             Directory.ensure directoryPath
             let zipStream = zipEntry.Open()
-            if unzipPath.EndsWith "/" |> not then 
+            if unzipPath.EndsWith "/" |> not then
                 use unzippedFileStream = File.Create(unzipPath)
                 zipStream.CopyTo(unzippedFileStream)
 
@@ -1455,23 +1474,55 @@ Target.create "EnsureTestsRun" (fun _ ->
 //#endif
   ()
 )
+#if BOOTSTRAP
+Target.description "Default Build all artifacts and documentation"
+#else
 Target.Description "Default Build all artifacts and documentation"
+#endif
 Target.create "Default" ignore
 Target.create "_StartDnc" ignore
+#if BOOTSTRAP
+Target.description "Simple local command line release"
+#else
 Target.Description "Simple local command line release"
+#endif
 Target.create "Release" ignore
+#if BOOTSTRAP
+Target.description "Build the full-framework (legacy) solution"
+#else
 Target.Description "Build the full-framework (legacy) solution"
+#endif
 Target.create "BuildSolution" ignore
+#if BOOTSTRAP
+Target.description "dotnet pack pack to build all nuget packages"
+#else
 Target.Description "dotnet pack pack to build all nuget packages"
+#endif
 Target.create "DotNetPackage" ignore
 Target.create "_AfterBuild" ignore
+#if BOOTSTRAP
+Target.description "Build and test the dotnet sdk part (fake 5 - no legacy)"
+#else
 Target.Description "Build and test the dotnet sdk part (fake 5 - no legacy)"
+#endif
 Target.create "FullDotNetCore" ignore
+#if BOOTSTRAP
+Target.description "publish fake 5 runner for various platforms"
+#else
 Target.Description "publish fake 5 runner for various platforms"
+#endif
 Target.create "DotNetPublish" ignore
+#if BOOTSTRAP
+Target.description "Run the tests - if artifacts are available via 'artifactsdirectory' those are used."
+#else
 Target.Description "Run the tests - if artifacts are available via 'artifactsdirectory' those are used."
+#endif
 Target.create "RunTests" ignore
+#if BOOTSTRAP
+Target.description "Generate the docs (potentially from artifacts) and publish as artifact."
+#else
 Target.Description "Generate the docs (potentially from artifacts) and publish as artifact."
+#endif
 Target.create "Release_GenerateDocs" (fun _ ->
     let testZip = "temp/docs.zip"
     !! "docs/**"
@@ -1479,7 +1530,11 @@ Target.create "Release_GenerateDocs" (fun _ ->
     publish testZip
 )
 
+#if BOOTSTRAP
+Target.description "Full Build & Test and publish results as artifacts."
+#else
 Target.Description "Full Build & Test and publish results as artifacts."
+#endif
 Target.create "Release_BuildAndTest" ignore
 open Fake.Core.TargetOperators
 
@@ -1489,7 +1544,7 @@ open Fake.Core.TargetOperators
     ==> "Clean"
 "WorkaroundPaketNuspecBug"
     ==> "_DotNetPackage"
-    
+
 // DotNet Core Build
 "Clean"
     ?=> "_StartDnc"
@@ -1586,7 +1641,7 @@ let prevDocs =
 
 "BuildSolution"
     ==> "Default"
-    
+
 (if fromArtifacts then "PrepareArtifacts" else "_BuildSolution")
     =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
     ==> "Default"

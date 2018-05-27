@@ -194,6 +194,8 @@ let runOrBuild (args : RunArguments) =
         TraceMessage ("There was a problem while setting up the environment, see standard error for details.", true) |> forceWrite
       ErrorMessage "There was a problem while setting up the environment:" |> forceWrite
       reportExn args.VerboseLevel exn
+      
+      tracefn "Hint: %s" "If you just upgraded the fake-runner you can try to remove the .fake directory and try again."
       false
 
 type CliAction =

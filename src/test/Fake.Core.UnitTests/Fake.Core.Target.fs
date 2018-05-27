@@ -1,7 +1,5 @@
-
 module Fake.Core.TargetTests
 
-open Fake.Runtime
 open Fake.Core
 open Expecto
 open Expecto.Flip
@@ -29,24 +27,20 @@ let (|TargetSet|) (t : seq<Target>) =
     let list = t |> Seq.map (fun t -> t.Name) |> Seq.sort |> Seq.toList
     TargetSet list
 
-let targetTestCase name f =
-    testCase name <| fun arg ->
-      use execContext = Fake.Core.Context.FakeExecutionContext.Create false "text.fsx" []
-      Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
-      f arg
 let DoNothing = ignore
-let determineBuildOrder a b = Target.determineBuildOrder a
+let determineBuildOrder a _ = Target.determineBuildOrder a
 let validateBuildOrder a b = ignore a; ignore b
 
 let testCaseMultipleRuns name f = [
-    targetTestCase (sprintf "%s - run" name) <| fun c -> f run c 
-    targetTestCase (sprintf "%s - runParallel" name) <| fun c -> f runParallel c 
+    Fake.ContextHelper.fakeContextTestCase (sprintf "%s - run" name) <| fun c -> f run c 
+    Fake.ContextHelper.fakeContextTestCase (sprintf "%s - runParallel" name) <| fun c -> f runParallel c 
 ]
 
 [<Tests>]
 let tests =
-  testList "Fake.Core.Target.Tests" ([
-    targetTestCase "check simple parallelism" <| fun _ ->
+  testList "Fake.Core.Target.Tests" (
+    [
+    Fake.ContextHelper.fakeContextTestCase "check simple parallelism" <| fun _ ->
         Target.create "a" ignore
         Target.create "b" ignore
         Target.create "c" ignore
@@ -66,7 +60,7 @@ let tests =
         | _ ->
             Expect.isTrue (sprintf "inconsistent order: %A" order) false
 
-    targetTestCase "issue #1395 example" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "issue #1395 example" <| fun _ ->
         Target.create "T1" DoNothing
         Target.create "T2.1" DoNothing
         Target.create "T2.2" DoNothing
@@ -91,7 +85,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Diamonds are resolved correctly" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Diamonds are resolved correctly" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c" DoNothing
@@ -112,7 +106,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Initial Targets Can Run Concurrently" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Initial Targets Can Run Concurrently" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c1" DoNothing
@@ -134,7 +128,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "BlythMeisters Scenario Of Complex Build Order Is Correct" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "BlythMeisters Scenario Of Complex Build Order Is Correct" <| fun _ ->
         Target.create "PrepareBuild" DoNothing
         Target.create "CreateWholeCaboodle" DoNothing
         Target.create "UpdateVersions" DoNothing
@@ -185,7 +179,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "BlythMeisters Scenario Of Even More Complex Build Order Is Correct" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "BlythMeisters Scenario Of Even More Complex Build Order Is Correct" <| fun _ ->
         Target.create "PrepareBuild" DoNothing
         Target.create "CreateWholeCaboodle" DoNothing
         Target.create "UpdateVersions" DoNothing
@@ -235,7 +229,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Spurs run as early as possible" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Spurs run as early as possible" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c1" DoNothing
@@ -257,7 +251,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Spurs run as early as possible 3 and 2 length" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Spurs run as early as possible 3 and 2 length" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b1" DoNothing
         Target.create "b2" DoNothing
@@ -281,7 +275,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Spurs run as early as possible (reverse definition order)" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Spurs run as early as possible (reverse definition order)" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c1" DoNothing
@@ -303,7 +297,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Spurs run as early as possible split on longer spur" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Spurs run as early as possible split on longer spur" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c1" DoNothing
@@ -327,7 +321,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "3 way Spurs run as early as possible" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "3 way Spurs run as early as possible" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c1" DoNothing
@@ -353,7 +347,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Soft dependencies are respected when dependees are present" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Soft dependencies are respected when dependees are present" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c" DoNothing
@@ -384,7 +378,7 @@ let tests =
             failwithf "unexpected order: %A" order
         ()
 
-    targetTestCase "Soft dependencies are ignored when dependees are not present" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Soft dependencies are ignored when dependees are not present" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
         Target.create "c" DoNothing
@@ -413,7 +407,7 @@ let tests =
             failwithf "unexpected order: %A" order
         ()
 
-    targetTestCase "Fsharp.Data Dependencies single worker (broken)" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Fsharp.Data Dependencies single worker (broken)" <| fun _ ->
         Target.create "Clean" DoNothing
         Target.create "AssemblyInfo" DoNothing
         Target.create "Build" DoNothing
@@ -450,7 +444,7 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
-    targetTestCase "Test that we run a simple target with dependency" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Test that we run a simple target with dependency" <| fun _ ->
       Target.create "SimpleTest" ignore
       Target.create "Dependency" ignore
 
@@ -459,7 +453,7 @@ let tests =
       Expect.equal "Expected both tasks to succeed" false context.HasError
       Expect.equal "Expected context to contain both targets" 2 context.PreviousTargets.Length
 
-    targetTestCase "Test we output targets after failing targets" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Test we output targets after failing targets" <| fun _ ->
       Target.create "SimpleTest" ignore
       Target.create "Dependency" (fun _ -> failwith "failed dependency")
 
@@ -468,8 +462,8 @@ let tests =
       Expect.equal "Expected failure" true context.HasError
       Expect.equal "Expected context to contain both targets" 2 context.PreviousTargets.Length  // second one as "skipped"
   ]
-  @ ([
-      
+  @ (
+    [     
     testCaseMultipleRuns "Not activated final target does not run" <| fun myRun _ ->
       Target.create "a" ignore
       Target.create "b" ignore
