@@ -4,6 +4,7 @@ source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 
 nuget Fake.Core.Target prerelease
+nuget System.Reactive.Compatibility
 nuget FSharp.Core prerelease"
 #endif
 

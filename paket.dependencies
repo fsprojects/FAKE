@@ -68,6 +68,7 @@ nuget Octokit
 nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
 nuget FSharp.Control.Reactive
+nuget System.Reactive.Compatibility
 // From FSharp.Compiler.Service, but manually managed because of rename
 nuget System.ValueTuple copy_local: true, redirects:force
 
@@ -153,6 +154,7 @@ group netcore
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
     nuget FSharp.Control.Reactive
+    nuget System.Reactive.Compatibility
     // Testing
     nuget Expecto >= 5.0
 

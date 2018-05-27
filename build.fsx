@@ -29,6 +29,7 @@ nuget Fake.DotNet.Testing.NUnit prerelease
 nuget Fake.Windows.Chocolatey prerelease
 nuget Fake.Tools.Git prerelease
 nuget Mono.Cecil prerelease
+nuget System.Reactive.Compatibility
 nuget Suave
 nuget Newtonsoft.Json
 nuget Octokit //"
