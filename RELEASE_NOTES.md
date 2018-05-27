@@ -4,6 +4,11 @@
 
 * ENHANCEMENT: Mark `Target.DoNothing` as obsolete
 * ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
+* BUGFIX: Includes fixes from 4.64.12
+* BUGFIX: Quoting in NuGet Restore task - https://github.com/fsharp/FAKE/pull/1962
+* BUGFIX: Fix several bugs in AssemblyInfo reader - https://github.com/fsharp/FAKE/pull/1959
+* BUGFIX: Workaround System.Reactive v4 release breaking us - https://github.com/fsharp/FAKE/issues/1966
+
 
 ## 5.0.0-rc016 - 2018-05-21
 
