@@ -278,7 +278,10 @@ module TraceSecrets =
         | None -> []
 
     let register replacement secret =
-        setTraceSecrets ({ Value = secret; Replacement = replacement } :: getAll() |> List.filter (fun s -> s.Value <> secret))
+        getAll()
+        |> List.filter (fun s -> s.Value <> secret)
+        |> fun l -> { Value = secret; Replacement = replacement } :: l
+        |> fun l -> setTraceSecrets l
 
     let guardMessage (s:string) =
         getAll()
