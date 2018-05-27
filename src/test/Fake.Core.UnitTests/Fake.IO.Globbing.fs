@@ -8,7 +8,6 @@ open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
 open Expecto
 open Expecto.Flip
-open Fake.IO.Globbing.Glob
 open System.ComponentModel
 open System.ComponentModel
 open System.IO
@@ -34,14 +33,14 @@ let tests =
         let fileIncludes = getFileIncludeWithKnownBaseDir [@"test1\bin\*.dll"; @"test2\bin\*.dll"]
         let dirIncludes = GlobbingPattern.getBaseDirectoryIncludes(fileIncludes)
         Expect.equal "Should have 2 dirs" dirIncludes.Length 2
-        Expect.contains "Should contain first folder" (normalizePath(@"C:\Project\test1\bin")) dirIncludes
-        Expect.contains "Should contain second folder" (normalizePath(@"C:\Project\test2\bin")) dirIncludes
+        Expect.contains "Should contain first folder" (Glob.normalizePath(@"C:\Project\test1\bin")) dirIncludes
+        Expect.contains "Should contain second folder" (Glob.normalizePath(@"C:\Project\test2\bin")) dirIncludes
 
     testCase "should only take the most root path when multiple directories share a root" <| fun _ ->
         let fileIncludes = getFileIncludeWithKnownBaseDir [@"tests\**\test1\bin\*.dll"; @"tests\test2\bin\*.dll"]
         let dirIncludes = GlobbingPattern.getBaseDirectoryIncludes(fileIncludes)
         Expect.equal "Should have only 1 directory" dirIncludes.Length 1
-        Expect.contains "Should contain tests folder" (normalizePath(@"C:\Project\tests")) dirIncludes
+        Expect.contains "Should contain tests folder" (Glob.normalizePath(@"C:\Project\tests")) dirIncludes
 
     testCase "glob should handle substring directories properly" <| fun _ ->
         let testDir = Path.GetTempFileName()
