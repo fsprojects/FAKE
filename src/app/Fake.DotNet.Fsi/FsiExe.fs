@@ -52,7 +52,7 @@ let private serializeArgs (fsiParams: FsiParam list) script (scriptArgs: string 
 let execFsiRaw workingDirectory fsiExe fsiParams script scriptArgs environmentVars = 
     let args = serializeArgs fsiParams script scriptArgs
     let environmentVars' = defaultEnvironmentVars environmentVars
-    
+
     Trace.trace <| sprintf "Executing FSI at %s with args %s" fsiExe args
 
     let r = Process.execWithResult (fun info -> 
@@ -60,7 +60,6 @@ let execFsiRaw workingDirectory fsiExe fsiParams script scriptArgs environmentVa
                 FileName = fsiExe
                 Arguments = args
                 WorkingDirectory = workingDirectory
-                RedirectStandardOutput = true
             }.WithEnvironmentVariables environmentVars' ) TimeSpan.MaxValue
 
     if r.ExitCode <> 0 then
