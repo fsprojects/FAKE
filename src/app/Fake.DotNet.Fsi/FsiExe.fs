@@ -35,7 +35,7 @@ let private defaultEnvironmentVars environmentVars =
     [
         ("MSBuild", MSBuild.msBuildExe)
         ("GIT", Git.CommandHelper.gitPath)
-        // ("FSI", findFsiPath )
+        ("FSI", pathToFsiExe )
     ]
     |> Seq.append environmentVars
 
