@@ -30,7 +30,7 @@ Just install the corresponding package for your system:
 
 - Windows (dotnet sdk global tool)
 
-  - Install the .NET sdk (at least `2.1.300-RC1`)
+  - Install the .NET sdk (at least `2.1.300`)
   - Install FAKE
 
     <pre>
