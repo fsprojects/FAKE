@@ -9,8 +9,13 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "dotnet:build:fake.sln",
-            "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.0/fake.dll",
-            "args": ["run", "build.fsx", "--fsiargs", "--debug:portable --optimize-"],
+            "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.1/fake.dll",
+            "args": [
+                "run",
+                "build.fsx",
+                "--fsiargs",
+                "--debug:portable --optimize-"
+            ],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
             "console": "internalConsole"
@@ -20,7 +25,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "dotnet:build:fake.sln",
-            "program": "${workspaceRoot}/src/test/Fake.Core.UnitTests/bin/Debug/netcoreapp2.0/Fake.Core.UnitTests.dll",
+            "program": "${workspaceRoot}/src/test/Fake.Core.UnitTests/bin/Debug/netcoreapp2.1/Fake.Core.UnitTests.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
             "console": "internalConsole",
