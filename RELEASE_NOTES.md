@@ -1,5 +1,11 @@
 # Release Notes
 
+## 5.0.0-rc018 - 2018-06-02
+
+* ENHANCEMENT: Upgrade to final release of global tools - https://github.com/fsharp/FAKE/pull/1972
+* ENHANCEMENT: Upgrade to netcore2.1 - https://github.com/fsharp/FAKE/pull/1972
+* BUGFIX: Fix issue to hide secrets in output - https://github.com/fsharp/FAKE/pull/1969
+
 ## 5.0.0-rc017 - 2018-05-22
 
 * BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
