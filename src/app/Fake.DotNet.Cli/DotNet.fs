@@ -269,6 +269,16 @@ module DotNet =
             Version = Version "2.1.300-rc1-008673"
         }
 
+    let Release_2_1_300 option =
+        { option with
+            InstallerOptions = (fun io ->
+                { io with
+                    Branch = "release/2.1"
+                })
+            Channel = None
+            Version = Version "2.1.300"
+        }
+
     /// [omit]
     let private optionToParam option paramFormat =
         match option with
