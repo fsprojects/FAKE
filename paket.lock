@@ -329,7 +329,7 @@ NUGET
     NUnit.Extension.VSProjectLoader (3.7)
     Octokit (0.29)
       NETStandard.Library (>= 1.6) - restriction: && (< net45) (>= netstandard1.1)
-    Paket.Core (5.166)
+    Paket.Core (5.169.6)
       Chessie (>= 0.6) - restriction: || (>= net45) (>= netstandard2.0)
       FSharp.Compiler.Tools  - restriction: >= net45
       FSharp.Core  - restriction: >= net45
@@ -3201,7 +3201,7 @@ NUGET
       System.Xml.XmlDocument (>= 4.3) - restriction: && (< net20) (>= netstandard1.3) (< netstandard2.0)
     Octokit (0.29)
       NETStandard.Library (>= 1.6) - restriction: && (< net45) (>= netstandard1.1)
-    Paket.Core (5.166)
+    Paket.Core (5.169.6)
       Chessie (>= 0.6) - restriction: || (>= net45) (>= netstandard2.0)
       FSharp.Compiler.Tools  - restriction: >= net45
       FSharp.Core  - restriction: >= net45
