@@ -12,6 +12,14 @@ let tests =
         Expect.isSome value "Variable 'Test' is none"
         Expect.equal "TestValue" value.Value "Variable 'Test' is incorrect"
 
+    Fake.ContextHelper.fakeContextTestCase "When type does not match, errors" <| fun _ ->
+        set "Test" "TestValue" |> ignore
+        try
+            get<bool> "Test" |> ignore
+            Tests.failtest "Expected exception"
+        with e ->
+            Expect.equal "Variable 'Test' - Unable to cast object of type 'System.String' to type 'System.Boolean'." e.Message "Incorrect failure message for variable failure case"
+
     Fake.ContextHelper.fakeContextTestCase "Ability to set and get fake variables with default - when found" <| fun _ ->
         set "Test" "TestValue" |> ignore
         let value = getOrDefault<string> "Test" "DefaultValue"

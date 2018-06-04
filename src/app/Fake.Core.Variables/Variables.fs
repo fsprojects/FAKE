@@ -6,7 +6,11 @@ open Fake.Core.Context
 let get<'a> name =
   forceFakeContext()
   |> getFakeContext name
-  |> Option.map (fun o -> o :?> 'a)
+  |> Option.map (fun o -> try
+                            o :?> 'a
+                          with e -> 
+                            failwithf "Variable '%s' - %s" name e.Message
+                )
 
 let getOrFail<'a> name =
   match get<'a> name with
@@ -21,29 +25,35 @@ let getOrDefault<'a> name defaultValue =
 let remove name =
   forceFakeContext()
   |> removeFakeContext name
-  |> Option.map (fun o -> o :?> 'a)
+  |> ignore
 
 let set name (v:'a) =
   forceFakeContext()
   |> setFakeContext name v (fun _ -> v :> obj)
-  :?> 'a
+  |> ignore
 
 let fakeVar<'a> name =
   (fun () -> get name : 'a option),
-  (fun () -> (remove name : 'a option) |> ignore),
-  (fun (v : 'a) -> set name v |> ignore)
+  (fun () -> remove name),
+  (fun (v : 'a) -> set name v)
 
 let fakeVarNoContext<'a> name =
-  let mutable varWithoutContext = None
-  (fun () -> 
-    if isFakeContext() then
-      get name : 'a option
-    else varWithoutContext),
-  (fun () -> 
-    if isFakeContext() then
-      (remove name : 'a option) |> ignore
-    else varWithoutContext <- None),
-  (fun (v : 'a) -> 
-    if isFakeContext() then
-      set name v |> ignore
-    else varWithoutContext <- Some v)
+    let mutable varWithoutContext = None
+    (fun () -> 
+        if isFakeContext() then
+            get name : 'a option
+        else 
+            varWithoutContext
+    ),
+    (fun () -> 
+        if isFakeContext() then
+            remove name
+        else 
+            varWithoutContext <- None
+    ),
+    (fun (v : 'a) -> 
+        if isFakeContext() then
+            set name v
+        else 
+            varWithoutContext <- Some v
+    )
