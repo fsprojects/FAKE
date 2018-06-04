@@ -10,7 +10,7 @@ let get<'a> name =
   |> Option.map (fun o -> try
                             o :?> 'a
                           with e -> 
-                            raise <| exn(sprintf "Cast error on variable %s" name, e)
+                            raise <| exn(sprintf "Cast error on variable '%s'" name, e)
                 )
 
 let getOrFail<'a> name =
