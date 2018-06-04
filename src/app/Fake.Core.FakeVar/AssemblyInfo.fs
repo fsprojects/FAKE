@@ -2,7 +2,7 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("FAKE - F# Make Core Variables")>]
+[<assembly: AssemblyTitleAttribute("FAKE - F# Make Core FakeVar")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
 [<assembly: AssemblyInformationalVersionAttribute("5.0.0.0")>]
@@ -10,7 +10,7 @@ open System.Reflection
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "FAKE - F# Make Core Variables"
+    let [<Literal>] AssemblyTitle = "FAKE - F# Make Core FakeVar"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
     let [<Literal>] AssemblyVersion = "5.0.0"
     let [<Literal>] AssemblyInformationalVersion = "5.0.0.0"

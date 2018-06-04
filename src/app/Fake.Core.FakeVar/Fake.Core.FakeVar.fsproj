@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.6;netstandard2.0</TargetFrameworks>
-    <AssemblyName>Fake.Core.Variables</AssemblyName>
+    <AssemblyName>Fake.Core.FakeVar</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Variables.fs" />
+    <Compile Include="FakeVar.fs" />
   </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />

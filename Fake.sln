@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{7BFFAE76-DEE
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Context", "src/app/Fake.Core.Context/Fake.Core.Context.fsproj", "{D3D92ED7-C2B9-46D5-B611-A2CF0C30C8DB}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Variables", "src/app/Fake.Core.Variables/Fake.Core.Variables.fsproj", "{1CEE1FC0-41F4-4F6C-A409-3849B30D57EF}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.FakeVar", "src/app/Fake.Core.FakeVar/Fake.Core.FakeVar.fsproj", "{1CEE1FC0-41F4-4F6C-A409-3849B30D57EF}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Environment", "src/app/Fake.Core.Environment/Fake.Core.Environment.fsproj", "{A2C4A85F-24C4-4FFA-B165-4807B1127C4E}"
 EndProject

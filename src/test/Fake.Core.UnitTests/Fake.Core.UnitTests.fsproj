@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Context\Fake.Core.Context.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
@@ -31,7 +32,7 @@
     <Compile Include="Fake.Core.ReleaseNotes.fs" />
     <Compile Include="Fake.Core.Xml.fs" />
     <Compile Include="Fake.Core.Context.fs" />
-    <Compile Include="Fake.Core.Variables.fs" />
+    <Compile Include="Fake.Core.FakeVar.fs" />
     <Compile Include="Fake.Runtime.fs" />
     <Compile Include="Main.fs" />
     <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.cs" CopyToOutputDirectory="PreserveNewest" />
