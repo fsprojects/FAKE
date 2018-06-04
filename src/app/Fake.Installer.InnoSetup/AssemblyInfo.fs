@@ -5,7 +5,7 @@ open System.Reflection
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make Creating installers with InnoSetup")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.0.0-rc007")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.0.0.0")>]
 [<assembly: AssemblyFileVersionAttribute("5.0.0")>]
 do ()
 
@@ -13,5 +13,5 @@ module internal AssemblyVersionInformation =
     let [<Literal>] AssemblyTitle = "FAKE - F# Make Creating installers with InnoSetup"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
     let [<Literal>] AssemblyVersion = "5.0.0"
-    let [<Literal>] AssemblyInformationalVersion = "5.0.0-rc007"
+    let [<Literal>] AssemblyInformationalVersion = "5.0.0.0"
     let [<Literal>] AssemblyFileVersion = "5.0.0"
