@@ -116,6 +116,11 @@ let getFakeVar<'a> name =
   forceFakeContext()
   |> getFakeContext name
   |> Option.map (fun o -> o :?> 'a)
+
+let getFakeVarOrFail<'a> name =
+  match getFakeVar<'a> name with
+  | Some v -> v
+  | _ -> failwithf "Unable to find FakeVar %s" name
   
 let removeFakeVar name =
   forceFakeContext()
