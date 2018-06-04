@@ -3,47 +3,47 @@ module Fake.Core.Variables
 
 open Fake.Core.Context
 
-let getFakeVar<'a> name =
+let get<'a> name =
   forceFakeContext()
   |> getFakeContext name
   |> Option.map (fun o -> o :?> 'a)
 
-let getFakeVarOrFail<'a> name =
-  match getFakeVar<'a> name with
+let getOrFail<'a> name =
+  match get<'a> name with
   | Some v -> v
-  | _ -> failwithf "Unable to find FakeVar '%s'" name
+  | _ -> failwithf "Unable to find variable '%s'" name
 
-let getFakeVarOrDefault<'a> name defaultValue =
-  match getFakeVar<'a> name with
+let getOrDefault<'a> name defaultValue =
+  match get<'a> name with
   | Some v -> v
   | _ -> defaultValue
   
-let removeFakeVar name =
+let remove name =
   forceFakeContext()
   |> removeFakeContext name
   |> Option.map (fun o -> o :?> 'a)
 
-let setFakeVar name (v:'a) =
+let set name (v:'a) =
   forceFakeContext()
   |> setFakeContext name v (fun _ -> v :> obj)
   :?> 'a
 
-let fakeVar name =
-  (fun () -> getFakeVar name : 'a option),
-  (fun () -> (removeFakeVar name : 'a option) |> ignore),
-  (fun (v : 'a) -> setFakeVar name v |> ignore)
+let fakeVar<'a> name =
+  (fun () -> get name : 'a option),
+  (fun () -> (remove name : 'a option) |> ignore),
+  (fun (v : 'a) -> set name v |> ignore)
 
-let fakeVarAllowNoContext name =
+let fakeVarNoContext<'a> name =
   let mutable varWithoutContext = None
   (fun () -> 
     if isFakeContext() then
-      getFakeVar name : 'a option
+      get name : 'a option
     else varWithoutContext),
   (fun () -> 
     if isFakeContext() then
-      (removeFakeVar name : 'a option) |> ignore
+      (remove name : 'a option) |> ignore
     else varWithoutContext <- None),
   (fun (v : 'a) -> 
     if isFakeContext() then
-      setFakeVar name v |> ignore
+      set name v |> ignore
     else varWithoutContext <- Some v)

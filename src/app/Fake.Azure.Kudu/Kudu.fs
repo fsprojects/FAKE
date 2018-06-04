@@ -26,7 +26,7 @@ type WebJobType = Scheduled | Continuous
 do
     Directory.ensure deploymentTemp |> ignore
     Directory.ensure deploymentTarget |> ignore
-    Shell.CleanDir deploymentTemp
+    Shell.cleanDir deploymentTemp
 
 /// <summary>
 /// Stages a folder and all subdirectories into the temp deployment area, ready for deployment into the website.
@@ -34,7 +34,7 @@ do
 /// <param name="source">The source folder to copy.</param>
 /// <param name="shouldInclude">A predicate which includes files from the folder. If the entire directory should be copied, this predicate should always return true.</param>
 let stageFolder source shouldInclude =
-    Shell.CopyRecursive source deploymentTemp true
+    Shell.copyRecursive source deploymentTemp true
     |> Seq.filter (not << shouldInclude)
     |> Seq.iter File.Delete
 
@@ -47,7 +47,7 @@ let getWebJobPath webJobType webJobName =
 let stageWebJob webJobType webJobName files =
     let webJobPath = getWebJobPath webJobType webJobName
     Directory.ensure webJobPath |> ignore
-    files |> Shell.CopyFiles webJobPath
+    files |> Shell.copyFiles webJobPath
 
 /// Synchronises all staged files from the temporary deployment to the actual deployment, removing
 /// any obsolete files, updating changed files and adding new files.

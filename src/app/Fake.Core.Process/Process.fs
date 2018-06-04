@@ -337,7 +337,7 @@ module Process =
     //let mutable redirectOutputToTrace = false
     let private redirectOutputToTraceVar = "Fake.Core.Process.redirectOutputToTrace"
     let private tryGetRedirectOutputToTrace, _, public setRedirectOutputToTrace = 
-        Fake.Core.Variables.fakeVarAllowNoContext redirectOutputToTraceVar
+        Fake.Core.Variables.fakeVarNoContext redirectOutputToTraceVar
     let getRedirectOutputToTrace () =
         match tryGetRedirectOutputToTrace() with
         | Some v -> v
@@ -350,7 +350,7 @@ module Process =
     //let mutable enableProcessTracing = true
     let private enableProcessTracingVar = "Fake.Core.Process.enableProcessTracing"
     let private getEnableProcessTracing, private removeEnableProcessTracing, public setEnableProcessTracing = 
-        Fake.Core.Variables.fakeVarAllowNoContext enableProcessTracingVar
+        Fake.Core.Variables.fakeVarNoContext enableProcessTracingVar
     let shouldEnableProcessTracing () =
         match getEnableProcessTracing() with
         | Some v -> v
