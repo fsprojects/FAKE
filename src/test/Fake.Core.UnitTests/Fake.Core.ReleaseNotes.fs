@@ -1,9 +1,7 @@
-
 module Fake.Core.ReleaseNotesTests
 
 open Fake.Core
 open Expecto
-open Expecto.Flip
 
 
 [<Tests>]
@@ -20,7 +18,7 @@ let tests =
         // For historic reasons notes get appended a "."
         { AssemblyVersion = "1.1.0"; NugetVersion = "1.1.0"; SemVer = SemVer.parse "1.1.0"; Date = None; Notes = ["First change."] }
       
-      Expect.equal "Simple parse failure" expected releaseNotes
+      Expect.equal expected releaseNotes "Simple parse failure"
 
     testCase "Test that we can parse simple release notes (reversed)" <| fun _ ->
       let releaseNotesLines = [
@@ -33,7 +31,7 @@ let tests =
         // For historic reasons notes get appended a "."
         { AssemblyVersion = "1.1.0"; NugetVersion = "1.1.0"; SemVer = SemVer.parse "1.1.0"; Date = None; Notes = ["First change."] }
       
-      Expect.equal "Simple parse failure" expected releaseNotes
+      Expect.equal expected releaseNotes "Simple parse failure"
 
     testCase "Test that we can parse complex release notes" <| fun _ ->
       let releaseNotesLines = [
@@ -50,7 +48,7 @@ let tests =
       let (expected:ReleaseNotes.ReleaseNotes) = 
          { AssemblyVersion = "1.1.0"; NugetVersion = "1.1.0"; SemVer = SemVer.parse "1.1.0"; Date = Some (System.DateTime(2017,04,12)); Notes = ["- Some change 3"; "- Some change 4"] }
       
-      Expect.equal "Simple parse failure" expected releaseNotes
+      Expect.equal expected releaseNotes "Simple parse failure"
 
     testCase "Test that we can parse complex release notes (reversed)" <| fun _ ->
       let releaseNotesLines = [
@@ -68,7 +66,7 @@ let tests =
       let (expected:ReleaseNotes.ReleaseNotes) = 
          { AssemblyVersion = "1.1.0"; NugetVersion = "1.1.0"; SemVer = SemVer.parse "1.1.0"; Date = Some (System.DateTime(2017,04,12)); Notes = ["- Some change 3"; "- Some change 4"] }
       
-      Expect.equal "Simple parse failure" expected releaseNotes
+      Expect.equal expected releaseNotes "Simple parse failure"
 
     testCase "Test that we can parse complex release notes with header" <| fun _ ->
       let releaseNotesLines = [
@@ -87,5 +85,5 @@ let tests =
       let (expected:ReleaseNotes.ReleaseNotes) = 
          { AssemblyVersion = "1.1.0"; NugetVersion = "1.1.0"; SemVer = SemVer.parse "1.1.0"; Date = Some (System.DateTime(2017,04,12)); Notes = ["- Some change 3"; "- Some change 4"] }
       
-      Expect.equal "Simple parse failure" expected releaseNotes
+      Expect.equal expected releaseNotes "Simple parse failure"
   ]    

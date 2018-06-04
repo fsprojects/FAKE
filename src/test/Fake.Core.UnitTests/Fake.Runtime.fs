@@ -4,7 +4,6 @@ open System.IO
 open Fake.Runtime
 open Fake.IO.FileSystemOperators
 open Expecto
-open Expecto.Flip
 open Fake.IO
 
 [<Tests>]
@@ -12,16 +11,16 @@ let tests =
   testList "Fake.Runtime.Tests" [
     testCase "Test that cache helpers work" <| fun _ ->
       Path.fixPathForCache "build.fsx" "build.fsx"
-      |> Expect.equal "should detect script itself" "scriptpath:///build.fsx"
+      |> Flip.Expect.equal "should detect script itself" "scriptpath:///build.fsx"
       Path.readPathFromCache "build.fsx" "scriptpath:///build.fsx"
-      |> Expect.equal "should detect script itself" (Path.GetFullPath "build.fsx")
+      |> Flip.Expect.equal "should detect script itself" (Path.GetFullPath "build.fsx")
 
     testCase "Test that cache helpers work for nuget cache" <| fun _ ->
       let nugetLib = Paket.Constants.UserNuGetPackagesFolder </> "MyLib" </> "lib" </> "mylib.dll"
       Path.fixPathForCache "build.fsx" nugetLib
-      |> Expect.equal "should detect script itself" "nugetcache:///MyLib/lib/mylib.dll"
+      |> Flip.Expect.equal "should detect script itself" "nugetcache:///MyLib/lib/mylib.dll"
       Path.readPathFromCache "build.fsx" "nugetcache:///MyLib/lib/mylib.dll"
-      |> Expect.equal "should detect script itself" nugetLib
+      |> Flip.Expect.equal "should detect script itself" nugetLib
 
     testCase "Test that we can properly find type names when the file name contains '.'" <| fun _ ->
       // Add test if everything works with __SOURCE_FILE__
@@ -31,13 +30,13 @@ let tests =
              "build.test1.test2.fsx"
 
       Expect.equal
-        "Expected to have correct full type name"
         "<StartupCode$build-test1-test2_E294A5A65B9A06E0358F991A589AC7246FA6677BA99829862925EF343588E50D>.$Build.test1.test2$fsx"
         name
+        "Expected to have correct full type name"
     testCase "Test that we can tokenize __SOURCE_FILE__" <| fun _ ->
       // Add test if everything works with __SOURCE_FILE__
       
-      Expect.equal "." "" ""
+      Expect.equal "" "" "."
 
     // Add test if everything works with #ifdefed #r "paket: line"
     testCase "Test that we find the correct references" <| fun _ ->
@@ -52,7 +51,7 @@ nuget Fake.Core.SemVer prerelease //"
           |> Fake.Runtime.FSharpParser.findInterestingItems
       let expected =
         [Fake.Runtime.FSharpParser.InterestingItem.Reference (sprintf "paket:\nnuget Fake.Core.SemVer prerelease //") ]
-      Expect.equal "Expected to find reference." expected interesting 
+      Expect.equal expected interesting "Expected to find reference."
       
     // Add test if everything works with #ifdefed #r "paket: line"
     testCase "Test that we find the correct references without defines" <| fun _ ->
@@ -66,7 +65,7 @@ nuget Fake.Core.SemVer prerelease //"
           Fake.Runtime.FSharpParser.getTokenized "testfile.fsx" ["DOTNETCORE"; "FAKE"] (scriptText.Split([|'\r';'\n'|]))
           |> Fake.Runtime.FSharpParser.findInterestingItems
       let expected = []
-      Expect.equal "Expected to find reference." expected interesting 
+      Expect.equal expected interesting "Expected to find reference."
 
     // TODO: Add test if everything works with #ifdefed #r "paket: line"
 
@@ -97,7 +96,7 @@ nuget Fake.Core.SemVer prerelease //"
             tmpDir </> "paket-files" </> "test" </> "octokit.fsx"
           ]
         let actual = scripts |> List.map (fun s -> s.Location)
-        Expect.equal "Expected to find script." expected actual
+        Expect.equal expected actual "Expected to find script."
       finally
         Directory.Delete(tmpDir, true)
 
@@ -133,7 +132,7 @@ printfn "other.fsx"
             otherScriptPath
           ]
         let actual = scripts |> List.map (fun s -> s.Location)
-        Expect.equal "Expected to find script." expected actual
+        Expect.equal expected actual "Expected to find script."
       finally
         Directory.Delete(tmpDir, true)
         
@@ -150,10 +149,10 @@ printfn "other.fsx"
             Fake.Runtime.FSharpParser.getTokenized "test.fsx" ["DOTNETCORE"; "FAKE"] (testScript.Split([|'\r';'\n'|]))
         try
           let scripts = HashGeneration.getAllScripts [] tokens testScriptPath
-          Expect.isTrue "Expected an exception" false
+          Expect.isTrue false "Expected an exception"
         with e ->
           (e.Message.Contains "test.fsx(2,1): error FS2302: Directory '" && e.Message.Contains "' doesn't exist")
-          |> Expect.isTrue (sprintf "Expected a good error message, but got: %s" e.Message)
+          |> Flip.Expect.isTrue (sprintf "Expected a good error message, but got: %s" e.Message)
       finally
         Directory.Delete(tmpDir, true)
   ]    
