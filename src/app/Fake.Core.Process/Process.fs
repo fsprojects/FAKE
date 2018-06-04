@@ -263,7 +263,7 @@ module Process =
     //let startedProcesses = HashSet()
     let private startedProcessesVar = "Fake.Core.Process.startedProcesses"
     let private getStartedProcesses, _, private setStartedProcesses = 
-        Fake.Core.Context.fakeVar<ProcessList> startedProcessesVar
+        Fake.Core.Variables.fakeVar<ProcessList> startedProcessesVar
 
     let private doWithProcessList f =
         if Fake.Core.Context.isFakeContext () then
@@ -337,7 +337,7 @@ module Process =
     //let mutable redirectOutputToTrace = false
     let private redirectOutputToTraceVar = "Fake.Core.Process.redirectOutputToTrace"
     let private tryGetRedirectOutputToTrace, _, public setRedirectOutputToTrace = 
-        Fake.Core.Context.fakeVarAllowNoContext redirectOutputToTraceVar
+        Fake.Core.Variables.fakeVarAllowNoContext redirectOutputToTraceVar
     let getRedirectOutputToTrace () =
         match tryGetRedirectOutputToTrace() with
         | Some v -> v
@@ -350,7 +350,7 @@ module Process =
     //let mutable enableProcessTracing = true
     let private enableProcessTracingVar = "Fake.Core.Process.enableProcessTracing"
     let private getEnableProcessTracing, private removeEnableProcessTracing, public setEnableProcessTracing = 
-        Fake.Core.Context.fakeVarAllowNoContext enableProcessTracingVar
+        Fake.Core.Variables.fakeVarAllowNoContext enableProcessTracingVar
     let shouldEnableProcessTracing () =
         match getEnableProcessTracing() with
         | Some v -> v

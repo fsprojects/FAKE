@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Variables\Fake.Core.Variables.fsproj" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' " >
     <Reference Include="System.Configuration" />

@@ -112,36 +112,31 @@ let forceFakeContext () =
     invalidOp "no Fake Execution context was found. You can initialize one via Fake.Core.Context.setExecutionContext"
   | RuntimeContext.Fake e -> e
 
-let getFakeVar<'a> name =
+[<System.Obsolete "Please use 'Fake.Core.Variables.getFakeVar' instead">]
+let getFakeVar name =
   forceFakeContext()
   |> getFakeContext name
   |> Option.map (fun o -> o :?> 'a)
 
-let getFakeVarOrFail<'a> name =
-  match getFakeVar<'a> name with
-  | Some v -> v
-  | _ -> failwithf "Unable to find FakeVar '%s'" name
-
-let getFakeVarOrDefault<'a> name defaultValue =
-  match getFakeVar<'a> name with
-  | Some v -> v
-  | _ -> defaultValue
-  
+[<System.Obsolete "Please use 'Fake.Core.Variables.removeFakeVar' instead">]
 let removeFakeVar name =
   forceFakeContext()
   |> removeFakeContext name
   |> Option.map (fun o -> o :?> 'a)
 
+[<System.Obsolete "Please use 'Fake.Core.Variables.setFakeVar' instead">]
 let setFakeVar name (v:'a) =
   forceFakeContext()
   |> setFakeContext name v (fun _ -> v :> obj)
   :?> 'a
 
+[<System.Obsolete "Please use 'Fake.Core.Variables.fakeVar' instead">]
 let fakeVar name =
   (fun () -> getFakeVar name : 'a option),
   (fun () -> (removeFakeVar name : 'a option) |> ignore),
   (fun (v : 'a) -> setFakeVar name v |> ignore)
 
+[<System.Obsolete "Please use 'Fake.Core.Variables.fakeVarAllowNoContext' instead">]
 let fakeVarAllowNoContext name =
   let mutable varWithoutContext = None
   (fun () -> 

@@ -105,13 +105,13 @@ module Target =
     //let mutable PrintStackTraceOnError = false
     let private printStackTraceOnErrorVar = "Fake.Core.Target.PrintStackTraceOnError"
     let private getPrintStackTraceOnError, _, (setPrintStackTraceOnError:bool -> unit) = 
-        Fake.Core.Context.fakeVar printStackTraceOnErrorVar
+        Fake.Core.Variables.fakeVar printStackTraceOnErrorVar
     
     /// [omit]
     //let mutable LastDescription = null
     let private lastDescriptionVar = "Fake.Core.Target.LastDescription"
     let private getLastDescription, removeLastDescription, setLastDescription = 
-        Fake.Core.Context.fakeVar lastDescriptionVar
+        Fake.Core.Variables.fakeVar lastDescriptionVar
 
     /// Sets the Description for the next target.
     /// [omit]
@@ -132,7 +132,7 @@ module Target =
     let internal getVarWithInit name f =
         let varName = sprintf "Fake.Core.Target.%s" name
         let getVar, _, setVar = 
-            Fake.Core.Context.fakeVar varName
+            Fake.Core.Variables.fakeVar varName
         fun () ->
             match getVar() with
             | Some d -> d
