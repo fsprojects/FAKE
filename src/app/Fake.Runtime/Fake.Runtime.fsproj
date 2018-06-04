@@ -13,15 +13,16 @@
   <ItemGroup>
     <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs" />
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Profile.fs" />
     <Compile Include="LegacyApiHelper.fs" />
     <Compile Include="Environment.fs" />
     <Compile Include="Path.fs" />
     <Compile Include="String.fs" />
     <Compile Include="Trace.fs" />
+    <Compile Include="FSharpParser.fs" />
     <Compile Include="Runners.fs" />
     <Compile Include="CompileRunner.fs" />
     <Compile Include="ScriptRunner.fs" />
-    <Compile Include="FSharpParser.fs" />
     <Compile Include="HashGeneration.fs" />
     <Compile Include="CoreCache.fs" />
     <Compile Include="FakeRuntime.fs" />

@@ -8,8 +8,6 @@ module Fake.Windows.Choco
     open System.Xml.Linq
     open Fake.DotNet.NuGet.NuGet
     open Fake.Core
-    open Fake.Core.Environment
-    open Fake.Core.StringBuilder
     open Fake.IO
     open Fake.IO.FileSystemOperators
 
@@ -326,16 +324,16 @@ module Fake.Windows.Choco
     }
 
     let private getPaths =
-        let programDataPath = environVar "ProgramData"
+        let programDataPath = Environment.environVar "ProgramData"
         if programDataPath |> String.isNotNullOrEmpty
         then
             [
                 Seq.singleton (programDataPath @@ "chocolatey" @@ "bin")
-                pathDirectories
+                Environment.pathDirectories
             ]
         else
             [
-                pathDirectories
+                Environment.pathDirectories
             ]
 
     /// [omit]
@@ -368,9 +366,12 @@ module Fake.Windows.Choco
                 Arguments = args }
         let result = Process.execSimple (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
+        __.MarkSuccess()
 
     let private getTempFolder =
-        let tempFolder = DirectoryInfo.ofPath (Path.GetTempPath() @@ "FakeChocolateyPack")
+        // temp folder in current working directory has the advantage of being compatible
+        // with chocolatey on docker on mono...
+        let tempFolder = DirectoryInfo.ofPath (".fake" @@ "temp" @@ "FakeChocolateyPack")
 
         if tempFolder.Exists
         then tempFolder.Delete(true)
@@ -572,8 +573,8 @@ module Fake.Windows.Choco
                             |> appendFormattedLineIfNotNull "    %s" nuspecData.FrameworkAssembliesXml
                             |> appendLine "  </metadata>"
                             |> appendFormattedLineIfNotNull "  %s" nuspecData.FilesXml
-                            |> appendWithoutQuotes "</package>"
-                            |> toText
+                            |> StringBuilder.appendWithoutQuotes "</package>"
+                            |> StringBuilder.toText
 
         File.writeString false specFile nuspecContent
         Trace.tracefn "Created nuspec file %s" specFile
@@ -613,14 +614,14 @@ module Fake.Windows.Choco
                             |> match parameters.InstallerType with ChocolateyInstallerType.Zip -> appendFormattedLine "$unzipLocation = \"%s\"" parameters.UnzipLocation | _ -> id
                             |> appendLine String.Empty
                             |> match parameters.InstallerType with
-                                | ChocolateyInstallerType.Zip -> appendWithoutQuotes "Install-ChocolateyZipPackage $packageName $url $unzipLocation"
-                                | _ -> appendWithoutQuotes "Install-ChocolateyPackage $packageName $installerType $silentArgs $url"
-                            |> appendIfTrue (String.isNotNullOrEmpty parameters.PackageDownload64Url) " $url64"
-                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum) ("-Checksum " + parameters.Checksum)
-                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum) ("-ChecksumType " + checksumTypeToString parameters.ChecksumType)
-                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty parameters.Checksum64) ("-Checksum64 " + parameters.Checksum64)
-                            |> appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum64) ("-Checksum64Type " + checksumTypeToString parameters.Checksum64Type)
-                            |> toText
+                                | ChocolateyInstallerType.Zip -> StringBuilder.appendWithoutQuotes "Install-ChocolateyZipPackage $packageName $url $unzipLocation"
+                                | _ -> StringBuilder.appendWithoutQuotes "Install-ChocolateyPackage $packageName $installerType $silentArgs $url"
+                            |> StringBuilder.appendIfTrue (String.isNotNullOrEmpty parameters.PackageDownload64Url) " $url64"
+                            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum) ("-Checksum " + parameters.Checksum)
+                            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum) ("-ChecksumType " + checksumTypeToString parameters.ChecksumType)
+                            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty parameters.Checksum64) ("-Checksum64 " + parameters.Checksum64)
+                            |> StringBuilder.appendIfTrueWithoutQuotes (String.isNotNullOrEmpty  parameters.Checksum64) ("-Checksum64Type " + checksumTypeToString parameters.Checksum64Type)
+                            |> StringBuilder.toText
 
         File.writeString false outputPath installContent
 
@@ -631,7 +632,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyInstall.ps1 at %s from template %s" outputPath templatePath
 
-        templatePath |> Shell.CopyFile outputPath
+        templatePath |> Shell.copyFile outputPath
 
         let replacements =
             [ "@packageName@", parameters.Title
@@ -664,9 +665,9 @@ module Fake.Windows.Choco
                                 |> match parameters.InstallerType with ChocolateyInstallerType.Zip -> id | _ -> appendFormattedLine "$silentArgs = '%s'" parameters.SilentArgs
                                 |> appendLine String.Empty
                                 |> match parameters.InstallerType with
-                                    | ChocolateyInstallerType.Zip -> appendWithoutQuotes "Uninstall-ChocolateyZipPackage $packageName $file"
-                                    | _ -> appendWithoutQuotes "Uninstall-ChocolateyPackage $packageName $installerType $silentArgs $file"
-                                |> toText
+                                    | ChocolateyInstallerType.Zip -> StringBuilder.appendWithoutQuotes "Uninstall-ChocolateyZipPackage $packageName $file"
+                                    | _ -> StringBuilder.appendWithoutQuotes "Uninstall-ChocolateyPackage $packageName $installerType $silentArgs $file"
+                                |> StringBuilder.toText
 
             File.writeString false outputPath uninstallContent
 
@@ -676,7 +677,7 @@ module Fake.Windows.Choco
         let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> Path.getFullName
         Trace.tracefn "Create chocolateyUninstall.ps1 at %s from template %s" outputPath templatePath
 
-        templatePath |> Shell.CopyFile outputPath
+        templatePath |> Shell.copyFile outputPath
 
         let replacements =
             [ "@packageName@", parameters.Title
@@ -691,19 +692,19 @@ module Fake.Windows.Choco
 
     let private callChocoPack nuspecFile (parameters: ChocoPackParams) =
         let args = new StringBuilder()
-                |> appendWithoutQuotes "pack"
-                |> append nuspecFile
-                |> appendWithoutQuotesIfNotNull parameters.Version "--version "
-                |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
-                |> appendWithoutQuotesIfNotNull parameters.AdditionalArgs parameters.AdditionalArgs
-                |> toText
+                |> StringBuilder.appendWithoutQuotes "pack"
+                |> StringBuilder.append nuspecFile
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Version "--version "
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.AdditionalArgs parameters.AdditionalArgs
+                |> StringBuilder.toText
 
         callChoco parameters.ToolPath args parameters.Timeout
 
     /// True if choco is available (only on windows)
     /// ## Sample usage
     ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
-    let IsAvailable = not isUnix && findExe <> None
+    let IsAvailable = not Environment.isUnix && findExe <> None
 
     /// Call choco to [install](https://github.com/chocolatey/choco/wiki/CommandsInstall) a package
     /// ## Parameters
@@ -720,21 +721,21 @@ module Fake.Windows.Choco
         let parameters = setParams ChocoInstallDefaults
 
         let args = new StringBuilder()
-                |> appendWithoutQuotes "install"
-                |> append packages
-                |> appendWithoutQuotesIfNotNull parameters.Version "--version "
-                |> appendIfTrueWithoutQuotes parameters.Prerelease "--pre"
-                |> appendWithoutQuotesIfNotNull parameters.PackageParameters "--params "
-                |> appendWithoutQuotesIfNotNull parameters.Source "--source "
-                |> appendIfTrueWithoutQuotes parameters.ForceX86 "--forcex86"
-                |> appendWithoutQuotesIfNotNull parameters.InstallArgs "--installargs "
-                |> appendIfTrueWithoutQuotes parameters.OverrideArgs "--overrideargs"
-                |> appendIfTrueWithoutQuotes parameters.SkipPowershell "--skippowershell"
-                |> appendWithoutQuotesIfNotNull parameters.User "--user "
-                |> appendWithoutQuotesIfNotNull parameters.Password "--password "
-                |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
-                |> appendIfNotNullOrEmpty parameters.AdditionalArgs ""
-                |> toText
+                |> StringBuilder.appendWithoutQuotes "install"
+                |> StringBuilder.append packages
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Version "--version "
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.Prerelease "--pre"
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.PackageParameters "--params "
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Source "--source "
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.ForceX86 "--forcex86"
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.InstallArgs "--installargs "
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.OverrideArgs "--overrideargs"
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.SkipPowershell "--skippowershell"
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.User "--user "
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Password "--password "
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
+                |> StringBuilder.appendIfNotNullOrEmpty parameters.AdditionalArgs ""
+                |> StringBuilder.toText
 
         callChoco parameters.ToolPath args parameters.Timeout
 
@@ -763,7 +764,7 @@ module Fake.Windows.Choco
 
         callChocoPack nuspecFile parameters
 
-        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.MoveFile parameters.OutputDir
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package
     /// ## Parameters
@@ -804,7 +805,7 @@ module Fake.Windows.Choco
 
         callChocoPack nuspecFile parameters
 
-        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.MoveFile parameters.OutputDir
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> Shell.moveFile parameters.OutputDir
 
     /// Call choco to [push](https://github.com/chocolatey/choco/wiki/CommandsPush) a package
     /// ## Parameters
@@ -821,14 +822,14 @@ module Fake.Windows.Choco
         let parameters = setParams ChocoPushDefaults
 
         let args = new StringBuilder()
-                |> appendWithoutQuotes "push"
-                |> append nupkgPath
-                |> appendWithoutQuotesIfNotNull parameters.Source "--source "
-                |> appendWithoutQuotesIfNotNull parameters.ApiKey "--apikey "
-                |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
-                |> appendIfTrueWithoutQuotes parameters.Force "--force"
-                |> appendIfTrueWithoutQuotes (parameters.AdditionalArgs |> String.isNotNullOrEmpty) parameters.AdditionalArgs
-                |> toText
+                |> StringBuilder.appendWithoutQuotes "push"
+                |> StringBuilder.append nupkgPath
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.Source "--source "
+                |> StringBuilder.appendWithoutQuotesIfNotNull parameters.ApiKey "--apikey "
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
+                |> StringBuilder.appendIfTrueWithoutQuotes parameters.Force "--force"
+                |> StringBuilder.appendIfTrueWithoutQuotes (parameters.AdditionalArgs |> String.isNotNullOrEmpty) parameters.AdditionalArgs
+                |> StringBuilder.toText
 
         callChoco parameters.ToolPath args parameters.Timeout
                 

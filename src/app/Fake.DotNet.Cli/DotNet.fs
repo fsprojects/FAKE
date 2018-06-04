@@ -10,30 +10,10 @@ module DotNet =
 
     // NOTE: The #if can be removed once we have a working release with the "new" API
     // Currently we #load this file in build.fsx
-    #if NO_DOTNETCORE_BOOTSTRAP
+    
     open Fake.Core
     open Fake.IO
     open Fake.IO.FileSystemOperators
-    #else
-    open Fake
-    // Workaround until we have a release with the "new" API.
-    module Environment =
-        let environVar = environVar
-        let isUnix = isUnix
-    module Trace =
-        let trace = trace
-        let traceError = traceError
-        let traceImportant = traceImportant
-        let traceTask s proj =
-            { new System.IDisposable with
-                member x.Dispose() = () }
-    module String =
-        let replace = replace
-    module Process =
-        let ExecProcess = ExecProcess
-        let ExecProcessWithLambdas = ExecProcessWithLambdas
-
-    #endif
     open System
     open System.IO
     open System.Security.Cryptography
@@ -152,6 +132,8 @@ module DotNet =
         | Version of string
 
     /// .NET Core SDK install options
+    [<NoComparison>]
+    [<NoEquality>]
     type CliInstallOptions =
         {
             /// Custom installer obtain (download) options
@@ -277,6 +259,26 @@ module DotNet =
             Version = Version "2.1.4"
         }
 
+    let Release_2_1_300_RC1 option =
+        { option with
+            InstallerOptions = (fun io ->
+                { io with
+                    Branch = "release/2.1"
+                })
+            Channel = None
+            Version = Version "2.1.300-rc1-008673"
+        }
+
+    let Release_2_1_300 option =
+        { option with
+            InstallerOptions = (fun io ->
+                { io with
+                    Branch = "release/2.1"
+                })
+            Channel = None
+            Version = Version "2.1.300"
+        }
+
     /// [omit]
     let private optionToParam option paramFormat =
         match option with
@@ -290,7 +292,7 @@ module DotNet =
         | false -> ""
 
     /// [omit]
-    let private buildDotNetCliInstallArgs quoteChar (param: CliInstallOptions) =
+    let private buildDotNetCliInstallArgs (param: CliInstallOptions) =
         let versionParamValue =
             match param.Version with
             | Latest -> "latest"
@@ -304,22 +306,22 @@ module DotNet =
                 | None ->
                     let installerOptions = InstallerOptions.Default |> param.InstallerOptions
                     installerOptions.Branch |> String.replace "/" "-"
-        let quoteStr str = sprintf "%c%s%c" quoteChar str quoteChar
+
         let architectureParamValue =
             match param.Architecture with
             | Auto -> None
             | X86 -> Some "x86"
             | X64 -> Some "x64"
         [
-            "-Verbose"
-            sprintf "-Channel %s" (quoteStr channelParamValue)
-            sprintf "-Version %s" (quoteStr versionParamValue)
-            optionToParam architectureParamValue "-Architecture %s"
-            optionToParam (param.CustomInstallDir |> Option.map quoteStr) "-InstallDir %s"
-            boolToFlag param.DebugSymbols "-DebugSymbols"
-            boolToFlag param.DryRun "-DryRun"
-            boolToFlag param.NoPath "-NoPath"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+            Process.boolParam ("Verbose", true)
+            Process.stringParam ("Channel", channelParamValue)
+            Process.stringParam ("Version", versionParamValue)
+            Process.optionParam ("Architecture", architectureParamValue |> Option.map Process.quote)
+            Process.optionParam ("InstallDir", param.CustomInstallDir |> Option.map Process.quote) 
+            Process.boolParam ("DebugSymbols", param.DebugSymbols)
+            Process.boolParam ("DryRun", param.DryRun)
+            Process.boolParam ("NoPath", param.NoPath)
+        ] |> Process.parametersToString "-" " "
 
 
     /// dotnet restore verbosity
@@ -364,6 +366,9 @@ module DotNet =
                 Process.createEnvironmentMap()
                 |> Map.remove "MSBUILD_EXE_PATH"
                 |> Map.remove "MSBuildExtensionsPath"
+                |> Map.remove "MSBuildLoadMicrosoftTargetsReadOnly"
+                |> Map.remove "MSBuildSDKsPath"
+                |> Map.remove "DOTNET_HOST_PATH"
         }
         [<Obsolete("Use Options.Create instead")>]
         static member Default = Options.Create()
@@ -517,6 +522,7 @@ module DotNet =
 
         if rid.IsNone then failwithf "could not read rid from output: \n%s" (System.String.Join("\n", result.Messages))
 
+        __.MarkSuccess()
         { RID = rid.Value }
 
 
@@ -547,16 +553,16 @@ module DotNet =
     /// dotnet info result
     type VersionResult = string
 
-    /// Execute dotnet --info command
+    /// Execute dotnet --version command
     /// ## Parameters
     ///
-    /// - 'setParams' - set info command parameters
+    /// - 'setParams' - set version command parameters
     let getVersion setParams =
-        use __ = Trace.traceTask "DotNet:info" "running dotnet --info"
+        use __ = Trace.traceTask "DotNet:version" "running dotnet --version"
         let param = VersionOptions.Create() |> setParams
         let args = "--version"
         let result = exec (fun _ -> param.Common) "" args
-        if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
+        if not result.OK then failwithf "dotnet --version failed with code %i" result.ExitCode
 
         let version =
             result.Messages
@@ -565,6 +571,7 @@ module DotNet =
 
         if String.isNullOrWhiteSpace version then failwithf "could not read version from output: \n%s" (System.String.Join("\n", result.Messages))
 
+        __.MarkSuccess()
         version
 
     /// Install .NET Core SDK if required
@@ -573,7 +580,7 @@ module DotNet =
     /// - 'setParams' - set installation options
     let install setParams : Options -> Options =
         let param = CliInstallOptions.Default |> setParams
-
+        
         let dir = defaultArg param.CustomInstallDir defaultDotNetCliDir
         let existingDotNet =
             match tryDotnetCliPath dir with
@@ -594,25 +601,18 @@ module DotNet =
         | _ ->
 
         let installScript = downloadInstaller param.InstallerOptions
-
+        
         let exitCode =
             let args, fileName =
                 if Environment.isUnix then
-                    // Problem is that argument parsing works differently on dotnetcore than on mono...
-                    // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
-    #if NO_DOTNETCORE_BOOTSTRAP
-                    let quoteChar = '"'
-    #else
-                    let quoteChar = '\''
-    #endif
-                    let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs quoteChar param)
+                    let args = sprintf "%s %s" installScript (buildDotNetCliInstallArgs param)
                     args, "bash" // Otherwise we need to set the executable flag!
                 else
                     let args =
                         sprintf
                             "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\""
                             installScript
-                            (buildDotNetCliInstallArgs '\'' param)
+                            (buildDotNetCliInstallArgs param)
                     args, "powershell"
             Process.execSimple (fun info ->
             { info with
@@ -634,7 +634,8 @@ module DotNet =
             match param.CustomInstallDir with
             | Some installDir -> installDir
             | None -> defaultDotNetCliDir
-        let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")              
+        let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
+        Trace.tracefn ".NET Core SDK installed to %s" exe     
         (fun opt -> { opt with DotNetCliPath = exe})
 
     /// dotnet restore command options
@@ -709,6 +710,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildRestoreArgs param)
         let result = exec (fun _ -> param.Common) "restore" args
         if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// build configuration
     type BuildConfiguration =
@@ -787,6 +789,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildPackArgs param)
         let result = exec (fun _ -> param.Common) "pack" args
         if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// dotnet publish command options
     type PublishOptions =
@@ -859,6 +862,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildPublishArgs param)
         let result = exec (fun _ -> param.Common) "publish" args
         if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// dotnet build command options
     type BuildOptions =
@@ -928,6 +932,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildBuildArgs param)
         let result = exec (fun _ -> param.Common) "build" args
         if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// dotnet build command options
     type TestOptions =
@@ -1033,6 +1038,7 @@ module DotNet =
         let args = sprintf "%s %s" project (buildTestArgs param)
         let result = exec (fun _ -> param.Common) "test" args
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
+        __.MarkSuccess()
 
     /// Gets the DotNet SDK from the global.json
     let getSDKVersionFromGlobalJson() : string =

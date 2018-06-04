@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies. There is also a [tutorial](../fxcop.html) for this task available.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.FxCopHelper
 
 open System
@@ -10,6 +11,7 @@ open System.Text.RegularExpressions
 open Microsoft.Win32
 
 /// The FxCop error reporting level
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type FxCopErrorLevel = 
     | Warning = 5
     | CriticalWarning = 4
@@ -20,6 +22,7 @@ type FxCopErrorLevel =
 
 /// Parameter type for the FxCop tool
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type FxCopParams = 
     { ApplyOutXsl : bool
       DirectOutputToConsole : bool
@@ -48,6 +51,7 @@ type FxCopParams =
 
 /// This checks the result file with some XML queries for errors
 /// [omit]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let checkForErrors resultFile = 
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
     let FxCopCriticalWarnings = 0
@@ -59,6 +63,7 @@ let checkForErrors resultFile =
     getErrorValue "CriticalError", getErrorValue "Error", getErrorValue "CriticalWarning", getErrorValue "Warning"
 
 /// FxCop Default parameters
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let FxCopDefaults = 
     { ApplyOutXsl = false
       DirectOutputToConsole = true
@@ -86,6 +91,7 @@ let FxCopDefaults =
       CustomDictionary = String.Empty }
 
 /// Run FxCop on a group of assemblies.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let FxCop setParams (assemblies : string seq) = 
     let param = setParams FxCopDefaults
     use __ = traceStartTaskUsing "FxCop" ""

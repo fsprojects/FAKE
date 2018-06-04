@@ -1,4 +1,5 @@
-﻿module Fake.Installers
+﻿[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+module Fake.Installers
 
 open System.ServiceProcess
 open System.Configuration.Install
@@ -8,6 +9,7 @@ open System.Reflection
 open System.Diagnostics
 open Fake.Services
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<RunInstaller(true)>]
 type FakeDeployInstaller() as self = 
     inherit Installer()
@@ -24,11 +26,13 @@ type FakeDeployInstaller() as self =
         self.Installers.Add processInstaller |> ignore
         self.Installers.Add serviceInstaller |> ignore
     
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     override x.OnCommitted(savedState) = 
         base.OnCommitted(savedState)
         let sc = new ServiceController(ServiceName)
         sc.Start()
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getInstaller() = 
     let ti = new TransactedInstaller()
     let installer = new FakeDeployInstaller()
@@ -38,7 +42,9 @@ let getInstaller() =
     ti
 
 /// Installs the Fake listener
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let installServices() = getInstaller().Install(new System.Collections.Hashtable())
 
 /// Uninstalls the Fake listener
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let uninstallServices() = getInstaller().Uninstall(null)

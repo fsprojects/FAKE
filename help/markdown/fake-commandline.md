@@ -1,38 +1,66 @@
 # FAKE Command Line
 
-**Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found [here](legacy-commandline.html)**
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-commandline.html">here</a></p>
+</div>
 
+The `fake.exe` command line interface (CLI) is defined as follows:
+```bash
+Usage:
+fake.exe [fake_opts] run [run_opts] [<script.fsx>] [--] [<scriptargs>...]
+fake.exe [fake_opts] build [build_opts] [--] [<scriptargs>...]
+fake.exe --version
+fake.exe --help | -h
 
-The FAKE.exe command line interface (CLI) is defined as follows:`
+Fake Options [fake_opts]:
+-v, --verbose [*]     Verbose (can be used multiple times)
+                        Is ignored if -s is used.
+                        * -v: Log verbose but only for FAKE
+                        * -vv: Log verbose for Paket as well
+-s, --silent          Be silent, use this option if you need to pipe your output into another tool or need some additional processing.
 
+Fake Run Options [run_opts]:
+-d, --debug           Debug the script.
+-n, --nocache         Disable fake cache for this run.
+-p, --partial-restore
+                      Only restore the required group instead of a full restore,
+                      can be set globally by setting the environment variable FAKE_PARTIAL_RESTORE to true.
+--fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
+
+Fake Build Options [build_opts]:
+-d, --debug           Debug the script.
+-n, --nocache         Disable fake cache for this run.
+-p, --partial-restore
+                      Only restore the required group instead of a full restore,
+                      can be set globally by setting the environment variable FAKE_PARTIAL_RESTORE to true.
+--fsiargs <fsiargs> [*]  Arguments passed to the f# interactive.
+-f, --script <script.fsx>
+                        The script to execute (defaults to `build.fsx`).
 ```
-USAGE: fake [--help] [--version] [--verbose] [<subcommand> [<options>]]
+Please refer to the [Fake.Core.CommandLineParsing documentation](core-commandlineparsing.html) for a explanation of the synax.
 
-SUBCOMMANDS:
+For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future. In general you should use the `run` subcommand in scripting when you use parameters, because it is safer in regards to adding options without breaking. Use `build` to have a more dense workflow in the command line
 
-    run <options>         Runs a script.
-    build <options>       Build a target via build.fsx script.
+## Disclaimer
 
-    Use 'fake <subcommand> --help' for additional information.
+Ordering of arguments does MATTER. This is a change in behavior from FAKE version 4 to 5.
 
-OPTIONS:
+Examples:
 
-    --version             Prints the version.
-    --verbose, -v         More verbose output. Can be used more than once.
-    --help                display this list of options.
-```
-
-For now fake only supports the `run` and `build` subcommands which are basically equivalent to the Fake as you know it, but more are planned in the future.
+- `fake run -v build.fsx` - This will not run fake in verbose mode. Instead it will try to run the script named `-v`. (But we might support that in the future)
+- `fake run build.fsx --fsiargs "--define:BOOTSTRAP"` - This will not run `build.fsx` and define BOOTSTRAP, because `--fsiargs` needs to be before the script-name.
+- `fake build -s` - This will run fake in single-target mode and not in silent mode, you need to use `fake -s build` as described in the above usage description.
 
 ## `--verbose [-v]`
 
-
 Print details of FAKE's activity. Note that `-v` was used for `--version` in previous versions of Fake.
-Currently Fake supports 3 verbosity levels:
+Currently Fake supports 4 verbosity levels:
 
- - None is warnings only and regular output from the script
- - a single `--verbose` means verbose output from Fake
- - two `--verbose --verbose` mean to set other projects (like paket) to verbose mode as well.
+- a single `--silent` will prevent all output from the fake runner. This makes it easy to use a `.fsx` script for data processing or pipelining on the command-line
+- None is regular fake information like performance-numbers, general informations and warnings as well as regular output from the script
+- a single `--verbose` means verbose output from the fake runner
+- two `--verbose --verbose` or `-vv` mean to set other projects (like paket) to verbose mode as well.
 
 ### `--version`
 
@@ -43,116 +71,52 @@ Print FAKE version information.
 Prints help information. In contract to the other options you can use --help everywhere.
 For example `fake run --help` to get help about the `run` subcommand.
 
-## Subcommands
-
-### Run
-
-```
-USAGE: fake run [--help] [--script <string>] [--target <string>]
-                [--environmentvariable <string> <string>] [--debug]
-                [--singletarget] [--nocache] [--fsiargs <string>]
-
-OPTIONS:
-
-    --script, -f <string> Specify the script to run. (--script or -f is
-                          optional)
-    --target, -t <string> The target to run.
-    --environmentvariable, -e <string> <string>
-                          Set an environment variable.
-    --debug, -d           Debug the script (set a breakpoint at the start).
-    --singletarget, -s    Run only the specified target.
-    --nocache, -n         Disable caching of the compiled script.
-    --fsiargs <string>    Arguments passed to the f# interactive.
-    --help                display this list of options.
-```
-
-The run command is basically to start scripts or build-scripts therefore the `--script` is optional and you can just write `fake run build.fsx`.
-
-#### Basic examples
+## Basic examples
 
 **Specify build script only:** `fake.exe run mybuildscript.fsx`
 
 **Specify target name only:** `fake.exe run build.fsx --target Clean` (runs the `Clean` target).
 
-#### `script`
+As `fake build` is a shortcut you could use:
 
-Required. The path to your `.fsx` build file. Note the `--script` is optional, you can use it if you have specially crafted file names like `--debug`.
+**Specify target name only:** `fake.exe build -t Clean` (runs the `Clean` target).
 
-#### `target`
+### `<script.fsx>` or `--script <script.fsx>`
 
-Optional.  The name of the build script target you wish to run.  This will any target you specified to run in the build script.  
+Required. The path to your `.fsx` build file. Note that for `fake run` the first "unknown" argument as parsed as the script name and all other parameters are interpreted as arguments for the script.
 
-#### `--environmentvariable [-e] <name:string> <value:string>`
+To support specially named files like `--fsiargs` you could use `fake build --script --fsiargs`
 
-Set environment variable name value pair. Supports multiple. 
-                                                   
-#### `--fsiargs <string>`
+### `--fsiargs <fsiargs>`
 
 Pass an single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
 
-#### `--help [-h|/h|/help|/?]`
+This way you can use for example `#if MYFLAG` compiler directives in your script and use `--fsiargs --define:MYFLAG`
+
+### `--help` or `-h`
 
 Display CLI help.
-                                                                                                         
-### Build
 
-```
-USAGE: fake build [--help] [--target <string>] [--script <string>]
-                  [--environmentvariable <string> <string>] [--debug]
-                  [--singletarget] [--nocache] [--fsiargs <string>]
+## Running Targets
 
-OPTIONS:
+Please refer to the [target module documentation](core-targets.html)
 
-    --target, -t <string> The target to run (--target or -t is optional when
-                          running 'build').
-    --script, -f <string> Specify the script to run.
-    --environmentvariable, -e <string> <string>
-                          Set an environment variable.
-    --debug, -d           Debug the script (set a breakpoint at the start).
-    --singletarget, -s    Run only the specified target.
-    --nocache, -n         Disable caching of the compiled script.
-    --fsiargs <string>    Arguments passed to the f# interactive.
-    --help                display this list of options.
-```
+For reference the CLI for the targets-module looks like this:
 
-Very similar to `run`. The difference is that with `build` the `--target` is optional and `build.fsx` is assumed where in `run` the `--script` is optional.
-Examples:
+```bash
+Usage:
+  fake-run --list
+  fake-run --version
+  fake-run --help | -h
+  fake-run [target_opts] [target <target>] [--] [<targetargs>...]
 
- - `fake build` to run the default target and `build.fsx`
- - `fake build Build -s` to run the `Build` target without dependencies
- - `fake build Build` to run the `Build` target with all dependencies
-
-The recommendation is to use `fake build` if you have a single `build.fsx` and `fake run` for scripting (or multiple `.fsx` files). 
-
-# Running FAKE targets from the command line
-
-For this short sample we assume you have the latest version of FAKE installed and available in PATH (see [the getting started guide](gettingstarted.html)). Now consider the following small FAKE script:
-
-```fsharp
-#r "paket:
-nuget Fake.Core.Target //"
-open Fake.Core
-
-Target.Create "Clean" (fun _ -> Trace.trace " --- Cleaning stuff --- ")
-
-Target.Create "Build" (fun _ -> Trace.trace " --- Building the app --- ")
-
-Target.Create "Deploy" (fun _ -> Trace.trace " --- Deploying app --- ")
-
-open Fake.Core.TargetOperators
-"Clean"
-    ==> "Build"
-    ==> "Deploy"
-
-Target.RunOrDefault "Deploy"
+Target Module Options [target_opts]:
+    -t, --target <target>
+                          Run the given target (ignored if positional argument 'target' is given)
+    -e, --environment-variable <keyval> [*]
+                          Set an environment variable. Use 'key=val'
+    -s, --single-target    Run only the specified target.
+    -p, --parallel <num>  Run parallel with the given number of tasks.
 ```
 
-
-Now you can just execute
-
- - `fake run build.fsx` to run the default target (`Deploy`)
- - `fake build` same as above
- - `fake run build.fsx -s -t Build` to run the `Build` target without dependencies
- - `fake build Build -s` same as above
- - `fake run build.fsx -t Build` to run the `Build` target with the `Clean` dependency
- - `fake build Build` same as above
+Basically this means you insert the options as `<scriptargs>` parameters at the end.

@@ -3,7 +3,6 @@ module Fake.DotNet.NuGet.Update
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.BuildServer
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core
 open System
@@ -86,3 +85,4 @@ let NugetUpdate setParams packagesFile =
     let param = NugetUpdateDefaults |> setParams
     let args = sprintf "update %s %s" packagesFile (buildArgs param)
     runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package update for %s failed." packagesFile)
+    __.MarkSuccess()

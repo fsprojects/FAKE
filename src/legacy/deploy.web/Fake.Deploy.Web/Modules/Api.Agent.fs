@@ -14,10 +14,12 @@ open Fake.NuGetHelper
 open Fake.Deploy.Web
 open Fake.Deploy.Web.Module.NancyOp
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type AgentResponse<'t> = 
     { case : string
       fields : 't [] }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ApiAgent(dataProvider : IDataProvider, agentProxy : AgentProxy) as http = 
     inherit FakeModule("/api/v1/agent")
 

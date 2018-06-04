@@ -77,6 +77,7 @@ module Fake.Testing.SonarQube
         use __ = Trace.traceTask "SonarQube" "Begin"
         let parameters = setParams SonarQubeDefaults
         SonarQubeCall Begin parameters
+        __.MarkSuccess()
 
     /// This task to can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
     /// ## Parameters
@@ -99,3 +100,4 @@ module Fake.Testing.SonarQube
                          | Some setParams -> setParams SonarQubeDefaults
                          | None -> (fun p -> { p with Settings = [] }) SonarQubeDefaults
         SonarQubeCall End parameters
+        __.MarkSuccess()

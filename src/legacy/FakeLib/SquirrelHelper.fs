@@ -1,4 +1,5 @@
 /// Contains types and utility functions related to creating [Squirrel](https://github.com/Squirrel/Squirrel.Windows) installer.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Squirrel
 
 open Fake
@@ -10,6 +11,7 @@ open System.Text
 ///
 /// For reference, see: [Squirrel Command Line Options](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md)
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type SquirrelParams =
     {
         /// The output directory for the generated installer
@@ -60,6 +62,7 @@ type SquirrelParams =
 /// - `SignExecutable` - `None`
 /// - `SigningKeyFile` - `None`
 /// - `SigningSecret` - `None`
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let SquirrelDefaults =
     let toolname = "Squirrel.exe"
     {
@@ -122,6 +125,7 @@ module internal ResultHandling =
 ///     Target "CreatePackage" (fun _ ->
 ///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
 ///     )
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let SquirrelPack setParams nugetPackage =
     use __ = traceStartTaskUsing "Squirrel" ""
     let parameters = SquirrelDefaults |> setParams

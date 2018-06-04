@@ -9,6 +9,7 @@ open Nancy.Security
 open System.Security.Cryptography
 open System.Text
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type LoginModel = {
     UserName : string
@@ -18,10 +19,12 @@ type LoginModel = {
     Result : string
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type LoginResult =
     | Success of User
     | Failure of string
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Account (userMapper : UserMapper, memberProvider : IMembershipProvider) as http =
     inherit FakeModule("/account")
 

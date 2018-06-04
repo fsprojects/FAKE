@@ -127,8 +127,7 @@ module RawProc =
                     if not <| !isStarted then
                         toolProcess.EnableRaisingEvents <- true
                         setEcho true |> ignore
-                        if not <| Process.startProcess toolProcess then
-                            failwithf "could not start process: %s" commandLine
+                        Process.rawStartProcess toolProcess
                         isStarted := true
                         
                         let handleStream parameter processStream isInputStream =

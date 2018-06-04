@@ -8,6 +8,7 @@ open Nancy.Security
 open Fake.Deploy.Web
 open Fake.Deploy.Web.Module.NancyOp
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ApiUser (membershipProvider : IMembershipProvider) as http =
     inherit FakeModule("/api/v1/user")
 

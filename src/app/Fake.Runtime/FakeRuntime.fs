@@ -3,10 +3,12 @@
 open System
 open System.IO
 open Fake.Runtime
+open Fake.Runtime.Runners
 open Paket
+open System
 
 type FakeSection =
- | PaketDependencies of Paket.Dependencies * group : String option
+ | PaketDependencies of Paket.Dependencies * Lazy<Paket.DependenciesFile> * group : String option
 
 let readAllLines (r : TextReader) =
   seq {
@@ -17,28 +19,11 @@ let readAllLines (r : TextReader) =
   }
 let private dependenciesFileName = "paket.dependencies"
 
-
-
-#if !REMOVE_LEGACY_HEADER
-type LegacyRawFakeSection =
+type InlinePaketDependenciesSection =
   { Header : string
     Section : string }
 
-let legacyReadFakeSection (scriptText:string) =
-  let startString = "(* -- Fake Dependencies "
-  let endString = "-- Fake Dependencies -- *)"
-  let start = scriptText.IndexOf(startString) + startString.Length
-  let endIndex = scriptText.IndexOf(endString) - 1
-  if (start >= endIndex) then
-    None
-  else
-    let fakeSectionWithVersion = scriptText.Substring(start, endIndex - start)
-    let newLine = fakeSectionWithVersion.IndexOf("\n")
-    let header = fakeSectionWithVersion.Substring(0, newLine).Trim()
-    let fakeSection = fakeSectionWithVersion.Substring(newLine).Trim()
-    Some { Header = header; Section = fakeSection}
-
-let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
+let writeFixedPaketDependencies scriptCacheDir (f : InlinePaketDependenciesSection) =
   match f.Header with
   | "paket-inline" ->
     let dependenciesFile = Path.Combine(scriptCacheDir, dependenciesFileName)
@@ -59,7 +44,7 @@ let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
         |> replacePaketCommand "cache"
       )
     File.WriteAllLines(dependenciesFile, fixedSection)
-    PaketDependencies (Paket.Dependencies(dependenciesFile), None)
+    PaketDependencies (Dependencies dependenciesFile, (lazy DependenciesFile.ReadFromFile dependenciesFile), None)
   | "paket.dependencies" ->
     let groupStart = "group "
     let fileStart = "file "
@@ -81,16 +66,15 @@ let legacyParseHeader scriptCacheDir (f : LegacyRawFakeSection) =
       match options.TryGetValue "file" with
       | true, depFile -> depFile
       | _ -> dependenciesFileName
-    PaketDependencies (Paket.Dependencies(Path.GetFullPath file), group)
+    let fullpath = Path.GetFullPath file
+    PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), group)
   | _ -> failwithf "unknown dependencies header '%s'" f.Header
 
-#endif
-
-let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scriptText:string) =
+let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.TokenizedScript) cacheDir (scriptPath:string) =
   let pRefStr = "paket:"
   let grRefStr = "groupref"
   let groupReferences, paketLines =
-    FSharpParser.findInterestingItems defines scriptPath scriptText
+    FSharpParser.findInterestingItems tokenized
     |> Seq.choose (fun item -> 
         match item with
         | FSharpParser.InterestingItem.Reference ref when ref.StartsWith pRefStr ->
@@ -100,7 +84,7 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
     |> Seq.toList
     |> List.partition (fun ref -> ref.StartsWith(grRefStr, System.StringComparison.OrdinalIgnoreCase))
   let paketCode =
-    paketLines 
+    paketLines
     |> String.concat "\n"
   let paketGroupReferences =
     groupReferences
@@ -118,18 +102,24 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
 
   if paketCode <> "" then
     let fixDefaults (paketCode:string) =
-      let lines = paketCode.Split([|'\r';'\n'|])
+      let lines = paketCode.Split([|'\r';'\n'|]) |> Array.map (fun line -> line.ToLower().TrimStart())
       let storageRef = "storage"
       let sourceRef = "source"
-      let containsStorage = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(storageRef))
-      let containsSource = lines |> Seq.exists (fun line -> line.ToLower().TrimStart().StartsWith(sourceRef))
+      let frameworkRef = "framework"
+      let restrictionRef = "restriction"
+      let containsStorage = lines |> Seq.exists (fun line -> line.StartsWith(storageRef))
+      let containsSource = lines |> Seq.exists (fun line -> line.StartsWith(sourceRef))
+      let containsFramework = lines |> Seq.exists (fun line -> line.StartsWith(frameworkRef))
+      let containsRestriction = lines |> Seq.exists (fun line -> line.StartsWith(restrictionRef))
       paketCode
       |> fun p -> if containsStorage then p else "storage: none" + "\n" + p
       |> fun p -> if containsSource then p else "source https://api.nuget.org/v3/index.json" + "\n" + p
+      |> fun p -> if containsFramework || containsRestriction then p 
+                  else "framework: netstandard2.0" + "\n" + p
 
     { Header = "paket-inline"
       Section = fixDefaults paketCode }
-    |> legacyParseHeader cacheDir
+    |> writeFixedPaketDependencies cacheDir
     |> Some
   else
     let file = dependenciesFileName
@@ -137,7 +127,8 @@ let tryReadPaketDependenciesFromScript defines cacheDir (scriptPath:string) (scr
     | [] ->
       None
     | group :: _ ->
-      PaketDependencies (Paket.Dependencies(Path.GetFullPath file), Some group)
+      let fullpath = Path.GetFullPath file
+      PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
       |> Some
 
 
@@ -145,7 +136,10 @@ type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
 
-let paketCachingProvider (script:string) printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
+let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
+  use __ = Fake.Profile.startCategory Fake.Profile.Category.Paket
+  let logLevel = config.VerboseLevel
+  let script = config.ScriptFilePath
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
 #if DOTNETCORE
@@ -154,9 +148,11 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
 #else
   let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_6)
 #endif
-  let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
+  let lockFilePath = Paket.DependenciesFile.FindLockfile paketApi.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
+  let assemblyCacheHashFile = Path.Combine(cacheDir, "assemblies.cached")
+  let assemblyCacheFile = Path.Combine(cacheDir, "assemblies.txt")
 
 #if DOTNETCORE
   let getCurrentSDKReferenceFiles() =
@@ -170,113 +166,89 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
     // Note: This package/version needs to updated together with our "framework" variable below and needs to 
     // be compatible with the runtime we are currently running on.
     let rootDir = Directory.GetCurrentDirectory()
-    let sources = paketDependencies.GetSources().[groupName]
     let packageName = Domain.PackageName("NETStandard.Library")
-    let version = SemVer.Parse("2.0.0")
-    let versions =
-      Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
-      |> Async.RunSynchronously
-      |> dict
-    let source =
-      match versions.TryGetValue(version) with
-      | true, v when v.Length > 0 -> v |> Seq.head
-      | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
-    
-    let _, extractedFolder =
-      Paket.NuGet.DownloadAndExtractPackage
-        (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
-         source, [], Paket.Constants.MainDependencyGroup,
-         packageName, version, PackageResolver.ResolvedPackageKind.Package, false, false, false, false)
-      |> Async.RunSynchronously
-    //let netstandard = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyName(System.Reflection.AssemblyName("netstandard"))
+    let version = SemVer.Parse("2.0.2")
+    let existingpkg = NuGetCache.GetTargetUserNupkg packageName version
+    let extractedFolder =
+      if File.Exists existingpkg then
+        // Shortcut in order to prevent requests to nuget sources if we have it downloaded already
+        Path.GetDirectoryName existingpkg
+      else
+        let sources = paketDependenciesFile.Value.Groups.[groupName].Sources
+        let versions =
+          Paket.NuGet.GetVersions false None rootDir (PackageResolver.GetPackageVersionsParameters.ofParams sources groupName packageName)
+          |> Async.RunSynchronously
+          |> dict
+        let source =
+          match versions.TryGetValue(version) with
+          | true, v when v.Length > 0 -> v |> Seq.head
+          | _ -> failwithf "Could not find package '%A' with version '%A' in any package source of group '%A', but fake needs this package to compile the script" packageName version groupName    
+        
+        let _, extractedFolder =
+          Paket.NuGet.DownloadAndExtractPackage
+            (None, rootDir, false, PackagesFolderGroupConfig.NoPackagesFolder,
+             source, [], Paket.Constants.MainDependencyGroup,
+             packageName, version, PackageResolver.ResolvedPackageKind.Package, false, false, false, false)
+          |> Async.RunSynchronously
+        extractedFolder
     let sdkDir = Path.Combine(extractedFolder, "build", "netstandard2.0", "ref")
     Directory.GetFiles(sdkDir, "*.dll")
     |> Seq.toList
 #endif
 
-  let writeIntellisenseFile cacheDir (context : Paket.LoadingScripts.ScriptGeneration.PaketContext) =
-    // Write loadDependencies file (basically only for editor support)
-    let intellisenseFile = Path.Combine (cacheDir, "intellisense.fsx")
-    if printDetails then Trace.log <| sprintf "Writing '%s'" intellisenseFile
-    let groupScripts = Paket.LoadingScripts.ScriptGeneration.generateScriptContent context
-    let scripts, groupScript =
-      match groupScripts with
-      | [] -> failwith "generateScriptContent returned []"
-      | [h] -> failwithf "generateScriptContent returned a single item: %A" h
-      | [ _, scripts; _, [groupScript] ] -> scripts, groupScript
-      | _ -> failwithf "generateScriptContent returned %A" groupScripts
 
-    
-    let rootDir = DirectoryInfo cacheDir
-    for sd in scripts do
-        let scriptPath = Path.Combine (rootDir.FullName , sd.PartialPath)
-        let scriptDir = Path.GetDirectoryName scriptPath |> Path.GetFullPath |> DirectoryInfo
-        scriptDir.Create()
-        sd.Save rootDir
+  let writeIntellisenseFile cacheDir =
+    let intellisenseFile = Path.Combine (cacheDir, Runners.loadScriptName)
+    if logLevel.PrintVerbose then Trace.log <| sprintf "Writing '%s'" intellisenseFile
 
-    let content = groupScript.RenderDirect rootDir (FileInfo intellisenseFile)
-
-    // TODO: Make sure to create #if !FAKE block, because we don't actually need it.
+    // Make sure to create #if !FAKE block, because we don't actually need it.
     let intellisenseContents =
       [| "// This file is automatically generated by FAKE"
          "// This file is needed for IDE support only"
          "#if !FAKE"
-         content
+         sprintf "#load \"%s\"" Runners.loadScriptLazyName
          "#endif" |]
     File.WriteAllLines (intellisenseFile, intellisenseContents)
-
-  let restoreOrUpdate () =
-    if printDetails then Trace.log "Restoring with paket..."
-
-    // Update
-    let localLock = script + ".lock" // the primary lockfile-path </> lockFilePath.FullName is implementation detail
-    let needLocalLock = lockFilePath.FullName.Contains (Path.GetFullPath cacheDir) // Only primary if not external already.
-    let localLockText = lazy File.ReadAllText localLock
-    if needLocalLock && File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
-      File.Copy(localLock, lockFilePath.FullName)
-    if needLocalLock && not (File.Exists localLock) then
-      File.Delete lockFilePath.FullName
-
-    if not <| File.Exists lockFilePath.FullName then
-      if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
-      try
-        paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
-        |> ignore
-      with
-      | e when e.Message.Contains "Did you restore groups" ->
-        // See https://github.com/fsharp/FAKE/issues/1672
-        // and https://github.com/fsprojects/Paket/issues/2785
-        // We do a restore anyway.
-        ()
-      if needLocalLock then File.Copy(lockFilePath.FullName, localLock)
     
-    // Restore
-    paketDependencies.Restore((*false, group, [], false, true*))
-    |> ignore
+  let writeIntellisenseLazyFile cacheDir (context : Paket.LoadingScripts.ScriptGeneration.PaketContext) =
+    // Write loadDependencies file (basically only for editor support)
+    async {
+      try
+        let intellisenseLazyFile = Path.Combine (cacheDir, Runners.loadScriptLazyName)
+        let cache = context.Cache
+        cache.StartSetupGroup(groupName) |> ignore
+        do! cache.AwaitFinishSetup()
+        let groupScripts = Paket.LoadingScripts.ScriptGeneration.generateScriptContent context
+        let _, groupScript =
+          match groupScripts with
+          | [] -> failwith "generateScriptContent returned []"
+          | [h] -> failwithf "generateScriptContent returned a single item: %A" h
+          | [ _, scripts; _, [groupScript] ] -> scripts, groupScript
+          | _ -> failwithf "generateScriptContent returned %A" groupScripts
 
-    let lockFile = paketDependencies.GetLockFile()
-    //let (cache:DependencyCache) = DependencyCache(paketDependencies.GetDependenciesFile(), lockFile)
-    let (cache:DependencyCache) = DependencyCache(lockFile)
-    if printDetails then Trace.log "Setup DependencyCache..."
-    try
-      cache.SetupGroup groupName |> ignore
-    with e when e.Message.Contains "doesn't exist. Did you restore" ->
-      let idx = e.Message.IndexOf(" doesn't exist. Did you restore")
-      let folder = e.Message.Substring("Folder ".Length, idx - "Folder ".Length)
-      let rec printFolder f =
-        if not (System.IO.Directory.Exists f) then
-          printfn "Dir '%s' doesn't exist" f
-        else
-          printfn "Dir '%s':" f
-          System.IO.Directory.EnumerateDirectories(f)
-          |> Seq.iter (fun dir -> printfn " -> %s" dir)
-        let parent = System.IO.Path.GetDirectoryName(f)
-        if not (isNull parent) then
-          printFolder parent
 
-      printFolder folder
-      reraise()
+        let rootDir = DirectoryInfo cacheDir
+        let content = groupScript.RenderDirect rootDir (FileInfo intellisenseLazyFile)
+
+        let intellisenseContents =
+          [| "// This file is automatically generated by FAKE"
+             "// This file is needed for IDE support only"
+             content |]
+        File.WriteAllLines (intellisenseLazyFile, intellisenseContents)
+      with e ->
+          eprintfn "Failed to write intellisense script: %O" e
+    }
+
+  let lockFile = lazy LockFile.LoadFrom(lockFilePath.FullName)
+  let cache = lazy DependencyCache(lockFile.Value)
+  let retrieveInfosUncached () =
+    match lockFile.Value.Groups |> Map.tryFind groupName with
+    | Some g -> ()
+    | None -> failwithf "The group '%s' was not found in the lockfile. You might need to run 'paket install' first!" groupName.Name
+    
+    let (cache:DependencyCache) = cache.Value
     let orderedGroup = cache.OrderedGroups groupName // lockFile.GetGroup groupName
+
     let rid =
 #if DOTNETCORE
         let ridString = Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()
@@ -286,102 +258,205 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
         Paket.Rid.Of(ridString)
 
     // get runtime graph
-    if printDetails then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
-        orderedGroup
-        |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p.Resolved)
-        |> RuntimeGraph.mergeSeq
-
-    // Restore load-script
-    writeIntellisenseFile cacheDir {
-          Cache = cache
-          ScriptType = Paket.LoadingScripts.ScriptGeneration.ScriptType.FSharp
-          Groups = [groupName]
-          DefaultFramework = false, (Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_7_1))
+      async {
+        if logLevel.PrintVerbose then Trace.log <| sprintf "Calculating the runtime graph..."
+        use runtimeGraphProfile = Fake.Profile.startCategory Fake.Profile.Category.PaketRuntimeGraph
+        let result =
+          orderedGroup
+          |> Seq.choose (fun p ->
+            RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir (Some PackagesFolderGroupConfig.NoPackagesFolder) groupName p.Resolved)
+          |> RuntimeGraph.mergeSeq
+        runtimeGraphProfile.Dispose()
+        return result
       }
+      |> Async.StartAsTask
+
+    let filterValidAssembly (isSdk, isReferenceAssembly, fi:FileInfo) =
+        let fullName = fi.FullName
+        try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
+            { IsReferenceAssembly = isReferenceAssembly
+              Info =
+                { Runners.AssemblyInfo.FullName = assembly.Name.FullName
+                  Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
+                  Runners.AssemblyInfo.Location = fullName } } |> Some
+        with e -> 
+            if logLevel.PrintVerbose then Trace.log <| sprintf "Could not load '%s': %O" fullName e
+            None
 
     // Retrieve assemblies
-    if printDetails then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
+    use __ = Fake.Profile.startCategory Fake.Profile.Category.PaketGetAssemblies
+    if logLevel.PrintVerbose then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
+
     orderedGroup
     |> Seq.filter (fun p ->
       if p.Name.ToString() = "Microsoft.FSharp.Core.netcore" then
         eprintfn "Ignoring 'Microsoft.FSharp.Core.netcore' please tell the package authors to fix their package and reference 'FSharp.Core' instead."
         false
       else true)
-    |> Seq.collect (fun p ->
-      match cache.InstallModel groupName p.Name with
-      | None -> failwith "InstallModel not cached?"
-      | Some installModelRaw ->
-      let installModel =
-        installModelRaw
-          .ApplyFrameworkRestrictions(Paket.Requirements.getExplicitRestriction p.Settings.FrameworkRestrictions)
-      let targetProfile = Paket.TargetProfile.SinglePlatform framework
-
-      let refAssemblies =
-        installModel.GetCompileReferences targetProfile
-        |> Seq.map (fun fi -> true, FileInfo fi.Path)
-        |> Seq.toList
-      let runtimeAssemblies =
-        installModel.GetRuntimeAssemblies graph rid targetProfile
-        |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
-        |> Seq.toList
-      runtimeAssemblies @ refAssemblies)
-    |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
-    |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
+    |> Seq.map (fun p -> async {
+      match cache.InstallModelTask groupName p.Name with
+      | None -> return failwith "InstallModel not cached?"
+      | Some installModelTask ->
+        let! installModel = installModelTask |> Async.AwaitTask
+        let installModel =
+          installModel
+            .ApplyFrameworkRestrictions(Paket.Requirements.getExplicitRestriction p.Settings.FrameworkRestrictions)
+        let targetProfile = Paket.TargetProfile.SinglePlatform framework
+  
+        let refAssemblies =
+          installModel.GetCompileReferences targetProfile
+          |> Seq.map (fun fi -> true, FileInfo fi.Path)
+        let runtimeAssemblies =
+          installModel.GetRuntimeAssemblies graph.Result rid targetProfile
+          |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
+        let result =
+          Seq.append runtimeAssemblies refAssemblies
+          |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
+          |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
+          |> Seq.choose filterValidAssembly
+          |> Seq.toList
+        return result })
+    |> Async.Parallel
+    |> fun asy ->
+        let work = asy |> Async.StartAsTask
 #if DOTNETCORE
-    // Append sdk files as references in order to properly compile, for runtime we can default to the default-load-context.
-    |> Seq.append (getCurrentSDKReferenceFiles() |> Seq.map (fun file -> true, true, FileInfo file))
+        let sdkRefs =
+            (getCurrentSDKReferenceFiles()
+                 |> Seq.map (fun file -> true, true, FileInfo file)
+                 |> Seq.choose filterValidAssembly)
 #endif  
-    |> Seq.choose (fun (isSdk, isReferenceAssembly, fi) ->
-      let fullName = fi.FullName
-      try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
-          { IsReferenceAssembly = isReferenceAssembly
-            Info =
-              { Runners.AssemblyInfo.FullName = assembly.Name.FullName
-                Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
-                Runners.AssemblyInfo.Location = fullName } } |> Some
-      with e -> (if printDetails then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
+        work.Result
+        |> Seq.collect id
+#if DOTNETCORE
+        // Append sdk files as references in order to properly compile, for runtime we can default to the default-load-context.
+        |> Seq.append sdkRefs
+#endif  
     // If we have multiple select one
     |> Seq.groupBy (fun ass -> ass.IsReferenceAssembly, System.Reflection.AssemblyName(ass.Info.FullName).Name)
     |> Seq.map (fun (_, group) -> group |> Seq.maxBy(fun ass -> ass.Info.Version))
     |> Seq.toList
 
-  // Restore or update immediatly, because or everything might be OK -> cached path.
-  let knownAssemblies = restoreOrUpdate()
+  let restoreOrUpdate () =
+    if logLevel.PrintVerbose then Trace.log "Restoring with paket..."
 
-  if printDetails then
-    Trace.tracefn "Known assemblies: \n\t%s" (System.String.Join("\n\t", knownAssemblies |> Seq.map (fun a -> sprintf " - %s: %s (%s)" (if a.IsReferenceAssembly then "ref" else "lib") a.Info.Location a.Info.Version)))
+    // Update
+    let localLock = script + ".lock" // the primary lockfile-path </> lockFilePath.FullName is implementation detail
+    let needLocalLock = lockFilePath.FullName.Contains (Path.GetFullPath cacheDir) // Only primary if not external already.
+    let localLockText = lazy File.ReadAllText localLock
+    if needLocalLock && File.Exists localLock && (not (File.Exists lockFilePath.FullName) || localLockText.Value <> File.ReadAllText lockFilePath.FullName) then
+      File.Copy(localLock, lockFilePath.FullName, true)
+    if needLocalLock && not (File.Exists localLock) then
+      File.Delete lockFilePath.FullName
+    if not <| File.Exists lockFilePath.FullName then
+      if logLevel.PrintVerbose then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
+      try
+        paketApi.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
+        |> ignore
+      with
+      | e when e.Message.Contains "Did you restore groups" ->
+        // See https://github.com/fsharp/FAKE/issues/1672
+        // and https://github.com/fsprojects/Paket/issues/2785
+        // We do a restore anyway.
+        eprintfn "paket update has thrown an error: %O" e
+        ()
+      if needLocalLock then File.Copy(lockFilePath.FullName, localLock, true)
+    
+    // Restore
+    if config.RestoreOnlyGroup then 
+        paketApi.Restore(false,group,[],false,false,false,None)
+    else
+        paketApi.Restore()
+    
+  // https://github.com/fsharp/FAKE/issues/1908
+  writeIntellisenseFile cacheDir // write intellisense.fsx immediately
+  let writeIntellisenseTask = // write intellisense_lazy.fsx when something changed.
+    lazy
+      writeIntellisenseLazyFile cacheDir {
+        Cache = cache.Value
+        ScriptType = Paket.LoadingScripts.ScriptGeneration.ScriptType.FSharp
+        Groups = [groupName]
+        DefaultFramework = false, (Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_7_1))
+      }
+      |> Async.StartAsTask
+
+  let readFromCache () =
+      File.ReadLines(assemblyCacheFile)
+      |> Seq.map (fun line ->
+        let splits = line.Split(';')
+        let isRef = bool.Parse splits.[0]
+        let ver = splits.[1]
+        let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
+        let fullName = splits.[3]
+        { IsReferenceAssembly = isRef
+          Info =
+            { Runners.AssemblyInfo.FullName = fullName
+              Runners.AssemblyInfo.Version = ver
+              Runners.AssemblyInfo.Location = loc } })
+      |> Seq.toList
+      
+  let writeToCache (list:AssemblyData list) =
+      list
+      |> Seq.map (fun item -> 
+        sprintf "%b;%s;%s;%s" 
+            item.IsReferenceAssembly
+            item.Info.Version
+            (Path.fixPathForCache config.ScriptFilePath item.Info.Location)
+            item.Info.FullName)
+      |> fun lines -> File.WriteAllLines(assemblyCacheFile, lines)
+      File.Copy(lockFilePath.FullName, assemblyCacheHashFile, true)
+      ()
+      
+  let getKnownAssemblies () =
+    let inline getUncached () =
+        let list = retrieveInfosUncached()
+        writeIntellisenseTask.Value |> ignore
+        writeToCache list
+        list
+        
+    if File.Exists assemblyCacheHashFile && File.Exists assemblyCacheFile && File.ReadAllText assemblyCacheHashFile = File.ReadAllText lockFilePath.FullName then 
+        // get assembly list from cache
+        try readFromCache()
+        with e ->
+            eprintfn "Caching assembly list failed: %O" e
+            getUncached()
+    else
+        getUncached()
+  
+  // Restore or update immediatly, because or everything might be OK -> cached path.
+  //let knownAssemblies, writeIntellisenseTask = restoreOrUpdate()
+  do restoreOrUpdate()
+  let knownAssemblies = lazy getKnownAssemblies()
+
+  if logLevel.PrintVerbose then
+    Trace.tracefn "Known assemblies: \n\t%s" (System.String.Join("\n\t", knownAssemblies.Value |> Seq.map (fun a -> sprintf " - %s: %s (%s)" (if a.IsReferenceAssembly then "ref" else "lib") a.Info.Location a.Info.Version)))
   { new CoreCache.ICachingProvider with
       member x.CleanCache context =
-        if printDetails then Trace.log "Invalidating cache..."
+        if logLevel.PrintVerbose then Trace.log "Invalidating cache..."
         let assemblyPath, warningsFile = context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
         try File.Delete warningsFile; File.Delete assemblyPath
         with e -> Trace.traceError (sprintf "Failed to delete cached files: %O" e)
       member __.TryLoadCache (context) =
           let references =
-              knownAssemblies
+              knownAssemblies.Value
               |> List.filter (fun a -> a.IsReferenceAssembly)
               |> List.map (fun (a:AssemblyData) -> a.Info.Location)
           let runtimeAssemblies =
-              knownAssemblies
+              knownAssemblies.Value
               |> List.filter (fun a -> not a.IsReferenceAssembly)
               |> List.map (fun a -> a.Info)
-          let fsiOpts = context.Config.CompileOptions.AdditionalArguments |> Yaaf.FSharp.Scripting.FsiOptions.ofArgs
           let newAdditionalArgs =
-              { fsiOpts with
+              { context.Config.CompileOptions.FsiOptions with
                   NoFramework = true
+                  References = references @ context.Config.CompileOptions.FsiOptions.References
                   Debug = Some Yaaf.FSharp.Scripting.DebugMode.Portable }
-              |> (fun options -> options.AsArgs)
-              |> Seq.toList
           { context with
               Config =
                 { context.Config with
-                    CompileOptions =
-                      { context.Config.CompileOptions with
-                          AdditionalArguments = newAdditionalArgs
-                          RuntimeDependencies = runtimeAssemblies @ context.Config.CompileOptions.RuntimeDependencies
-                          CompileReferences = references @ context.Config.CompileOptions.CompileReferences
-                      }
+                    CompileOptions = 
+                      { context.Config.CompileOptions with 
+                         FsiOptions = newAdditionalArgs
+                         RuntimeDependencies = runtimeAssemblies @ context.Config.CompileOptions.RuntimeDependencies }
                 }
           },
           let assemblyPath, warningsFile = context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
@@ -389,13 +464,15 @@ let paketCachingProvider (script:string) printDetails cacheDir (paketDependencie
               Some { CompiledAssembly = assemblyPath; Warnings = File.ReadAllText(warningsFile) }
           else None
       member x.SaveCache (context, cache) =
-          if printDetails then Trace.log "saving cache..."
-          File.WriteAllText (context.CachedAssemblyFilePath + ".warnings", cache.Warnings) }
+          if logLevel.PrintVerbose then Trace.log "saving cache..."
+          File.WriteAllText (context.CachedAssemblyFilePath + ".warnings", cache.Warnings)
+          if writeIntellisenseTask.IsValueCreated then 
+            writeIntellisenseTask.Value.Wait() }
 
-let restoreDependencies script printDetails cacheDir section =
+let restoreDependencies config cacheDir section =
   match section with
-  | PaketDependencies (paketDependencies, group) ->
-    paketCachingProvider script printDetails cacheDir paketDependencies group
+  | PaketDependencies (paketDependencies, paketDependenciesFile, group) ->
+    paketCachingProvider config cacheDir paketDependencies paketDependenciesFile group
 
 let tryFindGroupFromDepsFile scriptDir =
     let depsFile = Path.Combine(scriptDir, "paket.dependencies")
@@ -421,44 +498,87 @@ let tryFindGroupFromDepsFile scriptDir =
                 | _ -> if l.Contains "// [ FAKE GROUP ]" then true, None else false, None) (false, None)
             |> snd with
         | Some group ->
-            PaketDependencies (Paket.Dependencies(Path.GetFullPath depsFile), Some group) |> Some
+            let fullpath = Path.GetFullPath depsFile
+            PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
+            |> Some
         | _ -> None
     else None
 
-let prepareFakeScript defines printDetails script =
-    // read dependencies from the top
+let prepareFakeScript (config:FakeConfig) =
+    let script = config.ScriptFilePath
     let scriptDir = Path.GetDirectoryName (script)
     let cacheDir = Path.Combine(scriptDir, ".fake", Path.GetFileName(script))
     Directory.CreateDirectory (cacheDir) |> ignore
-    let scriptText = File.ReadAllText(script)
-    let section =
-        let newSection = tryReadPaketDependenciesFromScript defines cacheDir script scriptText
-        match legacyReadFakeSection scriptText with
-        | Some s ->
-          Trace.traceFAKE "Legacy header is no longer supported and will be removed soon, please upgrade to '#r \"paket: nuget FakeModule\" in paket syntax (consult the docs)."
-          match newSection with
-          | Some s -> Some s // prefer new method (but print warning)
-          | None -> legacyParseHeader cacheDir s |> Some
+    
+    let scriptSectionHashFile = Path.Combine(cacheDir, "fake-section.cached")
+    let scriptSectionCacheFile = Path.Combine(cacheDir, "fake-section.txt")
+    let inline getSectionUncached () =
+        use __ = Fake.Profile.startCategory Fake.Profile.Category.Analyzing
+        let newSection = tryReadPaketDependenciesFromScript config.ScriptTokens.Value cacheDir script
+        match newSection with
+        | Some s -> Some s
         | None ->
-            match newSection with
-            | Some s -> Some s
-            | None ->
-              tryFindGroupFromDepsFile scriptDir
+          tryFindGroupFromDepsFile scriptDir
+    let writeToCache (section : FakeSection option) =
+        match section with 
+        | Some (PaketDependencies(p, _, group)) ->
+            sprintf "paket: %s, %s" (Path.fixPathForCache config.ScriptFilePath p.DependenciesFile) (match group with | Some g -> g | _ -> "<null>")
+        | None -> "none"
+        |> fun t -> File.WriteAllText(scriptSectionCacheFile, t)
+        File.Copy (script, scriptSectionHashFile, true)
+        
+    let readFromCache () =
+        let t = File.ReadAllText(scriptSectionCacheFile).Trim()
+        if t.StartsWith("paket:") then 
+            let s = t.Substring("paket: ".Length)
+            let splits = s.Split(',')
+            let depsFile = Path.readPathFromCache config.ScriptFilePath splits.[0]
+            let group =
+                let trimmed = splits.[1].Trim()
+                if trimmed = "<null>" then None else Some trimmed
+            let fullpath = Path.GetFullPath depsFile
+            PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), group) |> Some
+        else None
+        
+    let section =
+        let inline getUncached () =
+            let section = getSectionUncached()
+            writeToCache section
+            section
+            
+        if File.Exists scriptSectionHashFile && File.Exists scriptSectionCacheFile && File.ReadAllText scriptSectionHashFile = File.ReadAllText script then 
+            // get assembly list from cache
+            try readFromCache()
+            with e ->
+                eprintfn "Caching fake section failed: %O" e
+                getUncached()
+        else
+            getUncached()
 
-    match section, Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" with
-    | _, true ->
-        Trace.traceFAKE "NetCore hack (FAKE_UNDOCUMENTED_NETCORE_HACK) is activated: %s" script
-        CoreCache.Cache.defaultProvider
-    | Some section, _ ->
-        restoreDependencies script printDetails cacheDir section
-    | _ ->
-        failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
+    match section with
+    | Some section ->
+        restoreDependencies config cacheDir section
+    | None ->
+        let defaultPaketCode = """
+source https://api.nuget.org/v3/index.json
+storage: none
+framework: netstandard2.0
+nuget FSharp.Core
+        """
+        if Environment.environVar "FAKE_ALLOW_NO_DEPENDENCIES" <> "true" then
+          Trace.traceFAKE """Consider adding your dependencies via `#r` dependencies, for example add '#r "paket: nuget FSharp.Core //"'.
+See https://fake.build/fake-fake5-modules.html for details. 
+If you know what you are doing you can silence this warning by setting the environment variable 'FAKE_ALLOW_NO_DEPENDENCIES' to 'true'"""
+        let section =
+          { Header = "paket-inline"
+            Section = defaultPaketCode }
+          |> writeFixedPaketDependencies cacheDir        
+        restoreDependencies config cacheDir section
 
-let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath envVars onErrMsg onOutMsg useCache =
 
-  if printDetails then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
+let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs onErrMsg onOutMsg useCache restoreOnlyGroup =
+  if logLevel.PrintVerbose then Trace.log (sprintf "prepareAndRunScriptRedirect(Script: %s, fsiOptions: %A)" scriptPath (System.String.Join(" ", fsiOptions)))
   let fsiOptionsObj = Yaaf.FSharp.Scripting.FsiOptions.ofArgs fsiOptions
-  // TODO: this is duplicated in CoreCache :(
   let newFsiOptions =
     { fsiOptionsObj with
 #if !NETSTANDARD1_6
@@ -467,22 +587,46 @@ let prepareAndRunScriptRedirect printDetails (fsiOptions:string list) scriptPath
         Defines = "DOTNETCORE" :: "FAKE" :: fsiOptionsObj.Defines
 #endif
       }
-  let provider = prepareFakeScript newFsiOptions.Defines printDetails scriptPath
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
-  let config =
-    { Runners.FakeConfig.PrintDetails = printDetails
-      Runners.FakeConfig.ScriptFilePath = scriptPath
-      Runners.FakeConfig.CompileOptions =
-        { CompileReferences = []
-          RuntimeDependencies = []
-          AdditionalArguments = fsiOptions }
-      Runners.FakeConfig.UseCache = useCache
-      Runners.FakeConfig.Out = out
-      Runners.FakeConfig.Err = err
-      Runners.FakeConfig.Environment = envVars }
+  let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
+
+  { Runners.FakeConfig.VerboseLevel = logLevel
+    Runners.FakeConfig.ScriptFilePath = scriptPath
+    Runners.FakeConfig.ScriptTokens = tokenized
+    Runners.FakeConfig.CompileOptions = 
+      { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
+    Runners.FakeConfig.UseCache = useCache
+    Runners.FakeConfig.RestoreOnlyGroup = restoreOnlyGroup
+    Runners.FakeConfig.Out = out
+    Runners.FakeConfig.Err = err
+    Runners.FakeConfig.ScriptArgs = scriptArgs }
+
+let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
+    createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
+
+let prepareAndRunScript (config:FakeConfig) : RunResult =
+  let provider = prepareFakeScript config
   CoreCache.runScriptWithCacheProvider config provider
 
-let prepareAndRunScript printDetails fsiOptions scriptPath envVars useCache =
-  prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars (printf "%s") (printf "%s") useCache
-
+let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
+    match runResult with
+    | Runners.RunResult.SuccessRun _ -> []
+    | Runners.RunResult.CompilationError err ->
+      [
+        // Add some hints about the error, for example
+        // detect https://github.com/fsharp/FAKE/issues/1783
+        let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
+        let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
+        if containsNotDefined then
+          yield sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath
+        if containsNotSupportOperator then
+          yield "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators"
+      ]
+    | Runners.RunResult.RuntimeError _ ->
+      [
+        if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
+        if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'"
+      ]

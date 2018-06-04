@@ -1,6 +1,9 @@
 # Getting started with FAKE - F# Make
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found [here](fake-gettingstarted.html)**
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="fake-gettingstarted.html">here </a></p>
+</div>
 
 In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
 
@@ -305,13 +308,13 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	// start build
 	RunTargetOrDefault "Default"
 
-Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitsequential.html) if you need to specify the tool path explicitly.
+Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/v5/fake-nunitsequential.html) if you need to specify the tool path explicitly.
 
 The mysterious part **(fun p -> ...)** simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.
 
 ![alt text](pics/gettingstarted/alltestsgreen.png "All tests green")
 
-Alternatively you could also run the tests in parallel using the [NUnitParallel](apidocs/fake-nunitparallel.html) task:
+Alternatively you could also run the tests in parallel using the [NUnitParallel](apidocs/v5/legacy/fake-nunitparallel.html) task:
 
 	Target "Test" (fun _ ->
 		!! (testDir + "/NUnit.Test.*.dll")

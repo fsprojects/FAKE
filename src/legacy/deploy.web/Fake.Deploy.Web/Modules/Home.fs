@@ -7,6 +7,7 @@ open Nancy.ModelBinding
 open Nancy.Authentication.Forms
 open Nancy.Security
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type HomeModule() as http =
     inherit FakeModule("/")
 

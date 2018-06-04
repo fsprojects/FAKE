@@ -6,9 +6,11 @@ open Nancy.Authentication.Forms
 open Fake.Deploy.Web.Data
 open Newtonsoft.Json
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Bootstrapper() =
     inherit DefaultNancyBootstrapper()
-        
+
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]    
     override this.ConfigureApplicationContainer(container) =
         let m = UserMapper()
         container.Register<IUserMapper, UserMapper>(m) |> ignore
@@ -25,7 +27,7 @@ type Bootstrapper() =
 
         container.Register<AgentProxy, AgentProxy>().AsSingleton() |> ignore
 
-
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     override this.ApplicationStartup (container, pipelines) =
         //StaticConfiguration.Caching.EnableRuntimeViewUpdates <- true
         StaticConfiguration.EnableRequestTracing <- true
@@ -35,7 +37,8 @@ type Bootstrapper() =
         Nancy.Json.JsonSettings.MaxJsonLength <- 1024 * 1024
 
         base.ApplicationStartup(container, pipelines);
-        
+
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]    
     override this.RequestStartup(container, pipelines, context) =
         let c = container.Resolve<Configuration>()
 

@@ -5,7 +5,7 @@ build_script:
 # See https://stackoverflow.com/a/12866669/1269722
 # Problem is that colors are lost
 # Don't blame me but powershell is the bigest crap on earth
-  - cmd: fake.exe -v run build.fsx
+  - cmd: fake.exe run build.fsx --parallel 3
 
 #  - ps: .\build.cmd
 on_failure:

@@ -1,5 +1,158 @@
 # Release Notes
 
+## 5.0.0-rc018 - 2018-06-02
+
+* ENHANCEMENT: Upgrade to final release of global tools - https://github.com/fsharp/FAKE/pull/1972
+* ENHANCEMENT: Upgrade to netcore2.1 - https://github.com/fsharp/FAKE/pull/1972
+* BUGFIX: Fix issue to hide secrets in output - https://github.com/fsharp/FAKE/pull/1969
+
+## 5.0.0-rc017 - 2018-05-22
+
+* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
+* ENHANCEMENT: Mark `Target.DoNothing` as obsolete
+* ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
+* BUGFIX: Includes fixes from 4.64.12
+* BUGFIX: Quoting in NuGet Restore task - https://github.com/fsharp/FAKE/pull/1962
+* BUGFIX: Fix several bugs in AssemblyInfo reader - https://github.com/fsharp/FAKE/pull/1959
+* BUGFIX: Workaround System.Reactive v4 release breaking us - https://github.com/fsharp/FAKE/issues/1966
+
+
+## 5.0.0-rc016 - 2018-05-21
+
+* ENHANCEMENT: Make caches more portable - https://github.com/fsharp/FAKE/issues/1924
+* ENHANCEMENT: Handle Ctrl+C to properly shutdown (for example run final targets) - https://github.com/fsharp/FAKE/pull/1946
+* ENHANCEMENT: Add `Target.deactivateBuildFailure` and `Target.deactivateFinal` - https://github.com/fsharp/FAKE/pull/1949
+* BUGFIX: Fake had problems with `#load` directives in some scenarios - https://github.com/fsharp/FAKE/issues/1947
+* BUGFIX: Parallel Builds on Team-Foundation would sometimes fail because of racy output of `#vso[]` commands - https://github.com/fsharp/FAKE/pull/1949
+* BUGFIX: Parallel runner would run more targets than needed in error case - https://github.com/fsharp/FAKE/pull/1949
+
+## 5.0.0-rc015 - 2018-05-21
+
+* FAKE5: Global dotnet cli-tool `fake-cli` - https://github.com/fsharp/FAKE/pull/1932
+  Install via `dotnet tool install fake-cli -g --version 5.0.0-*`
+* BUGFIX: Some issues when running latest `dotnet cli` via the Fake.DotNet.Cli module.
+* BUGFIX: Fake.Core.Xml changed DOCTYPE - https://github.com/fsharp/FAKE/issues/1692
+* ENHANCEMENT: Add API to set the build state - https://github.com/fsharp/FAKE/issues/1936
+* ENHANCEMENT: Add `Shell.copyFilesWithSubFolder` to copy files while keeping relative directories in place - https://github.com/fsharp/FAKE/issues/1937
+* ENHANCEMENT: Fake runner will now hint you into success when dependencies are missing - https://github.com/fsharp/FAKE/issues/1783
+
+## 5.0.0-rc014 - 2018-05-20
+
+* BUGFIX: Globbing is now more robust (especially outside the working directory) - https://github.com/fsharp/FAKE/issues/1925 https://github.com/fsharp/FAKE/issues/1750 and some not tracked issues
+* COSMETICS: Fake is printing target description twice - https://github.com/fsharp/FAKE/issues/1931
+* ENHANCEMENT: Fake parallel logic is not even smarter in running targets parallel - https://github.com/fsharp/FAKE/pull/1934
+* DOCS: We now have a full staging environment in place - https://fake.build/contributing.html#Staging-environment
+* DOCS: We now have a place to thank our supporters - https://fake.build/help-supporters.html
+
+## 5.0.0-rc013 - 2018-05-20
+
+* ENHANCEMENT: Add partial restore (to improve the speed when using in a release-pipeline) - https://github.com/fsharp/FAKE/issues/1926
+* FAKE5: Xake now supports FAKE 5 and is advertised as module - https://github.com/xakebuild/Xake
+* ENHANCEMENT: Parallelize targets even more - https://github.com/fsharp/FAKE/pull/1934
+* COSMETICS: Targets are always shown as "failed" - https://github.com/fsharp/FAKE/issues/1929
+* COSMETICS: Target description was printed twice - https://github.com/fsharp/FAKE/issues/1931
+
+## 5.0.0-rc012 - 2018-05-12
+
+* FAKE5: New module `Fake.Windows.Registry` - https://github.com/fsharp/FAKE/pull/1909
+* BUGFIX: Fix MSBuild parameter parsing - https://github.com/fsharp/FAKE/pull/1918
+* BUGFIX: DocoptException was not reported correctly - https://github.com/MangelMaxime/fulma-demo/issues/4
+* FAKE5: New module `Fake.DotNet.Fsc` - https://github.com/fsharp/FAKE/pull/1919
+* ENHANCEMENT: Improve GitLab and VSTS CI Support - https://github.com/fsharp/FAKE/pull/1920
+* FAKE5: New module `Fake.BuildServer.GitLab` - https://github.com/fsharp/FAKE/pull/1919
+* BUGFIX: Zip.unzip was flattening the result - https://github.com/fsharp/FAKE/pull/1920
+* BUGFIX: Fake complained that Intellisense.fsx didn't exist - https://github.com/fsharp/FAKE/issues/1917
+* ENHANCEMENT: Targets now retrieve the current execution list as context parameter - https://github.com/fsharp/FAKE/pull/1920
+* DOCS: Huge update to the documentation, adds obsolete warnings thanks @kblohm - https://github.com/fsharp/FAKE/pull/1923
+
+## 5.0.0-rc011 - 2018-05-06
+
+* ENHANCEMENT: Add Verbosity setting for NuGet restore - https://github.com/fsharp/FAKE/pull/1904
+* BUGFIX: Fix msbuild helper OutputPath with trailing `\` - https://github.com/fsharp/FAKE/pull/1905
+* BUGFIX: Make `Fake.Tools.Pickles` run on unix (with mono) - https://github.com/fsharp/FAKE/pull/1901
+* DOCS: Add docs on how to test modules locally - https://github.com/fsharp/FAKE/pull/1906
+* DOCS: Added some links to the documentation of SpecFlow, Pickles and ReportGenerator - https://github.com/fsharp/FAKE/pull/1907
+* BUGFIX: API-Reference documentation showing invalid tool-tips - https://github.com/fsharp/FAKE/pull/1912
+* BUGFIX: Fake being unable to compile when `intellisense.fsx` doesn't exist - https://github.com/fsharp/FAKE/issues/1908
+* ENHANCEMENT: Some improvements to the target build order algorithm - https://github.com/fsharp/FAKE/pull/1903
+
+## 5.0.0-rc010 - 2018-05-01
+
+* BUGFIX: Some minor issues after last performance release - https://github.com/fsharp/FAKE/pull/1902
+
+## 5.0.0-rc009 - 2018-05-01
+
+* FAKE5: New module `Fake.Installer.InnoSetup` - https://github.com/fsharp/FAKE/pull/1890
+* DOCS: Order module-namespaces alphabetically - https://github.com/fsharp/FAKE/pull/1891
+* BUGFIX: Make sure ReportGenerator is run with mono on unix - https://github.com/fsharp/FAKE/pull/1894
+* DOCS: Make sure API docs for new modules and FAKE 4 is available - https://github.com/fsharp/FAKE/pull/1893
+* PERFORMANCE: A lot of shortcuts have been added to improve the speed of some common use-cases - https://github.com/fsharp/FAKE/pull/1891
+* BUGFIX: `tryFindFileOnPath` not working properly on windows - https://github.com/fsharp/FAKE/issues/1899
+* BREAKING: Change --environmentvariable to --environment-variable and --singletarget to --single-target - https://github.com/fsharp/FAKE/issues/1896
+* BREAKING: Targets with arguments are not opt-in to make the command line parser fail on spurious inputs by default - https://github.com/fsharp/FAKE/issues/1896
+  See https://fake.build/core-targets.html#Targets-with-arguments for details, basically you need to use `Target.runOrDefaultWithArguments` instead of `Target.runOrDefault` to opt-in.
+* DOCS: Fix missing modules on documentation page - https://github.com/fsharp/FAKE/issues/1895
+* DOCS: Documentation can now be hosted locally via `fake build target HostDocs` (after it has been built) - https://github.com/fsharp/FAKE/pull/1891
+
+## 5.0.0-rc008 - 2018-04-26
+
+* FAKE4: Bundle System.ValueTuple to prevent some issues - https://github.com/fsharp/FAKE/pull/1883
+* DOCS: Various improvements - https://github.com/fsharp/FAKE/pull/1883
+* FAKE5: New module `Fake.Tools.Pickles` - https://github.com/fsharp/FAKE/pull/1884
+* FAKE5: New module `Fake.Tools.Mage` - https://github.com/fsharp/FAKE/pull/1885
+* FAKE5: New module `Fake.DotNet.Testing.SpecFlow` - https://github.com/fsharp/FAKE/pull/1886
+* FAKE5: New module `Fake.Testing.ReportGenerator` - https://github.com/fsharp/FAKE/pull/1887
+* BUGFIX: Some fixes in TeamFoundation integration - https://github.com/fsharp/FAKE/pull/1883
+
+## 5.0.0-rc007 - 2018-04-23
+
+* DOCS: Update documentation issues - https://github.com/fsharp/FAKE/pull/1881
+* BUGFIX: Improve error message when groups doesn't exist - https://github.com/fsharp/FAKE/issues/1874
+* BUGFIX: Improve error message when file doesn't exist (`Process.start`) - https://github.com/fsharp/FAKE/issues/1875
+* ENHANCEMENT: Make `Shell` module conform to API-guidelines. Mark existing functions as obsolete - https://github.com/fsharp/FAKE/pull/1882
+
+## 5.0.0-rc006 - 2018-04-22
+
+* FAKE5: New module `Fake.DotNet.Testing.Expecto` - https://github.com/fsharp/FAKE/pull/1871
+* FAKE5: New module `Fake.Sql.DacPac` - https://github.com/fsharp/FAKE/pull/1878
+* FAKE5: New module `Fake.Documentation.DocFx` - https://github.com/fsharp/FAKE/pull/1872
+* FAKE5: Add ChangeLog module to `Fake.Core.ReleaseNotes` - https://github.com/fsharp/FAKE/pull/1876
+* DOCS: Fix some documentation - https://github.com/fsharp/FAKE/pull/1877
+
+## 5.0.0-rc005 - 2018-04-15
+
+* [DOCS] Improve NPM documentation - https://github.com/fsharp/FAKE/pull/1867
+* [FAKE 5] Add yarn module 'Fake.JavaScript.Yarn' - https://github.com/fsharp/FAKE/pull/1868
+* [FAKE 5] Add HockeyApp module 'Fake.Api.HockeyApp' - https://github.com/fsharp/FAKE/pull/1870
+* [BUGFIX] Properly handle '.' in file-names - https://github.com/fsharp/FAKE/issues/1865
+* Add some missing RequireQualifiedAccess Attributes - https://github.com/fsharp/FAKE/pull/1862
+
+## 5.0.0-rc004 - 2018-04-09
+
+* Same as rc002
+
+## 5.0.0-rc002 - 2018-04-09
+
+* [BUGFIX] Fake could no longer find fsi after sdk upgrade - https://github.com/fsharp/FAKE/pull/1857
+* [BUGFIX] Some hotfixes merged from fake 4 - https://github.com/fsharp/FAKE/pull/1849
+* [DOCS] Fix various documentation issues - https://github.com/fsharp/FAKE/pull/1849
+
+## 5.0.0-rc001
+
+* [BREAKING] New runner is not compatible with old `Fake.Core.Target` package. Make sure to upgrade your packages before updating the runner!
+* [BREAKING] Fix inconsistent naming of MSBuild package (MsBuild -> MSBuild), add setParams to run* methods - https://github.com/fsharp/FAKE/pull/1837
+* [BREAKING] Update to the CLI, see https://fake.build/fake-commandline.html
+* [FAKE 5] Implement MSBuild /nowarn command line option (https://github.com/fsharp/FAKE/pull/1840)
+* [FAKE 5] Target Parameters (closes https://github.com/fsharp/FAKE/issues/1830)
+* [FAKE 5] Scripts can now have/use their own CLI.
+* [FAKE 5] Performance numbers (closes https://github.com/fsharp/FAKE/issues/1831)
+* [FAKE 5] new module `Fake.Core.CommandLineParsing`, see https://fake.build/core-commandlineparsing.html
+* [DOCS] fixes https://github.com/fsharp/FAKE/issues/1845
+* [BUGFIX] fix various migration messages and fix ChangeWatcher according to API-Guideline
+* [BUGFIX] Remove content-disposition from Azure.Webjobs - https://github.com/fsharp/FAKE/pull/1844
+* [BUGFIX] Don't alter global shell var $cur - https://github.com/fsharp/FAKE/pull/1844
+* [BUGFIX] Fix docs and traces for dotnet version (https://github.com/fsharp/FAKE/pull/1835)
+
 ## 5.0.0-beta029
 
 * BUGFIX: Fix mono version detection on netcore.
@@ -278,15 +431,25 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
-## 4.64.6 - 21.02.2018
+#### 4.64.11 - 2018-03-09
+* Added SynchronizeSchemaChanges for DynamicsNAV
 
+#### 4.64.10 - 2018-03-06
+* Added RunCodeunitWithSettings for DynamicsNAV - https://github.com/fsharp/FAKE/pull/1811
+
+#### 4.64.9 - 2018-03-05
+* CompileWithFilter for DynamicsNAV
+
+#### 4.64.7 - 2018-03-01
+* Allow REST calls without credentials
+
+#### 4.64.6 - 2018-02-21
 * ConvertFileFromWin7ToWin8 reads file line by line
 
-## 4.64.4 - 17.01.2018
-
+## 4.64.4 - 2018-01-17
 * Support for Dynamics NAV 2018 - https://github.com/fsharp/FAKE/pull/1758
 
-## 4.64.3 - 19.12.2017
+## 4.64.3 - 2017-12-19
 
 * New helper: GetDotNetSDKVersionFromGlobalJson
 * Do not download DotNet SDK when it's already in temp
@@ -295,7 +458,7 @@
 * Do not use "file" parameter for paket push
 * Download .NET SDK to temp path
 
-## 4.63.0 - 27.07.2017
+## 4.63.0 - 2017-07-27
 
 * Disable MSBuild NodeReuse by default - https://github.com/fsharp/FAKE/pull/1600
 
@@ -975,7 +1138,7 @@
 * Added ZipHelper.ZipOfIncludes - https://github.com/fsharp/FAKE/pull/686
 * Added AppVeyorEnvironment.RepoTag & .RepoTagName - https://github.com/fsharp/FAKE/pull/685
 * New tutorial about Azure Cloud Service - http://fsharp.github.io/FAKE/azurecloudservices.html
-* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/fake-azure-cloudservices.html
+* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/v5/fake-azure-cloudservices.html
 * Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
 
 ## 3.18.0 - 2015-03-04

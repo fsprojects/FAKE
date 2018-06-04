@@ -1,4 +1,5 @@
 /// Contains function to run bower tasks
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.BowerHelper
 open Fake
 open System
@@ -11,6 +12,7 @@ let private bowerFileName =
     | _ -> "./packages/Bower.js/tools/bower.cmd"
 
 /// Arguments for the Bower install command
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type InstallArgs =
 | Standard
 | Forced
@@ -18,12 +20,14 @@ type InstallArgs =
 /// The list of support Bower commands. The `Custom` alternative
 /// can be used for other commands not in the list until they are
 /// implemented
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type BowerCommand =
 | Install of InstallArgs
 | Run of string
 | Custom of string
 
 /// The Bower parameter type
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type BowerParams =
     { Src: string
@@ -33,6 +37,7 @@ type BowerParams =
       Timeout: TimeSpan }
 
 /// Bower default parameters
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let defaultBowerParams =
     { Src = ""
       BowerFilePath = bowerFileName
@@ -49,6 +54,7 @@ let private parse = function
     | Run str -> sprintf "run %s" str
     | Custom str -> str
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let run bowerParams =
     let bowerPath = Path.GetFullPath(bowerParams.BowerFilePath)
     let arguments = bowerParams.Command |> parse
@@ -82,5 +88,6 @@ let run bowerParams =
 ///                           WorkingDirectory = "./src/FAKESimple.Web/"
 ///                       })
 ///         )
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Bower setParams =
     defaultBowerParams |> setParams |> run

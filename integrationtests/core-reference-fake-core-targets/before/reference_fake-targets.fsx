@@ -4,6 +4,7 @@ source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
 
 nuget Fake.Core.Target prerelease
+nuget System.Reactive.Compatibility
 nuget FSharp.Core prerelease"
 #endif
 
@@ -19,9 +20,10 @@ open Fake.Core.TargetOperators
 printfn "test_before targets"
 Target.create "Start" (fun _ -> ())
 
-Target.create "TestTarget" (fun _ ->
+Target.create "TestTarget" (fun p ->
     printfn "Starting Build."
     Trace.traceFAKE "Some Info from FAKE"
+    printfn "Arguments: %A" p.Context.Arguments
     printfn "Ending Build."
 )
 
@@ -30,4 +32,4 @@ Target.create "TestTarget" (fun _ ->
 
 printfn "before run targets"
 
-Target.runOrDefault "TestTarget"
+Target.runOrDefaultWithArguments "TestTarget"

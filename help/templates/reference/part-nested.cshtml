@@ -10,7 +10,16 @@
           <td class="type-name">
             <a href="@(it.UrlName).html">@it.Name</a>
           </td>
-          <td class="xmldoc">@it.Comment.Blurb</td>
+          <td class="xmldoc">
+            @if (it.IsObsolete)
+            {
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>@Html.Encode(@it.ObsoleteMessage)</p>
+                </div> 
+            }
+            @it.Comment.Blurb
+          </td>
         </tr>
       }
     </tbody>
@@ -28,7 +37,16 @@
           <td class="module-name">
             <a href="@(it.UrlName).html">@it.Name</a>
           </td>
-          <td class="xmldoc">@it.Comment.Blurb</td>
+          <td class="xmldoc">
+          @if (it.IsObsolete)
+          {
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>@Html.Encode(@it.ObsoleteMessage)</p>
+            </div> 
+          }
+          @it.Comment.Blurb
+          </td>
         </tr>
       }
     </tbody>

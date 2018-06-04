@@ -48,13 +48,14 @@ type NAntXmlTraceListener(encoding : Encoding, xmlOutputFile) =
         | TraceData.ImportantMessage text -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text // TODO: Set Level
         | TraceData.LogMessage(text, _) | TraceData.TraceMessage(text, _) -> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" text
         | TraceData.OpenTag(tag, _) -> sprintf "<%s name=\"%s\">" tag.Type tag.Name
-        | TraceData.CloseTag (tag, _) -> sprintf "</%s>" tag.Type
+        | TraceData.CloseTag (tag, _, _) -> sprintf "</%s>" tag.Type
         | TraceData.ErrorMessage text -> 
             sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" text
         | TraceData.TestOutput _
         | TraceData.TestStatus _
         | TraceData.ImportData _
-        | TraceData.BuildNumber _ -> ""       
+        | TraceData.BuildNumber _
+        | TraceData.BuildState _ -> ""
 
     interface System.IDisposable with
         member __.Dispose () =

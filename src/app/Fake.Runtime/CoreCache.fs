@@ -84,13 +84,14 @@ module internal Cache =
                 match tryLoadDefault context with
                 | Some config when File.Exists xmlFile ->
                     let readXml = read xmlFile
+                    let fsiOpts = context.Config.CompileOptions.FsiOptions // |> FsiOptions.ofArgs
                     { context with
                         Config =
                           { context.Config with
                               CompileOptions =
                                 { context.Config.CompileOptions with
                                     RuntimeDependencies = context.Config.CompileOptions.RuntimeDependencies @ readXml
-                                    CompileReferences = context.Config.CompileOptions.CompileReferences @ (readXml |> List.map (fun x -> x.Location))
+                                    FsiOptions = { fsiOpts with References = fsiOpts.References @ (readXml |> List.map (fun x -> x.Location)) }
                                 }
                           }
                     }, Some config
@@ -134,7 +135,7 @@ module internal Cache =
                 traceFAKE "Default caching is disabled on dotnetcore, see https://github.com/dotnet/coreclr/issues/919#issuecomment-219212910"
                 traceFAKE "Use a Fake-Header to get rid of this warning and let FAKE handle the script dependencies!"
 
-                let fsiOpts = context.Config.CompileOptions.AdditionalArguments |> FsiOptions.ofArgs
+                let fsiOpts = context.Config.CompileOptions.FsiOptions // |> FsiOptions.ofArgs
                 if not fsiOpts.NoFramework then // Caller should take care!
                     let basePath = System.AppContext.BaseDirectory
                     let references =
@@ -148,17 +149,13 @@ module internal Cache =
                         { fsiOpts with
                             NoFramework = true
                             Debug = Some DebugMode.Portable }
-                        |> (fun options -> options.AsArgs)
-                        |> Seq.toList
                     { context with
                         Config =
                           { context.Config with
                               CompileOptions =
                                 { context.Config.CompileOptions with
-                                    AdditionalArguments = newAdditionalArgs
+                                    FsiOptions = newAdditionalArgs
                                     RuntimeDependencies = references @ context.Config.CompileOptions.RuntimeDependencies
-                                    CompileReferences =
-                                        (references |> List.map (fun r -> r.Location)) @ context.Config.CompileOptions.CompileReferences
                                 }
                           }
                     }, None
@@ -170,18 +167,18 @@ module internal Cache =
 
 
 
-let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:AssemblyInfo) =
+let loadAssembly (loadContext:AssemblyLoadContext) (logLevel:Trace.VerboseLevel) (assemInfo:AssemblyInfo) =
     let realLoadAssembly (assemInfo:AssemblyInfo) =
         let assem =
             if assemInfo.Location <> "" then
                 try
                     Some assemInfo.Location, loadContext.LoadFromAssemblyPath(assemInfo.Location)
                 with :? FileLoadException as e ->
-                    if printDetails then
+                    if logLevel.PrintVerbose then
                         Trace.tracefn "Error while loading assembly: %O" e
                     let assemblyName = System.Reflection.AssemblyName(assemInfo.FullName)
                     let asem = System.Reflection.Assembly.Load(System.Reflection.AssemblyName(assemblyName.Name))
-                    if printDetails then
+                    if logLevel.PrintVerbose then
                         Trace.traceFAKE "recovered and used already loaded assembly '%s' instead of '%s' ('%s')" asem.FullName assemInfo.FullName assemInfo.Location
                     None, asem
             else None, loadContext.LoadFromAssemblyName(AssemblyName(assemInfo.FullName))
@@ -196,13 +193,13 @@ let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:Assem
         //    // TODO: This is a real bad hack for now...
         //    realLoadAssembly { assemInfo with Location = newLocation }
     with ex ->
-        if printDetails then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
+        if logLevel.PrintVerbose then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
 
 
-let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) =
+let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) =
     let strName = name.FullName
-    if printDetails then tracefn "Trying to resolve: %s" strName
+    if logLevel.PrintVerbose then tracefn "Trying to resolve: %s" strName
     let getAssemblyFromType (t:System.Type) =
 #if NETSTANDARD1_6
       t.GetTypeInfo().Assembly
@@ -233,7 +230,7 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                     let location =
                         try Some assembly.Location 
                         with e -> 
-                            if printDetails then tracefn "Could not get Location from '%s': %O" strName e
+                            if logLevel.PrintVerbose then tracefn "Could not get Location from '%s': %O" strName e
                             None
                     Some (location, assembly)
             with e -> None
@@ -241,10 +238,10 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
         | Some r -> true, Some r
         | None ->                
 #endif
-            if printDetails then tracefn "Could not find assembly in the default load-context: %s" strName
+            if logLevel.PrintVerbose then tracefn "Could not find assembly in the default load-context: %s" strName
             match runtimeDependencies |> List.tryFind (fun r -> r.FullName = strName) with
             | Some a ->
-                true, loadAssembly loadContext printDetails a
+                true, loadAssembly loadContext logLevel a
             | _ ->
                 let token = name.GetPublicKeyToken()
                 match runtimeDependencies
@@ -255,12 +252,12 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                               n.GetPublicKeyToken() = token)) with
                 | Some (otherName, info) ->
                     // Then the version matches and the public token is null we still accept this as perfect match
-                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext printDetails info
+                    (isNull token && otherName.Version = name.Version), loadAssembly loadContext logLevel info
                 | _ ->
                     false, None
     match result with
     | Some (location, a) ->
-        if printDetails then 
+        if logLevel.PrintVerbose then 
             if isPerfectMatch then
                 tracefn "Redirect assembly load to known assembly: %s (%A)" strName location
             else
@@ -269,20 +266,22 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
     | _ ->
         if not (strName.StartsWith("FSharp.Compiler.Service.resources"))
         && not (strName.StartsWith("FSharp.Compiler.Service.MSBuild")) then
-            if printDetails then tracefn "Could not resolve: %s" strName
+            if logLevel.PrintVerbose then tracefn "Could not resolve: %s" strName
         null
 
 let findAndLoadInRuntimeDepsCached =
     let assemblyCache = System.Collections.Concurrent.ConcurrentDictionary<_,Assembly>()
-    fun (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) ->
+    fun (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) ->
         let mutable wasCalled = false
         let result = assemblyCache.GetOrAdd(name.Name, (fun _ ->
             wasCalled <- true
-            findAndLoadInRuntimeDeps loadContext name printDetails runtimeDependencies))
-        if not wasCalled then
+            findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
+        if wasCalled && isNull result then
+            failwithf "Could not load '%A'.\nFull framework assemblies are not supported!\nYou might try to load a legacy-script with the new netcore runner.\nPlease take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html" name
+        if not wasCalled && not (isNull result) then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
-            if printDetails then 
+            if logLevel.PrintVerbose then 
                 if not isPerfectMatch then
                     traceFAKE "Redirect assembly from '%A' to previous loaded assembly '%A'" name loadedName
                 else
@@ -291,7 +290,7 @@ let findAndLoadInRuntimeDepsCached =
 
 #if NETSTANDARD1_6
 // See https://github.com/dotnet/coreclr/issues/6411
-type FakeLoadContext (printDetails:bool, dependencies:AssemblyInfo list) =
+type FakeLoadContext (printDetails:Trace.VerboseLevel, dependencies:AssemblyInfo list) =
   inherit AssemblyLoadContext()
   let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
@@ -301,27 +300,65 @@ type FakeLoadContext (printDetails:bool, dependencies:AssemblyInfo list) =
 let fakeDirectoryName = ".fake"
 
 let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
-    let fsiOptions = FsiOptions.ofArgs (config.CompileOptions.AdditionalArguments)
-    let newFsiOptions =
-      { fsiOptions with
-#if !NETSTANDARD1_6
-          Defines = "FAKE" :: fsiOptions.Defines
-#else
-          Defines = "DOTNETCORE" :: "FAKE" :: fsiOptions.Defines
-#endif
-      }
-    let config =
-      { config with
-          FakeConfig.CompileOptions =
-            { config.CompileOptions with
-                AdditionalArguments = newFsiOptions.AsArgs |> Array.toList } }
-    let allScriptContents = getAllScripts newFsiOptions.Defines config.ScriptFilePath
-    let getOpts (c:ScriptCompileOptions) = c.AdditionalArguments @ c.CompileReferences
-    let scriptHash = getScriptHash allScriptContents (getOpts config.CompileOptions)
-    //TODO this is only calculating the hash for the input file, not anything #load-ed
+    
     let fakeDir = Path.Combine(Path.GetDirectoryName config.ScriptFilePath, fakeDirectoryName)
+    let cacheDir = Path.Combine(fakeDir, Path.GetFileName config.ScriptFilePath)
+    let fakeCacheFile = Path.Combine(cacheDir, "fake-hash.txt")
+    let fakeCacheDepsFile = Path.Combine(cacheDir, "fake-hash-files.txt")
+    let fakeCacheContentsFile = Path.Combine(cacheDir, "fake-hash-contents.txt")
+    
+    let getHashUncached () =
+        //TODO this is only calculating the hash for the input file, not anything #load-ed
+        let allScriptContents = getAllScripts config.CompileOptions.FsiOptions.Defines config.ScriptTokens.Value config.ScriptFilePath
+        let getOpts (c:CompileOptions) = c.FsiOptions.AsArgs // @ c.CompileReferences
+        allScriptContents, getScriptHash allScriptContents (getOpts config.CompileOptions)
+    
+    let writeToCache ((scripts:Script list), hash) =
+        File.WriteAllText(fakeCacheFile, hash)
+        let locations =
+            scripts
+            |> List.map (fun s -> s.Location)
+        // write fakeCacheContentsFile
+        locations
+        |> Seq.map File.ReadAllText
+        |> fun texts -> File.WriteAllText(fakeCacheContentsFile, String.Join("", texts))
+        // write fakeCacheDepsFile
+        File.WriteAllLines(fakeCacheDepsFile, locations |> Seq.map (Path.fixPathForCache config.ScriptFilePath))
+    
+    let readFromCache () =
+        File.ReadAllText fakeCacheFile
+    
+    let scriptHash =
+        let inline getUncached () =
+            let scripts, section = getHashUncached()
+            writeToCache (scripts, section)
+            section
+        let cacheFilesExist =
+            File.Exists fakeCacheDepsFile &&
+            File.Exists fakeCacheContentsFile &&
+            File.Exists fakeCacheFile
+        let inline dependencyCacheUpdated () =
+            let contents =
+                File.ReadLines fakeCacheDepsFile
+                |> Seq.map (Path.readPathFromCache config.ScriptFilePath)
+                |> Seq.map (fun line -> if File.Exists line then Some (File.ReadAllText line) else None)
+                |> Seq.toList
+            if contents |> Seq.exists Option.isNone then false
+            else
+               let actual = contents |> Seq.choose id |> fun texts -> String.Join("", texts)
+               let cached = File.ReadAllText fakeCacheContentsFile
+               actual = cached
 
-
+        // TODO: This could be improved in such a way that we only
+        // TODO: need to tokenize "changed" files and not everything
+        if cacheFilesExist && dependencyCacheUpdated() then
+            // get assembly list from cache
+            try readFromCache()
+            with e ->
+                eprintfn "Caching fake section failed: %O" e
+                getUncached()
+        else
+            getUncached()
 
     let context =
       { FakeContext.Config = config
@@ -331,7 +368,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let context, cache = cache.TryLoadCache context
 #if NETSTANDARD1_6
     // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
-    let fakeLoadContext = FakeLoadContext(context.Config.PrintDetails, context.Config.CompileOptions.RuntimeDependencies)
+    let fakeLoadContext = FakeLoadContext(context.Config.VerboseLevel, context.Config.CompileOptions.RuntimeDependencies)
 #else
     let fakeLoadContext = new AssemblyLoadContext()
 #endif
@@ -349,35 +386,19 @@ let setupAssemblyResolverLogger (context:FakeContext) =
         let name = AssemblyName(strName)
         //findAndLoadInRuntimeDeps loadContext name context.Config.PrintDetails context.Config.CompileOptions.RuntimeDependencies
 #endif
-        if context.Config.PrintDetails then
+        if context.Config.VerboseLevel.PrintVerbose then
             printfn "Global resolve event: %s" name.FullName
         null
         ))
 
-let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
+let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) : RunResult =
     let newContext, cacheInfo =  prepareContext config cache
 
     setupAssemblyResolverLogger newContext
-
-    // Add arguments to the Environment
-    for (k,v) in config.Environment do
-      setEnvironVar k v
-
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
-    setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.AdditionalArguments))
+    setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.FsiOptions.AsArgs))
 
     let resultCache, result = runFakeScript cacheInfo newContext
-
-    match result with
-    | Some err ->
-        let printDetails = config.PrintDetails
-        if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
-            Paket.Logging.printErrorExt true true false err
-        else Paket.Logging.printErrorExt printDetails printDetails false err
-    | _ -> ()
-
-    if resultCache.Warnings <> "" then
-        traceFAKE "%O" resultCache.Warnings
 
     match resultCache.AsCacheInfo with
     | Some newCache ->
@@ -385,4 +406,4 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
     | _ -> ()
 
     // Return if the script suceeded
-    result.IsNone
+    result

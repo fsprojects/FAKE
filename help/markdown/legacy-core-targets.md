@@ -1,6 +1,9 @@
 # Running targets in "FAKE - F# Make"
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be [found here](core-targets.html) **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="core-targets.html">here </a></p>
+</div>
 
 ## Listing targets
 Before running any specific target it is useful to know all the targets that are available in a build script.
@@ -17,18 +20,18 @@ FAKE has a special param "target" which can be used to run specific targets in a
 	// include Fake libs
 	#I @"tools\FAKE"
 	#r "FakeLib.dll"
-	open Fake 
+	open Fake
 
 	// *** Define Targets ***
-	Target "Clean" (fun () -> 
+	Target "Clean" (fun () ->
 		trace " --- Cleaning stuff --- "
 	)
 
-	Target "Build" (fun () -> 
+	Target "Build" (fun () ->
 		trace " --- Building the app --- "
 	)
 
-	Target "Deploy" (fun () -> 
+	Target "Deploy" (fun () ->
 		trace " --- Deploying app --- "
 	)
 
@@ -50,7 +53,7 @@ Now we have the following options:
 
 ## Final targets
 
-Final targets can be used for TearDown functionality. 
+Final targets can be used for TearDown functionality.
 These targets will be executed even if the build fails but have to be activated via ActivateFinalTarget().
 
 	FinalTarget "CloseSomePrograms" (fun _ ->
@@ -83,7 +86,7 @@ the build script contains a call like this:
 
 ```
 RunTargetOrDefault "Default"
-``` 
+```
 
 ### Example
 
@@ -118,7 +121,7 @@ still be exectued in order.
 
 ## Setting the number of threads
 The number of threads used can be set using the environment variable ``parallel-jobs``.
-This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
+This can be achieved in various ways where the easiest one is to use FAKE's built-in support for
 setting environment variables:
 
 ``FAKE.exe *YourBuildScript* "parallel-jobs=8"``
@@ -137,7 +140,7 @@ However when a fast build is desired (and the project is e.g. known to build suc
 
 When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
 For example this dependency tree:
-	
+
 	"Task 1"
 	 ==> "Task A2"
 	 ==> "Task 3"
@@ -158,14 +161,12 @@ For example this dependency tree:
 
 ![](pics/parallel/ParallelExample.png)
 
-This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.
+This is in addition to that that MSBuild may use multiple threads when building one solution having multiple independent project-files.
 
 
 # Writing custom C# tasks for FAKE
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
-
-"FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks. 
+"FAKE - F# Make" is intended to be an extensible build framework and therefor it should be as easy as possible to create custom tasks.
 This tutorial shows how to create a (very simple) custom task in C#.
 
 ## Creating a custom task
@@ -198,7 +199,7 @@ Compile the project and put the generated assembly into the *tools/FAKE* path of
 
 	// include CustomTask
 	#r "MyCustomTask.dll"
-	open Fake 
+	open Fake
 
 	// open CustomNamespace
 	open MyCustomTask
@@ -207,32 +208,32 @@ Compile the project and put the generated assembly into the *tools/FAKE* path of
 	RandomNumberTask.RandomNumber(2,13)
 	  |> tracefn "RandomNumber: %d"
 
-If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference FakeLib.dll and [explore the FAKE namespace](apidocs/index.html).
+If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference FakeLib.dll and [explore the FAKE namespace](apidocs/v5/legacy/index.html).
 
 
 # Soft dependencies
 
-Typically you will define dependencies among your targets using the `==>` and `<==` operators, and these 
+Typically you will define dependencies among your targets using the `==>` and `<==` operators, and these
 dependencies define the order in which the targets are executed during a build.
 
 You can also define soft dependencies among targets using the  `?=>` and `<=?` operators.  For example, you might
-say that target B has a soft dependency on target A: 
-    
+say that target B has a soft dependency on target A:
+
     "A" ?=> "B"
     // Or equivalently
     "B" <=? "A"
 
-With this soft dependency, running B will not require that A be run first. However it does mean that *if* A is run 
+With this soft dependency, running B will not require that A be run first. However it does mean that *if* A is run
 (due to other dependencies) it must be run before B.
 
 ## Example
 
 	// *** Define Targets ***
-	Target "Clean" (fun () -> 
+	Target "Clean" (fun () ->
 		trace " --- Cleaning stuff --- "
 	)
 
-	Target "Build" (fun () -> 
+	Target "Build" (fun () ->
 		trace " --- Building the app --- "
 	)
 

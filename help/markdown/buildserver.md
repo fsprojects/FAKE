@@ -6,7 +6,7 @@ Supported Build-Server (Note: Not supported doesn't mean that it won't work, but
 
 - `Fake.BuildServer.AppVeyor`
 - `Fake.BuildServer.Travis`
-- `Fake.BuildServer.TeamCity`
+- `Fake.BuildServer.TeamCity` - [legacy documentation](legacy-teamcity.html)
 - `Fake.BuildServer.TeamFoundation`
 
 ## General API usage
@@ -27,12 +27,15 @@ open System.IO
 open Fake.Core
 open Fake.BuildServer
 
-BuildServer.Install [
+BuildServer.install [
     TeamCity.Installer
     TeamFoundation.Installer
 ]
 
-Target.Create "Test" (fun _ ->
+// If you additionally want output in the console, even on the build-server (otherwise remove this line).
+CoreTracing.ensureConsoleListener ()
+
+Target.create "Test" (fun _ ->
     File.WriteAllText("myfile.txt", "some content")
 
     // traceTag can be used to open scopes/blocks. They will be shown in the build-server visualization supported.

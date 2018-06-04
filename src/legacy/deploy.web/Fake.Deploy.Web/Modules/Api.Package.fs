@@ -13,8 +13,10 @@ open Fake.Deploy.Web.Data
 open Fake.Deploy.Web.Module.NancyOp
 open Fake.Deploy.Web.Module.ApiModels
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DeployMessage = { IsError : bool; Message : string; Timestamp : DateTime }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ApiPackage (dataProvider : IDataProvider) as http =
     inherit FakeModule("/api/v1/package")
 

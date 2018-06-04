@@ -1,4 +1,5 @@
 ﻿/// Contains various functions for interacting with Dynamics CRM. So far there is support for exporting and importing solutions, zipping and unzipping using the Solution Packager, as well as publishing customizations.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.DynamicsCRMHelper
 
 open System
@@ -6,6 +7,7 @@ open System.Configuration
 open System.IO
 
 /// Specify which action Solution Packager should be invoked with
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type SolutionPackagerAction = 
     | Extract
     | Pack 
@@ -15,6 +17,7 @@ type SolutionPackagerAction =
         | Pack -> "/a:Pack"
 
 /// Specify Package Type for usage with Solution Packager
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type PackageType = 
     | Unmanaged
     | Managed
@@ -27,6 +30,7 @@ type PackageType =
 
 /// Parameters for executing Dynamics CRM Helper functions
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DynamicsCrmHelperParams =
     {
         /// Url of CRM Organization / Discovery Service URL if using AllOrganizations
@@ -55,6 +59,7 @@ type DynamicsCrmHelperParams =
 
 /// Default values for Dynamics CRM Helper
 /// You can obtain the solution exchanger as NuGet Package "Dynamics.CRM.SolutionExchanger"
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DynamicsCrmHelperDefaults = 
     {
         Url = ""
@@ -72,6 +77,7 @@ let DynamicsCrmHelperDefaults =
 
 /// Parameters for invoking Solution Packager
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type SolutionPackagerParams =
     {
         /// Action to start, either pack or extract
@@ -91,6 +97,7 @@ type SolutionPackagerParams =
     }
 
 /// Default values for invoking Solution Packager
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let SolutionPackagerDefaults =
     {
         ToolDirectory = currentDirectory @@ "tools" @@ "SolutionPackager"
@@ -106,6 +113,7 @@ let SolutionPackagerDefaults =
 /// ## Parameters
 ///
 ///  - `setParams` - Parameters for invoking solution exchanger
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let PublishAll (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperParams) =
     use __ = traceStartTaskUsing "Publish All" ""
     let parameters = setParams DynamicsCrmHelperDefaults
@@ -149,6 +157,7 @@ let PublishAll (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperParams) 
 ///                                     ToolDirectory = @".\tools\SolutionPackager\"
 ///                                 }))
 ///     )
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ExportSolution (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperParams) =
     let parameters = setParams DynamicsCrmHelperDefaults
     use __ = traceStartTaskUsing "Exporting Solution" (parameters.Solution + ": " + if parameters.Managed then "Managed" else "Unmanaged")
@@ -166,6 +175,7 @@ let ExportSolution (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperPara
 /// ## Parameters
 ///
 ///  - `setParams` - Parameters for invoking solution exchanger
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ImportSolution (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperParams) =
     let parameters = setParams DynamicsCrmHelperDefaults
     use __ = traceStartTaskUsing "Importing Solution" parameters.FileName
@@ -182,6 +192,7 @@ let ImportSolution (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperPara
 /// ## Parameters
 ///
 ///  - `setParams` - Parameters for invoking solution packager
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let SolutionPackager setParams = 
     let parameters = setParams SolutionPackagerDefaults
     use __ = traceStartTaskUsing "Running Solution Packager" (parameters.Action.ToString() + ": " + parameters.ZipFile)

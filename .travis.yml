@@ -1,7 +1,7 @@
 language: csharp
 sudo: required
 dist: trusty # Ubuntu 14.04
-dotnet : 2.1.4
+dotnet : 2.1.300
 env:
  - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
@@ -15,7 +15,7 @@ mono:
   - 5.0.1
 
 script: 
-  - dotnet build build.proj /nologo /verbosity:minimal
+  - dotnet build build.proj /nologo /verbosity:minimal /p:Parallel=true
 
 branches:
   except:

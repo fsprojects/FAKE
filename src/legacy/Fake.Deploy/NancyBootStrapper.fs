@@ -12,6 +12,7 @@ open Fake.Deploy.Auth
 open Fake.DeployAgentModule
 open Fake.SshRsaModule
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type NancyBootStrapper() = 
     inherit DefaultNancyBootstrapper()
     let dummyUser = AuthenticatedUser("None", []) :> IUserIdentity
@@ -32,6 +33,7 @@ type NancyBootStrapper() =
                         | None -> null
                         | Some u -> AuthenticatedUser(u.UserName, u.Claims) :> IUserIdentity)
     
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     override this.ApplicationStartup(container, pipelines) = 
         StaticConfiguration.EnableRequestTracing <- true
         StaticConfiguration.DisableErrorTraces <- false
@@ -40,6 +42,7 @@ type NancyBootStrapper() =
         StatelessAuthentication.Enable(pipelines, statelessAuthConfig userMapper)
         base.ApplicationStartup(container, pipelines)
     
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     override this.ConfigureApplicationContainer container = 
         base.ConfigureApplicationContainer container
         container.Register(typedefof<JsonNetSerializer>, typedefof<JsonSerializerForFsharp>) |> ignore

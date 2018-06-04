@@ -1,5 +1,6 @@
 
 [<AutoOpen>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.FSIHelper
 
@@ -11,13 +12,17 @@ open System.Text.RegularExpressions
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
-let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
+let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\10.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let createDirectiveRegex id =
     Regex("^\s*#" + id + "\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", RegexOptions.Compiled ||| RegexOptions.Multiline)
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let loadRegex = createDirectiveRegex "load"
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let rAssemblyRegex = createDirectiveRegex "r"
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let searchPathRegex = createDirectiveRegex "I"
 
 let private extractDirectives (regex : Regex) scriptContents =
@@ -25,6 +30,7 @@ let private extractDirectives (regex : Regex) scriptContents =
     |> Seq.cast<Match>
     |> Seq.map(fun m -> m.Groups.Item("path").Value)
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Script = {
     Content : string
     Location : string
@@ -32,11 +38,15 @@ type Script = {
     IncludedAssemblies : Lazy<string seq>
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.Content)
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let rec getAllScripts scriptPath : seq<Script> =
     let scriptContents = File.ReadAllText scriptPath
     let searchPaths = getSearchPaths scriptContents |> Seq.toList
@@ -44,23 +54,26 @@ let rec getAllScripts scriptPath : seq<Script> =
     let loadedContents =
         extractDirectives loadRegex scriptContents
         |> Seq.collect (fun path ->
-            let path =
-                if Path.IsPathRooted path then
-                    path
-                else
-                    let pathMaybe =
-                        ["./"] @ searchPaths
-                        |> List.map(fun searchPath ->
-                            if Path.IsPathRooted searchPath then
-                                Path.Combine(searchPath, path)
-                            else
-                                Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
-                        |> List.tryFind File.Exists
+            if path.StartsWith ".fake" then
+                Seq.empty
+            else
+                let path =
+                    if Path.IsPathRooted path then
+                        path
+                    else
+                        let pathMaybe =
+                            ["./"] @ searchPaths
+                            |> List.map(fun searchPath ->
+                                if Path.IsPathRooted searchPath then
+                                    Path.Combine(searchPath, path)
+                                else
+                                    Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
+                            |> List.tryFind File.Exists
 
-                    match pathMaybe with
-                    | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
-                    | Some x -> x
-            getAllScripts path
+                        match pathMaybe with
+                        | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
+                        | Some x -> x
+                getAllScripts path
         )
     let s =
       { Location = scriptPath
@@ -69,6 +82,7 @@ let rec getAllScripts scriptPath : seq<Script> =
         IncludedAssemblies = lazy(getIncludedAssembly scriptContents) }
     Seq.concat [List.toSeq [s]; loadedContents]
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getScriptHash pathsAndContents fsiOptions =
     let fullContents = getAllScriptContents pathsAndContents |> String.concat "\n"
     let fsiOptions = fsiOptions |> String.concat "\n"
@@ -122,6 +136,7 @@ module internal Cache =
                   Version = get "Version" })
         { Assemblies = assemblies }
 /// The path to the F# Interactive tool.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let fsiPath =
     let ev = environVar "FSI"
     if not (isNullOrEmpty ev) then ev else
@@ -141,6 +156,7 @@ let fsiPath =
         if fi.Exists then fi.FullName else
         findPath "FSIPath" FSIPath "fsi.exe"
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type FsiArgs =
     FsiArgs of string list * string * string list with
     static member parse (args:string array) =
@@ -169,10 +185,12 @@ let private FsiStartInfo workingDirectory (FsiArgs(fsiOptions, scriptPath, scrip
         setVar "FSI" fsiPath)
 
 /// Creates a ProcessStartInfo which is configured to the F# Interactive.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let fsiStartInfo script workingDirectory env info =
     FsiStartInfo workingDirectory (FsiArgs([], script, [])) env info
 
 /// Run the given buildscript with fsi.exe
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let executeFSI workingDirectory script env =
     let (result, messages) =
         ExecProcessRedirected
@@ -182,12 +200,14 @@ let executeFSI workingDirectory script env =
     (result, messages)
 
 /// Run the given build script with fsi.exe and allows for extra arguments to FSI.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let executeFSIWithArgs workingDirectory script extraFsiArgs env =
     let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) env) TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
 
 /// Run the given build script with fsi.exe and allows for extra arguments to FSI. Returns output.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let executeFSIWithArgsAndReturnMessages workingDirectory script extraFsiArgs env =
     let (result, messages) =
         ExecProcessRedirected (fun startInfo ->
@@ -196,6 +216,7 @@ let executeFSIWithArgsAndReturnMessages workingDirectory script extraFsiArgs env
     (result, messages)
 
 /// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     let (result, messages) =
         ExecProcessRedirected (fun si ->
@@ -207,6 +228,7 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
 open Microsoft.FSharp.Compiler.Interactive.Shell
 open System.Reflection
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+)(\.dll|_config\.xml|_warnings\.txt)$", System.Text.RegularExpressions.RegexOptions.Compiled)
 
 type private CacheInfo =
@@ -307,6 +329,7 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
       IsValid = cacheValid }
 
 /// because it is used by test code
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let nameParser scriptFileName =
     let noExtension = Path.GetFileNameWithoutExtension(scriptFileName)
     let startString = "<StartupCode$FSI_"
@@ -620,6 +643,7 @@ let internal onMessage isError =
     printer "%s"
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script (scriptArgs: string[]) (fsiArgs:string[]) useCache =
     let messages = ref []
     let appendMessage isError msg =
@@ -634,10 +658,12 @@ let executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script (scriptArgs: st
     (result, !messages |> List.rev)
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) useCache =
     executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script scriptArgs [||] useCache
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env useCache =
     runFAKEScriptWithFsiArgsAndRedirectMessages
         printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env
@@ -645,9 +671,11 @@ let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, script
         useCache
 
 /// Run the given buildscript with fsi.exe at the given working directory.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let runBuildScriptAt printDetails script extraFsiArgs env useCache =
     runBuildScriptWithFsiArgsAt printDetails (FsiArgs(extraFsiArgs, script, [])) env useCache
 
 /// Run the given buildscript with fsi.exe
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let runBuildScript printDetails script extraFsiArgs env useCache =
     runBuildScriptAt printDetails script extraFsiArgs env useCache

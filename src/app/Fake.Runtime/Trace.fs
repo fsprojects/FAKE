@@ -7,6 +7,27 @@ open System.IO
 open System.Reflection
 open System.Threading
 
+type VerboseLevel =
+    | Silent // For scripting and pipelining
+    | Normal // Regular use
+    | Verbose // Verbose FAKE
+    | VerbosePaket // Verbose FAKE & Paket
+    member x.PrintPaket =
+        match x with
+        | VerbosePaket -> true
+        | _ -> false
+    member x.PrintVerbose =
+        match x with
+        | Verbose
+        | VerbosePaket -> true
+        | _ -> false
+    member x.PrintNormal =
+        match x with
+        | Normal
+        | Verbose
+        | VerbosePaket -> true
+        | _ -> false
+
 /// Defines Tracing information for TraceListeners
 type TraceData =
     | ImportantMessage of string
@@ -43,14 +64,16 @@ let colorMap traceData =
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
 type ConsoleTraceListener(colorMap) =
-    let writeText color newLine text = 
+    let writeText stdErr color newLine text = 
         let curColor = Console.ForegroundColor
         try
           if curColor <> color then Console.ForegroundColor <- color
           let printer =
-            match newLine with
-            | true -> printfn
-            | false -> printf
+            match stdErr, newLine with
+            | false, true -> printfn
+            | false, false -> printf
+            | true, true -> eprintfn
+            | true, false -> eprintf
           printer "%s" text
         finally
           if curColor <> color then Console.ForegroundColor <- curColor
@@ -61,13 +84,13 @@ type ConsoleTraceListener(colorMap) =
             let color = colorMap msg
             match msg with
             | ImportantMessage text | ErrorMessage text ->
-                writeText color true text
+                writeText true color true text
             | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
-                writeText color newLine text
+                writeText false color newLine text
 
 /// The default TraceListener for Console.
 let defaultConsoleTraceListener =
-  ConsoleTraceListener(colorMap)
+  ConsoleTraceListener(colorMap) :> ITraceListener
 
 /// A List with all registered listeners
 let listeners = new Collections.Generic.List<ITraceListener>()

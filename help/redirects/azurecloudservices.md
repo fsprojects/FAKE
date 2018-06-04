@@ -2,5 +2,5 @@
 
 This page moved to:
 
-- Not yet migrated to FAKE 5
-- [here for FAKE 4](todo-azurecloudservices.html) (Final location not decided yet)
+- [here for FAKE 5](apidocs/v5/fake-azure-cloudservices.html)
+- [here for FAKE 4](legacy-azurecloudservices.html)

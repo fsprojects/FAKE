@@ -252,7 +252,7 @@ module AppVeyor =
                     currentTestOutput <- Some(out,err)
                 | TraceData.TestStatus (testName, status) ->
                     currentTestResult <- Some status
-                | TraceData.CloseTag (KnownTags.Test name, time) ->
+                | TraceData.CloseTag (KnownTags.Test name, time, status) ->
                     let outcome, msg, detail =
                         match currentTestResult with
                         | None -> "Passed", "", ""
@@ -268,12 +268,14 @@ module AppVeyor =
                     AppVeyorInternal.FinishTestCase (getCurrentTestSuite()) name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
                     currentTestSuite <- Some name
-                | TraceData.CloseTag (KnownTags.TestSuite name, _) ->
+                | TraceData.CloseTag (KnownTags.TestSuite name, _, _) ->
                     currentTestSuite <- None
+                | TraceData.BuildState state ->
+                    ConsoleWriter.writeAnsiColor false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.OpenTag (tag, descr) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-                | TraceData.CloseTag (tag, time) ->
-                    ConsoleWriter.writeAnsiColor false color true (sprintf "Finished '%s' in %O" tag.Name time)
+                | TraceData.CloseTag (tag, time, state) ->
+                    ConsoleWriter.writeAnsiColor false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
                     ConsoleWriter.writeAnsiColor false color true text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->

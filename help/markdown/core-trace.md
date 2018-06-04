@@ -1,6 +1,6 @@
 # Fake.Core.Trace module
 
-[API-Reference](apidocs/fake-core-trace.html)
+[API-Reference](apidocs/v5/fake-core-trace.html)
 
 ## Logging and Tracing
 
@@ -27,9 +27,10 @@ with e -> Trace.traceException e
 
 Trace.traceLine()
 
-Target.Create "mytarget" (fun _ ->
+Target.create "mytarget" (fun _ ->
     use __ = Trace.traceTask "MyOperation" "Description"
     // do my operation
+    __.MarkSuccess()
 )
 
 ```

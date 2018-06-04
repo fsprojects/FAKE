@@ -1,9 +1,11 @@
 /// Contains helper functions to run the documentation tool "docfx".
+[<System.Obsolete("FAKE0001 Use the Fake.Documentation.DocFx module instead")>]
 module Fake.DocFxHelper
 
 open System
 
 /// The parameter type for DocFx.
+[<System.Obsolete("FAKE0001 Use the Fake.Documentation.DocFx module instead")>]
 [<CLIMutable>]
 type DocFxParams = 
     { /// The tool path - FAKE tries to find docfx.exe automatically in any sub folder.
@@ -19,6 +21,7 @@ type DocFxParams =
     }
 
 /// The default parameters
+[<System.Obsolete("FAKE0001 Use the Fake.Documentation.DocFx module instead")>]
 let DocFxDefaults = 
     let toolPath = findToolInSubPath "docfx.exe" (currentDirectory @@ "tools" @@ "docfx.msbuild")
     let docsPath = currentDirectory @@ "docs"
@@ -39,6 +42,7 @@ let DocFxDefaults =
 ///          DocFxJson = "foo" @@ "bar" @@ "docfx.json"
 ///          Timeout = TimeSpan.FromMinutes 10.
 ///      })
+[<System.Obsolete("FAKE0001 Use the Fake.Documentation.DocFx module instead")>]
 let DocFx setParams = 
     let parameters = DocFxDefaults |> setParams
     

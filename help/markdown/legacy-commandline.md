@@ -1,8 +1,9 @@
 # FAKE Command Line
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The new documentation can be found [here](fake-commandline.html)**
-
-**Note:  This documentation is for FAKE.exe version 2.18 or later.**
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="fake-commandline.html">here </a></p>
+</div>
 
 The FAKE.exe command line interface (CLI) is defined as follows:
 

@@ -1,0 +1,34 @@
+﻿@{
+  Layout = "template";
+  //Description = Properties["project-summary"];
+  
+  // Properties["current-page"] = "APIReference";
+  ViewBag.CurrentPage = "APIReference";
+}
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                @if(!string.IsNullOrWhiteSpace(ViewBag.AssemblyName)){
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/@ViewBag.AssemblyName" >@ViewBag.AssemblyName</a> module.
+                                                </p>
+                                                }
+                                            </div> 
+                                
+                                   
+                                    
+									<!-- Content -->
+                      <article>
+          			@RenderBody()
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>

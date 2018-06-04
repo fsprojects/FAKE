@@ -1,10 +1,12 @@
 /// New Command line interface for FAKE that utilises Argu.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<RequireQualifiedAccessAttribute>]
 module Cli
 
 open System
 open Argu
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type FakeArg =
     | [<AltCommandLine("-ev")>] EnvVar of string * string
     | [<AltCommandLine("-ef")>] EnvFlag of string
@@ -17,6 +19,7 @@ type FakeArg =
     | [<AltCommandLine("-st")>] Single_Target
     | [<AltCommandLine("-nc")>] NoCache
     interface IArgParserTemplate with
+        [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
         member x.Usage =
             match x with
             | EnvVar _ -> "Set environment variable <name> <value>. Supports multiple."
@@ -31,6 +34,7 @@ type FakeArg =
             | NoCache -> "Disables caching of compiled script"
 
 /// Return the parsed FAKE args or the parse exception.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let parsedArgsOrEx args =
     try
         let args = args |> Seq.skip 1 |> Array.ofSeq
@@ -39,6 +43,7 @@ let parsedArgsOrEx args =
     with | ex -> Choice2Of2(ex)
 
 /// Prints the FAKE argument usage.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let printUsage () =
     printfn @"
     fake.exe [<scriptPath>] [<targetName>] [options]
@@ -51,9 +56,11 @@ let printUsage () =
     Options:
     %s" (defaultArg (ArgumentParser.Create<FakeArg>().HelpTextMessage) "")
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type Args = { Script: string option; Target: string option; Rest: string [] }
 
 /// Parses the positional args and provides the remaining tail args.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let parsePositionalArgs (args:string []) =
 
     //Support this usage.

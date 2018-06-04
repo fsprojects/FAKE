@@ -1,10 +1,12 @@
-﻿module Fake.FuchuHelper
+﻿[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+module Fake.FuchuHelper
 
 /// Execute Fuchu tests from one or more assemblies.
 /// Multiple assemblies are run concurrently.
 /// ## Parameters
 /// 
 ///  - `testExes` - The paths of the executables containing Fuchu tests to run.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Fuchu testExes = 
     let errorCode =
         testExes

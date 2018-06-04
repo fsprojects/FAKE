@@ -6,6 +6,7 @@ open System.ComponentModel.DataAnnotations
 open System.Globalization
 open System.Runtime.Serialization
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type Login = {
@@ -14,6 +15,7 @@ type Login = {
     [<DataMember>]RememberMe : bool
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type Registration = {
@@ -27,6 +29,7 @@ type Registration = {
     ConfirmPassword : string
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type Role = {
@@ -34,6 +37,7 @@ type Role = {
     Id : string
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 [<DataContract>]
 type User = {

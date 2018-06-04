@@ -26,7 +26,7 @@ let Dependency x = [x]
 let And x y = y @ [x]
 
 /// Runs a Target and its dependencies
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.Run)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.run)")>]
 let Run targetName = run targetName
 
 /// Runs the target given by the build script parameter or the given default target
@@ -34,17 +34,17 @@ let Run targetName = run targetName
 let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDefault parameterName defaultTarget |> Run
 
 /// Runs the target given by the target parameter or the given default target
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.RunOrDefault)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.runOrDefault)")>]
 let RunTargetOrDefault defaultTarget = getBuildParamOrDefault "target" defaultTarget |> Run
 
 /// Runs the target given by the target parameter or lists the available targets
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.RunOrList)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.runOrList)")>]
 let RunTargetOrListTargets() =
     if hasBuildParam "target" then getBuildParam "target" |> Run
     else listTargets()
 
 /// Runs the target given by the target parameter
-[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.RunOrDefault with \"\" default target)")>]
+[<System.Obsolete("Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.Target.runOrDefault with \"\" default target)")>]
 let RunTarget() = getBuildParam "target" |> Run
 
 /// Stores which targets are on the same level

@@ -93,18 +93,19 @@ let createDocsForDlls (p:MetadataFormatArguments->MetadataFormatArguments) dllFi
         if arguments.LayoutRoots.IsEmpty then []
         else [ "--layoutRoots" ] @ arguments.LayoutRoots
 
-    for file in dllFiles do
-        projectParameters
-        |> Seq.map (fun (k, v) -> [ k; v ])
-        |> Seq.concat
-        |> Seq.append 
-                ([ "metadataformat"; "--generate"; "--outdir"; outputDir] @ layoutroots @ libdirs @ [ "--sourceRepo"; sourceRepo;
-                   "--sourceFolder"; arguments.Source; "--parameters" ])
-        |> Seq.map (fun s -> 
-                if s.StartsWith "\"" then s
-                else sprintf "\"%s\"" s)
-        |> String.separated " "
-        |> fun prefix -> sprintf "%s --dllfiles \"%s\"" prefix file
-        |> run arguments.ToolPath
+    
+    projectParameters
+    |> Seq.map (fun (k, v) -> [ k; v ])
+    |> Seq.concat
+    |> Seq.append 
+            ([ "metadataformat"; "--generate"; "--outdir"; outputDir] @ layoutroots @ libdirs @ [ "--sourceRepo"; sourceRepo;
+               "--sourceFolder"; arguments.Source; "--parameters" ])
+    |> Seq.map (fun s -> 
+            if s.StartsWith "\"" then s
+            else sprintf "\"%s\"" s)
+    |> String.separated " "
+    |> fun prefix -> sprintf "%s --dllfiles %s" prefix (String.separated " " (dllFiles |> Seq.map (sprintf "\"%s\"")))
+    |> run arguments.ToolPath
 
-        printfn "Successfully generated docs for DLL %s" file
+    
+    printfn "Successfully generated docs for DLLs: %s" (String.separated ", " dllFiles)

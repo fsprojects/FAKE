@@ -5,7 +5,6 @@ module Fake.DotNet.NuGet.Restore
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -51,6 +50,13 @@ let findNuget defaultPath =
     with
     | _ -> defaultPath @@ "NuGet.exe"
 
+
+/// RestorePackages Verbosity settings
+type NugetRestoreVerbosity =
+| Normal
+| Quiet
+| Detailed
+
 /// RestorePackages parameter path
 type RestorePackageParams =
     { ToolPath: string
@@ -58,7 +64,8 @@ type RestorePackageParams =
       TimeOut: TimeSpan
       /// Specifies how often nuget should try to restore the packages - default is 5
       Retries: int
-      OutputPath: string}
+      OutputPath: string
+      Verbosity: NugetRestoreVerbosity }
 
 /// RestorePackage defaults parameters
 let RestorePackageDefaults =
@@ -66,7 +73,8 @@ let RestorePackageDefaults =
       Sources = []
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
-      OutputPath = "./packages" }
+      OutputPath = "./packages"
+      Verbosity = Normal }
 
 /// RestorePackages parameter path for single packages
 type RestoreSinglePackageParams =
@@ -78,7 +86,8 @@ type RestoreSinglePackageParams =
       ExcludeVersion: bool
       /// Specifies how often nuget should try to restore the packages - default is 5
       Retries: int
-      IncludePreRelease: bool }
+      IncludePreRelease: bool
+      Verbosity: NugetRestoreVerbosity }
 
 /// RestoreSinglePackageParams defaults parameters
 let RestoreSinglePackageDefaults =
@@ -89,7 +98,8 @@ let RestoreSinglePackageDefaults =
       Version = None
       ExcludeVersion = false
       Retries = 5
-      IncludePreRelease = false }
+      IncludePreRelease = false
+      Verbosity = Normal }
 
 /// [omit]
 let runNuGet toolPath timeOut args failWith =
@@ -106,17 +116,26 @@ let rec runNuGetTrial retries toolPath timeOut args failWith =
     TaskRunner.runWithRetries f retries
 
 /// [omit]
-let buildSources sources =
+let buildSources sources : string list =
     sources
-    |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-    |> String.separated ""
+    |> List.collect (fun source -> [ "-Source" ; source ] )
+
+
+//Args Helper Functions
+let private verbosityToString (v:NugetRestoreVerbosity) = (match v with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "normal")
 
 /// [omit]
 let buildNuGetArgs setParams packageId =
     let parameters = RestoreSinglePackageDefaults |> setParams
     let sources = parameters.Sources |> buildSources
 
-    let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> Path.getFullName) + "\"" + sources
+    let args = 
+        [
+            yield! ["install"; packageId]
+            yield! ["-OutputDirectory"; parameters.OutputPath |> Path.getFullName]
+            yield! sources
+            yield! ["-verbosity"; (verbosityToString parameters.Verbosity)]
+        ] |> Args.toWindowsCommandLine 
 
     match parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version with
     | (true, false, Some(v))  -> args + " \"-ExcludeVersion\" \"-Version\" \"" + v.ToString() + "\""
@@ -133,6 +152,7 @@ let RestorePackageId setParams packageId =
 
     let args = buildNuGetArgs setParams packageId
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of package %s failed." packageId)
+    __.MarkSuccess()
 
 /// Restores the packages in the given packages.config file from NuGet.
 /// ## Parameters
@@ -156,11 +176,16 @@ let RestorePackage setParams packageFile =
 
     let sources = parameters.Sources |> buildSources
 
-    let args =
-        " \"install\" \"" + (packageFile |> Path.getFullName) + "\"" +
-        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> Path.getFullName) + "\"" + sources
+    let args = 
+        [
+            yield! ["install"; (packageFile |> Path.getFullName)]
+            yield! ["-OutputDirectory"; parameters.OutputPath |> Path.getFullName]
+            yield! sources
+            yield! ["-verbosity"; (verbosityToString parameters.Verbosity)]
+        ] |> Args.toWindowsCommandLine
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
+    __.MarkSuccess()
 
 /// Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.
 let RestorePackages() =
@@ -190,7 +215,12 @@ let RestoreMSSolutionPackages setParams solutionFile =
     let sources = parameters.Sources |> buildSources
 
     let args =
-        "\"restore\" \"" + (solutionFile |> Path.getFullName) + "\"" +
-        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> Path.getFullName) + "\"" + sources
+        [
+            yield! ["restore"; (solutionFile |> Path.getFullName)]
+            yield! ["-OutputDirectory"; parameters.OutputPath |> Path.getFullName]
+            yield! sources
+            yield! ["-verbosity"; (verbosityToString parameters.Verbosity)]
+        ] |> Args.toWindowsCommandLine
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)
+    __.MarkSuccess()

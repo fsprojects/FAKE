@@ -1,4 +1,5 @@
 /// Contains tasks to run [expecto](https://github.com/haf/expecto) v2 unit tests.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Testing.Expecto
 
 open System
@@ -8,6 +9,7 @@ open Fake
 open System.Diagnostics
 
 /// CLI parameters available if you use Tests.runTestsInAssembly defaultConfig argv in your code:
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ExpectoParams =
     {
       /// Extra verbose output for your tests.
@@ -73,7 +75,7 @@ type ExpectoParams =
         |> appendList this.Run "--run "
         |> appendList this.CustomArgs ""
         |> toText
-
+    [<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
     static member DefaultParams =
         {
             Debug = false
@@ -92,7 +94,7 @@ type ExpectoParams =
             CustomArgs = []
             WorkingDirectory = ""
         }
-
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Expecto (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
     let args = setParams ExpectoParams.DefaultParams
     use __ = assemblies |> separated ", " |> traceStartTaskUsing "Expecto"

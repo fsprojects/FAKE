@@ -21,9 +21,11 @@ module TeamFoundation =
                 properties  
                 |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensureProp prop) (ensureProp value))
                 |> String.separated ""
-            if String.isNullOrWhiteSpace temp then "" else " " + temp            
-        printf "##vso[%s%s]%s" action formattedProperties message
-
+            if String.isNullOrWhiteSpace temp then "" else " " + temp
+        sprintf "##vso[%s%s]%s" action formattedProperties message
+        // printf is racing with others in parallel mode
+        |> fun s -> System.Console.WriteLine("\n{0}", s)
+        
     let private toType t o =
         o |> Option.map (fun value -> t, value)
     let private toList t o =
@@ -43,6 +45,9 @@ module TeamFoundation =
 
     let private setBuildNumber number =
         write "build.updatebuildnumber" [] number
+
+    let setBuildState state message =
+        write "task.complete" ["result", state] message
 
     type internal LogDetailState =
         | Unknown
@@ -77,12 +82,19 @@ module TeamFoundation =
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
+    type Environment =
+        static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
+        static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"
+        static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
+        static member BuildId = Environment.environVar "BUILD_BUILDID"
+
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
     type internal TeamFoundationTraceListener() =
-        let mutable openTags = []
+        let mutable openTags = System.Threading.AsyncLocal<_>()
+        do openTags.Value <- []
         let mutable order = 1        
         interface ITraceListener with
             /// Writes the given message to the Console.
@@ -97,23 +109,36 @@ module TeamFoundation =
                 | TraceData.OpenTag (tag, descr) ->
                     let id = Guid.NewGuid()
                     let parentId =
-                        match openTags with
+                        match openTags.Value with
                         | [] -> None
                         | (_, id) :: _ -> Some id
-                    openTags <- (tag,id) :: openTags               
+                    openTags.Value <- (tag,id) :: openTags.Value
+                    let order = System.Threading.Interlocked.Increment(&order)
                     createLogDetail id parentId tag.Type tag.Name order descr
-                | TraceData.CloseTag (tag, time) ->
+                | TraceData.CloseTag (tag, time, state) ->
                     ignore time
                     let id, rest =
-                        match openTags with
+                        match openTags.Value with
                         | [] -> failwithf "Cannot close tag, as it was not opened before! (Expected %A)" tag
                         | (savedTag, id) :: rest ->
                             ignore savedTag // TODO: Check if tag = savedTag
                             id, rest
-                    openTags <- rest                
-                    setLogDetailFinished id Succeeded
+                    openTags.Value <- rest 
+                    let result =
+                        match state with
+                        | TagStatus.Warning -> LogDetailResult.SucceededWithIssues
+                        | TagStatus.Failed -> LogDetailResult.Failed
+                        | TagStatus.Success -> LogDetailResult.Succeeded               
+                    setLogDetailFinished id result
+                | TraceData.BuildState state ->
+                    let vsoState, msg =
+                        match state with
+                        | TagStatus.Success -> "Succeeded", "OK" 
+                        | TagStatus.Warning -> "SucceededWithIssues", "WARN"
+                        | TagStatus.Failed -> "Failed", "ERROR"
+                    setBuildState vsoState msg
                 | TraceData.ImportData (typ, path) ->
-                    publishArtifact typ.Name (Path.GetFileName path|>Some) path
+                    publishArtifact typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number ->

@@ -1,32 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Fake.DotNet.AssemblyInfoFile\Fake.DotNet.AssemblyInfoFile.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.Context\Fake.Core.Context.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Target\Fake.Core.Target.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fake.ContextHelper.fs" />
     <Compile Include="Fake.IO.Globbing.fs" />
     <Compile Include="Fake.DotNet.Cli.fs" />
+    <Compile Include="Fake.DotNet.AssemblyInfoFile.fs" />
+    <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
     <Compile Include="Fake.Core.Process.fs" />
     <Compile Include="Fake.Core.Target.fs" />
     <Compile Include="Fake.Core.ReleaseNotes.fs" />
+    <Compile Include="Fake.Core.Xml.fs" />
+    <Compile Include="Fake.Core.Context.fs" />
     <Compile Include="Fake.Runtime.fs" />
     <Compile Include="Main.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
+    <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.cs" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.fs" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="TestFiles/Fake.DotNet.AssemblyInfoFile/AssemblyInfo.vb" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

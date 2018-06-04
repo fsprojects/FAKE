@@ -3,7 +3,6 @@ module Fake.DotNet.Testing.MSTest
 
 open System
 open System.Text
-open Fake.Core.StringBuilder
 open Fake.Core
 open Fake.Testing.Common
 
@@ -84,8 +83,8 @@ let internal buildMSTestArgs parameters assembly =
     |> StringBuilder.appendIfNotNull parameters.TestSettingsPath "/testsettings:"
     |> StringBuilder.appendIfNotNull testResultsFile "/resultsfile:"
     |> StringBuilder.appendIfTrue parameters.NoIsolation "/noisolation"
-    |> StringBuilder.forEach parameters.Tests appendIfNotNullOrEmpty "/test:"
-    |> StringBuilder.forEach parameters.Details appendIfNotNullOrEmpty "/detail:"
+    |> StringBuilder.forEach parameters.Tests StringBuilder.appendIfNotNullOrEmpty "/test:"
+    |> StringBuilder.forEach parameters.Details StringBuilder.appendIfNotNullOrEmpty "/detail:"
     |> StringBuilder.toText
 
 /// Runs MSTest command line tool on a group of assemblies.
@@ -119,3 +118,4 @@ let exec (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) =
             WorkingDirectory = parameters.WorkingDir
             Arguments = args }) >> Process.withFramework) parameters.TimeOut
         |> failIfError assembly
+    __.MarkSuccess()

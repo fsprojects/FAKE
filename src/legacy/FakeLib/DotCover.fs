@@ -1,4 +1,5 @@
 ﻿/// Contains a task which can be used to run [DotCover](http://www.jetbrains.com/dotcover/) on .NET assemblies.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.DotCover
 
 open Fake
@@ -8,6 +9,7 @@ open System.Text
 open Fake.Testing.XUnit2
 open Fake.Testing.NUnit3
 open Fake.MSTest
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 
 type DotCoverReportType = 
   | Html = 0
@@ -17,6 +19,7 @@ type DotCoverReportType =
 
 /// The dotCover parameter type for running coverage
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DotCoverParams = 
     { ToolPath: string
       WorkingDir: string
@@ -30,6 +33,7 @@ type DotCoverParams =
       CustomParameters: string }
 
 /// The dotCover default parameters
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverDefaults = 
     { ToolPath = findToolInSubPath "dotCover.exe" (currentDirectory @@ "tools" @@ "DotCover")
       WorkingDir = ""
@@ -43,6 +47,7 @@ let DotCoverDefaults =
       ErrorLevel = ErrorLevel.Error} 
 
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DotCoverMergeParams = 
     { ToolPath: string
       WorkingDir: string
@@ -51,6 +56,7 @@ type DotCoverMergeParams =
       TempDir: string
       CustomParameters: string }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverMergeDefaults =
      { ToolPath = findToolInSubPath "dotCover.exe" (currentDirectory @@ "tools" @@ "DotCover")
        WorkingDir = ""
@@ -60,6 +66,7 @@ let DotCoverMergeDefaults =
        CustomParameters = "" }
 
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type DotCoverReportParams = 
     { ToolPath: string
       WorkingDir: string
@@ -67,7 +74,8 @@ type DotCoverReportParams =
       Output: string
       ReportType: DotCoverReportType
       CustomParameters: string }
-      
+
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]      
 let DotCoverReportDefaults : DotCoverReportParams =
      { ToolPath = findToolInSubPath "dotCover.exe" (currentDirectory @@ "tools" @@ "DotCover")
        WorkingDir = ""
@@ -76,6 +84,7 @@ let DotCoverReportDefaults : DotCoverReportParams =
        ReportType = DotCoverReportType.Xml
        CustomParameters = "" }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let buildDotCoverArgs parameters =
     new StringBuilder()
     |> append "cover"
@@ -88,6 +97,7 @@ let buildDotCoverArgs parameters =
     |> appendWithoutQuotes parameters.CustomParameters
     |> toText
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
     new StringBuilder()
     |> append "merge"
@@ -96,7 +106,8 @@ let buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
     |> appendIfNotNullOrEmpty parameters.TempDir "/TempDir="
     |> appendWithoutQuotes parameters.CustomParameters
     |> toText
-    
+
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]    
 let buildDotCoverReportArgs parameters =
     new StringBuilder()
     |> append "report"
@@ -107,10 +118,12 @@ let buildDotCoverReportArgs parameters =
     |> toText
 
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getWorkingDir workingDir =
     Seq.find isNotNullOrEmpty [workingDir; environVar("teamcity.build.workingDir"); "."]
     |> Path.GetFullPath
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let buildParamsAndExecute parameters buildArguments toolPath workingDir failBuild =
     let args = buildArguments parameters
     trace (toolPath + " " + args)
@@ -133,6 +146,7 @@ let buildParamsAndExecute parameters buildArguments toolPath workingDir failBuil
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the dotCover default parameters.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCover (setParams: DotCoverParams -> DotCoverParams) =
     let parameters = (DotCoverDefaults |> setParams)
     buildParamsAndExecute parameters buildDotCoverArgs parameters.ToolPath parameters.WorkingDir (parameters.ErrorLevel <> ErrorLevel.DontFailBuild)
@@ -149,6 +163,7 @@ let DotCover (setParams: DotCoverParams -> DotCoverParams) =
 ///                         Source = [artifactsDir @@ "NUnitDotCoverSnapshot.dcvr"
 ///                                   artifactsDir @@ "MSpecDotCoverSnapshot.dcvr"]
 ///                         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" }) 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
     let parameters = (DotCoverMergeDefaults |> setParams)
     buildParamsAndExecute parameters buildDotCoverMergeArgs parameters.ToolPath parameters.WorkingDir false 
@@ -164,6 +179,7 @@ let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
 ///                         Source = artifactsDir @@ "dotCoverSnapshot.dcvr"
 ///                         Output = artifactsDir @@ "dotCoverReport.xml"
 ///                         ReportType = DotCoverReportType.Xml })
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
     let parameters = (DotCoverReportDefaults |> setParams)
     buildParamsAndExecute parameters buildDotCoverReportArgs parameters.ToolPath parameters.WorkingDir
@@ -182,6 +198,7 @@ let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
 ///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
 ///             (fun nUnitOptions -> { nUnitOptions with
 ///                     DisableShadowCopy = true })
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "
@@ -210,6 +227,7 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 ///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
 ///             (fun nUnitOptions -> { nUnitOptions with
 ///                     DisableShadowCopy = true })
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "
@@ -236,6 +254,7 @@ let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUn
 ///         |> DotCoverXUnit2 
 ///             (fun  -> dotCoverOptions )
 ///             (fun nUnitOptions -> nUnitOptions) 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUnit2Params: XUnit2Params -> XUnit2Params) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "
@@ -281,6 +300,7 @@ let internal buildMSTestArgsForDotCover parameters assemblies =
 ///         |> MSTest 
 ///             (fun  -> dotCoverOptions )
 ///             (fun MSTestOptions -> MSTestOptions) 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSTestParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "
@@ -309,6 +329,7 @@ let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMST
 ///                     Output = artifactsDir @@ "MSpecDotCoverSnapshot.dcvr" }) 
 ///             (fun mSpecOptions -> { mSpecOptions with
 ///                     Silent = true })
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpecParams: MSpecParams -> MSpecParams) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "

@@ -17,35 +17,32 @@ type Script = {
 let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.HashContent)
 
-let getAllScripts defines scriptPath : Script list =
-    let rec getAllScriptsRec scriptPath parentIncludes : Script list =
-        let scriptContents =
-          File.ReadLines scriptPath
-          |> FSharpParser.getTokenized scriptPath defines
-        //let searchPaths = getSearchPaths scriptContents |> Seq.toList
-        let resolvePath currentIncludes currentDir relativeOrAbsolute isDir =
+let getAllScripts defines (tokens:Fake.Runtime.FSharpParser.TokenizedScript) scriptPath : Script list =
+    let rec getAllScriptsRec (tokens:Fake.Runtime.FSharpParser.TokenizedScript) workDir (scriptName:string) parentIncludes : Script list =
+        let tryResolvePath currentIncludes currentDir relativeOrAbsolute isDir =
             let possiblePaths =
               if Path.IsPathRooted relativeOrAbsolute then [ relativeOrAbsolute ]
               else
                 currentDir :: currentIncludes
                 |> List.map (fun bas -> Path.Combine(bas, relativeOrAbsolute))
-            let realPath =
-              match possiblePaths |> Seq.tryFind (if isDir then Directory.Exists else File.Exists) with
-              | Some f -> f
-              | None ->
-                failwithf "FAKE-CACHING: Could not find %s '%s' in any paths searched. Searched paths:\n%A" (if isDir then "directory" else "file") relativeOrAbsolute (currentDir :: currentIncludes)
-            realPath
+            possiblePaths
+            |> Seq.tryFind (if isDir then Directory.Exists else File.Exists)
+            |> Option.map Path.GetFullPath
+        let resolvePath currentIncludes currentDir relativeOrAbsolute isDir =
+            match tryResolvePath currentIncludes currentDir relativeOrAbsolute isDir with
+            | Some f -> f
+            | None ->
+              failwithf "FAKE-CACHING: Could not find %s '%s' in any paths searched. Searched paths:\n%A" (if isDir then "directory" else "file") relativeOrAbsolute (currentDir :: currentIncludes)
 
         let loadedContents =
-            scriptContents
-            |> FSharpParser.findProcessorDirectives
-            |> List.fold (fun ((currentIncludes, currentDir, childScripts) as state) preprocessorDirective ->
+            ((parentIncludes, workDir, []), FSharpParser.findProcessorDirectives tokens)
+            ||> List.fold (fun ((currentIncludes, currentDir, childScripts) as state) preprocessorDirective ->
                 let (|MatchFirstString|_|) (l:FSharpParser.StringLike list) =
                   match l with
                   | FSharpParser.StringLike.StringKeyword FSharpParser.SourceDirectory :: _ ->
-                    Some (Path.GetDirectoryName scriptPath)
+                    Some (".")
                   | FSharpParser.StringLike.StringKeyword FSharpParser.SourceFile :: _ ->
-                    Some (Path.GetFileName scriptPath)
+                    Some (scriptName)
                   | FSharpParser.StringLike.StringKeyword (FSharpParser.Unknown s) :: _ ->
                     printfn "FAKE-CACHING: Unknown special key '%s' in preprocessor directive: %A" s preprocessorDirective.Token
                     None
@@ -55,22 +52,55 @@ let getAllScripts defines scriptPath : Script list =
                     None
                 match preprocessorDirective with
                 | { Token = { Representation = "#load" }; Strings = MatchFirstString childScriptRelPath } ->
-                  let realPath = resolvePath currentIncludes currentDir childScriptRelPath false
-                  currentIncludes, currentDir, getAllScriptsRec realPath currentIncludes @ childScripts
+                  let name = Path.GetFileName childScriptRelPath
+                  // ignore intellisense file, because it might not be generated yet
+                  if name = Runners.loadScriptName && childScriptRelPath.StartsWith ".fake"
+                  then currentIncludes, currentDir, childScripts
+                  else
+                      let realPath =
+                        try resolvePath currentIncludes currentDir childScriptRelPath false
+                        with e ->
+                            let p = String.Join("\n ", currentDir :: currentIncludes)
+                            let msg =
+                                sprintf "%s(%d,%d): error FS0078: Unable to find the file '%s' in any of\n %s"
+                                    (Path.Combine(workDir, scriptPath))
+                                    preprocessorDirective.Token.LineNumber
+                                    (match preprocessorDirective.Token.TokenInfo with Some t -> t.LeftColumn + 1 | None -> 1)
+                                    childScriptRelPath
+                                    p
+                            raise <| exn(msg, e)
+                      let newWorkDir = Path.GetDirectoryName realPath
+                      let newScriptName = Path.GetFileName realPath
+                      let nestedTokens =
+                          File.ReadLines realPath
+                          |> FSharpParser.getTokenized realPath defines
+                      currentIncludes, currentDir, getAllScriptsRec nestedTokens newWorkDir newScriptName currentIncludes @ childScripts
                 | { Token = { Representation = "#cd" }; Strings = MatchFirstString relOrAbsolute } ->
-                  let realPath = resolvePath currentIncludes currentDir relOrAbsolute true
+                  let realPath = 
+                    try resolvePath [] currentDir relOrAbsolute true
+                    with e ->
+                        let p = Path.Combine(currentDir, relOrAbsolute)
+                        let msg =
+                            sprintf "%s(%d,%d): error FS2302: Directory '%s' doesn't exist"
+                                (Path.Combine(workDir, scriptPath))
+                                preprocessorDirective.Token.LineNumber
+                                (match preprocessorDirective.Token.TokenInfo with Some t -> t.LeftColumn + 1 | None -> 1)
+                                p
+                        raise <| exn(msg, e)
                   currentIncludes, realPath, childScripts
                 | { Token = { Representation = "#I" }; Strings = MatchFirstString relOrAbsolute } ->
-                  let realPath = resolvePath currentIncludes currentDir relOrAbsolute true
-                  realPath :: currentIncludes, currentDir, childScripts
+                  match tryResolvePath currentIncludes currentDir relOrAbsolute true with
+                  | Some realPath ->
+                    realPath :: currentIncludes, currentDir, childScripts
+                  | None -> currentIncludes, currentDir, childScripts                
                 | _ -> state
-            ) (parentIncludes, Path.GetDirectoryName scriptPath, [])
+            ) 
             |> fun (_, _, c) -> c
-            |> List.rev
-        { Location = scriptPath
-          HashContent = FSharpParser.getHashableString scriptContents } :: loadedContents
-
-    getAllScriptsRec scriptPath []
+        { Location = Path.Combine(workDir, scriptName)
+          HashContent = FSharpParser.getHashableString tokens } :: loadedContents
+    let dir = Path.GetDirectoryName scriptPath
+    let name = Path.GetFileName scriptPath
+    getAllScriptsRec tokens dir name []
 
 let getStringHash (s:string) =
     use sha256 = System.Security.Cryptography.SHA256.Create()

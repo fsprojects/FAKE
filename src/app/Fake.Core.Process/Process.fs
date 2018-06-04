@@ -309,12 +309,29 @@ module Process =
     /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
     let mutable ProcessEncoding = Encoding.UTF8
 
+    let internal rawStartProcess (proc : Process) =
+        try
+            let result = proc.Start()
+            if not result then failwithf "Could not start process (Start() returned false)."
+        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
+        let startTime =
+            try proc.StartTime with
+            | :? System.InvalidOperationException
+            | :? System.ComponentModel.Win32Exception as e ->
+                let hasExited =
+                    try proc.HasExited with
+                    | :? System.InvalidOperationException
+                    | :? System.ComponentModel.Win32Exception -> false
+                if not hasExited then
+                    Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
+                DateTime.Now               
+        addStartedProcess(proc.Id, startTime) |> ignore
+
     /// [omit]
-    let startProcess (proc : Process) = 
-        //platformInfoAction proc.StartInfo
-        let result = proc.Start()
-        addStartedProcess(proc.Id, proc.StartTime) |> ignore
-        result
+    [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
+    let startProcess (proc : Process) =
+        rawStartProcess proc
+        true
 
     /// [omit]
     //let mutable redirectOutputToTrace = false
@@ -427,12 +444,9 @@ module Process =
                 if isNull d.Data |> not then errorF d.Data)
             proc.OutputDataReceived.Add(fun d -> 
                 if isNull d.Data |> not then messageF d.Data)
-        try 
-            if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
-                Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
-            if not (startProcess proc) then
-                failwithf "Could not start process (start returned false)."
-        with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
+        if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
+            Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
+        rawStartProcess proc
         if silent then 
             proc.BeginErrorReadLine()
             proc.BeginOutputReadLine()
@@ -509,24 +523,19 @@ module Process =
     /// Starts the given process and returns immediatly.
     let fireAndForget configProcessStartInfoF =
         use proc = getProc configProcessStartInfoF
-        try 
-            startProcess proc
-        with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
+        rawStartProcess proc
 
     /// Runs the given process, waits for its completion and returns if it succeeded.
     let directExec configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
-        try 
-            if not (startProcess proc) then
-                failwithf "Could not start process (start returned false)."
-        with ex -> raise <| exn(sprintf "Start of process %s failed." proc.StartInfo.FileName, ex)
+        rawStartProcess proc
         proc.WaitForExit()
         proc.ExitCode = 0
 
     /// Starts the given process and forgets about it.
     let start configProcessStartInfoF = 
         use proc = getProc configProcessStartInfoF
-        startProcess proc
+        rawStartProcess proc
 
     /// Adds quotes around the string
     /// [omit]
@@ -617,9 +626,17 @@ module Process =
         |> fun path ->
             // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
             if Environment.isWindows then
+                // Prefer PATHEXT, see https://github.com/fsharp/FAKE/issues/1911
+                // and https://github.com/fsharp/FAKE/issues/1899
                 Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
                 |> String.split ';'
                 |> Seq.tryPick (fun postFix -> tryFindFile path (file + postFix))
+                |> function
+                   | None ->
+                        match tryFindFile path file with
+                        | Some s -> Some s
+                        | None -> None
+                   | Some s -> Some s
             else tryFindFile path file
 
     /// Returns the AppSettings for the key - Splitted on ;
@@ -692,8 +709,7 @@ module Process =
                 if not (isNull e.Data) then Trace.traceError e.Data)
             proc.OutputDataReceived.Add(fun e -> 
                 if not (isNull e.Data) then Trace.log e.Data)
-            if not (startProcess proc) then
-                failwithf "Could not start process (start returned false)."
+            rawStartProcess proc
             proc.BeginOutputReadLine()
             proc.BeginErrorReadLine()
             proc.StandardInput.Dispose()

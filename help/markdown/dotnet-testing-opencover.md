@@ -1,7 +1,7 @@
 # Analyze your code coverage with OpenCover
 
 From the [project](https://github.com/OpenCover/opencover):
-"A code coverage tool for .NET 2 and above (WINDOWS OS only), support for 32 and 64 processes with both branch and sequence points."
+>"A code coverage tool for .NET 2 and above (WINDOWS OS only), support for 32 and 64 processes with both branch and sequence points."
 
 It will analyze the code coverage during testing and generates an XML report which can be used to generates HTML pages or uploaded to online services like [coveralls](https://coveralls.io/) or [codecov](https://codecov.io/).
 
@@ -12,7 +12,7 @@ It will analyze the code coverage during testing and generates an XML report whi
 nuget Fake.DotNet.Testing.OpenCover //"
 open Fake.DotNet.Testing
 
-OpenCover.Run (fun p ->
+OpenCover.run (fun p ->
     { p with
         TestRunnerExePath = "./Tools/NUnit/nunit-console.exe";
     })
@@ -28,7 +28,7 @@ By default, the OpenCover module looks for the OpenCover Console in the OpenCove
 nuget Fake.DotNet.Testing.OpenCover //"
 open Fake.DotNet.Testing
 
-OpenCover.Version None
+OpenCover.getVersion None
 ```
 
 ## Full example
@@ -41,10 +41,10 @@ open Fake.Core
 open Fake.DotNet.Testing
 open Fake.DotNet.Testing.OpenCover
 
-Target.Create "OpenCover" (fun _ ->
-    OpenCover.Version (fun p -> { p with ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe" })
+Target.create "OpenCover" (fun _ ->
+    OpenCover.getVersion (fun p -> { p with ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe" })
 
-    OpenCover.Run (fun p ->
+    OpenCover.run (fun p ->
     { p with
             ExePath = "./tools/OpenCover/tools/OpenCover.Console.exe"
             TestRunnerExePath = "./tools/xunit.runner.console/tools/xunit.console.exe";

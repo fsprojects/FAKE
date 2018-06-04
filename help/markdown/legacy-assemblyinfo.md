@@ -1,6 +1,9 @@
 # Generating AssemblyInfo files
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found [here](dotnet-assemblyinfo.html)! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation for FAKE 5 can be found <a href="dotnet-assemblyinfo.html">here </a></p>
+</div>
 
 In this article the AssemblyInfo task is used in order to set specific version information to .NET assemblies.
 
@@ -29,7 +32,7 @@ If you succeeded with the [Getting Started tutorial](gettingstarted.html), then 
 		  |> Log "AppBuild-Output: "
 	)
 
-As you can see generating an AssemblyInfo.cs file is pretty easy with FAKE. You can read more about the C# and F# AssemblyInfo tasks in the [API docs](apidocs/fake-assemblyinfofile.html).
+As you can see generating an AssemblyInfo.cs file is pretty easy with FAKE. You can read more about the C# and F# AssemblyInfo tasks in the [API docs](apidocs/v5/fake-assemblyinfofile.html).
 
 ## Setting the version no.
 

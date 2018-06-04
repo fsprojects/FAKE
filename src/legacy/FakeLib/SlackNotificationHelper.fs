@@ -120,7 +120,7 @@ let private SerializeData data =
 /// ## Parameters
 ///  - `webhookURL` - The Slack webhook URL
 ///  - `setParams` - Function used to override the default notification parameters
-[<System.Obsolete("Use Fake.Api.Slack.SendNotification instead")>]
+[<System.Obsolete("Use Fake.Api.Slack.sendNotification instead")>]
 let SlackNotification (webhookURL : string) (setParams: SlackNotificationParams -> SlackNotificationParams) =
     let sendNotification param =
         use client = (new WebClient())

@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains a task to use [XCOPY](http://en.wikipedia.org/wiki/XCOPY) on Windows.
 module Fake.XCopyHelper
 
@@ -6,6 +7,7 @@ module Fake.XCopyHelper
 /// ## Parameters
 ///  - `source` - The source directory
 ///  - `destination` - The target directory
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let XCopy (source:string) (destination:string) =
     let args =
           "/D /c XCOPY " +

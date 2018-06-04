@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains helper functions for [Microsoft Visual SourceSafe](http://en.wikipedia.org/wiki/Microsoft_Visual_SourceSafe)
 module Fake.VSSHelper
 
 /// Retrieves the given label of the given project from Microsoft Visual SourceSafe
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getVSSProjectWithLabel toolPath srcSafeIni username password project (localSpec : string) label = 
     let args' = 
         let s = 
@@ -26,5 +28,6 @@ let getVSSProjectWithLabel toolPath srcSafeIni username password project (localS
     if result <> 0 then failwith "Could not get sources from VSS"
 
 /// Retrieves the given project from Microsoft Visual SourceSafe    
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getVSSProject toolPath srcSafeIni username password project localSpec = 
     getVSSProjectWithLabel toolPath srcSafeIni username password project localSpec ""

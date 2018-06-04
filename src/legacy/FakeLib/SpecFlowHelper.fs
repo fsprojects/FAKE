@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains a task which allows to run [SpecFlow](http://www.specflow.org/) tests.
+[<System.Obsolete("Open Fake.DotNet.Testing instead (FAKE0001 - package: Fake.DotNet.Testing.SpecFlow, module: SpecFlow)")>]
 module Fake.SpecFlowHelper
 
 open System
@@ -7,6 +8,7 @@ open System.IO
 open System.Text
 
 /// SpecFlow execution parameter type.
+[<System.Obsolete("Open Fake.DotNet.Testing instead (FAKE0001 - package: Fake.DotNet.Testing.SpecFlow, module: SpecFlow, type: SpecFlowParams)")>]
 [<CLIMutable>]
 type SpecFlowParams = { 
     SubCommand:         string
@@ -23,8 +25,10 @@ type SpecFlowParams = {
     XsltFile:           string
 }
 
+[<System.Obsolete("Open Fake.DotNet.Testing instead (FAKE0001 - package: Fake.DotNet.Testing.SpecFlow, module: SpecFlow, function: toolname (now private))")>]
 let toolname = "specflow.exe"
 
+[<System.Obsolete("Open Fake.DotNet.Testing instead (FAKE0001 - package: Fake.DotNet.Testing.SpecFlow, module: SpecFlow, function: SpecFlowDefaults)")>]
 /// SpecFlow default execution parameters.
 let SpecFlowDefaults = { 
     SubCommand =        "generateall"
@@ -45,6 +49,7 @@ let SpecFlowDefaults = {
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
+[<System.Obsolete("Open Fake.DotNet.Testing instead (FAKE0001 - package: Fake.DotNet.Testing.SpecFlow, module: SpecFlow, function: generate)")>]
 let SpecFlow setParams =    
     let parameters = setParams SpecFlowDefaults
 

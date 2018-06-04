@@ -3,7 +3,6 @@ module Fake.DotNet.Testing.NUnit.Sequential
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -57,3 +56,4 @@ let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
+    __.MarkSuccess()

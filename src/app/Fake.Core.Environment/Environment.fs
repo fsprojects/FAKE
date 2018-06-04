@@ -28,6 +28,7 @@ module Environment =
 
 namespace Fake.Core
 
+[<RequireQualifiedAccess>]
 module Environment =
 //    type Environment = System.Environment
 #if DOTNETCORE
@@ -193,7 +194,7 @@ module Environment =
         | _ -> false
     #endif
 
-    /// Determines if the current system is a mono system
+    /// Determines if the current FAKE runner is being run via mono.  With the FAKE 5 runner, this will always be false
     /// Todo: Detect mono on windows
     let isMono = 
     #if NETSTANDARD1_6

@@ -12,10 +12,22 @@ open System.IO
 open System.Diagnostics
 open System.Threading
 open System.Text.RegularExpressions
+open System.Threading.Tasks
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 
+open Microsoft.FSharp.Compiler.SourceCodeServices
 
+module internal ExnHelper =
+   let formatError (e:FSharpErrorInfo) =
+     sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
+   let formatErrors errors =
+        System.String.Join("\n", errors |> Seq.map formatError)
+
+type CompilationErrors =
+  { Errors : FSharpErrorInfo list }
+  member x.FormattedErrors = ExnHelper.formatErrors x.Errors
+  static member ofErrors errors = { Errors = errors }
 
 #if !NETSTANDARD1_6
 type AssemblyLoadContext () =
@@ -33,23 +45,32 @@ type AssemblyInfo =
     let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
     { FullName = n.FullName; Version = n.Version.ToString(); Location = loc }
 
-
-type ScriptCompileOptions =
-  { CompileReferences : string list
-    RuntimeDependencies : AssemblyInfo list
-    AdditionalArguments : string list }
+type CompileOptions = 
+    internal { FsiOptions : FsiOptions; RuntimeDependencies : AssemblyInfo list }
 
 type FakeConfig =
-  { PrintDetails : bool
+  { VerboseLevel : Trace.VerboseLevel
     ScriptFilePath : string
-    CompileOptions : ScriptCompileOptions
+    ScriptTokens : Lazy<Fake.Runtime.FSharpParser.TokenizedScript>
+    CompileOptions : CompileOptions
     UseCache : bool
+    RestoreOnlyGroup : bool
     Out: TextWriter
     Err: TextWriter
-    Environment: seq<string * string> }
+    ScriptArgs: string list }
+  member x.FsArgs = x.CompileOptions.FsiOptions.AsArgs
 
 let fsiAssemblyName = "removeme"
 let cachedAssemblyPrefix = "FAKE_CACHE_"
+// This file is created immediately in order to make fsc happy
+let loadScriptName = "intellisense.fsx"
+// This file is created lazily and is not used by fsc (only for intellisense).
+let loadScriptLazyName = "intellisense_lazy.fsx"
+
+type RunResult =
+  | CompilationError of CompilationErrors
+  | RuntimeError of Exception
+  | SuccessRun of warnings:string
 
 type ResultCoreCacheInfo =
   { MaybeCompiledAssembly : string option

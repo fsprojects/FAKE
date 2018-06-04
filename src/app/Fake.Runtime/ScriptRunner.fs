@@ -53,7 +53,7 @@ let private handleCoreCaching (context:FakeContext) (session:IFsiSession) fsiErr
                 let resolve name =
                     let n = AssemblyName(name)
                     // Maybe we have a runtime or reference assembly available
-                    match (context.Config.CompileOptions.CompileReferences |> List.map AssemblyInfo.ofLocation) @ context.Config.CompileOptions.RuntimeDependencies
+                    match (context.Config.CompileOptions.FsiOptions.References |> List.map AssemblyInfo.ofLocation) @ context.Config.CompileOptions.RuntimeDependencies
                           |> List.tryFind (fun a -> a.FullName = name) with
                     | Some f -> f.Location
                     | None ->
@@ -133,8 +133,8 @@ let nameParser scriptFileName =
         else None
     exampleName, fullName, parseName
 
-let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
-    if context.Config.PrintDetails then trace "Using cache"
+let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : RunResult =
+    if context.Config.VerboseLevel.PrintVerbose then trace "Using cache"
     let exampleName, _, parseName = nameParser context.Config.ScriptFilePath
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
@@ -154,21 +154,16 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
         | Some mainMethod ->
           try mainMethod.Invoke(null, [||])
               |> ignore
-              None
+              RunResult.SuccessRun c.Warnings
           with ex ->
-              Some ex
+              RunResult.RuntimeError ex
         | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName c.CompiledAssembly)
 
 
-let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     let co = context.Config.CompileOptions
-    let options =
-        co.AdditionalArguments
-        |> FsiOptions.ofArgs
-        |> fun f ->
-            { f with
-                References = f.References @ co.CompileReferences }
-    if context.Config.PrintDetails then
+    let options =  co.FsiOptions
+    if context.Config.VerboseLevel.PrintVerbose then
       Trace.tracefn "FSI Args: %A" (options.AsArgs |> Seq.toList)
 (*
     let cacheDir = context.ScriptFile.ScriptFakeDirectory
@@ -230,14 +225,14 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let result =
         try
             session.EvalScriptAsInteraction context.Config.ScriptFilePath
-            None
+            RunResult.SuccessRun ""
         with :? FsiEvaluationException as eval ->
-            Some (eval :> Exception)
+            RunResult.RuntimeError (eval :> Exception)
 
     let strFsiErrorOutput = fsiErrorOutput.ToString()
     handleCoreCaching context session strFsiErrorOutput, result
 
-let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+let runFakeScript (cache:CoreCacheInfo option) (context:FakeContext) : ResultCoreCacheInfo * RunResult =
     match cache with
     | Some c when context.Config.UseCache ->
         try c.AsResult, tryRunCached c context

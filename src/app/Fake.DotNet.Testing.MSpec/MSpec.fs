@@ -3,8 +3,6 @@ module Fake.DotNet.Testing.MSpec
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.StringBuilder
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -60,7 +58,7 @@ let internal buildMSpecArgs parameters assemblies =
     let includes = parameters.IncludeTags |> String.separated ","
     let excludes = parameters.ExcludeTags |> String.separated ","
     new StringBuilder()
-    |> StringBuilder.appendIfTrue (buildServer = TeamCity) "--teamcity"
+    |> StringBuilder.appendIfTrue (BuildServer.buildServer = BuildServer.TeamCity) "--teamcity"
     |> StringBuilder.appendIfTrue parameters.Silent "-s"
     |> StringBuilder.appendIfTrue html "-t"
     |> StringBuilder.appendIfTrue html htmlText
@@ -100,3 +98,4 @@ let exec setParams assemblies =
         sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
                                                         | Error | FailOnFirstError -> failwith
                                                         | DontFailBuild -> Trace.traceImportant
+    __.MarkSuccess()

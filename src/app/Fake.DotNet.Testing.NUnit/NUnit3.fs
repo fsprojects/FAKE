@@ -4,7 +4,6 @@ module Fake.DotNet.Testing.NUnit3
 open Fake.Testing.Common
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.StringBuilder
 open Fake.Core
 open System
 open System.IO
@@ -277,9 +276,9 @@ let getWorkingDir parameters =
 let internal buildNUnit3Args parameters assemblies =
     let appendResultString results sb =
         match results, sb with
-        | [], sb -> append "--noresult" sb
+        | [], sb -> StringBuilder.append "--noresult" sb
         | x, sb when x = NUnit3Defaults.ResultSpecs -> sb
-        | results, sb -> (sb, results) ||> Seq.fold (fun builder str -> append (sprintf "--result=%s" str) builder)
+        | results, sb -> (sb, results) ||> Seq.fold (fun builder str -> StringBuilder.append (sprintf "--result=%s" str) builder)
 
     new StringBuilder()
     |> StringBuilder.append "--noheader"
@@ -340,3 +339,4 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
+    __.MarkSuccess()

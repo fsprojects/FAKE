@@ -1,8 +1,6 @@
 ﻿/// Defines default listeners for build output traces
 namespace Fake.Core
 
-open Fake.Core.BuildServer
-
 open System
 
 [<RequireQualifiedAccess>]
@@ -104,6 +102,11 @@ module TestStatus =
             TestStatus.Failed (f message, f details, None)
         | _ -> t        
 
+[<RequireQualifiedAccess>]
+type TagStatus =
+    | Success
+    | Warning
+    | Failed
 
 /// Defines Tracing information for TraceListeners
 [<RequireQualifiedAccess>]
@@ -117,7 +120,8 @@ type TraceData =
     | OpenTag of KnownTags * description:string
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
-    | CloseTag of KnownTags * time:TimeSpan
+    | CloseTag of KnownTags * time:TimeSpan * TagStatus
+    | BuildState of TagStatus
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -129,6 +133,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
+        | BuildState _
         | CloseTag _ -> None
     member x.Message =
         match x with
@@ -141,6 +146,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
+        | BuildState _
         | CloseTag _ -> None
 
 module TraceData =
@@ -236,12 +242,20 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write importantMessagesToStdErr color true text
             | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                 write false color newLine text
+            | TraceData.OpenTag(KnownTags.Target _ as tag, description) ->
+                write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
+                if not (isNull description) then
+                    let msg = TraceData.TraceMessage("", true)
+                    let color2 = colorMap msg
+                    write false color2 true description
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
-            | TraceData.CloseTag (tag, time) ->
-                write false color true (sprintf "Finished '%s' in %O" tag.Name time)
+            | TraceData.CloseTag (tag, time, status) ->
+                write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
+            | TraceData.BuildState state ->
+                write false color true (sprintf "Changing BuildState to: %A" state)
             | TraceData.TestOutput (test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
             | TraceData.BuildNumber number ->
@@ -264,7 +278,10 @@ module TraceSecrets =
         | None -> []
 
     let register replacement secret =
-        setTraceSecrets ({ Value = secret; Replacement = replacement } :: getAll() |> List.filter (fun s -> s.Value <> secret))
+        getAll()
+        |> List.filter (fun s -> s.Value <> secret)
+        |> fun l -> { Value = secret; Replacement = replacement } :: l
+        |> fun l -> setTraceSecrets l
 
     let guardMessage (s:string) =
         getAll()
@@ -272,7 +289,9 @@ module TraceSecrets =
 
 module CoreTracing =
     // If we write the stderr on those build servers the build will fail.
-    let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
+    let importantMessagesToStdErr = 
+        let buildServer = BuildServer.buildServer 
+        buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
     /// The default TraceListener for Console.
     let defaultConsoleTraceListener  =
@@ -299,6 +318,11 @@ module CoreTracing =
 
     let setTraceListeners l = setTraceListenersPrivate l
     let addListener l = setTraceListenersPrivate (l :: getListeners())
+
+    let ensureConsoleListener () =
+        let current = getListeners()
+        if current |> Seq.contains defaultConsoleTraceListener |> not then
+            setTraceListenersPrivate (defaultConsoleTraceListener :: current)
 
     /// Allows to post messages to all trace listeners
     let postMessage x =

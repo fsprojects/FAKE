@@ -1,4 +1,4 @@
-version 5.153.0
+version 5.166.0
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -28,6 +28,7 @@ nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
 nuget Mono.Cecil prerelease
 nuget Nuget.Core
+nuget FParsec
 nuget bootstrap
 nuget Knockout.Mapping
 nuget log4net 2.0.5
@@ -43,14 +44,39 @@ nuget xunit
 nuget Newtonsoft.Json redirects:force
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
-nuget FluentMigrator.Runner
+nuget FluentMigrator                        2.0.6
+nuget FluentMigrator.Abstractions           2.0.6
+nuget FluentMigrator.Extensions.SqlAnywhere 2.0.6
+nuget FluentMigrator.Extensions.SqlServer   2.0.6
+nuget FluentMigrator.Runner                 2.0.6
+nuget FluentMigrator.Runner.Core            2.0.6
+nuget FluentMigrator.Runner.Db2             2.0.6
+nuget FluentMigrator.Runner.Firebird        2.0.6
+nuget FluentMigrator.Runner.Hana            2.0.6
+nuget FluentMigrator.Runner.Jet             2.0.6
+nuget FluentMigrator.Runner.MySql           2.0.6
+nuget FluentMigrator.Runner.Oracle          2.0.6
+nuget FluentMigrator.Runner.Postgres        2.0.6
+nuget FluentMigrator.Runner.Redshift        2.0.6
+nuget FluentMigrator.Runner.SqlAnywhere     2.0.6
+nuget FluentMigrator.Runner.SQLite          2.0.6
+nuget FluentMigrator.Runner.SqlServer       2.0.6
+nuget FluentMigrator.Runner.SqlServerCe     2.0.6
 nuget HashLib
 nuget FSharp.Compiler.Service content: none
 nuget Octokit
 nuget System.Net.Http
 nuget Microsoft.DotNet.PlatformAbstractions
+nuget FSharp.Control.Reactive
+nuget System.Reactive.Compatibility
+// From FSharp.Compiler.Service, but manually managed because of rename
+nuget System.ValueTuple copy_local: true, redirects:force
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
+
+group Docs
+    source https://api.nuget.org/v3/index.json
+    nuget FAKE ~> 4.0
 
 group TestAdapter
     source https://api.nuget.org/v3/index.json
@@ -59,28 +85,30 @@ group TestAdapter
 group Build
     content: none
     source https://api.nuget.org/v3/index.json
-    source https://ci.appveyor.com/nuget/fake
+    //source https://ci.appveyor.com/nuget/fake
     source https://ci.appveyor.com/nuget/fsharp-formatting
     source https://dotnet.myget.org/F/roslyn-tools/api/v3/index.json
 
     nuget FSharp.Core ~> 4.1
-    nuget Nuget.CommandLine
+    nuget NuGet.CommandLine
     nuget FAKE prerelease
     nuget FSharp.Formatting prerelease
     nuget FSharp.Formatting.CommandTool prerelease
     nuget SourceLink.Fake
     nuget ILRepack
     nuget RoslynTools.ReferenceAssemblies
-
+    nuget Newtonsoft.Json
     github fsharp/FAKE modules/Octokit/Octokit.fsx
 
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
+    //source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
     nuget FSharp.Core ~> 4.1
+    nuget Suave
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
     nuget Fake.Api.GitHub prerelease
@@ -90,6 +118,7 @@ group NetcoreBuild
     nuget Fake.BuildServer.TeamCity prerelease
     nuget Fake.BuildServer.Travis prerelease
     nuget Fake.BuildServer.TeamFoundation prerelease
+    nuget Fake.BuildServer.GitLab prerelease
     nuget Fake.IO.FileSystem prerelease
     nuget Fake.IO.Zip prerelease
     nuget Fake.Core.ReleaseNotes prerelease
@@ -106,12 +135,12 @@ group NetcoreBuild
     nuget Fake.Tools.Git prerelease
     nuget Mono.Cecil prerelease
     nuget Octokit
-
+    nuget Newtonsoft.Json
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
     storage: none
-    framework: net46, netstandard1.6, netstandard2.0, netcoreapp2.0
+    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
 
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget FSharp.Compiler.Service storage: packages, content: none
@@ -119,12 +148,13 @@ group netcore
 
     nuget NETStandard.Library ~> 2.0
     nuget FSharp.Core ~> 4.1
-    nuget Argu
+    nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
     nuget Paket.Core prerelease
     nuget Mono.Cecil prerelease
-
+    nuget FSharp.Control.Reactive
+    nuget System.Reactive.Compatibility
     // Testing
     nuget Expecto >= 5.0
 

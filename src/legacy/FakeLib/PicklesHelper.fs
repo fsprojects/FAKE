@@ -1,4 +1,5 @@
 /// Contains tasks to run the [Pickles](http://www.picklesdoc.com/) living documentation generator
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles)")>]
 module Fake.PicklesHelper
 
 open System
@@ -33,6 +34,7 @@ Pickles version 2.6.1.0
                              whether to include experimental features
 *)
 
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: ErrorLevel)")>]
 /// Option which allows to specify if failure of pickles should break the build.
 type PicklesErrorLevel = 
     /// This option instructs FAKE to break the build if pickles fails to execute
@@ -40,6 +42,7 @@ type PicklesErrorLevel =
     /// With this option set, no exception is thrown if pickles fails to execute
     | DontFailBuild
 
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: TestResultsFormat)")>]
 /// The format of the test results
 type TestResultsFormat =
     | Nunit
@@ -52,6 +55,7 @@ type TestResultsFormat =
     | SpecRun
     | VSTest
     
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: DocumentationFormat)")>]
  type DocumentationFormat =
     | DHTML
     | HTML
@@ -59,6 +63,7 @@ type TestResultsFormat =
     | JSON
     | Excel
   
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, type: PicklesParams)")>]
 /// The Pickles parameter type
 [<CLIMutable>]
 type PicklesParams =
@@ -104,6 +109,7 @@ type PicklesParams =
 /// - `TimeOut` - 5 minutes
 /// - `ErrorLevel` - `Error`
 /// - `IncludeExperimentalFeatures` - `None` 
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, function: PicklesDefaults)")>]
 let PicklesDefaults =
     {
       ToolPath = findToolInSubPath "pickles.exe" currentDirectory
@@ -190,14 +196,7 @@ module internal ResultHandling =
 ///
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default `PicklesParams` value
-///
-/// ## Sample usage
-///
-///     Target "BuildDoc" (fun _ ->
-///        Pickles (fun p -> { p with
-///                            FeatureDirectory = currentDirectory @@ "Specs"
-///                            OutputDirectory = currentDirectory @@ "SpecDocs" })
-///     )
+[<System.Obsolete("Open Fake.Tools instead (FAKE0001 - package: Fake.Tools.Pickles, module: Pickles, function: convert)")>]
 let Pickles setParams =
     use __ = traceStartTaskUsing "Pickles" ""
     let parameters = setParams PicklesDefaults

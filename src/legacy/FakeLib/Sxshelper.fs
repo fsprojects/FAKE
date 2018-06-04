@@ -1,5 +1,6 @@
 ﻿/// Module that enables creating and embedding Side-by-Side interop
 /// manifests for registration free deployment of Com-.net interop projects
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.SxsHelper
 
 open Fake
@@ -9,6 +10,7 @@ open System.Linq
 open System.Xml.Linq
 
 /// Represents a `.NET` assembly that may be used in COM interop projects
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type InteropAssemblyData = 
     {
         /// Assembly name
@@ -25,6 +27,7 @@ type InteropAssemblyData =
     }
 
 /// Represents an executable to create an _application manifest_ for
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type InteropApplicationData = 
     {
         /// Path of the executable binary file
@@ -127,6 +130,7 @@ let private embedManiFestAsync workingDir (asyncData: Async<string*string>) =
 /// interop Side-by-Side manifest, but it has the important `clrClass` elements, + `version` and `name`info that would be the most
 /// difficult to create through other means.
 /// The important info is then put into a valid base manifest and embedded into the assembly as a resource.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
      use __ = traceStartTaskUsing "AddEmbeddedAssemblyManifest" (sprintf "Adding assembly manifests to %i assemlbies" (assemblies |> Seq.length)) 
      let createManifestPath assembly =
@@ -191,6 +195,7 @@ let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
 /// I ended up using the windows sdk dissasembler `ildasm.exe` (ref: https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx)
 /// to create the smallest dissasembly I could (Really only need the manifest part), and the parse the IL file to get the metadata
 /// (If anyone knows a cleaner / better way, pls improve on the code)
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let GetInteropAssemblyData workingDir assemblies = 
     let toChars (s:string) = s.ToCharArray () |> Seq.ofArray
     let replace (oldVal:Char) (newVal:Char) (s:string) = (s.Replace(oldVal, newVal))
@@ -282,6 +287,7 @@ let GetInteropAssemblyData workingDir assemblies =
 /// ## Parameters
 ///  - `workingdir` - somewhere to put any temporary files
 ///  - `applications` - Metadata about executables to create manifests for.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let public AddEmbeddedApplicationManifest workingDir (applications: InteropApplicationData seq) = 
     use __ = traceStartTaskUsing "AddEmbeddedApplicationManifest" (sprintf "Adding embedded application manifest to %i applications" (applications |> Seq.length))
     let applicationManifestBase = 

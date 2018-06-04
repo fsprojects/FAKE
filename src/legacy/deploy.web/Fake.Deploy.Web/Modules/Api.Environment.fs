@@ -8,7 +8,7 @@ open log4net
 open Fake.Deploy.Web
 open Fake.Deploy.Web.Module.NancyOp
 
-
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type ApiEnvironment (dataProvider : IDataProvider) as http =
     inherit FakeModule("/api/v1/environment")
 

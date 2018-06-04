@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to run [Fixie](http://fixie.github.io/) unit tests.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.FixieHelper
 
 open System
@@ -7,6 +8,7 @@ open System.Text
 
 /// Parameter type to configure the Fixie runner
 [<CLIMutable>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type FixieParams = {
     /// FileName of the Fixie runner
     ToolPath: string
@@ -18,6 +20,7 @@ type FixieParams = {
     TimeOut: TimeSpan}
 
 /// Fixie default parameters - tries to locate Fixie.Console.exe in any subfolder.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let FixieDefaults = { 
     ToolPath = findToolInSubPath "Fixie.Console.exe" (currentDirectory @@ "tools" @@ "Fixie")
     WorkingDir = null
@@ -34,6 +37,7 @@ let FixieDefaults = {
 ///
 ///     !! (testDir @@ "Test.*.dll") 
 ///       |> Fixie (fun p -> { p with CustomOptions = ["custom","1"; "test",2] })
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let Fixie setParams assemblies = 
     let details = separated ", " assemblies
     use __ = traceStartTaskUsing "Fixie" details

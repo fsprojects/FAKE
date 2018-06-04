@@ -1,4 +1,5 @@
-﻿module Fake.Utils
+﻿[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+module Fake.Utils
 
 open System
 open System.Net
@@ -16,6 +17,7 @@ let inline internal memoizeBy (getKey : 'a -> 'key) (f: 'a -> 'b) : ('a -> 'b) =
 
 let inline internal memoize (f: 'a -> 'b) : 'a -> 'b = memoizeBy id f
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let envProxies () =
     let getEnvValue (name:string) =
         let v = Environment.GetEnvironmentVariable(name.ToUpperInvariant())
@@ -67,8 +69,10 @@ let envProxies () =
     [ "http"; "https" ]
     |> List.fold addProxy Map.empty
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let calcEnvProxies = lazy (envProxies())
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getDefaultProxyForUrl =
     memoize
       (fun (url:string) ->

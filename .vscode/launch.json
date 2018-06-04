@@ -8,54 +8,29 @@
             "name": "Debug Build Script",
             "type": "coreclr",
             "request": "launch",
-            "program": "E:\\UserData\\Download\\fake-dotnetcore-portable\\fake.dll",
-            "args": ["run", "build.fsx", "--fsiargs", "--debug:portable --optimize-"],
+            "preLaunchTask": "dotnet:build:fake.sln",
+            "program": "${workspaceRoot}/src/app/Fake.netcore/bin/Debug/netcoreapp2.1/fake.dll",
+            "args": [
+                "run",
+                "build.fsx",
+                "--fsiargs",
+                "--debug:portable --optimize-"
+            ],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
         {
-            "name": ".NET Core Launch (console)",
+            "name": "Run Tests",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/<insert-target-framework-here>/<insert-project-name-here>.dll",
+            "preLaunchTask": "dotnet:build:fake.sln",
+            "program": "${workspaceRoot}/src/test/Fake.Core.UnitTests/bin/Debug/netcoreapp2.1/Fake.Core.UnitTests.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceRoot}",
             "console": "internalConsole",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
-        },
-        {
-            "name": ".NET Core Launch (web)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/<insert-target-framework-here>/<insert-project-name-here>.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
         },
         {
             "name": ".NET Core Attach",

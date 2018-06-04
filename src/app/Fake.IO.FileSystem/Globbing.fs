@@ -1,4 +1,6 @@
 /// This module contains a file pattern globbing implementation.
+/// This module is part of the `Fake.IO.FileSystem` package
+[<RequireQualifiedAccess>]
 module Fake.IO.Globbing.Glob
 
 open System
@@ -17,7 +19,7 @@ type private SearchOption =
     | Recursive
     | FilePattern of string
 
-let private checkSubDirs absolute (dir : string) root = 
+let private checkSubDirs absolute (dir : string) root =
     if dir.Contains "*" then Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else 
         let path = Path.Combine(root, dir)
@@ -99,16 +101,43 @@ let internal getRoot (baseDirectory : string) (pattern : string) =
 let internal search (baseDir : string) (input : string) = 
     let baseDir = normalizePath baseDir
     let input = normalizePath input
-    let input = input.Replace(baseDir, "")
+    let input =
+        if String.IsNullOrEmpty baseDir
+        then input
+        else
+            // The final \ (or /) makes sure to only match complete folder names (as one folder name could be a substring of the other)
+            let start = baseDir.TrimEnd([|Path.DirectorySeparatorChar|]) + string Path.DirectorySeparatorChar
+            // See https://github.com/fsharp/FAKE/issues/1925
+            if input.StartsWith start then
+                input.Substring start.Length
+            else input           
 
     let filePattern = Path.GetFileName(input)
-    input.Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries)
-    |> Seq.map (function 
-           | "**" -> Recursive
-           | a when a = filePattern -> FilePattern(a)
-           | a when driveRegex.IsMatch a -> Directory(a + "\\")
-           | a -> Directory(a))
-    |> Seq.toList
+
+    let splits = input.Split([| '/'; '\\' |], StringSplitOptions.None)
+    let baseItems =
+        let start, rest =
+            if input.StartsWith "\\\\" && splits.Length >= 4 then
+                let serverName = splits.[2]
+                let share = splits.[3]
+                [ Directory (sprintf "\\\\%s\\%s" serverName share) ], splits |> Seq.skip 4
+            elif splits.Length >= 2 && Path.IsPathRooted input && driveRegex.IsMatch splits.[0] then
+                [ Directory(splits.[0] + "\\") ], splits |> Seq.skip 1
+            elif splits.Length >= 2 && Path.IsPathRooted input && input.StartsWith "/" then
+                [ Directory("/") ], splits |> Array.toSeq
+            else
+                if Path.IsPathRooted input then failwithf "Unknown globbing input '%s', try to use a relative path and report an issue!" input
+                [], splits |> Array.toSeq
+        let restList =
+            rest    
+            |> Seq.filter (String.IsNullOrEmpty >> not)
+            |> Seq.map (function 
+                   | "**" -> Recursive
+                   | a when a = filePattern -> FilePattern(a)
+                   | a -> Directory(a))
+            |> Seq.toList
+        start @ restList
+    baseItems    
     |> buildPaths [ baseDir ]
     |> List.map normalizeOutputPath
 

@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to host webprojects in IIS Express.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.IISExpress
 
 open System.Diagnostics
@@ -7,10 +8,12 @@ open System.IO
 open System.Xml.Linq
 
 /// Options for using IISExpress
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 type IISExpressOptions = 
     { ToolPath : string }
 
 /// IISExpress default parameters - tries to locate the iisexpress.exe
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let IISExpressDefaults = 
     { ToolPath = 
           let root = 
@@ -21,6 +24,7 @@ let IISExpressDefaults =
           Path.Combine(root, "IIS Express", "iisexpress.exe") }
 
 /// Create a IISExpress config file from a given template
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let createConfigFile (name, siteId : int, templateFileName, path, hostName, port : int) = 
     let xname s = XName.Get(s)
     let uniqueConfigFile = Path.Combine(Path.GetTempPath(), "iisexpress-" + Guid.NewGuid().ToString() + ".config")
@@ -62,6 +66,7 @@ let createConfigFile (name, siteId : int, templateFileName, path, hostName, port
 /// ## Sample
 ///
 ///      HostWebsite (fun p -> { p with ToolPath = "iisexpress.exe" }) "configfile.config" 1
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let HostWebsite setParams configFileName siteId = 
     let parameters = setParams IISExpressDefaults
 
@@ -76,7 +81,9 @@ let HostWebsite setParams configFileName siteId =
     proc
 
 /// Opens the given url in the browser
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let OpenUrlInBrowser url = Process.Start(url:string) |> ignore
 
 /// Opens the given website in the browser
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let OpenWebsiteInBrowser hostName port = sprintf "http://%s:%d/" hostName port |> OpenUrlInBrowser

@@ -5,7 +5,6 @@ module Fake.DotNet.NuGet.NuGet
 
 open Fake.IO
 open Fake.IO.FileSystemOperators
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -81,7 +80,7 @@ let NuGetDefaults() =
     { ToolPath = findNuget (Shell.pwd() @@ "tools" @@ "NuGet")
       TimeOut = TimeSpan.FromMinutes 5.
       Version =
-          if not isLocalBuild then buildVersion
+          if not BuildServer.isLocalBuild then BuildServer.buildVersion
           else "0.1.0.0"
       Authors = []
       Project = ""
@@ -144,7 +143,7 @@ let GetPackageVersion deploymentsDir package =
         if Directory.Exists deploymentsDir |> not then
             failwithf "Package %s was not found, because the deployment directory %s doesn't exist." package deploymentsDir
         let version =
-            let dirs = Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package)
+            let dirs = Directory.GetDirectories(deploymentsDir, sprintf "%s*" package)
             if Seq.isEmpty dirs then failwithf "Package %s was not found." package
             let folder = Seq.head dirs
             let index = folder.LastIndexOf package + package.Length + 1
@@ -391,10 +390,11 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
     try
          pack parameters nuspecOrProjectFile
     with exn ->
-        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+        (if not (isNull exn.InnerException) then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> TraceSecrets.guardMessage
         |> failwith
+    __.MarkSuccess()
 
 /// Creates a new NuGet package based on the given .nuspec or project file.
 /// Template parameter substitution is performed when passing a .nuspec
@@ -412,10 +412,11 @@ let NuGetPack setParams nuspecOrProjectFile =
             File.delete nuspecTemplateFile
         | None -> pack parameters nuspecOrProjectFile
     with exn ->
-        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+        (if not (isNull exn.InnerException) then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> TraceSecrets.guardMessage
         |> failwith
+    __.MarkSuccess()
 
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters
@@ -427,9 +428,10 @@ let NuGetPublish setParams =
     try
         publish parameters
     with exn ->
-        if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message
+        if not (isNull exn.InnerException) then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message
         |> TraceSecrets.guardMessage
         |> failwith
+    __.MarkSuccess()
 
 /// Creates a new NuGet package, and optionally publishes it.
 /// Template parameter substitution is performed when passing a .nuspec
@@ -449,12 +451,13 @@ let NuGet setParams nuspecOrProjectFile =
 
         if parameters.Publish then
             publish parameters
-            if parameters.ProjectFile <> null then publishSymbols parameters
+            if not (isNull parameters.ProjectFile) then publishSymbols parameters
     with exn ->
-        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+        (if not (isNull exn.InnerException) then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> TraceSecrets.guardMessage
         |> failwith
+    __.MarkSuccess()
 
 /// NuSpec metadata type
 type NuSpecPackage =

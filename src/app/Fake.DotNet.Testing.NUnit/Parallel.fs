@@ -3,7 +3,6 @@ module Fake.DotNet.Testing.NUnit.Parallel
 
 open Fake.Testing.Common
 open Fake.IO.FileSystemOperators
-open Fake.Core.BuildServer
 open Fake.Core
 open System
 open System.IO
@@ -123,3 +122,4 @@ let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
             match aggResult.WorseReturnCode with
             | OK -> ()
             | _ -> fail()
+    __.MarkSuccess()

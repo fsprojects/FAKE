@@ -1,7 +1,8 @@
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 module Fake.Deploy.Web.Module.ApiModels
 open System
 
-
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type RollbackRequest = {
     agentUrl : string
@@ -9,6 +10,7 @@ type RollbackRequest = {
     appName : string
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type DeployResponse = {
     Agent : string
@@ -17,6 +19,7 @@ type DeployResponse = {
     Error : string
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type TeamcityBuild = {
     Id : string
@@ -28,6 +31,7 @@ type TeamcityBuild = {
     Branch: string
 }
 
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 [<CLIMutable>]
 type TeamcityArtifact = { 
     Name : string

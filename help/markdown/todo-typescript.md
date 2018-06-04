@@ -1,6 +1,9 @@
 # Compiling TypeScript applications
 
-**Note:  This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help! **
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE.exe before version 5 (or the non-netcore version). The documentation needs te be updated, please help!</p>
+</div>
 
 FAKE can be used to build a variety of different application types. 
 In this tutorial we are looking at the TypeScript support.
@@ -49,4 +52,4 @@ This small script will run all *.ts files through the TypeScript compiler and pu
 
 	document.body.innerHTML = greeter(user);
 
-If you need more details please see the [API docs for the TypeScript](apidocs/fake-typescript.html) task.
+If you need more details please see the [API docs for the TypeScript](apidocs/v5/legacy/fake-typescript.html) task.

@@ -2,3 +2,5 @@ group netcore
 
 FSharp.Core
 NETStandard.Library
+FSharp.Control.Reactive
+System.Reactive.Compatibility

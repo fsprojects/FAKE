@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 /// Contains tasks which allow to control NT services.
 module Fake.ServiceControllerHelpers
 
@@ -18,45 +19,53 @@ let private friendlyName host name =
 /// ## Parameters
 ///  - `name` - The name to check for.
 ///  - `service` - The service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let isService name (service : ServiceController) = service.DisplayName = name || service.ServiceName = name
 
 /// Returns sequence of remote services with given name.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the services in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRemoteServices host name = ServiceController.GetServices(host) |> Seq.filter (isService name)
 
 /// Returns sequence of local services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getServices name = getRemoteServices localhost name
 
 /// Returns the first remote service with given name or None.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRemoteService host name = getRemoteServices host name |> Seq.tryPick Some
 
 /// Returns the first local service with given name or None.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getService name = getRemoteService localhost name
 
 /// Returns whether a remote service with the given name exists.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let checkRemoteServiceExists host name = getRemoteService host name |> Option.isSome
 
 /// Returns whether a local service with the given name exists.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let checkServiceExists name = checkRemoteServiceExists localhost name
 
 /// Returns status of the remote service with given name or fails when service is not found.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getRemoteServiceStatus host name =
     match getRemoteService host name with
     | Some sc -> sc.Status
@@ -69,12 +78,14 @@ let getRemoteServiceStatus host name =
 /// Returns status of the local service with given name or fails when service is not found.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let getServiceStatus name = getRemoteServiceStatus localhost name
 
 /// Starts all remote services with given name.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the services in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let startRemoteService host name =
     getRemoteServices host name |> Seq.iter (fun s ->
                                        if s.Status <> ServiceControllerStatus.Running then
@@ -84,12 +95,14 @@ let startRemoteService host name =
 /// Starts all local services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let startService name = startRemoteService localhost name
 
 /// Stops all services with given name.
 /// ## Parameters
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the services in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let stopRemoteService host name =
     getRemoteServices host name |> Seq.iter (fun s ->
                                             if s.Status <> ServiceControllerStatus.Stopped then
@@ -99,6 +112,7 @@ let stopRemoteService host name =
 /// Stops all local services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let stopService name = stopRemoteService localhost name
 
 /// Waits until the remote service with the given name has been started or fails after given timeout
@@ -106,6 +120,7 @@ let stopService name = stopRemoteService localhost name
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
 ///  - `timeout` - The timespan to time out after.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureRemoteServiceHasStarted host name timeout =
     let endTime = DateTime.Now.Add timeout
     while DateTime.Now <= endTime && (getRemoteServiceStatus host name <> ServiceControllerStatus.Running) do
@@ -118,6 +133,7 @@ let ensureRemoteServiceHasStarted host name timeout =
 /// ## Parameters
 ///  - `name` - The name of the service in question.
 ///  - `timeout` - The timespan to time out after.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureServiceHasStarted name timeout =
     ensureRemoteServiceHasStarted localhost name timeout
 
@@ -126,6 +142,7 @@ let ensureServiceHasStarted name timeout =
 ///  - `host` - The hostname of the remote machine.
 ///  - `name` - The name of the service in question.
 ///  - `timeout` - The timespan to time out after.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureRemoteServiceHasStopped host name timeout =
     let endTime = DateTime.Now.Add timeout
     let getRemoteServiceStatus host name =
@@ -146,5 +163,6 @@ let ensureRemoteServiceHasStopped host name timeout =
 /// ## Parameters
 ///  - `name` - The name of the service in question.
 ///  - `timeout` - The timespan to time out after.
+[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
 let ensureServiceHasStopped name timeout =
     ensureRemoteServiceHasStopped localhost name timeout
