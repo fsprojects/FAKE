@@ -121,6 +121,11 @@ let getFakeVarOrFail<'a> name =
   match getFakeVar<'a> name with
   | Some v -> v
   | _ -> failwithf "Unable to find FakeVar %s" name
+
+let getFakeVarOrDefault<'a> name defaultValue =
+  match getFakeVar<'a> name with
+  | Some v -> v
+  | _ -> defaultValue
   
 let removeFakeVar name =
   forceFakeContext()
