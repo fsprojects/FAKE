@@ -4,7 +4,6 @@ open System
 open Fake.Core
 open Expecto
 open Expecto.Flip
-open FParsec.ErrorMessage
 
 [<Tests>]
 let tests = 
@@ -41,7 +40,7 @@ let tests =
         let value = Fake.Core.Context.getFakeVarOrFail<string> "Test"
         Expect.equal "TestValue" value "FakeVar 'Test' is incorrect"
 
-    testCase "Ability to set and get fake variables with default - when not found" <| fun _ ->
+    testCase "Ability to set and get fake variables with failure - when not found" <| fun _ ->
         try
             Fake.Core.Context.getFakeVarOrFail<string> "Test" |> ignore
             Tests.failtest "Expected exception"
