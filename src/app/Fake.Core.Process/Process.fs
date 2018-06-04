@@ -4,9 +4,6 @@ namespace Fake.Core
 
 open System
 open System.Diagnostics
-open System.Collections.Generic
-open System.Collections.Generic
-open System
 
 /// A record type which captures console messages
 type ConsoleMessage = 
@@ -250,13 +247,13 @@ module Process =
                     | _ -> ()                    
                 with exn -> Trace.logfn "Killing %d failed with %s" pid exn.Message
             startedProcesses.Clear()
-        member x.KillAll() = killProcesses()
-        member x.Add (pid, startTime) = startedProcesses.Add(pid, startTime)
-        member x.SetShouldKill (enable) = shouldKillProcesses <- enable
-        member x.GetShouldKill = shouldKillProcesses
+        member __.KillAll() = killProcesses()
+        member __.Add (pid, startTime) = startedProcesses.Add(pid, startTime)
+        member __.SetShouldKill (enable) = shouldKillProcesses <- enable
+        member __.GetShouldKill = shouldKillProcesses
 
         interface IDisposable with
-            member x.Dispose() =
+            member __.Dispose() =
                 if shouldKillProcesses then killProcesses()
 
     /// [omit]
@@ -648,7 +645,7 @@ module Process =
     #if FX_CONFIGURATION_MANAGER
                 try
                     System.Configuration.ConfigurationManager.AppSettings.[key]
-                with exn -> ""
+                with _ -> ""
     #else
                 null
     #endif
@@ -731,11 +728,11 @@ module Process =
         |> Seq.filter (fun p -> 
                try 
                    not p.HasExited
-               with exn -> false)
+               with _ -> false)
         |> Seq.filter (fun p -> 
                try 
                    p.ProcessName.ToLower().StartsWith(name.ToLower())
-               with exn -> false)
+               with _ -> false)
 
     [<System.Obsolete("use Process.getAllByName instead.")>]
     let getProcessesByName name = getAllByName name
