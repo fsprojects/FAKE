@@ -113,10 +113,10 @@ let createGHEClientWithToken url token =
         return github
     }
 
-let private makeRelease draft owner project version prerelease (notes:seq<string>) (client : Async<GitHubClient>) =
+let private makeRelease draft owner project version name prerelease (notes:seq<string>) (client : Async<GitHubClient>) =
     retryWithArg 5 client <| fun client' -> async {
         let data = new NewRelease(version)
-        data.Name <- version
+        data.Name <- name
         data.Body <- String.Join(Environment.NewLine, notes)
         data.Draft <- draft
         data.Prerelease <- prerelease
@@ -130,8 +130,11 @@ let private makeRelease draft owner project version prerelease (notes:seq<string
             DraftRelease = draft }
     }
 
-let createDraft owner project version prerelease notes client = makeRelease true owner project version prerelease notes client
-let createRelease owner project version prerelease notes client = makeRelease false owner project version prerelease notes client
+let createDraft owner project version prerelease notes client = makeRelease true owner project version version prerelease notes client
+let createRelease owner project version prerelease notes client = makeRelease false owner project version version prerelease notes client
+
+let createNamedDraft owner project version name prerelease notes client = makeRelease true owner project version name prerelease notes client
+let createNamedRelease owner project version name prerelease notes client = makeRelease false owner project version name prerelease notes client
 
 let uploadFile fileName (draft : Async<Draft>) =
     retryWithArg 5 draft <| fun draft' -> async {
