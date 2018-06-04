@@ -1,4 +1,5 @@
 ﻿/// This module contains helpers for managing build time variables
+[<RequireQualifiedAccess>]
 module Fake.Core.Variables
 
 open Fake.Core.Context
