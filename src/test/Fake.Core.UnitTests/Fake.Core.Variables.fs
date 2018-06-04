@@ -18,7 +18,7 @@ let tests =
             get<bool> "Test" |> ignore
             Tests.failtest "Expected exception"
         with e ->
-            Expect.equal "Variable 'Test' - Unable to cast object of type 'System.String' to type 'System.Boolean'." e.Message "Incorrect failure message for variable failure case"
+            Expect.equal "Cast error on variable 'Test'" e.Message "Incorrect failure message for variable failure case"
 
     Fake.ContextHelper.fakeContextTestCase "Ability to set and get fake variables with default - when found" <| fun _ ->
         set "Test" "TestValue" |> ignore
