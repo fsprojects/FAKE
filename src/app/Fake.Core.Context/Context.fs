@@ -112,7 +112,7 @@ let forceFakeContext () =
     invalidOp "no Fake Execution context was found. You can initialize one via Fake.Core.Context.setExecutionContext"
   | RuntimeContext.Fake e -> e
 
-let getFakeVar name =
+let getFakeVar<'a> name =
   forceFakeContext()
   |> getFakeContext name
   |> Option.map (fun o -> o :?> 'a)
