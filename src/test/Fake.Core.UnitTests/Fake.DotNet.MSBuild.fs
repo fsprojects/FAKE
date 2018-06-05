@@ -7,7 +7,7 @@ open Expecto
 [<Tests>]
 let tests =
   testList "Fake.DotNet.MSBuild.Tests" [
-    testCase "Test that we can create simple msbuild cmdline" <| fun _ ->
+    Fake.ContextHelper.fakeContextTestCase "Test that we can create simple msbuild cmdline" <| fun _ ->
       let cmdLine =
         { MSBuildParams.Create() with
             Properties = ["OutputPath", "C:\\Test\\"] }

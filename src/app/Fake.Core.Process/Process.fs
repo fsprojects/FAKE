@@ -260,7 +260,7 @@ module Process =
     //let startedProcesses = HashSet()
     let private startedProcessesVar = "Fake.Core.Process.startedProcesses"
     let private getStartedProcesses, _, private setStartedProcesses = 
-        Fake.Core.FakeVar.define startedProcessesVar
+        Fake.Core.FakeVar.define<ProcessList> startedProcessesVar
 
     let private doWithProcessList f =
         if Fake.Core.Context.isFakeContext () then
