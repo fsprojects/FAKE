@@ -1,6 +1,26 @@
 # Release Notes
 
-## 5.0.0-rc018 - 2018-06-02
+## 5.0.0 - 2018-06-06
+
+* Deep integration into the .NET SDK and .Net Core
+* Global dotnet cli-tool `dotnet tool install fake-cli -g --version 5.0.0-*`
+* `dotnet-fake` cli tool via `DotNetCliToolReference`
+* The old runner (`FAKE` nuget package) is obsolete
+* Clean and modularized API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6
+* Feature to import fake modules - https://fake.build/fake-fake5-modules.html
+* Migration guide - https://fake.build/fake-migrate-to-fake-5.html
+* New and clean CLI interface - https://fake.build/fake-commandline.html
+* `build.sh` and `build.cmd` are no longer required
+* Modules can be used in regular projects
+* API Guideline - https://fake.build/contributing.html#API-Design
+* Improved F# scripting support
+* Learn more - https://fake.build/fake-fake5-learn-more.html
+
+## 5.0.0-rc018.248 - 2018-06-05
+
+* FAKE5: New module Fake.Core.FakeVar - https://github.com/fsharp/FAKE/pull/1978
+
+## 5.0.0-rc018.244 - 2018-06-02
 
 * ENHANCEMENT: Upgrade to final release of global tools - https://github.com/fsharp/FAKE/pull/1972
 * ENHANCEMENT: Upgrade to netcore2.1 - https://github.com/fsharp/FAKE/pull/1972
@@ -15,7 +35,6 @@
 * BUGFIX: Quoting in NuGet Restore task - https://github.com/fsharp/FAKE/pull/1962
 * BUGFIX: Fix several bugs in AssemblyInfo reader - https://github.com/fsharp/FAKE/pull/1959
 * BUGFIX: Workaround System.Reactive v4 release breaking us - https://github.com/fsharp/FAKE/issues/1966
-
 
 ## 5.0.0-rc016 - 2018-05-21
 
