@@ -46,7 +46,7 @@ let define<'a> name =
         (fun () -> remove name),
         (fun (v : 'a) -> set name v)
     else
-        failwithf "Cannot define variable %s without context" name
+        failwithf "Cannot define variable '%s' without context" name
 
 /// Define a named FakeVar providing the get, remove and set
 /// Will create a local variable if there is no context
