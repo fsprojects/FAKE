@@ -19,7 +19,7 @@
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
-    <ProjectReference Include="..\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" FromP2P="true" />
+    <ProjectReference Include="..\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
