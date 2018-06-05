@@ -48,30 +48,30 @@ let tests =
             Expect.equal "Unable to find variable 'Test'" e.Message "Incorrect failure message for variable failure case"   
 
     Fake.ContextHelper.fakeContextTestCase "Ability to define variable" <| fun _ ->
-        let myGet, myRemove, mySet = FakeVar.define<string> "Test"
+        let myGet, _, mySet = FakeVar.define<string> "Test"
         mySet "TestValue"
-        let value = myGet "Test"
+        let value = myGet()
         Expect.isSome value "Variable 'Test' is none"
         Expect.equal "TestValue" value.Value "Variable 'Test' is incorrect"
 
     Fake.ContextHelper.fakeContextTestCase "Ability to define variable allowing non context" <| fun _ ->
-        let myGet, myRemove, mySet = FakeVar.defineAllowNoContext<string> "Test"
+        let myGet, _, mySet = FakeVar.defineAllowNoContext<string> "Test"
         mySet "TestValue"
-        let value = myGet "Test"
+        let value = myGet()
         Expect.isSome value "Variable 'Test' is none"
         Expect.equal "TestValue" value.Value "Variable 'Test' is incorrect"
 
-    TestCase "Ability to define variable with no context" <| fun _ ->
-        let myGet, myRemove, mySet = FakeVar.defineAllowNoContext<string> "Test"
+    testCase "Ability to define variable with no context" <| fun _ ->
+        let myGet, _, mySet = FakeVar.defineAllowNoContext<string> "Test"
         mySet "TestValue"
-        let value = myGet "Test"
+        let value = myGet()
         Expect.isSome value "Variable 'Test' is none"
         Expect.equal "TestValue" value.Value "Variable 'Test' is incorrect"
 
-    TestCase "Ability to define variable with no context when context required" <| fun _ ->
+    testCase "Ability to define variable with no context when context required" <| fun _ ->
         try
-            let myGet, myRemove, mySet = FakeVar.define<string> "Test"
+            let _, _, _ = FakeVar.define<string> "Test"
             Tests.failtest "Expected exception"
         with e ->
-            Expect.equal "Cannot define 'Test' without context" e.Message "Incorrect failure message for variable failure case"
+            Expect.equal "Cannot define variable 'Test' without context" e.Message "Incorrect failure message for variable failure case"
   ]
