@@ -4,6 +4,16 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "dotnet:restore:fake.sln",            
+            "group": "build",
+            "command": "dotnet restore FAKE.sln",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "dotnet:build:fake.sln",            
             "group": "build",
             "command": "dotnet build FAKE.sln",
