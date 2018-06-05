@@ -8,7 +8,7 @@ open Expecto
 [<Tests>]
 let tests = 
   testList "Fake.Core.Process.Tests" [
-    Fake.ContextHelper.fakeContextTestCase "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
+    testCase "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
         try
             Process.start(fun proc ->
                 { proc with
@@ -20,7 +20,7 @@ let tests =
             let s = e.Message.Contains "FileDoesntExist.exe"
             Expect.isTrue s ("Expected file-path as part of the message '" + e.Message + "'")
     
-    Fake.ContextHelper.fakeContextTestCase "Test that we can read messages correctly" <| fun _ ->
+    testCase "Test that we can read messages correctly" <| fun _ ->
         let shell, command =
             if Environment.isWindows then
                 "cmd", "/C \"echo 1&& echo 2\""
