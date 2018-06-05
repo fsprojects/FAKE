@@ -63,6 +63,9 @@
     <Compile Include="..\..\app\Fake.Core.Context\Context.fs">
       <Link>Fake.Core.Context/Context.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.FakeVar\FakeVar.fs">
+      <Link>Fake.Core.FakeVar/FakeVar.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Core.CommandLineParsing\docopt.fs\Docopt\Options.fs">
       <Link>Fake.Core.CommandLineParsing/Options.fs</Link>
     </Compile>

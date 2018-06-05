@@ -37,7 +37,7 @@ let prepare scenario =
 
 let directFakeInPath command scenarioPath target =
     let result =
-        Process.execWithResult (fun (info:Process.ProcStartInfo) ->
+        Process.execWithResult (fun (info:ProcStartInfo) ->
           { info with
                 FileName = fakeToolPath
                 WorkingDirectory = scenarioPath

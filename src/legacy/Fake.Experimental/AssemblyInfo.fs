@@ -7,7 +7,7 @@ open System.Runtime.InteropServices
 [<assembly: GuidAttribute("5AA28AED-B9D8-4158-A594-32FE5ABC5713")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
 [<assembly: AssemblyVersionAttribute("5.0.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("5.0.0-beta025")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.0.0.0")>]
 [<assembly: AssemblyFileVersionAttribute("5.0.0")>]
 do ()
 
@@ -16,5 +16,5 @@ module internal AssemblyVersionInformation =
     let [<Literal>] Guid = "5AA28AED-B9D8-4158-A594-32FE5ABC5713"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
     let [<Literal>] AssemblyVersion = "5.0.0"
-    let [<Literal>] AssemblyInformationalVersion = "5.0.0-beta025"
+    let [<Literal>] AssemblyInformationalVersion = "5.0.0.0"
     let [<Literal>] AssemblyFileVersion = "5.0.0"

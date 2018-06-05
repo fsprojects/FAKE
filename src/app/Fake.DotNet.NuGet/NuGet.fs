@@ -134,9 +134,6 @@ let RequireRange breakingPoint version =
 
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
-[<Obsolete("I was just lazy in porting")>]
-let private FullName = Path.getFullName
-
 /// Gets the version no. for a given package in the deployments folder
 let GetPackageVersion deploymentsDir package =
     try
@@ -331,10 +328,10 @@ let rec private publish parameters =
                  | Some source, Some symSource -> sprintf "-source %s -SymbolSource %s -SymbolApiKey %s"
                                                           source symSource parameters.SymbolAccessKey
 
-    let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters |> FullName)
+    let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters |> Path.getFullName)
                                            parameters.AccessKey source
     Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath args
-                                                            (FullName parameters.WorkingDir) parameters.PublishTrials
+                                                            (Path.getFullName parameters.WorkingDir) parameters.PublishTrials
     try
         let result =
             let tracing = Process.shouldEnableProcessTracing()
@@ -343,7 +340,7 @@ let rec private publish parameters =
                 Process.execSimple ((fun info ->
                 { info with
                     FileName = parameters.ToolPath
-                    WorkingDirectory = FullName parameters.WorkingDir
+                    WorkingDirectory = Path.getFullName parameters.WorkingDir
                     Arguments = args }) >> Process.withFramework) parameters.TimeOut
             finally Process.setEnableProcessTracing tracing
         if result <> 0 then
@@ -359,7 +356,7 @@ let rec private publishSymbols parameters =
         sprintf "push -source %s \"%s\" %s" parameters.PublishUrl (packageFileName parameters) parameters.AccessKey
 
     Trace.tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath args
-        (FullName parameters.WorkingDir) parameters.PublishTrials
+        (Path.getFullName parameters.WorkingDir) parameters.PublishTrials
     try
         let result =
             let tracing = Process.shouldEnableProcessTracing()
@@ -368,7 +365,7 @@ let rec private publishSymbols parameters =
                 Process.execSimple ((fun info ->
                     { info with
                         FileName = parameters.ToolPath
-                        WorkingDirectory = FullName parameters.WorkingDir
+                        WorkingDirectory = Path.getFullName parameters.WorkingDir
                         Arguments = args }) >> Process.withFramework) parameters.TimeOut
             finally Process.setEnableProcessTracing tracing
         if result <> 0 then

@@ -1,9 +1,6 @@
 module Fake.Core.ContextTests
 
-open System
-open Fake.Core
 open Expecto
-open Expecto.Flip
 
 [<Tests>]
 let tests = 
@@ -19,5 +16,4 @@ let tests =
            Fake.Core.Context.forceFakeContext() |> ignore
            Tests.failtest "Expected exception"
         with :? System.InvalidOperationException as e -> ()
-
   ]

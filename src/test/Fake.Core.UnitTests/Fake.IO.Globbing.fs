@@ -1,16 +1,12 @@
 module Fake.Core.GlobbingTests
 
 open System.IO
-open Fake.Core
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
 open Expecto
-open Expecto.Flip
-open System.ComponentModel
-open System.ComponentModel
-open System.IO
+
 let getFileIncludeWithKnownBaseDir includes : LazyGlobbingPattern=
     { Fake.IO.Globbing.LazyGlobbingPattern.BaseDirectory = @"C:\Project"
       Fake.IO.Globbing.LazyGlobbingPattern.Includes = includes
@@ -27,20 +23,20 @@ let tests =
             Fake.IO.Globbing.ResolvedGlobbingPattern.Results = 
               [ "folder/file1.exe"
                 "folder/file2.exe" ] }
-      Expect.equal "Glob should match relative paths" true (globExe.IsMatch "folder/test.exe")
-      Expect.equal "Glob should match full paths" true (globExe.IsMatch (Path.GetFullPath "folder/test.exe"))
+      Expect.equal true (globExe.IsMatch "folder/test.exe") "Glob should match relative paths"
+      Expect.equal true (globExe.IsMatch (Path.GetFullPath "folder/test.exe")) "Glob should match full paths"
     testCase "It should resolve multiple directories" <| fun _ ->
         let fileIncludes = getFileIncludeWithKnownBaseDir [@"test1\bin\*.dll"; @"test2\bin\*.dll"]
         let dirIncludes = GlobbingPattern.getBaseDirectoryIncludes(fileIncludes)
-        Expect.equal "Should have 2 dirs" dirIncludes.Length 2
-        Expect.contains "Should contain first folder" (Glob.normalizePath(@"C:\Project\test1\bin")) dirIncludes
-        Expect.contains "Should contain second folder" (Glob.normalizePath(@"C:\Project\test2\bin")) dirIncludes
+        Expect.equal dirIncludes.Length 2 "Should have 2 dirs"
+        Expect.contains dirIncludes (Glob.normalizePath(@"C:\Project\test1\bin"))  "Should contain first folder"
+        Expect.contains dirIncludes (Glob.normalizePath(@"C:\Project\test2\bin")) "Should contain second folder"
 
     testCase "should only take the most root path when multiple directories share a root" <| fun _ ->
         let fileIncludes = getFileIncludeWithKnownBaseDir [@"tests\**\test1\bin\*.dll"; @"tests\test2\bin\*.dll"]
         let dirIncludes = GlobbingPattern.getBaseDirectoryIncludes(fileIncludes)
-        Expect.equal "Should have only 1 directory" dirIncludes.Length 1
-        Expect.contains "Should contain tests folder" (Glob.normalizePath(@"C:\Project\tests")) dirIncludes
+        Expect.equal dirIncludes.Length 1 "Should have only 1 directory"
+        Expect.contains  dirIncludes (Glob.normalizePath(@"C:\Project\tests")) "Should contain tests folder"
 
     testCase "glob should handle substring directories properly" <| fun _ ->
         let testDir = Path.GetTempFileName()
@@ -60,7 +56,7 @@ let tests =
           |> Seq.map (fun f -> Path.GetFileName f)
           |> Seq.sort
           |> Seq.toList
-          |> Expect.equal "Expected equal lists." ["match1.txt"; "match2.txt"; "match3.txt"]
+          |> Flip.Expect.equal "Expected equal lists." ["match1.txt"; "match2.txt"; "match3.txt"]
         finally
           Directory.Delete(testDir, true)
   ]
