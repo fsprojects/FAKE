@@ -5,15 +5,18 @@
 * Deep integration into the .NET SDK and .Net Core
 * Global dotnet cli-tool `dotnet tool install fake-cli -g --version 5.0.0-*`
 * `dotnet-fake` cli tool via `DotNetCliToolReference`
+* Standalone `.zip` xcopy deployment and various package manager integrations (for example chocolatey).
 * The old runner (`FAKE` nuget package) is obsolete
+* FakeLib and FAKE.Deploy are obsolete - https://github.com/fsharp/FAKE/issues/1820
 * Clean and modularized API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6
 * Feature to import fake modules - https://fake.build/fake-fake5-modules.html
 * Migration guide - https://fake.build/fake-migrate-to-fake-5.html
 * New and clean CLI interface - https://fake.build/fake-commandline.html
 * `build.sh` and `build.cmd` are no longer required
 * Modules can be used in regular projects
+* You can extend FAKE more easily - https://fake.build/fake-fake5-custom-modules.html
 * API Guideline - https://fake.build/contributing.html#API-Design
-* Improved F# scripting support
+* Improved F# scripting support including support for command-line arguments
 * Learn more - https://fake.build/fake-fake5-learn-more.html
 
 ## 5.0.0-rc018.248 - 2018-06-05
