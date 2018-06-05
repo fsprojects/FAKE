@@ -17,12 +17,8 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj" />
-        <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj">
-            <FromP2P>true</FromP2P>
-        </ProjectReference>
-        <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
-            <FromP2P>true</FromP2P>
-        </ProjectReference>
+        <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj" FromP2P="true" />
+        <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" FromP2P="true" />
     </ItemGroup>
     <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

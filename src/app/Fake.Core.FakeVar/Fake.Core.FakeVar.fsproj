@@ -12,7 +12,7 @@
     <Compile Include="FakeVar.fs" />
   </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
+        <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" FromP2P="true" />
     </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
