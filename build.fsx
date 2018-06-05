@@ -213,7 +213,10 @@ let version =
             Some ({p with
                         Values = p.Values @ source
                         Origin = p.Origin + toAdd })
-    let fromRepository = { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+    let fromRepository =
+        match prerelease with
+        | Some _ -> { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+        | None -> semVer
 
     match Environment.environVarOrNone "FAKE_VERSION" with
     | Some ver -> SemVer.parse ver
