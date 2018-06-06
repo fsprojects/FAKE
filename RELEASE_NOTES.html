@@ -251,7 +251,30 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
-<h2><a name="5-0-0-rc018-2018-06-02" class="anchor" href="#5-0-0-rc018-2018-06-02">5.0.0-rc018 - 2018-06-02</a></h2>
+<h2><a name="5-0-0-2018-06-06" class="anchor" href="#5-0-0-2018-06-06">5.0.0 - 2018-06-06</a></h2>
+<ul>
+<li>Deep integration into the .NET SDK and .Net Core</li>
+<li>Global dotnet cli-tool <code>dotnet tool install fake-cli -g --version 5.0.0-*</code></li>
+<li><code>dotnet-fake</code> cli tool via <code>DotNetCliToolReference</code></li>
+<li>Standalone <code>.zip</code> xcopy deployment and various package manager integrations (for example chocolatey).</li>
+<li>The old runner (<code>FAKE</code> nuget package) is obsolete</li>
+<li>FakeLib and FAKE.Deploy are obsolete - <a href="https://github.com/fsharp/FAKE/issues/1820">https://github.com/fsharp/FAKE/issues/1820</a></li>
+<li>Clean and modularized API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6</li>
+<li>Feature to import fake modules - <a href="https://fake.build/fake-fake5-modules.html">https://fake.build/fake-fake5-modules.html</a></li>
+<li>Migration guide - <a href="https://fake.build/fake-migrate-to-fake-5.html">https://fake.build/fake-migrate-to-fake-5.html</a></li>
+<li>New and clean CLI interface - <a href="https://fake.build/fake-commandline.html">https://fake.build/fake-commandline.html</a></li>
+<li><code>build.sh</code> and <code>build.cmd</code> are no longer required</li>
+<li>Modules can be used in regular projects</li>
+<li>You can extend FAKE more easily - <a href="https://fake.build/fake-fake5-custom-modules.html">https://fake.build/fake-fake5-custom-modules.html</a></li>
+<li>API Guideline - <a href="https://fake.build/contributing.html#API-Design">https://fake.build/contributing.html#API-Design</a></li>
+<li>Improved F# scripting support including support for command-line arguments</li>
+<li>Learn more - <a href="https://fake.build/fake-fake5-learn-more.html">https://fake.build/fake-fake5-learn-more.html</a></li>
+</ul>
+<h2><a name="5-0-0-rc018-248-2018-06-05" class="anchor" href="#5-0-0-rc018-248-2018-06-05">5.0.0-rc018.248 - 2018-06-05</a></h2>
+<ul>
+<li>FAKE5: New module Fake.Core.FakeVar - <a href="https://github.com/fsharp/FAKE/pull/1978">https://github.com/fsharp/FAKE/pull/1978</a></li>
+</ul>
+<h2><a name="5-0-0-rc018-244-2018-06-02" class="anchor" href="#5-0-0-rc018-244-2018-06-02">5.0.0-rc018.244 - 2018-06-02</a></h2>
 <ul>
 <li>ENHANCEMENT: Upgrade to final release of global tools - <a href="https://github.com/fsharp/FAKE/pull/1972">https://github.com/fsharp/FAKE/pull/1972</a></li>
 <li>ENHANCEMENT: Upgrade to netcore2.1 - <a href="https://github.com/fsharp/FAKE/pull/1972">https://github.com/fsharp/FAKE/pull/1972</a></li>
@@ -1918,7 +1941,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0-rc018.248</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
 									</ul>
 								</div>
 							</div>
