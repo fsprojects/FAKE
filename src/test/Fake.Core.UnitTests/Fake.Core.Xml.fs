@@ -2,9 +2,7 @@ module Fake.Core.XmlTests
 
 open System.IO
 open Fake.Core
-open Fake.DotNet
 open Expecto
-open Expecto.Flip
 
 let normalize (s:string) = s.Replace("\r", "")
 
@@ -34,7 +32,7 @@ let tests =
         let bundleIdentifier = "whateva"
         Xml.pokeInnerText tmpFile "plist/dict/key[text()='CFBundleIdentifier']/following-sibling::string" bundleIdentifier
         let actual = File.ReadAllText tmpFile |> normalize
-        Expect.equal "expected same xml" expected actual
+        Expect.equal expected actual "expected same xml"
       finally
         File.Delete(tmpFile)      
   ]

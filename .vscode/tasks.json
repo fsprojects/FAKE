@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "dotnet:build:fake.sln",            
+            "label": "dotnet:restore:fake.sln",            
             "group": "build",
-            "command": "dotnet build FAKE.sln",
+            "command": "dotnet restore FAKE.sln",
             "type": "shell",
             "presentation": {
                 "reveal": "always"
@@ -14,9 +14,56 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "dotnet:build:fake.sln",            
+            "group": "build",
+            "command": "dotnet build FAKE.sln",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile",
+            "dependsOn": [
+                "dotnet:restore:fake.sln"
+            ]
+        },
+        {
             "label": "dotnet:run:unitTests",            
             "group": "test",
             "command": "dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet:run:commandLineUnitTests",            
+            "group": "test",
+            "command": "dotnet run -p src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet:run:integrationTests",            
+            "group": "test",
+            "command": "dotnet run -p src/test/Fake.Core.IntegrationTests/Fake.Core.IntegrationTests.fsproj",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet:run:allTests",            
+            "group": "test",
+            "dependsOn": [
+                "dotnet:run:integrationTests",
+                "dotnet:run:commandLineUnitTests",
+                "dotnet:run:unitTests"  
+            ],
             "type": "shell",
             "presentation": {
                 "reveal": "always"

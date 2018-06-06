@@ -2,11 +2,7 @@
 module Fake.Tools.Git.CommandHelper
 
 open System
-open System.Diagnostics
 open System.IO
-open System.Threading
-open System.Text
-open System.Collections.Generic
 open Fake.Core
 open Fake.Core.String.Operators
 open Fake.IO
@@ -72,7 +68,7 @@ let gitCommandf repositoryDir fmt = Printf.ksprintf (gitCommand repositoryDir) f
 /// Runs the given git command, waits for its completion.
 /// This version doesn't throw an exception if an error occurs. It just traces the error.
 let showGitCommand repositoryDir command =
-    let ok,msg,errors = runGitCommand repositoryDir command
+    let _,msg,errors = runGitCommand repositoryDir command
     msg |> Seq.iter (Trace.logfn "%s")
     if errors <> "" then
       Trace.traceError <| sprintf "Errors: %s" errors
@@ -80,7 +76,7 @@ let showGitCommand repositoryDir command =
 /// Runs the git command and returns the first line of the result.
 let runSimpleGitCommand repositoryDir command =
     try
-        let ok,msg,errors = runGitCommand repositoryDir command
+        let _,msg,errors = runGitCommand repositoryDir command
 
         let errorText = String.toLines msg + Environment.NewLine + errors
         if errorText.Contains "fatal: " then

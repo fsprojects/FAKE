@@ -25,12 +25,8 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
-    <ProjectReference Include="..\Fake.Testing.Common\Fake.Testing.Common.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
-    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
+    <ProjectReference Include="..\Fake.Testing.Common\Fake.Testing.Common.fsproj" FromP2P="true" />
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" FromP2P="true" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
