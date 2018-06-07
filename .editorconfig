@@ -11,3 +11,5 @@ root = true
 insert_final_newline = true
 indent_style = space
 indent_size = 4
+[*.fsproj]
+indent_size = 2

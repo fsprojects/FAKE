@@ -4,9 +4,6 @@ namespace Fake.Core
 
 open System
 open System.Diagnostics
-open System.Collections.Generic
-open System.Collections.Generic
-open System
 
 /// A record type which captures console messages
 type ConsoleMessage = 
@@ -250,25 +247,25 @@ module Process =
                     | _ -> ()                    
                 with exn -> Trace.logfn "Killing %d failed with %s" pid exn.Message
             startedProcesses.Clear()
-        member x.KillAll() = killProcesses()
-        member x.Add (pid, startTime) = startedProcesses.Add(pid, startTime)
-        member x.SetShouldKill (enable) = shouldKillProcesses <- enable
-        member x.GetShouldKill = shouldKillProcesses
+        member __.KillAll() = killProcesses()
+        member __.Add (pid, startTime) = startedProcesses.Add(pid, startTime)
+        member __.SetShouldKill (enable) = shouldKillProcesses <- enable
+        member __.GetShouldKill = shouldKillProcesses
 
         interface IDisposable with
-            member x.Dispose() =
+            member __.Dispose() =
                 if shouldKillProcesses then killProcesses()
 
     /// [omit]
     //let startedProcesses = HashSet()
     let private startedProcessesVar = "Fake.Core.Process.startedProcesses"
     let private getStartedProcesses, _, private setStartedProcesses = 
-        Fake.Core.Context.fakeVar startedProcessesVar
+        Fake.Core.FakeVar.defineAllowNoContext<ProcessList> startedProcessesVar
 
     let private doWithProcessList f =
         if Fake.Core.Context.isFakeContext () then
             match getStartedProcesses () with
-            | Some (h:ProcessList) -> Some(f h)
+            | Some h -> Some(f h)
             | None -> 
                 let h = new ProcessList()
                 setStartedProcesses (h)
@@ -337,7 +334,7 @@ module Process =
     //let mutable redirectOutputToTrace = false
     let private redirectOutputToTraceVar = "Fake.Core.Process.redirectOutputToTrace"
     let private tryGetRedirectOutputToTrace, _, public setRedirectOutputToTrace = 
-        Fake.Core.Context.fakeVarAllowNoContext redirectOutputToTraceVar
+        Fake.Core.FakeVar.defineAllowNoContext redirectOutputToTraceVar
     let getRedirectOutputToTrace () =
         match tryGetRedirectOutputToTrace() with
         | Some v -> v
@@ -350,7 +347,7 @@ module Process =
     //let mutable enableProcessTracing = true
     let private enableProcessTracingVar = "Fake.Core.Process.enableProcessTracing"
     let private getEnableProcessTracing, private removeEnableProcessTracing, public setEnableProcessTracing = 
-        Fake.Core.Context.fakeVarAllowNoContext enableProcessTracingVar
+        Fake.Core.FakeVar.defineAllowNoContext enableProcessTracingVar
     let shouldEnableProcessTracing () =
         match getEnableProcessTracing() with
         | Some v -> v
@@ -648,7 +645,7 @@ module Process =
     #if FX_CONFIGURATION_MANAGER
                 try
                     System.Configuration.ConfigurationManager.AppSettings.[key]
-                with exn -> ""
+                with _ -> ""
     #else
                 null
     #endif
@@ -731,11 +728,11 @@ module Process =
         |> Seq.filter (fun p -> 
                try 
                    not p.HasExited
-               with exn -> false)
+               with _ -> false)
         |> Seq.filter (fun p -> 
                try 
                    p.ProcessName.ToLower().StartsWith(name.ToLower())
-               with exn -> false)
+               with _ -> false)
 
     [<System.Obsolete("use Process.getAllByName instead.")>]
     let getProcessesByName name = getAllByName name

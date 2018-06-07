@@ -1,6 +1,5 @@
 module Fake.IO.ZipTests
 
-open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Expecto

@@ -1,6 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
     <DelaySign>true</DelaySign>
     <DebugType>Portable</DebugType>
@@ -20,15 +21,9 @@
     <EmbeddedResource Include="..\..\..\.paket\Paket.Restore.targets" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
-    <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
-    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
-      <FromP2P>true</FromP2P>
-    </ProjectReference>
+    <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj" FromP2P="true" />
+    <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj" FromP2P="true" />
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" FromP2P="true" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

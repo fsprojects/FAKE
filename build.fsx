@@ -213,7 +213,10 @@ let version =
             Some ({p with
                         Values = p.Values @ source
                         Origin = p.Origin + toAdd })
-    let fromRepository = { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+    let fromRepository =
+        match prerelease with
+        | Some _ -> { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
+        | None -> semVer
 
     match Environment.environVarOrNone "FAKE_VERSION" with
     | Some ver -> SemVer.parse ver
@@ -247,7 +250,7 @@ Trace.setBuildNumber nugetVersion
 //    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 
 
-let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_300_RC1
+let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_300
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
@@ -724,7 +727,7 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
     cleanForTests()
 
     let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.0/Fake.Core.IntegrationTests.dll" "--summary"
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
 )
@@ -733,13 +736,13 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
     let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.UnitTests.dll" "--summary"
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     let processResult =
-        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.0/Fake.Core.CommandLine.UnitTests.dll" "--summary"
+        DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
 )
@@ -1060,7 +1063,7 @@ Target.create "_DotNetPublish_portable" (fun _ ->
     let outDir = nugetDir @@ "Fake.netcore" @@ "portable"
     DotNet.publish (fun c ->
         { c with
-            Framework = Some "netcoreapp2.0"
+            Framework = Some "netcoreapp2.1"
             OutputPath = Some outDir
         } |> dtntSmpl) netcoreFsproj
 )
@@ -1100,7 +1103,7 @@ Target.create "_DotNetPackage" (fun _ ->
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
-    !! "src/test/*/bin/Release/netcoreapp2.0/**"
+    !! "src/test/*/bin/Release/netcoreapp2.1/**"
     |> Zip.zip "src/test" testZip
     publish testZip
 )

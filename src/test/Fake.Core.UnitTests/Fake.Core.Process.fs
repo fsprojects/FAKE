@@ -4,8 +4,6 @@ module Fake.Core.ProcessTests
 open System
 open Fake.Core
 open Expecto
-open Expecto.Flip
-
 
 [<Tests>]
 let tests = 
@@ -17,10 +15,10 @@ let tests =
                     FileName = "FileDoesntExist.exe"
                     Arguments = "arg1 arg2" })
                 |> ignore
-            Expect.isTrue "Expected an exception" false 
+            Expect.isTrue false "Expected an exception"
         with e ->
             let s = e.Message.Contains "FileDoesntExist.exe"
-            Expect.isTrue ("Expected file-path as part of the message '" + e.Message + "'") s
+            Expect.isTrue s ("Expected file-path as part of the message '" + e.Message + "'")
     
     testCase "Test that we can read messages correctly" <| fun _ ->
         let shell, command =
@@ -34,6 +32,6 @@ let tests =
                         FileName = shell
                         Arguments = command }) (TimeSpan.FromMinutes 1.)
       
-        Expect.equal "Messages are not read correctly" ["1"; "2"] result.Messages
+        Expect.equal ["1"; "2"] result.Messages "Messages are not read correctly"
 
   ]

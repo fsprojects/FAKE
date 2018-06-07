@@ -300,13 +300,13 @@ let AndroidBuildPackages setParams =
         rewriteManifestFile manifestFile specificManifest transformVersion target
         // workaround for xamarin bug: https://bugzilla.xamarin.com/show_bug.cgi?id=30571
         let backupFn = (manifestFile |> Path.GetDirectoryName) @@ ("AndroidManifest-original.xml")
-        Shell.CopyFile backupFn manifestFile
-        Shell.CopyFile manifestFile specificManifest
+        Shell.copyFile backupFn manifestFile
+        Shell.copyFile manifestFile specificManifest
         try
             //buildPackages param (Some name) (Some specificManifest) // to uncomment after xamarin fix there bug
             buildPackages param (Some name) None
         finally
-            Shell.CopyFile manifestFile backupFn
+            Shell.copyFile manifestFile backupFn
 
     let translateAbi = function
                        | AndroidAbiTarget.X86 _ -> "x86"

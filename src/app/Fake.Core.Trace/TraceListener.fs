@@ -270,7 +270,7 @@ type TraceSecret =
 module TraceSecrets =
     let private traceSecretsVar = "Fake.Core.Trace.TraceSecrets"
     let private getTraceSecrets, _, (setTraceSecrets:TraceSecret list -> unit) = 
-        Fake.Core.Context.fakeVar traceSecretsVar
+        Fake.Core.FakeVar.define traceSecretsVar
 
     let getAll () =
         match getTraceSecrets() with
@@ -278,7 +278,10 @@ module TraceSecrets =
         | None -> []
 
     let register replacement secret =
-        setTraceSecrets ({ Value = secret; Replacement = replacement } :: getAll() |> List.filter (fun s -> s.Value <> secret))
+        getAll()
+        |> List.filter (fun s -> s.Value <> secret)
+        |> fun l -> { Value = secret; Replacement = replacement } :: l
+        |> fun l -> setTraceSecrets l
 
     let guardMessage (s:string) =
         getAll()
@@ -299,7 +302,7 @@ module CoreTracing =
 
     let private traceListenersVar = "Fake.Core.Trace.TraceListeners"
     let private getTraceListeners, _, (setTraceListenersPrivate:ITraceListener list -> unit) = 
-        Fake.Core.Context.fakeVar traceListenersVar
+        Fake.Core.FakeVar.define traceListenersVar
 
     let areListenersSet () =
         match getTraceListeners() with

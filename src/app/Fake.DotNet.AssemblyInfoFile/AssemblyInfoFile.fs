@@ -213,7 +213,6 @@ module AssemblyInfoFile =
 
     /// Creates a C# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    [<System.Obsolete "Please use 'create' instead">]
     let createCSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace, emitResharperSupressions = config.GenerateClass, config.UseNamespace, config.EmitResharperSuppressions
@@ -260,7 +259,6 @@ module AssemblyInfoFile =
 
     /// Creates a F# AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    [<System.Obsolete "Please use 'create' instead">]
     let createFSharpWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
@@ -292,7 +290,6 @@ module AssemblyInfoFile =
 
     /// Creates a VB AssemblyInfo file with the given attributes and configuration.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    [<System.Obsolete "Please use 'create' instead">]
     let createVisualBasicWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let generateClass, _ = config.GenerateClass, config.UseNamespace
@@ -321,7 +318,6 @@ module AssemblyInfoFile =
 
     /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
     /// Does not generate an AssemblyVersionInformation class.
-    [<System.Obsolete "Please use 'create' instead">]
     let createCppCliWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
         use __ = Trace.traceTask "AssemblyInfo" outputFileName
         let _, _ = config.GenerateClass, config.UseNamespace
@@ -342,24 +338,20 @@ module AssemblyInfoFile =
 
     /// Creates a C# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    [<System.Obsolete "Please use 'create' instead">]
     let createCSharp outputFileName attributes =
         createCSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a F# AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    [<System.Obsolete "Please use 'create' instead">]
     let createFSharp outputFileName attributes =
         createFSharpWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     /// Creates a VB AssemblyInfo file with the given attributes.
     /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
-    [<System.Obsolete "Please use 'create' instead">]
     let createVisualBasic outputFileName attributes =
         createVisualBasicWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
     ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
-    [<System.Obsolete "Please use 'create' instead">]
     let createCppCli outputFileName attributes =
         createCppCliWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
 
