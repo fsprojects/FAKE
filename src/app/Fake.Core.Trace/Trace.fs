@@ -47,9 +47,6 @@ let traceImportant text = CoreTracing.postMessage (TraceData.ImportantMessage te
 /// Writes a message to stderr (in yellow) 
 let traceImportantfn fmt = Printf.ksprintf traceImportant fmt
 
-/// Writes a message to stderr (in yellow) and without a line break
-let traceImportantf fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.ImportantMessage(text))) fmt
-
 /// Writes a trace to the command line (in yellow)
 let traceFAKE fmt = Printf.ksprintf (TraceData.ImportantMessage >> CoreTracing.postMessage) fmt
 
@@ -58,9 +55,6 @@ let traceError error = CoreTracing.postMessage (TraceData.ErrorMessage error)
 
 /// Writes an error message to stderr (in red) 
 let traceErrorfn fmt = Printf.ksprintf traceError fmt
-
-/// Writes an error message to stderr (in red) and without a line break
-let traceErrorf fmt = Printf.ksprintf (fun text -> CoreTracing.postMessage (TraceData.ErrorMessage(text))) fmt
 
 open Microsoft.FSharp.Core.Printf
 
