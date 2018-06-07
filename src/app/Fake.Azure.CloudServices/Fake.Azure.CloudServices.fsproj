@@ -12,10 +12,7 @@
     <Compile Include="CloudServices.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
-    <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Xml\Fake.Core.Xml.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
   </ItemGroup>

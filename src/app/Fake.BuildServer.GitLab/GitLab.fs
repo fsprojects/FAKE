@@ -1,7 +1,6 @@
 /// Contains support for various build servers
 namespace Fake.BuildServer
 
-open System
 open System.IO
 open Fake.Core
 open Fake.IO
