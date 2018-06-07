@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
-    <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />

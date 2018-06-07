@@ -16,6 +16,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Fake.Core.CommandLineParsing\Fake.Core.CommandLineParsing.fsproj" />
+        <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
         <ProjectReference Include="..\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" />
         <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
         <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
