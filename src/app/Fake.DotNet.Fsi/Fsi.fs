@@ -265,7 +265,7 @@ module internal ExternalFsi =
         let args = parameters FsiParams.Defaults |> serializeArgs script scriptArgs
         let environmentVars' = defaultEnvironmentVars environmentVars
 
-        Trace.trace <| sprintf "Executing FSI at %s with args %s" fsiExe args
+        use __ = Trace.traceTask "Fsi " (sprintf "%s %s with args %s" fsiExe script args)
 
         let r = Process.execWithResult (fun info -> 
                 { info with
@@ -276,6 +276,7 @@ module internal ExternalFsi =
 
         if r.ExitCode <> 0 then
             List.iter Trace.traceError r.Errors
+        __.MarkSuccess()
 
         (r.ExitCode, r.Messages)
 
@@ -336,8 +337,8 @@ module internal InternalFsi =
 ///                 { p with 
 ///                     TargetProfile = Fsi.Profile.NetStandard } ) script ["stuff";"10"]
 ///     ```
-// let execInternal fsiParams script scriptArgs = 
-    // InternalFsi.execFsi fsiParams script scriptArgs
+let execInternal fsiParams script scriptArgs = 
+    InternalFsi.exec fsiParams script scriptArgs
 
 /// Executes a user supplied Fsi.exe with the option to set args and environment variables and 
 /// runs the specified script.
