@@ -127,10 +127,10 @@ with
         /// format a compiler arg that ends with "+" or "-": "--%s%s"
         let togl s b = if Option.isNone b then "" else sprintf "--%s%s" s (chk b.Value)
         /// format a list of compiler args with string parameters "--%s:\"%s\""   
-        let argls s (ls:string list) = stringEmptyMap (sprintf "--%s:\"%s\"" s) (String.concat ";" ls)
+        let argls s (ls:string list) = stringEmptyMap (sprintf "--%s:%s" s) (String.concat ";" ls)
         /// format a compiler arg that ends with "+" or "-" with string parameters  "--%s%s:\"%s\""
         let inline toglls s b (ls:'a list) = 
-            stringEmptyMap (sprintf "--%s%s:\"%s\"" s  (chk b)) (String.concat ";" (List.map string ls))
+            stringEmptyMap (sprintf "--%s%s:%s" s  (chk b)) (String.concat ";" (List.map string ls))
 
         [
             argp "use" p.Use
@@ -321,10 +321,11 @@ module internal InternalFsi =
         traceErrors errors
         __.MarkSuccess()
 
-        //Return error code 0 for success, or 1 with exception message on failure 
+        //Return error code 0 for success, or 1 with exception message on failure
+        //Note -- Returning a string list just for consistency with the external version
         match result with
-        | Choice1Of2 _ -> (0,"The script completed successfully")
-        | Choice2Of2 e -> (1, e.ToString())
+        | Choice1Of2 _ -> (0,["The script completed successfully"])
+        | Choice2Of2 e -> (1, [e.ToString()])
 
 
 (* - Public Facing API - *)
