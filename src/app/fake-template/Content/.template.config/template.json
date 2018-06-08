@@ -1,0 +1,116 @@
+{
+    "identity": "Fake.Template",
+    "shortName": "fake",
+    "name": "FAKE - Template",
+    "classifications": ["Fake", "build"],
+    "symbols": {
+        "scriptname": {
+            "type": "parameter",
+            "description": "Name of the generated build-script",
+            "dataType": "string",
+            "defaultValue": "build.fsx",
+            "FileRename": "build.fsx"
+        },
+        "version": {
+            "type": "parameter",
+            "description": "Version of fake to install. This parameter is only applicable when either 'tool' or 'project' is used for bootstrapping",
+            "dataType": "string",
+            "defaultValue": "5.0.0",
+            "replaces": "(version)"
+        },
+        "dependencies": {
+            "type": "parameter",
+            "dataType": "choice",
+            "defaultValue": "file",
+            "choices": [{
+                    "choice": "file",
+                    "description": "Use paket.dependencies file to define build dependencies"
+                },
+                {
+                    "choice": "inline",
+                    "description": "Define build dependencies inside the build script"
+                },
+                {
+                    "choice": "none",
+                    "description": "No dependencies are created"
+                }
+            ]
+        },
+        "bootstrap": {
+            "type": "parameter",
+            "dataType": "choice",
+            "defaultValue": "tool",
+            "choices": [{
+                    "choice": "project",
+                    "description": "Creates a build.proj file to bootstrap fake"
+                },
+                {
+                    "choice": "tool",
+                    "description": "Uses the global dotnet fake tool to bootstrap fake. The tool is downloaded into 'tool--path'"
+                },
+                {
+                    "choice": "none",
+                    "description": "Does not bootstrap fake"
+                }
+            ]
+        },
+        "tool-path": {
+            "type": "parameter",
+            "description": "Folder for the fake-cli tool. This parameter is only applicable when 'tool' is used for bootstrapping",
+            "dataType": "string",
+            "defaultValue": ".fake",
+            "replaces": "(ToolPath)"
+        }
+    },
+    "sources": [{
+        "exclude": "**/.template.config/**/*",
+        "modifiers": [{
+                "exclude": "**/buildTool.*",
+                "condition": "(bootstrap != \"tool\")"
+            },
+            {
+                "rename": {
+                    "buildTool.sh": "build.sh",
+                    "buildTool.cmd": "build.cmd"
+                }
+            },
+            {
+                "exclude": ["**/buildProj.*", "**/build.proj"],
+                "condition": "(bootstrap != \"project\")"
+            },
+            {
+                "rename": {
+                    "buildProj.sh": "build.sh",
+                    "buildProj.cmd": "build.cmd"
+                }
+            },
+            {
+                "exclude": "**/paket.dependencies",
+                "condition": "(dependencies != \"file\")"
+            }
+        ]
+    }],
+    "SpecialCustomOperations": {
+        "**/*.fsx*": {
+            "operations": [{
+                "type": "conditional",
+                "configuration": {
+                    "if": [
+                        "#if"
+                    ],
+                    "else": [
+                        "#else"
+                    ],
+                    "elseif": [
+                        "#elseif"
+                    ],
+                    "endif": [
+                        "#endif"
+                    ],
+                    "trim": "true",
+                    "wholeLine": "true"
+                }
+            }]
+        }
+    }
+}

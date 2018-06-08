@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <PackageType>Template</PackageType>
+        <PackProjectInputFile>$(MSBuildProjectFullPath)</PackProjectInputFile>
+        <NoBuild>true</NoBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ExcludeFromPackage>
+        Content/packages/**/*;
+        Content/bin/**/*;
+        Content/obj/**/*;
+        Content/src/bin/**/*;
+        Content/src/obj/**/*;
+        </ExcludeFromPackage>
+    </PropertyGroup>
+    <ItemGroup>
+        <Content Include="Content/**/*" Exclude="$(ExcludeFromPackage)">
+            <PackagePath>Content\</PackagePath>
+        </Content>
+    </ItemGroup>
+</Project>
