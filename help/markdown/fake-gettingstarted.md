@@ -16,18 +16,37 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 
 "FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.
 
-There are various ways to install FAKE 5
+There are various ways to install FAKE 5:
 
-* Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
+* Install FAKE as a global dotnet tool: 
+    * To install FAKE globally, run:
+        <pre><code class="lang-bash">
+        dotnet tool install fake-cli -g
+        </code></pre>
+    * To install FAKE into `your_tool_path`, run:
+        <pre><code class="lang-bash">
+        dotnet tool install fake-cli --tool-path your_tool_path
+        </code></pre>
+
+    Use `--version` to specify the version of FAKE. See the [`global_tool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) for ideas to bootstrap in your CI process.
+
+* Bootstrap via the [fake dotnet new template](fake-template.html). The template bootstraps FAKE and sets up a basic build-script.
+    * To install the template run:
+        <pre><code class="lang-bash">
+        dotnet new -i "fake-template::*"
+        </code></pre>
+    * Then run the template with:
+        <pre><code class="lang-bash">
+        dotnet new fake
+        </code></pre>
+
+    See the [template](fake-template.html) page for more information.
+
+* Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey).  
   Example `choco install fake -pre`
 
-* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
+* Use it as dotnet tool: Add `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies and run `dotnet fake ...` instead of `fake ...`, see [this example](https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj)
 
-* Install fake as a global dotnet tool: run `dotnet tool install fake-cli -g --version=5.0.0-*` to install fake globally or `dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*` to install fake into `your_tool_path`. Use `--version` to specify the version of fake. See the [`global_tool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/global_tool) for ideas to bootstrap in your CI process.
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>As FAKE 5 is still in pre-release, you have to specify the <code>--version</code> parameter.</p>
-</div>
 
 * Bootstrap via shell script (fake.cmd/fake.sh),
   see this [example project](https://github.com/FakeBuild/fake-bootstrap)

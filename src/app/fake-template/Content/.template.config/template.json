@@ -2,7 +2,7 @@
     "identity": "Fake.Template",
     "shortName": "fake",
     "name": "FAKE - Template",
-    "classifications": ["Fake", "build"],
+    "classifications": ["build", "FAKE"],
     "symbols": {
         "scriptname": {
             "type": "parameter",
@@ -11,12 +11,23 @@
             "defaultValue": "build.fsx",
             "FileRename": "build.fsx"
         },
-        "version": {
+        "bootstrap": {
             "type": "parameter",
-            "description": "Version of fake to install. This parameter is only applicable when either 'tool' or 'project' is used for bootstrapping",
-            "dataType": "string",
-            "defaultValue": "5.0.0",
-            "replaces": "(version)"
+            "dataType": "choice",
+            "defaultValue": "tool",
+            "choices": [{
+                    "choice": "project",
+                    "description": "Creates a build.proj file to bootstrap FAKE"
+                },
+                {
+                    "choice": "tool",
+                    "description": "Uses the FAKE dotnet sdk global tool to bootstrap FAKE. The tool is installed into 'tool--path'"
+                },
+                {
+                    "choice": "none",
+                    "description": "Does not bootstrap FAKE. Use this if you want to use a global installation of FAKE"
+                }
+            ]
         },
         "dependencies": {
             "type": "parameter",
@@ -32,34 +43,23 @@
                 },
                 {
                     "choice": "none",
-                    "description": "No dependencies are created"
-                }
-            ]
-        },
-        "bootstrap": {
-            "type": "parameter",
-            "dataType": "choice",
-            "defaultValue": "tool",
-            "choices": [{
-                    "choice": "project",
-                    "description": "Creates a build.proj file to bootstrap fake"
-                },
-                {
-                    "choice": "tool",
-                    "description": "Uses the global dotnet fake tool to bootstrap fake. The tool is downloaded into 'tool--path'"
-                },
-                {
-                    "choice": "none",
-                    "description": "Does not bootstrap fake"
+                    "description": "No dependencies are created. Use this if you already have a paket.dependencies file in your folder"
                 }
             ]
         },
         "tool-path": {
             "type": "parameter",
-            "description": "Folder for the fake-cli tool. This parameter is only applicable when 'tool' is used for bootstrapping",
+            "description": "Folder for the FAKE dotnet sdk global tool. This parameter is only applicable when 'tool' is used for bootstrapping",
             "dataType": "string",
             "defaultValue": ".fake",
             "replaces": "(ToolPath)"
+        },
+        "version": {
+            "type": "parameter",
+            "description": "Version of FAKE to install. This parameter is only applicable when either 'tool' or 'project' is used for bootstrapping",
+            "dataType": "string",
+            "defaultValue": "5.*",
+            "replaces": "(version)"
         }
     },
     "sources": [{
@@ -89,28 +89,5 @@
                 "condition": "(dependencies != \"file\")"
             }
         ]
-    }],
-    "SpecialCustomOperations": {
-        "**/*.fsx*": {
-            "operations": [{
-                "type": "conditional",
-                "configuration": {
-                    "if": [
-                        "#if"
-                    ],
-                    "else": [
-                        "#else"
-                    ],
-                    "elseif": [
-                        "#elseif"
-                    ],
-                    "endif": [
-                        "#endif"
-                    ],
-                    "trim": "true",
-                    "wholeLine": "true"
-                }
-            }]
-        }
-    }
+    }]
 }
