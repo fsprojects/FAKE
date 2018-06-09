@@ -350,6 +350,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
       "Fake.DotNet.Cli", "Running the dotnet cli"
       "Fake.DotNet.Fsc", "Running the f# compiler - fsc"
+      "Fake.DotNet.Fsi", "FSharp Interactive - fsi"
       "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
       "Fake.DotNet.Mage", "Manifest Generation and Editing Tool"
       "Fake.DotNet.MSBuild", "Running msbuild"
