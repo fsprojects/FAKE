@@ -11,8 +11,5 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="SemVer.fs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
-  </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

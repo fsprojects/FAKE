@@ -1,4 +1,4 @@
-#if BOOTSTRAP && DOTNETCORE
+#if BOOTSTRAP
 
 #r "paket:
 source nuget/dotnetcore
@@ -35,35 +35,16 @@ nuget Newtonsoft.Json
 nuget Octokit //"
 #endif
 
-
-#if DOTNETCORE
 // We need to use this for now as "regular" Fake breaks when its caching logic cannot find "intellisense.fsx".
 // This is the reason why we need to checkin the "intellisense.fsx" file for now...
 #load ".fake/build.fsx/intellisense.fsx"
 
 open System.Reflection
 
-#else
-// Load this before FakeLib, see https://github.com/fsharp/FSharp.Compiler.Service/issues/763
-#r "packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
-#I "packages/build/FAKE/tools/"
-#r "FakeLib.dll"
-#r "Paket.Core.dll"
-#r "packages/build/System.Net.Http/lib/net46/System.Net.Http.dll"
-#r "packages/build/Octokit/lib/net45/Octokit.dll"
-#r "packages/build/Newtonsoft.Json/lib/net45/Newtonsoft.Json.dll"
-#I "packages/build/SourceLink.Fake/tools/"
-
-#r "System.IO.Compression"
-//#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
-
-#endif
-
 //#if !FAKE
 //let execContext = Fake.Core.Context.FakeExecutionContext.Create false "build.fsx" []
 //Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 //#endif
-#load "src/app/Fake.DotNet.Cli/DotNet.fs"
 open System.IO
 open Fake.Api
 open Fake.Core
@@ -90,13 +71,6 @@ let github_release_user = Environment.environVarOrDefault "github_release_user" 
 let gitName = "FAKE"
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
-
-(*
-let version =
-    let semVer = SemVer.parse release.NugetVersion
-    match semVer.PreRelease with
-    | None -> ()
-    | _ -> ()*)
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -157,32 +131,21 @@ BuildServer.install [
     TeamCity.Installer
     Travis.Installer
     TeamFoundation.Installer
-#if DOTNETCORE
     GitLab.Installer
-#endif
 ]
 
 let version =
     let segToString = function
         | PreReleaseSegment.AlphaNumeric n -> n
         | PreReleaseSegment.Numeric n -> string n
-    //let createAlphaNum (s:string) =
-    //    PreReleaseSegment.AlphaNumeric (s.Replace("_", "-").Replace("+", "-"))
     let source, buildMeta =
         match BuildServer.buildServer with
-#if DOTNETCORE
         | BuildServer.GitLabCI ->
             // Workaround for now
             // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
             // Too long for chocolatey (limit = 20) and we don't strictly need it.
-            //let branchPath =
-            //    MyGitLab.Environment.CommitRefName.Split('/')
-            //    |> Seq.map createAlphaNum
-            [ //yield! branchPath
-              //yield PreReleaseSegment.AlphaNumeric "gitlab"
-              yield PreReleaseSegment.AlphaNumeric GitLab.Environment.PipelineId
+            [ yield PreReleaseSegment.AlphaNumeric GitLab.Environment.PipelineId
             ], sprintf "gitlab.%s" GitLab.Environment.CommitSha
-#endif
         | BuildServer.TeamFoundation ->
             let sourceBranch = TeamFoundation.Environment.BuildSourceBranch
             let isPr = sourceBranch.StartsWith "refs/pull/"
@@ -192,13 +155,9 @@ let version =
                     let prNum = bigint (int splits.[2])
                     [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.Numeric prNum ]
                 else
-                    // Too long for chocolatey (limit = 20) and we don't strictly need it.
-                    //let branchPath = sourceBranch.Split('/') |> Seq.skip 2 |> Seq.map createAlphaNum
-                    //[ yield! branchPath ]
                     []
             let buildId = bigint (int TeamFoundation.Environment.BuildId)
             [ yield! firstSegment
-              //yield PreReleaseSegment.AlphaNumeric "vsts"
               yield PreReleaseSegment.Numeric buildId
             ], sprintf "vsts.%s" TeamFoundation.Environment.BuildSourceVersion
         | _ -> [], ""
@@ -325,7 +284,6 @@ Target.create "RenameFSharpCompilerService" (fun _ ->
       let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
       File.delete targetFile
 
-#if DOTNETCORE
       let reader =
           let searchpaths =
               [ dir; __SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net45" ]
@@ -345,16 +303,9 @@ Target.create "RenameFSharpCompilerService" (fun _ ->
               readAssemblyE name (new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
           { new Mono.Cecil.IAssemblyResolver with
               member x.Dispose () = ()
-              //member x.Resolve (name : string) = readAssembly name x
-              //member x.Resolve (name : string, parms : Mono.Cecil.ReaderParameters) = readAssemblyE name parms
               member x.Resolve (name : Mono.Cecil.AssemblyNameReference) = readAssembly name.FullName x
               member x.Resolve (name : Mono.Cecil.AssemblyNameReference, parms : Mono.Cecil.ReaderParameters) = readAssemblyE name.FullName parms
                }
-#else
-      let reader = new Mono.Cecil.DefaultAssemblyResolver()
-      reader.AddSearchDirectory(dir)
-      reader.AddSearchDirectory(__SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net45")
-#endif
       let readerParams = Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
       let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </>"FSharp.Compiler.Service.dll", readerParams)
       asem.Name <- Mono.Cecil.AssemblyNameDefinition("FAKE.FSharp.Compiler.Service", System.Version(1,0,0,0))
@@ -666,7 +617,6 @@ Target.create "GenerateDocs" (fun _ ->
             SourceRepository = githubLink + "/blob/hotfix_fake4" })
 )
 
-#if DOTNETCORE
 let startWebServer () =
     let rec findPort port =
         let portIsTaken = false
@@ -700,7 +650,6 @@ Target.create "HostDocs" (fun _ ->
     Trace.traceImportant "Press any key to stop."
     System.Console.ReadKey() |> ignore
 )
-#endif
 
 Target.create "CopyLicense" (fun _ ->
     Shell.copyTo buildDir additionalFiles
@@ -746,59 +695,6 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
 )
-
-Target.create "BootstrapTest" (fun _ ->
-    let buildScript = "build.fsx"
-    let testScript = "testbuild.fsx"
-    // Check if we can build ourself with the new binaries.
-    let test clearCache (script:string) =
-        let clear () =
-            // Will make sure the test call actually compiles the script.
-            // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
-            if Directory.Exists ".fake" then
-                Directory.EnumerateFiles(".fake")
-                  |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
-                  |> Seq.iter File.Delete
-        let executeTarget span target =
-            if clearCache then clear ()
-            if Environment.isUnix then
-                let result =
-                    Process.execSimple (fun info ->
-                    { info with
-                        FileName = "chmod"
-                        WorkingDirectory = "."
-                        Arguments = "+x build/FAKE.exe" }
-                    |> Process.withFramework
-                    ) span
-                if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
-            Process.execSimple (fun info ->
-            { info with
-                FileName = "build/FAKE.exe"
-                WorkingDirectory = "."
-                Arguments = sprintf "%s %s --fsiargs \"--define:BOOTSTRAP\"" script target }
-            |> Process.withFramework
-            |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true"
-                ) span
-
-        let result = executeTarget (System.TimeSpan.FromMinutes 10.0) "PrintColors"
-        if result <> 0 then failwith "Bootstrapping failed"
-
-        let result = executeTarget (System.TimeSpan.FromMinutes 1.0) "FailFast"
-        if result = 0 then failwith "Bootstrapping failed"
-
-    // Replace the include line to use the newly build FakeLib, otherwise things will be weird.
-    File.ReadAllText buildScript
-    |> fun s -> s.Replace("#I \"packages/build/FAKE/tools/\"", "#I \"build/\"")
-    |> fun text -> File.WriteAllText(testScript, text)
-
-    try
-      // Will compile the script.
-      test true testScript
-      // Will use the compiled/cached version.
-      test false testScript
-    finally File.Delete(testScript)
-)
-
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
     let buildScript = "build.fsx"
@@ -1478,55 +1374,23 @@ Target.create "EnsureTestsRun" (fun _ ->
 //#endif
   ()
 )
-#if BOOTSTRAP
 Target.description "Default Build all artifacts and documentation"
-#else
-Target.Description "Default Build all artifacts and documentation"
-#endif
 Target.create "Default" ignore
 Target.create "_StartDnc" ignore
-#if BOOTSTRAP
 Target.description "Simple local command line release"
-#else
-Target.Description "Simple local command line release"
-#endif
 Target.create "Release" ignore
-#if BOOTSTRAP
 Target.description "Build the full-framework (legacy) solution"
-#else
-Target.Description "Build the full-framework (legacy) solution"
-#endif
 Target.create "BuildSolution" ignore
-#if BOOTSTRAP
 Target.description "dotnet pack pack to build all nuget packages"
-#else
-Target.Description "dotnet pack pack to build all nuget packages"
-#endif
 Target.create "DotNetPackage" ignore
 Target.create "_AfterBuild" ignore
-#if BOOTSTRAP
 Target.description "Build and test the dotnet sdk part (fake 5 - no legacy)"
-#else
-Target.Description "Build and test the dotnet sdk part (fake 5 - no legacy)"
-#endif
 Target.create "FullDotNetCore" ignore
-#if BOOTSTRAP
 Target.description "publish fake 5 runner for various platforms"
-#else
-Target.Description "publish fake 5 runner for various platforms"
-#endif
 Target.create "DotNetPublish" ignore
-#if BOOTSTRAP
 Target.description "Run the tests - if artifacts are available via 'artifactsdirectory' those are used."
-#else
-Target.Description "Run the tests - if artifacts are available via 'artifactsdirectory' those are used."
-#endif
 Target.create "RunTests" ignore
-#if BOOTSTRAP
 Target.description "Generate the docs (potentially from artifacts) and publish as artifact."
-#else
-Target.Description "Generate the docs (potentially from artifacts) and publish as artifact."
-#endif
 Target.create "Release_GenerateDocs" (fun _ ->
     let testZip = "temp/docs.zip"
     !! "docs/**"
@@ -1534,11 +1398,7 @@ Target.create "Release_GenerateDocs" (fun _ ->
     publish testZip
 )
 
-#if BOOTSTRAP
 Target.description "Full Build & Test and publish results as artifacts."
-#else
-Target.Description "Full Build & Test and publish results as artifacts."
-#endif
 Target.create "Release_BuildAndTest" ignore
 open Fake.Core.TargetOperators
 
@@ -1645,14 +1505,6 @@ let prevDocs =
 
 "BuildSolution"
     ==> "Default"
-
-(if fromArtifacts then "PrepareArtifacts" else "_BuildSolution")
-    =?> ("BootstrapTest", not disableBootstrap && not <| Environment.hasEnvironVar "SkipTests")
-    ==> "Default"
-"_BuildSolution" ?=> "BootstrapTest"
-
-"BootstrapTest"
-    ==> "RunTests"
 
 // Test the dotnetcore build
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
