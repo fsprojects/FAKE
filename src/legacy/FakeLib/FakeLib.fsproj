@@ -332,6 +332,9 @@
     <Compile Include="..\..\app\Fake.Tools.Git\Commit.fs">
       <Link>Fake.Tools.Git/Commit.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Tools.GitVersion\GitVersion.fs">
+      <Link>Fake.Tools.GitVersion/GitVersion.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
       <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
     </Compile>

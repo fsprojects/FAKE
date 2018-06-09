@@ -377,6 +377,7 @@ let dotnetAssemblyInfos =
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.Tools.Git", "Running git commands"
       "Fake.Tools.Pickles", "Convert Gherkin to HTML"
+      "Fake.Tools.GitVersion", "GitVersion helper"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
