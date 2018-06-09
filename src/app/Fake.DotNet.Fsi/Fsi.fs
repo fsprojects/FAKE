@@ -28,6 +28,12 @@ type Profile =
     override self.ToString () =
         (function MsCorlib -> "mscorlib" | Netcore -> "netcore" | NetStandard -> "netstandard") self  
 
+[<RequireQualifiedAccess>]
+type FsiTool =
+    | External of string
+    | Internal
+    | Default
+
 type FsiParams = {
 
 (* - INPUT FILES - *)
@@ -109,8 +115,18 @@ type FsiParams = {
     QuotationsDebug: bool option
     /// Prevents references from being locked by the F# Interactive process
     ShadowCopyReferences: bool option
+
+    /// Sets the path to the fsharpi / fsi.exe to use
+    ToolPath : FsiTool
+    /// Environment variables
+    Environment : Map<string, string>
+    /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
+    WorkingDirectory : string
 }
 with 
+    /// Sets the current environment variables.
+    member x.WithEnvironment map =
+        { x with Environment = map }
     static member ToArgsList p = 
 
         let stringEmptyMap f s = 
@@ -180,8 +196,11 @@ with
         ]
         |> List.filter String.isNotNullOrEmpty
 
-    static member Defaults = 
+    static member Create() =
         {
+            Environment =
+                Process.createEnvironmentMap()
+            WorkingDirectory =  Directory.GetCurrentDirectory()
             Use = null
             Load = null
             Reference = null
@@ -216,6 +235,7 @@ with
             ReadLine = None
             QuotationsDebug = None
             ShadowCopyReferences = None
+            ToolPath = FsiTool.Default
         }    
 
 module internal ExternalFsi = 
@@ -223,17 +243,16 @@ module internal ExternalFsi =
     let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\10.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
     /// The path to the F# Interactive tool.
-    let private pathToFsiExe =
+    let internal pathToFsiExe =
         let ev = Environment.environVar "FSI"
         if not (String.isNullOrEmpty ev) then ev else
         if Environment.isUnix then
-            let paths = Process.appSettings "FSIPath" FSIPath
             // The standard name on *nix is "fsharpi"
-            match Process.tryFindFile paths "fsharpi" with
+            match Process.tryFindFileOnPath "fsharpi" with
             | Some file -> file
             | None ->
             // The early F# 2.0 name on *nix was "fsi"
-            match Process.tryFindFile paths "fsi" with
+            match Process.tryFindFileOnPath "fsi" with
             | Some file -> file
             | None -> "fsharpi"
         else
@@ -243,36 +262,25 @@ module internal ExternalFsi =
             Process.findPath "FSIPath" FSIPath "fsi.exe"
 
     /// Gets the default environment variables and additionally appends user defined vars to it
-    let private defaultEnvironmentVars environmentVars = 
+    let private defaultEnvironmentVars = 
         [
             ("MSBuild", MSBuild.msBuildExe)
             ("GIT", Git.CommandHelper.gitPath)
             ("FSI", pathToFsiExe )
         ]
-        |> Seq.append environmentVars
-
-    /// Serializes arguments, putting script arguments after an empty "--" arg, which denotes the beginning of script arguments
-    let private serializeArgs script (scriptArgs: string list) (fsiParams: FsiParams) = 
-        let stringParams = FsiParams.ToArgsList fsiParams//fsiParams.ToArgsList()
-        let args = 
-            List.concat ([ stringParams; [script;"--"]; scriptArgs]) 
-            |> List.toArray
-            |> Arguments.OfArgs 
-        args.ToWindowsCommandLine
 
     /// Executes a user supplied Fsi.exe with the option to set args and environment variables
-    let execRaw parameters script scriptArgs workingDirectory fsiExe environmentVars = 
-        let args = parameters FsiParams.Defaults |> serializeArgs script scriptArgs
-        let environmentVars' = defaultEnvironmentVars environmentVars
+    let execRaw fsiExe (parameters:FsiParams) (allArgs:string list) = 
+        let args = allArgs |> Args.toWindowsCommandLine
 
-        use __ = Trace.traceTask "Fsi " (sprintf "%s %s with args %s" fsiExe script args)
+        use __ = Trace.traceTask "Fsi " (sprintf "%s with args %s" fsiExe args)
 
         let r = Process.execWithResult (fun info -> 
-                { info with
+                { info.WithEnvironmentVariables defaultEnvironmentVars with
                     FileName = fsiExe
                     Arguments = args
-                    WorkingDirectory = workingDirectory
-                }.WithEnvironmentVariables environmentVars' ) TimeSpan.MaxValue        
+                    WorkingDirectory = ""
+                }.WithEnvironmentVariables (parameters.Environment |> Map.toSeq)) TimeSpan.MaxValue        
 
         if r.ExitCode <> 0 then
             List.iter Trace.traceError r.Errors
@@ -281,12 +289,12 @@ module internal ExternalFsi =
         (r.ExitCode, r.Messages)
 
     /// Locates Fsi.exe and executes 
-    let exec fsiParams script scriptArgs = 
-        execRaw fsiParams script scriptArgs "" pathToFsiExe []
+    let exec fsiExe parameters (allArgs:string list) =
+        execRaw fsiExe parameters allArgs
+
 
 
 module internal InternalFsi = 
-
     let private doExec script allArgs  = 
         // Intialize output and input streams
         let sbOut = new StringBuilder()
@@ -296,15 +304,8 @@ module internal InternalFsi =
         let errStream = new StringWriter(sbErr)
 
         let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
-        let fsiSession = FsiEvaluationSession.Create(fsiConfig, allArgs, inStream, outStream, errStream)
+        let fsiSession = FsiEvaluationSession.Create(fsiConfig, List.toArray allArgs, inStream, outStream, errStream)
         fsiSession.EvalScriptNonThrowing script
-
-
-    let private serializeArgs fsiParams scriptArgs = 
-        let scriptArgs = if List.isEmpty scriptArgs then scriptArgs else List.append ["--"] scriptArgs
-        let fsiArgs = FsiParams.Defaults |> fsiParams |> FsiParams.ToArgsList
-        List.concat ([["C:\\fsi.exe"]; fsiArgs; scriptArgs]) |> List.toArray
-
 
     let private traceErrors (errors: FSharpErrorInfo []) =    
         errors |> Array.iter (fun e -> 
@@ -313,10 +314,8 @@ module internal InternalFsi =
         | FSharpErrorSeverity.Warning -> Trace.traceImportant e.Message)
 
 
-    let exec fsiParams script scriptArgs = 
-        let allArgs = serializeArgs fsiParams scriptArgs
-        
-        use __ = Trace.traceTask "Fsi " (sprintf "%s with args %A" script allArgs)
+    let exec script allArgs =
+        use __ = Trace.traceTask "Fsi " (sprintf "internal fsi with args %A" allArgs)
         let result, errors = doExec script allArgs      
         traceErrors errors
         __.MarkSuccess()
@@ -327,48 +326,44 @@ module internal InternalFsi =
         | Choice1Of2 _ -> (0,["The script completed successfully"])
         | Choice2Of2 e -> (1, [e.ToString()])
 
+let internal execRaw fsiParams script scriptArgs =
+    let param = FsiParams.Create() |> fsiParams 
+    
+    let stringParams = FsiParams.ToArgsList param//fsiParams.ToArgsList()
+    
+    match param.ToolPath with
+    | FsiTool.External fsiPath ->
+        let args = List.concat ([ stringParams; [script;"--"]; scriptArgs]) 
+        ExternalFsi.exec fsiPath param args
+    | FsiTool.Internal ->
+        let args = List.concat ([ ["C:\\fsi.exe"]; stringParams; ["--"]; scriptArgs]) 
+        InternalFsi.exec script args
+    | FsiTool.Default ->
+        let args = List.concat ([ stringParams; [script;"--"]; scriptArgs]) 
+        ExternalFsi.exec ExternalFsi.pathToFsiExe param args
+        
 
 (* - Public Facing API - *)
 /// Executes the internal fsi within FSC on the given script
 /// Returns error code and an exception message if any exceptions were thrown
 /// 
-/// e.g: Passing some arguemnts to fsi, along with the script and some args to be passed to the script
-///     ```
-///     let script = "MyScript.fsx"
-///     let (exitcode,msgs) = Fsi.execInternal (fun p -> 
-///                 { p with 
-///                     TargetProfile = Fsi.Profile.NetStandard } ) script ["stuff";"10"]
-///     ```
-let execInternal fsiParams script scriptArgs = 
-    InternalFsi.exec fsiParams script scriptArgs
-
-/// Executes a user supplied Fsi.exe with the option to set args and environment variables and 
-/// runs the specified script.
-/// Returns error code and any messages from the process
-/// 
-/// e.g: Passing some arguemnts to fsi, along with the script and some args to be passed to the script
-///     ```
+/// ## Sample
+///
+/// e.g: Passing some arguments to fsi, along with the script and some args to be passed to the script
+///
 ///     let workingDir = "path/to/WorkingDir"
 ///     let environmentVars = [("SOME_VAR","55");("GIT","path/to/git")]
 ///     let fsiExe = "path/to/fsi.exe"
 ///     let script = "MyScript.fsx"
-///     let (exitcode,msgs) = Fsi.execExternalRaw (fun p -> 
-///                 { p with 
-///                     TargetProfile = Fsi.Profile.NetStandard } ) 
-///                                 script ["stuff";"10"] workingDir fsiExe environmentVars
+///     let (exitcode,msgs) =
+///         Fsi.exec (fun p -> 
+///             { p with 
+///                 TargetProfile = Fsi.Profile.NetStandard
+///                 WorkingDirectory = "path/to/WorkingDir"
+///                 ToolPath = FsiTool.External fsiExe
+///             }
+///             |> Process.setEnvironmentVariable "SOME_VAR" "55"
+///             |> Process.setEnvironmentVariable "GIT" "path/to/git") script ["stuff";"10"]
 ///     ```
-let execExternalRaw fsiParams script scriptArgs workingDirectory fsiExe environmentVars = 
-    ExternalFsi.execRaw fsiParams script scriptArgs workingDirectory fsiExe environmentVars
-
-/// Looks for Fsi.exe in standard install locations and executes fsi on the specified script.
-/// Returns error code and any messages from the process
-/// 
-/// e.g: Passing some arguemnts to fsi, along with the script and some args to be passed to the script
-///     ```
-///     let script = "MyScript.fsx"
-///     let (exitcode,msgs) = Fsi.execExternal (fun p -> 
-///                 { p with 
-///                     TargetProfile = Fsi.Profile.NetStandard } ) script ["stuff";"10"]
-///     ```
-let execExternal fsiParams script scriptArgs = 
-    ExternalFsi.exec fsiParams script scriptArgs
+let exec fsiParams script scriptArgs = 
+    execRaw fsiParams script scriptArgs
