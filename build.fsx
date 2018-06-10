@@ -1190,7 +1190,7 @@ Target.create "DotNetCorePushNuGet" (fun _ ->
     // dotnet pack
     !! (appDir </> "*/*.fsproj")
     -- (appDir </> "Fake.netcore/*.fsproj")
-    ++ (templateDir </> "*/*.proj")
+    ++ (templateDir </> "*/*.fsproj")
     |> Seq.iter(fun proj ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
         !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
