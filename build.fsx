@@ -96,6 +96,7 @@ let buildMergedDir = buildDir </> "merged"
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
+let templateDir = srcDir</>"template"
 let legacyDir = srcDir</>"legacy"
 
 let additionalFiles = [
@@ -906,9 +907,6 @@ Target.create "CreateNuGet" (fun _ ->
     publish legacyZip
 )
 
-let netCoreProjs =
-    !! (appDir </> "*/*.fsproj")
-
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
@@ -998,16 +996,16 @@ Target.create "_DotNetPackage" (fun _ ->
         } |> dtntSmpl) "Fake.sln"
 
     // pack template
-    let templateProj = appDir @@ "fake-template"
+    let templateProj = templateDir @@ "fake-template"
     DotNet.pack (fun c ->
-    { c with
-        Configuration = DotNet.Release
-        OutputPath = Some nugetDir
-        Common =
-            if CircleCi.isCircleCi then
-                { c.Common with CustomParams = Some "/m:1" }
-            else c.Common
-    } |> dtntSmpl) templateProj
+        { c with
+            Configuration = DotNet.Release
+            OutputPath = Some nugetDir
+            Common =
+                if CircleCi.isCircleCi then
+                    { c.Common with CustomParams = Some "/m:1" }
+                else c.Common
+        } |> dtntSmpl) templateProj
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
@@ -1201,8 +1199,9 @@ let rec nugetPush tries nugetpackage =
 
 Target.create "DotNetCorePushNuGet" (fun _ ->
     // dotnet pack
-    netCoreProjs
+    !! (appDir </> "*/*.fsproj")
     -- (appDir </> "Fake.netcore/*.fsproj")
+    ++ (templateDir </> "*/*.proj")
     |> Seq.iter(fun proj ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
         !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
