@@ -1052,14 +1052,27 @@ module DotNet =
         __.MarkSuccess()
 
     /// Gets the DotNet SDK from the global.json
+    /// This file can exist in the working directory or any of the parent directories
     let getSDKVersionFromGlobalJson() : string =
-        if not (File.Exists "global.json") then
+        let globalJsonPaths rootDir = 
+            let rec loop (dir: DirectoryInfo) = seq {
+                match dir.GetFiles "global.json" with
+                | [| json |] -> yield json
+                | _ -> ()
+                if dir.Parent <> null then
+                    yield! loop dir.Parent
+            }
+            loop (DirectoryInfo rootDir)
+
+        match Seq.tryHead (globalJsonPaths Environment.CurrentDirectory) with
+        | None -> 
             failwithf "global.json not found"
-        try
-            let content = File.ReadAllText "global.json"
-            let json = JObject.Parse content
-            let sdk = json.Item("sdk") :?> JObject
-            let version = sdk.Property("version").Value.ToString()
-            version
-        with
-        | exn -> failwithf "Could not parse global.json: %s" exn.Message
+        | Some globalJson -> 
+            try
+                let content = File.ReadAllText globalJson.FullName
+                let json = JObject.Parse content
+                let sdk = json.Item("sdk") :?> JObject
+                let version = sdk.Property("version").Value.ToString()
+                version
+            with
+            | exn -> failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
