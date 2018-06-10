@@ -1,6 +1,6 @@
 # FAKE 5 - Learn more
 
-> This is especially about the FAKE 5 update, [here you can learn about FAKE](fake-what-is-fake.html)
+> This is especially about the FAKE 5 update, [here you can learn about FAKE](fake-what-is-fake.html) or learn [how to contribute](contributing.html)
 
 FAKE 5 is a huge undertaking in modularizing and porting FAKE 4 to dotnet-core.
 At the same time we want to use that opportunity to pay old API debts.
@@ -15,18 +15,11 @@ So before I go into the details of what changed and what the vision is going for
 > Therefore I decided to make the finish line of FAKE 5 a community effort.
 > If your favorite module is missing, please port it and send a PR (see Open Work section below).
 
-## How stable is it? What is RC? Should I use it?
+## How stable is it?
 
-First, let me say that there are two distributions of FAKE 5.
-
-* The first one is an update to the 'regular' FAKE 4 package on NuGet.
-  It's very safe to update to this package as mentioned in the [migrate to fake 5 guide](fake-migrate-to-fake-5.html).
-  Update the package and fix the `Obsolete` warnings to use the new API. There might still be some minor issues in the new API but it is considered stable now (ie no more breaking changes).
-* The second one is the new dotnet-core version of FAKE.
-  This version is brand-new, was migrated to a new platform and has several API changes.
-  We call it the "new runner" it bundles the support for the `#r "paket: ..."` references and has a new [CLI](fake-commandline.html). At this point we no longer break the API but there might still be some minor issues.
-
-> Fake 5 and this website are already released with Fake 5, so it might be more stable than you think.
+We had quite a long alpha, beta and rc-phase so we are positive that it is ready.
+There might be some missing modules as we have not 100% coverage of the old API.
+If you are blocked by missing modules please consider porting it and sending a PR.
 
 ## Modules? Packages? Paket?
 
@@ -48,7 +41,6 @@ This section describes work that still need to be done to finally release FAKE 5
 * Missing documentation
 * Update documentation
 * Fixing issues with the new website
-* Implement a special formatting for the obsolete warnings -> parse them -> suggest new API dependencies file.
 
 ## New API-Design
 

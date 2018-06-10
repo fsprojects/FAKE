@@ -12,7 +12,7 @@
 ## 5.0.0 - 2018-06-06
 
 * Deep integration into the .NET SDK and .Net Core
-* Global dotnet cli-tool `dotnet tool install fake-cli -g --version 5.0.0-*`
+* Global dotnet cli-tool `dotnet tool install fake-cli -g --version 5.*`
 * `dotnet-fake` cli tool via `DotNetCliToolReference`
 * Standalone `.zip` xcopy deployment and various package manager integrations (for example chocolatey).
 * The old runner (`FAKE` nuget package) is obsolete
