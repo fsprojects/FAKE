@@ -28,14 +28,14 @@ Just install the corresponding package for your system:
 
   - There are [other ways to get started](fake-gettingstarted.html#Install-FAKE) if chocolatey / an administrator-cmd or global installation is not an option.
 
-- Windows (dotnet sdk global tool)
+- Dotnet sdk global tool
 
   - Install the .NET sdk (at least `2.1.300`)
   - Install FAKE
 
     <pre>
         <code class="lang-bash">
-        dotnet tool install fake-cli -g --version=5.0.0-*
+        dotnet tool install fake-cli -g --version=5.*
         </code>
     </pre>
 
@@ -49,6 +49,21 @@ now you can use
 <pre><code class="lang-bash">fake --help</code></pre>
 
 This is basically it. You can now execute fake commands. Follow the [minimal example below](fake-dotnetcore.html#Minimal-example) for a quick start.
+
+## FAKE Template
+Use the FAKE `dotnet new` template. See [FAKE template]("fake-template.html") for more information.
+
+- Install the template:
+
+  <pre><code class="lang-bash">
+  dotnet new -i "fake-template::*"
+  </code></pre
+
+- Run the template:
+
+  <pre><code class="lang-bash">
+  dotnet new fake
+  </code></pre>
 
 ## CLI
 
@@ -146,7 +161,3 @@ Get the latest binaries from chocolatey: https://chocolatey.org/packages/fake
 
 Get the latest dotnet-fake cli tool by adding `<DotNetCliToolReference Include="dotnet-fake" Version="5.*" />` to your dependencies (https://www.nuget.org/packages/dotnet-fake)
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-*"` to get the latest non-stable release</p>
-</div>
