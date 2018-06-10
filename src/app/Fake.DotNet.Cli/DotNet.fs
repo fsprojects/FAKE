@@ -1,7 +1,3 @@
-// From https://raw.githubusercontent.com/dolly22/FAKE.DotNet/master/src/Fake.DotNet/DotNet.fs
-// Temporary copied into Fake until the dotnetcore conversation has finished.
-// This probably needs to stay within Fake to bootstrap?
-// Currently last file in FakeLib, until all dependencies are available in dotnetcore.
 /// .NET Core + CLI tools helpers
 namespace Fake.DotNet
 
@@ -21,8 +17,14 @@ module DotNet =
     open Newtonsoft.Json.Linq
     open System
 
-    /// .NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet)). Update this to redirect all tool commands to different location.
-    let internal defaultDotNetCliDir =
+    /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
+    let defaultUserInstallDir = 
+        if Environment.isUnix
+        then Environment.environVar "HOME" @@ ".dotnet"
+        else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
+
+    /// .NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet))
+    let defaultSystemInstallDir =
         if Environment.isUnix
         then "/usr/local/share/dotnet"
         else @"C:\Program Files\dotnet"
@@ -30,20 +32,29 @@ module DotNet =
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
     /// ## Parameters
     ///
-    /// - 'dotnetCliDir' - dotnet cli install directory
+    /// - 'dotnetCliDir' - the path to check else will probe system PATH
     let private tryDotnetCliPath dotnetCliDir = 
-        let defaultCliPath = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
-        match File.Exists defaultCliPath with
-        | true -> Some defaultCliPath
-        | _ ->
+        match dotnetCliDir with
+        | Some userSetPath -> 
+            let defaultCliPath = userSetPath @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
+            match File.Exists defaultCliPath with
+            | true -> Some defaultCliPath
+            | _ -> None
+        | None -> 
             match Process.tryFindFileOnPath "dotnet" with
             | Some dotnet when File.Exists dotnet -> Some dotnet
             | _ -> None
+            
 
     let private dotnetCliPath dotnetCliDir =
         match tryDotnetCliPath dotnetCliDir with
         | Some dotnet -> dotnet
-        | _ -> failwithf "Can't find dotnet CLI. Looked in %s and on PATH" dotnetCliDir
+        | _ -> 
+            let probeDirs = [
+                match dotnetCliDir with Some dir -> yield dir | None -> ()
+                yield! Environment.pathDirectories
+            ]
+            failwithf "Can't find dotnet CLI. Looked in the following directories: %A" probeDirs
 
     /// Get .NET Core SDK download uri
     let private getGenericDotNetCliInstallerUrl branch installerName =
@@ -316,7 +327,7 @@ module DotNet =
             Process.stringParam ("Channel", channelParamValue)
             Process.stringParam ("Version", versionParamValue)
             Process.optionParam ("Architecture", architectureParamValue |> Option.map Process.quote)
-            Process.stringParam ("InstallDir", (defaultArg param.CustomInstallDir defaultDotNetCliDir) |> Process.quote)
+            Process.stringParam ("InstallDir", (defaultArg param.CustomInstallDir defaultUserInstallDir) |> Process.quote)
             Process.boolParam ("DebugSymbols", param.DebugSymbols)
             Process.boolParam ("DryRun", param.DryRun)
             Process.boolParam ("NoPath", param.NoPath)
@@ -353,9 +364,10 @@ module DotNet =
         }
         static member Create() = {
             DotNetCliPath = 
-                match tryDotnetCliPath defaultDotNetCliDir with
-                | Some dotNet -> dotNet
-                | None -> if Environment.isUnix then "dotnet" else "dotnet.exe"
+                tryDotnetCliPath (Some defaultUserInstallDir)
+                |> Option.orElseWith (fun () -> tryDotnetCliPath (Some defaultSystemInstallDir))
+                // shouldn't hit this one because the previous two probe PATH...
+                |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")                     
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
             Verbosity = None
@@ -404,6 +416,11 @@ module DotNet =
             lift (fun o -> { o with CustomParams = args}) x
         let inline withDotNetCliPath path x =
             lift (fun o -> { o with DotNetCliPath = path}) x
+        
+        /// instruct FAKE DotNet Cli commands to prefer dotnet sdk installs from the system install location.
+        let inline preferSystemInstall = withDotNetCliPath defaultSystemInstallDir
+        /// instruct FAKE DotNet Cli to prefer dotnet sdk installs from the user install location.
+        let inline preferUserInstall   = withDotNetCliPath defaultUserInstallDir
 
     /// [omit]
     let private argList2 name values =
@@ -580,9 +597,9 @@ module DotNet =
     let install setParams : Options -> Options =
         let param = CliInstallOptions.Default |> setParams
         
-        let dir = defaultArg param.CustomInstallDir defaultDotNetCliDir
+        let dir = defaultArg param.CustomInstallDir defaultUserInstallDir
         let existingDotNet =
-            match tryDotnetCliPath dir with
+            match tryDotnetCliPath (Some dir) with
             | Some dotnet ->
                 match param.Version with
                 | Version version -> 
@@ -1001,7 +1018,6 @@ module DotNet =
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f =
             { x with Common = f x.Common }
-
 
     /// [omit]
     let private buildTestArgs (param: TestOptions) =
