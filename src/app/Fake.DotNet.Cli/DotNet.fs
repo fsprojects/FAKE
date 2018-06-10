@@ -418,9 +418,9 @@ module DotNet =
             lift (fun o -> { o with DotNetCliPath = path}) x
         
         /// instruct FAKE DotNet Cli commands to prefer dotnet sdk installs from the system install location.
-        let inline preferSystemInstall = withDotNetCliPath defaultSystemInstallDir
+        let inline preferSystemInstall x = withDotNetCliPath defaultSystemInstallDir x
         /// instruct FAKE DotNet Cli to prefer dotnet sdk installs from the user install location.
-        let inline preferUserInstall   = withDotNetCliPath defaultUserInstallDir
+        let inline preferUserInstall x  = withDotNetCliPath defaultUserInstallDir x
 
     /// [omit]
     let private argList2 name values =
