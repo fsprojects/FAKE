@@ -30,34 +30,25 @@ with override x.ToString () = match x with | Tool -> "tool" | Project -> "projec
 let shouldSucceed message (r: ProcessResult) =
     Expect.isTrue r.OK (sprintf "%s. Results:\n:%A" message r)
 
-let runTemplate rootDir kind = async {
+let runTemplate rootDir kind =
     Directory.ensure rootDir
     let dotnet = DotNet.Options.Create().DotNetCliPath
-    let proc = 
-        Process.getProc (fun p ->
-            p.WithWorkingDirectory(rootDir)
-             .WithFileName(dotnet)
-             .WithArguments(sprintf "new %s --bootstrap %s" templateName (string kind))
-             .WithRedirectStandardInput(true)
-             .WithRedirectStandardOutput(true)
-             .WithRedirectStandardError(true)
-        )
-    
-    proc.Start () |> ignore
-    do! Async.Sleep 2000
-    proc.StandardInput.WriteLine("Y")
-    proc.WaitForExit ()
-    Expect.equal proc.ExitCode 0 "should have run the template successfully"
-}
+    Process.execWithResult (fun p ->
+        p.WithWorkingDirectory(rootDir)
+         .WithFileName(dotnet)
+         .WithArguments(sprintf "new %s --allow-scripts yes --bootstrap %s" templateName (string kind))) (System.TimeSpan.FromSeconds 60.)
+    |> shouldSucceed "should have run the template successfully"
 
-let invokeScript dir scriptName =
+let invokeScript dir scriptName args =
     let fullScriptPath = Path.Combine(dir, scriptName)
     Process.execWithResult 
         (fun x -> 
             x.WithWorkingDirectory(dir)
              .WithFileName(fullScriptPath)
-             .WithArguments "--help" ) (System.TimeSpan.FromSeconds 60.)
-    |> shouldSucceed "should invoke the script file"
+             .WithArguments args ) (System.TimeSpan.FromSeconds 60.)
+
+let missingTarget targetName (r: ProcessResult) = 
+    r.Errors |> Seq.exists (fun err -> err.Contains (sprintf "Target \"%s\" is not defined" targetName))
 
 [<Tests>]
 let tests =
@@ -73,19 +64,35 @@ let tests =
                 then "fake.sh"
                 else "fake.cmd"
 
-            yield testAsync "can install a project-style template" {
+            yield test "can install a project-style template" {
                 let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
                 Directory.ensure tempDir
-                do! runTemplate tempDir Project
-                invokeScript tempDir scriptFile
+                runTemplate tempDir Project
+                invokeScript tempDir scriptFile "--help" |> shouldSucceed "should invoke help"
+            }
+
+            yield test "can build with the project-style template" {
+                let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
+                Directory.ensure tempDir
+                runTemplate tempDir Project
+                invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
+            }
+
+            yield test "fails to build a target that doesn't exist" {
+                let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
+                Directory.ensure tempDir
+                runTemplate tempDir Project
+                let result = invokeScript tempDir scriptFile "build -t Nonexistent"
+                Expect.isFalse result.OK "the script should have failed"
+                Expect.isTrue (missingTarget "Nonexistent" result) "The script should recognize the target doesn't exist"
             }
 
             /// ignored because the .net tool install to a subdirectory is broken: https://github.com/fsharp/FAKE/pull/1989#issuecomment-396057330
-            yield ptestAsync "can install a tool-style template" {
+            yield ptest "can install a tool-style template" {
                 let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
                 Directory.ensure tempDir
-                do! runTemplate tempDir Tool
-                invokeScript tempDir scriptFile
+                runTemplate tempDir Tool
+                invokeScript tempDir scriptFile "--help" |> shouldSucceed "should invoke help"
             }
         ]
     ]
