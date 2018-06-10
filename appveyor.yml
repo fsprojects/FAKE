@@ -1,6 +1,6 @@
 image: Visual Studio 2017
 install:
-  - cinst fake -pre
+  - cinst fake
 build_script:
 # See https://stackoverflow.com/a/12866669/1269722
 # Problem is that colors are lost
