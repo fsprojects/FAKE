@@ -37,12 +37,12 @@ namespace Test.FAKECore.PackageMgt
             () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
 
         It should_contain_the_license_url = 
-            () => _package.LicenseUrl.ShouldStartWith("http://www.github.com/fsharp/Fake/blob/master/License.txt") && _package.LicenseUrl.ShouldEndWith("License.txt");
+            () => _package.LicenseUrl.ShouldStartWith("https://github.com/fsharp/Fake/blob/master/License.txt") && _package.LicenseUrl.ShouldEndWith("License.txt");
 
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 
         It should_contain_the_package_url =
-            () => _package.Url.ShouldEqual("https://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
+            () => _package.Url.ShouldEqual("https://www.nuget.org/api/v2/package/FAKE/" + _package.Version);
 
         It should_build_the_FileName_from_id =
             () => _package.FileName.ShouldStartWith("FAKE");        
