@@ -4,12 +4,13 @@
     "name": "FAKE - Template",
     "classifications": ["build", "FAKE"],
     "symbols": {
-        "scriptname": {
+        "script-name": {
             "type": "parameter",
             "description": "Name of the generated build-script",
             "dataType": "string",
             "defaultValue": "build.fsx",
-            "FileRename": "build.fsx"
+            "FileRename": "build.fsx",
+            "replaces": "(build.fsx)"
         },
         "bootstrap": {
             "type": "parameter",
@@ -65,23 +66,23 @@
     "sources": [{
         "exclude": "**/.template.config/**/*",
         "modifiers": [{
-                "exclude": "**/buildTool.*",
+                "exclude": "**/fake.tool.*",
                 "condition": "(bootstrap != \"tool\")"
             },
             {
                 "rename": {
-                    "buildTool.sh": "build.sh",
-                    "buildTool.cmd": "build.cmd"
+                    "fake.tool.sh": "fake.sh",
+                    "fake.tool.cmd": "fake.cmd"
                 }
             },
             {
-                "exclude": ["**/buildProj.*", "**/build.proj"],
+                "exclude": ["**/fake.proj.*", "**/build.proj"],
                 "condition": "(bootstrap != \"project\")"
             },
             {
                 "rename": {
-                    "buildProj.sh": "build.sh",
-                    "buildProj.cmd": "build.cmd"
+                    "fake.proj.sh": "fake.sh",
+                    "fake.proj.cmd": "fake.cmd"
                 }
             },
             {

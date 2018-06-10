@@ -5,7 +5,7 @@
     nuget Fake.IO.FileSystem
     nuget Fake.Core.Target //"
 //#endif
-#load ".fake/build.fsx/intellisense.fsx"
+#load ".fake/(build.fsx)/intellisense.fsx"
 open Fake.Core
 open Fake.DotNet
 open Fake.IO

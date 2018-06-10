@@ -15,15 +15,15 @@ After you installed the template you can setup FAKE by running:
 <pre><code class="lang-bash">
 dotnet new fake
 </code></pre>
-This will create a default `build.fsx` file, a `paket.dependencies` file used to mangage your build dependencies and two shell scripts `build.sh` and `build.cmd`. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed direcly to FAKE so you can run:
+This will create a default `build.fsx` file, a `paket.dependencies` file used to mangage your build dependencies and two shell scripts `fake.sh` and `fake.cmd`. The shell scripts are used to bootstrap and run FAKE. All of the arguments are passed direcly to FAKE so you can run:
 <pre><code class="lang-bash">
-.\build.cmd build
+.\fake.cmd build
 </code></pre>
 to run your build. Have a look [this](fake-commandline.html) for the available command-line options. [This page](fake-gettingstarted.html#Example-Compiling-and-building-your-NET-application) additional information on how to use a build script.
 
 ## Options
 
-### --scriptname
+### --script-name
 Specifies the name of the generated build-script. Defaults to `build.fsx`.
 
 ### --bootstrap
