@@ -995,17 +995,6 @@ Target.create "_DotNetPackage" (fun _ ->
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
 
-    // pack template
-    let templateProj = templateDir @@ "fake-template"
-    DotNet.pack (fun c ->
-        { c with
-            Configuration = DotNet.Release
-            OutputPath = Some nugetDir
-            Common =
-                if CircleCi.isCircleCi then
-                    { c.Common with CustomParams = Some "/m:1" }
-                else c.Common
-        } |> dtntSmpl) templateProj
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
     let testZip = "temp/tests.zip"
