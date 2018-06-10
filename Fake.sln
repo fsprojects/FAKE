@@ -154,7 +154,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "template", "template", "{87
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "fake-template", "src\template\fake-template\fake-template.fsproj", "{29B66A06-1A45-4D65-AC31-7D746449E5D6}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Dotnet.Cli.IntegrationTests", "src\test\Fake.Dotnet.Cli.IntegrationTests\Fake.Dotnet.Cli.IntegrationTests.fsproj", "{48ECC58D-468C-4D44-98B3-854C21EB0D40}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.DotNet.Cli.IntegrationTests", "src\test\Fake.DotNet.Cli.IntegrationTests\Fake.DotNet.Cli.IntegrationTests.fsproj", "{48ECC58D-468C-4D44-98B3-854C21EB0D40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,4 +3,3 @@ group netcore
 FSharp.Core
 NETStandard.Library
 Expecto
-FParsec

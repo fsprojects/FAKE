@@ -4,6 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TemplateTests.fs" />
