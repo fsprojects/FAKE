@@ -683,6 +683,11 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
     if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
 )
 
+Target.create "TemplateIntegrationTests" (fun _ ->
+    let processResult =
+        DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
+    if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
+)
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
     // dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj
@@ -1536,6 +1541,7 @@ let prevDocs =
     ==> "RunTests"
 
 "DotNetPackage"
+    ==> "TemplateIntegrationTests"
     ==> "DotNetCoreCreateZipPackages"
     ==> "FullDotNetCore"
     ==> "Default"
