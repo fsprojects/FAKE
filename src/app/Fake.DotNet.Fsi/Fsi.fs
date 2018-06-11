@@ -351,8 +351,6 @@ let internal execRaw fsiParams script scriptArgs =
 ///
 /// e.g: Passing some arguments to fsi, along with the script and some args to be passed to the script
 ///
-///     let workingDir = "path/to/WorkingDir"
-///     let environmentVars = [("SOME_VAR","55");("GIT","path/to/git")]
 ///     let fsiExe = "path/to/fsi.exe"
 ///     let script = "MyScript.fsx"
 ///     let (exitcode,msgs) =
