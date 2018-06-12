@@ -56,7 +56,7 @@ let kuduSync() =
         Process.execWithResult(fun psi ->
             { psi with
                 FileName = Path.Combine(kuduPath, "kudusync.cmd")
-                Arguments = sprintf """-v 50 -f "%s" -t "%s" -n "%s" -p "%s" -i ".git;.hg;.deployment;deploy.cmd""" deploymentTemp deploymentTarget nextManifestPath previousManifestPath })
+                Arguments = sprintf """-v 50 -f "%s" -t "%s" -n "%s" -p "%s" -i ".git;.hg;.deployment;deploy.cmd" """ deploymentTemp deploymentTarget nextManifestPath previousManifestPath })
             (TimeSpan.FromMinutes 5.)
     result.Results |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
     if not result.OK then failwith "Error occurred during Kudu Sync deployment."
