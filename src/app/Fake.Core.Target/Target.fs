@@ -496,7 +496,7 @@ module Target =
     /// Runs a single target without its dependencies... only when no error has been detected yet.
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
-            use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
+            use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> target.Name) (dependencyString target)
             let res = runSimpleContextInternal target context
             if res.HasError
             then t.MarkFailed()
