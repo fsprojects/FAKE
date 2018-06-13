@@ -209,6 +209,9 @@
     <Compile Include="..\..\app\Fake.Core.Target\TargetOperators.fs">
       <Link>Fake.Core.Target/TargetOperators.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.UserInput\UserInput.fs">
+      <Link>Fake.Core.UserInput/UserInput.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuildLogger.fs">
       <Link>Fake.DotNet.MSBuild/MSBuildLogger.fs</Link>
     </Compile>
