@@ -41,4 +41,4 @@ DotNet.restore (fun args ->
     } |> withWorkDir "./test" ) "mysolution.sln"
 ```
 
-More [API Documentation](apidocs/v5/fake-dotnet-cli.html)
+More [API Documentation](apidocs/v5/fake-dotnet-dotnet.html)

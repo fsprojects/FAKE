@@ -31,13 +31,17 @@ namespace Test.FAKECore.PackageMgt
             () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
 
         It should_contain_the_project_url = 
-            () => _package.ProjectUrl.ShouldEqual("http://www.github.com/fsharp/Fake");
+            () => _package.ProjectUrl.ShouldEqual("https://github.com/fsharp/Fake");
 
         It should_contain_the_publiNuSpecPackageshing_date = 
             () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
 
-        It should_contain_the_license_url = 
-            () => _package.LicenseUrl.ShouldEqual("http://www.github.com/fsharp/Fake/blob/master/License.txt");
+        private It should_contain_the_license_url =
+            () =>
+            {
+                _package.LicenseUrl.ShouldStartWith("https://github.com/fsharp/FAKE/blob/");
+                _package.LicenseUrl.ShouldEndWith("/License.txt");
+            };
 
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 

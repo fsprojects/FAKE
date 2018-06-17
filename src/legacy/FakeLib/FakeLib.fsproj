@@ -209,6 +209,9 @@
     <Compile Include="..\..\app\Fake.Core.Target\TargetOperators.fs">
       <Link>Fake.Core.Target/TargetOperators.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Core.UserInput\UserInput.fs">
+      <Link>Fake.Core.UserInput/UserInput.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuildLogger.fs">
       <Link>Fake.DotNet.MSBuild/MSBuildLogger.fs</Link>
     </Compile>
@@ -332,6 +335,9 @@
     <Compile Include="..\..\app\Fake.Tools.Git\Commit.fs">
       <Link>Fake.Tools.Git/Commit.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Tools.GitVersion\GitVersion.fs">
+      <Link>Fake.Tools.GitVersion/GitVersion.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
       <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
     </Compile>
@@ -412,6 +418,9 @@
     </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Fsc\Fsc.fs">
       <Link>Fake.DotNet.Fsc\Fsc.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.DotNet.Fsi\Fsi.fs">
+      <Link>Fake.DotNet.Fsi\Fsi.fs</Link>
     </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
@@ -712,10 +721,10 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
         <Reference Include="FSharp.Control.Reactive">
-          <HintPath>..\..\..\packages\FSharp.Control.Reactive\lib\net45\FSharp.Control.Reactive.dll</HintPath>
+          <HintPath>..\..\..\packages\FSharp.Control.Reactive\lib\net46\FSharp.Control.Reactive.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
