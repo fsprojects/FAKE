@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -310,10 +313,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2020', 2020)" onmouseover="showTip(event, '2020', 2020)">
+          <code onmouseout="hideTip(event, '2025', 2025)" onmouseover="showTip(event, '2025', 2025)">
             downloadFile localFilePath uri
           </code>
-          <div class="tip" id="2020">
+          <div class="tip" id="2025">
             <strong>Signature:</strong> localFilePath:string -&gt; uri:string -&gt; string<br />
                                   </div>
         </td>
@@ -340,10 +343,10 @@ string -&gt; string -&gt; string</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2021', 2021)" onmouseover="showTip(event, '2021', 2021)">
+          <code onmouseout="hideTip(event, '2026', 2026)" onmouseover="showTip(event, '2026', 2026)">
             downloadFiles input
           </code>
-          <div class="tip" id="2021">
+          <div class="tip" id="2026">
             <strong>Signature:</strong> input:DownloadParameters list -&gt; string list<br />
                                   </div>
         </td>
@@ -369,10 +372,10 @@ DownloadParameters -&gt; string list</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2022', 2022)" onmouseover="showTip(event, '2022', 2022)">
+          <code onmouseout="hideTip(event, '2027', 2027)" onmouseover="showTip(event, '2027', 2027)">
             get userName password url
           </code>
-          <div class="tip" id="2022">
+          <div class="tip" id="2027">
             <strong>Signature:</strong> userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                                   </div>
         </td>
@@ -396,10 +399,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2023', 2023)" onmouseover="showTip(event, '2023', 2023)">
+          <code onmouseout="hideTip(event, '2028', 2028)" onmouseover="showTip(event, '2028', 2028)">
             post url userName password data
           </code>
-          <div class="tip" id="2023">
+          <div class="tip" id="2028">
             <strong>Signature:</strong> url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
@@ -424,10 +427,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2024', 2024)" onmouseover="showTip(event, '2024', 2024)">
+          <code onmouseout="hideTip(event, '2029', 2029)" onmouseover="showTip(event, '2029', 2029)">
             postCommand (...)
           </code>
-          <div class="tip" id="2024">
+          <div class="tip" id="2029">
             <strong>Signature:</strong> headerF:(HttpRequestHeaders -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                                   </div>
         </td>
@@ -454,10 +457,10 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2025', 2025)" onmouseover="showTip(event, '2025', 2025)">
+          <code onmouseout="hideTip(event, '2030', 2030)" onmouseover="showTip(event, '2030', 2030)">
             upload url file
           </code>
-          <div class="tip" id="2025">
+          <div class="tip" id="2030">
             <strong>Signature:</strong> url:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -576,7 +579,7 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

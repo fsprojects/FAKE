@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -282,10 +285,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '566', 566)" onmouseover="showTip(event, '566', 566)">
+          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
             lift f x
           </code>
-          <div class="tip" id="566">
+          <div class="tip" id="570">
             <strong>Signature:</strong> f:(Options -&gt; Options) -&gt; x:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -300,12 +303,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '567', 567)" onmouseover="showTip(event, '567', 567)">
+          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
             withCustomParams args x
           </code>
-          <div class="tip" id="567">
-            <strong>Signature:</strong> args:string option -&gt; x:^?11839 -&gt; ^?11839<br />
-                          <strong>Type parameters:</strong> ^?11839                      </div>
+          <div class="tip" id="571">
+            <strong>Signature:</strong> args:string option -&gt; x:^?11864 -&gt; ^?11864<br />
+                          <strong>Type parameters:</strong> ^?11864                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L404-404" class="github-link">
@@ -318,12 +321,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '568', 568)" onmouseover="showTip(event, '568', 568)">
+          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
             withDiagnostics diag x
           </code>
-          <div class="tip" id="568">
-            <strong>Signature:</strong> diag:bool -&gt; x:^?11835 -&gt; ^?11835<br />
-                          <strong>Type parameters:</strong> ^?11835                      </div>
+          <div class="tip" id="572">
+            <strong>Signature:</strong> diag:bool -&gt; x:^?11860 -&gt; ^?11860<br />
+                          <strong>Type parameters:</strong> ^?11860                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L400-400" class="github-link">
@@ -336,12 +339,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '569', 569)" onmouseover="showTip(event, '569', 569)">
+          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
             withDotNetCliPath path x
           </code>
-          <div class="tip" id="569">
-            <strong>Signature:</strong> path:string -&gt; x:^?11841 -&gt; ^?11841<br />
-                          <strong>Type parameters:</strong> ^?11841                      </div>
+          <div class="tip" id="573">
+            <strong>Signature:</strong> path:string -&gt; x:^?11866 -&gt; ^?11866<br />
+                          <strong>Type parameters:</strong> ^?11866                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L406-406" class="github-link">
@@ -354,12 +357,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
+          <code onmouseout="hideTip(event, '574', 574)" onmouseover="showTip(event, '574', 574)">
             withEnvironment map x
           </code>
-          <div class="tip" id="570">
-            <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; x:^?11829 -&gt; ^?11829<br />
-                          <strong>Type parameters:</strong> ^?11829                      </div>
+          <div class="tip" id="574">
+            <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; x:^?11854 -&gt; ^?11854<br />
+                          <strong>Type parameters:</strong> ^?11854                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L392-392" class="github-link">
@@ -372,12 +375,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
+          <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
             withRedirectOutput shouldRedirect x
           </code>
-          <div class="tip" id="571">
-            <strong>Signature:</strong> shouldRedirect:bool -&gt; x:^?11831 -&gt; ^?11831<br />
-                          <strong>Type parameters:</strong> ^?11831                      </div>
+          <div class="tip" id="575">
+            <strong>Signature:</strong> shouldRedirect:bool -&gt; x:^?11856 -&gt; ^?11856<br />
+                          <strong>Type parameters:</strong> ^?11856                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L395-395" class="github-link">
@@ -390,12 +393,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
+          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
             withVerbosity verb x
           </code>
-          <div class="tip" id="572">
-            <strong>Signature:</strong> verb:Verbosity option -&gt; x:^?11837 -&gt; ^?11837<br />
-                          <strong>Type parameters:</strong> ^?11837                      </div>
+          <div class="tip" id="576">
+            <strong>Signature:</strong> verb:Verbosity option -&gt; x:^?11862 -&gt; ^?11862<br />
+                          <strong>Type parameters:</strong> ^?11862                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L402-402" class="github-link">
@@ -408,12 +411,12 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
             withWorkingDirectory wd x
           </code>
-          <div class="tip" id="573">
-            <strong>Signature:</strong> wd:string -&gt; x:^?11833 -&gt; ^?11833<br />
-                          <strong>Type parameters:</strong> ^?11833                      </div>
+          <div class="tip" id="577">
+            <strong>Signature:</strong> wd:string -&gt; x:^?11858 -&gt; ^?11858<br />
+                          <strong>Type parameters:</strong> ^?11858                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L398-398" class="github-link">
@@ -530,7 +533,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

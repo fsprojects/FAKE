@@ -52,6 +52,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -111,6 +112,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -125,6 +127,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -252,7 +255,7 @@
                       <article>
 <h1><a name="FAKE-5-Learn-more" class="anchor" href="#FAKE-5-Learn-more">FAKE 5 - Learn more</a></h1>
 <blockquote>
-<p>This is especially about the FAKE 5 update, <a href="fake-what-is-fake.html">here you can learn about FAKE</a></p>
+<p>This is especially about the FAKE 5 update, <a href="fake-what-is-fake.html">here you can learn about FAKE</a> or learn <a href="contributing.html">how to contribute</a></p>
 </blockquote>
 <p>FAKE 5 is a huge undertaking in modularizing and porting FAKE 4 to dotnet-core.
 At the same time we want to use that opportunity to pay old API debts.</p>
@@ -265,23 +268,10 @@ I think we now have a good foundation to finish the remaining work.
 Therefore I decided to make the finish line of FAKE 5 a community effort.
 If your favorite module is missing, please port it and send a PR (see Open Work section below).</p>
 </blockquote>
-<h2><a name="How-stable-is-it-What-is-RC-Should-I-use-it" class="anchor" href="#How-stable-is-it-What-is-RC-Should-I-use-it">How stable is it? What is RC? Should I use it?</a></h2>
-<p>First, let me say that there are two distributions of FAKE 5.</p>
-<ul>
-<li>
-The first one is an update to the 'regular' FAKE 4 package on NuGet.
-It's very safe to update to this package as mentioned in the <a href="fake-migrate-to-fake-5.html">migrate to fake 5 guide</a>.
-Update the package and fix the <code>Obsolete</code> warnings to use the new API. There might still be some minor issues in the new API but it is considered stable now (ie no more breaking changes).
-</li>
-<li>
-The second one is the new dotnet-core version of FAKE.
-This version is brand-new, was migrated to a new platform and has several API changes.
-We call it the "new runner" it bundles the support for the <code>#r "paket: ..."</code> references and has a new <a href="fake-commandline.html">CLI</a>. At this point we no longer break the API but there might still be some minor issues.
-</li>
-</ul>
-<blockquote>
-<p>Fake 5 and this website are already released with Fake 5, so it might be more stable than you think.</p>
-</blockquote>
+<h2><a name="How-stable-is-it" class="anchor" href="#How-stable-is-it">How stable is it?</a></h2>
+<p>We had quite a long alpha, beta and rc-phase so we are positive that it is ready.
+There might be some missing modules as we have not 100% coverage of the old API.
+If you are blocked by missing modules please consider porting it and sending a PR.</p>
 <h2><a name="Modules-Packages-Paket" class="anchor" href="#Modules-Packages-Paket">Modules? Packages? Paket?</a></h2>
 <p>In the past it was cumbersome and hard to extend your own builds with customized logic or share logic across builds easily.
 Paket loading scripts helped a lot in that issue space, but now you have quite a lot infrastructure for simply running a build script.
@@ -298,7 +288,6 @@ If you are in the scripting area there is not even a need to save <code>paket.de
 <li>Missing documentation</li>
 <li>Update documentation</li>
 <li>Fixing issues with the new website</li>
-<li>Implement a special formatting for the obsolete warnings -&gt; parse them -&gt; suggest new API dependencies file.</li>
 </ul>
 <h2><a name="New-API-Design" class="anchor" href="#New-API-Design">New API-Design</a></h2>
 <p>The old API suffered from several issues:</p>
@@ -420,7 +409,7 @@ This old API design lead to ambiguities and even user issues.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

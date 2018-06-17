@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -339,10 +342,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '862', 862)" onmouseover="showTip(event, '862', 862)">
+          <code onmouseout="hideTip(event, '867', 867)" onmouseover="showTip(event, '867', 867)">
             defaultNpmParams
           </code>
-          <div class="tip" id="862">
+          <div class="tip" id="867">
             <strong>Signature:</strong> NpmParams<br />
                                   </div>
         </td>
@@ -359,10 +362,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '863', 863)" onmouseover="showTip(event, '863', 863)">
+          <code onmouseout="hideTip(event, '868', 868)" onmouseover="showTip(event, '868', 868)">
             exec(command setParams)
           </code>
-          <div class="tip" id="863">
+          <div class="tip" id="868">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -391,10 +394,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '864', 864)" onmouseover="showTip(event, '864', 864)">
+          <code onmouseout="hideTip(event, '869', 869)" onmouseover="showTip(event, '869', 869)">
             install(setParams)
           </code>
-          <div class="tip" id="864">
+          <div class="tip" id="869">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -422,10 +425,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '865', 865)" onmouseover="showTip(event, '865', 865)">
+          <code onmouseout="hideTip(event, '870', 870)" onmouseover="showTip(event, '870', 870)">
             installForced(setParams)
           </code>
-          <div class="tip" id="865">
+          <div class="tip" id="870">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -453,10 +456,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '866', 866)" onmouseover="showTip(event, '866', 866)">
+          <code onmouseout="hideTip(event, '871', 871)" onmouseover="showTip(event, '871', 871)">
             run(command setParams)
           </code>
-          <div class="tip" id="866">
+          <div class="tip" id="871">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -485,10 +488,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '867', 867)" onmouseover="showTip(event, '867', 867)">
+          <code onmouseout="hideTip(event, '872', 872)" onmouseover="showTip(event, '872', 872)">
             runSilent(command setParams)
           </code>
-          <div class="tip" id="867">
+          <div class="tip" id="872">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -517,10 +520,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '868', 868)" onmouseover="showTip(event, '868', 868)">
+          <code onmouseout="hideTip(event, '873', 873)" onmouseover="showTip(event, '873', 873)">
             runTest(command setParams)
           </code>
-          <div class="tip" id="868">
+          <div class="tip" id="873">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -549,10 +552,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '869', 869)" onmouseover="showTip(event, '869', 869)">
+          <code onmouseout="hideTip(event, '874', 874)" onmouseover="showTip(event, '874', 874)">
             test(setParams)
           </code>
-          <div class="tip" id="869">
+          <div class="tip" id="874">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -684,7 +687,7 @@ WorkingDirectory = "./src/FAKESimple.Web/"
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

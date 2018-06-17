@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -261,7 +264,7 @@
 <p>
         <div class="alert alert-warning">
         <h5>OBSOLETE</h5>
-        <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+        <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
         </div> 
 
 </p>
@@ -287,7 +290,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
                 </div> 
             <p>DotNet build parameters</p>
 
@@ -301,7 +304,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
                 </div> 
             <p>DotNet parameters</p>
 
@@ -315,7 +318,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
                 </div> 
             <p>DotNet pack parameters</p>
 
@@ -329,7 +332,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
                 </div> 
             <p>DotNet publish parameters</p>
 
@@ -343,7 +346,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
                 </div> 
             <p>DotNet restore parameters</p>
 
@@ -357,7 +360,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
                 </div> 
             <p>DotNet test parameters</p>
 
@@ -385,14 +388,14 @@
             <strong>Signature:</strong> setBuildParams:(BuildParams -&gt; BuildParams) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L212-212" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -430,14 +433,14 @@
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L14-14" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -458,14 +461,14 @@
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L487-487" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -484,14 +487,14 @@
             <strong>Signature:</strong> unit -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L492-492" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -512,14 +515,14 @@
             <strong>Signature:</strong> unit -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L18-18" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -540,14 +543,14 @@
             <strong>Signature:</strong> sdkVersion:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L507-507" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -568,14 +571,14 @@
             <strong>Signature:</strong> unit -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L29-29" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -596,14 +599,14 @@
             <strong>Signature:</strong> setPackParams:(PackParams -&gt; PackParams) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L365-365" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -641,14 +644,14 @@
             <strong>Signature:</strong> setPublishParams:(PublishParams -&gt; PublishParams) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L448-448" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -686,14 +689,14 @@
             <strong>Signature:</strong> setRestoreParams:(RestoreParams -&gt; RestoreParams) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L134-134" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -731,14 +734,14 @@
             <strong>Signature:</strong> setCommandParams:(CommandParams -&gt; CommandParams) -&gt; args:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L74-74" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -779,14 +782,14 @@
             <strong>Signature:</strong> version:string -&gt; fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L477-477" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -807,14 +810,14 @@
             <strong>Signature:</strong> setTestParams:(TestParams -&gt; TestParams) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/DotNetCLIHelper.fs#L289-289" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -949,7 +952,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -384,10 +387,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '412', 412)" onmouseover="showTip(event, '412', 412)">
+          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
             create(description unreleased entries)
           </code>
-          <div class="tip" id="412">
+          <div class="tip" id="414">
             <strong>Signature:</strong> description:string option -&gt; unreleased:Unreleased option -&gt; entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
@@ -402,10 +405,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
+          <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
             createWithCustomHeader(...)
           </code>
-          <div class="tip" id="413">
+          <div class="tip" id="415">
             <strong>Signature:</strong> header:string -&gt; description:string option -&gt; unreleased:Unreleased option -&gt; entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
@@ -420,10 +423,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
+          <code onmouseout="hideTip(event, '416', 416)" onmouseover="showTip(event, '416', 416)">
             fromEntries(entries)
           </code>
-          <div class="tip" id="414">
+          <div class="tip" id="416">
             <strong>Signature:</strong> entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
@@ -438,10 +441,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
+          <code onmouseout="hideTip(event, '417', 417)" onmouseover="showTip(event, '417', 417)">
             load(filename)
           </code>
-          <div class="tip" id="415">
+          <div class="tip" id="417">
             <strong>Signature:</strong> filename:string -&gt; Changelog<br />
                                   </div>
         </td>
@@ -464,10 +467,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '416', 416)" onmouseover="showTip(event, '416', 416)">
+          <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
             parse(data)
           </code>
-          <div class="tip" id="416">
+          <div class="tip" id="418">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; Changelog<br />
                                   </div>
         </td>
@@ -488,10 +491,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '417', 417)" onmouseover="showTip(event, '417', 417)">
+          <code onmouseout="hideTip(event, '419', 419)" onmouseover="showTip(event, '419', 419)">
             parseVersions(line)
           </code>
-          <div class="tip" id="417">
+          <div class="tip" id="419">
             <strong>Signature:</strong> line:string -&gt; Match * Match<br />
                                   </div>
         </td>
@@ -506,10 +509,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
+          <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
             promoteUnreleased(version changelog)
           </code>
-          <div class="tip" id="418">
+          <div class="tip" id="420">
             <strong>Signature:</strong> version:string -&gt; changelog:Changelog -&gt; Changelog<br />
                                   </div>
         </td>
@@ -534,10 +537,10 @@ to a new changelog entry with the given version</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '419', 419)" onmouseover="showTip(event, '419', 419)">
+          <code onmouseout="hideTip(event, '421', 421)" onmouseover="showTip(event, '421', 421)">
             save(filename changelog)
           </code>
-          <div class="tip" id="419">
+          <div class="tip" id="421">
             <strong>Signature:</strong> filename:string -&gt; changelog:Changelog -&gt; unit<br />
                                   </div>
         </td>
@@ -663,7 +666,7 @@ to a new changelog entry with the given version</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

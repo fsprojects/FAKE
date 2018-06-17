@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -336,10 +339,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2226', 2226)" onmouseover="showTip(event, '2226', 2226)">
+          <code onmouseout="hideTip(event, '2232', 2232)" onmouseover="showTip(event, '2232', 2232)">
             ChocoInstallDefaults 
           </code>
-          <div class="tip" id="2226">
+          <div class="tip" id="2232">
             <strong>Signature:</strong> ChocoInstallParams<br />
                                   </div>
         </td>
@@ -356,10 +359,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2227', 2227)" onmouseover="showTip(event, '2227', 2227)">
+          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
             ChocoPackDefaults 
           </code>
-          <div class="tip" id="2227">
+          <div class="tip" id="2233">
             <strong>Signature:</strong> ChocoPackParams<br />
                                   </div>
         </td>
@@ -376,10 +379,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2228', 2228)" onmouseover="showTip(event, '2228', 2228)">
+          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
             ChocoPushDefaults 
           </code>
-          <div class="tip" id="2228">
+          <div class="tip" id="2234">
             <strong>Signature:</strong> ChocoPushParams<br />
                                   </div>
         </td>
@@ -396,10 +399,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2229', 2229)" onmouseover="showTip(event, '2229', 2229)">
+          <code onmouseout="hideTip(event, '2235', 2235)" onmouseover="showTip(event, '2235', 2235)">
             exec args timeout
           </code>
-          <div class="tip" id="2229">
+          <div class="tip" id="2235">
             <strong>Signature:</strong> args:string -&gt; timeout:TimeSpan -&gt; unit<br />
                                   </div>
         </td>
@@ -450,10 +453,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2230', 2230)" onmouseover="showTip(event, '2230', 2230)">
+          <code onmouseout="hideTip(event, '2236', 2236)" onmouseover="showTip(event, '2236', 2236)">
             install setParams packages
           </code>
-          <div class="tip" id="2230">
+          <div class="tip" id="2236">
             <strong>Signature:</strong> setParams:(ChocoInstallParams -&gt; ChocoInstallParams) -&gt; packages:string -&gt; unit<br />
                                   </div>
         </td>
@@ -481,10 +484,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2231', 2231)" onmouseover="showTip(event, '2231', 2231)">
+          <code onmouseout="hideTip(event, '2237', 2237)" onmouseover="showTip(event, '2237', 2237)">
             IsAvailable 
           </code>
-          <div class="tip" id="2231">
+          <div class="tip" id="2237">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -508,10 +511,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2232', 2232)" onmouseover="showTip(event, '2232', 2232)">
+          <code onmouseout="hideTip(event, '2238', 2238)" onmouseover="showTip(event, '2238', 2238)">
             pack setParams
           </code>
-          <div class="tip" id="2232">
+          <div class="tip" id="2238">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -538,10 +541,10 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
+          <code onmouseout="hideTip(event, '2239', 2239)" onmouseover="showTip(event, '2239', 2239)">
             packFromTemplate setParams nuspecPath
           </code>
-          <div class="tip" id="2233">
+          <div class="tip" id="2239">
             <strong>Signature:</strong> setParams:(ChocoPackParams -&gt; ChocoPackParams) -&gt; nuspecPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -569,10 +572,10 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
+          <code onmouseout="hideTip(event, '2240', 2240)" onmouseover="showTip(event, '2240', 2240)">
             push setParams nupkgPath
           </code>
-          <div class="tip" id="2234">
+          <div class="tip" id="2240">
             <strong>Signature:</strong> setParams:(ChocoPushParams -&gt; ChocoPushParams) -&gt; nupkgPath:string -&gt; unit<br />
                                   </div>
         </td>
@@ -704,7 +707,7 @@ Choco.Pack (fun p -&gt; { p with Version = "0.5.0"; ... })
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

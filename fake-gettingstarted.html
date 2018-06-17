@@ -52,6 +52,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -111,6 +112,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -125,6 +127,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -264,20 +267,51 @@
 </ul>
 <h2><a name="Install-FAKE" class="anchor" href="#Install-FAKE">Install FAKE</a></h2>
 <p>"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.</p>
-<p>There are various ways to install FAKE 5</p>
+<p>There are various ways to install FAKE 5:</p>
 <ul>
 <li>
-<p>Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey)
-Example <code>choco install fake -pre</code></p>
-</li>
-<li><p>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.0.0-*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
+<p>Install FAKE as a global dotnet tool:</p>
+<ul>
 <li>
-<p>Install fake as a global dotnet tool: run <code>dotnet tool install fake-cli -g --version=5.0.0-*</code> to install fake globally or <code>dotnet tool install fake-cli --tool-path your_tool_path --version=5.0.0-*</code> to install fake into <code>your_tool_path</code>. Use <code>--version</code> to specify the version of fake. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/global_tool"><code>global_tool</code> branch of <code>fake-bootstrap</code></a> for ideas to bootstrap in your CI process.
-<div class="alert alert-info">
-<h5>INFO</h5>
-<p>As FAKE 5 is still in pre-release, you have to specify the <code>--version</code> parameter.</p>
-</div></p>
+<p>To install FAKE globally, run:
+<pre><code class="lang-bash">
+dotnet tool install fake-cli -g
+</code></pre></p>
 </li>
+<li>
+<p>To install FAKE into <code>your_tool_path</code>, run:
+<pre><code class="lang-bash">
+dotnet tool install fake-cli --tool-path your<em>tool</em>path
+</code></pre></p>
+<p>Use <code>--version</code> to specify the version of FAKE. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/global_tool"><code>global_tool</code> branch of <code>fake-bootstrap</code></a> for ideas to bootstrap in your CI process.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Bootstrap via the <a href="fake-template.html">fake dotnet new template</a>. The template bootstraps FAKE and sets up a basic build-script.</p>
+<ul>
+<li>
+<p>To install the template run:
+<pre><code class="lang-bash">
+dotnet new -i "fake-template::*"
+</code></pre></p>
+</li>
+<li>
+<p>Then run the template with:
+<pre><code class="lang-bash">
+dotnet new fake
+</code></pre></p>
+<p>See the <a href="fake-template.html">template</a> page for more information.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Install the 'fake' or 'fake-netcore' package for you system (currenty chocolatey).<br />
+Example <code>choco install fake</code></p>
+</li>
+<li><p>Use it as dotnet tool: Add <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies and run <code>dotnet fake ...</code> instead of <code>fake ...</code>, see <a href="https://github.com/FakeBuild/fake-bootstrap/blob/master/dotnet-fake.csproj">this example</a></p></li>
+</ul>
+<ul>
 <li>
 <p>Bootstrap via shell script (fake.cmd/fake.sh),
 see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</a>
@@ -886,7 +920,7 @@ Now edit the script like this:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

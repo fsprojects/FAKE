@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -279,10 +282,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3997', 3997)" onmouseover="showTip(event, '3997', 3997)">
+          <code onmouseout="hideTip(event, '4003', 4003)" onmouseover="showTip(event, '4003', 4003)">
             ForceCreateOnInstall
           </code>
-          <div class="tip" id="3997">
+          <div class="tip" id="4003">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -301,10 +304,10 @@ Windows Installer creates keys as needed to store subkeys and values. The defaul
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3998', 3998)" onmouseover="showTip(event, '3998', 3998)">
+          <code onmouseout="hideTip(event, '4004', 4004)" onmouseover="showTip(event, '4004', 4004)">
             ForceDeleteOnUninstall
           </code>
-          <div class="tip" id="3998">
+          <div class="tip" id="4004">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -323,10 +326,10 @@ MSI already removes all values and subkeys that it creates, so this option just 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3999', 3999)" onmouseover="showTip(event, '3999', 3999)">
+          <code onmouseout="hideTip(event, '4005', 4005)" onmouseover="showTip(event, '4005', 4005)">
             Id
           </code>
-          <div class="tip" id="3999">
+          <div class="tip" id="4005">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -343,10 +346,10 @@ MSI already removes all values and subkeys that it creates, so this option just 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4000', 4000)" onmouseover="showTip(event, '4000', 4000)">
+          <code onmouseout="hideTip(event, '4006', 4006)" onmouseover="showTip(event, '4006', 4006)">
             Key
           </code>
-          <div class="tip" id="4000">
+          <div class="tip" id="4006">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -364,10 +367,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4001', 4001)" onmouseover="showTip(event, '4001', 4001)">
+          <code onmouseout="hideTip(event, '4007', 4007)" onmouseover="showTip(event, '4007', 4007)">
             Keys
           </code>
-          <div class="tip" id="4001">
+          <div class="tip" id="4007">
             <strong>Signature:</strong> seq&lt;WiXRegistryKey&gt;<br />
                                   </div>
         </td>
@@ -384,10 +387,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4002', 4002)" onmouseover="showTip(event, '4002', 4002)">
+          <code onmouseout="hideTip(event, '4008', 4008)" onmouseover="showTip(event, '4008', 4008)">
             Root
           </code>
-          <div class="tip" id="4002">
+          <div class="tip" id="4008">
             <strong>Signature:</strong> Option&lt;WiXRegistryRootType&gt;<br />
                                   </div>
         </td>
@@ -404,10 +407,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4003', 4003)" onmouseover="showTip(event, '4003', 4003)">
+          <code onmouseout="hideTip(event, '4009', 4009)" onmouseover="showTip(event, '4009', 4009)">
             Values
           </code>
-          <div class="tip" id="4003">
+          <div class="tip" id="4009">
             <strong>Signature:</strong> seq&lt;WiXRegistryValue&gt;<br />
                                   </div>
         </td>
@@ -432,10 +435,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4004', 4004)" onmouseover="showTip(event, '4004', 4004)">
+          <code onmouseout="hideTip(event, '4010', 4010)" onmouseover="showTip(event, '4010', 4010)">
             createAttributeList()
           </code>
-          <div class="tip" id="4004">
+          <div class="tip" id="4010">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -562,7 +565,7 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

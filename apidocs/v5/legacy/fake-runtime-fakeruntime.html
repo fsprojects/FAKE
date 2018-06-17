@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -312,10 +315,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2057', 2057)" onmouseover="showTip(event, '2057', 2057)">
+          <code onmouseout="hideTip(event, '2062', 2062)" onmouseover="showTip(event, '2062', 2062)">
             createConfig (...)
           </code>
-          <div class="tip" id="2057">
+          <div class="tip" id="2062">
             <strong>Signature:</strong> logLevel:VerboseLevel -&gt; fsiOptions:string list -&gt; scriptPath:string -&gt; scriptArgs:string list -&gt; onErrMsg:(string -&gt; unit) -&gt; onOutMsg:(string -&gt; unit) -&gt; useCache:bool -&gt; restoreOnlyGroup:bool -&gt; FakeConfig<br />
                                   </div>
         </td>
@@ -330,10 +333,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2058', 2058)" onmouseover="showTip(event, '2058', 2058)">
+          <code onmouseout="hideTip(event, '2063', 2063)" onmouseover="showTip(event, '2063', 2063)">
             createConfigSimple (...)
           </code>
-          <div class="tip" id="2058">
+          <div class="tip" id="2063">
             <strong>Signature:</strong> logLevel:VerboseLevel -&gt; fsiOptions:string list -&gt; scriptPath:string -&gt; scriptArgs:string list -&gt; useCache:bool -&gt; restoreOnlyGroup:bool -&gt; FakeConfig<br />
                                   </div>
         </td>
@@ -348,10 +351,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2059', 2059)" onmouseover="showTip(event, '2059', 2059)">
+          <code onmouseout="hideTip(event, '2064', 2064)" onmouseover="showTip(event, '2064', 2064)">
             paketCachingProvider (...)
           </code>
-          <div class="tip" id="2059">
+          <div class="tip" id="2064">
             <strong>Signature:</strong> config:FakeConfig -&gt; cacheDir:string -&gt; paketApi:Dependencies -&gt; paketDependenciesFile:Lazy&lt;DependenciesFile&gt; -&gt; group:string option -&gt; ICachingProvider<br />
                                   </div>
         </td>
@@ -366,10 +369,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2060', 2060)" onmouseover="showTip(event, '2060', 2060)">
+          <code onmouseout="hideTip(event, '2065', 2065)" onmouseover="showTip(event, '2065', 2065)">
             prepareAndRunScript config
           </code>
-          <div class="tip" id="2060">
+          <div class="tip" id="2065">
             <strong>Signature:</strong> config:FakeConfig -&gt; RunResult<br />
                                   </div>
         </td>
@@ -384,10 +387,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2061', 2061)" onmouseover="showTip(event, '2061', 2061)">
+          <code onmouseout="hideTip(event, '2066', 2066)" onmouseover="showTip(event, '2066', 2066)">
             prepareFakeScript config
           </code>
-          <div class="tip" id="2061">
+          <div class="tip" id="2066">
             <strong>Signature:</strong> config:FakeConfig -&gt; ICachingProvider<br />
                                   </div>
         </td>
@@ -402,10 +405,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2062', 2062)" onmouseover="showTip(event, '2062', 2062)">
+          <code onmouseout="hideTip(event, '2067', 2067)" onmouseover="showTip(event, '2067', 2067)">
             readAllLines r
           </code>
-          <div class="tip" id="2062">
+          <div class="tip" id="2067">
             <strong>Signature:</strong> r:TextReader -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
@@ -420,10 +423,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2063', 2063)" onmouseover="showTip(event, '2063', 2063)">
+          <code onmouseout="hideTip(event, '2068', 2068)" onmouseover="showTip(event, '2068', 2068)">
             restoreDependencies (...)
           </code>
-          <div class="tip" id="2063">
+          <div class="tip" id="2068">
             <strong>Signature:</strong> config:FakeConfig -&gt; cacheDir:string -&gt; section:FakeSection -&gt; ICachingProvider<br />
                                   </div>
         </td>
@@ -438,10 +441,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2064', 2064)" onmouseover="showTip(event, '2064', 2064)">
+          <code onmouseout="hideTip(event, '2069', 2069)" onmouseover="showTip(event, '2069', 2069)">
             retrieveHints config runResult
           </code>
-          <div class="tip" id="2064">
+          <div class="tip" id="2069">
             <strong>Signature:</strong> config:FakeConfig -&gt; runResult:RunResult -&gt; string list<br />
                                   </div>
         </td>
@@ -456,10 +459,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2065', 2065)" onmouseover="showTip(event, '2065', 2065)">
+          <code onmouseout="hideTip(event, '2070', 2070)" onmouseover="showTip(event, '2070', 2070)">
             tryFindGroupFromDepsFile scriptDir
           </code>
-          <div class="tip" id="2065">
+          <div class="tip" id="2070">
             <strong>Signature:</strong> scriptDir:string -&gt; FakeSection option<br />
                                   </div>
         </td>
@@ -474,10 +477,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2066', 2066)" onmouseover="showTip(event, '2066', 2066)">
+          <code onmouseout="hideTip(event, '2071', 2071)" onmouseover="showTip(event, '2071', 2071)">
             tryReadPaketDependenciesFromScript (...)
           </code>
-          <div class="tip" id="2066">
+          <div class="tip" id="2071">
             <strong>Signature:</strong> tokenized:TokenizedScript -&gt; cacheDir:string -&gt; scriptPath:string -&gt; FakeSection option<br />
                                   </div>
         </td>
@@ -492,10 +495,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2067', 2067)" onmouseover="showTip(event, '2067', 2067)">
+          <code onmouseout="hideTip(event, '2072', 2072)" onmouseover="showTip(event, '2072', 2072)">
             writeFixedPaketDependencies (...)
           </code>
-          <div class="tip" id="2067">
+          <div class="tip" id="2072">
             <strong>Signature:</strong> scriptCacheDir:string -&gt; f:InlinePaketDependenciesSection -&gt; FakeSection<br />
                                   </div>
         </td>
@@ -614,7 +617,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

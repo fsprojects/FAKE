@@ -51,6 +51,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -110,6 +111,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -124,6 +126,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -630,7 +633,7 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the Fake.DotNet.Cli module instead, see https://fake.build/dotnet-cli.html for an example</p>
+                <p>Please add &#39;open Fake.DotNet&#39; and use &#39;DotNet.*&#39; instead, see https://fake.build/dotnet-dotnet.html for an example (the fake 5 module is called Fake.DotNet.Cli)</p>
             </div> 
           <p>Contains a task which can be used to run dotnet CLI commands.</p>
 
@@ -870,7 +873,7 @@ Does not support FTPS and SFTP.</p>
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>FAKE0001 Use the Fake.Tools.GitVersion module instead</p>
             </div> 
           <p>Containts helper function for GitVersion - a tool to help you achieve Semantic Versioning on your project.</p>
 <p>To install GitVersion.exe on Windows, start PowerShell as Administrator and run choco install gitversion.portable -s <a href="https://chocolatey.org/api/v2"
@@ -1801,7 +1804,7 @@ manifests for registration free deployment of Com-.net interop projects</p>
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>FAKE0001 Use the Fake.Core.UserInput module instead</p>
             </div> 
           <p>This module contains functions which allow to interactively input values</p>
 
@@ -2822,6 +2825,16 @@ This allows us to run some modules without any context and change behavior depen
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-core-userinput.html">UserInput</a>
+          </td>
+          <td class="xmldoc">
+          <p>Helpers for capturing user input</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-core-xml.html">Xml</a>
           </td>
           <td class="xmldoc">
@@ -3188,6 +3201,14 @@ This allows us to run some modules without any context and change behavior depen
 <p><strong>Note:  This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="/legacy-fsc.html">here</a></strong></p>
 
 
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-fsi.html">Fsi</a>
+          </td>
+          <td class="xmldoc">
+          
           </td>
         </tr>
         <tr>
@@ -4355,6 +4376,25 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
   </table>
 
     </div>
+    <a name="Fake.Tools" class="anchor" href="#Fake.Tools"><h2>Fake.Tools Namespace</h2></a>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-gitversion.html">GitVersion</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
     <a name="Fake.Tools.Git" class="anchor" href="#Fake.Tools.Git"><h2>Fake.Tools.Git Namespace</h2></a>
     <div>
         <table class="table table-bordered module-list">
@@ -4741,7 +4781,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -52,6 +52,7 @@
                                                         <li><a href="/fake-cache.html">Build script caching</a></li>
                                                         <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
                                                         <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
                                                         <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
                                                         <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
                                                     </ul>
@@ -111,6 +112,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
 																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
 															</ul>
 														</li>
 														<li>
@@ -125,6 +127,7 @@
 																<li><a href="/dotnet-cli.html">Cli</a></li>
 																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
                                                                 <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
@@ -281,14 +284,14 @@ Basically</a> open an admin <code>cmd.exe</code> and paste</p>
 </ul>
 </li>
 <li>
-<p>Windows (dotnet sdk global tool)</p>
+<p>Dotnet sdk global tool</p>
 <ul>
 <li><p>Install the .NET sdk (at least <code>2.1.300</code>)</p></li>
 <li>
 <p>Install FAKE</p>
 <pre>
     <code class="lang-bash">
-    dotnet tool install fake-cli -g --version=5.0.0-*
+    dotnet tool install fake-cli -g --version=5.*
     </code>
 </pre>
 </li>
@@ -303,6 +306,22 @@ Please consider <a href="https://github.com/fsharp/FAKE/issues/1828">helping out
 <p>now you can use</p>
 <pre><code class="lang-bash">fake --help</code></pre>
 <p>This is basically it. You can now execute fake commands. Follow the <a href="fake-dotnetcore.html#Minimal-example">minimal example below</a> for a quick start.</p>
+<h2><a name="FAKE-Template" class="anchor" href="#FAKE-Template">FAKE Template</a></h2>
+<p>Use the FAKE <code>dotnet new</code> template. See <a href="" title="fake-template.html">FAKE template</a> for more information.</p>
+<ul>
+<li>
+<p>Install the template:</p>
+<pre><code class="lang-bash">
+dotnet new -i "fake-template::*"
+</code></pre
+</li>
+<li>
+<p>Run the template:</p>
+<pre><code class="lang-bash">
+dotnet new fake
+</code></pre>
+</li>
+</ul>
 <h2><a name="CLI" class="anchor" href="#CLI">CLI</a></h2>
 <p>See <a href="fake-commandline.html">Fake command line</a></p>
 <h2><a name="Buildserver-support" class="anchor" href="#Buildserver-support">Buildserver support</a></h2>
@@ -407,10 +426,6 @@ fake run build.fsx
 <p>Get the latest packages from GitHub: <a href="https://github.com/fsharp/FAKE/releases">https://github.com/fsharp/FAKE/releases</a></p>
 <p>Get the latest binaries from chocolatey: <a href="https://chocolatey.org/packages/fake">https://chocolatey.org/packages/fake</a></p>
 <p>Get the latest dotnet-fake cli tool by adding <code>&lt;DotNetCliToolReference Include="dotnet-fake" Version="5.*" /&gt;</code> to your dependencies (<a href="https://www.nuget.org/packages/dotnet-fake)">https://www.nuget.org/packages/dotnet-fake)</a></p>
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p> Note that `Version="5.*"` is working only after we released the first stable release. For now use `Version="5.0.0-*"` to get the latest non-stable release</p>
-</div>
 
 
                       </article>
@@ -517,7 +532,7 @@ fake run build.fsx
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.0.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
 									</ul>
 								</div>
 							</div>
