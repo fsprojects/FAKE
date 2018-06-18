@@ -4,9 +4,9 @@
   <metadata>
     <version>@build.number@</version>
     <authors>fsprojects</authors>
-    <projectUrl>http://fsharp.github.io/FAKE</projectUrl>
+    <projectUrl>https://fake.build</projectUrl>
     <projectSourceUrl>https://github.com/fsharp/FAKE</projectSourceUrl>
-    <docsUrl>http://fsharp.github.io/FAKE</docsUrl>
+    <docsUrl>https://fake.build/fake-gettingstarted.html</docsUrl>
     <bugTrackerUrl>https://github.com/fsharp/FAKE/issues</bugTrackerUrl>
     <iconUrl>https://cdn.rawgit.com/fsharp/FAKE/515c78f15ea1829857dc757a5bcf48b3f85e0286/help/pics/logo.png</iconUrl>
     <licenseUrl>https://github.com/fsharp/FAKE/blob/master/License.txt</licenseUrl>
