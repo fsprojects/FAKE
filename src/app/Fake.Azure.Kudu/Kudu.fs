@@ -17,7 +17,12 @@ let nextManifestPath = Environment.environVarOrDefault "NEXT_MANIFEST_PATH" Stri
 /// Used by KuduSync for tracking and diffing deployments.
 let previousManifestPath = Environment.environVarOrDefault "PREVIOUS_MANIFEST_PATH" String.Empty
 /// The path to the KuduSync application.
-let kuduPath = (Environment.environVarOrDefault "GO_WEB_CONFIG_TEMPLATE" ".") |> DirectoryInfo.ofPath
+let kuduPath = 
+    Environment.environVarOrNone "GO_WEB_CONFIG_TEMPLATE"
+    |> function
+        | Some goWebConfigTemplate -> Path.GetDirectoryName goWebConfigTemplate
+        | None -> "." 
+    |> DirectoryInfo.ofPath 
 
 /// The different types of web jobs.
 type WebJobType = Scheduled | Continuous
@@ -56,7 +61,7 @@ let kuduSync() =
         Process.execWithResult(fun psi ->
             { psi with
                 FileName = Path.Combine(kuduPath.FullName, "kudusync.cmd")
-                Arguments = sprintf """-v 50 -f "%s" -t "%s" -n "%s" -p "%s" -i ".git;.hg;.deployment;deploy.cmd""" deploymentTemp deploymentTarget nextManifestPath previousManifestPath })
+                Arguments = Args.toWindowsCommandLine [ "-v"; "50"; "-f"; deploymentTemp; "-t"; deploymentTarget; "-n"; nextManifestPath; "-p"; previousManifestPath; "-i"; ".git;.hg;.deployment;deploy.cmd" ]})
             (TimeSpan.FromMinutes 5.)
     result.Results |> Seq.iter (fun cm -> printfn "%O: %s" cm.Timestamp cm.Message)
     if not result.OK then failwith "Error occurred during Kudu Sync deployment."

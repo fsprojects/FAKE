@@ -346,6 +346,7 @@ let dotnetAssemblyInfos =
       "Fake.Core.Target", "Defining and running Targets"
       "Fake.Core.Tasks", "Repeating and managing Tasks"
       "Fake.Core.Trace", "Core Logging functionality"
+      "Fake.Core.UserInput", "User input helpers"
       "Fake.Core.Xml", "Core Xml functionality"
       "Fake.Documentation.DocFx", "Documentation with DocFx"
       "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"

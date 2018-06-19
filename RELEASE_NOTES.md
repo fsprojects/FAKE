@@ -1,13 +1,15 @@
 # Release Notes
 
-## 5.1-alpha.1 - 2018-06-10
+## 5.1.0 - 2018-06-18
 
-* FAKE5: New module Fake.DotNet.Fsi to start fsharpi/fsi.exe on a F# script - https://github.com/fsharp/FAKE/pull/1970
-* `dotnet new -i "fake-template::*"` and `dotnet new fake` to get started via SDK-template - https://github.com/fsharp/FAKE/pull/1989
-* FAKE5: New module Fake.Tools.GitVersion to interact with gitversion.exe - https://github.com/fsharp/FAKE/pull/1988
+* NEW: module Fake.DotNet.Fsi to start fsharpi/fsi.exe on a F# script - https://github.com/fsharp/FAKE/pull/1970
+* NEW: `dotnet new -i "fake-template::*"` and `dotnet new fake` to get started via SDK-template - https://github.com/fsharp/FAKE/pull/1989 and https://github.com/fsharp/FAKE/pull/1990
+* NEW: module Fake.Tools.GitVersion to interact with gitversion.exe - https://github.com/fsharp/FAKE/pull/1988
 * ENHANCEMENT: Add `traceImportantf` and `traceErrorf` - https://github.com/fsharp/FAKE/pull/1986
 * ENHANCEMENT: Minimalize dependencies between FAKE packages - https://github.com/fsharp/FAKE/pull/1980
 * ENHANCEMENT: Change chocolatey package accoding to feedback - https://github.com/fsharp/FAKE/pull/1983
+* BUGFIX: Fix locating kudusync.cmd in Fake.Azure.Kudu - https://github.com/fsharp/FAKE/pull/1995
+* NEW: module Fake.Core.UserInput - https://github.com/fsharp/FAKE/pull/1997
 
 ## 5.0.0 - 2018-06-06
 
