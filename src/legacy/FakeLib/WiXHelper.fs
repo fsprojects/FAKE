@@ -50,7 +50,7 @@ let compName comp =
         comp
 
 /// Creates a WiX File tag from the given FileInfo
-[<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.getFileTag)")>]
+[<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.getWixFileTag)")>]
 let wixFile (fileInfo : FileInfo) = 
     fileCount <- fileCount + 1
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" fileCount fileInfo.Name fileInfo.FullName
@@ -132,7 +132,7 @@ type WiXServiceControl =
         Stop : InstallUninstall
         Wait : YesOrNo
     }
-    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceControl)")>]    
+    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceControl.createAttributeList)")>]
     member w.createAttributeList () =
         seq 
             {
@@ -262,7 +262,7 @@ type WiXServiceConfig =
         /// [Required] Action to take on the third failure of the service.
         ThirdFailureActionType: ServiceFailureActionType
     }
-    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceConfig)")>]
+    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceConfig.createAttributeList)")>]
     member w.createAttributeList () =
         seq 
             {
@@ -312,7 +312,7 @@ type WiXServiceDependency =
         /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.	
         Group : YesOrNo option
     }
-    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceDependency)")>]    
+    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceDependency.createAttributeList)")>]    
     member w.createAttributeList () =
         seq {           
             yield ("Id", w.Id)           
@@ -374,7 +374,7 @@ type WiXServiceInstall =
         /// Service configuration information for failure actions.
         ServiceConfig: WiXServiceConfig seq
     }
-    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceInstall)")>]
+    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.ServiceInstall.createAttributeList)")>]
     member w.createAttributeList () =
         seq {
             if not (String.IsNullOrWhiteSpace w.Account) then yield ("Account", w.Account)
@@ -507,7 +507,7 @@ type WiXRegistryValue =
         /// The predefined root key for the registry value.
         Root : WiXRegistryRootType Option
     }
-    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.RegistryValue)")>]
+    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.RegistryValue.createAttributeList)")>]
     member v.createAttributeList () =
         seq {
             if not (String.IsNullOrWhiteSpace v.Id) then yield ("Id", v.Id)
@@ -580,7 +580,7 @@ type WiXRegistryKey =
         /// You can nest child registry values here
         Values : WiXRegistryValue seq
     }
-    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.RegistryKey)")>]
+    [<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.RegistryKey.createAttributeList)")>]
     member k.createAttributeList () = 
         seq {
             if not (String.IsNullOrWhiteSpace k.Id) then yield ("Id", k.Id)

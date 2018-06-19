@@ -2,16 +2,16 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("")>]
-[<assembly: AssemblyProductAttribute("")>]
-[<assembly: AssemblyVersionAttribute("")>]
-[<assembly: AssemblyInformationalVersionAttribute("")>]
-[<assembly: AssemblyFileVersionAttribute("")>]
+[<assembly: AssemblyTitleAttribute("FAKE - F# Make WiX helper to create msi installers")>]
+[<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
+[<assembly: AssemblyVersionAttribute("5.1")>]
+[<assembly: AssemblyInformationalVersionAttribute("5.1.0-alpha.1")>]
+[<assembly: AssemblyFileVersionAttribute("5.1.0")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = ""
-    let [<Literal>] AssemblyProduct = ""
-    let [<Literal>] AssemblyVersion = ""
-    let [<Literal>] AssemblyInformationalVersion = ""
-    let [<Literal>] AssemblyFileVersion = ""
+    let [<Literal>] AssemblyTitle = "FAKE - F# Make WiX helper to create msi installers"
+    let [<Literal>] AssemblyProduct = "FAKE - F# Make"
+    let [<Literal>] AssemblyVersion = "5.1"
+    let [<Literal>] AssemblyInformationalVersion = "5.1.0-alpha.1"
+    let [<Literal>] AssemblyFileVersion = "5.1.0"
