@@ -382,7 +382,8 @@ let dotnetAssemblyInfos =
       "Fake.Tools.GitVersion", "GitVersion helper"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
-      "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
+      "Fake.Windows.Registry", "CRUD functionality for Windows registry"
+      "Fake.Windows.Wix", "WiX helper to create msi installers" ]
 
 let assemblyInfos =
   [ legacyDir </> "FAKE/AssemblyInfo.fs",
