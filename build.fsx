@@ -1095,11 +1095,14 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
         { opt with 
             Common = { opt.Common with WorkingDirectory = "src/app/Fake.netcore/" } |> dtntSmpl
             Runtime = Some "linux-x64"}) "Fake.netcore.fsproj"
+
+    let runtime = "linux-x64" 
+    let targetFramework =  "netcoreapp2.1" 
     let args = 
         [
             sprintf "/t:%s" "CreateDeb"  
-            sprintf "/p:TargetFramework=%s" "netcoreapp2.0" 
-            sprintf "/p:RuntimeIdentifier=%s" "linux-x64" 
+            sprintf "/p:TargetFramework=%s" targetFramework
+            sprintf "/p:RuntimeIdentifier=%s" runtime
             sprintf "/p:Configuration=%s" "Release" 
             sprintf "/p:PackageVersion=%s" release.NugetVersion
         ] |> String.concat " "
@@ -1111,7 +1114,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     if result.OK |> not then
         failwith "Debian package creation failed"
 
-    [(sprintf "src/app/Fake.netcore/bin/Release/netcoreapp2.0/linux-x64/fake-cli.%s.linux-x64.deb" release.NugetVersion)]   
+    [(sprintf "src/app/Fake.netcore/bin/Release/%s/%s/fake-cli.%s.%s.deb" targetFramework runtime release.NugetVersion runtime)]   
     |> Shell.copy artifactsDir   
 
 )
