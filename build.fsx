@@ -1114,7 +1114,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     if result.OK |> not then
         failwith "Debian package creation failed"
 
-    [(sprintf "src/app/Fake.netcore/bin/Release/%s/%s/fake-cli.%s.%s.deb" targetFramework runtime release.NugetVersion runtime)]   
+    [(sprintf "src/app/Fake.netcore/bin/Release/%s/%s/fake.%s.%s.deb" targetFramework runtime release.NugetVersion runtime)]   
     |> Shell.copy artifactsDir   
 
 )
