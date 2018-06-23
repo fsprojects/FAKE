@@ -30,13 +30,15 @@ with override x.ToString () = match x with | Tool -> "tool" | Project -> "projec
 let shouldSucceed message (r: ProcessResult) =
     Expect.isTrue r.OK (sprintf "%s. Results:\n:%A" message r)
 
+let timeout = (System.TimeSpan.FromMinutes 10.)
+
 let runTemplate rootDir kind =
     Directory.ensure rootDir
     let dotnet = DotNet.Options.Create().DotNetCliPath
     Process.execWithResult (fun p ->
         p.WithWorkingDirectory(rootDir)
          .WithFileName(dotnet)
-         .WithArguments(sprintf "new %s --allow-scripts yes --bootstrap %s" templateName (string kind))) (System.TimeSpan.FromSeconds 60.)
+         .WithArguments(sprintf "new %s --allow-scripts yes --bootstrap %s" templateName (string kind))) timeout
     |> shouldSucceed "should have run the template successfully"
 
 let invokeScript dir scriptName args =
@@ -45,7 +47,7 @@ let invokeScript dir scriptName args =
         (fun x -> 
             x.WithWorkingDirectory(dir)
              .WithFileName(fullScriptPath)
-             .WithArguments args ) (System.TimeSpan.FromSeconds 60.)
+             .WithArguments args) timeout
 
 let missingTarget targetName (r: ProcessResult) = 
     r.Errors |> Seq.exists (fun err -> err.Contains (sprintf "Target \"%s\" is not defined" targetName))
