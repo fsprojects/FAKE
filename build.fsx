@@ -361,6 +361,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.Expecto", "Running expecto test runner"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
+      "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
