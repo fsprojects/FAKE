@@ -111,6 +111,14 @@ let createDoc text =
         xmlDocument.LoadXml text
         xmlDocument
 
+/// Loads the given file path into a XmlDocument
+let loadDoc path =
+    if String.isNullOrEmpty path then null
+    else
+        let xmlDocument = new XmlDocument()
+        xmlDocument.Load path
+        xmlDocument
+
 /// Gets the DocumentElement of the XmlDocument
 let getDocElement(doc : XmlDocument) = doc.DocumentElement
 
