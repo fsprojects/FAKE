@@ -34,5 +34,21 @@ let tests =
         let actual = File.ReadAllText tmpFile |> normalize
         Expect.equal expected actual "expected same xml"
       finally
-        File.Delete(tmpFile)      
+        File.Delete(tmpFile)
+
+    testCase "Test that poke pokes" <| fun _ ->
+      let original = normalize """<?xml version="1.0" encoding="UTF-8"?>
+<root attr="original">
+</root>"""
+      let expected = normalize """<?xml version="1.0" encoding="UTF-8"?>
+<root attr="expected">
+</root>"""
+      let tmpFile = Path.GetTempFileName()
+      try
+        File.WriteAllText(tmpFile, original)
+        Xml.poke tmpFile "/root/@attr" "expected"
+        let actual = File.ReadAllText tmpFile |> normalize
+        Expect.equal expected actual "expected same xml"
+      finally
+        File.Delete(tmpFile)
   ]
