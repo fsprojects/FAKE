@@ -232,10 +232,32 @@ let traceEndTaskUnsafe task = traceEndTaskUnsafeEx TagStatus.Success task
 /// Traces the end of a task
 [<System.Obsolete("Consider using traceTask instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTask'.")>]
 let traceEndTask task = traceEndTaskUnsafe task
-     
+
+/// Wrap functions in a 'use' of this function     
 let traceTask name description =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
+
+/// Traces a function execution
+/// If no exception is thrown then trace is marked as success
+/// Any exception thrown will result in a mark failed and exception re-thrown 
+let traceTaskFunction name description func =
+    use t = traceTask name description
+    try
+        let result = func()
+        t.MarkSuccess()
+        result
+    with _ -> t.MarkFailed()
+              reraise()
+
+/// Traces a function execution which takes the ISafeDisposable to mark success/failled.
+/// Any exception thrown will result in a mark failed and exception re-thrown 
+let traceTaskFunctionDetailed name description func =
+    use t = traceTask name description
+    try
+        func t
+    with _ -> t.MarkFailed()
+              reraise()
 
 open System.Diagnostics
 #if DOTNETCORE
