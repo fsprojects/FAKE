@@ -112,7 +112,7 @@ let createDoc text =
         xmlDocument
 
 /// Loads the given file path into a XmlDocument
-let loadDoc path =
+let loadDoc (path:string) =
     if String.isNullOrEmpty path then null
     else
         let xmlDocument = new XmlDocument()
