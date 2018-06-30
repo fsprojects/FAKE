@@ -1,0 +1,108 @@
+{
+    "identity": "Fake.Template",
+    "shortName": "fake",
+    "name": "FAKE - Template",
+    "classifications": ["build", "FAKE"],
+    "symbols": {
+        "script-name": {
+            "type": "parameter",
+            "description": "Name of the generated build-script",
+            "dataType": "string",
+            "defaultValue": "build.fsx",
+            "FileRename": "build.fsx",
+            "replaces": "(build.fsx)"
+        },
+        "bootstrap": {
+            "type": "parameter",
+            "dataType": "choice",
+            "defaultValue": "tool",
+            "choices": [{
+                    "choice": "project",
+                    "description": "Creates a build.proj file to bootstrap FAKE"
+                },
+                {
+                    "choice": "tool",
+                    "description": "Uses the FAKE dotnet sdk global tool to bootstrap FAKE. The tool is installed into 'tool--path'"
+                },
+                {
+                    "choice": "none",
+                    "description": "Does not bootstrap FAKE. Use this if you want to use a global installation of FAKE"
+                }
+            ]
+        },
+        "dependencies": {
+            "type": "parameter",
+            "dataType": "choice",
+            "defaultValue": "file",
+            "choices": [{
+                    "choice": "file",
+                    "description": "Use paket.dependencies file to define build dependencies"
+                },
+                {
+                    "choice": "inline",
+                    "description": "Define build dependencies inside the build script"
+                },
+                {
+                    "choice": "none",
+                    "description": "No dependencies are created. Use this if you already have a paket.dependencies file in your folder"
+                }
+            ]
+        },
+        "tool-path": {
+            "type": "parameter",
+            "description": "Folder for the FAKE dotnet sdk global tool. This parameter is only applicable when 'tool' is used for bootstrapping",
+            "dataType": "string",
+            "defaultValue": ".fake",
+            "replaces": "(ToolPath)"
+        },
+        "version": {
+            "type": "parameter",
+            "description": "Version of FAKE to install. This parameter is only applicable when either 'tool' or 'project' is used for bootstrapping",
+            "dataType": "string",
+            "defaultValue": "5.*",
+            "replaces": "(version)"
+        }
+    },
+    "sources": [{
+        "exclude": "**/.template.config/**/*",
+        "modifiers": [{
+                "exclude": "**/fake.tool.*",
+                "condition": "(bootstrap != \"tool\")"
+            },
+            {
+                "rename": {
+                    "fake.tool.sh": "fake.sh",
+                    "fake.tool.cmd": "fake.cmd"
+                }
+            },
+            {
+                "exclude": ["**/fake.proj.*", "**/build.proj"],
+                "condition": "(bootstrap != \"project\")"
+            },
+            {
+                "rename": {
+                    "fake.proj.sh": "fake.sh",
+                    "fake.proj.cmd": "fake.cmd"
+                }
+            },
+            {
+                "exclude": "**/paket.dependencies",
+                "condition": "(dependencies != \"file\")"
+            }
+        ]
+    }],
+    "postActions": [{
+        "condition": "(OS != \"Windows_NT\")",
+        "description": "Make scripts executable",
+        "manualInstructions": [{
+            "text": "Run 'chmod +x *.sh'"
+        }],
+        "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+        "args": {
+            "executable": "/bin/sh",
+            "args": "-c \"chmod +x *.sh\""
+
+        },
+        "continueOnError": false
+    }]
+}

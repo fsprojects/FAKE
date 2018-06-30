@@ -15,7 +15,6 @@
     <Compile Include="WebJobs.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\Fake.IO.Zip\Fake.IO.Zip.fsproj" />

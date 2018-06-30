@@ -36,11 +36,12 @@ namespace Test.FAKECore.PackageMgt
         It should_contain_the_publiNuSpecPackageshing_date = 
             () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
 
-        It should_contain_the_license_url = 
-            () => {
-                _package.LicenseUrl.ShouldStartWith("https://github.com/fsharp/Fake/blob/master/License.txt"); 
-                _package.LicenseUrl.ShouldEndWith("License.txt");
-            }
+        private It should_contain_the_license_url =
+            () =>
+            {
+                _package.LicenseUrl.ShouldStartWith("https://github.com/fsharp/FAKE/blob/");
+                _package.LicenseUrl.ShouldEndWith("/License.txt");
+            };
 
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 

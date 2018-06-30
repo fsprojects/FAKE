@@ -3,7 +3,7 @@
 /// To install GitVersion.exe on Windows, start PowerShell as Administrator and run choco install gitversion.portable -s https://chocolatey.org/api/v2"
 /// For Mac and Unix, install the NuGet version.
 
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Tools.GitVersion module instead")>]
 module Fake.GitVersionHelper
 
 open FSharp.Data
@@ -11,17 +11,17 @@ open Newtonsoft.Json
 open System
 
 [<CLIMutable>]
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Tools.GitVersion module instead")>]
 type GitversionParams = {
     ToolPath : string
 }
 
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Tools.GitVersion module instead")>]
 let GitversionDefaults = {
     ToolPath = findToolInSubPath "GitVersion.exe" (environVarOrDefault "ChocolateyInstall" currentDirectory)
 }
 
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Tools.GitVersion module instead")>]
 type GitVersionProperties = {
                                 Major : int;
                                 Minor : int;
@@ -58,7 +58,7 @@ type GitVersionProperties = {
 ///
 ///      GitVersion id // Use Defaults
 ///      GitVersion (fun p -> { p with ToolPath = currentDirectory @@ "tools" }
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
+[<System.Obsolete("FAKE0001 Use the Fake.Tools.GitVersion module instead. Function GitVersion.generateProperties")>]
 let GitVersion (setParams : GitversionParams -> GitversionParams) =
     let parameters = GitversionDefaults |> setParams
     let timespan =  TimeSpan.FromMinutes 1.
