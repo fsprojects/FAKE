@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to run [VSTest](https://msdn.microsoft.com/en-us/library/ms182486.aspx) unit tests.
+[<RequireQualifiedAccess>]
 module Fake.DotNet.Testing.VSTest
 
 open Fake.Core
@@ -7,7 +8,7 @@ open System
 open System.Text
 
 /// [omit]
-let vsTestPaths = 
+let private vsTestPaths = 
     [|
         @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
         @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
@@ -16,7 +17,7 @@ let vsTestPaths =
     |]
 
 /// [omit]
-let vsTestExe = 
+let private vsTestExe = 
     if Environment.isMono then failwith "VSTest is not supported on the mono platform"
     else "vstest.console.exe"
 
@@ -24,7 +25,6 @@ let vsTestExe =
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
-[<CLIMutable>]
 type VSTestParams = 
     { /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
       SettingsPath : string
@@ -66,7 +66,7 @@ type VSTestParams =
       TestAdapterPath: string}
 
 /// VSTest default parameters.
-let VSTestDefaults = 
+let private VSTestDefaults = 
     { SettingsPath = null
       Tests = []
       EnableCodeCoverage = false
@@ -92,7 +92,7 @@ let VSTestDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let buildVSTestArgs (parameters : VSTestParams) assembly = 
+let private buildVSTestArgs (parameters : VSTestParams) assembly = 
     let testsToRun = 
         if not (Seq.isEmpty parameters.Tests) then 
             sprintf @"/Tests:%s" (parameters.Tests |> String.separated ",")
@@ -116,7 +116,7 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
     |> StringBuilder.appendIfNotNull parameters.TestAdapterPath "/TestAdapterPath:"
     |> StringBuilder.toText
 
-/// Runs VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
+/// Runs VSTest command line tool (VSTest.Console.exe) on a group of assemblies.m
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default VSTestParams values.
@@ -128,7 +128,7 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
 ///         !! (testDir + @"\*.Tests.dll") 
 ///           |> VSTest.VSTest (fun p -> { p with SettingsPath = "Local.RunSettings" })
 ///     )
-let VSTest (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
+let run (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "VSTest" details
     let parameters = VSTestDefaults |> setParams
