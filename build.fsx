@@ -1221,9 +1221,14 @@ Target.create "FastRelease" (fun _ ->
     Git.Branches.tag gitDirectory simpleVersion
     Git.Branches.pushTag gitDirectory url simpleVersion
 
+    let linuxRuntime = "linux-x64"
+    let debFileName = sprintf "fake-cli.%s.%s.deb" simpleVersion linuxRuntime
+    let debTarget = sprintf "%s/%s" nugetDncDir debFileName
+
     let files =
         runtimes @ [ "portable"; "packages" ]
         |> List.map (fun n -> sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir n)
+        |> fun l -> l @ [ debTarget ]
 
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease github_release_user gitName simpleVersion (release.SemVer.PreRelease <> None) release.Notes
