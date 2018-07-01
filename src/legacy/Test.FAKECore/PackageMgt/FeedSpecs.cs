@@ -46,7 +46,7 @@ namespace Test.FAKECore.PackageMgt
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 
         It should_contain_the_package_url =
-            () => _package.Url.ShouldEqual("https://www.nuget.org/api/v2/package/FAKE/" + _package.Version);
+            () => _package.Url.ShouldEqual("https://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
 
         It should_build_the_FileName_from_id =
             () => _package.FileName.ShouldStartWith("FAKE");        
