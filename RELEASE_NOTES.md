@@ -8,6 +8,8 @@
 * BUGFIX: FIx ambiguity in new octokit release - https://github.com/fsharp/FAKE/pull/2004
 * BUGFIX: Fix XML poke - https://github.com/fsharp/FAKE/pull/2005
 * BUGFIX: Fix SQLPackage path with VS2017 - https://github.com/fsharp/FAKE/pull/2006
+* BUGFIX: Warn when resolved FSharp.Core doesn't match - https://github.com/fsharp/FAKE/issues/2001
+* ENHANCEMENT: Upgrade FSharp.Core to 4.5
 
 ## 5.1.0 - 2018-06-18
 

@@ -97,7 +97,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client using the specified credentials
-    let createClient user password =
+    let createClient (user:string) (password:string) =
         async {
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
             let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
@@ -107,7 +107,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client using the specified token
-    let createClientWithToken token =
+    let createClientWithToken (token:string) =
         async {
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
             let connection = Connection(ProductHeaderValue("FAKE"), httpClient)
@@ -117,7 +117,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified credentials
-    let createGHEClient url user password =
+    let createGHEClient url (user:string) (password:string) =
         async {
             let credentials = Credentials(user, password)
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
@@ -128,7 +128,7 @@ module GitHub =
         }
 
     /// Creates a GitHub API v3 client to GitHub Enterprise server at the specified url using the specified token
-    let createGHEClientWithToken url token =
+    let createGHEClientWithToken url (token:string) =
         async {
             let credentials = Credentials(token)
             let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)

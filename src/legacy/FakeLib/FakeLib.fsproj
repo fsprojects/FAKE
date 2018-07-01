@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\SourceLink.Create.GitHub\build\SourceLink.Create.GitHub.props" Condition="Exists('..\..\..\packages\SourceLink.Create.GitHub\build\SourceLink.Create.GitHub.props')" Label="Paket" />
   <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
   <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
   <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
@@ -1073,8 +1074,20 @@
     </When>
   </Choose>
   <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
+      <ItemGroup>
+        <Reference Include="System.Net.Http">
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Octokit">
           <HintPath>..\..\..\packages\Octokit\lib\net45\Octokit.dll</HintPath>
           <Private>True</Private>
@@ -1779,13 +1792,6 @@
       </ItemGroup>
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
-      <ItemGroup>
-        <Reference Include="System.Net.Http">
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
       <ItemGroup>
         <Reference Include="System.Net.Http">
           <Paket>True</Paket>
@@ -3396,4 +3402,5 @@
   <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
   <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
   <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\SourceLink.Create.GitHub\build\SourceLink.Create.GitHub.targets" Condition="Exists('..\..\..\packages\SourceLink.Create.GitHub\build\SourceLink.Create.GitHub.targets')" Label="Paket" />
 </Project>
