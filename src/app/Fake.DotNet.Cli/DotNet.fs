@@ -18,43 +18,67 @@ module DotNet =
     open System
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
-    let defaultUserInstallDir = 
+    let internal defaultUserInstallDir = 
         if Environment.isUnix
         then Environment.environVar "HOME" @@ ".dotnet"
         else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (/usr/local/share/dotnet or C:\Program Files\dotnet))
-    let defaultSystemInstallDir =
+    let internal defaultSystemInstallDir =
         if Environment.isUnix
         then "/usr/local/share/dotnet"
         else @"C:\Program Files\dotnet"
+
+    /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
+    let internal getSDKVersionFromGlobalJsonDir startDir : string =
+        let globalJsonPaths rootDir = 
+            let rec loop (dir: DirectoryInfo) = seq {
+                match dir.GetFiles "global.json" with
+                | [| json |] -> yield json
+                | _ -> ()
+                if not (isNull dir.Parent) then
+                    yield! loop dir.Parent
+            }
+            loop (DirectoryInfo rootDir)
+
+        match Seq.tryHead (globalJsonPaths startDir) with
+        | None -> 
+            failwithf "global.json not found"
+        | Some globalJson -> 
+            try
+                let content = File.ReadAllText globalJson.FullName
+                let json = JObject.Parse content
+                let sdk = json.Item("sdk") :?> JObject
+                let version = sdk.Property("version").Value.ToString()
+                version
+            with
+            | exn -> failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
+
+    /// Gets the DotNet SDK from the global.json
+    /// This file can exist in the working directory or any of the parent directories
+    let getSDKVersionFromGlobalJson() : string = getSDKVersionFromGlobalJsonDir "."
+
 
     /// Get dotnet cli executable path. Probes the provided path first, then as a fallback tries the system PATH
     /// ## Parameters
     ///
     /// - 'dotnetCliDir' - the path to check else will probe system PATH
-    let private tryDotnetCliPath dotnetCliDir = 
+    let private findPossibleDotnetCliPaths dotnetCliDir = seq {
+        let fileName = if Environment.isUnix then "dotnet" else "dotnet.exe"
+        yield!
+            Process.findFilesOnPath "dotnet"
+            |> Seq.filter File.Exists
+        let userInstalldir = defaultUserInstallDir </> fileName
+        if File.exists userInstalldir then yield userInstalldir
+        let systemInstalldir = defaultSystemInstallDir </> fileName
+        if File.exists systemInstalldir then yield systemInstalldir
         match dotnetCliDir with
         | Some userSetPath -> 
-            let defaultCliPath = userSetPath @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
+            let defaultCliPath = userSetPath @@ fileName
             match File.Exists defaultCliPath with
-            | true -> Some defaultCliPath
-            | _ -> None
-        | None -> 
-            match Process.tryFindFileOnPath "dotnet" with
-            | Some dotnet when File.Exists dotnet -> Some dotnet
-            | _ -> None
-            
-
-    let private dotnetCliPath dotnetCliDir =
-        match tryDotnetCliPath dotnetCliDir with
-        | Some dotnet -> dotnet
-        | _ -> 
-            let probeDirs = [
-                match dotnetCliDir with Some dir -> yield dir | None -> ()
-                yield! Environment.pathDirectories
-            ]
-            failwithf "Can't find dotnet CLI. Looked in the following directories: %A" probeDirs
+            | true -> yield defaultCliPath
+            | _ -> ()
+        | None -> () }
 
     /// Get .NET Core SDK download uri
     let private getGenericDotNetCliInstallerUrl branch installerName =
@@ -140,6 +164,8 @@ module DotNet =
         | Lkg
         /// 4-part version in a format A.B.C.D - represents specific version of build
         | Version of string
+        /// Take version from global.json and fail if it is not found.
+        | GlobalJson
 
     /// .NET Core SDK install options
     [<NoComparison>]
@@ -149,15 +175,15 @@ module DotNet =
             /// Custom installer obtain (download) options
             InstallerOptions: InstallerOptions -> InstallerOptions
             /// .NET Core SDK channel (defaults to normalized installer branch)
-            Channel: string option;
+            Channel: string option
             /// .NET Core SDK version
-            Version: CliVersion;
+            Version: CliVersion
             /// Custom installation directory (for local build installation)
             CustomInstallDir: string option
             /// Architecture
-            Architecture: CliArchitecture;
+            Architecture: CliArchitecture
             /// Include symbols in the installation (Switch does not work yet. Symbols zip is not being uploaded yet)
-            DebugSymbols: bool;
+            DebugSymbols: bool
             /// If set it will not perform installation but instead display what command line to use
             DryRun: bool
             /// Do not update path variable
@@ -176,118 +202,172 @@ module DotNet =
             NoPath = true
         }
 
+    /// The a list of well-known versions to install
+    module Versions =    
+        /// .NET Core SDK install options preconfigured for preview2 tooling
+        let internal Preview2ToolingOptions options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "v1.0.0-preview2"
+                    })
+                Channel = Some "preview"
+                Version = Version "1.0.0-preview2-003121"
+            }
+
+        /// .NET Core SDK install options preconfigured for preview4 tooling
+        let internal LatestPreview4ToolingOptions options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "rel/1.0.0-preview4"
+                    })
+                Channel = None
+                Version = Latest
+            }
+        /// .NET Core SDK install options preconfigured for preview4 tooling
+        let internal Preview4_004233ToolingOptions options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "rel/1.0.0-preview4"
+                    })
+                Channel = None
+                Version = Version "1.0.0-preview4-004233"
+            }
+        /// .NET Core SDK install options preconfigured for preview4 tooling
+        let internal RC4_004771ToolingOptions options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "rel/1.0.0-rc3"
+                    })
+                Channel = None
+                Version = Version "1.0.0-rc4-004771"
+            }
+
+        /// .NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1 release of the .NET Core tools
+        let internal RC4_004973ToolingOptions options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "rel/1.0.1"
+                    })
+                Channel = None
+                Version = Version "1.0.3-rc4-004973"
+            }
+
+        let Release_1_0_4 options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.0.0"
+                    })
+                Channel = None
+                Version = Version "1.0.4"
+            }
+
+        let Release_2_0_0 options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.0.0"
+                    })
+                Channel = None
+                Version = Version "2.0.0"
+            }
+
+        let Release_2_0_3 options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.0.0"
+                    })
+                Channel = None
+                Version = Version "2.0.3"
+            }
+
+        let Release_2_1_4 options =
+            { options with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.4"
+            }
+
+        let Release_2_1_300_RC1 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.300-rc1-008673"
+            }
+
+        let Release_2_1_300 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.300"
+            }
+        
+        let Release_2_1_301 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.301"
+            }
+
+        let FromGlobalJson option =
+            { option with
+                InstallerOptions = id
+                Channel = None
+                Version = CliVersion.GlobalJson
+            }
+
+
     /// .NET Core SDK install options preconfigured for preview2 tooling
-    let Preview2ToolingOptions options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "v1.0.0-preview2"
-                })
-            Channel = Some "preview"
-            Version = Version "1.0.0-preview2-003121"
-        }
+    [<Obsolete "Please use a stable release at this point">]
+    let Preview2ToolingOptions options = Versions.Preview4_004233ToolingOptions options
 
     /// .NET Core SDK install options preconfigured for preview4 tooling
-    let LatestPreview4ToolingOptions options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "rel/1.0.0-preview4"
-                })
-            Channel = None
-            Version = Latest
-        }
+    [<Obsolete "Please use a stable release at this point">]
+    let LatestPreview4ToolingOptions options = Versions.LatestPreview4ToolingOptions options
+
     /// .NET Core SDK install options preconfigured for preview4 tooling
-    let Preview4_004233ToolingOptions options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "rel/1.0.0-preview4"
-                })
-            Channel = None
-            Version = Version "1.0.0-preview4-004233"
-        }
-    /// .NET Core SDK install options preconfigured for preview4 tooling
-    let RC4_004771ToolingOptions options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "rel/1.0.0-rc3"
-                })
-            Channel = None
-            Version = Version "1.0.0-rc4-004771"
-        }
+    [<Obsolete "Please use a stable release at this point">]
+    let RC4_004771ToolingOptions options = Versions.RC4_004771ToolingOptions options
 
     /// .NET Core SDK install options preconfigured for preview4 tooling, this is marketized as v1.0.1 release of the .NET Core tools
-    let RC4_004973ToolingOptions options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "rel/1.0.1"
-                })
-            Channel = None
-            Version = Version "1.0.3-rc4-004973"
-        }
+    [<Obsolete "Please use a stable release at this point">]
+    let RC4_004973ToolingOptions options = Versions.RC4_004973ToolingOptions options
 
-    let Release_1_0_4 options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "release/2.0.0"
-                })
-            Channel = None
-            Version = Version "1.0.4"
-        }
+    [<Obsolete "Please use DotNet.Versions.Release_1_0_4 instead">]
+    let Release_1_0_4 options = Versions.Release_1_0_4 options
 
-    let Release_2_0_0 options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "release/2.0.0"
-                })
-            Channel = None
-            Version = Version "2.0.0"
-        }
+    [<Obsolete "Please use DotNet.Versions.Release_2_0_0 instead">]
+    let Release_2_0_0 options = Versions.Release_2_0_0 options
 
-    let Release_2_0_3 options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "release/2.0.0"
-                })
-            Channel = None
-            Version = Version "2.0.3"
-        }
+    [<Obsolete "Please use DotNet.Versions.Release_2_0_3 instead">]
+    let Release_2_0_3 options = Versions.Release_2_0_3 options
 
-    let Release_2_1_4 options =
-        { options with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "release/2.1"
-                })
-            Channel = None
-            Version = Version "2.1.4"
-        }
+    [<Obsolete "Please use DotNet.Versions.Release_2_1_4 instead">]
+    let Release_2_1_4 options =Versions.Release_2_1_4 options
 
-    let Release_2_1_300_RC1 option =
-        { option with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "release/2.1"
-                })
-            Channel = None
-            Version = Version "2.1.300-rc1-008673"
-        }
+    [<Obsolete "Please use DotNet.Versions.Release_2_1_300_RC1 instead">]
+    let Release_2_1_300_RC1 option = Versions.Release_2_1_300_RC1 option
 
-    let Release_2_1_300 option =
-        { option with
-            InstallerOptions = (fun io ->
-                { io with
-                    Branch = "release/2.1"
-                })
-            Channel = None
-            Version = Version "2.1.300"
-        }
+    [<Obsolete "Please use DotNet.Versions.Release_2_1_300 instead">]
+    let Release_2_1_300 option = Versions.Release_2_1_300 option
 
     /// [omit]
     let private optionToParam option paramFormat =
@@ -308,6 +388,7 @@ module DotNet =
             | Latest -> "latest"
             | Lkg -> "lkg"
             | Version ver -> ver
+            | GlobalJson -> getSDKVersionFromGlobalJson()
 
         // get channel value from installer branch info
         let channelParamValue =
@@ -347,6 +428,8 @@ module DotNet =
         {
             /// DotNet cli executable path
             DotNetCliPath: string
+            /// Write a global.json with the given version (required to make SDK choose the correct version)
+            Version : string option
             /// Command working directory
             WorkingDirectory: string
             /// Custom parameters
@@ -364,12 +447,13 @@ module DotNet =
         }
         static member Create() = {
             DotNetCliPath = 
-                tryDotnetCliPath (Some defaultUserInstallDir)
-                |> Option.orElseWith (fun () -> tryDotnetCliPath (Some defaultSystemInstallDir))
+                findPossibleDotnetCliPaths None
+                |> Seq.tryHead
                 // shouldn't hit this one because the previous two probe PATH...
                 |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")                     
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
+            Version = None
             Verbosity = None
             Diagnostics = false
             RedirectOutput = false
@@ -445,6 +529,28 @@ module DotNet =
         [   param.Diagnostics |> argOption "--diagostics"
         ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
+    let internal withGlobalJson workDir version f =
+        let globalJsonPath =
+            if (Path.GetFullPath workDir).StartsWith(Path.GetFullPath ".") then "global.json"
+            else workDir </> "global.json"
+        let writtenJson =
+            match version with
+            | Some version ->
+                // make sure to write global.json if we did not read the version from it
+                // We need to do this as the SDK will use this file to select the actual version
+                // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
+                if File.Exists globalJsonPath then
+                    let readVersion = getSDKVersionFromGlobalJsonDir workDir 
+                    if readVersion <> version then failwithf "Existing global.json with a different version found!"
+                    false
+                else
+                    let template = sprintf """{ "sdk": { "version": "%s" } }""" version                  
+                    File.WriteAllText(globalJsonPath, template)
+                    true
+            | None -> false
+        try f ()
+        finally if writtenJson then File.delete globalJsonPath
+
     /// Execute raw dotnet cli command
     /// ## Parameters
     ///
@@ -482,9 +588,12 @@ module DotNet =
                 |> Process.setEnvironment options.Environment
                 |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
 
-            if options.RedirectOutput then
-              Process.execRaw f timeout true errorF messageF
-            else Process.execSimple f timeout
+            
+            withGlobalJson options.WorkingDirectory options.Version (fun () ->
+                if options.RedirectOutput then
+                  Process.execRaw f timeout true errorF messageF
+                else Process.execSimple f timeout
+            )            
         ProcessResult.New result (results |> List.ofSeq)
 
 
@@ -598,24 +707,41 @@ module DotNet =
         let param = CliInstallOptions.Default |> setParams
         
         let dir = defaultArg param.CustomInstallDir defaultUserInstallDir
+        let checkVersion, fromGlobalJson =
+            match param.Version with
+            | Version version -> Some version, false
+            | CliVersion.Lkg -> None, false
+            | CliVersion.Latest -> None, false
+            | CliVersion.GlobalJson -> Some (getSDKVersionFromGlobalJson()), true
+
+        let dotnetInstallations = findPossibleDotnetCliPaths (Some dir)
+
         let existingDotNet =
-            match tryDotnetCliPath (Some dir) with
-            | Some dotnet ->
-                match param.Version with
-                | Version version -> 
-                    let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet}))
-                    if result = version then Some dotnet
-                    else None
-                | CliVersion.Lkg -> Some dotnet
-                | CliVersion.Latest -> None
-            | None -> None
+            match checkVersion with
+            | Some version ->
+                let passVersion = if fromGlobalJson then None else Some version
+                withGlobalJson "." passVersion (fun () ->
+                    dotnetInstallations
+                    |> Seq.tryFind (fun dotnet ->
+                        try
+                            let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet; Version = None}))
+                            result = version
+                        with e ->
+                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %s" e.Message
+                            false
+                    )
+                ), passVersion
+            | None ->
+                // Just take first if we found a result
+                dotnetInstallations |> Seq.tryHead, None
 
         match existingDotNet with
-        | Some dotnet ->
+        | Some dotnet, passVersion ->
             Trace.traceVerbose "Suitable dotnet installation found, skipping .NET SDK installer."
-            (fun opt -> { opt with DotNetCliPath = dotnet})
+            (fun opt -> { opt with DotNetCliPath = dotnet; Version = passVersion})
         | _ ->
 
+        let passVersion = if fromGlobalJson then None else checkVersion
         let installScript = downloadInstaller param.InstallerOptions
         
         let exitCode =
@@ -648,7 +774,7 @@ module DotNet =
     
         let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
         Trace.tracefn ".NET Core SDK installed to %s" exe     
-        (fun opt -> { opt with DotNetCliPath = exe})
+        (fun opt -> { opt with DotNetCliPath = exe; Version = passVersion})
 
     /// dotnet restore command options
     type RestoreOptions =
@@ -742,17 +868,17 @@ module DotNet =
     type PackOptions =
         {
             /// Common tool options
-            Common: Options;
+            Common: Options
             /// Pack configuration (--configuration)
-            Configuration: BuildConfiguration;
+            Configuration: BuildConfiguration
             /// Version suffix to use
-            VersionSuffix: string option;
+            VersionSuffix: string option
             /// Build base path (--build-base-path)
-            BuildBasePath: string option;
+            BuildBasePath: string option
             /// Output path (--output)
-            OutputPath: string option;
+            OutputPath: string option
             /// No build flag (--no-build)
-            NoBuild: bool;
+            NoBuild: bool
         }
 
         /// Parameter default values.
@@ -807,21 +933,21 @@ module DotNet =
     type PublishOptions =
         {
             /// Common tool options
-            Common: Options;
+            Common: Options
             /// Pack configuration (--configuration)
-            Configuration: BuildConfiguration;
+            Configuration: BuildConfiguration
             /// Target framework to compile for (--framework)
-            Framework: string option;
+            Framework: string option
             /// Target runtime to publish for (--runtime)
-            Runtime: string option;
+            Runtime: string option
             /// Build base path (--build-base-path)
-            BuildBasePath: string option;
+            BuildBasePath: string option
             /// Output path (--output)
-            OutputPath: string option;
+            OutputPath: string option
             /// Defines what `*` should be replaced with in version field in project.json (--version-suffix)
-            VersionSuffix: string option;
+            VersionSuffix: string option
             /// No build flag (--no-build)
-            NoBuild: bool;
+            NoBuild: bool
         }
 
         /// Parameter default values.
@@ -880,19 +1006,19 @@ module DotNet =
     type BuildOptions =
         {
             /// Common tool options
-            Common: Options;
+            Common: Options
             /// Pack configuration (--configuration)
-            Configuration: BuildConfiguration;
+            Configuration: BuildConfiguration
             /// Target framework to compile for (--framework)
-            Framework: string option;
+            Framework: string option
             /// Target runtime to publish for (--runtime)
-            Runtime: string option;
+            Runtime: string option
             /// Build base path (--build-base-path)
-            BuildBasePath: string option;
+            BuildBasePath: string option
             /// Output path (--output)
-            OutputPath: string option;
+            OutputPath: string option
             /// Native flag (--native)
-            Native: bool;
+            Native: bool
         }
 
         /// Parameter default values.
@@ -1051,28 +1177,3 @@ module DotNet =
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
         __.MarkSuccess()
 
-    /// Gets the DotNet SDK from the global.json
-    /// This file can exist in the working directory or any of the parent directories
-    let getSDKVersionFromGlobalJson() : string =
-        let globalJsonPaths rootDir = 
-            let rec loop (dir: DirectoryInfo) = seq {
-                match dir.GetFiles "global.json" with
-                | [| json |] -> yield json
-                | _ -> ()
-                if not (isNull dir.Parent) then
-                    yield! loop dir.Parent
-            }
-            loop (DirectoryInfo rootDir)
-
-        match Seq.tryHead (globalJsonPaths ".") with
-        | None -> 
-            failwithf "global.json not found"
-        | Some globalJson -> 
-            try
-                let content = File.ReadAllText globalJson.FullName
-                let json = JObject.Parse content
-                let sdk = json.Item("sdk") :?> JObject
-                let version = sdk.Property("version").Value.ToString()
-                version
-            with
-            | exn -> failwithf "Could not parse `sdk.version` from global.json at '%s': %s" globalJson.FullName exn.Message
