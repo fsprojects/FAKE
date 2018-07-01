@@ -20,7 +20,7 @@ open System.IO
 ///        
 ///            let files =
 ///                runtimes @ [ "portable"; "packages" ]
-///                |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+///                |> List.map (fun n -> sprintf "release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
 ///        
 ///            GitHub.createClientWithToken token
 ///            |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes

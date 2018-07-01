@@ -1,7 +1,7 @@
 #if BOOTSTRAP
 
 #r "paket:
-source nuget/dotnetcore
+source release/dotnetcore
 source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 4.1
 nuget System.AppContext prerelease
@@ -87,8 +87,12 @@ let buildDir = "./build"
 let testDir = "./test"
 let docsDir = "./docs"
 let apidocsDir = "./docs/apidocs/"
-let nugetDncDir = "./nuget/dotnetcore"
-let nugetLegacyDir = "./nuget/legacy"
+
+let releaseDir = "./release"
+let nugetDncDir = releaseDir </> "dotnetcore"
+let chocoReleaseDir = nugetDncDir </> "chocolatey"
+let nugetLegacyDir = releaseDir </> "legacy"
+
 let reportDir = "./report"
 let packagesDir = "./packages"
 let buildMergedDir = buildDir </> "merged"
@@ -722,8 +726,8 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
         let executeTarget target =
             if clearCache then clear ()
             let fileName =
-                if Environment.isUnix then "nuget/dotnetcore/Fake.netcore/current/fake"
-                else "nuget/dotnetcore/Fake.netcore/current/fake.exe"
+                if Environment.isUnix then nugetDncDir </> "Fake.netcore/current/fake"
+                else nugetDncDir </> "Fake.netcore/current/fake.exe"
             Process.execSimple (fun info ->
                 { info with
                     FileName = fileName
@@ -907,7 +911,7 @@ Target.create "CreateNuGet" (fun _ ->
         !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
         NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
 
-    let legacyZip = "nuget/fake-legacy-packages.zip"
+    let legacyZip = releaseDir </> "fake-legacy-packages.zip"
     !! (nugetLegacyDir </> "**/*.nupkg")
     |> Zip.zip nugetLegacyDir legacyZip
     publish legacyZip
@@ -1013,19 +1017,19 @@ Target.create "DotNetCoreCreateZipPackages" (fun _ ->
     Environment.setEnvironVar "Version" nugetVersion
 
     // build zip packages
-    !! "nuget/dotnetcore/*.nupkg"
-    -- "nuget/dotnetcore/*.symbols.nupkg"
-    |> Zip.zip "nuget/dotnetcore" "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-packages.zip"
+    !! (nugetDncDir </> "*.nupkg")
+    -- (nugetDncDir </> "*.symbols.nupkg")
+    |> Zip.zip nugetDncDir (nugetDncDir </> "Fake.netcore/fake-dotnetcore-packages.zip")
 
     ("portable" :: runtimes)
     |> Seq.iter (fun runtime ->
-        let runtimeDir = sprintf "nuget/dotnetcore/Fake.netcore/%s" runtime
+        let runtimeDir = sprintf "%s/Fake.netcore/%s" nugetDncDir runtime
         !! (sprintf "%s/**" runtimeDir)
-        |> Zip.zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
+        |> Zip.zip runtimeDir (sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir runtime)
     )
 
     runtimes @ [ "portable"; "packages" ]
-    |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+    |> List.map (fun n -> sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir n)
     |> List.iter publish
 )
 
@@ -1047,7 +1051,7 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
         if Environment.isWindows
         then p
         else { p with ToolPath = altToolPath }
-    Directory.ensure "nuget/dotnetcore/chocolatey"
+    Directory.ensure chocoReleaseDir
     Choco.packFromTemplate (fun p ->
         { p with
             PackageId = "fake"
@@ -1055,23 +1059,23 @@ Target.create "DotNetCoreCreateChocolateyPackage" (fun _ ->
             InstallerType = Choco.ChocolateyInstallerType.SelfContained
             Version = chocoVersion
             Files =
-                [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None
+                [ (System.IO.Path.GetFullPath (nugetDncDir </> @"Fake.netcore\win7-x86")) + @"\**", Some "bin", None
                   (System.IO.Path.GetFullPath @"src\VERIFICATION.txt"), Some "VERIFICATION.txt", None
                   (System.IO.Path.GetFullPath @"License.txt"), Some "LICENSE.txt", None ]
-            OutputDir = "nuget/dotnetcore/chocolatey" }
+            OutputDir = chocoReleaseDir }
         |> changeToolPath) "src/Fake-choco-template.nuspec"
 
     let name = sprintf "%s.%s" "fake" chocoVersion
-    let chocoPackage = sprintf "nuget/dotnetcore/chocolatey/%s.nupkg" name
-    let chocoTargetPackage = sprintf "nuget/dotnetcore/chocolatey/chocolatey-%s.nupkg" name
+    let chocoPackage = sprintf "%s/%s.nupkg" chocoReleaseDir name
+    let chocoTargetPackage = sprintf "%s/chocolatey-%s.nupkg" chocoReleaseDir name
     File.Copy(chocoPackage, chocoTargetPackage, true)
     publish chocoTargetPackage
 )
 Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
     let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
-    let path = sprintf "nuget/dotnetcore/chocolatey/%s" name
+    let path = sprintf "%s/%s" chocoReleaseDir name
     if not Environment.isWindows && not (File.exists path) && fromArtifacts then
-        Directory.ensure "nuget/dotnetcore/chocolatey"
+        Directory.ensure chocoReleaseDir
         Shell.copyFile path (artifactsDir </> sprintf "chocolatey-%s" name)
 
     let altToolPath = getChocoWrapper()
@@ -1093,31 +1097,35 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     DotNet.restore (fun opt ->
         { opt with 
-            Common = { opt.Common with WorkingDirectory = "src/app/Fake.netcore/" } |> dtntSmpl
-            Runtime = Some "linux-x64"}) "Fake.netcore.fsproj"
+            Common = { opt.Common with WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
+            Runtime = Some "linux-x64"}) "fake-cli.fsproj"
 
-    let runtime = "linux-x64" 
+    let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1" 
     let args = 
         [
             sprintf "/t:%s" "CreateDeb"  
             sprintf "/p:TargetFramework=%s" targetFramework
+            sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
             sprintf "/p:Configuration=%s" "Release" 
-            sprintf "/p:PackageVersion=%s" release.NugetVersion
+            sprintf "/p:PackageVersion=%s" simpleVersion
         ] |> String.concat " "
     let result =
         DotNet.exec (fun opt ->
             { opt with
-                WorkingDirectory = "src/app/Fake.netcore/" } |> dtntSmpl
+                WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
         ) "msbuild" args
     if result.OK |> not then
         failwith "Debian package creation failed"
 
-    if fromArtifacts then
-        [(sprintf "src/app/Fake.netcore/bin/Release/%s/%s/fake.%s.%s.deb" targetFramework runtime release.NugetVersion runtime)]   
-        |> Shell.copy artifactsDir   
-
+    
+    let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
+    let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
+    Directory.ensure nugetDncDir
+    let target = sprintf "%s/%s" nugetDncDir fileName
+    File.Copy(sourceFile, target, true)
+    publish target
 )
 
 
@@ -1157,8 +1165,8 @@ Target.create "DotNetCorePushNuGet" (fun _ ->
     ++ (templateDir </> "*/*.fsproj")
     |> Seq.iter(fun proj ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
-        !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
-        -- (sprintf "nuget/dotnetcore/%s.*.symbols.nupkg" projName)
+        !! (sprintf "%s/%s.*.nupkg" nugetDncDir projName)
+        -- (sprintf "%s/%s.*.symbols.nupkg" nugetDncDir projName)
         |> Seq.iter (nugetPush 4))
 )
 
@@ -1215,7 +1223,7 @@ Target.create "FastRelease" (fun _ ->
 
     let files =
         runtimes @ [ "portable"; "packages" ]
-        |> List.map (fun n -> sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" n)
+        |> List.map (fun n -> sprintf "%s/Fake.netcore/fake-dotnetcore-%s.zip" nugetDncDir n)
 
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease github_release_user gitName simpleVersion (release.SemVer.PreRelease <> None) release.Notes
@@ -1254,26 +1262,32 @@ Target.create "PrepareArtifacts" (fun _ ->
             |> Seq.toList
         Trace.tracefn "files: %A" files
         files
-        |> Shell.copy "nuget/dotnetcore/Fake.netcore"
+        |> Shell.copy (nugetDncDir </> "Fake.netcore")
 
-        unzip "nuget/dotnetcore" (artifactsDir </> "fake-dotnetcore-packages.zip")
+        unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
 
         if Environment.isWindows then
-            Directory.ensure "nuget/dotnetcore/chocolatey"
+            Directory.ensure chocoReleaseDir
             let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
-            Shell.copyFile (sprintf "nuget/dotnetcore/chocolatey/%s" name) (artifactsDir </> sprintf "chocolatey-%s" name)
+            Shell.copyFile (sprintf "%s/%s" chocoReleaseDir name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
             unzip "." (artifactsDir </> "chocolatey-requirements.zip")
 
-        Directory.ensure "nuget/legacy"
-        unzip "nuget/legacy" (artifactsDir </> "fake-legacy-packages.zip")
+        Directory.ensure nugetLegacyDir
+        unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
 
         Directory.ensure "temp/build"
-        !! ("nuget" </> "legacy" </> "*.nupkg")
+        !! (nugetLegacyDir </> "*.nupkg")
         |> Seq.iter (fun pack ->
             unzip "temp/build" pack
         )
         Shell.copyDir "build" "temp/build" (fun _ -> true)
+
+        let linuxRuntime = "linux-x64"
+        let debFileName = sprintf "fake-cli.%s.%s.deb" simpleVersion linuxRuntime
+        Directory.ensure nugetDncDir
+        let debTarget = sprintf "%s/%s" nugetDncDir debFileName
+        Shell.copyFile debTarget (artifactsDir </> debFileName)
 
         let unzipIfExists dir file =
             Directory.ensure dir
