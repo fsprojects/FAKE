@@ -117,6 +117,8 @@ type TraceData =
     | ErrorMessage of text:string
     | LogMessage of text:string * newLine:bool
     | TraceMessage of text:string * newLine:bool
+    /// Happens when a tag (Task, Target, Test, ...) has started.
+    /// description is 'null' when missing.
     | OpenTag of KnownTags * description:string
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
@@ -245,10 +247,12 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
             | TraceData.OpenTag(KnownTags.Target _ as tag, description) ->
                 let msg = TraceData.TraceMessage("", true)
                 let color2 = colorMap msg
-                write false color2 false (sprintf "Starting %s '%s'" tag.Type tag.Name)
-                if not (String.IsNullOrWhiteSpace description) then
-                    write false color2 false (sprintf ": %s" description)
-                write false color2 true ""
+                let msgToPrint =
+                    let initial = sprintf "Starting %s '%s'" tag.Type tag.Name
+                    if String.IsNullOrWhiteSpace description then
+                        initial
+                    else sprintf "%s: %s" initial description
+                write false color2 true msgToPrint
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time, status) ->
