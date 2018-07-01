@@ -169,4 +169,5 @@ group netcore
     nuget System.IO.Compression.ZipFile
     nuget System.Runtime.Loader
     nuget System.IO.FileSystem.Watcher
+    nuget Packaging.Targets 
     

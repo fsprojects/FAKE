@@ -1,5 +1,14 @@
 # Release Notes
 
+## 5.1.1-alpha - 2018-07-01
+
+* ENHANCEMENT: Improve output around empty target descriptions - https://github.com/fsharp/FAKE/pull/1996
+* BUGFIX: Proper handling of dotnet SDK versioning - https://github.com/fsharp/FAKE/pull/1963
+* NEW: Add debian package (maintainer wanted for hosting!) - https://github.com/fsharp/FAKE/pull/1863
+* BUGFIX: FIx ambiguity in new octokit release - https://github.com/fsharp/FAKE/pull/2004
+* BUGFIX: Fix XML poke - https://github.com/fsharp/FAKE/pull/2005
+* BUGFIX: Fix SQLPackage path with VS2017 - https://github.com/fsharp/FAKE/pull/2006
+
 ## 5.1.0 - 2018-06-18
 
 * NEW: module Fake.DotNet.Fsi to start fsharpi/fsi.exe on a F# script - https://github.com/fsharp/FAKE/pull/1970

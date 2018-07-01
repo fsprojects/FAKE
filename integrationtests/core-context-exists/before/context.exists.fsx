@@ -2,7 +2,7 @@
 #r "paket:
 storage: none
 source https://nuget.org/api/v2
-source ../../../nuget/dotnetcore
+source ../../../release/dotnetcore
 //source https://ci.appveyor.com/nuget/paket
 
 nuget Fake.Core.Context prerelease"
