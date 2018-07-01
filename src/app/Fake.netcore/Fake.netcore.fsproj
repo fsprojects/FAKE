@@ -13,6 +13,16 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
+
+  <!-- Debian packaging -->
+  <PropertyGroup>
+    <Prefix>/opt/fake</Prefix>
+    <PreInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/preinst'))</PreInstallScript>
+    <PostInstallScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/postinst'))</PostInstallScript>
+    <PreRemoveScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/prerm'))</PreRemoveScript>
+    <PostRemoveScript>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../../packaging/debian/postrm'))</PostRemoveScript>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Cli.fs" />
