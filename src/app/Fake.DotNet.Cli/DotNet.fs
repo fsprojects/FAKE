@@ -1059,12 +1059,12 @@ module DotNet =
                 match dir.GetFiles "global.json" with
                 | [| json |] -> yield json
                 | _ -> ()
-                if dir.Parent <> null then
+                if not (isNull dir.Parent) then
                     yield! loop dir.Parent
             }
             loop (DirectoryInfo rootDir)
 
-        match Seq.tryHead (globalJsonPaths Environment.CurrentDirectory) with
+        match Seq.tryHead (globalJsonPaths ".") with
         | None -> 
             failwithf "global.json not found"
         | Some globalJson -> 
