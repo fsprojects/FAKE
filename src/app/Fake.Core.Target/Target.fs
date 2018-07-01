@@ -457,12 +457,12 @@ module Target =
 
         let rec visitDependenciesAux fGetDependencies (visited:string list) level (_depType, targetName) =
             let target = get targetName
-            let isVisited = visited |> Seq.contains targetName
+            let isVisited = visited |> Seq.exists (fun t -> t = String.toLower targetName)
             //fVisit (target, depType, level, isVisited)
             let dependencies =
                 fGetDependencies target
-                |> Seq.collect (visitDependenciesAux fGetDependencies (targetName::visited) (level + 1))
-                |> Seq.distinctBy (fun t -> t.Name)
+                |> Seq.collect (visitDependenciesAux fGetDependencies (String.toLower targetName::visited) (level + 1))
+                |> Seq.distinctBy (fun t -> String.toLower t.Name)
                 |> Seq.toList
             if not isVisited then target :: dependencies
             else dependencies
@@ -472,7 +472,7 @@ module Target =
 
         // Try to build the optimal tree by starting with the targets without dependencies and remove them from the list iteratively
         let rec findOrder (targetLeft:Target list) =
-            let isValidTarget name = targetLeft |> Seq.exists (fun t -> t.Name = name)
+            let isValidTarget name = targetLeft |> Seq.exists (fun t -> String.toLower t.Name = String.toLower name)
             let canBeExecuted (t:Target) =
                 t.Dependencies @ t.SoftDependencies
                 |> Seq.filter isValidTarget
@@ -509,11 +509,11 @@ module Target =
         let internal mergeContext (ctx1:TargetContext) (ctx2:TargetContext) =
             let known =
                 ctx1.PreviousTargets
-                |> Seq.map (fun tres -> tres.Target.Name, tres)
+                |> Seq.map (fun tres -> String.toLower tres.Target.Name, tres)
                 |> dict
             let filterKnown targets =
                 targets
-                |> List.filter (fun tres -> not (known.ContainsKey tres.Target.Name))
+                |> List.filter (fun tres -> not (known.ContainsKey (String.toLower tres.Target.Name)))
             { ctx1 with
                 PreviousTargets =
                     ctx1.PreviousTargets @ filterKnown ctx2.PreviousTargets
@@ -530,8 +530,8 @@ module Target =
             let body (inbox:MailboxProcessor<RunnerHelper>) = async {
                 let targetCount =
                     order |> Seq.sumBy (fun t -> t.Length)
-                let resolution = Set.ofSeq(order |> Seq.concat |> Seq.map (fun t -> t.Name))
-                let inResolution (t:string) = resolution.Contains t
+                let resolution = Set.ofSeq(order |> Seq.concat |> Seq.map (fun t -> String.toLower t.Name))
+                let inResolution (t:string) = resolution.Contains (String.toLower t)
                 let mutable ctx = ctx
                 let mutable waitList = []
                 let mutable runningTasks = []
@@ -547,11 +547,11 @@ module Target =
                             ctx <- mergeContext ctx newCtx
                             let known =
                                 ctx.PreviousTargets
-                                |> Seq.map (fun tres -> tres.Target.Name, tres)
+                                |> Seq.map (fun tres -> String.toLower tres.Target.Name, tres)
                                 |> dict
                             runningTasks <-
                                 runningTasks
-                                |> List.filter (fun t -> not(known.ContainsKey t.Name))
+                                |> List.filter (fun t -> not(known.ContainsKey (String.toLower t.Name)))
                             if known.Count = targetCount then
                                 for (w:System.Threading.Tasks.TaskCompletionSource<TargetContext * Target option>) in waitList do
                                     w.SetResult (ctx, None)
@@ -560,8 +560,8 @@ module Target =
                             else
 
                                 let isRunnable (t:Target) =
-                                    not (known.ContainsKey t.Name) && // not already finised
-                                    not (runningTasks |> Seq.exists (fun r -> r.Name = t.Name)) && // not already running
+                                    not (known.ContainsKey (String.toLower t.Name)) && // not already finised
+                                    not (runningTasks |> Seq.exists (fun r -> String.toLower r.Name = String.toLower t.Name)) && // not already running
                                     t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
                                     |> Seq.forall (fun d -> known.ContainsKey d)
                                 let runnable =

@@ -84,6 +84,41 @@ let tests =
             | _ ->
                 failwithf "unexpected order: %A" order
 
+
+    Fake.ContextHelper.fakeContextTestCase "casing in targets - #2000" <| fun _ ->
+
+        Target.create "CleanUp" DoNothing
+
+        Target.create "RunUnitTests" DoNothing
+
+        Target.create "RunAllTests" DoNothing
+
+        Target.create "Default" DoNothing
+
+        "CleanUp"
+            ==> "RunUnitTests"
+            ==> "RunAlltests"
+            ==> "Default"
+
+        [ "CleanUp";
+          "RunUnitTests";
+          "RunAlltests";
+          "Default" ]
+        |> Seq.iter (fun i ->
+                        let t = i |> Target.get
+                        Trace.tracefn "%s has %A" i t.Dependencies )
+
+
+        let order = determineBuildOrder "Default" 1
+        validateBuildOrder order "Default"
+        match order with
+            | [[|Target "CleanUp"|];[|Target "RunUnitTests"|];[|Target "RunAllTests"|];[|Target "Default"|]] ->
+                // as expected
+                ()
+            | _ ->
+                failwithf "unexpected order: %A" order
+        Target.runOrDefault "Default"
+
     Fake.ContextHelper.fakeContextTestCase "Diamonds are resolved correctly" <| fun _ ->
         Target.create "a" DoNothing
         Target.create "b" DoNothing
