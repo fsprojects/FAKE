@@ -182,7 +182,6 @@ module AssemblyInfoFile =
         use f = fi.Open(FileMode.Create)
         use writer = new System.IO.StreamWriter(f, System.Text.Encoding.UTF8)
         lines |> Seq.iter writer.WriteLine
-        Trace.tracefn "Created AssemblyInfo file \"%s\"." outputFileName
 
     let private getDependencies attributes =
         attributes
