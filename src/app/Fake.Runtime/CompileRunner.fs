@@ -103,6 +103,28 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * RunResult =
             FullPaths = true
             ScriptArgs = "--simpleresolution" :: "--targetprofile:netstandard" :: "--nowin32manifest" :: "-o" :: wishPath :: context.Config.ScriptFilePath :: co.FsiOptions.ScriptArgs
         }
+    // Replace fsharp.core with current version, see https://github.com/fsharp/FAKE/issues/2001
+    let fixReferences (s:string list) =
+        // replace potential FSharp.Core.dll and Fake.Core.Context.dll (just as we do on runtime)
+        // see https://github.com/fsharp/FAKE/issues/2001
+        let filteredFsCore =
+            s |> List.filter (fun r -> r.ToLower().EndsWith "fsharp.core.dll" |> not)
+        let filteredFakeContext =
+            filteredFsCore |> List.filter (fun r -> r.ToLower().EndsWith "fake.core.context.dll" |> not)
+        let resultList =
+            let fscoreAssembly = Environment.fsCoreAssembly()
+            if s.Length > filteredFsCore.Length then fscoreAssembly.Location :: filteredFakeContext
+            else filteredFakeContext
+
+        let fakecontextAssembly = Environment.fakeContextAssembly()
+        if filteredFsCore.Length > filteredFakeContext.Length then fakecontextAssembly.Location :: resultList
+        else resultList
+
+    let options =
+        { options with
+            References = fixReferences options.References
+        }
+
     let args =
         options.AsArgs |> Seq.toList
         |> List.filter (fun arg -> arg <> "--")

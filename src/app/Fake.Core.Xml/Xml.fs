@@ -159,6 +159,7 @@ let private save (fileName:string) (doc:XmlDocument) =
 /// Replaces text in a XML file at the location specified by a XPath expression.
 let poke (fileName : string) xpath value =
     let doc = new XmlDocument()
+    load fileName doc
     replaceXPath xpath value doc |> save fileName
 
 /// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.

@@ -1,6 +1,6 @@
 storage: none
 source https://nuget.org/api/v2
-source ..\..\../../../nuget/dotnetcore
+source ..\..\../../../release/dotnetcore
 
 nuget Fake.Core.Target prerelease
 nuget FSharp.Core prerelease

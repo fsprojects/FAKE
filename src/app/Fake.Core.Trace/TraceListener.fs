@@ -106,7 +106,7 @@ module TestStatus =
             TestStatus.Failed (f message, f details, Some (f expected, f actual))
         | TestStatus.Failed (message, details, None) ->
             TestStatus.Failed (f message, f details, None)
-        | _ -> t        
+        | _ -> t
 
 [<RequireQualifiedAccess>]
 type TagStatus =
@@ -116,13 +116,15 @@ type TagStatus =
 
 /// Defines Tracing information for TraceListeners
 [<RequireQualifiedAccess>]
-type TraceData = 
+type TraceData =
     | ImportData of typ:ImportData * path:string
     | BuildNumber of text:string
     | ImportantMessage of text:string
     | ErrorMessage of text:string
     | LogMessage of text:string * newLine:bool
     | TraceMessage of text:string * newLine:bool
+    /// Happens when a tag (Task, Target, Test, ...) has started.
+    /// description is 'null' when missing.
     | OpenTag of KnownTags * description:string
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
@@ -158,7 +160,7 @@ type TraceData =
 module TraceData =
     let inline mapMessage f (t:TraceData) =
         match t with
-        | TraceData.ImportantMessage text -> TraceData.ImportantMessage (f text) 
+        | TraceData.ImportantMessage text -> TraceData.ImportantMessage (f text)
         | TraceData.ErrorMessage text -> TraceData.ErrorMessage (f text)
         | TraceData.LogMessage (text, d) -> TraceData.LogMessage (f text, d)
         | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
@@ -172,12 +174,12 @@ module TraceData =
         mapMessage (repl oldString replacement) t
 
 /// Defines a TraceListener interface
-type ITraceListener = 
+type ITraceListener =
     abstract Write : TraceData -> unit
 
 module ConsoleWriter =
-    
-    let write toStdErr color newLine text = 
+
+    let write toStdErr color newLine text =
         let curColor = Console.ForegroundColor
         try
           if curColor <> color then Console.ForegroundColor <- color
@@ -225,7 +227,7 @@ module ConsoleWriter =
         printer "\x1b[%sm%s\x1b[0m" codeStr text
 
     /// A default color map which maps TracePriorities to ConsoleColors
-    let colorMap traceData = 
+    let colorMap traceData =
         match traceData with
         | TraceData.ImportantMessage _ -> ConsoleColor.Yellow
         | TraceData.ErrorMessage _ -> ConsoleColor.Red
@@ -240,7 +242,7 @@ module ConsoleWriter =
 type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
     interface ITraceListener with
         /// Writes the given message to the Console.
-        member __.Write msg = 
+        member __.Write msg =
             let color = colorMap msg
             let write = if ansiColor then ConsoleWriter.writeAnsiColor else ConsoleWriter.write
             match msg with
@@ -251,8 +253,14 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
             | TraceData.OpenTag(KnownTags.Target _ as tag, description)
             | TraceData.OpenTag(KnownTags.FailureTarget _ as tag, description)
             | TraceData.OpenTag(KnownTags.FinalTarget _ as tag, description) ->
-                write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
-                if not (isNull description) then write false ConsoleColor.Green true description
+                let msg = TraceData.TraceMessage("", true)
+                let color2 = colorMap msg
+                let msgToPrint =
+                    let initial = sprintf "Starting %s '%s'" tag.Type tag.Name
+                    if String.IsNullOrWhiteSpace description then
+                        initial
+                    else sprintf "%s: %s" initial description
+                write false color2 true msgToPrint
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time, status) ->
@@ -274,7 +282,7 @@ type TraceSecret =
 
 module TraceSecrets =
     let private traceSecretsVar = "Fake.Core.Trace.TraceSecrets"
-    let private getTraceSecrets, _, (setTraceSecrets:TraceSecret list -> unit) = 
+    let private getTraceSecrets, _, (setTraceSecrets:TraceSecret list -> unit) =
         Fake.Core.FakeVar.define traceSecretsVar
 
     let getAll () =
@@ -294,8 +302,8 @@ module TraceSecrets =
 
 module CoreTracing =
     // If we write the stderr on those build servers the build will fail.
-    let importantMessagesToStdErr = 
-        let buildServer = BuildServer.buildServer 
+    let importantMessagesToStdErr =
+        let buildServer = BuildServer.buildServer
         buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity && buildServer <> TeamFoundation
 
     /// The default TraceListener for Console.
@@ -306,7 +314,7 @@ module CoreTracing =
     /// A List with all registered listeners
 
     let private traceListenersVar = "Fake.Core.Trace.TraceListeners"
-    let private getTraceListeners, _, (setTraceListenersPrivate:ITraceListener list -> unit) = 
+    let private getTraceListeners, _, (setTraceListenersPrivate:ITraceListener list -> unit) =
         Fake.Core.FakeVar.define traceListenersVar
 
     let areListenersSet () =

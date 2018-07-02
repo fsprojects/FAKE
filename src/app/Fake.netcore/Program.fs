@@ -152,7 +152,7 @@ let runOrBuild (args : RunArguments) =
     let useCache = not args.NoCache
     try
       let config = FakeRuntime.createConfigSimple args.VerboseLevel additionalArgs scriptFile args.ScriptArguments useCache args.RestoreOnlyGroup
-      let runResult = FakeRuntime.prepareAndRunScript config
+      let runResult, cache, context = FakeRuntime.prepareAndRunScriptExt config
       let result =
         match runResult with
         | Runners.RunResult.SuccessRun warnings ->
@@ -180,8 +180,11 @@ let runOrBuild (args : RunArguments) =
           reportExn args.VerboseLevel err
           false
       if Environment.GetEnvironmentVariable "FAKE_DISABLE_HINTS" <> "true" then
-        for hint in FakeRuntime.retrieveHints config runResult do
-          tracefn "Hint: %s" hint
+        for hint in FakeRuntime.retrieveHintsExt context runResult cache do
+          if hint.Important then
+            traceFAKE "Warning: %s" hint.Text
+          else
+            tracefn "Hint: %s" hint.Text
       result        
     finally
       sw.Stop()

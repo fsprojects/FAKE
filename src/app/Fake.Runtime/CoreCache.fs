@@ -196,25 +196,23 @@ let loadAssembly (loadContext:AssemblyLoadContext) (logLevel:Trace.VerboseLevel)
         if logLevel.PrintVerbose then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
 
-
 let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) (logLevel:Trace.VerboseLevel) (runtimeDependencies:AssemblyInfo list) =
     let strName = name.FullName
     if logLevel.PrintVerbose then tracefn "Trying to resolve: %s" strName
-    let getAssemblyFromType (t:System.Type) =
-#if NETSTANDARD1_6
-      t.GetTypeInfo().Assembly
-#else
-      t.Assembly
-#endif
+
 
     // These guys need to be handled carefully, they must only exist a single time in memory
     let wellKnownAssemblies =
-      [ getAssemblyFromType typeof<Fake.Core.Context.FakeExecutionContext>
-        getAssemblyFromType typeof<Microsoft.FSharp.Core.AutoOpenAttribute> ]
+      [ Environment.fakeContextAssembly()
+        Environment.fsCoreAssembly() ]
 
     let isPerfectMatch, result =
       match wellKnownAssemblies |> List.tryFind (fun a -> a.GetName().Name = name.Name) with
       | Some a ->
+        let knownName = a.GetName()
+        if knownName.Version < name.Version && knownName.Name.ToLower().Contains("fsharp.core") then
+            // See https://github.com/fsharp/FAKE/issues/2001
+            traceFAKE "Downgrade (%O -> %O) of FSharp.Core detected. Try to pin FSharp.Core or upgrade fake." name.Version knownName.Version
         a.FullName = strName, (Some (None, a))
       | None ->
 #if NETSTANDARD1_6
@@ -391,7 +389,7 @@ let setupAssemblyResolverLogger (context:FakeContext) =
         null
         ))
 
-let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) : RunResult =
+let runScriptWithCacheProviderExt (config:FakeConfig) (cache:ICachingProvider) : RunResult * ResultCoreCacheInfo * FakeContext =
     let newContext, cacheInfo =  prepareContext config cache
 
     setupAssemblyResolverLogger newContext
@@ -406,4 +404,9 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) : Ru
     | _ -> ()
 
     // Return if the script suceeded
-    result
+    result, resultCache, newContext
+
+[<Obsolete("Use runScriptWithCacheProviderExt instead")>]
+let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) : RunResult =
+    let res, _, _ = runScriptWithCacheProviderExt config cache
+    res
