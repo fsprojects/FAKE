@@ -142,7 +142,8 @@ let selectXPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocume
 let private load (fileName:string) (doc:XmlDocument) =
     use fs = File.OpenRead(fileName)
     doc.Load fs
-let private save (fileName:string) (doc:XmlDocument) =
+
+let saveDoc (fileName:string) (doc:XmlDocument) =
     // https://stackoverflow.com/questions/284394/net-xmldocument-why-doctype-changes-after-save
     // https://stackoverflow.com/a/16451790
     // https://github.com/fsharp/FAKE/issues/1692
@@ -169,13 +170,13 @@ let loadDoc (path:string) =
 /// Replaces text in a XML file at the location specified by a XPath expression.
 let poke (fileName : string) xpath value =
     let doc = new XmlDocument()
-    replaceXPath xpath value doc |> save fileName
+    replaceXPath xpath value doc |> saveDoc fileName
 
 /// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.
 let pokeInnerText (fileName : string) xpath innerTextValue =
     let doc = new XmlDocument()
     load fileName doc
-    replaceXPathInnerText xpath innerTextValue doc |> save fileName
+    replaceXPathInnerText xpath innerTextValue doc |> saveDoc fileName
 
 /// Replaces text in a XML document specified by a XPath expression, with support for namespaces.
 let replaceXPathNS xpath value (namespaces : #seq<string * string>) (doc : XmlDocument) =
@@ -201,13 +202,13 @@ let replaceXPathInnerTextNS xpath innerTextValue (namespaces : #seq<string * str
 let pokeNS (fileName : string) namespaces xpath value =
     let doc = new XmlDocument()
     load fileName doc
-    replaceXPathNS xpath value namespaces doc |> save fileName
+    replaceXPathNS xpath value namespaces doc |> saveDoc fileName
 
 /// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.
 let pokeInnerTextNS (fileName : string) namespaces xpath innerTextValue =
     let doc = new XmlDocument()
     load fileName doc
-    replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> save fileName
+    replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> saveDoc fileName
 
 #if !NETSTANDARD
 /// Loads the given text into a XslCompiledTransform.
@@ -248,6 +249,6 @@ let XmlTransform (stylesheetUri : string) (fileName : string) =
     doc.Load fileName
     let xsl = new XslCompiledTransform()
     xsl.Load stylesheetUri
-    XslTransform xsl doc |> save fileName
+    XslTransform xsl doc |> saveDoc fileName
 
 #endif
