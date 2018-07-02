@@ -7,6 +7,8 @@ open System
 type KnownTags =
     | Task of name:string
     | Target of name:string
+    | FinalTarget of name:string
+    | FailureTarget of name:string
     | Compilation of compiler:string
     | TestSuite of suiteName:string
     | Test of testName:string
@@ -15,6 +17,8 @@ type KnownTags =
         match x with
         | Task n
         | Target n
+        | FinalTarget n
+        | FailureTarget n
         | Compilation n
         | TestSuite n
         | Test n
@@ -23,6 +27,8 @@ type KnownTags =
         match x with
         | Task _ -> "task"
         | Target _ -> "target"
+        | FinalTarget _ -> "final target"
+        | FailureTarget _ -> "failure target"
         | Compilation _ -> "compilation"
         | TestSuite _ -> "testsuite"
         | Test _ -> "test"
@@ -242,12 +248,11 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write importantMessagesToStdErr color true text
             | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                 write false color newLine text
-            | TraceData.OpenTag(KnownTags.Target _ as tag, description) ->
+            | TraceData.OpenTag(KnownTags.Target _ as tag, description)
+            | TraceData.OpenTag(KnownTags.FailureTarget _ as tag, description)
+            | TraceData.OpenTag(KnownTags.FinalTarget _ as tag, description) ->
                 write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)
-                if not (isNull description) then
-                    let msg = TraceData.TraceMessage("", true)
-                    let color2 = colorMap msg
-                    write false color2 true description
+                if not (isNull description) then write false ConsoleColor.Green true description
             | TraceData.OpenTag (tag, descr) ->
                 write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
             | TraceData.CloseTag (tag, time, status) ->

@@ -317,9 +317,14 @@ module Target =
           |> Seq.filter (fun kv -> kv.Value)     // only if activated
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.fold (fun context name ->
-               Trace.tracefn "Starting FinalTarget: %s" name
-               let target = get name
-               runSimpleContextInternal target context) context  
+                        let target = get name
+                        use t = Trace.traceFinalTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
+                        let res = runSimpleContextInternal target context
+                        if res.HasError
+                        then t.MarkFailed()
+                        else t.MarkSuccess()
+                        res
+                      ) context                
 
     /// Runs all build failure targets.
     /// [omit]
@@ -328,9 +333,14 @@ module Target =
           |> Seq.filter (fun kv -> kv.Value)     // only if activated
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.fold (fun context name ->
-               Trace.tracefn "Starting BuildFailureTarget: %s" name
-               let target = get name
-               runSimpleContextInternal target context) context
+                        let target = get name
+                        use t = Trace.traceFailureTarget target.Name (match target.Description with Some d -> d | _ -> "NoDescription") (dependencyString target)
+                        let res = runSimpleContextInternal target context
+                        if res.HasError
+                        then t.MarkFailed()
+                        else t.MarkSuccess()
+                        res
+                      ) context   
 
     /// List all targets available.
     let listAvailable() =
