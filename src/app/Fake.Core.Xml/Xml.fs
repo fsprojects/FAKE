@@ -4,8 +4,6 @@ module Fake.Core.Xml
 open Fake.Core
 open System
 open System.IO
-open System.Text
-
 open System.Xml
 open System.Xml.XPath
 #if !NETSTANDARD
@@ -105,18 +103,11 @@ let parseSubNode name f = getSubNode name >> parse name f
 
 /// Loads the given text into a XmlDocument
 let createDoc text =
-    if String.isNullOrEmpty text then null
+    if String.isNullOrEmpty text then 
+        null
     else
         let xmlDocument = new XmlDocument()
         xmlDocument.LoadXml text
-        xmlDocument
-
-/// Loads the given file path into a XmlDocument
-let loadDoc (path:string) =
-    if String.isNullOrEmpty path then null
-    else
-        let xmlDocument = new XmlDocument()
-        xmlDocument.Load path
         xmlDocument
 
 /// Gets the DocumentElement of the XmlDocument
@@ -163,6 +154,15 @@ let private save (fileName:string) (doc:XmlDocument) =
 #endif    
     use fs = File.Open(fileName, FileMode.Truncate, FileAccess.Write)
     doc.Save fs
+
+/// Loads the given file path into a XmlDocument
+let loadDoc (path:string) =
+    if String.isNullOrEmpty path then 
+        null
+    else
+        let xmlDocument = new XmlDocument()
+        load path xmlDocument
+        xmlDocument
 
 /// Replaces text in a XML file at the location specified by a XPath expression.
 let poke (fileName : string) xpath value =
