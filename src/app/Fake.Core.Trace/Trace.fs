@@ -264,21 +264,12 @@ let traceTask name description =
 /// Traces a function execution
 /// If no exception is thrown then trace is marked as success
 /// Any exception thrown will result in a mark failed and exception re-thrown 
-let traceFunction name description func =
-    use t = traceTask name description
-    try
-        let result = func()
+let inline useWith (d:ISafeDisposable) f =
+    use t = d
+    try 
+        let result = f()
         t.MarkSuccess()
-        result
-    with _ -> t.MarkFailed()
-              reraise()
-
-/// Traces a function execution which takes the ISafeDisposable to mark success/failled.
-/// Any exception thrown will result in a mark failed and exception re-thrown 
-let traceFunctionManual name description func =
-    use t = traceTask name description
-    try
-        func t
+        result 
     with _ -> t.MarkFailed()
               reraise()
 
