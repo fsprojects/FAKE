@@ -4,6 +4,8 @@ module Fake.Core.Xml
 open Fake.Core
 open System
 open System.IO
+open System.Text
+
 open System.Xml
 open System.Xml.XPath
 #if !NETSTANDARD
