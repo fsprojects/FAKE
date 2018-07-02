@@ -133,13 +133,13 @@ let replaceXPathInnerText xpath innerTextValue (doc : XmlDocument) =
         doc
 
 /// Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.
-let replaceXPathAttribute xpath attribute value (doc : XmlDocument) =
+let replaceXPathAttribute xpath (attribute:string) value (doc : XmlDocument) =
     let node = doc.SelectSingleNode xpath
     if isNull node then 
         failwithf "XML node '%s' not found" xpath
     else
-        let attributeValue = node.Attributes.[name]
-        if not (isNull attributeValue) then
+        let attributeValue = node.Attributes.[attribute]
+        if isNull attributeValue then
             failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
         else
             attributeValue.Value <- value
@@ -155,15 +155,15 @@ let selectXPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocume
     else node.InnerText
 
 /// Selects a xml node attribute value via XPath from the given document
-let selectXPathAttributeValue xpath attribute (namespaces : #seq<string * string>) (doc : XmlDocument) =
+let selectXPathAttributeValue xpath (attribute:string) (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
     if node = null then 
         failwithf "XML node '%s' not found" xpath
     else 
-        let attributeValue = node.Attributes.[name]
-        if not (isNull attributeValue) then
+        let attributeValue = (node :?> #XmlNode).Attributes.[attribute]
+        if isNull attributeValue then
             failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
         else
             attributeValue.Value
