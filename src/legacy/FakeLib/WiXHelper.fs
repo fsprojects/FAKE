@@ -1718,7 +1718,7 @@ let generateWiXScript fileName =
 ///                                CustomActions = action1.ToString() + action2.ToString()
 ///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
 ///                            })
-[<Obsolete("Please use new FillInWiXTemplate function")>]
+[<Obsolete("Please use new fillInWiXTemplate function")>]
 let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
     let parameters = WiXScriptDefaults |> setParams
     let wixScript = !!( wiXPath @@ "*.wxs" )
@@ -2073,7 +2073,7 @@ let HeatDefaulParams =
 ///  - `directory` - The path to the directory that will be harvested by Heat.
 ///  - `outputFile` - The output file path given to Heat.
 ///
-[<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.HarvestDirectory)")>]
+[<Obsolete("Use Fake.Windows.Wix instead (FAKE0001 - package: Fake.Windows.Wix - member: Fake.Windows.Wix.harvestDirectory)")>]
 let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
     use __ = traceStartTaskUsing "Heat" directory
     let conditionalArgument condition arg args =
