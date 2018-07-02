@@ -126,23 +126,63 @@ let replaceXPath xpath value (doc : XmlDocument) =
 /// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
 let replaceXPathInnerText xpath innerTextValue (doc : XmlDocument) =
     let node = doc.SelectSingleNode xpath
-    if isNull node then failwithf "XML node '%s' not found" xpath
+    if isNull node then 
+        failwithf "XML node '%s' not found" xpath
     else
         node.InnerText <- innerTextValue
         doc
+
+/// Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.
+let replaceXPathAttribute xpath attribute value (doc : XmlDocument) =
+    let node = doc.SelectSingleNode xpath
+    if isNull node then 
+        failwithf "XML node '%s' not found" xpath
+    else
+        let attributeValue = node.Attributes.[name]
+        if not (isNull attributeValue) then
+            failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
+        else
+            attributeValue.Value <- value
+            doc
 
 /// Selects a xml node value via XPath from the given document
 let selectXPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
-    if node = null then failwithf "XML node '%s' not found" xpath
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
     else node.InnerText
+
+/// Selects a xml node attribute value via XPath from the given document
+let selectXPathAttributeValue xpath attribute (namespaces : #seq<string * string>) (doc : XmlDocument) =
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
+    else 
+        let attributeValue = node.Attributes.[name]
+        if not (isNull attributeValue) then
+            failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
+        else
+            attributeValue.Value
+
+/// Selects a xml node via XPath from the given document
+let selectXPathNode xpath (namespaces : #seq<string * string>) (doc : XmlDocument) =
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
+    else 
+        node
 
 let private load (fileName:string) (doc:XmlDocument) =
     use fs = File.OpenRead(fileName)
     doc.Load fs
 
+//Save the given XmlDocument to file path
 let saveDoc (fileName:string) (doc:XmlDocument) =
     // https://stackoverflow.com/questions/284394/net-xmldocument-why-doctype-changes-after-save
     // https://stackoverflow.com/a/16451790
@@ -183,7 +223,8 @@ let replaceXPathNS xpath value (namespaces : #seq<string * string>) (doc : XmlDo
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.SelectSingleNode(xpath, nsmgr)
-    if node = null then failwithf "XML node '%s' not found" xpath
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
     else
         node.Value <- value
         doc
