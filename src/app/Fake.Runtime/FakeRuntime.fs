@@ -4,6 +4,7 @@ open System
 open System.IO
 open Fake.Runtime
 open Fake.Runtime.Runners
+open Fake.Runtime.Trace
 open Paket
 open System
 
@@ -135,6 +136,18 @@ let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.Toke
 type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
+
+let internal filterValidAssembly (logLevel:VerboseLevel) (isSdk, isReferenceAssembly, fi:FileInfo) =
+    let fullName = fi.FullName
+    try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
+        { IsReferenceAssembly = isReferenceAssembly
+          Info =
+            { Runners.AssemblyInfo.FullName = assembly.Name.FullName
+              Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
+              Runners.AssemblyInfo.Location = fullName } } |> Some
+    with e ->
+        if logLevel.PrintVerbose then Trace.log <| sprintf "Could not load '%s': %O" fullName e
+        None
 
 let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependencies) (paketDependenciesFile:Lazy<Paket.DependenciesFile>) group =
   use __ = Fake.Profile.startCategory Fake.Profile.Category.Paket
@@ -272,18 +285,6 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
       }
       |> Async.StartAsTask
 
-    let filterValidAssembly (isSdk, isReferenceAssembly, fi:FileInfo) =
-        let fullName = fi.FullName
-        try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
-            { IsReferenceAssembly = isReferenceAssembly
-              Info =
-                { Runners.AssemblyInfo.FullName = assembly.Name.FullName
-                  Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
-                  Runners.AssemblyInfo.Location = fullName } } |> Some
-        with e -> 
-            if logLevel.PrintVerbose then Trace.log <| sprintf "Could not load '%s': %O" fullName e
-            None
-
     // Retrieve assemblies
     use __ = Fake.Profile.startCategory Fake.Profile.Category.PaketGetAssemblies
     if logLevel.PrintVerbose then Trace.log <| sprintf "Retrieving the assemblies (rid: '%O')..." rid
@@ -314,7 +315,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
           Seq.append runtimeAssemblies refAssemblies
           |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
           |> Seq.map (fun (isRef, fi) -> false, isRef, fi)
-          |> Seq.choose filterValidAssembly
+          |> Seq.choose (filterValidAssembly logLevel)
           |> Seq.toList
         return result })
     |> Async.Parallel
@@ -324,7 +325,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         let sdkRefs =
             (getCurrentSDKReferenceFiles()
                  |> Seq.map (fun file -> true, true, FileInfo file)
-                 |> Seq.choose filterValidAssembly)
+                 |> Seq.choose (filterValidAssembly logLevel))
 #endif  
         work.Result
         |> Seq.collect id
@@ -605,10 +606,64 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
 let createConfigSimple (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPath scriptArgs useCache restoreOnlyGroup =
     createConfig logLevel fsiOptions scriptPath scriptArgs (printf "%s") (printf "%s") useCache restoreOnlyGroup
 
-let prepareAndRunScript (config:FakeConfig) : RunResult =
+let prepareAndRunScriptExt (config:FakeConfig) : RunResult * ResultCoreCacheInfo * FakeContext =
   let provider = prepareFakeScript config
-  CoreCache.runScriptWithCacheProvider config provider
+  CoreCache.runScriptWithCacheProviderExt config provider
 
+[<Obsolete("Use prepareAndRunScriptExt instead")>]
+let prepareAndRunScript (config:FakeConfig) : RunResult =
+  let res, _, _ = prepareAndRunScriptExt config
+  res
+
+type Hint =
+ { Important : bool
+   Text : string }
+
+let retrieveHintsExt (context:FakeContext) (runResult:Runners.RunResult) (cache:ResultCoreCacheInfo) =
+    let config = context.Config
+    // https://github.com/fsharp/FAKE/issues/2001
+    let fsCoreDll =
+        config.CompileOptions.FsiOptions.References
+        |> Seq.tryFind (fun r -> r.ToLower().EndsWith("fsharp.core.dll"))
+    let globalHints =
+        [
+            match fsCoreDll with
+            | Some fsCoreDll ->
+                match filterValidAssembly VerboseLevel.Silent ("", false, FileInfo fsCoreDll) with
+                | Some assInfo ->
+                    let refVersion = Version assInfo.Info.Version
+                    let currentVersion = Environment.fsCoreAssembly().GetName().Version
+                    if refVersion > currentVersion then
+                        yield { Important = true
+                                Text = sprintf "Paket resolved a FSharp.Core with version '%O', but fake runs with a version of '%O'. This is not supported.\nPlease either lock the version via 'nuget FSharp.Core <nuget-version>' or upgrade fake.\nRead https://github.com/fsharp/FAKE/issues/2001 for details." refVersion currentVersion }
+                | None -> ()
+            | None -> ()
+        ]
+
+    match runResult with
+    | Runners.RunResult.SuccessRun _ -> globalHints
+    | Runners.RunResult.CompilationError err ->
+      [
+        // Add some hints about the error, for example
+        // detect https://github.com/fsharp/FAKE/issues/1783
+        let containsNotDefined = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 39)
+        let containsNotSupportOperator = err.Errors |> Seq.exists (fun er -> er.ErrorNumber = 43)
+        if containsNotDefined then
+          yield { Important = false; Text = sprintf "If you have updated your dependencies you might need to run 'paket install' or delete '%s.lock' for fake to pick them up." config.ScriptFilePath }
+        if containsNotSupportOperator then
+          yield { Important = false; Text = "Operators now need to be opened manually, try to add 'open Fake.IO.FileSystemOperators' and 'open Fake.IO.Globbing.Operators' to your script to import the most common operators" }
+        yield! globalHints
+      ]
+    | Runners.RunResult.RuntimeError _ ->
+      [
+        if config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield { Important = false; Text = "To further diagnose the problem you can set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'" }
+        if not config.VerboseLevel.PrintVerbose && Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" <> "true" then
+          yield { Important = false; Text = "To further diagnose the problem you can run fake in verbose mode `fake -v run ...` or set the 'FAKE_DETAILED_ERRORS' environment variable to 'true'" }
+        yield! globalHints
+      ]
+
+[<Obsolete("Use retrieveHintsExt instead.")>]
 let retrieveHints (config:FakeConfig) (runResult:Runners.RunResult) =
     match runResult with
     | Runners.RunResult.SuccessRun _ -> []

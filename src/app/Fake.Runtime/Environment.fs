@@ -56,3 +56,14 @@ let environVarOrNone name =
 /// Returns if the build parameter with the given name was set
 let inline hasEnvironVar name = environVar name |> isNull |> not
 
+open System.Reflection
+
+let inline internal getAssemblyFromType (t:System.Type) =
+#if NETSTANDARD1_6
+    t.GetTypeInfo().Assembly
+#else
+    t.Assembly
+#endif
+
+let inline internal fsCoreAssembly () = getAssemblyFromType typeof<Microsoft.FSharp.Core.AutoOpenAttribute>
+let inline internal fakeContextAssembly () = getAssemblyFromType typeof<Fake.Core.Context.FakeExecutionContext>
