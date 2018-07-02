@@ -210,11 +210,11 @@ let traceEndTargetUnsafeEx state name =
     closeTagUnsafeEx state (KnownTags.Target name)
 
 /// Traces the end of a final target
-let traceEndTargetUnsafeEx state name = 
+let traceEndFinalTargetUnsafeEx state name = 
     closeTagUnsafeEx state (KnownTags.FinalTarget name)
 
 /// Traces the end of a failure target
-let traceEndTargetUnsafeEx state name = 
+let traceEndFailureTargetUnsafeEx state name = 
     closeTagUnsafeEx state (KnownTags.FailureTarget name)
 
 /// Traces the end of a target
