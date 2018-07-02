@@ -241,7 +241,7 @@ let traceTask name description =
 /// Traces a function execution
 /// If no exception is thrown then trace is marked as success
 /// Any exception thrown will result in a mark failed and exception re-thrown 
-let traceTaskFunction name description func =
+let traceFunction name description func =
     use t = traceTask name description
     try
         let result = func()
@@ -252,7 +252,7 @@ let traceTaskFunction name description func =
 
 /// Traces a function execution which takes the ISafeDisposable to mark success/failled.
 /// Any exception thrown will result in a mark failed and exception re-thrown 
-let traceTaskFunctionDetailed name description func =
+let traceFunctionManual name description func =
     use t = traceTask name description
     try
         func t
