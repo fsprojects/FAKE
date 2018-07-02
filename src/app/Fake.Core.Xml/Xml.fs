@@ -162,7 +162,7 @@ let selectXPathAttributeValue xpath (attribute:string) (namespaces : #seq<string
     if node = null then 
         failwithf "XML node '%s' not found" xpath
     else 
-        let attributeValue = (node :?> #XmlNode).Attributes.[attribute]
+        let attributeValue = node.Attributes.[attribute]
         if isNull attributeValue then
             failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
         else
