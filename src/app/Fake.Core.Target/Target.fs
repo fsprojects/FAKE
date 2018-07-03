@@ -541,6 +541,12 @@ module Target =
                         let! msg = inbox.Receive()
                         match msg with
                         | GetNextTarget (newCtx, reply) ->
+                            let failwithf pf =
+                                // handle reply before throwing.
+                                let tcs = new TaskCompletionSource<TargetContext * Target option>()
+                                waitList <- waitList @ [ tcs ]
+                                reply.Reply (tcs.Task |> Async.AwaitTask)
+                                failwithf pf
                             // semantic is:
                             // - We never return a target twice!
                             // - we fill up the waitlist first
@@ -558,12 +564,11 @@ module Target =
                                 waitList <- []
                                 reply.Reply (async.Return(ctx, None))
                             else
-
                                 let isRunnable (t:Target) =
                                     not (known.ContainsKey (String.toLower t.Name)) && // not already finised
                                     not (runningTasks |> Seq.exists (fun r -> String.toLower r.Name = String.toLower t.Name)) && // not already running
                                     t.Dependencies @ List.filter inResolution t.SoftDependencies // all dependencies finished
-                                    |> Seq.forall (fun d -> known.ContainsKey d)
+                                    |> Seq.forall (String.toLower >> known.ContainsKey)
                                 let runnable =
                                     order
                                     |> Seq.concat
@@ -587,11 +592,19 @@ module Target =
                                     runningTasks <- free :: runningTasks
                                     reply.Reply (async.Return(ctx, Some free))
                                 | None ->
+                                    if runningTasks.Length = 0 && resolution.Count > known.Count then
+                                        // No running tasks but still open resolution
+                                        let resolutionStr = sprintf "[%s]" (String.Join(",", resolution))
+                                        let knownStr = sprintf "[%s]" (String.Join(",", known.Keys))
+                                        failwithf "Error detected in fake scheduler: resolution '%s', known '%s'" resolutionStr knownStr
                                     // queue work
                                     let tcs = new TaskCompletionSource<TargetContext * Target option>()
                                     waitList <- waitList @ [ tcs ]
                                     reply.Reply (tcs.Task |> Async.AwaitTask)
                 with e ->
+                    for (w:System.Threading.Tasks.TaskCompletionSource<TargetContext * Target option>) in waitList do
+                        w.SetException (exn("mailbox failed", e))
+                    waitList <- []
                     while true do
                         let! msg = inbox.Receive()
                         match msg with

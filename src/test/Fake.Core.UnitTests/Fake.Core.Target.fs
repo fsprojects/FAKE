@@ -39,6 +39,43 @@ let testCaseMultipleRuns name f = [
 let tests =
   testList "Fake.Core.Target.Tests" (
     [
+    Fake.ContextHelper.fakeContextTestCase "handle casing in target runner" <| fun _ ->
+        Target.create "aA" ignore
+        Target.create "bB" ignore
+        Target.create "cC" ignore
+
+        "bB" ==> "cC" |> ignore
+        "aA" ==> "BB" |> ignore
+        "Aa" ==> "Cc" |> ignore
+
+        let order = Target.determineBuildOrder "cC"
+        let targets = order |> Seq.concat |> Seq.toList
+        
+        printfn "targets [%s]" (System.String.Join(",", targets |> Seq.map (fun t -> t.Name)))
+        let ctx = TargetContext.Create "cc" targets [] System.Threading.CancellationToken.None
+
+        let mgr = Target.ParallelRunner.createCtxMgr order ctx
+        let runSyncWithTimeout a =
+            let t = a |> Async.StartAsTask
+            if not (t.Wait(1000)) then
+                failwithf "Task did not finish after a second!"
+            t.Result
+        let ctx, target = mgr.GetNextTarget ctx |> runSyncWithTimeout
+        Expect.isSome target "expected next target"
+        Expect.equal target.Value.Name "aA" "Expected target aA"
+        let setFinished ctx s =
+            let result = { Error = None; Time = System.TimeSpan.FromSeconds 0.; Target = Target.get s; WasSkipped = false }
+            { ctx with PreviousTargets = result :: ctx.PreviousTargets }
+        let ctx, target = mgr.GetNextTarget (setFinished ctx "Aa") |> runSyncWithTimeout
+        Expect.isSome target "expected next target"
+        Expect.equal target.Value.Name "bB" "Expected target bB"
+        let ctx, target = mgr.GetNextTarget (setFinished ctx "bB") |> runSyncWithTimeout
+        Expect.isSome target "expected next target"
+        Expect.equal target.Value.Name "cC" "Expected target cC"
+        let ctx, target = mgr.GetNextTarget (setFinished ctx "CC") |> runSyncWithTimeout
+        Expect.isNone target "expected no next target"
+
+
     Fake.ContextHelper.fakeContextTestCase "check simple parallelism" <| fun _ ->
         Target.create "a" ignore
         Target.create "b" ignore
