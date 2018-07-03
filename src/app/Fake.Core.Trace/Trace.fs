@@ -264,17 +264,25 @@ let traceTask name description =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
 
+
+type TraceWithParams<'a> = Automatic of (unit -> 'a) | Manual of (ISafeDisposable -> 'a)
+
 /// Traces a function execution
 /// If no exception is thrown then trace is marked as success
 /// Any exception thrown will result in a mark failed and exception re-thrown 
-let inline useWith (d:ISafeDisposable) f =
-    use t = d
-    try 
-        let result = f()
-        t.MarkSuccess()
-        result 
-    with _ -> t.MarkFailed()
-              reraise()
+let inline useWith<'a> (func:TraceWithParams<'a>) (trace:ISafeDisposable) =
+    try
+        try 
+            match func with
+            | Automatic f -> let result = f()
+                             trace.MarkSuccess()
+                             result
+            | Manual f -> f trace
+        with _ -> 
+            trace.MarkFailed()
+            reraise()
+    finally 
+        trace.Dispose()
 
 open System.Diagnostics
 #if DOTNETCORE
