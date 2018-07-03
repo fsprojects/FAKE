@@ -27,4 +27,4 @@ jobs:
             export PATH=$PATH:$PWD/fake-dotnetcore/
             export MSBUILDDISABLENODEREUSE=1
             export BuildInParallel=false
-            fake run build.fsx --parallel 3
+            fake -vv run build.fsx --parallel 3
