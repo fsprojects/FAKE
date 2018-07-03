@@ -239,7 +239,10 @@ let traceFailureTarget name description dependencyString =
 
 /// Traces the begin of a task
 let traceStartTaskUnsafe task description = 
-    openTagUnsafe (KnownTags.Task task) description
+    if String.IsNullOrWhiteSpace description then
+        openTagUnsafe (KnownTags.Task task) None
+    else
+        openTagUnsafe (KnownTags.Task task) (Some(description))
 
 /// Traces the begin of a task
 [<System.Obsolete("Consider using traceTask instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceStartTaskUnsafe'.")>]

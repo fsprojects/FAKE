@@ -125,7 +125,7 @@ type TraceData =
     | TraceMessage of text:string * newLine:bool
     /// Happens when a tag (Task, Target, Test, ...) has started.
     /// description is 'null' when missing.
-    | OpenTag of KnownTags * description:string
+    | OpenTag of KnownTags * description:string option
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan * TagStatus
@@ -253,16 +253,14 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
             | TraceData.OpenTag(KnownTags.Target _ as tag, description)
             | TraceData.OpenTag(KnownTags.FailureTarget _ as tag, description)
             | TraceData.OpenTag(KnownTags.FinalTarget _ as tag, description) ->
-                let msg = TraceData.TraceMessage("", true)
-                let color2 = colorMap msg
-                let msgToPrint =
-                    let initial = sprintf "Starting %s '%s'" tag.Type tag.Name
-                    if String.IsNullOrWhiteSpace description then
-                        initial
-                    else sprintf "%s: %s" initial description
-                write false color2 true msgToPrint
-            | TraceData.OpenTag (tag, descr) ->
-                write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                let color2 = colorMap (TraceData.TraceMessage("", true))
+                match description with
+                | Some d -> write false color2 true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                | _ -> write false color2 true (sprintf "Starting %s '%s'" tag.Type tag.Name)                
+            | TraceData.OpenTag (tag, description) ->
+                match description with
+                | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)                
             | TraceData.CloseTag (tag, time, status) ->
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
