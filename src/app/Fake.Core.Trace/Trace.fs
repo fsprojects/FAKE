@@ -124,10 +124,10 @@ let traceHeader name =
     traceLine()
 
 /// Puts an opening tag on the internal tag stack
-let openTagUnsafe tag description =
+let openTagUnsafe tag (description:string) =
     let sw = System.Diagnostics.Stopwatch.StartNew()
     openTags.Value <- (sw, tag) :: openTags.Value
-    TraceData.OpenTag(tag, description) |> CoreTracing.postMessage
+    TraceData.OpenTag(tag, if System.String.IsNullOrEmpty description then None else Some description) |> CoreTracing.postMessage
 
 type ISafeDisposable =
     inherit System.IDisposable
@@ -238,11 +238,8 @@ let traceFailureTarget name description dependencyString =
     asSafeDisposable (fun state -> traceEndFailureTargetUnsafeEx state name)
 
 /// Traces the begin of a task
-let traceStartTaskUnsafe task description = 
-    if String.IsNullOrWhiteSpace description then
-        openTagUnsafe (KnownTags.Task task) None
-    else
-        openTagUnsafe (KnownTags.Task task) (Some(description))
+let traceStartTaskUnsafe task (description:string) = 
+    openTagUnsafe (KnownTags.Task task) description
 
 /// Traces the begin of a task
 [<System.Obsolete("Consider using traceTask instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceStartTaskUnsafe'.")>]
@@ -260,7 +257,7 @@ let traceEndTaskUnsafe task = traceEndTaskUnsafeEx TagStatus.Success task
 let traceEndTask task = traceEndTaskUnsafe task
 
 /// Wrap functions in a 'use' of this function     
-let traceTask name description =
+let traceTask name (description:string) =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
 

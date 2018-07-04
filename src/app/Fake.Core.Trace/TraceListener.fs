@@ -124,7 +124,6 @@ type TraceData =
     | LogMessage of text:string * newLine:bool
     | TraceMessage of text:string * newLine:bool
     /// Happens when a tag (Task, Target, Test, ...) has started.
-    /// description is 'null' when missing.
     | OpenTag of KnownTags * description:string option
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
