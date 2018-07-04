@@ -264,20 +264,15 @@ let traceTask name description =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
 
-
-type TraceWithParams<'a> = Automatic of (unit -> 'a) | Manual of (ISafeDisposable -> 'a)
-
-/// Traces a function execution
-/// If no exception is thrown then trace is marked as success
+/// Allows automatic or manual tracing around a function being run
+/// If in automatic success mode and no exception is thrown then trace is marked as success
 /// Any exception thrown will result in a mark failed and exception re-thrown 
-let inline useWith<'a> (func:TraceWithParams<'a>) (trace:ISafeDisposable) =
+let inline useWith automaticSuccess func (trace:ISafeDisposable) =
     try
         try 
-            match func with
-            | Automatic f -> let result = f()
-                             trace.MarkSuccess()
-                             result
-            | Manual f -> f trace
+            let result = func trace
+            if automaticSuccess then trace.MarkSuccess()
+            result
         with _ -> 
             trace.MarkFailed()
             reraise()
