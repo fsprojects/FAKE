@@ -318,7 +318,7 @@ module Target =
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.fold (fun context name ->
                         let target = get name
-                        use t = Trace.traceFinalTarget target.Name target.Description (dependencyString target)
+                        use t = Trace.traceFinalTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
                         let res = runSimpleContextInternal target context
                         if res.HasError
                         then t.MarkFailed()
@@ -334,7 +334,7 @@ module Target =
           |> Seq.map (fun kv -> kv.Key)
           |> Seq.fold (fun context name ->
                         let target = get name
-                        use t = Trace.traceFailureTarget target.Name target.Description (dependencyString target)
+                        use t = Trace.traceFailureTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
                         let res = runSimpleContextInternal target context
                         if res.HasError
                         then t.MarkFailed()
@@ -506,7 +506,7 @@ module Target =
     /// Runs a single target without its dependencies... only when no error has been detected yet.
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
-            use t = Trace.traceTarget target.Name target.Description (dependencyString target)
+            use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
             let res = runSimpleContextInternal target context
             if res.HasError
             then t.MarkFailed()
