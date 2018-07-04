@@ -7,6 +7,8 @@ open System
 type KnownTags =
     | Task of name:string
     | Target of name:string
+    | FinalTarget of name:string
+    | FailureTarget of name:string
     | Compilation of compiler:string
     | TestSuite of suiteName:string
     | Test of testName:string
@@ -15,6 +17,8 @@ type KnownTags =
         match x with
         | Task n
         | Target n
+        | FinalTarget n
+        | FailureTarget n
         | Compilation n
         | TestSuite n
         | Test n
@@ -23,6 +27,8 @@ type KnownTags =
         match x with
         | Task _ -> "task"
         | Target _ -> "target"
+        | FinalTarget _ -> "final target"
+        | FailureTarget _ -> "failure target"
         | Compilation _ -> "compilation"
         | TestSuite _ -> "testsuite"
         | Test _ -> "test"
@@ -119,7 +125,7 @@ type TraceData =
     | TraceMessage of text:string * newLine:bool
     /// Happens when a tag (Task, Target, Test, ...) has started.
     /// description is 'null' when missing.
-    | OpenTag of KnownTags * description:string
+    | OpenTag of KnownTags * description:string option
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan * TagStatus
@@ -244,17 +250,17 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write importantMessagesToStdErr color true text
             | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                 write false color newLine text
-            | TraceData.OpenTag(KnownTags.Target _ as tag, description) ->
-                let msg = TraceData.TraceMessage("", true)
-                let color2 = colorMap msg
-                let msgToPrint =
-                    let initial = sprintf "Starting %s '%s'" tag.Type tag.Name
-                    if String.IsNullOrWhiteSpace description then
-                        initial
-                    else sprintf "%s: %s" initial description
-                write false color2 true msgToPrint
-            | TraceData.OpenTag (tag, descr) ->
-                write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+            | TraceData.OpenTag(KnownTags.Target _ as tag, description)
+            | TraceData.OpenTag(KnownTags.FailureTarget _ as tag, description)
+            | TraceData.OpenTag(KnownTags.FinalTarget _ as tag, description) ->
+                let color2 = colorMap (TraceData.TraceMessage("", true))
+                match description with
+                | Some d -> write false color2 true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                | _ -> write false color2 true (sprintf "Starting %s '%s'" tag.Type tag.Name)                
+            | TraceData.OpenTag (tag, description) ->
+                match description with
+                | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)                
             | TraceData.CloseTag (tag, time, status) ->
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->

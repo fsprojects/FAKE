@@ -26,7 +26,9 @@ module Travis =
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     write false color newLine text
                 | TraceData.OpenTag (tag, descr) ->
-                    write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                    match descr with
+                    | Some d -> write false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                    | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
                     write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
                 | TraceData.ImportData (typ, path) ->
