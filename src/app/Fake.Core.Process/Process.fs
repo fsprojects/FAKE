@@ -564,7 +564,7 @@ module Process =
     /// [omit]
     let optionParam (paramName, paramValue) = 
         match paramValue with
-        | Some x -> Some(paramName, x.ToString())
+        | Some x -> Some(paramName, x.ToString() |> quote)
         | None -> None
 
     /// [omit]
