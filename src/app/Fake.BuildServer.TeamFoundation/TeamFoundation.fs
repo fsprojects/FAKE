@@ -114,7 +114,10 @@ module TeamFoundation =
                         | (_, id) :: _ -> Some id
                     openTags.Value <- (tag,id) :: openTags.Value
                     let order = System.Threading.Interlocked.Increment(&order)
-                    createLogDetail id parentId tag.Type tag.Name order descr
+
+                    match descr with
+                    | Some d -> createLogDetail id parentId tag.Type tag.Name order d
+                    | _ -> createLogDetail id parentId tag.Type tag.Name order null
                 | TraceData.CloseTag (tag, time, state) ->
                     ignore time
                     let id, rest =
