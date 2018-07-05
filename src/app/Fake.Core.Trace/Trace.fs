@@ -226,21 +226,16 @@ let traceEndTargetUnsafe name =
 [<System.Obsolete("Consider using traceTarget instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTargetUnsafe'.")>]
 let traceEndTarget name = traceEndTargetUnsafe name
 
-let private optionDescriptionToNullable description =
-    match description with 
-    | Some d -> d 
-    | _ -> null
-
 let traceTarget name description dependencyString =
-    traceStartTargetUnsafe name (optionDescriptionToNullable description) dependencyString
+    traceStartTargetUnsafe name description dependencyString
     asSafeDisposable (fun state -> traceEndTargetUnsafeEx state name)
 
 let traceFinalTarget name description dependencyString =
-    traceStartFinalTargetUnsafe name (optionDescriptionToNullable description) dependencyString
+    traceStartFinalTargetUnsafe name description dependencyString
     asSafeDisposable (fun state -> traceEndFinalTargetUnsafeEx state name)
     
 let traceFailureTarget name description dependencyString =
-    traceStartFailureTargetUnsafe name (optionDescriptionToNullable description) dependencyString
+    traceStartFailureTargetUnsafe name description dependencyString
     asSafeDisposable (fun state -> traceEndFailureTargetUnsafeEx state name)
 
 /// Traces the begin of a task
