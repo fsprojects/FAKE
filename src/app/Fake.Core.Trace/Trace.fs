@@ -124,10 +124,11 @@ let traceHeader name =
     traceLine()
 
 /// Puts an opening tag on the internal tag stack
-let openTagUnsafe tag (description:string) =
+let openTagUnsafe tag description =
     let sw = System.Diagnostics.Stopwatch.StartNew()
     openTags.Value <- (sw, tag) :: openTags.Value
-    TraceData.OpenTag(tag, if System.String.IsNullOrEmpty description then None else Some description) |> CoreTracing.postMessage
+    let descriptionOption = if System.String.IsNullOrEmpty description then None else Some description
+    TraceData.OpenTag(tag, descriptionOption) |> CoreTracing.postMessage
 
 type ISafeDisposable =
     inherit System.IDisposable
@@ -225,20 +226,25 @@ let traceEndTargetUnsafe name =
 [<System.Obsolete("Consider using traceTarget instead and 'use' to properly call traceEndTask in case of exceptions. To remove this warning use 'traceEndTargetUnsafe'.")>]
 let traceEndTarget name = traceEndTargetUnsafe name
 
+let private optionDescriptionToNullable description =
+    match description with 
+    | Some d -> d 
+    | _ -> null
+
 let traceTarget name description dependencyString =
-    traceStartTargetUnsafe name description dependencyString
+    traceStartTargetUnsafe name (optionDescriptionToNullable description) dependencyString
     asSafeDisposable (fun state -> traceEndTargetUnsafeEx state name)
 
 let traceFinalTarget name description dependencyString =
-    traceStartFinalTargetUnsafe name description dependencyString
+    traceStartFinalTargetUnsafe name (optionDescriptionToNullable description) dependencyString
     asSafeDisposable (fun state -> traceEndFinalTargetUnsafeEx state name)
     
 let traceFailureTarget name description dependencyString =
-    traceStartFailureTargetUnsafe name description dependencyString
+    traceStartFailureTargetUnsafe name (optionDescriptionToNullable description) dependencyString
     asSafeDisposable (fun state -> traceEndFailureTargetUnsafeEx state name)
 
 /// Traces the begin of a task
-let traceStartTaskUnsafe task (description:string) = 
+let traceStartTaskUnsafe task description = 
     openTagUnsafe (KnownTags.Task task) description
 
 /// Traces the begin of a task
@@ -257,7 +263,7 @@ let traceEndTaskUnsafe task = traceEndTaskUnsafeEx TagStatus.Success task
 let traceEndTask task = traceEndTaskUnsafe task
 
 /// Wrap functions in a 'use' of this function     
-let traceTask name (description:string) =
+let traceTask name description =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
 
