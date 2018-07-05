@@ -198,7 +198,7 @@ module Target =
         watch.Stop()
         { Error = error; Time = watch.Elapsed; Target = target; WasSkipped = false }
     
-    let internal runSimpleContextInternal target context (traceStart: string -> string -> string -> Trace.ISafeDisposable) =
+    let internal runSimpleContextInternal (traceStart: string -> string -> string -> Trace.ISafeDisposable) context target =
         use t = traceStart target.Name target.DescriptionAsString (dependencyString target)
         let result = runSimpleInternal context target
         if result.Error.IsSome then 
@@ -316,7 +316,7 @@ module Target =
         addTarget template name
 
     /// Creates a Target.
-    let create name body = addTargetWithDependencies [] body name        
+    let create name body = addTargetWithDependencies [] body name
 
     /// Runs all activated final targets (in alphabetically order).
     /// [omit]
@@ -324,7 +324,7 @@ module Target =
         getFinalTargets()
         |> Seq.filter (fun kv -> kv.Value)     // only if activated
         |> Seq.map (fun kv -> get kv.Key)
-        |> Seq.fold (fun context target -> runSimpleContextInternal target context Trace.traceFinalTarget) context                
+        |> Seq.fold (fun context target -> runSimpleContextInternal Trace.traceFinalTarget context target) context                
 
     /// Runs all build failure targets.
     /// [omit]
@@ -332,7 +332,7 @@ module Target =
         getBuildFailureTargets()
         |> Seq.filter (fun kv -> kv.Value)     // only if activated
         |> Seq.map (fun kv -> get kv.Key)
-        |> Seq.fold (fun context target -> runSimpleContextInternal target context Trace.traceFailureTarget) context     
+        |> Seq.fold (fun context target -> runSimpleContextInternal Trace.traceFailureTarget context target) context     
 
     /// List all targets available.
     let listAvailable() =
@@ -498,7 +498,7 @@ module Target =
     /// Runs a single target without its dependencies... only when no error has been detected yet.
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
-            runSimpleContextInternal target context Trace.traceTarget
+            runSimpleContextInternal Trace.traceTarget context target
         else
             { context with PreviousTargets = context.PreviousTargets @ [{ Error = None; Time = TimeSpan.Zero; Target = target; WasSkipped = true }] }
 

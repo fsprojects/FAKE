@@ -127,8 +127,7 @@ let traceHeader name =
 let openTagUnsafe tag description =
     let sw = System.Diagnostics.Stopwatch.StartNew()
     openTags.Value <- (sw, tag) :: openTags.Value
-    let descriptionOption = if System.String.IsNullOrEmpty description then None else Some description
-    TraceData.OpenTag(tag, descriptionOption) |> CoreTracing.postMessage
+    TraceData.OpenTag(tag, if System.String.IsNullOrEmpty description then None else Some description) |> CoreTracing.postMessage
 
 type ISafeDisposable =
     inherit System.IDisposable
