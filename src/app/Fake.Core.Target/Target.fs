@@ -50,6 +50,10 @@ and [<NoComparison>] [<NoEquality>] TargetContext =
     member x.HasError =
         x.PreviousTargets
         |> List.exists (fun t -> t.Error.IsSome)
+    member x.LastTargetError =
+        x.PreviousTargets
+        |> List.last
+        |> fun x -> x.Error.IsSome
     member x.TryFindPrevious name =
         x.PreviousTargets |> List.tryFind (fun t -> t.Target.Name = name)
     member x.TryFindTarget name =
@@ -320,7 +324,7 @@ module Target =
                         let target = get name
                         use t = Trace.traceFinalTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
                         let res = runSimpleContextInternal target context
-                        if res.HasError
+                        if res.LastTargetError
                         then t.MarkFailed()
                         else t.MarkSuccess()
                         res
@@ -336,7 +340,7 @@ module Target =
                         let target = get name
                         use t = Trace.traceFailureTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
                         let res = runSimpleContextInternal target context
-                        if res.HasError
+                        if res.LastTargetError
                         then t.MarkFailed()
                         else t.MarkSuccess()
                         res
@@ -508,7 +512,7 @@ module Target =
         if not context.HasError then
             use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
             let res = runSimpleContextInternal target context
-            if res.HasError
+            if res.LastTargetError
             then t.MarkFailed()
             else t.MarkSuccess()
             res
