@@ -107,7 +107,7 @@ group NetcoreBuild
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
-    nuget FSharp.Core ~> 4.1
+    nuget FSharp.Core < 4.5
     nuget Suave
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
@@ -147,7 +147,7 @@ group netcore
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
     nuget NETStandard.Library ~> 2.0
-    nuget FSharp.Core ~> 4.1
+    nuget FSharp.Core < 4.5
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
