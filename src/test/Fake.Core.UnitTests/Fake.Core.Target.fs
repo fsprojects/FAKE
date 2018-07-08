@@ -57,7 +57,7 @@ let tests =
         let mgr = Target.ParallelRunner.createCtxMgr order ctx
         let runSyncWithTimeout a =
             let t = a |> Async.StartAsTask
-            if not (t.Wait(1000)) then
+            if not (t.Wait(10000)) then
                 failwithf "Task did not finish after a second!"
             t.Result
         let ctx, target = mgr.GetNextTarget ctx |> runSyncWithTimeout
