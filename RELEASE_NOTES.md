@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.1.1-alpha - 2018-07-01
+## 5.2.0-alpha - 2018-07-08
 
 * ENHANCEMENT: Improve output around empty target descriptions - https://github.com/fsharp/FAKE/pull/1996
 * BUGFIX: Proper handling of dotnet SDK versioning - https://github.com/fsharp/FAKE/pull/1963
@@ -9,7 +9,8 @@
 * BUGFIX: Fix XML poke - https://github.com/fsharp/FAKE/pull/2005
 * BUGFIX: Fix SQLPackage path with VS2017 - https://github.com/fsharp/FAKE/pull/2006
 * BUGFIX: Warn when resolved FSharp.Core doesn't match - https://github.com/fsharp/FAKE/issues/2001
-* ENHANCEMENT: Upgrade FSharp.Core to 4.5
+* ENHANCEMENT: Upgrade runner to FSharp.Core 4.5
+* ENHANCEMENT: Fix tracing of final and failure targets and add new `Trace.useWith` API - https://github.com/fsharp/FAKE/pull/2009 and https://github.com/fsharp/FAKE/pull/2016
 
 ## 5.1.0 - 2018-06-18
 
