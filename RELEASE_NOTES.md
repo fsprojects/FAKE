@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.2.0-alpha - 2018-07-08
+## 5.2.0 - 2018-07-10
 
 * ENHANCEMENT: Improve output around empty target descriptions - https://github.com/fsharp/FAKE/pull/1996
 * BUGFIX: Proper handling of dotnet SDK versioning - https://github.com/fsharp/FAKE/pull/1963
