@@ -416,9 +416,9 @@
     <Compile Include="..\..\app\Fake.Windows.Registry\Registry.fs">
       <Link>Fake.Windows.Registry\Registry.fs</Link>
     </Compile>
-    <Compile Include="..\..\app\Fake.Windows.Wix\Wix.fs">
-      <Link>Fake.Windows.Wix\Wix.fs</Link>
-    </Compile>	
+    <Compile Include="..\..\app\Fake.Installer.Wix\Wix.fs">
+      <Link>Fake.Installer.Wix\Wix.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.DotNet.Fsc\Fsc.fs">
       <Link>Fake.DotNet.Fsc\Fsc.fs</Link>
     </Compile>

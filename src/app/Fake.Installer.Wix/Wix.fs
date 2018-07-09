@@ -1,6 +1,6 @@
 ﻿/// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
 [<RequireQualifiedAccess>]
-module Fake.Windows.Wix
+module Fake.Installer.Wix
 
 open System
 open System.IO
@@ -48,7 +48,7 @@ let internal getCompName comp =
         comp
 
 /// Creates a WiX File tag from the given FileInfo
-let getWixFileTag (fileInfo : FileInfo) = 
+let internal getWixFileTag (fileInfo : FileInfo) = 
     fileCount <- fileCount + 1
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" fileCount fileInfo.Name fileInfo.FullName
 
@@ -82,7 +82,7 @@ type File =
                                 w.Id w.Name w.Source (w.ProcessorArchitecture.ToString())
 
 /// Defaults for WiX file
-let FileDefaults = 
+let internal FileDefaults = 
     {
         Id = "fi"
         Name = ""
@@ -154,7 +154,7 @@ let internal ServiceControlDefaults =
     }
 
 /// Use this for generating service controls
-let internal generateServiceControl (setParams : ServiceControl -> ServiceControl) =
+let generateServiceControl (setParams : ServiceControl -> ServiceControl) =
     let parameters = ServiceControlDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for service control Id!"
@@ -276,7 +276,7 @@ let internal ServiceConfigDefaults =
     }
 
 /// Use this for generating service configs
-let internal generateServiceConfig (setParams : ServiceConfig -> ServiceConfig) =
+let generateServiceConfig (setParams : ServiceConfig -> ServiceConfig) =
     let parameters = ServiceConfigDefaults |> setParams
     parameters
 
@@ -306,7 +306,7 @@ let internal ServiceDependencyDefaults =
     }
 
 /// Use this for generating service dependencies
-let internal generateServiceDependency (setParams : ServiceDependency -> ServiceDependency) =
+let generateServiceDependency (setParams : ServiceDependency -> ServiceDependency) =
     let parameters = ServiceDependencyDefaults |> setParams
     if String.IsNullOrWhiteSpace parameters.Id then 
         failwith "No parameter passed for service dependency id!"
@@ -372,7 +372,7 @@ type ServiceInstall =
             (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceConfig)
 
 /// Defaults for service install element
-let ServiceInstallDefaults =
+let internal ServiceInstallDefaults =
     {       
         Account = ""        
         Arguments = ""        
@@ -488,7 +488,7 @@ type RegistryValue =
         sprintf "<RegistryValue%s />" 
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (v.createAttributeList())) 
 
-let RegistryValueDefaults =
+let internal RegistryValueDefaults =
     {
         Id = ""
         Name = ""
@@ -557,7 +557,7 @@ type RegistryKey =
               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Keys) 
               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Values)
 
-let RegistryKeyDefaults =
+let internal RegistryKeyDefaults =
     {
         Id = ""
         Root = None
@@ -596,7 +596,7 @@ type ComponentRef =
     override w.ToString() = sprintf "<ComponentRef Id=\"%s\" />" w.Id
 
 /// Defaults for component ref
-let ComponentRefDefaults =
+let internal ComponentRefDefaults =
     {
         Id = ""
     }
@@ -669,7 +669,7 @@ type DirectoryRef =
                               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" r.Components)
 
 /// Defaults for component ref
-let DirectoryRefDefaults =
+let internal DirectoryRefDefaults =
    {
        Id = ""
        Components = []
@@ -701,7 +701,7 @@ let rec getComponentRefs (elements : DirectoryComponent seq) =
     
 
 /// Defaults for component
-let ComponentDefaults =
+let internal ComponentDefaults =
     {
         Id = ""
         Guid = "*"
@@ -721,7 +721,7 @@ let generateComponent (setParams : Component -> Component) =
     parameters
 
 /// Defaults for directories
-let DirDefaults = 
+let internal DirDefaults = 
     {
         Id = ""
         Name = ""
@@ -967,7 +967,7 @@ type Params =
       AdditionalLightArgs : string list }
 
 /// Contains the WiX default parameters  
-let Defaults : Params = 
+let internal Defaults : Params = 
     { ToolDirectory = (Path.GetFullPath ".") @@ "tools" @@ "Wix"
       TimeOut = TimeSpan.FromMinutes 5.0
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
@@ -1032,7 +1032,7 @@ type Feature =
         ConcatAll f ""
 
 /// Default values for creating WiX Feature
-let FeatureDefaults =
+let internal FeatureDefaults =
     {   
         Id = ""
         Title = "Default Feature"
@@ -1125,7 +1125,7 @@ type CustomAction =
                             + w.ExeCommand + "\" Return=\"" + w.Return.ToString() + "\" />"
 
 /// Default values for WiX custom actions
-let CustomActionDefaults = 
+let internal CustomActionDefaults = 
     {
         Id = ""
         FileKey = ""
@@ -1161,7 +1161,7 @@ type CustomActionExecution =
     override w.ToString() = "<Custom Action=\"" + w.ActionId + "\" " + w.Verb.ToString() + "=\"" + w.Target + "\"> " + w.Condition + " </Custom>"
 
 /// Default values for WiX custom action executions
-let CustomActionExecutionDefaults = 
+let internal CustomActionExecutionDefaults = 
     {
         ActionId = ""
         Verb = ActionExecutionVerb.After
@@ -1178,7 +1178,7 @@ type UIRef =
     override w.ToString() = "<UIRef Id=\"" + w.Id + "\" />"
 
 /// Default value for WiX UI Reference (WixUI_Minimal)
-let UIRefDefaults = 
+let internal UIRefDefaults = 
     {
         Id = "WixUI_Minimal"
     }
@@ -1194,7 +1194,7 @@ type Upgrade =
     override w.ToString() = "<Upgrade Id=\"" + w.Id.ToString("D") + "\">" + w.UpgradeVersion + "</Upgrade>"
 
 /// Default value for WiX Upgrade
-let UpgradeDefaults = 
+let internal UpgradeDefaults = 
     {
         Id = Guid.Empty
         UpgradeVersion = ""
@@ -1224,7 +1224,7 @@ type UpgradeVersion =
                             + "\" IncludeMaximum=\"" + w.IncludeMaximum.ToString() + "\" Property=\"" + w.Property + "\" />"
 
 /// Default value for WiX Upgrade
-let UpgradeVersionDefaults = 
+let internal UpgradeVersionDefaults = 
     {
         OnlyDetect = YesOrNo.No
         Minimum = ""
@@ -1283,7 +1283,7 @@ type MajorUpgrade =
         "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\"" + downgradeErrorMessage + " />"
 
 /// Default value for WiX Major Upgrade
-let MajorUpgradeDefaults =
+let internal MajorUpgradeDefaults =
     {
         Schedule = MajorUpgradeSchedule.AfterInstallValidate
         AllowDowngrades = YesOrNo.No
@@ -1304,7 +1304,7 @@ type Variable =
     override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable.ToString() + "\"/>"
 
 /// Default value for WiX Variable
-let VariableDefaults = 
+let internal VariableDefaults = 
     {
         Id = ""
         Overridable = YesOrNo.No
@@ -1379,7 +1379,7 @@ type Script =
     }
 
 /// Default values for WiX Script properties
-let ScriptDefaults = 
+let internal ScriptDefaults = 
     {
         ProductCode = Guid.Empty
         ProductName = ""
@@ -1472,7 +1472,6 @@ let generateWiXScript fileName =
             </InstallExecuteSequence>
           </Product>
         </Wix>"
-    //TODO: rozhodnout jak nahradit writeStringToFile
     Fake.IO.File.writeString false fileName scriptTemplate
   
 /// Takes path where script files reside and sets all parameters as defined
@@ -1749,7 +1748,7 @@ type HeatParams =
     }
 
 /// Default values for the Heat harvesting
-let HeatDefaulParams = 
+let internal HeatDefaulParams = 
     {
       ToolDirectory = (Path.GetFullPath ".") @@ "tools" @@ "Wix"
       TimeOut =  TimeSpan.FromMinutes 5.0
@@ -1772,7 +1771,7 @@ let HeatDefaulParams =
 ///  - `directory` - The path to the directory that will be harvested by Heat.
 ///  - `outputFile` - The output file path given to Heat.
 ///
-let harvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
+let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
     use __ = Fake.Core.Trace.traceTask "Heat" directory
     let conditionalArgument condition arg args =
         match condition with

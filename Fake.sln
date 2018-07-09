@@ -156,7 +156,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "fake-template", "src\templa
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Cli.IntegrationTests", "src\test\Fake.DotNet.Cli.IntegrationTests\Fake.DotNet.Cli.IntegrationTests.fsproj", "{48ECC58D-468C-4D44-98B3-854C21EB0D40}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Windows.Wix", "src\app\Fake.Windows.Wix\Fake.Windows.Wix.fsproj", "{648CD0F4-4A99-4EF1-AF56-4FBEA410B57A}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Installer.Wix", "src\app\Fake.Installer.Wix\Fake.Installer.Wix.fsproj", "{648CD0F4-4A99-4EF1-AF56-4FBEA410B57A}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.UserInput", "src\app\Fake.Core.UserInput\Fake.Core.UserInput.fsproj", "{3B0A5EE3-6696-4EBA-BCF9-8136C7F17040}"
 EndProject
