@@ -11,25 +11,25 @@ open System.IO
 ///
 /// ## Sample
 ///
-/// let result =
-///     Rsync.exec
-///         (Rsync.Options.WithActions
-///             [
-///                 Rsync.Compress
-///                 Rsync.Archive
-///                 Rsync.Verbose
-///                 Rsync.NoOption Rsync.Perms
-///                 Rsync.Delete
-///                 Rsync.Exclude ".keep"
-///             ]
-///         >> Rsync.Options.WithSources
-///             [ FleetMapping.server </> "build"
-///               FleetMapping.server </> "package.json"
-///               FleetMapping.server </> "yarn.lock" ]
-///         >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
-///         ""
-///
-/// if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
+/// > let result =
+/// >      Rsync.exec
+/// >         (Rsync.Options.WithActions
+/// >              [
+/// >                  Rsync.Compress
+/// >                  Rsync.Archive
+/// >                  Rsync.Verbose
+/// >                  Rsync.NoOption Rsync.Perms
+/// >                  Rsync.Delete
+/// >                  Rsync.Exclude ".keep"
+/// >              ]
+/// >          >> Rsync.Options.WithSources
+/// >              [ FleetMapping.server </> "build"
+/// >                FleetMapping.server </> "package.json"
+/// >                FleetMapping.server </> "yarn.lock" ]
+/// >          >> Rsync.Options.WithDestination "remote@myserver.com:deploy")
+/// >          ""
+/// >
+/// > if not result.OK then failwithf "Rsync failed with code %i" result.ExitCode
 [<RequireQualifiedAccess>]
 module Rsync =
 
@@ -271,7 +271,7 @@ module Rsync =
         static member WithDestination dest options =
             { options with Destination = dest }
 
-    let rec actionToString =
+    let rec private actionToString =
         function
         | Verbose -> "--verbose"
         | Quiet -> "--quit"
