@@ -381,7 +381,7 @@ If set to false (default) only mono processes will be changed.</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L689-689" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L694-694" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -496,7 +496,7 @@ sure that none of them depend on the output of another.</p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L765-765" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L770-770" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -634,9 +634,29 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '235', 235)" onmouseover="showTip(event, '235', 235)">
-            fireAndForget(configProcessStartInfoF)
+            findFilesOnPath(file)
           </code>
           <div class="tip" id="235">
+            <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L621-621" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Searches in PATH for the given file and returnes the result ordered by precendence</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '236', 236)" onmouseover="showTip(event, '236', 236)">
+            fireAndForget(configProcessStartInfoF)
+          </code>
+          <div class="tip" id="236">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; unit<br />
                                   </div>
         </td>
@@ -653,15 +673,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '236', 236)" onmouseover="showTip(event, '236', 236)">
+          <code onmouseout="hideTip(event, '237', 237)" onmouseover="showTip(event, '237', 237)">
             getAllByName(name)
           </code>
-          <div class="tip" id="236">
+          <div class="tip" id="237">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L726-726" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L731-731" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -673,10 +693,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '237', 237)" onmouseover="showTip(event, '237', 237)">
+          <code onmouseout="hideTip(event, '238', 238)" onmouseover="showTip(event, '238', 238)">
             getProc(config)
           </code>
-          <div class="tip" id="237">
+          <div class="tip" id="238">
             <strong>Signature:</strong> config:(ProcStartInfo -&gt; ProcStartInfo) -&gt; Process<br />
                                   </div>
         </td>
@@ -691,10 +711,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '238', 238)" onmouseover="showTip(event, '238', 238)">
+          <code onmouseout="hideTip(event, '239', 239)" onmouseover="showTip(event, '239', 239)">
             getProcessesByName(name)
           </code>
-          <div class="tip" id="238">
+          <div class="tip" id="239">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -707,7 +727,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use Process.getAllByName instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L738-738" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L743-743" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -717,10 +737,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '239', 239)" onmouseover="showTip(event, '239', 239)">
+          <code onmouseout="hideTip(event, '240', 240)" onmouseover="showTip(event, '240', 240)">
             getRedirectOutputToTrace()
           </code>
-          <div class="tip" id="239">
+          <div class="tip" id="240">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
@@ -735,10 +755,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '240', 240)" onmouseover="showTip(event, '240', 240)">
+          <code onmouseout="hideTip(event, '241', 241)" onmouseover="showTip(event, '241', 241)">
             kill(proc)
           </code>
-          <div class="tip" id="240">
+          <div class="tip" id="241">
             <strong>Signature:</strong> proc:Process -&gt; unit<br />
                                   </div>
         </td>
@@ -755,15 +775,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '241', 241)" onmouseover="showTip(event, '241', 241)">
+          <code onmouseout="hideTip(event, '242', 242)" onmouseover="showTip(event, '242', 242)">
             killAllByName(name)
           </code>
-          <div class="tip" id="241">
+          <div class="tip" id="242">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L741-741" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L746-746" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -775,15 +795,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '242', 242)" onmouseover="showTip(event, '242', 242)">
+          <code onmouseout="hideTip(event, '243', 243)" onmouseover="showTip(event, '243', 243)">
             killAllCreatedProcesses()
           </code>
-          <div class="tip" id="242">
+          <div class="tip" id="243">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L755-755" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L760-760" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -795,15 +815,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '243', 243)" onmouseover="showTip(event, '243', 243)">
+          <code onmouseout="hideTip(event, '244', 244)" onmouseover="showTip(event, '244', 244)">
             killById(id)
           </code>
-          <div class="tip" id="243">
+          <div class="tip" id="244">
             <strong>Signature:</strong> id:int -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L721-721" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L726-726" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -815,15 +835,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '244', 244)" onmouseover="showTip(event, '244', 244)">
+          <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
             killFSI()
           </code>
-          <div class="tip" id="244">
+          <div class="tip" id="245">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L749-749" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L754-754" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -835,15 +855,15 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
+          <code onmouseout="hideTip(event, '246', 246)" onmouseover="showTip(event, '246', 246)">
             killMSBuild()
           </code>
-          <div class="tip" id="245">
+          <div class="tip" id="246">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L752-752" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L757-757" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -855,10 +875,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '246', 246)" onmouseover="showTip(event, '246', 246)">
+          <code onmouseout="hideTip(event, '247', 247)" onmouseover="showTip(event, '247', 247)">
             killProcess(name)
           </code>
-          <div class="tip" id="246">
+          <div class="tip" id="247">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -871,7 +891,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use Process.killAllByName instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L746-746" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L751-751" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -881,10 +901,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '247', 247)" onmouseover="showTip(event, '247', 247)">
+          <code onmouseout="hideTip(event, '248', 248)" onmouseover="showTip(event, '248', 248)">
             killProcessById(id)
           </code>
-          <div class="tip" id="247">
+          <div class="tip" id="248">
             <strong>Signature:</strong> id:int -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -897,25 +917,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
                 <h5>OBSOLETE</h5>
                 <p>use Process.killById instead.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L723-723" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '248', 248)" onmouseover="showTip(event, '248', 248)">
-            monoVersion
-          </code>
-          <div class="tip" id="248">
-            <strong>Signature:</strong> (string * Version option) option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L778-778" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L728-728" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -926,9 +928,27 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '249', 249)" onmouseover="showTip(event, '249', 249)">
-            ProcessEncoding
+            monoVersion
           </code>
           <div class="tip" id="249">
+            <strong>Signature:</strong> (string * Version option) option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L783-783" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '250', 250)" onmouseover="showTip(event, '250', 250)">
+            ProcessEncoding
+          </code>
+          <div class="tip" id="250">
             <strong>Signature:</strong> Encoding<br />
                                   </div>
         </td>
@@ -945,10 +965,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '250', 250)" onmouseover="showTip(event, '250', 250)">
+          <code onmouseout="hideTip(event, '251', 251)" onmouseover="showTip(event, '251', 251)">
             redirectOutput(startInfo)
           </code>
-          <div class="tip" id="250">
+          <div class="tip" id="251">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -963,10 +983,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '251', 251)" onmouseover="showTip(event, '251', 251)">
+          <code onmouseout="hideTip(event, '252', 252)" onmouseover="showTip(event, '252', 252)">
             removeEnvironmentVariable(...)
           </code>
-          <div class="tip" id="251">
+          <div class="tip" id="252">
             <strong>Signature:</strong> envKey:string -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -983,10 +1003,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '252', 252)" onmouseover="showTip(event, '252', 252)">
+          <code onmouseout="hideTip(event, '253', 253)" onmouseover="showTip(event, '253', 253)">
             setCurrentEnvironmentVariables(...)
           </code>
-          <div class="tip" id="252">
+          <div class="tip" id="253">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -1003,10 +1023,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '253', 253)" onmouseover="showTip(event, '253', 253)">
+          <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
             setEnableProcessTracing
           </code>
-          <div class="tip" id="253">
+          <div class="tip" id="254">
             <strong>Signature:</strong> bool -&gt; unit<br />
                                   </div>
         </td>
@@ -1021,10 +1041,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
+          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
             setEnvironment(map startInfo)
           </code>
-          <div class="tip" id="254">
+          <div class="tip" id="255">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -1039,10 +1059,10 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
+          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
             setEnvironmentVariable(...)
           </code>
-          <div class="tip" id="255">
+          <div class="tip" id="256">
             <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -1060,10 +1080,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
+          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
             setEnvironmentVariables(vars startInfo)
           </code>
-          <div class="tip" id="256">
+          <div class="tip" id="257">
             <strong>Signature:</strong> vars:seq&lt;string * string&gt; -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -1080,10 +1100,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
+          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
             setKillCreatedProcesses(enable)
           </code>
-          <div class="tip" id="257">
+          <div class="tip" id="258">
             <strong>Signature:</strong> enable:bool -&gt; unit<br />
                                   </div>
         </td>
@@ -1098,10 +1118,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
+          <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
             setRedirectOutput(...)
           </code>
-          <div class="tip" id="258">
+          <div class="tip" id="259">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; startInfo:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
@@ -1116,10 +1136,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
+          <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
             setRedirectOutputToTrace
           </code>
-          <div class="tip" id="259">
+          <div class="tip" id="260">
             <strong>Signature:</strong> bool -&gt; unit<br />
                                   </div>
         </td>
@@ -1134,10 +1154,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
+          <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
             shouldEnableProcessTracing()
           </code>
-          <div class="tip" id="260">
+          <div class="tip" id="261">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
@@ -1152,10 +1172,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
+          <code onmouseout="hideTip(event, '262', 262)" onmouseover="showTip(event, '262', 262)">
             shouldKillCreatedProcesses()
           </code>
-          <div class="tip" id="261">
+          <div class="tip" id="262">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
@@ -1170,10 +1190,10 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '262', 262)" onmouseover="showTip(event, '262', 262)">
+          <code onmouseout="hideTip(event, '263', 263)" onmouseover="showTip(event, '263', 263)">
             start(configProcessStartInfoF)
           </code>
-          <div class="tip" id="262">
+          <div class="tip" id="263">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; unit<br />
                                   </div>
         </td>
@@ -1190,15 +1210,15 @@ Existing values will be overriden.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '263', 263)" onmouseover="showTip(event, '263', 263)">
+          <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
             tryFindFileOnPath(file)
           </code>
-          <div class="tip" id="263">
+          <div class="tip" id="264">
             <strong>Signature:</strong> file:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L619-619" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L641-641" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1216,15 +1236,15 @@ path to the file.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
+          <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
             tryFindTool(envVar tool)
           </code>
-          <div class="tip" id="264">
+          <div class="tip" id="265">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L657-657" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L662-662" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1236,15 +1256,15 @@ path to the file.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
+          <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
             withFramework(proc)
           </code>
-          <div class="tip" id="265">
+          <div class="tip" id="266">
             <strong>Signature:</strong> proc:ProcStartInfo -&gt; ProcStartInfo<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L803-803" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L808-808" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1360,7 +1380,7 @@ path to the file.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
 									</ul>
 								</div>
 							</div>

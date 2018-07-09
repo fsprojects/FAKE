@@ -293,7 +293,7 @@
 
        <span class="k">let</span> <span class="id">files</span> <span class="o">=</span>
            <span class="id">runtimes</span> <span class="id">@</span> <span class="pn">[</span> <span class="s">&quot;portable&quot;</span><span class="pn">;</span> <span class="s">&quot;packages&quot;</span> <span class="pn">]</span>
-           <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">List</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="id">map</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">n</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="id">sprintf</span> <span class="s">&quot;nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip&quot;</span> <span class="id">n</span><span class="pn">)</span>
+           <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="id">List</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="id">map</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">n</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="id">sprintf</span> <span class="s">&quot;release/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip&quot;</span> <span class="id">n</span><span class="pn">)</span>
 
        <span class="id">GitHub</span><span class="pn">.</span><span class="id">createClientWithToken</span> <span class="id">token</span>
        <span class="o">|&gt;</span> <span class="id">GitHub</span><span class="pn">.</span><span class="id">draftNewRelease</span> <span class="id">gitOwner</span> <span class="id">gitName</span> <span class="id">release</span><span class="pn">.</span><span class="id">NugetVersion</span> <span class="pn">(</span><span class="id">release</span><span class="pn">.</span><span class="id">SemVer</span><span class="pn">.</span><span class="id">PreRelease</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs9', 9)" onmouseover="showTip(event, 'fs9', 9)" class="id">None</span><span class="pn">)</span> <span class="id">release</span><span class="pn">.</span><span class="id">Notes</span>
@@ -736,7 +736,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.1.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
 									</ul>
 								</div>
 							</div>
