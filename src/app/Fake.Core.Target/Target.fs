@@ -66,6 +66,10 @@ and [<NoComparison>] [<NoEquality>] Target =
       SoftDependencies: string list;
       Description: TargetDescription option;
       Function : TargetParameter -> unit}
+    member x.DescriptionAsString = 
+        match x.Description with 
+        | Some d -> d 
+        | _ -> null
 
 /// Exception for request errors
 #if !NETSTANDARD1_6
@@ -174,6 +178,14 @@ module Target =
                 Trace.traceError  <| sprintf "  - %s" target.Value.Name
             failwithf "Target \"%s\" is not defined." name
 
+    /// Returns the DependencyString for the given target.
+    let internal dependencyString target =
+        if target.Dependencies.IsEmpty then String.Empty else
+        target.Dependencies
+          |> Seq.map (fun d -> (get d).Name)
+          |> String.separated ", "
+          |> sprintf "(==> %s)"
+
     let internal runSimpleInternal context target =
         let watch = System.Diagnostics.Stopwatch.StartNew()
         let error =
@@ -185,10 +197,15 @@ module Target =
             with e -> Some e
         watch.Stop()
         { Error = error; Time = watch.Elapsed; Target = target; WasSkipped = false }
-    let internal runSimpleContextInternal target context =
+    
+    let internal runSimpleContextInternal (traceStart: string -> string -> string -> Trace.ISafeDisposable) context target =
+        use t = traceStart target.Name target.DescriptionAsString (dependencyString target)
         let result = runSimpleInternal context target
+        if result.Error.IsSome then 
+            t.MarkFailed()
+        else 
+            t.MarkSuccess()
         { context with PreviousTargets = context.PreviousTargets @ [result] }
-
 
     /// This simply runs the function of a target without doing anything (like tracing, stopwatching or adding it to the results at the end)
     let runSimple name args =
@@ -201,14 +218,6 @@ module Target =
         let target = get name
         target
         |> runSimpleInternal ctx
-
-    /// Returns the DependencyString for the given target.
-    let internal dependencyString target =
-        if target.Dependencies.IsEmpty then String.Empty else
-        target.Dependencies
-          |> Seq.map (fun d -> (get d).Name)
-          |> String.separated ", "
-          |> sprintf "(==> %s)"
 
     /// Returns the soft  DependencyString for the given target.
     let internal softDependencyString target =
@@ -262,7 +271,6 @@ module Target =
 
         getTargetDict().[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
-
     /// Appends the dependency to the list of soft dependencies.
     /// [omit]
     let internal softDependencyAtEnd targetName dependentTargetName =
@@ -314,33 +322,17 @@ module Target =
     /// [omit]
     let internal runFinalTargets context =
         getFinalTargets()
-          |> Seq.filter (fun kv -> kv.Value)     // only if activated
-          |> Seq.map (fun kv -> kv.Key)
-          |> Seq.fold (fun context name ->
-                        let target = get name
-                        use t = Trace.traceFinalTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
-                        let res = runSimpleContextInternal target context
-                        if res.HasError
-                        then t.MarkFailed()
-                        else t.MarkSuccess()
-                        res
-                      ) context                
+        |> Seq.filter (fun kv -> kv.Value)     // only if activated
+        |> Seq.map (fun kv -> get kv.Key)
+        |> Seq.fold (fun context target -> runSimpleContextInternal Trace.traceFinalTarget context target) context                
 
     /// Runs all build failure targets.
     /// [omit]
     let internal runBuildFailureTargets (context) =
         getBuildFailureTargets()
-          |> Seq.filter (fun kv -> kv.Value)     // only if activated
-          |> Seq.map (fun kv -> kv.Key)
-          |> Seq.fold (fun context name ->
-                        let target = get name
-                        use t = Trace.traceFailureTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
-                        let res = runSimpleContextInternal target context
-                        if res.HasError
-                        then t.MarkFailed()
-                        else t.MarkSuccess()
-                        res
-                      ) context   
+        |> Seq.filter (fun kv -> kv.Value)     // only if activated
+        |> Seq.map (fun kv -> get kv.Key)
+        |> Seq.fold (fun context target -> runSimpleContextInternal Trace.traceFailureTarget context target) context     
 
     /// List all targets available.
     let listAvailable() =
@@ -506,12 +498,7 @@ module Target =
     /// Runs a single target without its dependencies... only when no error has been detected yet.
     let internal runSingleTarget (target : Target) (context:TargetContext) =
         if not context.HasError then
-            use t = Trace.traceTarget target.Name (match target.Description with Some d -> d | _ -> null) (dependencyString target)
-            let res = runSimpleContextInternal target context
-            if res.HasError
-            then t.MarkFailed()
-            else t.MarkSuccess()
-            res
+            runSimpleContextInternal Trace.traceTarget context target
         else
             { context with PreviousTargets = context.PreviousTargets @ [{ Error = None; Time = TimeSpan.Zero; Target = target; WasSkipped = true }] }
 

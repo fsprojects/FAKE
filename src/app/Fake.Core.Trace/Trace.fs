@@ -124,7 +124,7 @@ let traceHeader name =
     traceLine()
 
 /// Puts an opening tag on the internal tag stack
-let openTagUnsafe tag (description:string) =
+let openTagUnsafe tag description =
     let sw = System.Diagnostics.Stopwatch.StartNew()
     openTags.Value <- (sw, tag) :: openTags.Value
     TraceData.OpenTag(tag, if System.String.IsNullOrEmpty description then None else Some description) |> CoreTracing.postMessage
@@ -238,7 +238,7 @@ let traceFailureTarget name description dependencyString =
     asSafeDisposable (fun state -> traceEndFailureTargetUnsafeEx state name)
 
 /// Traces the begin of a task
-let traceStartTaskUnsafe task (description:string) = 
+let traceStartTaskUnsafe task description = 
     openTagUnsafe (KnownTags.Task task) description
 
 /// Traces the begin of a task
@@ -257,7 +257,7 @@ let traceEndTaskUnsafe task = traceEndTaskUnsafeEx TagStatus.Success task
 let traceEndTask task = traceEndTaskUnsafe task
 
 /// Wrap functions in a 'use' of this function     
-let traceTask name (description:string) =
+let traceTask name description =
     traceStartTaskUnsafe name description
     asSafeDisposable (fun state -> traceEndTaskUnsafeEx state name)
 
