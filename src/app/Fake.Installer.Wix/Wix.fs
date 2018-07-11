@@ -940,7 +940,7 @@ let getComponentIdsFromWiXString wiXString =
         |> System.String.Concat
 
 /// Creates WiX ComponentRef tags from the given DirectoryInfo
-let internal rec getComponentRefsTags (directoryInfo : DirectoryInfo) = 
+let rec internal getComponentRefsTags (directoryInfo : DirectoryInfo) = 
     let compos = 
         directoryInfo
         |> Fake.IO.DirectoryInfo.getSubDirectories
