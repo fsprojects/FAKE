@@ -515,13 +515,10 @@ module MSBuild =
 
     let properties =
         match output with
-        | Some outputPath ->
+        | Some path ->
             (fun project ->
-                let seperator =
-                    if Environment.isWindows then @"\"
-                    else "/"
-
-                ("OutputPath", (outputPath |> String.trimSeparator) + seperator) :: (properties project)
+                let outputPath = (path |> String.trimSeparator) + Path.directorySeperatorChar
+                ("OutputPath", outputPath) :: (properties project)
             )
         | None -> properties
 
