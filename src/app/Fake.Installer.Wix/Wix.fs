@@ -276,7 +276,7 @@ let internal ServiceConfigDefaults =
     }
 
 /// Use this for generating service configs
-let generateServiceConfig (setParams : ServiceConfig -> ServiceConfig) =
+let internal generateServiceConfig (setParams : ServiceConfig -> ServiceConfig) =
     let parameters = ServiceConfigDefaults |> setParams
     parameters
 
@@ -306,7 +306,7 @@ let internal ServiceDependencyDefaults =
     }
 
 /// Use this for generating service dependencies
-let generateServiceDependency (setParams : ServiceDependency -> ServiceDependency) =
+let internal generateServiceDependency (setParams : ServiceDependency -> ServiceDependency) =
     let parameters = ServiceDependencyDefaults |> setParams
     if String.IsNullOrWhiteSpace parameters.Id then 
         failwith "No parameter passed for service dependency id!"
@@ -676,7 +676,7 @@ let internal DirectoryRefDefaults =
    }
 
 /// Use this for generating component refs
-let generateDirectoryRef (setParams : DirectoryRef -> DirectoryRef) =
+let internal generateDirectoryRef (setParams : DirectoryRef -> DirectoryRef) =
    let parameters = DirectoryRefDefaults |> setParams
    if parameters.Id = "" then 
        failwith "No parameter passed for component ref Id!"
@@ -714,7 +714,7 @@ let internal ComponentDefaults =
     }
 
 /// Use this for generating single components
-let generateComponent (setParams : Component -> Component) =
+let internal generateComponent (setParams : Component -> Component) =
     let parameters = ComponentDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for component Id!"
@@ -730,7 +730,7 @@ let internal DirDefaults =
     }
 
 /// Use this for generating directories
-let generateDirectory (setParams : Dir -> Dir) =
+let internal generateDirectory (setParams : Dir -> Dir) =
     let parameters = DirDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for directory Id!"
@@ -940,7 +940,7 @@ let getComponentIdsFromWiXString wiXString =
         |> System.String.Concat
 
 /// Creates WiX ComponentRef tags from the given DirectoryInfo
-let rec getComponentRefsTags (directoryInfo : DirectoryInfo) = 
+let internal rec getComponentRefsTags (directoryInfo : DirectoryInfo) = 
     let compos = 
         directoryInfo
         |> Fake.IO.DirectoryInfo.getSubDirectories
@@ -1532,15 +1532,15 @@ let fillInWiXTemplate wiXPath setParams =
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
 ///
 /// ## Sample
-///     let feature = generateFeature (fun f -> 
-///                                        {f with  
-///                                            Id = "UniqueName"
-///                                            Title = "Title which is shown"
-///                                            Level = 1 
-///                                            Description = "Somewhat longer description" 
-///                                            Display = "expand" 
-///                                            InnerContent = [otherFeature1; otherFeature2]
-///                                        })
+///     let feature = generateFeatureElement (fun f -> 
+///                                               {f with  
+///                                                   Id = "UniqueName"
+///                                                   Title = "Title which is shown"
+///                                                   Level = 1 
+///                                                   Description = "Somewhat longer description" 
+///                                                   Display = "expand" 
+///                                                   InnerContent = [otherFeature1; otherFeature2]
+///                                               })
 let generateFeatureElement setParams =
     let parameters : Feature = FeatureDefaults |> setParams
     if parameters.Id = "" then 
