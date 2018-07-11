@@ -116,7 +116,7 @@ let private buildVSTestArgs (parameters : VSTestParams) assembly =
     |> StringBuilder.appendIfNotNull parameters.TestAdapterPath "/TestAdapterPath:"
     |> StringBuilder.toText
 
-/// Runs VSTest command line tool (VSTest.Console.exe) on a group of assemblies.m
+/// Runs the VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default VSTestParams values.
@@ -126,7 +126,7 @@ let private buildVSTestArgs (parameters : VSTestParams) assembly =
 ///
 ///     Target.create "Test" (fun _ ->
 ///         !! (testDir + @"\*.Tests.dll") 
-///           |> VSTest.VSTest (fun p -> { p with SettingsPath = "Local.RunSettings" })
+///           |> VSTest.run (fun p -> { p with SettingsPath = "Local.RunSettings" })
 ///     )
 let run (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
     let details = assemblies |> String.separated ", "
