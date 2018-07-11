@@ -105,7 +105,8 @@ let parseSubNode name f = getSubNode name >> parse name f
 
 /// Loads the given text into a XmlDocument
 let createDoc text =
-    if String.isNullOrEmpty text then null
+    if String.isNullOrEmpty text then 
+        null
     else
         let xmlDocument = new XmlDocument()
         xmlDocument.LoadXml text
@@ -125,23 +126,64 @@ let replaceXPath xpath value (doc : XmlDocument) =
 /// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
 let replaceXPathInnerText xpath innerTextValue (doc : XmlDocument) =
     let node = doc.SelectSingleNode xpath
-    if isNull node then failwithf "XML node '%s' not found" xpath
+    if isNull node then 
+        failwithf "XML node '%s' not found" xpath
     else
         node.InnerText <- innerTextValue
         doc
+
+/// Replaces the value of attribute in an xml node in the XML document specified by a XPath expression.
+let replaceXPathAttribute xpath (attribute:string) value (doc : XmlDocument) =
+    let node = doc.SelectSingleNode xpath
+    if isNull node then 
+        failwithf "XML node '%s' not found" xpath
+    else
+        let attributeValue = node.Attributes.[attribute]
+        if isNull attributeValue then
+            failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
+        else
+            attributeValue.Value <- value
+            doc
 
 /// Selects a xml node value via XPath from the given document
 let selectXPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
-    if node = null then failwithf "XML node '%s' not found" xpath
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
     else node.InnerText
+
+/// Selects a xml node attribute value via XPath from the given document
+let selectXPathAttributeValue xpath (attribute:string) (namespaces : #seq<string * string>) (doc : XmlDocument) =
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
+    else 
+        let attributeValue = node.Attributes.[attribute]
+        if isNull attributeValue then
+            failwithf "XML node '%s' does not have attribute '%s'" xpath attribute
+        else
+            attributeValue.Value
+
+/// Selects a xml node via XPath from the given document
+let selectXPathNode xpath (namespaces : #seq<string * string>) (doc : XmlDocument) =
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.DocumentElement.SelectSingleNode(xpath, nsmgr)
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
+    else 
+        node
 
 let private load (fileName:string) (doc:XmlDocument) =
     use fs = File.OpenRead(fileName)
     doc.Load fs
-let private save (fileName:string) (doc:XmlDocument) =
+
+//Save the given XmlDocument to file path
+let saveDoc (fileName:string) (doc:XmlDocument) =
     // https://stackoverflow.com/questions/284394/net-xmldocument-why-doctype-changes-after-save
     // https://stackoverflow.com/a/16451790
     // https://github.com/fsharp/FAKE/issues/1692
@@ -156,23 +198,34 @@ let private save (fileName:string) (doc:XmlDocument) =
     use fs = File.Open(fileName, FileMode.Truncate, FileAccess.Write)
     doc.Save fs
 
+/// Loads the given file path into a XmlDocument
+let loadDoc (path:string) =
+    if String.isNullOrEmpty path then 
+        null
+    else
+        let xmlDocument = new XmlDocument()
+        load path xmlDocument
+        xmlDocument
+
 /// Replaces text in a XML file at the location specified by a XPath expression.
 let poke (fileName : string) xpath value =
     let doc = new XmlDocument()
-    replaceXPath xpath value doc |> save fileName
+    load fileName doc
+    replaceXPath xpath value doc |> saveDoc fileName
 
 /// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.
 let pokeInnerText (fileName : string) xpath innerTextValue =
     let doc = new XmlDocument()
     load fileName doc
-    replaceXPathInnerText xpath innerTextValue doc |> save fileName
+    replaceXPathInnerText xpath innerTextValue doc |> saveDoc fileName
 
 /// Replaces text in a XML document specified by a XPath expression, with support for namespaces.
 let replaceXPathNS xpath value (namespaces : #seq<string * string>) (doc : XmlDocument) =
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.SelectSingleNode(xpath, nsmgr)
-    if node = null then failwithf "XML node '%s' not found" xpath
+    if node = null then 
+        failwithf "XML node '%s' not found" xpath
     else
         node.Value <- value
         doc
@@ -191,13 +244,13 @@ let replaceXPathInnerTextNS xpath innerTextValue (namespaces : #seq<string * str
 let pokeNS (fileName : string) namespaces xpath value =
     let doc = new XmlDocument()
     load fileName doc
-    replaceXPathNS xpath value namespaces doc |> save fileName
+    replaceXPathNS xpath value namespaces doc |> saveDoc fileName
 
 /// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.
 let pokeInnerTextNS (fileName : string) namespaces xpath innerTextValue =
     let doc = new XmlDocument()
     load fileName doc
-    replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> save fileName
+    replaceXPathInnerTextNS xpath innerTextValue namespaces doc |> saveDoc fileName
 
 #if !NETSTANDARD
 /// Loads the given text into a XslCompiledTransform.
@@ -238,6 +291,6 @@ let XmlTransform (stylesheetUri : string) (fileName : string) =
     doc.Load fileName
     let xsl = new XslCompiledTransform()
     xsl.Load stylesheetUri
-    XslTransform xsl doc |> save fileName
+    XslTransform xsl doc |> saveDoc fileName
 
 #endif

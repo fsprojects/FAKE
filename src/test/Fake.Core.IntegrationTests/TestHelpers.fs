@@ -20,7 +20,7 @@ exception FakeExecutionFailed of ProcessResult
         sprintf "FAKE Process exited with %d:\n%s\nStdout: \n%s" result.ExitCode stdErr stdOut
 
 let fakeToolPath = 
-    let rawWithoutExtension = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../nuget/dotnetcore/Fake.netcore/current/fake")
+    let rawWithoutExtension = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../release/dotnetcore/Fake.netcore/current/fake")
     if Environment.isUnix then rawWithoutExtension
     else rawWithoutExtension + ".exe"
 let integrationTestPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../integrationtests")

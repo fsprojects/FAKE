@@ -1,7 +1,7 @@
 source https://nuget.org/api/v2
 storage: none
 //source https://ci.appveyor.com/nuget/paket
-source ../../../nuget/dotnetcore
+source ../../../release/dotnetcore
 
 nuget Fake.Runtime prerelease
 nuget FSharp.Core prerelease

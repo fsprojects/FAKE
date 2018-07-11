@@ -1,4 +1,4 @@
-version 5.170.2
+version 5.173.4
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -107,7 +107,8 @@ group NetcoreBuild
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
-    nuget FSharp.Core ~> 4.1
+    // 2018-07-08: Until we use a runner > 5.1, see https://github.com/fsharp/FAKE/pull/2011
+    nuget FSharp.Core < 4.5
     nuget Suave
     nuget System.AppContext prerelease
     nuget Paket.Core prerelease
@@ -136,6 +137,20 @@ group NetcoreBuild
     nuget Mono.Cecil prerelease
     nuget Octokit
     nuget Newtonsoft.Json
+
+// New group because of FSharp.Core 4.5 upgrade, see https://github.com/fsharp/FAKE/pull/2011
+group netcorerunner
+    source https://api.nuget.org/v3/index.json
+    storage: none
+    framework: net46, net462, netstandard1.6, netstandard2.0, netcoreapp2.0, netcoreapp2.1
+    nuget FSharp.Core
+
+    nuget Paket.Core
+    nuget Mono.Cecil
+    nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
+    nuget NETStandard.Library  ~> 2.0
+    nuget Packaging.Targets 
+
 group netcore
     //source https://ci.appveyor.com/nuget/paket
     source https://api.nuget.org/v3/index.json
@@ -147,7 +162,10 @@ group netcore
     nuget Microsoft.DotNet.PlatformAbstractions ~> 2.0
 
     nuget NETStandard.Library ~> 2.0
-    nuget FSharp.Core ~> 4.1
+    // Starting from 2018-07-08 this needs to be <4.5 to not break 5.0 and 5.1 releases
+    // After some time we can upgrade this (and consolidate the netcore and netcorerunner groups)
+    // but not before 2018-11
+    nuget FSharp.Core < 4.5
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json

@@ -564,7 +564,7 @@ module Process =
     /// [omit]
     let optionParam (paramName, paramValue) = 
         match paramValue with
-        | Some x -> Some(paramName, x.ToString())
+        | Some x -> Some(paramName, x.ToString() |> quote)
         | None -> None
 
     /// [omit]
@@ -583,7 +583,7 @@ module Process =
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
-    let tryFindFile dirs file = 
+    let findFiles dirs file = 
         let files = 
             dirs
             |> Seq.map (fun (path : string) -> 
@@ -601,6 +601,12 @@ module Process =
                        else "")
             |> Seq.filter ((<>) "")
             |> Seq.cache
+        files
+
+    /// Searches the given directories for all occurrences of the given file name
+    /// [omit]
+    let tryFindFile dirs file =
+        let files = findFiles dirs file
         if not (Seq.isEmpty files) then Some(Seq.head files)
         else None
 
@@ -611,12 +617,8 @@ module Process =
         | Some found -> found
         | None -> failwithf "%s not found in %A." file dirs
 
-    /// Searches the current directory and the directories within the PATH
-    /// environment variable for the given file. If successful returns the full
-    /// path to the file.
-    /// ## Parameters
-    ///  - `file` - The file to locate
-    let tryFindFileOnPath (file : string) : string option =
+    /// Searches in PATH for the given file and returnes the result ordered by precendence
+    let findFilesOnPath (file : string) : string seq =
         Environment.pathDirectories
         |> Seq.filter Path.isValidPath
         |> Seq.append [ "." ]
@@ -627,14 +629,17 @@ module Process =
                 // and https://github.com/fsharp/FAKE/issues/1899
                 Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
                 |> String.split ';'
-                |> Seq.tryPick (fun postFix -> tryFindFile path (file + postFix))
-                |> function
-                   | None ->
-                        match tryFindFile path file with
-                        | Some s -> Some s
-                        | None -> None
-                   | Some s -> Some s
-            else tryFindFile path file
+                |> Seq.collect (fun postFix -> findFiles path (file + postFix))
+                |> fun findings -> Seq.append findings (findFiles path file)
+            else findFiles path file
+
+    /// Searches the current directory and the directories within the PATH
+    /// environment variable for the given file. If successful returns the full
+    /// path to the file.
+    /// ## Parameters
+    ///  - `file` - The file to locate
+    let tryFindFileOnPath (file : string) : string option =
+        findFilesOnPath file |> Seq.tryHead
 
     /// Returns the AppSettings for the key - Splitted on ;
     /// [omit]

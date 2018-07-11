@@ -266,7 +266,9 @@ module TeamCity =
                 | TraceData.CloseTag (KnownTags.TestSuite name, _, _) ->
                     finishTestSuite name
                 | TraceData.OpenTag (tag, description) ->
-                    TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type description)
+                    match description with
+                    | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
+                    | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->

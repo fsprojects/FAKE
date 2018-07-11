@@ -1,7 +1,7 @@
 #if FAKE_DEPENDENCIES
 #r "paket:
 source https://nuget.org/api/v2
-source ../../../nuget/dotnetcore
+source ../../../release/dotnetcore
 
 nuget Fake.Core.Target prerelease
 nuget System.Reactive.Compatibility

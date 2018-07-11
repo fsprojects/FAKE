@@ -273,7 +273,9 @@ module AppVeyor =
                 | TraceData.BuildState state ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.OpenTag (tag, descr) ->
-                    ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name descr)
+                    match descr with
+                    | Some d -> ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s': %s" tag.Type tag.Name d)
+                    | _ -> ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
                 | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->

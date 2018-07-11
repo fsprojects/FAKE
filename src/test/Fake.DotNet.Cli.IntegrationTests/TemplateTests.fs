@@ -59,7 +59,7 @@ let tests =
         testList "can install and run the template" [
             uninstallTemplate () |> shouldSucceed "should clear out preexisting templates"
             printfn "%s" Environment.CurrentDirectory
-            let templateNupkg = GlobbingPattern.create "../../../nuget/dotnetcore/fake-template.*.nupkg" |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__ |> Seq.head
+            let templateNupkg = GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg" |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__ |> Seq.head
             installTemplateFrom templateNupkg |> shouldSucceed "should install new FAKE template"
 
             let scriptFile =

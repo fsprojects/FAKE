@@ -75,7 +75,7 @@ let private retryWithArg count input asycnF =
             return captureAndReraise ex
     }
 
-let createClient user password =
+let createClient user (password: string) =
     async {
         let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
         let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
@@ -93,7 +93,7 @@ let createClientWithToken token =
         return github
     }
 
-let createGHEClient url user password =
+let createGHEClient url user (password: string) =
     async {
         let credentials = Credentials(user, password)
         let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)

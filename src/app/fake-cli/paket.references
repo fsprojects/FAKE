@@ -1,8 +1,9 @@
-group netcore
+group netcorerunner
 FSharp.Core
 
-Argu
 Paket.Core
 Mono.Cecil
 Microsoft.NETCore.App
 NETStandard.Library
+
+Packaging.Targets 
