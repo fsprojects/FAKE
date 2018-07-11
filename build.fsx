@@ -367,6 +367,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
+      "Fake.Installer.Wix", "WiX helper to create msi installers"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.JavaScript.Npm", "Running npm commands"
@@ -383,8 +384,7 @@ let dotnetAssemblyInfos =
       "Fake.Tools.GitVersion", "GitVersion helper"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
-      "Fake.Windows.Registry", "CRUD functionality for Windows registry"
-      "Fake.Windows.Wix", "WiX helper to create msi installers" ]
+      "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
 
 let assemblyInfos =
   [ legacyDir </> "FAKE/AssemblyInfo.fs",
