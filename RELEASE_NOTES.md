@@ -1,5 +1,8 @@
 # Release Notes
 
+## 5.2.1-alpha - 2018-07-13
+* dummy
+
 ## 5.2.0 - 2018-07-10
 
 * ENHANCEMENT: Improve output around empty target descriptions - https://github.com/fsharp/FAKE/pull/1996
