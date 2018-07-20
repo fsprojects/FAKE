@@ -185,7 +185,7 @@ Target.runOrDefault "Default"
 ```
 <div class="alert alert-info">
     <h5>HINT</h5>
-    You can explore the APIs for example by writing <code>Fake.IO.</code> and waiting for intellisense (or pressing <code>Strg+Space</code>).
+    You can explore the APIs for example by writing <code>Fake.IO.</code> and waiting for intellisense (or pressing <code>Ctrl+Space</code>).
     You can remove <code>Fake.IO</code> once you put <code>open Fake.IO</code> on top.
 </div>
 
