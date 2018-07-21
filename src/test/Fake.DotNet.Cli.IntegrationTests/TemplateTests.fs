@@ -7,7 +7,6 @@ open System.IO
 open Fake.Core
 open Fake.DotNet
 open Fake.IO
-open Fake.IO.Globbing
 
 let templateProj = "fake-template.fsproj"
 let templatePackageName = "fake-template"
@@ -34,11 +33,9 @@ let timeout = (System.TimeSpan.FromMinutes 10.)
 
 let runTemplate rootDir kind =
     Directory.ensure rootDir
-    let dotnet = DotNet.Options.Create().DotNetCliPath
-    Process.execWithResult (fun p ->
-        p.WithWorkingDirectory(rootDir)
-         .WithFileName(dotnet)
-         .WithArguments(sprintf "new %s --allow-scripts yes --bootstrap %s" templateName (string kind))) timeout
+    DotNet.exec 
+        ( fun o -> 
+            { o with WorkingDirectory = rootDir; } ) "new" (sprintf "%s --allow-scripts yes --bootstrap %s" templateName (string kind))   
     |> shouldSucceed "should have run the template successfully"
 
 let invokeScript dir scriptName args =
@@ -51,6 +48,8 @@ let invokeScript dir scriptName args =
 
 let missingTarget targetName (r: ProcessResult) = 
     r.Errors |> Seq.exists (fun err -> err.Contains (sprintf "Target \"%s\" is not defined" targetName))
+
+let tempDir() = Path.Combine("../../../test/fake-template", Path.GetRandomFileName())
 
 [<Tests>]
 let tests =
@@ -68,22 +67,19 @@ let tests =
                 else "fake.cmd"
 
             yield test "can install a project-style template" {
-                let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
-                Directory.ensure tempDir
+                let tempDir = tempDir()
                 runTemplate tempDir Project
                 invokeScript tempDir scriptFile "--help" |> shouldSucceed "should invoke help"
             }
 
             yield test "can build with the project-style template" {
-                let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
-                Directory.ensure tempDir
+                let tempDir = tempDir()
                 runTemplate tempDir Project
                 invokeScript tempDir scriptFile "build -t All" |> shouldSucceed "should build successfully"
             }
 
             yield test "fails to build a target that doesn't exist" {
-                let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
-                Directory.ensure tempDir
+                let tempDir = tempDir()
                 runTemplate tempDir Project
                 let result = invokeScript tempDir scriptFile "build -t Nonexistent"
                 Expect.isFalse result.OK "the script should have failed"
@@ -92,8 +88,7 @@ let tests =
 
             /// ignored because the .net tool install to a subdirectory is broken: https://github.com/fsharp/FAKE/pull/1989#issuecomment-396057330
             yield ptest "can install a tool-style template" {
-                let tempDir = Path.Combine(Path.GetTempPath (), Path.GetRandomFileName())
-                Directory.ensure tempDir
+                let tempDir = tempDir()
                 runTemplate tempDir Tool
                 invokeScript tempDir scriptFile "--help" |> shouldSucceed "should invoke help"
             }
