@@ -1,30 +1,30 @@
 ﻿/// Contains tasks to run [VSTest](https://msdn.microsoft.com/en-us/library/ms182486.aspx) unit tests.
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-module Fake.VSTest
+[<RequireQualifiedAccess>]
+module Fake.DotNet.Testing.VSTest
 
+open Fake.Core
+open Fake.Testing.Common
 open System
 open System.Text
 
 /// [omit]
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-let vsTestPaths = 
-    [|  @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow";
-        @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow";
-        @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow" |]
+let private vsTestPaths = 
+    [|
+        @"[ProgramFilesX86]\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
+        @"[ProgramFilesX86]\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
+        @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
+        @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
+    |]
 
 /// [omit]
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-let vsTestExe = 
-    if isMono then failwith "VSTest is not supported on the mono platform"
+let private vsTestExe = 
+    if Environment.isMono then failwith "VSTest is not supported on the mono platform"
     else "vstest.console.exe"
 
 /// Option which allow to specify if a VSTest error should break the build.
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-[<CLIMutable>]
 type VSTestParams = 
     { /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
       SettingsPath : string
@@ -66,8 +66,7 @@ type VSTestParams =
       TestAdapterPath: string}
 
 /// VSTest default parameters.
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-let VSTestDefaults = 
+let private VSTestDefaults = 
     { SettingsPath = null
       Tests = []
       EnableCodeCoverage = false
@@ -83,7 +82,7 @@ let VSTestDefaults =
       ListLoggers = false
       ListSettingsProviders = false
       ToolPath = 
-          match tryFindFile vsTestPaths vsTestExe with
+          match Process.tryFindFile vsTestPaths vsTestExe with
           | Some path -> path
           | None -> ""
       WorkingDir = null
@@ -93,32 +92,31 @@ let VSTestDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-let buildVSTestArgs (parameters : VSTestParams) assembly = 
+let private buildVSTestArgs (parameters : VSTestParams) assembly = 
     let testsToRun = 
         if not (Seq.isEmpty parameters.Tests) then 
-            sprintf @"/Tests:%s" (parameters.Tests |> separated ",")
+            sprintf @"/Tests:%s" (parameters.Tests |> String.separated ",")
         else null
     new StringBuilder()
-    |> appendIfTrue (assembly <> null) assembly
-    |> appendIfNotNull parameters.SettingsPath "/Settings:"
-    |> appendIfTrue (testsToRun <> null) testsToRun
-    |> appendIfTrue parameters.EnableCodeCoverage "/EnableCodeCoverage"
-    |> appendIfTrue parameters.InIsolation "/InIsolation"
-    |> appendIfTrue parameters.UseVsixExtensions "/UseVsixExtensions:true"
-    |> appendIfNotNull parameters.Platform "/Platform:"
-    |> appendIfNotNull parameters.Framework "/Framework:"
-    |> appendIfNotNull parameters.TestCaseFilter "/TestCaseFilter:"
-    |> appendIfNotNull parameters.Logger "/Logger:"
-    |> appendIfNotNull parameters.ListTestsPath "/ListTests:"
-    |> appendIfTrue parameters.ListDiscoverers "/ListDiscoverers"
-    |> appendIfTrue parameters.ListExecutors "/ListExecutors"
-    |> appendIfTrue parameters.ListLoggers "/ListLoggers"
-    |> appendIfTrue parameters.ListSettingsProviders "/ListSettingsProviders"
-    |> appendIfNotNull parameters.TestAdapterPath "/TestAdapterPath:"
-    |> toText
+    |> StringBuilder.appendIfTrue (assembly <> null) assembly
+    |> StringBuilder.appendIfNotNull parameters.SettingsPath "/Settings:"
+    |> StringBuilder.appendIfTrue (testsToRun <> null) testsToRun
+    |> StringBuilder.appendIfTrue parameters.EnableCodeCoverage "/EnableCodeCoverage"
+    |> StringBuilder.appendIfTrue parameters.InIsolation "/InIsolation"
+    |> StringBuilder.appendIfTrue parameters.UseVsixExtensions "/UseVsixExtensions:true"
+    |> StringBuilder.appendIfNotNull parameters.Platform "/Platform:"
+    |> StringBuilder.appendIfNotNull parameters.Framework "/Framework:"
+    |> StringBuilder.appendIfNotNull parameters.TestCaseFilter "/TestCaseFilter:"
+    |> StringBuilder.appendIfNotNull parameters.Logger "/Logger:"
+    |> StringBuilder.appendIfNotNull parameters.ListTestsPath "/ListTests:"
+    |> StringBuilder.appendIfTrue parameters.ListDiscoverers "/ListDiscoverers"
+    |> StringBuilder.appendIfTrue parameters.ListExecutors "/ListExecutors"
+    |> StringBuilder.appendIfTrue parameters.ListLoggers "/ListLoggers"
+    |> StringBuilder.appendIfTrue parameters.ListSettingsProviders "/ListSettingsProviders"
+    |> StringBuilder.appendIfNotNull parameters.TestAdapterPath "/TestAdapterPath:"
+    |> StringBuilder.toText
 
-/// Runs VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
+/// Runs the VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default VSTestParams values.
@@ -126,28 +124,27 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
 /// 
 /// ## Sample usage
 ///
-///     Target "Test" (fun _ ->
+///     Target.create "Test" (fun _ ->
 ///         !! (testDir + @"\*.Tests.dll") 
-///           |> VSTest (fun p -> { p with SettingsPath = "Local.RunSettings" })
+///           |> VSTest.run (fun p -> { p with SettingsPath = "Local.RunSettings" })
 ///     )
-[<System.Obsolete("use Fake.DotNet.Testing.VSTest instead")>]
-let VSTest (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
-    let details = assemblies |> separated ", "
-    use __ = traceStartTaskUsing "VSTest" details
+let run (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
+    let details = assemblies |> String.separated ", "
+    use __ = Trace.traceTask "VSTest" details
     let parameters = VSTestDefaults |> setParams
-    if isNullOrEmpty parameters.ToolPath then failwith "VSTest: No tool path specified, or it could not be found automatically."
+    if String.IsNullOrEmpty parameters.ToolPath then failwith "VSTest: No tool path specified, or it could not be found automatically."
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "VSTest: cannot run tests (the assembly list is empty)."
     let failIfError assembly exitCode = 
         if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
             let message = sprintf "%sVSTest test run failed for %s" Environment.NewLine assembly
-            traceError message
+            Trace.traceError message
             failwith message
     for assembly in assemblies do
         let args = buildVSTestArgs parameters assembly
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
+        Process.execSimple (fun info -> 
+            { info with 
+                FileName = parameters.ToolPath
+                WorkingDirectory = parameters.WorkingDir
+                Arguments = args }) parameters.TimeOut
         |> failIfError assembly
-
