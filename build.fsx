@@ -378,6 +378,7 @@ let dotnetAssemblyInfos =
       "Fake.Net.Http", "HTTP Client"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
+      "Fake.Rsync", "Running Rsync commands"
       "Fake.Sql.DacPac", "Sql Server Data Tools DacPac operations"
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
@@ -1149,9 +1150,9 @@ let rec nugetPush tries nugetpackage =
                     if not ignore_conflict ||
                        not (r.Errors |> Seq.exists (fun err -> err.Contains "409"))
                     then
-                        let msgs = r.Results |> Seq.map (fun c -> (if c.IsError then "(Err) " else "") + c.Message)                    
+                        let msgs = r.Results |> Seq.map (fun c -> (if c.IsError then "(Err) " else "") + c.Message)
                         let msg = System.String.Join ("\n", msgs)
-                 
+
                         failwithf "failed to push package %s (code %d): \n%s" nugetpackage r.ExitCode msg
                     else Trace.traceFAKE "ignore conflict error because IGNORE_CONFLICT=true!")
         else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
@@ -1412,7 +1413,7 @@ let mutable prev = None
 for runtime in "current" :: "portable" :: runtimes do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
-    Target.Description (sprintf "publish fake 5 runner for %s" runtime)
+    Target.description (sprintf "publish fake 5 runner for %s" runtime)
     Target.create targetName ignore
     "SetAssemblyInfo"
         ==> rawTargetName
