@@ -1,8 +1,6 @@
-[<AutoOpen>]
-[<System.Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - module: Fake.Installer.Wix)")>]
-/// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
-
-module Fake.WiXHelper
+﻿/// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
+[<RequireQualifiedAccess>]
+module Fake.Installer.Wix
 
 open System
 open System.IO
@@ -10,13 +8,15 @@ open System.Collections.Generic
 open System.Text.RegularExpressions;
 open System.Security.Cryptography
 open System.Text
+open Fake.IO
+open Fake.IO.FileSystemOperators
+open Fake.IO.Globbing.Operators
 
 
 let mutable internal fileCount = 0
 let mutable internal dirs = Dictionary()
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getDirName)")>]
-let dirName dir = 
+let internal getDirName dir = 
     match dirs.TryGetValue dir with
     | true, n -> 
         dirs.[dir] <- n + 1
@@ -27,8 +27,7 @@ let dirName dir =
 
 let mutable internal compRefs = Dictionary()
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompRefName)")>]
-let compRefName compRef = 
+let internal getCompRefName compRef = 
     match compRefs.TryGetValue compRef with
     | true, n -> 
         compRefs.[compRef] <- n + 1
@@ -39,8 +38,7 @@ let compRefName compRef =
 
 let mutable internal comps = Dictionary()
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompName)")>]
-let compName comp = 
+let internal getCompName comp = 
     match comps.TryGetValue comp with
     | true, n -> 
         comps.[comp] <- n + 1
@@ -50,19 +48,16 @@ let compName comp =
         comp
 
 /// Creates a WiX File tag from the given FileInfo
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixFileTag)")>]
-let wixFile (fileInfo : FileInfo) = 
+let internal getWixFileTag (fileInfo : FileInfo) = 
     fileCount <- fileCount + 1
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" fileCount fileInfo.Name fileInfo.FullName
 
 /// Creates WiX File tags from the given files
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFilesAsWiXString)")>]
 let getFilesAsWiXString files = 
     files
-    |> Seq.map (fileInfo >> wixFile)
-    |> toLines
+    |> Seq.map (Fake.IO.FileInfo.ofPath >> getWixFileTag)
+    |> Fake.Core.String.toLines
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Architecture)")>]
 type Architecture = 
     | X64
     | X86
@@ -72,8 +67,7 @@ type Architecture =
         | X86 -> "x86"
 
 /// WiX File Element
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.File)")>]
-type WiXFile =
+type File =
     {
         /// File Id in WiX definition
         Id : string
@@ -88,8 +82,7 @@ type WiXFile =
                                 w.Id w.Name w.Source (w.ProcessorArchitecture.ToString())
 
 /// Defaults for WiX file
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FileDefaults)")>]
-let WiXFileDefaults = 
+let internal FileDefaults = 
     {
         Id = "fi"
         Name = ""
@@ -98,7 +91,6 @@ let WiXFileDefaults =
     }
 
 /// Specifies whether an action occur on install, uninstall or both.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.InstallUninstall)")>]
 type InstallUninstall = 
     | Install
     | Uninstall
@@ -112,7 +104,6 @@ type InstallUninstall =
         | Never -> null
 
 /// These are used in many methods for generating WiX nodes, regard them as booleans
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.YesOrNo)")>]
 type YesOrNo = 
     | Yes
     | No
@@ -122,8 +113,7 @@ type YesOrNo =
         | No -> "no"
 
 /// Service Control Element. Can Start, Stop and Remove services
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControl)")>]
-type WiXServiceControl =
+type ServiceControl =
     {
         Id : string
         Name: string
@@ -132,7 +122,6 @@ type WiXServiceControl =
         Stop : InstallUninstall
         Wait : YesOrNo
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControl.createAttributeList)")>]
     member w.createAttributeList () =
         seq 
             {
@@ -154,8 +143,7 @@ type WiXServiceControl =
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList()))             
 
 /// Defaults for service control element
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControlDefaults)")>]
-let WiXServiceControlDefaults =
+let internal ServiceControlDefaults =
     {
         Id = "ServiceControl"
         Name = "Service"
@@ -166,15 +154,13 @@ let WiXServiceControlDefaults =
     }
 
 /// Use this for generating service controls
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceControl)")>]
-let generateServiceControl (setParams : WiXServiceControl -> WiXServiceControl) =
-    let parameters = WiXServiceControlDefaults |> setParams
+let generateServiceControl (setParams : ServiceControl -> ServiceControl) =
+    let parameters = ServiceControlDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for service control Id!"
     parameters
 
 /// Determines what action should be taken on an error.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ErrorControl)")>]
 type ErrorControl = 
     /// Logs the error and continues with the startup operation.
     | Ignore
@@ -189,7 +175,6 @@ type ErrorControl =
         | Critical -> "critical"
 
 /// Determines when the service should be started. The Windows Installer does not support boot or system. 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallStart)")>]
 type ServiceInstallStart = 
     /// The service will start during startup of the system.
     | Auto
@@ -210,7 +195,6 @@ type ServiceInstallStart =
         | System -> "system"
 
 /// Determines the type of the service. The Windows Installer does not currently support kernelDriver or systemDriver.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallType)")>]
 type ServiceInstallType = 
     /// A Win32 service that runs its own process.
     | OwnProcess
@@ -228,7 +212,6 @@ type ServiceInstallType =
         | SystemDriver -> "systemDriver"
 
 /// Determines the type of the service failure action.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceFailureActionType)")>]
 type ServiceFailureActionType =
     | NoneAction
     | Reboot
@@ -242,8 +225,7 @@ type ServiceFailureActionType =
         | RunCommand -> "runCommand"
 
 /// Service configuration information for failure actions.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfig)")>]
-type WiXServiceConfig =
+type ServiceConfig =
     {
         /// [Required] Determines the type of the service failure action.
         FirstFailureActionType: ServiceFailureActionType
@@ -262,7 +244,6 @@ type WiXServiceConfig =
         /// [Required] Action to take on the third failure of the service.
         ThirdFailureActionType: ServiceFailureActionType
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfig.createAttributeList)")>]
     member w.createAttributeList () =
         seq 
             {
@@ -282,8 +263,7 @@ type WiXServiceConfig =
         sprintf "<ServiceConfig xmlns=\"http://schemas.microsoft.com/wix/UtilExtension\" %s/>" 
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfigDefaults)")>]
-let WiXServiceConfigDefaults =
+let internal ServiceConfigDefaults =
     {       
         FirstFailureActionType = NoneAction
         ProgramCommandLine = ""
@@ -296,14 +276,12 @@ let WiXServiceConfigDefaults =
     }
 
 /// Use this for generating service configs
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceConfig)")>]
-let generateServiceConfig (setParams : WiXServiceConfig -> WiXServiceConfig) =
-    let parameters = WiXServiceConfigDefaults |> setParams
+let internal generateServiceConfig (setParams : ServiceConfig -> ServiceConfig) =
+    let parameters = ServiceConfigDefaults |> setParams
     parameters
 
 /// Service or group of services that must start before the parent service.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependency)")>]
-type WiXServiceDependency = 
+type ServiceDependency = 
     {
         /// [Required] The value of this attribute should be one of the following:
         /// 1. The name (not the display name) of a previously installed service.
@@ -312,7 +290,6 @@ type WiXServiceDependency =
         /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.	
         Group : YesOrNo option
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependency.createAttributeList)")>]    
     member w.createAttributeList () =
         seq {           
             yield ("Id", w.Id)           
@@ -322,24 +299,21 @@ type WiXServiceDependency =
         sprintf "<ServiceDependency%s />"
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependencyDefaults)")>]
-let WiXServiceDependencyDefaults =
-    {       
+let internal ServiceDependencyDefaults =
+    {
         Id = ""
         Group = None
     }
 
 /// Use this for generating service dependencies
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceDependency)")>]
-let generateServiceDependency (setParams : WiXServiceDependency -> WiXServiceDependency) =
-    let parameters = WiXServiceDependencyDefaults |> setParams
+let internal generateServiceDependency (setParams : ServiceDependency -> ServiceDependency) =
+    let parameters = ServiceDependencyDefaults |> setParams
     if String.IsNullOrWhiteSpace parameters.Id then 
         failwith "No parameter passed for service dependency id!"
     parameters
 
 /// Adds services for parent Component. Use the ServiceControl element to remove services.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstall)")>]
-type WiXServiceInstall =
+type ServiceInstall =
     {
         /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
         Account : string
@@ -370,11 +344,10 @@ type WiXServiceInstall =
         /// The overall install should fail if this service fails to install. (Default: Yes)
         Vital : YesOrNo
         /// Services or groups of services that must start before the parent service.
-        ServiceDependencies : WiXServiceDependency seq
+        ServiceDependencies : ServiceDependency seq
         /// Service configuration information for failure actions.
-        ServiceConfig: WiXServiceConfig seq
+        ServiceConfig: ServiceConfig seq
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstall.createAttributeList)")>]
     member w.createAttributeList () =
         seq {
             if not (String.IsNullOrWhiteSpace w.Account) then yield ("Account", w.Account)
@@ -399,8 +372,7 @@ type WiXServiceInstall =
             (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceConfig)
 
 /// Defaults for service install element
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallDefaults)")>]
-let WiXServiceInstallDefaults =
+let internal ServiceInstallDefaults =
     {       
         Account = ""        
         Arguments = ""        
@@ -421,16 +393,14 @@ let WiXServiceInstallDefaults =
     }
 
 /// Use this for generating service installs
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceInstall)")>]
-let generateServiceInstall (setParams : WiXServiceInstall -> WiXServiceInstall) =
-    let parameters = WiXServiceInstallDefaults |> setParams
+let generateServiceInstall (setParams : ServiceInstall -> ServiceInstall) =
+    let parameters = ServiceInstallDefaults |> setParams
     if String.IsNullOrWhiteSpace parameters.Name then 
         failwith "No parameter passed for service name!"
     parameters
 
 /// Represents the registry root under which this key should be written
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryRootType)")>]
-type WiXRegistryRootType =
+type RegistryRootType =
     /// Writes this registry key inside either HKEY_LOCAL_MACHINE or HKEY_CURRENT_USER. Wix decides at install time based on wether or not this is an "all users" install
     | HKMU
     /// Writes this registry key inside either the HKEY_CLASSES_ROOT registry root
@@ -450,8 +420,7 @@ type WiXRegistryRootType =
         | HKU -> "HKU"
 
 /// The action that will be taken for a registry value
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueAction)")>]
-type WiXRegistryValueAction = 
+type RegistryValueAction = 
     /// Appends the specified value(s) to a multiString registry value
     | Append
     /// Prepends the specified value(s) to a multiString registry value
@@ -465,8 +434,7 @@ type WiXRegistryValueAction =
         | Write -> "write"
 
 /// The desired type of a registry key.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueType)")>]
-type WiXRegistryValueType =
+type RegistryValueType =
     /// The value is interpreted and stored as a string (REG_SZ)
     | String
     /// The value is interpreted and stored as an integer (REG_DWORD)
@@ -486,8 +454,7 @@ type WiXRegistryValueType =
         | MultiString -> "multistring"
 
 /// Parameters for WiX RegistryValue
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValue)")>]
-type WiXRegistryValue =
+type RegistryValue =
     {
         /// The Id of this value
         Id : string
@@ -496,18 +463,17 @@ type WiXRegistryValue =
         /// The localizable registry value. 
         Value : string
         /// The action that will be taken for this registry value
-        Action : WiXRegistryValueAction
+        Action : RegistryValueAction
         /// The type of the desired registry key
-        Type : WiXRegistryValueType
+        Type : RegistryValueType
         /// The localizable key for the registry value
         /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
         Key : string
         /// Set this attribute to 'yes' to make this registry key the KeyPath of the parent component
         KeyPath : YesOrNo
         /// The predefined root key for the registry value.
-        Root : WiXRegistryRootType Option
+        Root : RegistryRootType Option
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValue.createAttributeList)")>]
     member v.createAttributeList () =
         seq {
             if not (String.IsNullOrWhiteSpace v.Id) then yield ("Id", v.Id)
@@ -522,14 +488,13 @@ type WiXRegistryValue =
         sprintf "<RegistryValue%s />" 
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (v.createAttributeList())) 
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueDefaults)")>]
-let wixRegistryValueDefaults =
+let internal RegistryValueDefaults =
     {
         Id = ""
         Name = ""
         Value = ""
-        Type = WiXRegistryValueType.String
-        Action = WiXRegistryValueAction.Write
+        Type = RegistryValueType.String
+        Action = RegistryValueAction.Write
         Key = ""
         KeyPath = YesOrNo.No
         Root = None
@@ -545,25 +510,23 @@ let wixRegistryValueDefaults =
 ///                                                   Id = "asdasd"
 ///                                                   Name = "Something"
 ///                                                   Key = "Somewhere"
-///                                                   Root = Some WiXRegistryRootType.HKU
-///                                                   Type = WiXRegistryValueType.Integer
+///                                                   Root = Some RegistryRootType.HKU
+///                                                   Type = RegistryValueType.Integer
 ///                                                   KeyPath = YesOrNo.No
 ///                                                   Value = "2"
 ///                                               })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryValue)")>]
 
-let generateRegistryValue (setParams : WiXRegistryValue -> WiXRegistryValue) =
-    let parameters = wixRegistryValueDefaults |> setParams
+let generateRegistryValue (setParams : RegistryValue -> RegistryValue) =
+    let parameters = RegistryValueDefaults |> setParams
     parameters
 
 /// Parameters for WiX RegistryKey
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey)")>]
-type WiXRegistryKey =
+type RegistryKey =
     {
         /// Primary key used to identify this particular entry
         Id : string
         /// The predefined root key for the registry value
-        Root : WiXRegistryRootType Option
+        Root : RegistryRootType Option
         /// The localizable key for the registry value
         /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
         Key : string
@@ -576,11 +539,10 @@ type WiXRegistryKey =
         /// MSI already removes all values and subkeys that it creates, so this option just adds additional overhead to uninstall. The default is "no"
         ForceDeleteOnUninstall : YesOrNo
         /// You can nest child registry keys here
-        Keys : WiXRegistryKey seq
+        Keys : RegistryKey seq
         /// You can nest child registry values here
-        Values : WiXRegistryValue seq
+        Values : RegistryValue seq
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey.createAttributeList)")>]
     member k.createAttributeList () = 
         seq {
             if not (String.IsNullOrWhiteSpace k.Id) then yield ("Id", k.Id)
@@ -595,8 +557,7 @@ type WiXRegistryKey =
               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Keys) 
               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Values)
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKeyDefaults)")>]
-let wixRegistryKeyDefaults =
+let internal RegistryKeyDefaults =
     {
         Id = ""
         Root = None
@@ -617,46 +578,39 @@ let wixRegistryKeyDefaults =
 ///                                 {k with
 ///                                   Id = "KeyId"
 ///                                   Key = "SomeKey"
-///                                   Root = Some WiXRegistryRootType.HKCR
+///                                   Root = Some RegistryRootType.HKCR
 ///                                   ForceCreateOnInstall = YesOrNo.Yes
 ///                                   ForceDeleteOnUninstall = YesOrNo.No
 ///                                   Keys = someChildKeys
 ///                                   Values = someChildValues
 ///                                 })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryKey)")>]
-let generateRegistryKey (setParams : WiXRegistryKey -> WiXRegistryKey) =
-    let parameters = wixRegistryKeyDefaults |> setParams
+let generateRegistryKey (setParams : RegistryKey -> RegistryKey) =
+    let parameters = RegistryKeyDefaults |> setParams
     parameters
 
 /// Reference to a component for including it in a feature
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRef)")>]
-type WiXComponentRef =
+type ComponentRef =
     {
         Id : string
     }
     override w.ToString() = sprintf "<ComponentRef Id=\"%s\" />" w.Id
 
 /// Defaults for component ref
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRefDefaults)")>]
-let WiXComponentRefDefaults =
+let internal ComponentRefDefaults =
     {
         Id = ""
     }
 
 /// Use this for generating component refs
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponentRef)")>]
-let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
-    let parameters = WiXComponentRefDefaults |> setParams
+let generateComponentRef (setParams : ComponentRef -> ComponentRef) =
+    let parameters = ComponentRefDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for component ref Id!"
     Some(parameters)
 
-
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryComponent)")>]
-type WiXDirectoryComponent = 
-    | C of WiXComponent
-    | D of WiXDir      
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryComponent)")>]
+type DirectoryComponent = 
+    | C of Component
+    | D of Dir      
     member w.ToComponentRef() = 
         match w with
         | C c -> c.ToComponentRef()
@@ -666,18 +620,17 @@ type WiXDirectoryComponent =
             | C c -> c.ToString()
             | D d -> d.ToString()
 /// Component which wraps files into logical components and which allows to 
-and WiXComponent = 
+and Component = 
     {
         Id : string
         Guid : string
-        Files : WiXFile seq
+        Files : File seq
         Win64 : YesOrNo
-        ServiceControls : WiXServiceControl seq
-        ServiceInstalls : WiXServiceInstall seq
-        RegistryKeys : WiXRegistryKey seq
-        RegistryValues : WiXRegistryValue seq
+        ServiceControls : ServiceControl seq
+        ServiceInstalls : ServiceInstall seq
+        RegistryKeys : RegistryKey seq
+        RegistryValues : RegistryValue seq
     }
-    [<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Component)")>]
     member w.ToComponentRef() = generateComponentRef (fun f -> { f with Id = w.Id })
     override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\" Win64=\"%s\">%s%s%s%s%s</Component>" 
                                 w.Id w.Guid (w.Win64.ToString())
@@ -688,12 +641,12 @@ and WiXComponent =
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.RegistryValues)
                                 
 /// WiX Directories define a logical directory which can include components and files
-and WiXDir = 
+and Dir = 
     {
         Id : string
         Name : string
-        Files : WiXFile seq
-        Components : WiXDirectoryComponent seq
+        Files : File seq
+        Components : DirectoryComponent seq
     }
     override d.ToString() = sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>"
                                 d.Id 
@@ -706,34 +659,31 @@ and WiXDir =
                                                            )) "" d.Components)
 
 /// Reference to a component for including it in a feature
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRef)")>]
-type WiXDirectoryRef =
+type DirectoryRef =
    {
        Id : string
-       Components : WiXDirectoryComponent seq
+       Components : DirectoryComponent seq
    }
    override r.ToString() = sprintf "<DirectoryRef Id=\"%s\">%s</DirectoryRef>" 
                               r.Id
                               (Seq.fold(fun acc elem -> acc + elem.ToString()) "" r.Components)
 
 /// Defaults for component ref
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRefDefaults)")>]
-let WiXDirectoryRefDefaults =
+let internal DirectoryRefDefaults =
    {
        Id = ""
        Components = []
    }
 
 /// Use this for generating component refs
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectoryRef)")>]
-let generateDirectoryRef (setParams : WiXDirectoryRef -> WiXDirectoryRef) =
-   let parameters = WiXDirectoryRefDefaults |> setParams
+let internal generateDirectoryRef (setParams : DirectoryRef -> DirectoryRef) =
+   let parameters = DirectoryRefDefaults |> setParams
    if parameters.Id = "" then 
        failwith "No parameter passed for component ref Id!"
    parameters
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefs)")>]
-let rec getComponentRefs (elements : WiXDirectoryComponent seq) = 
+///get component refs from a directory component hierarchy
+let rec getComponentRefs (elements : DirectoryComponent seq) = 
     let refs = elements
                 |> Seq.choose (fun e -> 
                                 match e with
@@ -751,8 +701,7 @@ let rec getComponentRefs (elements : WiXDirectoryComponent seq) =
     
 
 /// Defaults for component
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentDefaults)")>]
-let WiXComponentDefaults =
+let internal ComponentDefaults =
     {
         Id = ""
         Guid = "*"
@@ -765,16 +714,14 @@ let WiXComponentDefaults =
     }
 
 /// Use this for generating single components
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponent)")>]
-let generateComponent (setParams : WiXComponent -> WiXComponent) =
-    let parameters = WiXComponentDefaults |> setParams
+let internal generateComponent (setParams : Component -> Component) =
+    let parameters = ComponentDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for component Id!"
     parameters
 
 /// Defaults for directories
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirDefaults)")>]
-let WiXDirDefaults = 
+let internal DirDefaults = 
     {
         Id = ""
         Name = ""
@@ -783,21 +730,20 @@ let WiXDirDefaults =
     }
 
 /// Use this for generating directories
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectory)")>]
-let generateDirectory (setParams : WiXDir -> WiXDir) =
-    let parameters = WiXDirDefaults |> setParams
+let internal generateDirectory (setParams : Dir -> Dir) =
+    let parameters = DirDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for directory Id!"
     parameters
 
 /// Calculates the SHA1 for a given string.
 let private calcSHA1 (text:string) =
-    Fake.EnvironmentHelper.encoding.GetBytes text
-      |> (new SHA1CryptoServiceProvider()).ComputeHash
-      |> Array.fold (fun acc e -> 
-           let t = System.Convert.ToString(e, 16)
-           if t.Length = 1 then acc + "0" + t else acc + t) 
-           ""
+    Fake.Core.Environment.getDefaultEncoding().GetBytes text
+    |> (SHA1.Create()).ComputeHash
+    |> Array.fold (fun acc e -> 
+        let t = System.Convert.ToString(e, 16)
+        if t.Length = 1 then acc + "0" + t else acc + t) 
+        ""
 let private getDirectoryId (directoryName : string) =        
     "d" + calcSHA1 directoryName
 
@@ -811,7 +757,7 @@ let private IsWin64 architecture =
 
 let private createComponents fileFilter directoryInfo directoryName architecture =
     directoryInfo
-        |> filesInDir
+        |> Fake.IO.DirectoryInfo.getFiles
         |> Seq.filter fileFilter
         |> Seq.map (fun file -> 
                         { 
@@ -838,18 +784,17 @@ let private createComponents fileFilter directoryInfo directoryName architecture
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentRefs function for getting all created component refs and adding them to features.
 /// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentTreeCreation)")>]
 let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo architecture =
     let directoryName = ""
     let directories = directoryInfo
-                      |> subDirectories
+                      |> Fake.IO.DirectoryInfo.getSubDirectories
                       |> Seq.filter directoryFilter
                       |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d directoryInfo.Name architecture)
     let components = createComponents fileFilter directoryInfo directoryName architecture
     Seq.append directories components  
 and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInfo directoryName architecture =    
     let directories = directoryInfo
-                      |> subDirectories
+                      |> Fake.IO.DirectoryInfo.getSubDirectories
                       |> Seq.filter directoryFilter
                       |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d (directoryName + directoryInfo.Name) architecture)       
     let components = createComponents fileFilter directoryInfo directoryName architecture
@@ -866,10 +811,9 @@ and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInf
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreation)")>]
 let bulkComponentCreation fileFilter directoryInfo architecture = 
     directoryInfo
-        |> filesInDir
+        |> Fake.IO.DirectoryInfo.getFiles
         |> Seq.filter fileFilter
         |> Seq.map (fun file -> 
                         { 
@@ -895,7 +839,6 @@ let bulkComponentCreation fileFilter directoryInfo architecture =
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// The components are embedded into the passed in root directory.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreationAsSubDir)")>]
 let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) architecture = 
     {
         Id = getDirectoryId(directoryInfo.FullName)
@@ -905,8 +848,7 @@ let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) arc
     }  
                  
 ///// Use this to attach service controls to your components.   
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceControlToComponent)")>]
-let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilter serviceControls = 
+let rec attachServiceControlToComponent (comp : DirectoryComponent) fileFilter serviceControls = 
     match comp with
     | C c -> C (if fileFilter c then                        
                         { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls; RegistryKeys = c.RegistryKeys; RegistryValues = c.RegistryValues; Win64 = c.Win64 }
@@ -914,13 +856,12 @@ let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilte
                             c
                         )                                          
     | D d -> D({Id = d.Id; Name = d.Name; Files = d.Files; Components = (attachServiceControlToComponents d.Components fileFilter serviceControls)})
-and attachServiceControlToComponents (components : WiXDirectoryComponent seq) fileFilter serviceControls = 
+and attachServiceControlToComponents (components : DirectoryComponent seq) fileFilter serviceControls = 
     components 
     |> Seq.map(fun c -> attachServiceControlToComponent c fileFilter serviceControls)
             
 /// Use this to attach service installs to your components.          
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceInstallToComponent)")>]
-let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilter serviceInstalls = 
+let rec attachServiceInstallToComponent (comp : DirectoryComponent) fileFilter serviceInstalls = 
     match comp with
     | C c -> C (if fileFilter c then                        
                         { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls; RegistryKeys = c.RegistryKeys; RegistryValues = c.RegistryValues; Win64 = c.Win64 }
@@ -928,7 +869,7 @@ let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilte
                             c
                         )                                          
     | D d -> D({Id = d.Id; Name = d.Name; Files = d.Files; Components = (attachServiceInstallToComponents d.Components fileFilter serviceInstalls)})
-and attachServiceInstallToComponents (components : WiXDirectoryComponent seq) fileFilter serviceInstalls = 
+and attachServiceInstallToComponents (components : DirectoryComponent seq) fileFilter serviceInstalls = 
     components 
     |> Seq.map(fun c -> attachServiceInstallToComponent c fileFilter serviceInstalls)
                             
@@ -937,44 +878,42 @@ and attachServiceInstallToComponents (components : WiXDirectoryComponent seq) fi
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixDirTag)")>]
-let rec wixDir fileFilter asSubDir (directoryInfo : DirectoryInfo) = 
+let rec getWixDirTag fileFilter asSubDir (directoryInfo : DirectoryInfo) = 
     let dirs = 
         directoryInfo
-        |> subDirectories
-        |> Seq.map (wixDir fileFilter true)
-        |> toLines
+        |> Fake.IO.DirectoryInfo.getSubDirectories
+        |> Seq.map (getWixDirTag fileFilter true)
+        |> Fake.Core.String.toLines
     
     let files = 
         directoryInfo
-        |> filesInDir
+        |> Fake.IO.DirectoryInfo.getFiles
         |> Seq.filter fileFilter
-        |> Seq.map wixFile
-        |> toLines
+        |> Seq.map getWixFileTag
+        |> Fake.Core.String.toLines
     
     let compo = 
         if files = "" then ""
         else 
-            split '\n' files
-            |> Seq.map(fun f -> sprintf "<Component Id=\"c%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (compName (directoryInfo.Name.GetHashCode().ToString("x8"))) "*" f)
-            |> toLines
+            Fake.Core.String.split '\n' files
+            |> Seq.map(fun f -> sprintf "<Component Id=\"c%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (getCompName (directoryInfo.Name.GetHashCode().ToString("x8"))) "*" f)
+            |> Fake.Core.String.toLines
 
     if asSubDir then 
-        sprintf "<Directory Id=\"d%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" (dirName (directoryInfo.Name.GetHashCode().ToString("x8"))) 
+        sprintf "<Directory Id=\"d%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" (getDirName (directoryInfo.Name.GetHashCode().ToString("x8"))) 
             directoryInfo.Name dirs compo
     else sprintf "%s%s" dirs compo
 
 /// Retrieves the file id of the first file in WiXString, which name matches fileRegex
 /// ## Parameters
-///  - `wiXString` - The directory string which was generated by wixDir
+///  - `wiXString` - The directory string which was generated by getWixDirTag
 ///  - `fileRegex` - Regex which matches the file name
 ///
 /// ## Sample
-///     let directoryString = wixDir (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
+///     let directoryString = getWixDirTag (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
 ///     let executableFileId = getFileIdFromWiXString directoryString "\S*.exe"
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFileIdFromWiXString)")>]
 let getFileIdFromWiXString wiXString fileRegex =
-    let lines = split '\n' wiXString
+    let lines = Fake.Core.String.split '\n' wiXString
 
     // Filter for lines which have a name tag matching the given regex, pick the first and return its ID
     lines
@@ -986,14 +925,13 @@ let getFileIdFromWiXString wiXString fileRegex =
 
 /// Retrieves all component ids from given WiX directory string
 /// ## Parameters
-///  - `wiXString` - The directory string which was generated by wixDir
+///  - `wiXString` - The directory string which was generated by getWixDirTag
 ///
 /// ## Sample
-///     let directoryString = wixDir (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
+///     let directoryString = getWixDirTag (fun file -> true) true (DirectoryInfo directoryWithFilesForSetup)
 ///     let componentIds = getComponentIdsFromWiXString directoryString
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentIdsFromWiXString)")>]
 let getComponentIdsFromWiXString wiXString =
-    let lines = split '\n' wiXString
+    let lines = Fake.Core.String.split '\n' wiXString
 
     // Filter for lines which have a name tag matching the given regex, pick the first and return its ID
     lines
@@ -1002,44 +940,40 @@ let getComponentIdsFromWiXString wiXString =
         |> System.String.Concat
 
 /// Creates WiX ComponentRef tags from the given DirectoryInfo
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefsTags)")>]
-let rec wixComponentRefs (directoryInfo : DirectoryInfo) = 
+let rec internal getComponentRefsTags (directoryInfo : DirectoryInfo) = 
     let compos = 
         directoryInfo
-        |> subDirectories
-        |> Seq.map wixComponentRefs
-        |> toLines
-    if (filesInDir directoryInfo).Length > 0 then 
-        sprintf "%s<ComponentRef Id=\"%s\"/>\r\n" compos (compRefName directoryInfo.Name)
+        |> Fake.IO.DirectoryInfo.getSubDirectories
+        |> Seq.map getComponentRefsTags
+        |> Fake.Core.String.toLines
+    if (Fake.IO.DirectoryInfo.getFiles directoryInfo).Length > 0 then 
+        sprintf "%s<ComponentRef Id=\"%s\"/>\r\n" compos (getCompRefName directoryInfo.Name)
     else compos
 
 /// Take a component string and set "neverOverwrite" Tag
 /// This is useful for config files, since they are not replaced on upgrade like that
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.setComponentsNeverOverwrite)")>]
 let setComponentsNeverOverwrite (components : string) = 
     components.Replace("<Component", "<Component NeverOverwrite=\"yes\"")
 
 open System
+open Fake.Core
 
 /// WiX parameter type
 [<CLIMutable>]
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Params)")>]
-type WiXParams = 
+type Params = 
     { ToolDirectory : string
       TimeOut : TimeSpan
       AdditionalCandleArgs : string list
       AdditionalLightArgs : string list }
 
 /// Contains the WiX default parameters  
-[<System.Obsolete("This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.")>]
-let WiXDefaults : WiXParams = 
-    { ToolDirectory = currentDirectory @@ "tools" @@ "Wix"
+let internal Defaults : Params = 
+    { ToolDirectory = (Path.GetFullPath ".") @@ "tools" @@ "Wix"
       TimeOut = TimeSpan.FromMinutes 5.0
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
 /// Used for determing whether the feature should be visible in the select features installer pane or not
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDisplay)")>]
 type FeatureDisplay = 
     /// Initially shows the feature collapsed. This is the default value.
     | Collapse
@@ -1054,55 +988,6 @@ type FeatureDisplay =
         | Hidden -> "hidden"
 
 /// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
-[<Obsolete("Please use the new 'Feature' type which features automatic string concatenation of inner features")>]
-type WiXFeature = 
-    {
-        /// Unique identifier of the feature.
-        Id : string
-
-        /// Short string of text identifying the feature. 
-        /// This string is listed as an item by the SelectionTree control of the Selection Dialog. 
-        Title : string
-
-        /// Sets the install level of this feature. A value of 0 will disable the feature. 
-        /// Processing the Condition Table can modify the level value (this is set via the Condition child element).
-        /// The default value is "1". 
-        Level : int
-
-        /// Longer string of text describing the feature. This localizable string is displayed by the Text Control of the Selection Dialog. 
-        Description : string
-
-        ///Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
-        ///collapse
-        ///    Initially shows the feature collapsed. This is the default value.
-        ///expand
-        ///    Initially shows the feature expanded.
-        ///hidden
-        ///    Prevents the feature from displaying in the user interface.
-        ///<an explicit integer value>
-        ///    For advanced users only, it is possible to directly set the integer value of the display value that will appear in the Feature row. 
-        Display : FeatureDisplay
-
-        /// Nest sub features or components in here
-        InnerContent : string 
-    }
-    override f.ToString() = "<Feature Id=\"" + f.Id + "\" Title=\"" + f.Title + "\" Level=\"" + f.Level.ToString() + "\" Description=\"" + f.Description + "\" Display=\"" 
-                            + f.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + f.InnerContent + "</Feature>"
-
-/// Default values for creating WiX Feature
-[<Obsolete("Please use the new 'Feature' type which features automatic string concatenation of inner features")>]
-let WiXFeatureDefaults =
-    {   
-        Id = ""
-        Title = "Default Feature"
-        Level = 1
-        Description = "Default Feature"
-        Display = FeatureDisplay.Expand
-        InnerContent = ""
-    }
-
-/// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Feature)")>]
 type Feature =
     {
          /// Unique identifier of the feature.
@@ -1135,7 +1020,7 @@ type Feature =
         NestedFeatures : Feature seq
 
         /// Components included in this feature
-        Components : WiXComponentRef option seq
+        Components : ComponentRef option seq
     }
     override f.ToString() =
         let (|Empty|NotEmpty|) seq = if Seq.isEmpty seq then Empty else NotEmpty seq
@@ -1147,8 +1032,7 @@ type Feature =
         ConcatAll f ""
 
 /// Default values for creating WiX Feature
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDefaults)")>]
-let FeatureDefaults =
+let internal FeatureDefaults =
     {   
         Id = ""
         Title = "Default Feature"
@@ -1160,7 +1044,6 @@ let FeatureDefaults =
     }
 
 /// Type for defining, which program directory should be used for installation. ProgramFiles32 refers to 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ProgramFilesFolder)")>]
 type ProgramFilesFolder = 
     | ProgramFiles32
     | ProgramFiles64
@@ -1169,91 +1052,7 @@ type ProgramFilesFolder =
         | ProgramFiles32 -> "ProgramFilesFolder"
         | ProgramFiles64 -> "ProgramFiles64Folder"
 
-/// Parameters for WiX Script properties, use ToString for creating the string xml nodes
-[<Obsolete("Please use new 'Script' type")>]
-type WiXScript =
-    {
-        /// The product code GUID for the product.
-        ProductCode : Guid
-
-        /// The descriptive name of the product.
-        ProductName : string
-
-        /// The program files folder
-        ProgramFilesFolder : ProgramFilesFolder
-
-        /// Product description
-        Description : string
-
-        /// The decimal language ID (LCID) for the product.
-        ProductLanguage : string
-
-        /// The product's version string.
-        ProductVersion : string
-
-        /// The manufacturer of the product.
-        ProductPublisher : string
-
-        /// The upgrade code GUID for the product.
-        UpgradeGuid : Guid
-
-        /// You can nest upgrade elements in here
-        Upgrade : string
-
-        /// Nest major upgrade elements in here
-        MajorUpgrade : string
-
-        /// Nest UIRefs in here
-        UIRefs : string
-
-        /// Nest WiXVariables in here
-        WiXVariables : string
-
-        /// Nest directories in here
-        Directories : string
-
-        /// Build Number of product
-        BuildNumber : string
-
-        /// You can nest feature elements in here
-        Features : string
-
-        /// You can nest custom actions in here
-        CustomActions : string
-
-        /// You can nest InstallExecuteSequence actions in here
-        ActionSequences : string
-
-        /// Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.
-        Platform : Architecture
-    }
-
-/// Default values for WiX Script properties
-[<Obsolete("Please use new 'Script' type")>]
-let WiXScriptDefaults = 
-    {
-        ProductCode = Guid.Empty
-        ProductName = ""
-        ProgramFilesFolder = ProgramFilesFolder.ProgramFiles32
-        Description = ""
-        ProductLanguage = ""
-        ProductVersion = ""
-        ProductPublisher = ""
-        UpgradeGuid = Guid.Empty
-        Upgrade = ""
-        MajorUpgrade = ""
-        UIRefs = ""
-        WiXVariables = ""
-        Directories = ""
-        BuildNumber = "1.0.0"
-        Features = ""
-        CustomActions = ""
-        ActionSequences = ""
-        Platform = X86
-    }
-
-/// Used in WiXCustomAction for determing when to run the custom action
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecute)")>]
+/// Used in CustomAction for determing when to run the custom action
 type CustomActionExecute = 
     /// Indicates that the custom action will run after successful completion of the installation script (at the end of the installation). 
     | Commit
@@ -1279,8 +1078,7 @@ type CustomActionExecute =
         | Rollback -> "rollback"
         | SecondSequence -> "secondSequence"
 
-/// Used in WiXCustomAction for determing the return type
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionReturn)")>]
+/// Used in CustomAction for determing the return type
 type CustomActionReturn = 
     /// Indicates that the custom action will run asyncronously and execution may continue after the installer terminates. 
     | AsyncNoWait
@@ -1298,8 +1096,7 @@ type CustomActionReturn =
         | Ignore -> "ignore"
 
 /// Parameters for WiX custom action, use ToString for creating the string xml nodes
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomAction)")>]
-type WiXCustomAction = 
+type CustomAction = 
     {
         ///	The identifier of the custom action. 
         Id : string
@@ -1328,8 +1125,7 @@ type WiXCustomAction =
                             + w.ExeCommand + "\" Return=\"" + w.Return.ToString() + "\" />"
 
 /// Default values for WiX custom actions
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionDefaults)")>]
-let WiXCustomActionDefaults = 
+let internal CustomActionDefaults = 
     {
         Id = ""
         FileKey = ""
@@ -1339,8 +1135,7 @@ let WiXCustomActionDefaults =
         Return = CustomActionReturn.Check
     }
 
-/// Used for specifying the point of time for action execution in WiXCustomActionExecution
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ActionExecutionVerb)")>]
+/// Used for specifying the point of time for action execution in CustomActionExecution
 type ActionExecutionVerb = 
     /// Specifies that action should be executed after some standard or custom action
     | After
@@ -1352,8 +1147,7 @@ type ActionExecutionVerb =
         | Before -> "Before"
 
 /// Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecution)")>]
-type WiXCustomActionExecution = 
+type CustomActionExecution = 
     {
         /// The action to which the Custom element applies.
         ActionId : string
@@ -1367,8 +1161,7 @@ type WiXCustomActionExecution =
     override w.ToString() = "<Custom Action=\"" + w.ActionId + "\" " + w.Verb.ToString() + "=\"" + w.Target + "\"> " + w.Condition + " </Custom>"
 
 /// Default values for WiX custom action executions
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecutionDefaults)")>]
-let WixCustomActionExecutionDefaults = 
+let internal CustomActionExecutionDefaults = 
     {
         ActionId = ""
         Verb = ActionExecutionVerb.After
@@ -1377,8 +1170,7 @@ let WixCustomActionExecutionDefaults =
     }
 
 /// Parameters for WiX UI Reference, use ToString for creating the string xml nodes
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)")>]
-type WiXUIRef = 
+type UIRef = 
     {   
         /// Name of referenced UI
         Id : string
@@ -1386,34 +1178,30 @@ type WiXUIRef =
     override w.ToString() = "<UIRef Id=\"" + w.Id + "\" />"
 
 /// Default value for WiX UI Reference (WixUI_Minimal)
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)")>]
-let WiXUIRefDefaults = 
+let internal UIRefDefaults = 
     {
         Id = "WixUI_Minimal"
     }
 
 /// Parameters for WiX Upgrade
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Upgrade)")>]
-type WiXUpgrade =
+type Upgrade =
     {
         /// This value specifies the upgrade code for the products that are to be detected by the FindRelatedProducts action.
         Id: Guid
-        /// You can nest WiXUpgradeVersion sequences in here
+        /// You can nest UpgradeVersion sequences in here
         UpgradeVersion: string
     }
     override w.ToString() = "<Upgrade Id=\"" + w.Id.ToString("D") + "\">" + w.UpgradeVersion + "</Upgrade>"
 
 /// Default value for WiX Upgrade
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeDefaults)")>]
-let WiXUpgradeDefaults = 
+let internal UpgradeDefaults = 
     {
         Id = Guid.Empty
         UpgradeVersion = ""
     }
 
 /// Parameters for WiX Upgrade Version
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersion)")>]
-type WiXUpgradeVersion =
+type UpgradeVersion =
     {
         /// Set to "yes" to detect products and applications but do not uninstall.
         OnlyDetect : YesOrNo
@@ -1436,8 +1224,7 @@ type WiXUpgradeVersion =
                             + "\" IncludeMaximum=\"" + w.IncludeMaximum.ToString() + "\" Property=\"" + w.Property + "\" />"
 
 /// Default value for WiX Upgrade
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersionDefaults)")>]
-let WiXUpgradeVersionDefaults = 
+let internal UpgradeVersionDefaults = 
     {
         OnlyDetect = YesOrNo.No
         Minimum = ""
@@ -1448,7 +1235,6 @@ let WiXUpgradeVersionDefaults =
     }
 
 /// Used for determing when to run RemoveExistingProducts on major upgrade
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeSchedule)")>]
 type MajorUpgradeSchedule =
     /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product. 
     /// It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails, 
@@ -1478,8 +1264,7 @@ type MajorUpgradeSchedule =
         | AfterInstallFinalize -> "afterInstallFinalize"
 
 /// Parameters for WiX Major Upgrade
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgrade)")>]
-type WiXMajorUpgrade = 
+type MajorUpgrade = 
     {
         /// Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the 
         /// installed product entirely before installing the upgrade product. It's slowest but gives the most flexibility in changing components and features in the upgrade product.
@@ -1498,8 +1283,7 @@ type WiXMajorUpgrade =
         "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\"" + downgradeErrorMessage + " />"
 
 /// Default value for WiX Major Upgrade
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeDefaults)")>]
-let WiXMajorUpgradeDefaults =
+let internal MajorUpgradeDefaults =
     {
         Schedule = MajorUpgradeSchedule.AfterInstallValidate
         AllowDowngrades = YesOrNo.No
@@ -1507,8 +1291,7 @@ let WiXMajorUpgradeDefaults =
     }
 
     /// Parameters for WiX Variable, use ToString for creating the string xml nodes
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Variable)")>]
-type WiXVariable = 
+type Variable = 
     {
         /// The name of the variable.
         Id : string
@@ -1521,8 +1304,7 @@ type WiXVariable =
     override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable.ToString() + "\"/>"
 
 /// Default value for WiX Variable
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.VariableDefaults)")>]
-let WiXVariableDefaults = 
+let internal VariableDefaults = 
     {
         Id = ""
         Overridable = YesOrNo.No
@@ -1530,7 +1312,6 @@ let WiXVariableDefaults =
     }
 
 /// Parameters for WiX Script properties, use ToString for creating the string xml nodes
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Script)")>]
 type Script =
     {
         /// The product code GUID for the product.
@@ -1558,25 +1339,25 @@ type Script =
         UpgradeGuid : Guid
 
         /// You can nest upgrade elements in here
-        Upgrade : WiXUpgrade seq
+        Upgrade : Upgrade seq
 
         /// Nest major upgrade elements in here
-        MajorUpgrade : WiXMajorUpgrade seq
+        MajorUpgrade : MajorUpgrade seq
 
         /// Nest UIRefs in here
-        UIRefs : WiXUIRef seq
+        UIRefs : UIRef seq
 
         /// Nest WiXVariables in here
-        WiXVariables : WiXVariable seq
+        WiXVariables : Variable seq
 
         /// Nest directories in here
-        Directories : WiXDir seq
+        Directories : Dir seq
         
         /// You can nest DirectoryRefs in here
-        DirectoryRefs : WiXDirectoryRef seq
+        DirectoryRefs : DirectoryRef seq
 
         /// Nest Components in here
-        Components : WiXDirectoryComponent seq
+        Components : DirectoryComponent seq
 
         /// Build Number of product
         BuildNumber : string
@@ -1585,10 +1366,10 @@ type Script =
         Features : Feature seq
 
         /// You can nest custom actions in here
-        CustomActions : WiXCustomAction seq
+        CustomActions : CustomAction seq
 
         /// You can nest InstallExecuteSequence actions in here
-        ActionSequences : WiXCustomActionExecution seq
+        ActionSequences : CustomActionExecution seq
 
         /// You can add custom replacements for the wix xml here.
         CustomReplacements: (string * string) seq
@@ -1598,8 +1379,7 @@ type Script =
     }
 
 /// Default values for WiX Script properties
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ScriptDefaults)")>]
-let ScriptDefaults = 
+let internal ScriptDefaults = 
     {
         ProductCode = Guid.Empty
         ProductName = ""
@@ -1625,13 +1405,12 @@ let ScriptDefaults =
     }
 
 /// Generates WiX Template with specified file name (you can prepend location too)
-/// You need to run this once every build an then use FillInWiXScript to replace placeholders
+/// You need to run this once every build an then use fillInWiXScript to replace placeholders
 /// ## Parameters
 ///  - `fileName` - Pass desired fileName for your wiXScript file
 ///
 /// ## Sample
 ///     generateWiXScript "Setup.wxs"
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateWiXScript)")>]
 let generateWiXScript fileName =
     let scriptTemplate = 
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1693,64 +1472,15 @@ let generateWiXScript fileName =
             </InstallExecuteSequence>
           </Product>
         </Wix>"
-    WriteStringToFile false fileName scriptTemplate
-    
+    Fake.IO.File.writeString false fileName scriptTemplate
+  
 /// Takes path where script files reside and sets all parameters as defined
 /// ## Parameters
 ///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
 ///
 /// ## Sample
-///     FillInWixScript "" (fun f ->
-///                            {f with
-///                                ProductCode = WiXProductCode
-///                                ProductName = WiXProductName
-///                                Description = projectDescription
-///                                ProductLanguage = WiXProductLanguage
-///                                ProductVersion = WiXProductVersion
-///                                ProductPublisher = WixProductPublisher
-///                                UpgradeGuid = WixProductUpgradeGuid
-///                                UIRefs = uiRef1.ToString() + uiRef2.ToString()
-///                                WiXVariables = wiXLicense.ToString()
-///                                Directories = directories
-///                                BuildNumber = "1.0.0"
-///                                Features = rootFeature.ToString()
-///                                CustomActions = action1.ToString() + action2.ToString()
-///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
-///                            })
-[<Obsolete("Please use new fillInWiXTemplate function")>]
-let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
-    let parameters = WiXScriptDefaults |> setParams
-    let wixScript = !!( wiXPath @@ "*.wxs" )
-    let replacements = [
-        "@Product.ProductCode@", parameters.ProductCode.ToString("D")
-        "@Product.ProductName@", parameters.ProductName
-        "@Product.ProgramFilesFolder@", parameters.ProgramFilesFolder.ToString()
-        "@Product.Description@", parameters.Description
-        "@Product.UIRefs@", parameters.UIRefs
-        "@Product.Language@", parameters.ProductLanguage
-        "@Product.Version@", parameters.ProductVersion
-        "@Product.Variables@", parameters.WiXVariables
-        "@Product.Publisher@", parameters.ProductPublisher
-        "@Product.UpgradeGuid@", parameters.UpgradeGuid.ToString("D")
-        "@Product.Upgrade@", parameters.Upgrade
-        "@Product.MajorUpgrade@", parameters.MajorUpgrade
-        "@Product.Directories@", parameters.Directories
-        "@Product.Components@", ""
-        "@Product.Platform@", parameters.Platform.ToString()
-        "@Product.Features@", parameters.Features
-        "@Product.CustomActions@", parameters.CustomActions
-        "@Product.ActionSequences@", parameters.ActionSequences
-        "@Build.number@", parameters.BuildNumber]    
-    processTemplates replacements wixScript
-    
-/// Takes path where script files reside and sets all parameters as defined
-/// ## Parameters
-///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
-///  - `setParams` - Function used to manipulate the WiX default parameters.
-///
-/// ## Sample
-///     FillInWixScript "" (fun f ->
+///     fillInWiXTemplate "" (fun f ->
 ///                            {f with
 ///                                ProductCode = WiXProductCode
 ///                                ProductName = WiXProductName
@@ -1768,8 +1498,7 @@ let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
 ///                                CustomActions = action1.ToString() + action2.ToString()
 ///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
 ///                            })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FillInWiXTemplate)")>]
-let FillInWiXTemplate wiXPath setParams =
+let fillInWiXTemplate wiXPath setParams =
     let parameters = ScriptDefaults |> setParams
     let wixScript = !!( wiXPath @@ "*.wxs" )
     let replacements = [
@@ -1795,7 +1524,7 @@ let FillInWiXTemplate wiXPath setParams =
         "@Build.number@", parameters.BuildNumber]
     let customReplacements = parameters.CustomReplacements |> Seq.map (fun (key, value) -> ((sprintf "@Custom.%s@" key), value)) |> List.ofSeq
     let replacements = replacements @ customReplacements
-    processTemplates replacements wixScript
+    Templates.replaceInFiles replacements wixScript
 
 /// Generates a feature based on the given parameters, use toString on it when embedding it
 /// You can pass other features into InnerContent for making a hierarchy
@@ -1803,38 +1532,15 @@ let FillInWiXTemplate wiXPath setParams =
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
 ///
 /// ## Sample
-///     let feature = generateFeature (fun f -> 
-///                                        {f with  
-///                                            Id = "UniqueName"
-///                                            Title = "Title which is shown"
-///                                            Level = 1 
-///                                            Description = "Somewhat longer description" 
-///                                            Display = "expand" 
-///                                            InnerContent = otherFeature.ToString()
-///                                        })
-[<Obsolete("Please use the new generateFeatureElement")>]
-let generateFeature (setParams : WiXFeature -> WiXFeature) =
-    let parameters = WiXFeatureDefaults |> setParams
-    if parameters.Id = "" then 
-        failwith "No parameter passed for feature Id!"
-    parameters
-
-/// Generates a feature based on the given parameters, use toString on it when embedding it
-/// You can pass other features into InnerContent for making a hierarchy
-/// ## Parameters
-///  - `setParams` - Function used to manipulate the WiX default parameters.
-///
-/// ## Sample
-///     let feature = generateFeature (fun f -> 
-///                                        {f with  
-///                                            Id = "UniqueName"
-///                                            Title = "Title which is shown"
-///                                            Level = 1 
-///                                            Description = "Somewhat longer description" 
-///                                            Display = "expand" 
-///                                            InnerContent = [otherFeature1; otherFeature2]
-///                                        })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateFeatureElement)")>]
+///     let feature = generateFeatureElement (fun f -> 
+///                                               {f with  
+///                                                   Id = "UniqueName"
+///                                                   Title = "Title which is shown"
+///                                                   Level = 1 
+///                                                   Description = "Somewhat longer description" 
+///                                                   Display = "expand" 
+///                                                   InnerContent = [otherFeature1; otherFeature2]
+///                                               })
 let generateFeatureElement setParams =
     let parameters : Feature = FeatureDefaults |> setParams
     if parameters.Id = "" then 
@@ -1842,7 +1548,7 @@ let generateFeatureElement setParams =
     parameters
 
 /// Generates a customAction based on the given parameters, use toString on it when embedding it
-/// Be careful to make Id unique. FileKey is a reference to a file Id which you added by using wixDir or wixFile
+/// Be careful to make Id unique. FileKey is a reference to a file Id which you added by using getWixDirTag or getWixFileTag
 /// Set impersonate to no if your action needs elevated privileges, you should then also set execute as "deferred"
 /// ExeCommand are the parameters passed to your executable
 /// ## Parameters
@@ -1858,9 +1564,8 @@ let generateFeatureElement setParams =
 ///                                                ExeCommand = "install"
 ///                                                Return = "check"
 ///                                            })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomAction)")>]
 let generateCustomAction setParams =
-    let parameters : WiXCustomAction = WiXCustomActionDefaults |> setParams
+    let parameters : CustomAction = CustomActionDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for feature Id!"
     parameters
@@ -1878,9 +1583,8 @@ let generateCustomAction setParams =
 ///                                                                    Target = "InstallFiles"                                                                        
 ///                                                                    Condition = "<![CDATA[(&" + feature.Id + " = 3) AND NOT (!" + feature.Id + " = 3)]]>"
 ///                                                                })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomActionExecution)")>]
 let generateCustomActionExecution setParams =
-    let parameters : WiXCustomActionExecution = WixCustomActionExecutionDefaults |> setParams
+    let parameters : CustomActionExecution = CustomActionExecutionDefaults |> setParams
     if parameters.ActionId = "" then 
         failwith "No parameter passed for action Id!"
     parameters
@@ -1894,9 +1598,8 @@ let generateCustomActionExecution setParams =
 ///                                    {f with
 ///                                        Id = "WixUI_Mondo"
 ///                                    })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUIRef)")>]
 let generateUIRef setParams =
-    let parameters : WiXUIRef = WiXUIRefDefaults |> setParams
+    let parameters : UIRef = UIRefDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for action Id!"
     parameters
@@ -1911,9 +1614,8 @@ let generateUIRef setParams =
 ///                                       {f with
 ///                                          Id = productUpgradeCode
 ///                                       })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgrade)")>]
 let generateUpgrade setParams =
-    let parameters : WiXUpgrade = WiXUpgradeDefaults |> setParams
+    let parameters : Upgrade = UpgradeDefaults |> setParams
     if parameters.Id = Guid.Empty then 
         failwith "No parameter passed for action Id!"
     parameters
@@ -1928,9 +1630,8 @@ let generateUpgrade setParams =
 ///                                                        Minimum = productVersion
 ///                                                        OnlyDetect = "yes"
 ///                                                     })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgradeVersion)")>]
 let generateUpgradeVersion setParams =
-    let parameters : WiXUpgradeVersion = WiXUpgradeVersionDefaults |> setParams
+    let parameters : UpgradeVersion = UpgradeVersionDefaults |> setParams
     parameters
 
 
@@ -1943,41 +1644,41 @@ let generateUpgradeVersion setParams =
 ///                                                     {f with 
 ///                                                         DowngradeErrorMessage = "A later version is already installed, exiting."
 ///                                                     })
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateMajorUpgradeVersion)")>]
 let generateMajorUpgradeVersion setParams =
-    let parameters : WiXMajorUpgrade = WiXMajorUpgradeDefaults |> setParams
+    let parameters : MajorUpgrade = MajorUpgradeDefaults |> setParams
     parameters
 
 /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Candle)")>]
-let Candle (parameters : WiXParams) wixScript = 
-    use __ = traceStartTaskUsing "Candle" wixScript
-    let fi = fileInfo wixScript
+let Candle (parameters : Params) wixScript = 
+    use __ = Fake.Core.Trace.traceTask "Candle" wixScript
+    let fi = Fake.IO.FileInfo.ofPath wixScript
     let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
     let tool = parameters.ToolDirectory @@ "candle.exe"
     let args = 
-        sprintf "-out \"%s\" \"%s\" %s" wixObj (wixScript |> FullName) (separated " " parameters.AdditionalCandleArgs)
-    tracefn "%s %s" parameters.ToolDirectory args
-    if 0 <> ExecProcess (fun info -> 
-                info.FileName <- tool
-                info.WorkingDirectory <- null
-                info.Arguments <- args) parameters.TimeOut
+        sprintf "-out \"%s\" \"%s\" %s" wixObj (wixScript |> Fake.IO.Path.getFullName) (Fake.Core.String.separated " " parameters.AdditionalCandleArgs)
+    Fake.Core.Trace.tracefn "%s %s" parameters.ToolDirectory args
+    if 0 <> Fake.Core.Process.execSimple (fun info -> 
+                                {info with 
+                                    FileName = tool
+                                    WorkingDirectory = null
+                                    Arguments = args
+                                }) parameters.TimeOut
     then failwithf "Candle %s failed." args
     wixObj
 
 /// Runs the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) on the given WiX script with the given parameters
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Light)")>]
-let Light (parameters : WiXParams) outputFile wixObj = 
-    use __ = traceStartTaskUsing "Light" wixObj
+let Light (parameters : Params) outputFile wixObj = 
+    use __ = Fake.Core.Trace.traceTask "Light" wixObj
     let tool = parameters.ToolDirectory @@ "light.exe"
     let args = 
-        sprintf "\"%s\" -spdb -dcl:high -out \"%s\" %s" (wixObj |> FullName) (outputFile |> FullName) 
-            (separated " " parameters.AdditionalLightArgs)
-    tracefn "%s %s" parameters.ToolDirectory args
-    if 0 <> ExecProcess (fun info -> 
-                info.FileName <- tool
-                info.WorkingDirectory <- null
-                info.Arguments <- args) parameters.TimeOut
+        sprintf "\"%s\" -spdb -dcl:high -out \"%s\" %s" (wixObj |> Fake.IO.Path.getFullName) (outputFile |> Fake.IO.Path.getFullName) 
+            (Fake.Core.String.separated " " parameters.AdditionalLightArgs)
+    Fake.Core.Trace.tracefn "%s %s" parameters.ToolDirectory args
+    if 0 <> Fake.Core.Process.execSimple (fun info -> 
+                {info with
+                    FileName = tool
+                    WorkingDirectory = null
+                    Arguments = args}) parameters.TimeOut
     then failwithf "Light %s failed." args
 
 /// Uses the WiX tools [Candle](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) and [Light](http://wixtoolset.org/documentation/manual/v3/overview/light.html) to create an msi.
@@ -2002,7 +1703,7 @@ let Light (parameters : WiXParams) outputFile wixObj =
 ///             "@product.productcode@",System.Guid.NewGuid().ToString()
 ///             "@HelpFiles@",getFilesAsWiXString helpFiles
 ///             "@ScriptFiles@",getFilesAsWiXString scriptFiles
-///             "@icons@",wixDir ALLFILES true (directoryInfo(bundledDir @@ "icons"))]
+///             "@icons@",getWixDirTag ALLFILES true (directoryInfo(bundledDir @@ "icons"))]
 ///         
 ///         processTemplates replacements setupFiles
 ///     
@@ -2011,14 +1712,12 @@ let Light (parameters : WiXParams) outputFile wixObj =
 ///             setupFileName
 ///             (setupBuildDir + "Setup.wxs.template")
 ///     )
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.WiX)")>]
 let WiX setParams outputFile wixScript = 
-    let parameters = setParams WiXDefaults
+    let parameters = setParams Defaults
     wixScript
     |> Candle parameters
     |> Light parameters outputFile
 
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatParams)")>]
 type HeatParams = 
     { 
       /// Directory that contains the Heat tool
@@ -2049,10 +1748,9 @@ type HeatParams =
     }
 
 /// Default values for the Heat harvesting
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatDefaulParams)")>]
-let HeatDefaulParams = 
+let internal HeatDefaulParams = 
     {
-      ToolDirectory = currentDirectory @@ "tools" @@ "Wix"
+      ToolDirectory = (Path.GetFullPath ".") @@ "tools" @@ "Wix"
       TimeOut =  TimeSpan.FromMinutes 5.0
       AutoGenerateGuid = true
       GenerateGuidNow = false
@@ -2073,9 +1771,8 @@ let HeatDefaulParams =
 ///  - `directory` - The path to the directory that will be harvested by Heat.
 ///  - `outputFile` - The output file path given to Heat.
 ///
-[<Obsolete("Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.harvestDirectory)")>]
 let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
-    use __ = traceStartTaskUsing "Heat" directory
+    use __ = Fake.Core.Trace.traceTask "Heat" directory
     let conditionalArgument condition arg args =
         match condition with
             | true ->  arg :: args
@@ -2093,17 +1790,16 @@ let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile
         |> conditionalArgument parameters.SupressUniqueIds "-suid" 
     let args = 
         sprintf "dir \"%s\" -o \"%s\" -dr %s -cg %s -var %s %s" 
-            (directory |> FullName)
-            (outputFile |> FullName) 
+            (directory |> Fake.IO.Path.getFullName)
+            (outputFile |> Fake.IO.Path.getFullName) 
             parameters.DirectoryReference 
             parameters.ComponentGroupName 
             parameters.VariableName 
-            (separated " " arglist)    
-    tracefn "%s %s" parameters.ToolDirectory args
-    if 0 <> ExecProcess (fun info -> 
-                info.FileName <- tool
-                info.WorkingDirectory <- null
-                info.Arguments <- args) parameters.TimeOut
+            (Fake.Core.String.separated " " arglist)    
+    Fake.Core.Trace.tracefn "%s %s" parameters.ToolDirectory args
+    if 0 <> Fake.Core.Process.execSimple (fun info -> 
+                {info with
+                    FileName = tool
+                    WorkingDirectory = null
+                    Arguments = args}) parameters.TimeOut
     then failwithf "Heat %s failed." args
-
-
