@@ -48,7 +48,7 @@ type Params =
             then sprintf "%s%s " s value |> sb.Append
             else sb
         let appendIfNotEqual other value s (sb: StringBuilder.StringBuilder) =
-            if other = value
+            if other <> value
             then sprintf "%s%A " s value |> sb.Append
             else sb
         let appendList list s (sb: StringBuilder.StringBuilder) =
