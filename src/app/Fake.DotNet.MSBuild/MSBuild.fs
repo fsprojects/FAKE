@@ -517,8 +517,8 @@ module MSBuild =
         match output with
         | Some path ->
             (fun project ->
-                let outputPath = path |> String.trimSeparator
-                ("OutputPath", (sprintf @"%s\" outputPath)) :: (properties project)
+                let outputPath = (path |> String.trimSeparator) + Path.directorySeparator
+                ("OutputPath", outputPath) :: (properties project)
             )
         | None -> properties
 
