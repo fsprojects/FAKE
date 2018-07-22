@@ -127,7 +127,7 @@ module GlobbingPattern =
           Includes = [ x ]
           Excludes = [] } :> IGlobbingPattern
 
-    // Start an empty globbing pattern from the specified directory
+    /// Start an empty globbing pattern from the specified directory
     let createFrom (dir : string) =
         { BaseDirectory = dir
           Includes = []
