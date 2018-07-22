@@ -865,6 +865,13 @@ module DotNet =
             | "release" -> Release
             | _ -> Custom s
 
+        /// Get the build configuration from an environment variable with the given name or returns
+        /// the default if not value was set
+        static member FromEnvironVarOrDefault (name: string) (defaultValue: BuildConfiguration) =
+            match Environment.environVarOrNone name with
+            | Some config -> BuildConfiguration.Parse config
+            | None -> defaultValue           
+
     /// [omit]
     let private buildConfigurationArg (param: BuildConfiguration) =
         sprintf "--configuration %O" param
