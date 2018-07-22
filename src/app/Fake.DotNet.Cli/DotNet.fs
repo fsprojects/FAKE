@@ -850,14 +850,24 @@ module DotNet =
         | Debug
         | Release
         | Custom of string
+    with
+        /// Convert the build configuration to a string that can be passed to the .NET CLI
+        override this.ToString() =
+            match this with
+            | Debug -> "Debug"
+            | Release -> "Release"
+            | Custom config -> config
+
+        /// Parse a build configuration string
+        static member Parse (s: string) =
+            match s.ToLowerInvariant() with
+            | "debug" -> Debug
+            | "release" -> Release
+            | _ -> Custom s
 
     /// [omit]
     let private buildConfigurationArg (param: BuildConfiguration) =
-        sprintf "--configuration %s"
-            (match param with
-            | Debug -> "Debug"
-            | Release -> "Release"
-            | Custom config -> config)
+        sprintf "--configuration %O" param
 
     /// dotnet pack command options
     type PackOptions =
