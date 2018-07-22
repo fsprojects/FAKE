@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.3.0-alpha - 2018-07-22
+## 5.2.1-alpha - 2018-07-22
 
 * NEW: module Fake.Tools.Rsync - https://github.com/fsharp/FAKE/pull/1987
 * NEW: module Fake.Installer.Wix - https://github.com/fsharp/FAKE/pull/2002
