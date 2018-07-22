@@ -127,6 +127,12 @@ module GlobbingPattern =
           Includes = [ x ]
           Excludes = [] } :> IGlobbingPattern
 
+    // Start an empty globbing pattern from the specified directory
+    let fromBaseDir (dir : string) =
+        { BaseDirectory = dir
+          Includes = []
+          Excludes = [] } :> IGlobbingPattern
+
     /// Sets a directory as baseDirectory for fileIncludes. 
     let setBaseDir (dir : string) (fileIncludes : IGlobbingPattern) = fileIncludes.SetBaseDirectory dir
 
