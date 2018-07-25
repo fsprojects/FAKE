@@ -6,7 +6,7 @@ module DotNet =
 
     // NOTE: The #if can be removed once we have a working release with the "new" API
     // Currently we #load this file in build.fsx
-    
+
     open Fake.Core
     open Fake.IO
     open Fake.IO.FileSystemOperators
@@ -15,10 +15,9 @@ module DotNet =
     open System.Security.Cryptography
     open System.Text
     open Newtonsoft.Json.Linq
-    open System
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
-    let internal defaultUserInstallDir = 
+    let internal defaultUserInstallDir =
         if Environment.isUnix
         then Environment.environVar "HOME" @@ ".dotnet"
         else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
@@ -31,7 +30,7 @@ module DotNet =
 
     /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
     let internal getSDKVersionFromGlobalJsonDir startDir : string =
-        let globalJsonPaths rootDir = 
+        let globalJsonPaths rootDir =
             let rec loop (dir: DirectoryInfo) = seq {
                 match dir.GetFiles "global.json" with
                 | [| json |] -> yield json
@@ -42,9 +41,9 @@ module DotNet =
             loop (DirectoryInfo rootDir)
 
         match Seq.tryHead (globalJsonPaths startDir) with
-        | None -> 
+        | None ->
             failwithf "global.json not found"
-        | Some globalJson -> 
+        | Some globalJson ->
             try
                 let content = File.ReadAllText globalJson.FullName
                 let json = JObject.Parse content
@@ -73,7 +72,7 @@ module DotNet =
         let systemInstalldir = defaultSystemInstallDir </> fileName
         if File.exists systemInstalldir then yield systemInstalldir
         match dotnetCliDir with
-        | Some userSetPath -> 
+        | Some userSetPath ->
             let defaultCliPath = userSetPath @@ fileName
             match File.Exists defaultCliPath with
             | true -> yield defaultCliPath
@@ -203,7 +202,7 @@ module DotNet =
         }
 
     /// The a list of well-known versions to install
-    module Versions =    
+    module Versions =
         /// .NET Core SDK install options preconfigured for preview2 tooling
         let internal Preview2ToolingOptions options =
             { options with
@@ -316,7 +315,7 @@ module DotNet =
                 Channel = None
                 Version = Version "2.1.300"
             }
-        
+
         let Release_2_1_301 option =
             { option with
                 InstallerOptions = (fun io ->
@@ -446,11 +445,11 @@ module DotNet =
             Environment : Map<string, string>
         }
         static member Create() = {
-            DotNetCliPath = 
+            DotNetCliPath =
                 findPossibleDotnetCliPaths None
                 |> Seq.tryHead
                 // shouldn't hit this one because the previous two probe PATH...
-                |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")                     
+                |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
             Version = None
@@ -535,11 +534,11 @@ module DotNet =
                 // We need to do this as the SDK will use this file to select the actual version
                 // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
                 if File.Exists globalJsonPath then
-                    let readVersion = getSDKVersionFromGlobalJsonDir workDir 
+                    let readVersion = getSDKVersionFromGlobalJsonDir workDir
                     if readVersion <> version then failwithf "Existing global.json with a different version found!"
                     false
                 else
-                    let template = sprintf """{ "sdk": { "version": "%s" } }""" version                  
+                    let template = sprintf """{ "sdk": { "version": "%s" } }""" version
                     File.WriteAllText(globalJsonPath, template)
                     true
             | None -> false
@@ -583,12 +582,12 @@ module DotNet =
                 |> Process.setEnvironment options.Environment
                 |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
 
-            
+
             withGlobalJson options.WorkingDirectory options.Version (fun () ->
                 if options.RedirectOutput then
                   Process.execRaw f timeout true errorF messageF
                 else Process.execSimple f timeout
-            )            
+            )
         ProcessResult.New result (results |> List.ofSeq)
 
 
@@ -700,7 +699,7 @@ module DotNet =
     /// - 'setParams' - set installation options
     let install setParams : Options -> Options =
         let param = CliInstallOptions.Default |> setParams
-        
+
         let dir = defaultArg param.CustomInstallDir defaultUserInstallDir
         let checkVersion, fromGlobalJson =
             match param.Version with
@@ -738,7 +737,7 @@ module DotNet =
 
         let passVersion = if fromGlobalJson then None else checkVersion
         let installScript = downloadInstaller param.InstallerOptions
-        
+
         let exitCode =
             let args, fileName =
                 if Environment.isUnix then
@@ -766,9 +765,9 @@ module DotNet =
                     AlwaysDownload = true
                 })) |> ignore
             failwithf ".NET Core SDK install failed with code %i" exitCode
-    
+
         let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
-        Trace.tracefn ".NET Core SDK installed to %s" exe     
+        Trace.tracefn ".NET Core SDK installed to %s" exe
         (fun opt -> { opt with DotNetCliPath = exe; Version = passVersion})
 
     /// dotnet restore command options
@@ -1172,3 +1171,111 @@ module DotNet =
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
         __.MarkSuccess()
 
+    /// dotnet msbuild command options
+    type MSBuildOptions =
+        {
+            /// Common tool options
+            Common: Options
+            /// Targets to run (/target)
+            Targets : string option
+            /// Set or override project-level properties (/property)
+            Properties : (string * string) list
+            /// Maximum number of concurrent processes (/maxcpucount)
+            MaxCpuCount : int
+            /// version of the MSBuild Toolset (/toolsversion)
+            ToolsVersion : string option
+            /// Logging verbosity (/verbosity)
+            Verbosity : Verbosity option
+            /// Disable console logger (/noconsolelogger)
+            NoConsoleLogger : bool
+            /// Warning codes to treats as errors (/warnaserror)
+            WarnAsError : string list
+            /// Warning codes to treats as messages (/warnasmesssage)
+            WarnAsMessage : string list
+            /// Extensions to ignore when determining which project file to build. (/ignoreprojectextensions)
+            IgnoreProjectExtensions : string list
+            ///  Enables or Disables the reuse of MSBuild nodes. (/nodeReuse)
+            NodeReuse : bool
+            /// Creates a single, aggregated project file (/preprocess)
+            Preprocess : string option
+            /// Shows detailed information at the end of the build (/detailedsummary)
+            DetailedSummary : bool
+            /// Runs a target named Restore prior to building other targets (/restore)
+            Restore : bool
+            /// Set or override project-level properties during restore (/restoreProperty)
+            RestoreProperties : (string * string) list
+            /// Profiles MSBuild evaluation and writes result to file (/profileevaluation)
+            ProfileEvaluation : bool
+            /// Do not auto-include any MSBuild.rsp files (/noautoresponse)
+            NoAutoResponse : bool
+            /// Do not display the startup banner and copyright message (/nologo)
+            NoLogo : bool
+        }
+        /// Parameter default values.
+        static member Create() = {
+            Common = Options.Create()
+            Targets = None
+            Properties = List.empty
+            MaxCpuCount = 1
+            ToolsVersion = None
+            Verbosity = None
+            NoConsoleLogger = false
+            WarnAsError = List.empty
+            WarnAsMessage = List.empty
+            IgnoreProjectExtensions = List.empty
+            NodeReuse = true
+            Preprocess = None
+            DetailedSummary = false
+            Restore = true
+            RestoreProperties = List.empty
+            ProfileEvaluation = false
+            NoAutoResponse = false
+            NoLogo = false
+        }
+
+    let private msbuildArgList name values =
+        let values =
+            values
+            |> Seq.map (fun x -> sprintf @"""%s""" x)
+            |> String.concat ";"
+
+        (sprintf "/%s:%s" name values)
+
+    let private msbuildProps name values =
+        let values =
+            values
+            |> Seq.map (fun (x, v) -> sprintf @"""%s=%s""" x v)
+            |> String.concat ";"
+
+        (sprintf "/%s:%s" name values)
+
+    let private msbuildArg name value =
+        sprintf "/%s:%s" name (value.ToString().ToLowerInvariant())
+
+    let private buildMSBuildArgs (param : MSBuildOptions) =
+        [
+            param.Targets |> Option.toList |> msbuildArgList "t"
+            param.Properties |> msbuildProps "p"
+            param.MaxCpuCount |> msbuildArg "m"
+            param.ToolsVersion |> Option.toList |> msbuildArgList "tv"
+            param.Verbosity |> msbuildArg "v"
+            boolToFlag param.NoConsoleLogger "/noconlog"
+            param.WarnAsError |> msbuildArgList "err"
+            param.WarnAsMessage |> msbuildArgList "nowarn"
+            param.IgnoreProjectExtensions |> msbuildArgList "ignore"
+            boolToFlag param.NodeReuse "/nr"
+            param.Preprocess |> msbuildArg "pp"
+            boolToFlag param.DetailedSummary "/ds"
+            boolToFlag param.Restore "/r"
+            param.ProfileEvaluation |> msbuildArg "profileevaluation"
+            boolToFlag param.NoAutoResponse "/noautorsp"
+            boolToFlag param.NoLogo "/nologo"
+        ] |> Seq.filter String.isNotNullOrEmpty |> String.concat " "
+
+    let msbuild setParams project =
+        use __ = Trace.traceTask "DotNet:msbuild" project
+        let param = MSBuildOptions.Create() |> setParams
+        let args = sprintf "%s %s" project (buildMSBuildArgs param)
+        let result = exec (fun _ -> param.Common) "msbuild" args
+        if not result.OK then failwithf "dotnet msbuild failed with code %i" result.ExitCode
+        __.MarkSuccess()
