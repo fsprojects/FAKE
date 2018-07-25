@@ -6,7 +6,7 @@ module DotNet =
 
     // NOTE: The #if can be removed once we have a working release with the "new" API
     // Currently we #load this file in build.fsx
-    
+
     open Fake.Core
     open Fake.IO
     open Fake.IO.FileSystemOperators
@@ -18,7 +18,7 @@ module DotNet =
     open System
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
-    let internal defaultUserInstallDir = 
+    let internal defaultUserInstallDir =
         if Environment.isUnix
         then Environment.environVar "HOME" @@ ".dotnet"
         else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
@@ -31,7 +31,7 @@ module DotNet =
 
     /// Gets the DotNet SDK from the global.json, starts searching in the given directory.
     let internal getSDKVersionFromGlobalJsonDir startDir : string =
-        let globalJsonPaths rootDir = 
+        let globalJsonPaths rootDir =
             let rec loop (dir: DirectoryInfo) = seq {
                 match dir.GetFiles "global.json" with
                 | [| json |] -> yield json
@@ -42,9 +42,9 @@ module DotNet =
             loop (DirectoryInfo rootDir)
 
         match Seq.tryHead (globalJsonPaths startDir) with
-        | None -> 
+        | None ->
             failwithf "global.json not found"
-        | Some globalJson -> 
+        | Some globalJson ->
             try
                 let content = File.ReadAllText globalJson.FullName
                 let json = JObject.Parse content
@@ -73,7 +73,7 @@ module DotNet =
         let systemInstalldir = defaultSystemInstallDir </> fileName
         if File.exists systemInstalldir then yield systemInstalldir
         match dotnetCliDir with
-        | Some userSetPath -> 
+        | Some userSetPath ->
             let defaultCliPath = userSetPath @@ fileName
             match File.Exists defaultCliPath with
             | true -> yield defaultCliPath
@@ -203,7 +203,7 @@ module DotNet =
         }
 
     /// The a list of well-known versions to install
-    module Versions =    
+    module Versions =
         /// .NET Core SDK install options preconfigured for preview2 tooling
         let internal Preview2ToolingOptions options =
             { options with
@@ -316,7 +316,7 @@ module DotNet =
                 Channel = None
                 Version = Version "2.1.300"
             }
-        
+
         let Release_2_1_301 option =
             { option with
                 InstallerOptions = (fun io ->
@@ -325,6 +325,16 @@ module DotNet =
                     })
                 Channel = None
                 Version = Version "2.1.301"
+            }
+
+        let Release_2_1_302 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.302"
             }
 
         let FromGlobalJson option =
@@ -446,11 +456,11 @@ module DotNet =
             Environment : Map<string, string>
         }
         static member Create() = {
-            DotNetCliPath = 
+            DotNetCliPath =
                 findPossibleDotnetCliPaths None
                 |> Seq.tryHead
                 // shouldn't hit this one because the previous two probe PATH...
-                |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")                     
+                |> Option.defaultWith (fun () -> if Environment.isUnix then "dotnet" else "dotnet.exe")
             WorkingDirectory = Directory.GetCurrentDirectory()
             CustomParams = None
             Version = None
@@ -535,11 +545,11 @@ module DotNet =
                 // We need to do this as the SDK will use this file to select the actual version
                 // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
                 if File.Exists globalJsonPath then
-                    let readVersion = getSDKVersionFromGlobalJsonDir workDir 
+                    let readVersion = getSDKVersionFromGlobalJsonDir workDir
                     if readVersion <> version then failwithf "Existing global.json with a different version found!"
                     false
                 else
-                    let template = sprintf """{ "sdk": { "version": "%s" } }""" version                  
+                    let template = sprintf """{ "sdk": { "version": "%s" } }""" version
                     File.WriteAllText(globalJsonPath, template)
                     true
             | None -> false
@@ -583,12 +593,12 @@ module DotNet =
                 |> Process.setEnvironment options.Environment
                 |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
 
-            
+
             withGlobalJson options.WorkingDirectory options.Version (fun () ->
                 if options.RedirectOutput then
                   Process.execRaw f timeout true errorF messageF
                 else Process.execSimple f timeout
-            )            
+            )
         ProcessResult.New result (results |> List.ofSeq)
 
 
@@ -700,7 +710,7 @@ module DotNet =
     /// - 'setParams' - set installation options
     let install setParams : Options -> Options =
         let param = CliInstallOptions.Default |> setParams
-        
+
         let dir = defaultArg param.CustomInstallDir defaultUserInstallDir
         let checkVersion, fromGlobalJson =
             match param.Version with
@@ -738,7 +748,7 @@ module DotNet =
 
         let passVersion = if fromGlobalJson then None else checkVersion
         let installScript = downloadInstaller param.InstallerOptions
-        
+
         let exitCode =
             let args, fileName =
                 if Environment.isUnix then
@@ -766,9 +776,9 @@ module DotNet =
                     AlwaysDownload = true
                 })) |> ignore
             failwithf ".NET Core SDK install failed with code %i" exitCode
-    
+
         let exe = dir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
-        Trace.tracefn ".NET Core SDK installed to %s" exe     
+        Trace.tracefn ".NET Core SDK installed to %s" exe
         (fun opt -> { opt with DotNetCliPath = exe; Version = passVersion})
 
     /// dotnet restore command options
