@@ -858,8 +858,10 @@ module DotNet =
             | Release -> "Release"
             | Custom config -> config
 
+    [<RequireQualifiedAccess>]
+    module BuildConfiguration =
         /// Parse a build configuration string
-        static member Parse (s: string) =
+        let fromString (s: string) =
             match s.ToLowerInvariant() with
             | "debug" -> Debug
             | "release" -> Release
@@ -867,10 +869,10 @@ module DotNet =
 
         /// Get the build configuration from an environment variable with the given name or returns
         /// the default if not value was set
-        static member FromEnvironVarOrDefault (name: string) (defaultValue: BuildConfiguration) =
+        let fromEnvironVarOrDefault (name: string) (defaultValue: BuildConfiguration) =
             match Environment.environVarOrNone name with
-            | Some config -> BuildConfiguration.Parse config
-            | None -> defaultValue           
+            | Some config -> fromString config
+            | None -> defaultValue      
 
     /// [omit]
     let private buildConfigurationArg (param: BuildConfiguration) =
