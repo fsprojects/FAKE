@@ -10,3 +10,8 @@ let exec repositoryDir message =
     |> runSimpleGitCommand repositoryDir
     |> Trace.trace
 
+/// Commits all files in the given repository with the given short message along with an extended message
+let execExtended repositoryDir shortMessage extendedMessage = 
+    sprintf "commit -m \"%s\" -m \"%s\"" shortMessage extendedMessage
+    |> runSimpleGitCommand repositoryDir
+    |> Trace.trace
