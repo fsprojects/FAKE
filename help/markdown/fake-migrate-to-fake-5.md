@@ -26,7 +26,7 @@ Upgrading to FAKE 5 is a multi step process and has various manual steps in betw
 * Fix all the (obsolete) warnings in your build-script to use the new API (see the [Use the new FAKE-API](#Use-the-new-FAKE-API) section).
   This should still not break your build. If things break here or you have difficulties after reading the 'Use the new FAKE-API' section
   please open an issue.
-  * Becareful if you update only some warning, it could break. For example, if you use `Target.Create`, but continue to use old operators definition, you will probably experiment some errors like "Target [...] is not defined".  
+  * Be careful if you update only some warnings, it could break. For example, if you use `Target.create`, but continue to use old operators definition, you will probably experiment some errors like "Target [...] is not defined".  
 * Change to the new version of FAKE 5.
 
   * This is for example done by installing FAKE as dependency on your build infrastructure.
