@@ -22,3 +22,5 @@ Target.create "All" ignore
 "Clean"
   ==> "Build"
   ==> "All"
+
+Target.runOrDefault "All"
