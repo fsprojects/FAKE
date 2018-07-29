@@ -5,8 +5,12 @@
 * NEW: module Fake.Tools.Rsync - https://github.com/fsharp/FAKE/pull/1987
 * NEW: module Fake.Installer.Wix - https://github.com/fsharp/FAKE/pull/2002
 * NEW: module Fake.DotNet.Testing.VSTest - https://github.com/fsharp/FAKE/pull/2008
+* ENHANCEMENT: Add .NET Sdk 2.1.302 version to Fake.DotNet.Cli - https://github.com/fsharp/FAKE/pull/2034
+* ENHANCEMENT: add extended commit message to Fake.Tools.Git - https://github.com/fsharp/FAKE/pull/2038
 * BUGFIX: Unbreak outdir on older mono - https://github.com/fsharp/FAKE/pull/2021
 * BUGFIX: Fix Expecto ParallelWorkers - https://github.com/fsharp/FAKE/pull/2028
+* BUGFIX: Environment setup error when running fake from a subdirectory - https://github.com/fsharp/FAKE/issues/2025
+* BUGFIX: Fix signature of `Zip.createZip` - https://github.com/fsharp/FAKE/issues/2024
 
 ## 5.2.0 - 2018-07-10
 
