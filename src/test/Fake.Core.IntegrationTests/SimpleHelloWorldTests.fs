@@ -67,4 +67,9 @@ let tests =
         stdOut.Contains expected
             |> Expect.isTrue (sprintf "stdout should contain '%s', but was: '%s'" expected stdOut)
         stdErr.Trim() |> Expect.equal "empty exected" ""
+
+    testCase "issue #2025" <| fun _ ->
+        handleAndFormat <| fun () ->
+            fakeRunAndCheckInPath "build.fsx" "build.fsx" "i002025" "script" |> ignore
+    
   ]

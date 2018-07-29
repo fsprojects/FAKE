@@ -123,13 +123,20 @@ let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.Toke
     |> writeFixedPaketDependencies cacheDir
     |> Some
   else
-    let file = dependenciesFileName
     match paketGroupReferences with
     | [] ->
       None
     | group :: _ ->
-      let fullpath = Path.GetFullPath file
-      PaketDependencies (Dependencies fullpath, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
+      let scriptDir = Path.GetDirectoryName scriptPath
+      let dependencies =
+            match Paket.Dependencies.TryLocate(scriptDir) with 
+            | Some deps -> deps
+            | None ->
+                failwithf "Could not find '%s'. To use Fake with an external file, please run 'paket init' first.%sAlternatively you can use inline-dependencies. See https://fake.build/fake-fake5-modules.html" 
+                    Constants.DependenciesFileName Environment.NewLine
+      
+      let fullpath = Path.GetFullPath dependencies.DependenciesFile
+      PaketDependencies (dependencies, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
       |> Some
 
 

@@ -27,6 +27,10 @@ let integrationTestPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../i
 let scenarioTempPath scenario = integrationTestPath @@ scenario @@ "temp"
 let originalScenarioPath scenario = integrationTestPath @@ scenario @@ "before"
 
+let resolvePath scenario (path:string) =
+    if Path.IsPathRooted path then path
+    else scenarioTempPath scenario @@ path
+
 let prepare scenario =
     let originalScenarioPath = originalScenarioPath scenario
     let scenarioPath = scenarioTempPath scenario
@@ -35,12 +39,12 @@ let prepare scenario =
     Directory.ensure scenarioPath
     Shell.copyDir scenarioPath originalScenarioPath (fun _ -> true)
 
-let directFakeInPath command scenarioPath target =
+let directFakeInPath command workingDir target =
     let result =
         Process.execWithResult (fun (info:ProcStartInfo) ->
           { info with
                 FileName = fakeToolPath
-                WorkingDirectory = scenarioPath
+                WorkingDirectory = workingDir
                 Arguments = command }
           |> Process.setEnvironmentVariable "target" target
           |> Process.setEnvironmentVariable "FAKE_DETAILED_ERRORS" "true") (System.TimeSpan.FromMinutes 15.)
@@ -59,19 +63,25 @@ let handleAndFormat f =
 let directFake command scenario =
     directFakeInPath command (scenarioTempPath scenario) null
 
-let fake command scenario =
+let fakeInPath command scenario path =
     prepare scenario
 
-    directFake command scenario
+    directFakeInPath command (resolvePath scenario path) null
+
+let fake command scenario =
+    fakeInPath command scenario (scenarioTempPath scenario)
 
 //let fakeFlags = "--verbose"
 let fakeFlags = "--silent"
-let fakeRun runArgs scenario =
-    fake (sprintf "%s run %s" fakeFlags runArgs) scenario
 
-let checkIntellisense scriptName scenario =
-    let scenarioPath = scenarioTempPath scenario
-    let cachePath = scenarioPath </> ".fake" </> scriptName
+let fakeRunInPath runArgs scenario path =
+    fakeInPath (sprintf "%s run %s" fakeFlags runArgs) scenario path
+ 
+let fakeRun runArgs scenario =
+    fakeRunInPath runArgs scenario (scenarioTempPath scenario)
+
+let checkIntellisenseInPath scriptName path =
+    let cachePath = path </> ".fake" </> scriptName
     File.Exists (cachePath </> "intellisense.fsx")
         |> Expect.isTrue "Expect intellisense.fsx to exist"
     File.Exists (cachePath </> "intellisense_lazy.fsx")
@@ -85,7 +95,14 @@ let checkIntellisense scriptName scenario =
          "#endif" ]
     Expect.equal "intellisense.fsx should be forwarding" expected lines
 
-let fakeRunAndCheck scriptName runArgs scenario =
-    let result = fakeRun runArgs scenario
-    checkIntellisense scriptName scenario
+let checkIntellisense scriptName scenario =
+    let scenarioPath = scenarioTempPath scenario
+    checkIntellisenseInPath scriptName scenarioPath
+
+let fakeRunAndCheckInPath scriptName runArgs scenario path =
+    let result = fakeRunInPath runArgs scenario path
+    checkIntellisenseInPath scriptName (resolvePath scenario path)
     result
+
+let fakeRunAndCheck scriptName runArgs scenario =
+    fakeRunAndCheckInPath scriptName runArgs scenario (scenarioTempPath scenario)
