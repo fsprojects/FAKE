@@ -6,7 +6,9 @@
 * NEW: module Fake.Installer.Wix - https://github.com/fsharp/FAKE/pull/2002
 * NEW: module Fake.DotNet.Testing.VSTest - https://github.com/fsharp/FAKE/pull/2008
 * ENHANCEMENT: Add .NET Sdk 2.1.302 version to Fake.DotNet.Cli - https://github.com/fsharp/FAKE/pull/2034
-* ENHANCEMENT: add extended commit message to Fake.Tools.Git - https://github.com/fsharp/FAKE/pull/2038
+* ENHANCEMENT: Add extended commit message to Fake.Tools.Git - https://github.com/fsharp/FAKE/pull/2038
+* ENHANCEMENT: GlobbingPattern.createFrom in Fake.IO.FileSystem - https://github.com/fsharp/FAKE/pull/2030
+* ENHANCEMENT: Add `BuildConfiguration.fromEnvironmentVarOrDefault` to Fake.DotNet.Cli - https://github.com/fsharp/FAKE/pull/2031
 * BUGFIX: Unbreak outdir on older mono - https://github.com/fsharp/FAKE/pull/2021
 * BUGFIX: Fix Expecto ParallelWorkers - https://github.com/fsharp/FAKE/pull/2028
 * BUGFIX: Environment setup error when running fake from a subdirectory - https://github.com/fsharp/FAKE/issues/2025
