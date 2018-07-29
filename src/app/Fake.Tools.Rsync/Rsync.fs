@@ -1,4 +1,4 @@
-namespace Fake.Rsync
+namespace Fake.Tools
 
 open Fake.Core
 open Fake.IO
