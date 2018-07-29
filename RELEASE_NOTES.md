@@ -13,6 +13,7 @@
 * BUGFIX: Fix Expecto ParallelWorkers - https://github.com/fsharp/FAKE/pull/2028
 * BUGFIX: Environment setup error when running fake from a subdirectory - https://github.com/fsharp/FAKE/issues/2025
 * BUGFIX: Fix signature of `Zip.createZip` - https://github.com/fsharp/FAKE/issues/2024
+* BUGFIX: Call gitversion with mono if required - https://github.com/fsharp/FAKE/issues/2041
 
 ## 5.2.0 - 2018-07-10
 
