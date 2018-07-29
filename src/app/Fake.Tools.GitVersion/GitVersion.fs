@@ -56,6 +56,7 @@ let generateProperties (setParams : GitversionParams -> GitversionParams) =
     let timespan =  TimeSpan.FromMinutes 1.
 
     let result = Process.execWithResult (fun info ->
-        {info with FileName = parameters.ToolPath} ) timespan
+        {info with FileName = parameters.ToolPath}
+        |> Process.withFramework) timespan
     if result.ExitCode <> 0 then failwithf "GitVersion.exe failed with exit code %i and message %s" result.ExitCode (String.concat "" result.Messages)
     result.Messages |> String.concat "" |> fun j -> JsonConvert.DeserializeObject<GitVersionProperties>(j)
