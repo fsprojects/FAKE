@@ -127,7 +127,8 @@ let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.Toke
     | [] ->
       None
     | group :: _ ->
-      let scriptDir = Path.GetDirectoryName scriptPath
+      let fullScriptDir = Path.GetFullPath scriptPath
+      let scriptDir = Path.GetDirectoryName fullScriptDir
       let dependencies =
             match Paket.Dependencies.TryLocate(scriptDir) with 
             | Some deps -> deps
@@ -138,7 +139,6 @@ let tryReadPaketDependenciesFromScript (tokenized:Fake.Runtime.FSharpParser.Toke
       let fullpath = Path.GetFullPath dependencies.DependenciesFile
       PaketDependencies (dependencies, (lazy DependenciesFile.ReadFromFile fullpath), Some group)
       |> Some
-
 
 type AssemblyData =
   { IsReferenceAssembly : bool
