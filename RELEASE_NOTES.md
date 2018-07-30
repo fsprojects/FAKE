@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.3.1-alpha - 2018-08-10
+
+* TBD.
+
 ## 5.3.0 - 2018-07-30
 
 * NEW: module Fake.Tools.Rsync - https://github.com/fsharp/FAKE/pull/1987
