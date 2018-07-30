@@ -498,6 +498,10 @@ module DotNet =
             lift (fun o -> { o with Verbosity = verb}) x
         let inline withCustomParams args x =
             lift (fun o -> { o with CustomParams = args}) x
+        /// Sets custom command-line arguments expressed as a sequence of strings.
+        /// This function overwrites and gets overwritten by `withCustomParams`.
+        let inline withAdditionalArgs args x =
+            withCustomParams (args |> Args.toWindowsCommandLine |> (function | "" -> None | x -> Some x)) x
         let inline withDotNetCliPath path x =
             lift (fun o -> { o with DotNetCliPath = path}) x
 
