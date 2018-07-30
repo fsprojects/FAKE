@@ -23,7 +23,8 @@ let DefaultZipLevel = 7
 
 #if DOTNETCORE // Wait for SharpZipLib to become available for netcore
 
-let private createZipInternal fileName comment level (items: (string * string) seq) =
+let private createZipInternal fileName (comment:string) level (items: (string * string) seq) =
+    ignore comment
     use stream = new ZipArchive (File.Create(fileName), ZipArchiveMode.Create)
     let zipLevel = min (max 0 level) 9
     let buffer = Array.create 32768 0uy
@@ -66,7 +67,7 @@ let private createZipInternal fileName comment level (items : (string * string) 
 /// ## Parameters
 ///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
 ///  - `fileName` - The fileName of the resulting zip file.
-///  - `comment` - A comment for the resulting zip file.
+///  - `comment` - A comment for the resulting zip file (currently ignored in fake 5).
 ///  - `level` - The compression level.
 ///  - `flatten` - If set to true then all subfolders are merged into the root folder.
 ///  - `files` - A sequence with files to zip.
@@ -100,7 +101,7 @@ let zip workingDir fileName files = createZip workingDir fileName "" DefaultZipL
 /// Creates a zip file with the given files and specs.
 /// ## Parameters
 ///  - `fileName` - The fileName of the resulting zip file.
-///  - `comment` - A comment for the resulting zip file.
+///  - `comment` - A comment for the resulting zip file (currently ignored in fake 5).
 ///  - `level` - The compression level.
 ///  - `items` - A sequence with files and their target location in the zip.
 let createZipSpec fileName comment level items = createZipInternal fileName comment level items
@@ -108,8 +109,6 @@ let createZipSpec fileName comment level items = createZipInternal fileName comm
 /// Creates a zip file with the given files and specs.
 /// ## Parameters
 ///  - `fileName` - The fileName of the resulting zip file.
-///  - `comment` - A comment for the resulting zip file.
-///  - `level` - The compression level.
 ///  - `items` - A sequence with files and their target location in the zip.
 let zipSpec fileName items = createZipSpec fileName "" DefaultZipLevel items
 
@@ -322,7 +321,7 @@ let moveToFolder path items =
 /// Creates a zip file with the given files.
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
-///  - `comment` - A comment for the resulting zip file.
+///  - `comment` - A comment for the resulting zip file (currently ignored in fake 5).
 ///  - `level` - The compression level.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
 let createZipOfIncludes fileName comment level (files : (string * IGlobbingPattern) seq) =

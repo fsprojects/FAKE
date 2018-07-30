@@ -214,7 +214,7 @@ Trace.setBuildNumber nugetVersion
 //    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 
 
-let dotnetSdk = lazy DotNet.install DotNet.Release_2_1_300
+let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_300
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
@@ -365,12 +365,14 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.Expecto", "Running expecto test runner"
       "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
       "Fake.DotNet.Testing.MSTest", "Running mstest test runner"
+      "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
+      "Fake.Installer.Wix", "WiX helper to create msi installers"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.JavaScript.Npm", "Running npm commands"
@@ -383,8 +385,9 @@ let dotnetAssemblyInfos =
       "Fake.Testing.ReportGenerator", "Convert XML coverage output to various formats"
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.Tools.Git", "Running git commands"
-      "Fake.Tools.Pickles", "Convert Gherkin to HTML"
       "Fake.Tools.GitVersion", "GitVersion helper"
+      "Fake.Tools.Pickles", "Convert Gherkin to HTML"
+      "Fake.Tools.Rsync", "Running Rsync commands"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey"
       "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
@@ -1149,9 +1152,9 @@ let rec nugetPush tries nugetpackage =
                     if not ignore_conflict ||
                        not (r.Errors |> Seq.exists (fun err -> err.Contains "409"))
                     then
-                        let msgs = r.Results |> Seq.map (fun c -> (if c.IsError then "(Err) " else "") + c.Message)                    
+                        let msgs = r.Results |> Seq.map (fun c -> (if c.IsError then "(Err) " else "") + c.Message)
                         let msg = System.String.Join ("\n", msgs)
-                 
+
                         failwithf "failed to push package %s (code %d): \n%s" nugetpackage r.ExitCode msg
                     else Trace.traceFAKE "ignore conflict error because IGNORE_CONFLICT=true!")
         else Trace.traceFAKE "could not push '%s', because api key was not set" nugetpackage
@@ -1412,7 +1415,7 @@ let mutable prev = None
 for runtime in "current" :: "portable" :: runtimes do
     let rawTargetName = sprintf "_DotNetPublish_%s" runtime
     let targetName = sprintf "DotNetPublish_%s" runtime
-    Target.Description (sprintf "publish fake 5 runner for %s" runtime)
+    Target.description (sprintf "publish fake 5 runner for %s" runtime)
     Target.create targetName ignore
     "SetAssemblyInfo"
         ==> rawTargetName
