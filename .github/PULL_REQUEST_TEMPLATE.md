@@ -2,7 +2,7 @@
 
 Please give a brief explanation about your change.
 
-Potentially link to an existing issue this PR fixes. For example:
+If available, link to an existing issue this PR fixes. For example:
 
 - fixes #1234
 
