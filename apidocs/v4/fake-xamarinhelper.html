@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -373,7 +376,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1050', 1050)" onmouseover="showTip(event, '1050', 1050)">
-            AllAndroidAbiTargets 
+            AllAndroidAbiTargets
           </code>
           <div class="tip" id="1050">
             <strong>Signature:</strong> AndroidPackageAbiParam<br />
@@ -387,7 +390,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1051', 1051)" onmouseover="showTip(event, '1051', 1051)">
-            AndroidBuildPackages setParams
+            AndroidBuildPackages(setParams)
           </code>
           <div class="tip" id="1051">
             <strong>Signature:</strong> setParams:(AndroidPackageParams -&gt; AndroidPackageParams) -&gt; FileInfo list<br />
@@ -407,7 +410,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1052', 1052)" onmouseover="showTip(event, '1052', 1052)">
-            AndroidPackage setParams
+            AndroidPackage(setParams)
           </code>
           <div class="tip" id="1052">
             <strong>Signature:</strong> setParams:(AndroidPackageParams -&gt; AndroidPackageParams) -&gt; FileInfo<br />
@@ -427,7 +430,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1053', 1053)" onmouseover="showTip(event, '1053', 1053)">
-            AndroidPackageDefaults 
+            AndroidPackageDefaults
           </code>
           <div class="tip" id="1053">
             <strong>Signature:</strong> AndroidPackageParams<br />
@@ -464,7 +467,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1055', 1055)" onmouseover="showTip(event, '1055', 1055)">
-            AndroidSignAndAlignDefaults 
+            AndroidSignAndAlignDefaults
           </code>
           <div class="tip" id="1055">
             <strong>Signature:</strong> AndroidSignAndAlignParams<br />
@@ -480,7 +483,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1056', 1056)" onmouseover="showTip(event, '1056', 1056)">
-            AndroidSignAndAlignPackages (...)
+            AndroidSignAndAlignPackages(...)
           </code>
           <div class="tip" id="1056">
             <strong>Signature:</strong> setParams:(AndroidSignAndAlignParams -&gt; AndroidSignAndAlignParams) -&gt; apkFiles:seq&lt;FileInfo&gt; -&gt; seq&lt;FileInfo&gt;<br />
@@ -501,7 +504,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1057', 1057)" onmouseover="showTip(event, '1057', 1057)">
-            iOSArchive setParams
+            iOSArchive(setParams)
           </code>
           <div class="tip" id="1057">
             <strong>Signature:</strong> setParams:(iOSArchiveParams -&gt; iOSArchiveParams) -&gt; unit<br />
@@ -521,7 +524,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1058', 1058)" onmouseover="showTip(event, '1058', 1058)">
-            iOSArchiveDefaults 
+            iOSArchiveDefaults
           </code>
           <div class="tip" id="1058">
             <strong>Signature:</strong> iOSArchiveParams<br />
@@ -537,7 +540,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1059', 1059)" onmouseover="showTip(event, '1059', 1059)">
-            iOSBuild setParams
+            iOSBuild(setParams)
           </code>
           <div class="tip" id="1059">
             <strong>Signature:</strong> setParams:(iOSBuildParams -&gt; iOSBuildParams) -&gt; unit<br />
@@ -557,7 +560,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1060', 1060)" onmouseover="showTip(event, '1060', 1060)">
-            iOSBuildDefaults 
+            iOSBuildDefaults
           </code>
           <div class="tip" id="1060">
             <strong>Signature:</strong> iOSBuildParams<br />
@@ -593,7 +596,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1062', 1062)" onmouseover="showTip(event, '1062', 1062)">
-            XamarinComponentRestoreDefaults 
+            XamarinComponentRestoreDefaults
           </code>
           <div class="tip" id="1062">
             <strong>Signature:</strong> XamarinComponentRestoreParams<br />
@@ -712,7 +715,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

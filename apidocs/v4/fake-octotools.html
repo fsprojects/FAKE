@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -362,7 +365,7 @@ There is also a tutorial about the <a href="../octopusdeploy.html">Octopus deplo
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '555', 555)" onmouseover="showTip(event, '555', 555)">
-            commandLine command
+            commandLine(command)
           </code>
           <div class="tip" id="555">
             <strong>Signature:</strong> command:OctoCommand -&gt; string<br />
@@ -378,7 +381,7 @@ There is also a tutorial about the <a href="../octopusdeploy.html">Octopus deplo
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '556', 556)" onmouseover="showTip(event, '556', 556)">
-            deleteOptions 
+            deleteOptions
           </code>
           <div class="tip" id="556">
             <strong>Signature:</strong> DeleteReleaseOptions<br />
@@ -394,7 +397,7 @@ There is also a tutorial about the <a href="../octopusdeploy.html">Octopus deplo
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '557', 557)" onmouseover="showTip(event, '557', 557)">
-            deployOptions 
+            deployOptions
           </code>
           <div class="tip" id="557">
             <strong>Signature:</strong> DeployReleaseOptions<br />
@@ -410,7 +413,7 @@ There is also a tutorial about the <a href="../octopusdeploy.html">Octopus deplo
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '558', 558)" onmouseover="showTip(event, '558', 558)">
-            Octo setParams
+            Octo(setParams)
           </code>
           <div class="tip" id="558">
             <strong>Signature:</strong> setParams:(OctoParams -&gt; OctoParams) -&gt; unit<br />
@@ -431,7 +434,7 @@ See <a href="https://github.com/OctopusDeploy/Octopus-Tools">Octopus-Tools</a> f
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '559', 559)" onmouseover="showTip(event, '559', 559)">
-            octoParams 
+            octoParams
           </code>
           <div class="tip" id="559">
             <strong>Signature:</strong> OctoParams<br />
@@ -447,7 +450,7 @@ See <a href="https://github.com/OctopusDeploy/Octopus-Tools">Octopus-Tools</a> f
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '560', 560)" onmouseover="showTip(event, '560', 560)">
-            releaseOptions 
+            releaseOptions
           </code>
           <div class="tip" id="560">
             <strong>Signature:</strong> CreateReleaseOptions<br />
@@ -463,7 +466,7 @@ See <a href="https://github.com/OctopusDeploy/Octopus-Tools">Octopus-Tools</a> f
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '561', 561)" onmouseover="showTip(event, '561', 561)">
-            serverCommandLineForTracing opts
+            serverCommandLineForTracing(opts)
           </code>
           <div class="tip" id="561">
             <strong>Signature:</strong> opts:OctoServerOptions -&gt; string<br />
@@ -477,7 +480,7 @@ See <a href="https://github.com/OctopusDeploy/Octopus-Tools">Octopus-Tools</a> f
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '562', 562)" onmouseover="showTip(event, '562', 562)">
-            serverOptions 
+            serverOptions
           </code>
           <div class="tip" id="562">
             <strong>Signature:</strong> OctoServerOptions<br />
@@ -596,7 +599,7 @@ See <a href="https://github.com/OctopusDeploy/Octopus-Tools">Octopus-Tools</a> f
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

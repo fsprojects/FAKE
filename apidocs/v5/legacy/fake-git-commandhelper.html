@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -286,10 +289,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1760', 1760)" onmouseover="showTip(event, '1760', 1760)">
-            directRunGitCommand (...)
+          <code onmouseout="hideTip(event, '1764', 1764)" onmouseover="showTip(event, '1764', 1764)">
+            directRunGitCommand(...)
           </code>
-          <div class="tip" id="1760">
+          <div class="tip" id="1764">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -314,10 +317,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1761', 1761)" onmouseover="showTip(event, '1761', 1761)">
-            directRunGitCommandAndFail (...)
+          <code onmouseout="hideTip(event, '1765', 1765)" onmouseover="showTip(event, '1765', 1765)">
+            directRunGitCommandAndFail(...)
           </code>
-          <div class="tip" id="1761">
+          <div class="tip" id="1765">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -342,10 +345,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1762', 1762)" onmouseover="showTip(event, '1762', 1762)">
-            findGitDir repositoryDir
+          <code onmouseout="hideTip(event, '1766', 1766)" onmouseover="showTip(event, '1766', 1766)">
+            findGitDir(repositoryDir)
           </code>
-          <div class="tip" id="1762">
+          <div class="tip" id="1766">
             <strong>Signature:</strong> repositoryDir:string -&gt; DirectoryInfo<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -370,10 +373,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1763', 1763)" onmouseover="showTip(event, '1763', 1763)">
-            fireAndForgetGitCommand (...)
+          <code onmouseout="hideTip(event, '1767', 1767)" onmouseover="showTip(event, '1767', 1767)">
+            fireAndForgetGitCommand(...)
           </code>
-          <div class="tip" id="1763">
+          <div class="tip" id="1767">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -398,10 +401,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1764', 1764)" onmouseover="showTip(event, '1764', 1764)">
+          <code onmouseout="hideTip(event, '1768', 1768)" onmouseover="showTip(event, '1768', 1768)">
             gitCommand repositoryDir command
           </code>
-          <div class="tip" id="1764">
+          <div class="tip" id="1768">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -426,10 +429,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1765', 1765)" onmouseover="showTip(event, '1765', 1765)">
-            gitPath 
+          <code onmouseout="hideTip(event, '1769', 1769)" onmouseover="showTip(event, '1769', 1769)">
+            gitPath
           </code>
-          <div class="tip" id="1765">
+          <div class="tip" id="1769">
             <strong>Signature:</strong> string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -454,10 +457,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1766', 1766)" onmouseover="showTip(event, '1766', 1766)">
-            gitTimeOut 
+          <code onmouseout="hideTip(event, '1770', 1770)" onmouseover="showTip(event, '1770', 1770)">
+            gitTimeOut
           </code>
-          <div class="tip" id="1766">
+          <div class="tip" id="1770">
             <strong>Signature:</strong> TimeSpan<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -482,10 +485,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1767', 1767)" onmouseover="showTip(event, '1767', 1767)">
+          <code onmouseout="hideTip(event, '1771', 1771)" onmouseover="showTip(event, '1771', 1771)">
             runGitCommand repositoryDir command
           </code>
-          <div class="tip" id="1767">
+          <div class="tip" id="1771">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -510,10 +513,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1768', 1768)" onmouseover="showTip(event, '1768', 1768)">
-            runSimpleGitCommand (...)
+          <code onmouseout="hideTip(event, '1772', 1772)" onmouseover="showTip(event, '1772', 1772)">
+            runSimpleGitCommand(...)
           </code>
-          <div class="tip" id="1768">
+          <div class="tip" id="1772">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -538,10 +541,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1769', 1769)" onmouseover="showTip(event, '1769', 1769)">
+          <code onmouseout="hideTip(event, '1773', 1773)" onmouseover="showTip(event, '1773', 1773)">
             showGitCommand repositoryDir command
           </code>
-          <div class="tip" id="1769">
+          <div class="tip" id="1773">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -671,7 +674,7 @@ This version doesn't throw an exception if an error occurs. It just traces the e
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

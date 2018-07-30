@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -265,7 +268,7 @@
 
         <div class="alert alert-warning">
         <h5>OBSOLETE</h5>
-        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey)</p>
         </div> 
 </p>
 <a name="WiXRegistryKey" class="anchor" href="#WiXRegistryKey" ><h1>WiXRegistryKey</h1></a>
@@ -282,10 +285,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4026', 4026)" onmouseover="showTip(event, '4026', 4026)">
+          <code onmouseout="hideTip(event, '4063', 4063)" onmouseover="showTip(event, '4063', 4063)">
             ForceCreateOnInstall
           </code>
-          <div class="tip" id="4026">
+          <div class="tip" id="4063">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -304,10 +307,10 @@ Windows Installer creates keys as needed to store subkeys and values. The defaul
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4027', 4027)" onmouseover="showTip(event, '4027', 4027)">
+          <code onmouseout="hideTip(event, '4064', 4064)" onmouseover="showTip(event, '4064', 4064)">
             ForceDeleteOnUninstall
           </code>
-          <div class="tip" id="4027">
+          <div class="tip" id="4064">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -326,10 +329,10 @@ MSI already removes all values and subkeys that it creates, so this option just 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4028', 4028)" onmouseover="showTip(event, '4028', 4028)">
+          <code onmouseout="hideTip(event, '4065', 4065)" onmouseover="showTip(event, '4065', 4065)">
             Id
           </code>
-          <div class="tip" id="4028">
+          <div class="tip" id="4065">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -346,10 +349,10 @@ MSI already removes all values and subkeys that it creates, so this option just 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4029', 4029)" onmouseover="showTip(event, '4029', 4029)">
+          <code onmouseout="hideTip(event, '4066', 4066)" onmouseover="showTip(event, '4066', 4066)">
             Key
           </code>
-          <div class="tip" id="4029">
+          <div class="tip" id="4066">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -367,10 +370,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4030', 4030)" onmouseover="showTip(event, '4030', 4030)">
+          <code onmouseout="hideTip(event, '4067', 4067)" onmouseover="showTip(event, '4067', 4067)">
             Keys
           </code>
-          <div class="tip" id="4030">
+          <div class="tip" id="4067">
             <strong>Signature:</strong> seq&lt;WiXRegistryKey&gt;<br />
                                   </div>
         </td>
@@ -387,10 +390,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4031', 4031)" onmouseover="showTip(event, '4031', 4031)">
+          <code onmouseout="hideTip(event, '4068', 4068)" onmouseover="showTip(event, '4068', 4068)">
             Root
           </code>
-          <div class="tip" id="4031">
+          <div class="tip" id="4068">
             <strong>Signature:</strong> Option&lt;WiXRegistryRootType&gt;<br />
                                   </div>
         </td>
@@ -407,10 +410,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4032', 4032)" onmouseover="showTip(event, '4032', 4032)">
+          <code onmouseout="hideTip(event, '4069', 4069)" onmouseover="showTip(event, '4069', 4069)">
             Values
           </code>
-          <div class="tip" id="4032">
+          <div class="tip" id="4069">
             <strong>Signature:</strong> seq&lt;WiXRegistryValue&gt;<br />
                                   </div>
         </td>
@@ -435,21 +438,21 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4033', 4033)" onmouseover="showTip(event, '4033', 4033)">
-            createAttributeList()
+          <code onmouseout="hideTip(event, '4070', 4070)" onmouseover="showTip(event, '4070', 4070)">
+            x.createAttributeList()
           </code>
-          <div class="tip" id="4033">
+          <div class="tip" id="4070">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey.createAttributeList)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey.createAttributeList)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L584-584" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -565,7 +568,7 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -264,7 +267,7 @@
 <p>
         <div class="alert alert-warning">
         <h5>OBSOLETE</h5>
-        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - module: Fake.Installer.Wix)</p>
         </div> 
 
 </p>
@@ -290,7 +293,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ActionExecutionVerb)</p>
                 </div> 
             <p>Used for specifying the point of time for action execution in WiXCustomActionExecution</p>
 
@@ -304,7 +307,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Architecture)</p>
                 </div> 
             
           </td>
@@ -316,7 +319,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecute)</p>
                 </div> 
             <p>Used in WiXCustomAction for determing when to run the custom action</p>
 
@@ -330,7 +333,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionReturn)</p>
                 </div> 
             <p>Used in WiXCustomAction for determing the return type</p>
 
@@ -344,7 +347,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ErrorControl)</p>
                 </div> 
             <p>Determines what action should be taken on an error.</p>
 
@@ -358,7 +361,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Feature)</p>
                 </div> 
             <p>Parameters for creating WiX Feature, use ToString for creating the string xml nodes</p>
 
@@ -372,7 +375,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDisplay)</p>
                 </div> 
             <p>Used for determing whether the feature should be visible in the select features installer pane or not</p>
 
@@ -386,7 +389,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatParams)</p>
                 </div> 
             
           </td>
@@ -398,7 +401,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.InstallUninstall)</p>
                 </div> 
             <p>Specifies whether an action occur on install, uninstall or both.</p>
 
@@ -412,7 +415,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeSchedule)</p>
                 </div> 
             <p>Used for determing when to run RemoveExistingProducts on major upgrade</p>
 
@@ -426,7 +429,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ProgramFilesFolder)</p>
                 </div> 
             <p>Type for defining, which program directory should be used for installation. ProgramFiles32 refers to 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'</p>
 
@@ -440,7 +443,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Script)</p>
                 </div> 
             <p>Parameters for WiX Script properties, use ToString for creating the string xml nodes</p>
 
@@ -454,7 +457,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceFailureActionType)</p>
                 </div> 
             <p>Determines the type of the service failure action.</p>
 
@@ -468,7 +471,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallStart)</p>
                 </div> 
             <p>Determines when the service should be started. The Windows Installer does not support boot or system.</p>
 
@@ -482,7 +485,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallType)</p>
                 </div> 
             <p>Determines the type of the service. The Windows Installer does not currently support kernelDriver or systemDriver.</p>
 
@@ -506,7 +509,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRef)</p>
                 </div> 
             <p>Reference to a component for including it in a feature</p>
 
@@ -520,7 +523,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomAction)</p>
                 </div> 
             <p>Parameters for WiX custom action, use ToString for creating the string xml nodes</p>
 
@@ -534,7 +537,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecution)</p>
                 </div> 
             <p>Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes</p>
 
@@ -558,7 +561,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryComponent)</p>
                 </div> 
             
           </td>
@@ -570,7 +573,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRef)</p>
                 </div> 
             <p>Reference to a component for including it in a feature</p>
 
@@ -584,7 +587,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the new Feature type which features automatic string concatenation of inner features</p>
+                <p>Please use the new &#39;Feature&#39; type which features automatic string concatenation of inner features</p>
                 </div> 
             <p>Parameters for creating WiX Feature, use ToString for creating the string xml nodes</p>
 
@@ -598,7 +601,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.File)</p>
                 </div> 
             <p>WiX File Element</p>
 
@@ -612,7 +615,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgrade)</p>
                 </div> 
             <p>Parameters for WiX Major Upgrade</p>
 
@@ -626,7 +629,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Params)</p>
                 </div> 
             <p>WiX parameter type</p>
 
@@ -640,7 +643,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKey)</p>
                 </div> 
             <p>Parameters for WiX RegistryKey</p>
 
@@ -654,7 +657,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryRootType)</p>
                 </div> 
             <p>Represents the registry root under which this key should be written</p>
 
@@ -668,7 +671,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValue)</p>
                 </div> 
             <p>Parameters for WiX RegistryValue</p>
 
@@ -682,7 +685,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueAction)</p>
                 </div> 
             <p>The action that will be taken for a registry value</p>
 
@@ -696,7 +699,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueType)</p>
                 </div> 
             <p>The desired type of a registry key.</p>
 
@@ -724,7 +727,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfig)</p>
                 </div> 
             <p>Service configuration information for failure actions.</p>
 
@@ -738,7 +741,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControl)</p>
                 </div> 
             <p>Service Control Element. Can Start, Stop and Remove services</p>
 
@@ -752,7 +755,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependency)</p>
                 </div> 
             <p>Service or group of services that must start before the parent service.</p>
 
@@ -766,7 +769,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstall)</p>
                 </div> 
             <p>Adds services for parent Component. Use the ServiceControl element to remove services.</p>
 
@@ -780,7 +783,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)</p>
                 </div> 
             <p>Parameters for WiX UI Reference, use ToString for creating the string xml nodes</p>
 
@@ -792,6 +795,10 @@
             <a href="fake-wixhelper-wixupgrade.html">WiXUpgrade</a>
           </td>
           <td class="xmldoc">
+                <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Upgrade)</p>
+                </div> 
             <p>Parameters for WiX Upgrade</p>
 
 
@@ -804,7 +811,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersion)</p>
                 </div> 
             <p>Parameters for WiX Upgrade Version</p>
 
@@ -818,7 +825,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Variable)</p>
                 </div> 
             <p>Parameters for WiX Variable, use ToString for creating the string xml nodes</p>
 
@@ -832,7 +839,7 @@
           <td class="xmldoc">
                 <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.YesOrNo)</p>
                 </div> 
             <p>These are used in many methods for generating WiX nodes, regard them as booleans</p>
 
@@ -854,22 +861,22 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '957', 957)" onmouseover="showTip(event, '957', 957)">
-            attachServiceControlToComponent (...)
+            attachServiceControlToComponent(...)
           </code>
           <div class="tip" id="957">
             <strong>Signature:</strong> comp:WiXDirectoryComponent -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceControls:seq&lt;WiXServiceControl&gt; -&gt; WiXDirectoryComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceControlToComponent)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceControlToComponent)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L910-910" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L909-909" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -880,14 +887,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '958', 958)" onmouseover="showTip(event, '958', 958)">
-            attachServiceControlToComponents (...)
+            attachServiceControlToComponents(...)
           </code>
           <div class="tip" id="958">
             <strong>Signature:</strong> components:seq&lt;WiXDirectoryComponent&gt; -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceControls:seq&lt;WiXServiceControl&gt; -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L918-918" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L917-917" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -898,22 +905,22 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '959', 959)" onmouseover="showTip(event, '959', 959)">
-            attachServiceInstallToComponent (...)
+            attachServiceInstallToComponent(...)
           </code>
           <div class="tip" id="959">
             <strong>Signature:</strong> comp:WiXDirectoryComponent -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceInstalls:seq&lt;WiXServiceInstall&gt; -&gt; WiXDirectoryComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceInstallToComponent)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.attachServiceInstallToComponent)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L924-924" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L923-923" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -926,14 +933,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '960', 960)" onmouseover="showTip(event, '960', 960)">
-            attachServiceInstallToComponents (...)
+            attachServiceInstallToComponents(...)
           </code>
           <div class="tip" id="960">
             <strong>Signature:</strong> components:seq&lt;WiXDirectoryComponent&gt; -&gt; fileFilter:(WiXComponent -&gt; bool) -&gt; serviceInstalls:seq&lt;WiXServiceInstall&gt; -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L932-932" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L931-931" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -944,22 +951,22 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '961', 961)" onmouseover="showTip(event, '961', 961)">
-            bulkComponentCreation (...)
+            bulkComponentCreation(...)
           </code>
           <div class="tip" id="961">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreation)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreation)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L871-871" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L870-870" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -976,22 +983,22 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '962', 962)" onmouseover="showTip(event, '962', 962)">
-            bulkComponentCreationAsSubDir (...)
+            bulkComponentCreationAsSubDir(...)
           </code>
           <div class="tip" id="962">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; WiXDir<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreationAsSubDir)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentCreationAsSubDir)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L900-900" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L899-899" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1008,22 +1015,22 @@ The components are embedded into the passed in root directory.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '963', 963)" onmouseover="showTip(event, '963', 963)">
-            bulkComponentTreeCreation (...)
+            bulkComponentTreeCreation(...)
           </code>
           <div class="tip" id="963">
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryFilter:(DirectoryInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; seq&lt;WiXDirectoryComponent&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentTreeCreation)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.bulkComponentTreeCreation)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L843-843" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L842-842" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1047,14 +1054,14 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
             <strong>Signature:</strong> parameters:WiXParams -&gt; wixScript:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Candle)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Candle)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1953-1953" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1069,20 +1076,20 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '965', 965)" onmouseover="showTip(event, '965', 965)">
-            compName comp
+            compName(comp)
           </code>
           <div class="tip" id="965">
             <strong>Signature:</strong> comp:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompName)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompName)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L43-43" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1095,20 +1102,20 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '966', 966)" onmouseover="showTip(event, '966', 966)">
-            compRefName compRef
+            compRefName(compRef)
           </code>
           <div class="tip" id="966">
             <strong>Signature:</strong> compRef:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompRefName)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getCompRefName)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L31-31" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1121,20 +1128,20 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '967', 967)" onmouseover="showTip(event, '967', 967)">
-            dirName dir
+            dirName(dir)
           </code>
           <div class="tip" id="967">
             <strong>Signature:</strong> dir:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getDirName)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getDirName)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L19-19" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1147,22 +1154,22 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '968', 968)" onmouseover="showTip(event, '968', 968)">
-            FeatureDefaults 
+            FeatureDefaults
           </code>
           <div class="tip" id="968">
             <strong>Signature:</strong> Feature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FeatureDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1152-1152" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1151-1151" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1181,14 +1188,14 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
             <strong>Signature:</strong> wiXPath:string -&gt; setParams:(WiXScript -&gt; WiXScript) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use new FillInWiXTemplate function&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please use new fillInWiXTemplate function&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use new FillInWiXTemplate function</p>
+                <p>Please use new fillInWiXTemplate function</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1722-1722" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1253,14 +1260,14 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
             <strong>Signature:</strong> wiXPath:string -&gt; setParams:(Script -&gt; Script) -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FillInWiXTemplate)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FillInWiXTemplate)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1772-1772" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1321,22 +1328,22 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '971', 971)" onmouseover="showTip(event, '971', 971)">
-            generateComponent setParams
+            generateComponent(setParams)
           </code>
           <div class="tip" id="971">
             <strong>Signature:</strong> setParams:(WiXComponent -&gt; WiXComponent) -&gt; WiXComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponent)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponent)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L770-770" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L769-769" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1349,20 +1356,20 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '972', 972)" onmouseover="showTip(event, '972', 972)">
-            generateComponentRef setParams
+            generateComponentRef(setParams)
           </code>
           <div class="tip" id="972">
             <strong>Signature:</strong> setParams:(WiXComponentRef -&gt; WiXComponentRef) -&gt; WiXComponentRef option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponentRef)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateComponentRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L648-648" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1377,20 +1384,20 @@ You can use attachServiceControlToComponents or attachServiceInstallToComponents
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '973', 973)" onmouseover="showTip(event, '973', 973)">
-            generateCustomAction setParams
+            generateCustomAction(setParams)
           </code>
           <div class="tip" id="973">
             <strong>Signature:</strong> setParams:(WiXCustomAction -&gt; WiXCustomAction) -&gt; WiXCustomAction<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomAction)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomAction)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1862-1862" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1436,20 +1443,20 @@ ExeCommand are the parameters passed to your executable</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '974', 974)" onmouseover="showTip(event, '974', 974)">
-            generateCustomActionExecution setParams
+            generateCustomActionExecution(setParams)
           </code>
           <div class="tip" id="974">
             <strong>Signature:</strong> setParams:(WiXCustomActionExecution -&gt; WiXCustomActionExecution) -&gt; WiXCustomActionExecution<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomActionExecution)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateCustomActionExecution)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1882-1882" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1489,22 +1496,22 @@ Condition in sample makes execute only on install</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '975', 975)" onmouseover="showTip(event, '975', 975)">
-            generateDirectory setParams
+            generateDirectory(setParams)
           </code>
           <div class="tip" id="975">
             <strong>Signature:</strong> setParams:(WiXDir -&gt; WiXDir) -&gt; WiXDir<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectory)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectory)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L788-788" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L787-787" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -1517,20 +1524,20 @@ Condition in sample makes execute only on install</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '976', 976)" onmouseover="showTip(event, '976', 976)">
-            generateDirectoryRef setParams
+            generateDirectoryRef(setParams)
           </code>
           <div class="tip" id="976">
             <strong>Signature:</strong> setParams:(WiXDirectoryRef -&gt; WiXDirectoryRef) -&gt; WiXDirectoryRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectoryRef)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateDirectoryRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L729-729" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1545,20 +1552,20 @@ Condition in sample makes execute only on install</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '977', 977)" onmouseover="showTip(event, '977', 977)">
-            generateFeature setParams
+            generateFeature(setParams)
           </code>
           <div class="tip" id="977">
             <strong>Signature:</strong> setParams:(WiXFeature -&gt; WiXFeature) -&gt; WiXFeature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the new &quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please use the new generateFeatureElement&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the new </p>
+                <p>Please use the new generateFeatureElement</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1816-1816" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1602,20 +1609,20 @@ You can pass other features into InnerContent for making a hierarchy</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '978', 978)" onmouseover="showTip(event, '978', 978)">
-            generateFeatureElement setParams
+            generateFeatureElement(setParams)
           </code>
           <div class="tip" id="978">
             <strong>Signature:</strong> setParams:(Feature -&gt; Feature) -&gt; Feature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateFeatureElement)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateFeatureElement)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1838-1838" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1659,20 +1666,20 @@ You can pass other features into InnerContent for making a hierarchy</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '979', 979)" onmouseover="showTip(event, '979', 979)">
-            generateMajorUpgradeVersion setParams
+            generateMajorUpgradeVersion(setParams)
           </code>
           <div class="tip" id="979">
             <strong>Signature:</strong> setParams:(WiXMajorUpgrade -&gt; WiXMajorUpgrade) -&gt; WiXMajorUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateMajorUpgradeVersion)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateMajorUpgradeVersion)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1947-1947" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1705,20 +1712,20 @@ You can pass other features into InnerContent for making a hierarchy</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '980', 980)" onmouseover="showTip(event, '980', 980)">
-            generateRegistryKey setParams
+            generateRegistryKey(setParams)
           </code>
           <div class="tip" id="980">
             <strong>Signature:</strong> setParams:(WiXRegistryKey -&gt; WiXRegistryKey) -&gt; WiXRegistryKey<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryKey)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryKey)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L627-627" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1749,20 +1756,20 @@ Values = someChildValues
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '981', 981)" onmouseover="showTip(event, '981', 981)">
-            generateRegistryValue setParams
+            generateRegistryValue(setParams)
           </code>
           <div class="tip" id="981">
             <strong>Signature:</strong> setParams:(WiXRegistryValue -&gt; WiXRegistryValue) -&gt; WiXRegistryValue<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryValue)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateRegistryValue)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L555-555" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1792,20 +1799,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '982', 982)" onmouseover="showTip(event, '982', 982)">
-            generateServiceConfig setParams
+            generateServiceConfig(setParams)
           </code>
           <div class="tip" id="982">
             <strong>Signature:</strong> setParams:(WiXServiceConfig -&gt; WiXServiceConfig) -&gt; WiXServiceConfig<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceConfig)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceConfig)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L300-300" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1820,20 +1827,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '983', 983)" onmouseover="showTip(event, '983', 983)">
-            generateServiceControl setParams
+            generateServiceControl(setParams)
           </code>
           <div class="tip" id="983">
             <strong>Signature:</strong> setParams:(WiXServiceControl -&gt; WiXServiceControl) -&gt; WiXServiceControl<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceControl)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceControl)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L170-170" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1848,20 +1855,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '984', 984)" onmouseover="showTip(event, '984', 984)">
-            generateServiceDependency setParams
+            generateServiceDependency(setParams)
           </code>
           <div class="tip" id="984">
             <strong>Signature:</strong> setParams:(WiXServiceDependency -&gt; WiXServiceDependency) -&gt; WiXServiceDependency<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceDependency)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceDependency)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L334-334" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1876,20 +1883,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '985', 985)" onmouseover="showTip(event, '985', 985)">
-            generateServiceInstall setParams
+            generateServiceInstall(setParams)
           </code>
           <div class="tip" id="985">
             <strong>Signature:</strong> setParams:(WiXServiceInstall -&gt; WiXServiceInstall) -&gt; WiXServiceInstall<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceInstall)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateServiceInstall)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L425-425" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1904,20 +1911,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '986', 986)" onmouseover="showTip(event, '986', 986)">
-            generateUIRef setParams
+            generateUIRef(setParams)
           </code>
           <div class="tip" id="986">
             <strong>Signature:</strong> setParams:(WiXUIRef -&gt; WiXUIRef) -&gt; WiXUIRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUIRef)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUIRef)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1898-1898" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1950,20 +1957,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '987', 987)" onmouseover="showTip(event, '987', 987)">
-            generateUpgrade setParams
+            generateUpgrade(setParams)
           </code>
           <div class="tip" id="987">
             <strong>Signature:</strong> setParams:(WiXUpgrade -&gt; WiXUpgrade) -&gt; WiXUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgrade)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgrade)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1915-1915" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1996,20 +2003,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '988', 988)" onmouseover="showTip(event, '988', 988)">
-            generateUpgradeVersion setParams
+            generateUpgradeVersion(setParams)
           </code>
           <div class="tip" id="988">
             <strong>Signature:</strong> setParams:(WiXUpgradeVersion -&gt; WiXUpgradeVersion) -&gt; WiXUpgradeVersion<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgradeVersion)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateUpgradeVersion)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1932-1932" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2044,20 +2051,20 @@ Value = "2"
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '989', 989)" onmouseover="showTip(event, '989', 989)">
-            generateWiXScript fileName
+            generateWiXScript(fileName)
           </code>
           <div class="tip" id="989">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateWiXScript)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.generateWiXScript)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1635-1635" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2084,22 +2091,22 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '990', 990)" onmouseover="showTip(event, '990', 990)">
-            getComponentIdsFromWiXString wiXString
+            getComponentIdsFromWiXString(wiXString)
           </code>
           <div class="tip" id="990">
             <strong>Signature:</strong> wiXString:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentIdsFromWiXString)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentIdsFromWiXString)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L996-996" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L995-995" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2127,50 +2134,48 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '991', 991)" onmouseover="showTip(event, '991', 991)">
-            getComponentRefs elements
+            getComponentRefs(elements)
           </code>
           <div class="tip" id="991">
             <strong>Signature:</strong> elements:seq&lt;WiXDirectoryComponent&gt; -&gt; seq&lt;WiXComponentRef option&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefs)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefs)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L737-737" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L736-736" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          <p>get component refs from a directory component hierarchy</p>
-
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '992', 992)" onmouseover="showTip(event, '992', 992)">
-            getFileIdFromWiXString (...)
+            getFileIdFromWiXString(...)
           </code>
           <div class="tip" id="992">
             <strong>Signature:</strong> wiXString:string -&gt; fileRegex:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFileIdFromWiXString)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFileIdFromWiXString)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L977-977" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L976-976" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2199,20 +2204,20 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '993', 993)" onmouseover="showTip(event, '993', 993)">
-            getFilesAsWiXString files
+            getFilesAsWiXString(files)
           </code>
           <div class="tip" id="993">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFilesAsWiXString)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getFilesAsWiXString)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L60-60" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2227,20 +2232,20 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '994', 994)" onmouseover="showTip(event, '994', 994)">
-            HarvestDirectory (...)
+            HarvestDirectory(...)
           </code>
           <div class="tip" id="994">
             <strong>Signature:</strong> setParams:(HeatParams -&gt; HeatParams) -&gt; directory:string -&gt; outputFile:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.harvestDirectory)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.harvestDirectory)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2077-2077" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2261,20 +2266,20 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '995', 995)" onmouseover="showTip(event, '995', 995)">
-            HeatDefaulParams 
+            HeatDefaulParams
           </code>
           <div class="tip" id="995">
             <strong>Signature:</strong> HeatParams<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatDefaulParams)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatDefaulParams)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2053-2053" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2295,14 +2300,14 @@ You need to run this once every build an then use FillInWiXScript to replace pla
             <strong>Signature:</strong> parameters:WiXParams -&gt; outputFile:string -&gt; wixObj:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Light)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.Light)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1970-1970" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2317,20 +2322,20 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '997', 997)" onmouseover="showTip(event, '997', 997)">
-            ScriptDefaults 
+            ScriptDefaults
           </code>
           <div class="tip" id="997">
             <strong>Signature:</strong> Script<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ScriptDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ScriptDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1602-1602" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2345,22 +2350,22 @@ You need to run this once every build an then use FillInWiXScript to replace pla
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '998', 998)" onmouseover="showTip(event, '998', 998)">
-            setComponentsNeverOverwrite components
+            setComponentsNeverOverwrite(components)
           </code>
           <div class="tip" id="998">
             <strong>Signature:</strong> components:string -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.setComponentsNeverOverwrite)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.setComponentsNeverOverwrite)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1020-1020" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1019-1019" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2380,14 +2385,14 @@ This is useful for config files, since they are not replaced on upgrade like tha
             <strong>Signature:</strong> setParams:(WiXParams -&gt; WiXParams) -&gt; outputFile:string -&gt; wixScript:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.WiX)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.WiX)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L2015-2015" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2465,22 +2470,22 @@ This is useful for config files, since they are not replaced on upgrade like tha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1000', 1000)" onmouseover="showTip(event, '1000', 1000)">
-            WiXComponentDefaults 
+            WiXComponentDefaults
           </code>
           <div class="tip" id="1000">
             <strong>Signature:</strong> WiXComponent<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L756-756" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L755-755" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2493,20 +2498,20 @@ This is useful for config files, since they are not replaced on upgrade like tha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1001', 1001)" onmouseover="showTip(event, '1001', 1001)">
-            WiXComponentRefDefaults 
+            WiXComponentRefDefaults
           </code>
           <div class="tip" id="1001">
             <strong>Signature:</strong> WiXComponentRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRefDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ComponentRefDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L641-641" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2521,22 +2526,22 @@ This is useful for config files, since they are not replaced on upgrade like tha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1002', 1002)" onmouseover="showTip(event, '1002', 1002)">
-            wixComponentRefs directoryInfo
+            wixComponentRefs(directoryInfo)
           </code>
           <div class="tip" id="1002">
             <strong>Signature:</strong> directoryInfo:DirectoryInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefsTags)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getComponentRefsTags)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1007-1007" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1006-1006" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2549,22 +2554,22 @@ This is useful for config files, since they are not replaced on upgrade like tha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1003', 1003)" onmouseover="showTip(event, '1003', 1003)">
-            WiXCustomActionDefaults 
+            WiXCustomActionDefaults
           </code>
           <div class="tip" id="1003">
             <strong>Signature:</strong> WiXCustomAction<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1333-1333" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1332-1332" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2577,22 +2582,22 @@ This is useful for config files, since they are not replaced on upgrade like tha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1004', 1004)" onmouseover="showTip(event, '1004', 1004)">
-            WixCustomActionExecutionDefaults 
+            WixCustomActionExecutionDefaults
           </code>
           <div class="tip" id="1004">
             <strong>Signature:</strong> WiXCustomActionExecution<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecutionDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.CustomActionExecutionDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1372-1372" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1371-1371" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2605,7 +2610,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1005', 1005)" onmouseover="showTip(event, '1005', 1005)">
-            WiXDefaults 
+            WiXDefaults
           </code>
           <div class="tip" id="1005">
             <strong>Signature:</strong> WiXParams<br />
@@ -2620,7 +2625,7 @@ This is useful for config files, since they are not replaced on upgrade like tha
                 <h5>OBSOLETE</h5>
                 <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1036-1036" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1035-1035" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2639,16 +2644,16 @@ This is useful for config files, since they are not replaced on upgrade like tha
             <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; asSubDir:bool -&gt; directoryInfo:DirectoryInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixDirTag)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixDirTag)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L942-942" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L941-941" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2665,22 +2670,22 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1007', 1007)" onmouseover="showTip(event, '1007', 1007)">
-            WiXDirDefaults 
+            WiXDirDefaults
           </code>
           <div class="tip" id="1007">
             <strong>Signature:</strong> WiXDir<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirDefaults)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L778-778" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L777-777" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2693,20 +2698,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1008', 1008)" onmouseover="showTip(event, '1008', 1008)">
-            WiXDirectoryRefDefaults 
+            WiXDirectoryRefDefaults
           </code>
           <div class="tip" id="1008">
             <strong>Signature:</strong> WiXDirectoryRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRefDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.DirectoryRefDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L721-721" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2721,22 +2726,22 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1009', 1009)" onmouseover="showTip(event, '1009', 1009)">
-            WiXFeatureDefaults 
+            WiXFeatureDefaults
           </code>
           <div class="tip" id="1009">
             <strong>Signature:</strong> WiXFeature<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use the new Feature type which features automatic string concatenation of inner features&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Please use the new &#39;Feature&#39; type which features automatic string concatenation of inner features&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>Please use the new Feature type which features automatic string concatenation of inner features</p>
+                <p>Please use the new &#39;Feature&#39; type which features automatic string concatenation of inner features</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1095-1095" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1094-1094" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2749,20 +2754,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1010', 1010)" onmouseover="showTip(event, '1010', 1010)">
-            wixFile fileInfo
+            wixFile(fileInfo)
           </code>
           <div class="tip" id="1010">
             <strong>Signature:</strong> fileInfo:FileInfo -&gt; string<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixFileTag)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.getWixFileTag)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L54-54" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2777,20 +2782,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1011', 1011)" onmouseover="showTip(event, '1011', 1011)">
-            WiXFileDefaults 
+            WiXFileDefaults
           </code>
           <div class="tip" id="1011">
             <strong>Signature:</strong> WiXFile<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FileDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.FileDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L92-92" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2805,20 +2810,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1012', 1012)" onmouseover="showTip(event, '1012', 1012)">
-            WiXMajorUpgradeDefaults 
+            WiXMajorUpgradeDefaults
           </code>
           <div class="tip" id="1012">
             <strong>Signature:</strong> WiXMajorUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.MajorUpgradeDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1502-1502" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2833,20 +2838,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1013', 1013)" onmouseover="showTip(event, '1013', 1013)">
-            wixRegistryKeyDefaults 
+            wixRegistryKeyDefaults
           </code>
           <div class="tip" id="1013">
             <strong>Signature:</strong> WiXRegistryKey<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKeyDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryKeyDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L599-599" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2859,20 +2864,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1014', 1014)" onmouseover="showTip(event, '1014', 1014)">
-            wixRegistryValueDefaults 
+            wixRegistryValueDefaults
           </code>
           <div class="tip" id="1014">
             <strong>Signature:</strong> WiXRegistryValue<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.RegistryValueDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L526-526" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2885,7 +2890,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1015', 1015)" onmouseover="showTip(event, '1015', 1015)">
-            WiXScriptDefaults 
+            WiXScriptDefaults
           </code>
           <div class="tip" id="1015">
             <strong>Signature:</strong> WiXScript<br />
@@ -2900,7 +2905,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
                 <h5>OBSOLETE</h5>
                 <p>Please use new &#39;Script&#39; type</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1234-1234" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1233-1233" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -2913,20 +2918,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1016', 1016)" onmouseover="showTip(event, '1016', 1016)">
-            WiXServiceConfigDefaults 
+            WiXServiceConfigDefaults
           </code>
           <div class="tip" id="1016">
             <strong>Signature:</strong> WiXServiceConfig<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfigDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceConfigDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L286-286" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2939,20 +2944,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1017', 1017)" onmouseover="showTip(event, '1017', 1017)">
-            WiXServiceControlDefaults 
+            WiXServiceControlDefaults
           </code>
           <div class="tip" id="1017">
             <strong>Signature:</strong> WiXServiceControl<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControlDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControlDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L158-158" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2967,20 +2972,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1018', 1018)" onmouseover="showTip(event, '1018', 1018)">
-            WiXServiceDependencyDefaults 
+            WiXServiceDependencyDefaults
           </code>
           <div class="tip" id="1018">
             <strong>Signature:</strong> WiXServiceDependency<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependencyDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceDependencyDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L326-326" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2993,20 +2998,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1019', 1019)" onmouseover="showTip(event, '1019', 1019)">
-            WiXServiceInstallDefaults 
+            WiXServiceInstallDefaults
           </code>
           <div class="tip" id="1019">
             <strong>Signature:</strong> WiXServiceInstall<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceInstallDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L403-403" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -3021,22 +3026,22 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1020', 1020)" onmouseover="showTip(event, '1020', 1020)">
-            WiXUIRefDefaults 
+            WiXUIRefDefaults
           </code>
           <div class="tip" id="1020">
             <strong>Signature:</strong> WiXUIRef<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UIRef)</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1391-1391" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1390-1390" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -3049,20 +3054,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1021', 1021)" onmouseover="showTip(event, '1021', 1021)">
-            WiXUpgradeDefaults 
+            WiXUpgradeDefaults
           </code>
           <div class="tip" id="1021">
             <strong>Signature:</strong> WiXUpgrade<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1408-1408" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -3077,20 +3082,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1022', 1022)" onmouseover="showTip(event, '1022', 1022)">
-            WiXUpgradeVersionDefaults 
+            WiXUpgradeVersionDefaults
           </code>
           <div class="tip" id="1022">
             <strong>Signature:</strong> WiXUpgradeVersion<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersionDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.UpgradeVersionDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1440-1440" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -3105,20 +3110,20 @@ You can use the getComponentIdsFromWiXString function for getting all created co
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1023', 1023)" onmouseover="showTip(event, '1023', 1023)">
-            WiXVariableDefaults 
+            WiXVariableDefaults
           </code>
           <div class="tip" id="1023">
             <strong>Signature:</strong> WiXVariable<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.VariableDefaults)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.VariableDefaults)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L1525-1525" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -3236,7 +3241,7 @@ You can use the getComponentIdsFromWiXString function for getting all created co
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

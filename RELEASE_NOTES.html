@@ -133,6 +133,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -149,7 +150,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -188,10 +190,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -254,6 +257,22 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-3-0-2018-07-30" class="anchor" href="#5-3-0-2018-07-30">5.3.0 - 2018-07-30</a></h2>
+<ul>
+<li>NEW: module Fake.Tools.Rsync - <a href="https://github.com/fsharp/FAKE/pull/1987">https://github.com/fsharp/FAKE/pull/1987</a></li>
+<li>NEW: module Fake.Installer.Wix - <a href="https://github.com/fsharp/FAKE/pull/2002">https://github.com/fsharp/FAKE/pull/2002</a></li>
+<li>NEW: module Fake.DotNet.Testing.VSTest - <a href="https://github.com/fsharp/FAKE/pull/2008">https://github.com/fsharp/FAKE/pull/2008</a></li>
+<li>ENHANCEMENT: Add .NET Sdk 2.1.302 version to Fake.DotNet.Cli - <a href="https://github.com/fsharp/FAKE/pull/2034">https://github.com/fsharp/FAKE/pull/2034</a></li>
+<li>ENHANCEMENT: Add extended commit message to Fake.Tools.Git - <a href="https://github.com/fsharp/FAKE/pull/2038">https://github.com/fsharp/FAKE/pull/2038</a></li>
+<li>ENHANCEMENT: GlobbingPattern.createFrom in Fake.IO.FileSystem - <a href="https://github.com/fsharp/FAKE/pull/2030">https://github.com/fsharp/FAKE/pull/2030</a></li>
+<li>ENHANCEMENT: Add <code>BuildConfiguration.fromEnvironmentVarOrDefault</code> to Fake.DotNet.Cli - <a href="https://github.com/fsharp/FAKE/pull/2031">https://github.com/fsharp/FAKE/pull/2031</a></li>
+<li>ENHANCEMENT: Add <code>withAdditionalArgs</code> helper to Fake.DotNet.Cli - <a href="https://github.com/fsharp/FAKE/pull/2044">https://github.com/fsharp/FAKE/pull/2044</a></li>
+<li>BUGFIX: Unbreak outdir on older mono - <a href="https://github.com/fsharp/FAKE/pull/2021">https://github.com/fsharp/FAKE/pull/2021</a></li>
+<li>BUGFIX: Fix Expecto ParallelWorkers - <a href="https://github.com/fsharp/FAKE/pull/2028">https://github.com/fsharp/FAKE/pull/2028</a></li>
+<li>BUGFIX: Environment setup error when running fake from a subdirectory - <a href="https://github.com/fsharp/FAKE/issues/2025">https://github.com/fsharp/FAKE/issues/2025</a></li>
+<li>BUGFIX: Fix signature of <code>Zip.createZip</code> - <a href="https://github.com/fsharp/FAKE/issues/2024">https://github.com/fsharp/FAKE/issues/2024</a></li>
+<li>BUGFIX: Call gitversion with mono if required - <a href="https://github.com/fsharp/FAKE/issues/2041">https://github.com/fsharp/FAKE/issues/2041</a></li>
+</ul>
 <h2><a name="5-2-0-2018-07-10" class="anchor" href="#5-2-0-2018-07-10">5.2.0 - 2018-07-10</a></h2>
 <ul>
 <li>ENHANCEMENT: Improve output around empty target descriptions - <a href="https://github.com/fsharp/FAKE/pull/1996">https://github.com/fsharp/FAKE/pull/1996</a></li>
@@ -1967,7 +1986,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

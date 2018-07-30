@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -265,7 +268,7 @@
 
         <div class="alert alert-warning">
         <h5>OBSOLETE</h5>
-        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.HeatParams)</p>
         </div> 
 </p>
 <a name="HeatParams" class="anchor" href="#HeatParams" ><h1>HeatParams</h1></a>
@@ -280,10 +283,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3922', 3922)" onmouseover="showTip(event, '3922', 3922)">
+          <code onmouseout="hideTip(event, '3959', 3959)" onmouseover="showTip(event, '3959', 3959)">
             AdditionalHeatArgs
           </code>
-          <div class="tip" id="3922">
+          <div class="tip" id="3959">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
@@ -298,10 +301,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3923', 3923)" onmouseover="showTip(event, '3923', 3923)">
+          <code onmouseout="hideTip(event, '3960', 3960)" onmouseover="showTip(event, '3960', 3960)">
             AutoGenerateGuid
           </code>
-          <div class="tip" id="3923">
+          <div class="tip" id="3960">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -318,10 +321,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3924', 3924)" onmouseover="showTip(event, '3924', 3924)">
+          <code onmouseout="hideTip(event, '3961', 3961)" onmouseover="showTip(event, '3961', 3961)">
             ComponentGroupName
           </code>
-          <div class="tip" id="3924">
+          <div class="tip" id="3961">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -338,10 +341,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3925', 3925)" onmouseover="showTip(event, '3925', 3925)">
+          <code onmouseout="hideTip(event, '3962', 3962)" onmouseover="showTip(event, '3962', 3962)">
             DirectoryReference
           </code>
-          <div class="tip" id="3925">
+          <div class="tip" id="3962">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -358,10 +361,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3926', 3926)" onmouseover="showTip(event, '3926', 3926)">
+          <code onmouseout="hideTip(event, '3963', 3963)" onmouseover="showTip(event, '3963', 3963)">
             GenerateGuidNow
           </code>
-          <div class="tip" id="3926">
+          <div class="tip" id="3963">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -378,10 +381,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3927', 3927)" onmouseover="showTip(event, '3927', 3927)">
+          <code onmouseout="hideTip(event, '3964', 3964)" onmouseover="showTip(event, '3964', 3964)">
             SupressComElements
           </code>
-          <div class="tip" id="3927">
+          <div class="tip" id="3964">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -398,10 +401,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3928', 3928)" onmouseover="showTip(event, '3928', 3928)">
+          <code onmouseout="hideTip(event, '3965', 3965)" onmouseover="showTip(event, '3965', 3965)">
             SupressDirectoryFragments
           </code>
-          <div class="tip" id="3928">
+          <div class="tip" id="3965">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -418,10 +421,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3929', 3929)" onmouseover="showTip(event, '3929', 3929)">
+          <code onmouseout="hideTip(event, '3966', 3966)" onmouseover="showTip(event, '3966', 3966)">
             SupressRegistry
           </code>
-          <div class="tip" id="3929">
+          <div class="tip" id="3966">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -438,10 +441,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3930', 3930)" onmouseover="showTip(event, '3930', 3930)">
+          <code onmouseout="hideTip(event, '3967', 3967)" onmouseover="showTip(event, '3967', 3967)">
             SupressRootDirectory
           </code>
-          <div class="tip" id="3930">
+          <div class="tip" id="3967">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -458,10 +461,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3931', 3931)" onmouseover="showTip(event, '3931', 3931)">
+          <code onmouseout="hideTip(event, '3968', 3968)" onmouseover="showTip(event, '3968', 3968)">
             SupressUniqueIds
           </code>
-          <div class="tip" id="3931">
+          <div class="tip" id="3968">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
@@ -478,10 +481,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3932', 3932)" onmouseover="showTip(event, '3932', 3932)">
+          <code onmouseout="hideTip(event, '3969', 3969)" onmouseover="showTip(event, '3969', 3969)">
             TimeOut
           </code>
-          <div class="tip" id="3932">
+          <div class="tip" id="3969">
             <strong>Signature:</strong> TimeSpan<br />
                                   </div>
         </td>
@@ -498,10 +501,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3933', 3933)" onmouseover="showTip(event, '3933', 3933)">
+          <code onmouseout="hideTip(event, '3970', 3970)" onmouseover="showTip(event, '3970', 3970)">
             ToolDirectory
           </code>
-          <div class="tip" id="3933">
+          <div class="tip" id="3970">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -518,10 +521,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3934', 3934)" onmouseover="showTip(event, '3934', 3934)">
+          <code onmouseout="hideTip(event, '3971', 3971)" onmouseover="showTip(event, '3971', 3971)">
             VariableName
           </code>
-          <div class="tip" id="3934">
+          <div class="tip" id="3971">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -642,7 +645,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

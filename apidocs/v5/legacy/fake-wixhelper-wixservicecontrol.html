@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -265,7 +268,7 @@
 
         <div class="alert alert-warning">
         <h5>OBSOLETE</h5>
-        <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+        <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControl)</p>
         </div> 
 </p>
 <a name="WiXServiceControl" class="anchor" href="#WiXServiceControl" ><h1>WiXServiceControl</h1></a>
@@ -282,10 +285,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4083', 4083)" onmouseover="showTip(event, '4083', 4083)">
+          <code onmouseout="hideTip(event, '4120', 4120)" onmouseover="showTip(event, '4120', 4120)">
             Id
           </code>
-          <div class="tip" id="4083">
+          <div class="tip" id="4120">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -300,10 +303,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4084', 4084)" onmouseover="showTip(event, '4084', 4084)">
+          <code onmouseout="hideTip(event, '4121', 4121)" onmouseover="showTip(event, '4121', 4121)">
             Name
           </code>
-          <div class="tip" id="4084">
+          <div class="tip" id="4121">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -318,10 +321,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4085', 4085)" onmouseover="showTip(event, '4085', 4085)">
+          <code onmouseout="hideTip(event, '4122', 4122)" onmouseover="showTip(event, '4122', 4122)">
             Remove
           </code>
-          <div class="tip" id="4085">
+          <div class="tip" id="4122">
             <strong>Signature:</strong> InstallUninstall<br />
                                   </div>
         </td>
@@ -336,10 +339,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4086', 4086)" onmouseover="showTip(event, '4086', 4086)">
+          <code onmouseout="hideTip(event, '4123', 4123)" onmouseover="showTip(event, '4123', 4123)">
             Start
           </code>
-          <div class="tip" id="4086">
+          <div class="tip" id="4123">
             <strong>Signature:</strong> InstallUninstall<br />
                                   </div>
         </td>
@@ -354,10 +357,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4087', 4087)" onmouseover="showTip(event, '4087', 4087)">
+          <code onmouseout="hideTip(event, '4124', 4124)" onmouseover="showTip(event, '4124', 4124)">
             Stop
           </code>
-          <div class="tip" id="4087">
+          <div class="tip" id="4124">
             <strong>Signature:</strong> InstallUninstall<br />
                                   </div>
         </td>
@@ -372,10 +375,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4088', 4088)" onmouseover="showTip(event, '4088', 4088)">
+          <code onmouseout="hideTip(event, '4125', 4125)" onmouseover="showTip(event, '4125', 4125)">
             Wait
           </code>
-          <div class="tip" id="4088">
+          <div class="tip" id="4125">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -398,21 +401,21 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4089', 4089)" onmouseover="showTip(event, '4089', 4089)">
-            createAttributeList()
+          <code onmouseout="hideTip(event, '4126', 4126)" onmouseover="showTip(event, '4126', 4126)">
+            x.createAttributeList()
           </code>
-          <div class="tip" id="4089">
+          <div class="tip" id="4126">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControl.createAttributeList)&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>Use Fake.Installer.Wix instead (FAKE0001 - package: Fake.Installer.Wix - member: Fake.Installer.Wix.ServiceControl.createAttributeList)</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/WiXHelper.fs#L136-136" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -528,7 +531,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

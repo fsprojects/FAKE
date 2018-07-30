@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -301,10 +304,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2059', 2059)" onmouseover="showTip(event, '2059', 2059)">
-            fakeDirectoryName 
+          <code onmouseout="hideTip(event, '2095', 2095)" onmouseover="showTip(event, '2095', 2095)">
+            fakeDirectoryName
           </code>
-          <div class="tip" id="2059">
+          <div class="tip" id="2095">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -319,10 +322,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2060', 2060)" onmouseover="showTip(event, '2060', 2060)">
-            findAndLoadInRuntimeDeps (...)
+          <code onmouseout="hideTip(event, '2096', 2096)" onmouseover="showTip(event, '2096', 2096)">
+            findAndLoadInRuntimeDeps(...)
           </code>
-          <div class="tip" id="2060">
+          <div class="tip" id="2096">
             <strong>Signature:</strong> loadContext:AssemblyLoadContext -&gt; name:AssemblyName -&gt; logLevel:VerboseLevel -&gt; runtimeDependencies:AssemblyInfo list -&gt; Assembly<br />
                                   </div>
         </td>
@@ -337,10 +340,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2061', 2061)" onmouseover="showTip(event, '2061', 2061)">
-            findAndLoadInRuntimeDepsCached 
+          <code onmouseout="hideTip(event, '2097', 2097)" onmouseover="showTip(event, '2097', 2097)">
+            findAndLoadInRuntimeDepsCached
           </code>
-          <div class="tip" id="2061">
+          <div class="tip" id="2097">
             <strong>Signature:</strong> AssemblyLoadContext -&gt; AssemblyName -&gt; VerboseLevel -&gt; AssemblyInfo list -&gt; Assembly<br />
                                   </div>
         </td>
@@ -355,10 +358,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2062', 2062)" onmouseover="showTip(event, '2062', 2062)">
-            loadAssembly (...)
+          <code onmouseout="hideTip(event, '2098', 2098)" onmouseover="showTip(event, '2098', 2098)">
+            loadAssembly(...)
           </code>
-          <div class="tip" id="2062">
+          <div class="tip" id="2098">
             <strong>Signature:</strong> loadContext:AssemblyLoadContext -&gt; logLevel:VerboseLevel -&gt; assemInfo:AssemblyInfo -&gt; (string option * Assembly) option<br />
                                   </div>
         </td>
@@ -373,10 +376,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2063', 2063)" onmouseover="showTip(event, '2063', 2063)">
+          <code onmouseout="hideTip(event, '2099', 2099)" onmouseover="showTip(event, '2099', 2099)">
             prepareContext config cache
           </code>
-          <div class="tip" id="2063">
+          <div class="tip" id="2099">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; FakeContext * CoreCacheInfo option<br />
                                   </div>
         </td>
@@ -391,10 +394,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2064', 2064)" onmouseover="showTip(event, '2064', 2064)">
+          <code onmouseout="hideTip(event, '2100', 2100)" onmouseover="showTip(event, '2100', 2100)">
             runScriptWithCacheProvider config cache
           </code>
-          <div class="tip" id="2064">
+          <div class="tip" id="2100">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; RunResult<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -417,10 +420,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2065', 2065)" onmouseover="showTip(event, '2065', 2065)">
-            runScriptWithCacheProviderExt (...)
+          <code onmouseout="hideTip(event, '2101', 2101)" onmouseover="showTip(event, '2101', 2101)">
+            runScriptWithCacheProviderExt(...)
           </code>
-          <div class="tip" id="2065">
+          <div class="tip" id="2101">
             <strong>Signature:</strong> config:FakeConfig -&gt; cache:ICachingProvider -&gt; RunResult * ResultCoreCacheInfo * FakeContext<br />
                                   </div>
         </td>
@@ -435,10 +438,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2066', 2066)" onmouseover="showTip(event, '2066', 2066)">
-            setupAssemblyResolverLogger context
+          <code onmouseout="hideTip(event, '2102', 2102)" onmouseover="showTip(event, '2102', 2102)">
+            setupAssemblyResolverLogger(context)
           </code>
-          <div class="tip" id="2066">
+          <div class="tip" id="2102">
             <strong>Signature:</strong> context:FakeContext -&gt; unit<br />
                                   </div>
         </td>
@@ -557,7 +560,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

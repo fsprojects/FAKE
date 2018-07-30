@@ -1,0 +1,1802 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Wix - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="/help-supporters.html">Supporters</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core-targets.html">DSL</a>
+															<ul>
+																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                    <p>
+                                        <strong>Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
+                                            <a href="/apidocs/v5/index.html">here</a>.
+                                            If the API is already migrated you can check <a href="/apidocs/v5/fake-installer-wix.html">here if exists in a module</a>.
+                                            More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
+                                        </strong>
+                                    </p>
+									<!-- Content -->
+                      <article>
+          			
+
+
+<p>
+
+</p>
+<a name="Wix" class="anchor" href="#Wix"><h1>Wix</h1></a>
+
+<div class="xmldoc">
+<p>Contains tasks to create msi installers using the <a href="http://wixtoolset.org/">WiX toolset</a></p>
+
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-actionexecutionverb.html">ActionExecutionVerb</a>
+          </td>
+          <td class="xmldoc">
+            <p>Used for specifying the point of time for action execution in CustomActionExecution</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-architecture.html">Architecture</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-component.html">Component</a>
+          </td>
+          <td class="xmldoc">
+            <p>Component which wraps files into logical components and which allows to</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-componentref.html">ComponentRef</a>
+          </td>
+          <td class="xmldoc">
+            <p>Reference to a component for including it in a feature</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-customaction.html">CustomAction</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX custom action, use ToString for creating the string xml nodes</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-customactionexecute.html">CustomActionExecute</a>
+          </td>
+          <td class="xmldoc">
+            <p>Used in CustomAction for determing when to run the custom action</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-customactionexecution.html">CustomActionExecution</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-customactionreturn.html">CustomActionReturn</a>
+          </td>
+          <td class="xmldoc">
+            <p>Used in CustomAction for determing the return type</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-dir.html">Dir</a>
+          </td>
+          <td class="xmldoc">
+            <p>WiX Directories define a logical directory which can include components and files</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-directorycomponent.html">DirectoryComponent</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-directoryref.html">DirectoryRef</a>
+          </td>
+          <td class="xmldoc">
+            <p>Reference to a component for including it in a feature</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-errorcontrol.html">ErrorControl</a>
+          </td>
+          <td class="xmldoc">
+            <p>Determines what action should be taken on an error.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-feature.html">Feature</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for creating WiX Feature, use ToString for creating the string xml nodes</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-featuredisplay.html">FeatureDisplay</a>
+          </td>
+          <td class="xmldoc">
+            <p>Used for determing whether the feature should be visible in the select features installer pane or not</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-file.html">File</a>
+          </td>
+          <td class="xmldoc">
+            <p>WiX File Element</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-heatparams.html">HeatParams</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-installuninstall.html">InstallUninstall</a>
+          </td>
+          <td class="xmldoc">
+            <p>Specifies whether an action occur on install, uninstall or both.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-majorupgrade.html">MajorUpgrade</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX Major Upgrade</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-majorupgradeschedule.html">MajorUpgradeSchedule</a>
+          </td>
+          <td class="xmldoc">
+            <p>Used for determing when to run RemoveExistingProducts on major upgrade</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-params.html">Params</a>
+          </td>
+          <td class="xmldoc">
+            <p>WiX parameter type</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-programfilesfolder.html">ProgramFilesFolder</a>
+          </td>
+          <td class="xmldoc">
+            <p>Type for defining, which program directory should be used for installation. ProgramFiles32 refers to 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-registrykey.html">RegistryKey</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX RegistryKey</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-registryroottype.html">RegistryRootType</a>
+          </td>
+          <td class="xmldoc">
+            <p>Represents the registry root under which this key should be written</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-registryvalue.html">RegistryValue</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX RegistryValue</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-registryvalueaction.html">RegistryValueAction</a>
+          </td>
+          <td class="xmldoc">
+            <p>The action that will be taken for a registry value</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-registryvaluetype.html">RegistryValueType</a>
+          </td>
+          <td class="xmldoc">
+            <p>The desired type of a registry key.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-script.html">Script</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX Script properties, use ToString for creating the string xml nodes</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-serviceconfig.html">ServiceConfig</a>
+          </td>
+          <td class="xmldoc">
+            <p>Service configuration information for failure actions.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-servicecontrol.html">ServiceControl</a>
+          </td>
+          <td class="xmldoc">
+            <p>Service Control Element. Can Start, Stop and Remove services</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-servicedependency.html">ServiceDependency</a>
+          </td>
+          <td class="xmldoc">
+            <p>Service or group of services that must start before the parent service.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-servicefailureactiontype.html">ServiceFailureActionType</a>
+          </td>
+          <td class="xmldoc">
+            <p>Determines the type of the service failure action.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-serviceinstall.html">ServiceInstall</a>
+          </td>
+          <td class="xmldoc">
+            <p>Adds services for parent Component. Use the ServiceControl element to remove services.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-serviceinstallstart.html">ServiceInstallStart</a>
+          </td>
+          <td class="xmldoc">
+            <p>Determines when the service should be started. The Windows Installer does not support boot or system.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-serviceinstalltype.html">ServiceInstallType</a>
+          </td>
+          <td class="xmldoc">
+            <p>Determines the type of the service. The Windows Installer does not currently support kernelDriver or systemDriver.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-uiref.html">UIRef</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX UI Reference, use ToString for creating the string xml nodes</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-upgrade.html">Upgrade</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX Upgrade</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-upgradeversion.html">UpgradeVersion</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX Upgrade Version</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-variable.html">Variable</a>
+          </td>
+          <td class="xmldoc">
+            <p>Parameters for WiX Variable, use ToString for creating the string xml nodes</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-installer-wix-yesorno.html">YesOrNo</a>
+          </td>
+          <td class="xmldoc">
+            <p>These are used in many methods for generating WiX nodes, regard them as booleans</p>
+
+
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2013', 2013)" onmouseover="showTip(event, '2013', 2013)">
+            Wix.attachServiceControlToComponent(...)
+          </code>
+          <div class="tip" id="2013">
+            <strong>Signature:</strong> comp:DirectoryComponent -&gt; fileFilter:(Component -&gt; bool) -&gt; serviceControls:seq&lt;ServiceControl&gt; -&gt; DirectoryComponent<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L851-851" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2014', 2014)" onmouseover="showTip(event, '2014', 2014)">
+            Wix.attachServiceControlToComponents(...)
+          </code>
+          <div class="tip" id="2014">
+            <strong>Signature:</strong> components:seq&lt;DirectoryComponent&gt; -&gt; fileFilter:(Component -&gt; bool) -&gt; serviceControls:seq&lt;ServiceControl&gt; -&gt; seq&lt;DirectoryComponent&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L859-859" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2015', 2015)" onmouseover="showTip(event, '2015', 2015)">
+            Wix.attachServiceInstallToComponent(...)
+          </code>
+          <div class="tip" id="2015">
+            <strong>Signature:</strong> comp:DirectoryComponent -&gt; fileFilter:(Component -&gt; bool) -&gt; serviceInstalls:seq&lt;ServiceInstall&gt; -&gt; DirectoryComponent<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L864-864" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Use this to attach service installs to your components.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2016', 2016)" onmouseover="showTip(event, '2016', 2016)">
+            Wix.attachServiceInstallToComponents(...)
+          </code>
+          <div class="tip" id="2016">
+            <strong>Signature:</strong> components:seq&lt;DirectoryComponent&gt; -&gt; fileFilter:(Component -&gt; bool) -&gt; serviceInstalls:seq&lt;ServiceInstall&gt; -&gt; seq&lt;DirectoryComponent&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L872-872" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2017', 2017)" onmouseover="showTip(event, '2017', 2017)">
+            Wix.bulkComponentCreation(...)
+          </code>
+          <div class="tip" id="2017">
+            <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; seq&lt;DirectoryComponent&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L814-814" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates WiX component with directories and files from the given DirectoryInfo
+The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
+and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2018', 2018)" onmouseover="showTip(event, '2018', 2018)">
+            Wix.bulkComponentCreationAsSubDir(...)
+          </code>
+          <div class="tip" id="2018">
+            <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; Dir<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L842-842" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates WiX component with directories and files from the given DirectoryInfo
+The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
+and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+The components are embedded into the passed in root directory.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2019', 2019)" onmouseover="showTip(event, '2019', 2019)">
+            Wix.bulkComponentTreeCreation(...)
+          </code>
+          <div class="tip" id="2019">
+            <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; directoryFilter:(DirectoryInfo -&gt; bool) -&gt; directoryInfo:DirectoryInfo -&gt; architecture:Architecture -&gt; seq&lt;DirectoryComponent&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L787-787" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates a WiX directory and component hierarchy from the given DirectoryInfo
+The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
+and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+You can use the getComponentRefs function for getting all created component refs and adding them to features.
+You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2020', 2020)" onmouseover="showTip(event, '2020', 2020)">
+            Wix.Candle parameters wixScript
+          </code>
+          <div class="tip" id="2020">
+            <strong>Signature:</strong> parameters:Params -&gt; wixScript:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1652-1652" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle tool</a> on the given WiX script with the given parameters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2021', 2021)" onmouseover="showTip(event, '2021', 2021)">
+            Wix.fillInWiXTemplate wiXPath setParams
+          </code>
+          <div class="tip" id="2021">
+            <strong>Signature:</strong> wiXPath:string -&gt; setParams:(Script -&gt; Script) -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1501-1501" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Takes path where script files reside and sets all parameters as defined</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>wiXPath</code> - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters</li>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">fillInWiXTemplate</span> <span class="s">&quot;&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                       <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                           <span class="id">ProductCode</span> <span class="o">=</span> <span class="id">WiXProductCode</span>
+                           <span class="id">ProductName</span> <span class="o">=</span> <span class="id">WiXProductName</span>
+                           <span class="id">Description</span> <span class="o">=</span> <span class="id">projectDescription</span>
+                           <span class="id">ProductLanguage</span> <span class="o">=</span> <span class="id">WiXProductLanguage</span>
+                           <span class="id">ProductVersion</span> <span class="o">=</span> <span class="id">WiXProductVersion</span>
+                           <span class="id">ProductPublisher</span> <span class="o">=</span> <span class="id">WixProductPublisher</span>
+                           <span class="id">UpgradeGuid</span> <span class="o">=</span> <span class="id">WixProductUpgradeGuid</span>
+                           <span class="id">UIRefs</span> <span class="o">=</span> <span class="id">uiRef1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">uiRef2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">WiXVariables</span> <span class="o">=</span> <span class="id">wiXLicense</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">Directories</span> <span class="o">=</span> <span class="id">directories</span>
+                           <span class="id">DirectoryRefs</span> <span class="o">=</span> <span class="id">directoryrefs</span>
+                           <span class="id">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+                           <span class="id">Features</span> <span class="o">=</span> <span class="id">rootFeature</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">CustomActions</span> <span class="o">=</span> <span class="id">action1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">action2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                           <span class="id">ActionSequences</span> <span class="o">=</span> <span class="id">actionExecution1</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span> <span class="o">+</span> <span class="id">actionExecution2</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+                       <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2022', 2022)" onmouseover="showTip(event, '2022', 2022)">
+            Wix.generateComponentRef(setParams)
+          </code>
+          <div class="tip" id="2022">
+            <strong>Signature:</strong> setParams:(ComponentRef -&gt; ComponentRef) -&gt; ComponentRef option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L605-605" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Use this for generating component refs</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2023', 2023)" onmouseover="showTip(event, '2023', 2023)">
+            Wix.generateCustomAction(setParams)
+          </code>
+          <div class="tip" id="2023">
+            <strong>Signature:</strong> setParams:(CustomAction -&gt; CustomAction) -&gt; CustomAction<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1567-1567" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a customAction based on the given parameters, use toString on it when embedding it
+Be careful to make Id unique. FileKey is a reference to a file Id which you added by using getWixDirTag or getWixFileTag
+Set impersonate to no if your action needs elevated privileges, you should then also set execute as "deferred"
+ExeCommand are the parameters passed to your executable</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">action</span> <span class="o">=</span> <span class="id">generateCustomAction</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                       <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                           <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueActionId&quot;</span>
+                                           <span class="id">FileKey</span> <span class="o">=</span> <span class="s">&quot;fi_5&quot;</span>
+                                           <span class="id">Execute</span> <span class="o">=</span> <span class="s">&quot;deferred&quot;</span>
+                                           <span class="id">Impersonate</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span>
+                                           <span class="id">ExeCommand</span> <span class="o">=</span> <span class="s">&quot;install&quot;</span>
+                                           <span class="id">Return</span> <span class="o">=</span> <span class="s">&quot;check&quot;</span>
+                                       <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val action : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2024', 2024)" onmouseover="showTip(event, '2024', 2024)">
+            Wix.generateCustomActionExecution(...)
+          </code>
+          <div class="tip" id="2024">
+            <strong>Signature:</strong> setParams:(CustomActionExecution -&gt; CustomActionExecution) -&gt; CustomActionExecution<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1586-1586" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a custom action execution based on the given parameters, use toString on it when embedding it
+Condition in sample makes execute only on install</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">actionExecution</span> <span class="o">=</span> <span class="id">generateCustomActionExecution</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                                           <span class="pn">{</span><span class="id">f</span> <span class="k">with</span> 
+                                                               <span class="id">ActionId</span> <span class="o">=</span> <span class="id">action</span><span class="pn">.</span><span class="id">Id</span>
+                                                               <span class="id">Verb</span> <span class="o">=</span> <span class="s">&quot;After&quot;</span>
+                                                               <span class="id">Target</span> <span class="o">=</span> <span class="s">&quot;InstallFiles&quot;</span>                                                                        
+                                                               <span class="id">Condition</span> <span class="o">=</span> <span class="s">&quot;&lt;![CDATA[(&amp;&quot;</span> <span class="o">+</span> <span class="id">feature</span><span class="pn">.</span><span class="id">Id</span> <span class="o">+</span> <span class="s">&quot; = 3) AND NOT (!&quot;</span> <span class="o">+</span> <span class="id">feature</span><span class="pn">.</span><span class="id">Id</span> <span class="o">+</span> <span class="s">&quot; = 3)]]&gt;&quot;</span>
+                                                           <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val actionExecution : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2025', 2025)" onmouseover="showTip(event, '2025', 2025)">
+            Wix.generateFeatureElement(setParams)
+          </code>
+          <div class="tip" id="2025">
+            <strong>Signature:</strong> setParams:(Feature -&gt; Feature) -&gt; Feature<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1544-1544" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a feature based on the given parameters, use toString on it when embedding it
+You can pass other features into InnerContent for making a hierarchy</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">feature</span> <span class="o">=</span> <span class="id">generateFeatureElement</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span> 
+                                          <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>  
+                                              <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;UniqueName&quot;</span>
+                                              <span class="id">Title</span> <span class="o">=</span> <span class="s">&quot;Title which is shown&quot;</span>
+                                              <span class="id">Level</span> <span class="o">=</span> <span class="n">1</span> 
+                                              <span class="id">Description</span> <span class="o">=</span> <span class="s">&quot;Somewhat longer description&quot;</span> 
+                                              <span class="id">Display</span> <span class="o">=</span> <span class="s">&quot;expand&quot;</span> 
+                                              <span class="id">InnerContent</span> <span class="o">=</span> <span class="pn">[</span><span class="id">otherFeature1</span><span class="pn">;</span> <span class="id">otherFeature2</span><span class="pn">]</span>
+                                          <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val feature : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2026', 2026)" onmouseover="showTip(event, '2026', 2026)">
+            Wix.generateMajorUpgradeVersion(...)
+          </code>
+          <div class="tip" id="2026">
+            <strong>Signature:</strong> setParams:(MajorUpgrade -&gt; MajorUpgrade) -&gt; MajorUpgrade<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1647-1647" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a major upgrade based on the given parameters, use toString on it when embedding it</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">majorUpgradeVersion</span> <span class="o">=</span> <span class="id">generateMajorUpgradeVersion</span><span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                                <span class="pn">{</span><span class="id">f</span> <span class="k">with</span> 
+                                                    <span class="id">DowngradeErrorMessage</span> <span class="o">=</span> <span class="s">&quot;A later version is already installed, exiting.&quot;</span>
+                                                <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val majorUpgradeVersion : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2027', 2027)" onmouseover="showTip(event, '2027', 2027)">
+            Wix.generateRegistryKey(setParams)
+          </code>
+          <div class="tip" id="2027">
+            <strong>Signature:</strong> setParams:(RegistryKey -&gt; RegistryKey) -&gt; RegistryKey<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L587-587" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a registry key based on the given parameters, use toString on it when embedding it
+You can pass other registry keys and values into RegistryKeys or RegistryValues for making a hierarchy</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<p>let key = generateRegistryKey(fun k -&gt;
+{k with
+Id = "KeyId"
+Key = "SomeKey"
+Root = Some RegistryRootType.HKCR
+ForceCreateOnInstall = YesOrNo.Yes
+ForceDeleteOnUninstall = YesOrNo.No
+Keys = someChildKeys
+Values = someChildValues
+})</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2028', 2028)" onmouseover="showTip(event, '2028', 2028)">
+            Wix.generateRegistryValue(setParams)
+          </code>
+          <div class="tip" id="2028">
+            <strong>Signature:</strong> setParams:(RegistryValue -&gt; RegistryValue) -&gt; RegistryValue<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L519-519" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a registry value based on the given parameters, use toString on it when embedding it</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<p>let registryValue = generateRegistryValue(fun v -&gt;
+{v with
+Id = "asdasd"
+Name = "Something"
+Key = "Somewhere"
+Root = Some RegistryRootType.HKU
+Type = RegistryValueType.Integer
+KeyPath = YesOrNo.No
+Value = "2"
+})</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2029', 2029)" onmouseover="showTip(event, '2029', 2029)">
+            Wix.generateServiceControl(setParams)
+          </code>
+          <div class="tip" id="2029">
+            <strong>Signature:</strong> setParams:(ServiceControl -&gt; ServiceControl) -&gt; ServiceControl<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L157-157" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Use this for generating service controls</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2030', 2030)" onmouseover="showTip(event, '2030', 2030)">
+            Wix.generateServiceInstall(setParams)
+          </code>
+          <div class="tip" id="2030">
+            <strong>Signature:</strong> setParams:(ServiceInstall -&gt; ServiceInstall) -&gt; ServiceInstall<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L396-396" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Use this for generating service installs</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2031', 2031)" onmouseover="showTip(event, '2031', 2031)">
+            Wix.generateUIRef(setParams)
+          </code>
+          <div class="tip" id="2031">
+            <strong>Signature:</strong> setParams:(UIRef -&gt; UIRef) -&gt; UIRef<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1601-1601" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates a ui ref based on the given parameters, use toString on it when embedding it</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">UIRef</span> <span class="o">=</span> <span class="id">generateUIRef</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                               <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                   <span class="id">Id</span> <span class="o">=</span> <span class="s">&quot;WixUI_Mondo&quot;</span>
+                               <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val UIRef : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2032', 2032)" onmouseover="showTip(event, '2032', 2032)">
+            Wix.generateUpgrade(setParams)
+          </code>
+          <div class="tip" id="2032">
+            <strong>Signature:</strong> setParams:(Upgrade -&gt; Upgrade) -&gt; Upgrade<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1617-1617" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates an upgrade based on the given parameters, use toString on it when embedding it</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">upgrade</span> <span class="o">=</span> <span class="id">generateUpgrade</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                  <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                     <span class="id">Id</span> <span class="o">=</span> <span class="id">productUpgradeCode</span>
+                                  <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val upgrade : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2033', 2033)" onmouseover="showTip(event, '2033', 2033)">
+            Wix.generateUpgradeVersion(setParams)
+          </code>
+          <div class="tip" id="2033">
+            <strong>Signature:</strong> setParams:(UpgradeVersion -&gt; UpgradeVersion) -&gt; UpgradeVersion<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1633-1633" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates an upgrade version based on the given parameters, use toString on it when embedding it</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">upgradeVersion</span> <span class="o">=</span> <span class="id">generateUpgradeVersion</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">f</span> <span class="k">-&gt;</span>
+                                                <span class="pn">{</span><span class="id">f</span> <span class="k">with</span>
+                                                   <span class="id">Minimum</span> <span class="o">=</span> <span class="id">productVersion</span>
+                                                   <span class="id">OnlyDetect</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span>
+                                                <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val upgradeVersion : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2034', 2034)" onmouseover="showTip(event, '2034', 2034)">
+            Wix.generateWiXScript(fileName)
+          </code>
+          <div class="tip" id="2034">
+            <strong>Signature:</strong> fileName:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1414-1414" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Generates WiX Template with specified file name (you can prepend location too)
+You need to run this once every build an then use fillInWiXScript to replace placeholders</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>fileName</code> - Pass desired fileName for your wiXScript file</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">generateWiXScript</span> <span class="s">&quot;Setup.wxs&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2035', 2035)" onmouseover="showTip(event, '2035', 2035)">
+            Wix.getComponentIdsFromWiXString(...)
+          </code>
+          <div class="tip" id="2035">
+            <strong>Signature:</strong> wiXString:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L933-933" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves all component ids from given WiX directory string</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>wiXString</code> - The directory string which was generated by getWixDirTag</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">directoryString</span> <span class="o">=</span> <span class="id">getWixDirTag</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">file</span> <span class="k">-&gt;</span> <span class="k">true</span><span class="pn">)</span> <span class="k">true</span> <span class="pn">(</span><span class="id">DirectoryInfo</span> <span class="id">directoryWithFilesForSetup</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">componentIds</span> <span class="o">=</span> <span class="id">getComponentIdsFromWiXString</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">directoryString</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val directoryString : obj</div>
+<div class="tip" id="fs2">val componentIds : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2036', 2036)" onmouseover="showTip(event, '2036', 2036)">
+            Wix.getComponentRefs(elements)
+          </code>
+          <div class="tip" id="2036">
+            <strong>Signature:</strong> elements:seq&lt;DirectoryComponent&gt; -&gt; seq&lt;ComponentRef option&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L686-686" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>get component refs from a directory component hierarchy</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2037', 2037)" onmouseover="showTip(event, '2037', 2037)">
+            Wix.getFileIdFromWiXString(...)
+          </code>
+          <div class="tip" id="2037">
+            <strong>Signature:</strong> wiXString:string -&gt; fileRegex:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L915-915" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Retrieves the file id of the first file in WiXString, which name matches fileRegex</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>wiXString</code> - The directory string which was generated by getWixDirTag</li>
+<li><code>fileRegex</code> - Regex which matches the file name</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">directoryString</span> <span class="o">=</span> <span class="id">getWixDirTag</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">file</span> <span class="k">-&gt;</span> <span class="k">true</span><span class="pn">)</span> <span class="k">true</span> <span class="pn">(</span><span class="id">DirectoryInfo</span> <span class="id">directoryWithFilesForSetup</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">executableFileId</span> <span class="o">=</span> <span class="id">getFileIdFromWiXString</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">directoryString</span> <span class="s">&quot;\S*.exe&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val directoryString : obj</div>
+<div class="tip" id="fs2">val executableFileId : obj</div>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2038', 2038)" onmouseover="showTip(event, '2038', 2038)">
+            Wix.getFilesAsWiXString(files)
+          </code>
+          <div class="tip" id="2038">
+            <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L56-56" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates WiX File tags from the given files</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2039', 2039)" onmouseover="showTip(event, '2039', 2039)">
+            Wix.getWixDirTag(...)
+          </code>
+          <div class="tip" id="2039">
+            <strong>Signature:</strong> fileFilter:(FileInfo -&gt; bool) -&gt; asSubDir:bool -&gt; directoryInfo:DirectoryInfo -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L881-881" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates recursive WiX directory and file tags from the given DirectoryInfo
+The function will create one component for each file <a href="https://support.microsoft.com/de-de/kb/290997/en-us">best practice</a>
+and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2040', 2040)" onmouseover="showTip(event, '2040', 2040)">
+            Wix.HarvestDirectory(...)
+          </code>
+          <div class="tip" id="2040">
+            <strong>Signature:</strong> setParams:(HeatParams -&gt; HeatParams) -&gt; directory:string -&gt; outputFile:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1774-1774" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Harvests the contents of a Directory for use with Wix using the <a href="http://wixtoolset.org/documentation/manual/v3/overview/heat.html">Heat</a> tool.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the Heat default parameters.</li>
+<li><code>directory</code> - The path to the directory that will be harvested by Heat.</li>
+<li><code>outputFile</code> - The output file path given to Heat.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2041', 2041)" onmouseover="showTip(event, '2041', 2041)">
+            Wix.Light parameters outputFile wixObj
+          </code>
+          <div class="tip" id="2041">
+            <strong>Signature:</strong> parameters:Params -&gt; outputFile:string -&gt; wixObj:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1670-1670" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light tool</a> on the given WiX script with the given parameters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2042', 2042)" onmouseover="showTip(event, '2042', 2042)">
+            Wix.setComponentsNeverOverwrite(...)
+          </code>
+          <div class="tip" id="2042">
+            <strong>Signature:</strong> components:string -&gt; string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L955-955" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Take a component string and set "neverOverwrite" Tag
+This is useful for config files, since they are not replaced on upgrade like that</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2043', 2043)" onmouseover="showTip(event, '2043', 2043)">
+            Wix.WiX setParams outputFile wixScript
+          </code>
+          <div class="tip" id="2043">
+            <strong>Signature:</strong> setParams:(Params -&gt; Params) -&gt; outputFile:string -&gt; wixScript:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Installer.Wix/Wix.fs#L1715-1715" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Uses the WiX tools <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle</a> and <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light</a> to create an msi.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the WiX default parameters.</li>
+<li><code>outputFile</code> - The msi output file path (given to Light).</li>
+<li><code>wixScript</code> - The path to a WiX script that will be used with Candle.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Target</span> <span class="s">&quot;BuildSetup&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="c">// Copy all important files to the deploy directory</span>
+    <span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.dll&quot;</span><span class="pn">)</span>
+      <span class="o">++</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.exe&quot;</span><span class="pn">)</span>
+      <span class="o">++</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.config&quot;</span><span class="pn">)</span>
+      <span class="o">|&gt;</span> <span class="id">Copy</span> <span class="id">deployPrepDir</span> 
+
+    <span class="c">// replace tags in a template file in order to generate a WiX script</span>
+    <span class="k">let</span> <span class="id">ALLFILES</span> <span class="o">=</span> <span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span> <span class="k">true</span>
+
+    <span class="k">let</span> <span class="id">replacements</span> <span class="o">=</span> <span class="pn">[</span>
+        <span class="s">&quot;@build.number@&quot;</span><span class="pn">,</span><span class="k">if</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">not</span> <span class="id">isLocalBuild</span> <span class="k">then</span> <span class="id">buildVersion</span> <span class="k">else</span> <span class="s">&quot;0.1.0.0&quot;</span>
+        <span class="s">&quot;@product.productcode@&quot;</span><span class="pn">,</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Guid</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">NewGuid</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
+        <span class="s">&quot;@HelpFiles@&quot;</span><span class="pn">,</span><span class="id">getFilesAsWiXString</span> <span class="id">helpFiles</span>
+        <span class="s">&quot;@ScriptFiles@&quot;</span><span class="pn">,</span><span class="id">getFilesAsWiXString</span> <span class="id">scriptFiles</span>
+        <span class="s">&quot;@icons@&quot;</span><span class="pn">,</span><span class="id">getWixDirTag</span> <span class="id">ALLFILES</span> <span class="k">true</span> <span class="pn">(</span><span class="id">directoryInfo</span><span class="pn">(</span><span class="id">bundledDir</span> <span class="id">@@</span> <span class="s">&quot;icons&quot;</span><span class="pn">)</span><span class="pn">)</span><span class="pn">]</span>
+
+    <span class="id">processTemplates</span> <span class="id">replacements</span> <span class="id">setupFiles</span>
+
+    <span class="c">// run the WiX tools</span>
+    <span class="id">WiX</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">p</span> <span class="k">with</span> <span class="id">ToolDirectory</span> <span class="o">=</span> <span class="id">WiXPath</span><span class="pn">}</span><span class="pn">)</span> 
+        <span class="id">setupFileName</span>
+        <span class="pn">(</span><span class="id">setupBuildDir</span> <span class="o">+</span> <span class="s">&quot;Setup.wxs.template&quot;</span><span class="pn">)</span>
+<span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val not : value:bool -&gt; bool</div>
+<div class="tip" id="fs2">namespace System</div>
+<div class="tip" id="fs3">Multiple items<br />type Guid =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : b:byte[] -&gt; Guid + 4 overloads<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Equals : o:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member ToByteArray : unit -&gt; byte[]<br />&#160;&#160;&#160;&#160;member ToString : unit -&gt; string + 2 overloads<br />&#160;&#160;&#160;&#160;static val Empty : Guid<br />&#160;&#160;&#160;&#160;static member NewGuid : unit -&gt; Guid<br />&#160;&#160;&#160;&#160;static member Parse : input:string -&gt; Guid<br />&#160;&#160;&#160;&#160;static member ParseExact : input:string * format:string -&gt; Guid<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />--------------------<br />System.Guid ()<br />System.Guid(b: byte []) : System.Guid<br />System.Guid(g: string) : System.Guid<br />System.Guid(a: int, b: int16, c: int16, d: byte []) : System.Guid<br />System.Guid(a: uint32, b: uint16, c: uint16, d: byte, e: byte, f: byte, g: byte, h: byte, i: byte, j: byte, k: byte) : System.Guid<br />System.Guid(a: int, b: int16, c: int16, d: byte, e: byte, f: byte, g: byte, h: byte, i: byte, j: byte, k: byte) : System.Guid</div>
+<div class="tip" id="fs4">System.Guid.NewGuid() : System.Guid</div>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
+
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
+	</body>
+</html>

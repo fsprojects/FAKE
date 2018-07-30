@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -394,7 +397,7 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
-            HockeyApp setParams
+            HockeyApp(setParams)
           </code>
           <div class="tip" id="475">
             <strong>Signature:</strong> setParams:(HockeyAppUploadParams -&gt; HockeyAppUploadParams) -&gt; HockeyResponse<br />
@@ -431,7 +434,7 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
-            HockeyAppUploadDefaults 
+            HockeyAppUploadDefaults
           </code>
           <div class="tip" id="476">
             <strong>Signature:</strong> HockeyAppUploadParams<br />
@@ -447,7 +450,7 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '477', 477)" onmouseover="showTip(event, '477', 477)">
-            HockeyAppVersion setParams
+            HockeyAppVersion(setParams)
           </code>
           <div class="tip" id="477">
             <strong>Signature:</strong> setParams:(HockeyAppVersionParams -&gt; HockeyAppVersionParams) -&gt; HockeyVersionResponse<br />
@@ -486,7 +489,7 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
-            HockeyAppVersionDefaults 
+            HockeyAppVersionDefaults
           </code>
           <div class="tip" id="478">
             <strong>Signature:</strong> HockeyAppVersionParams<br />
@@ -605,7 +608,7 @@ Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-versi
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

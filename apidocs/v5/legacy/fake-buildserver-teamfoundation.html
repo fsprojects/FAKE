@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -300,7 +303,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1167', 1167)" onmouseover="showTip(event, '1167', 1167)">
-            defaultTraceListener
+            TeamFoundation.defaultTraceListener
           </code>
           <div class="tip" id="1167">
             <strong>Signature:</strong> ITraceListener<br />
@@ -318,7 +321,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1168', 1168)" onmouseover="showTip(event, '1168', 1168)">
-            detect()
+            TeamFoundation.detect()
           </code>
           <div class="tip" id="1168">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -336,7 +339,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1169', 1169)" onmouseover="showTip(event, '1169', 1169)">
-            install(force)
+            TeamFoundation.install(force)
           </code>
           <div class="tip" id="1169">
             <strong>Signature:</strong> force:bool -&gt; unit<br />
@@ -354,7 +357,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1170', 1170)" onmouseover="showTip(event, '1170', 1170)">
-            Installer
+            TeamFoundation.Installer
           </code>
           <div class="tip" id="1170">
             <strong>Signature:</strong> BuildServerInstaller<br />
@@ -372,7 +375,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1171', 1171)" onmouseover="showTip(event, '1171', 1171)">
-            logIssue(...)
+            TeamFoundation.logIssue(...)
           </code>
           <div class="tip" id="1171">
             <strong>Signature:</strong> isWarning:bool -&gt; sourcePath:string option -&gt; lineNumber:string option -&gt; columnNumber:string option -&gt; code:string option -&gt; message:string -&gt; unit<br />
@@ -390,7 +393,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1172', 1172)" onmouseover="showTip(event, '1172', 1172)">
-            setBuildState(state message)
+            TeamFoundation.setBuildState(...)
           </code>
           <div class="tip" id="1172">
             <strong>Signature:</strong> state:string -&gt; message:string -&gt; unit<br />
@@ -408,7 +411,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1173', 1173)" onmouseover="showTip(event, '1173', 1173)">
-            setLogDetailProgress(id progress)
+            TeamFoundation.setLogDetailProgress(...)
           </code>
           <div class="tip" id="1173">
             <strong>Signature:</strong> id:Guid -&gt; progress:int -&gt; unit<br />
@@ -426,7 +429,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1174', 1174)" onmouseover="showTip(event, '1174', 1174)">
-            write(action properties message)
+            TeamFoundation.write(...)
           </code>
           <div class="tip" id="1174">
             <strong>Signature:</strong> action:string -&gt; properties:seq&lt;string * string&gt; -&gt; message:string -&gt; unit<br />
@@ -547,7 +550,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

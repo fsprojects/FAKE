@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -308,7 +311,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1389', 1389)" onmouseover="showTip(event, '1389', 1389)">
-            append(text builder)
+            StringBuilder.append text builder
           </code>
           <div class="tip" id="1389">
             <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -328,7 +331,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1390', 1390)" onmouseover="showTip(event, '1390', 1390)">
-            appendFileNamesIfNotNull(...)
+            StringBuilder.appendFileNamesIfNotNull(...)
           </code>
           <div class="tip" id="1390">
             <strong>Signature:</strong> fileNames:seq&lt;string&gt; -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -348,7 +351,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1391', 1391)" onmouseover="showTip(event, '1391', 1391)">
-            appendIfFalse(p)
+            StringBuilder.appendIfFalse(p)
           </code>
           <div class="tip" id="1391">
             <strong>Signature:</strong> p:bool -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
@@ -368,7 +371,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1392', 1392)" onmouseover="showTip(event, '1392', 1392)">
-            appendIfNotNull(value s)
+            StringBuilder.appendIfNotNull value s
           </code>
           <div class="tip" id="1392">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
@@ -388,7 +391,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1393', 1393)" onmouseover="showTip(event, '1393', 1393)">
-            appendIfNotNullOrEmpty(value s)
+            StringBuilder.appendIfNotNullOrEmpty(...)
           </code>
           <div class="tip" id="1393">
             <strong>Signature:</strong> value:string -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
@@ -408,7 +411,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1394', 1394)" onmouseover="showTip(event, '1394', 1394)">
-            appendIfSome(o f builder)
+            StringBuilder.appendIfSome o f builder
           </code>
           <div class="tip" id="1394">
             <strong>Signature:</strong> o:&#39;a option -&gt; f:(&#39;a -&gt; string) -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -428,7 +431,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1395', 1395)" onmouseover="showTip(event, '1395', 1395)">
-            appendIfTrue(p s builder)
+            StringBuilder.appendIfTrue p s builder
           </code>
           <div class="tip" id="1395">
             <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -448,7 +451,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1396', 1396)" onmouseover="showTip(event, '1396', 1396)">
-            appendIfTrueWithoutQuotes(p s builder)
+            StringBuilder.appendIfTrueWithoutQuotes(...)
           </code>
           <div class="tip" id="1396">
             <strong>Signature:</strong> p:bool -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -466,7 +469,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1397', 1397)" onmouseover="showTip(event, '1397', 1397)">
-            appendQuotedIfNotNull(value s builder)
+            StringBuilder.appendQuotedIfNotNull(...)
           </code>
           <div class="tip" id="1397">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -486,11 +489,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1398', 1398)" onmouseover="showTip(event, '1398', 1398)">
-            appendStringIfValueIsNotNull(value)
+            StringBuilder.appendStringIfValueIsNotNull(...)
           </code>
           <div class="tip" id="1398">
-            <strong>Signature:</strong> value:&#39;?17644 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
-                          <strong>Type parameters:</strong> '?17644                      </div>
+            <strong>Signature:</strong> value:&#39;?18184 -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
+                          <strong>Type parameters:</strong> '?18184                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.String/StringBuilder.fs#L62-62" class="github-link">
@@ -506,7 +509,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1399', 1399)" onmouseover="showTip(event, '1399', 1399)">
-            appendStringIfValueIsNotNullOrEmpty(...)
+            StringBuilder.appendStringIfValueIsNotNullOrEmpty(...)
           </code>
           <div class="tip" id="1399">
             <strong>Signature:</strong> value:string -&gt; string -&gt; StringBuilder -&gt; StringBuilder<br />
@@ -526,7 +529,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1400', 1400)" onmouseover="showTip(event, '1400', 1400)">
-            appendWithoutQuotes(text builder)
+            StringBuilder.appendWithoutQuotes(...)
           </code>
           <div class="tip" id="1400">
             <strong>Signature:</strong> text:string -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -546,7 +549,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1401', 1401)" onmouseover="showTip(event, '1401', 1401)">
-            appendWithoutQuotesIfNotNull(value s)
+            StringBuilder.appendWithoutQuotesIfNotNull(...)
           </code>
           <div class="tip" id="1401">
             <strong>Signature:</strong> value:Object -&gt; s:string -&gt; StringBuilder -&gt; StringBuilder<br />
@@ -566,7 +569,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1402', 1402)" onmouseover="showTip(event, '1402', 1402)">
-            forEach(items action text builder)
+            StringBuilder.forEach(...)
           </code>
           <div class="tip" id="1402">
             <strong>Signature:</strong> items:&#39;b list -&gt; action:(&#39;b -&gt; &#39;c -&gt; StringBuilder -&gt; &#39;d) -&gt; text:&#39;c -&gt; builder:StringBuilder -&gt; StringBuilder<br />
@@ -586,7 +589,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1403', 1403)" onmouseover="showTip(event, '1403', 1403)">
-            toText(builder)
+            StringBuilder.toText(builder)
           </code>
           <div class="tip" id="1403">
             <strong>Signature:</strong> builder:StringBuilder -&gt; string<br />
@@ -709,7 +712,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

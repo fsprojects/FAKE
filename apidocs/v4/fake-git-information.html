@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -282,7 +285,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1147', 1147)" onmouseover="showTip(event, '1147', 1147)">
-            describe repositoryDir
+            describe(repositoryDir)
           </code>
           <div class="tip" id="1147">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
@@ -298,7 +301,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1148', 1148)" onmouseover="showTip(event, '1148', 1148)">
-            getBranchName repositoryDir
+            getBranchName(repositoryDir)
           </code>
           <div class="tip" id="1148">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
@@ -314,7 +317,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1149', 1149)" onmouseover="showTip(event, '1149', 1149)">
-            getCurrentHash ()
+            getCurrentHash()
           </code>
           <div class="tip" id="1149">
             <strong>Signature:</strong> unit -&gt; string<br />
@@ -330,7 +333,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1150', 1150)" onmouseover="showTip(event, '1150', 1150)">
-            getCurrentSHA1 repositoryDir
+            getCurrentSHA1(repositoryDir)
           </code>
           <div class="tip" id="1150">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
@@ -346,7 +349,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1151', 1151)" onmouseover="showTip(event, '1151', 1151)">
-            getLastTag ()
+            getLastTag()
           </code>
           <div class="tip" id="1151">
             <strong>Signature:</strong> unit -&gt; string<br />
@@ -362,7 +365,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1152', 1152)" onmouseover="showTip(event, '1152', 1152)">
-            getVersion repositoryDir
+            getVersion(repositoryDir)
           </code>
           <div class="tip" id="1152">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
@@ -394,7 +397,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1154', 1154)" onmouseover="showTip(event, '1154', 1154)">
-            isCleanWorkingCopy repositoryDir
+            isCleanWorkingCopy(repositoryDir)
           </code>
           <div class="tip" id="1154">
             <strong>Signature:</strong> repositoryDir:string -&gt; bool<br />
@@ -410,7 +413,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1155', 1155)" onmouseover="showTip(event, '1155', 1155)">
-            isGitVersionHigherOrEqual (...)
+            isGitVersionHigherOrEqual(...)
           </code>
           <div class="tip" id="1155">
             <strong>Signature:</strong> referenceVersion:string -&gt; bool<br />
@@ -424,7 +427,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1156', 1156)" onmouseover="showTip(event, '1156', 1156)">
-            isVersionHigherOrEqual (...)
+            isVersionHigherOrEqual(...)
           </code>
           <div class="tip" id="1156">
             <strong>Signature:</strong> currentVersion:string -&gt; referenceVersion:string -&gt; bool<br />
@@ -438,7 +441,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1157', 1157)" onmouseover="showTip(event, '1157', 1157)">
-            shortlog repositoryDir
+            shortlog(repositoryDir)
           </code>
           <div class="tip" id="1157">
             <strong>Signature:</strong> repositoryDir:string -&gt; string<br />
@@ -470,7 +473,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1159', 1159)" onmouseover="showTip(event, '1159', 1159)">
-            showStatus repositoryDir
+            showStatus(repositoryDir)
           </code>
           <div class="tip" id="1159">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
@@ -486,7 +489,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1160', 1160)" onmouseover="showTip(event, '1160', 1160)">
-            versionRegex 
+            versionRegex
           </code>
           <div class="tip" id="1160">
             <strong>Signature:</strong> Regex<br />
@@ -603,7 +606,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

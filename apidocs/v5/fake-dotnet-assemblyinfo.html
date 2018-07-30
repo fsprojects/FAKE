@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -307,7 +310,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
-            BoolAttribute(name, value, inNamespace)
+            AssemblyInfo.BoolAttribute(...)
           </code>
           <div class="tip" id="525">
             <strong>Signature:</strong> (name:string * value:bool * inNamespace:string) -&gt; Attribute<br />
@@ -327,7 +330,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '526', 526)" onmouseover="showTip(event, '526', 526)">
-            CLSCompliant(value)
+            AssemblyInfo.CLSCompliant(value)
           </code>
           <div class="tip" id="526">
             <strong>Signature:</strong> value:bool -&gt; Attribute<br />
@@ -347,7 +350,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '527', 527)" onmouseover="showTip(event, '527', 527)">
-            Company(value)
+            AssemblyInfo.Company(value)
           </code>
           <div class="tip" id="527">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -367,7 +370,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '528', 528)" onmouseover="showTip(event, '528', 528)">
-            ComVisible(value)
+            AssemblyInfo.ComVisible(value)
           </code>
           <div class="tip" id="528">
             <strong>Signature:</strong> value:bool -&gt; Attribute<br />
@@ -387,7 +390,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '529', 529)" onmouseover="showTip(event, '529', 529)">
-            Configuration(value)
+            AssemblyInfo.Configuration(value)
           </code>
           <div class="tip" id="529">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -407,7 +410,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '530', 530)" onmouseover="showTip(event, '530', 530)">
-            Copyright(value)
+            AssemblyInfo.Copyright(value)
           </code>
           <div class="tip" id="530">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -427,7 +430,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '531', 531)" onmouseover="showTip(event, '531', 531)">
-            Culture(value)
+            AssemblyInfo.Culture(value)
           </code>
           <div class="tip" id="531">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -447,7 +450,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '532', 532)" onmouseover="showTip(event, '532', 532)">
-            DelaySign(value)
+            AssemblyInfo.DelaySign(value)
           </code>
           <div class="tip" id="532">
             <strong>Signature:</strong> value:bool -&gt; Attribute<br />
@@ -467,7 +470,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '533', 533)" onmouseover="showTip(event, '533', 533)">
-            Description(value)
+            AssemblyInfo.Description(value)
           </code>
           <div class="tip" id="533">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -487,7 +490,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '534', 534)" onmouseover="showTip(event, '534', 534)">
-            FileVersion(value)
+            AssemblyInfo.FileVersion(value)
           </code>
           <div class="tip" id="534">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -507,7 +510,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '535', 535)" onmouseover="showTip(event, '535', 535)">
-            Guid(value)
+            AssemblyInfo.Guid(value)
           </code>
           <div class="tip" id="535">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -527,7 +530,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '536', 536)" onmouseover="showTip(event, '536', 536)">
-            InformationalVersion(value)
+            AssemblyInfo.InformationalVersion(value)
           </code>
           <div class="tip" id="536">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -547,7 +550,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '537', 537)" onmouseover="showTip(event, '537', 537)">
-            InternalsVisibleTo(value)
+            AssemblyInfo.InternalsVisibleTo(value)
           </code>
           <div class="tip" id="537">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -567,7 +570,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '538', 538)" onmouseover="showTip(event, '538', 538)">
-            KeyFile(value)
+            AssemblyInfo.KeyFile(value)
           </code>
           <div class="tip" id="538">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -587,7 +590,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '539', 539)" onmouseover="showTip(event, '539', 539)">
-            KeyName(value)
+            AssemblyInfo.KeyName(value)
           </code>
           <div class="tip" id="539">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -607,7 +610,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '540', 540)" onmouseover="showTip(event, '540', 540)">
-            Metadata(name, value)
+            AssemblyInfo.Metadata(name, value)
           </code>
           <div class="tip" id="540">
             <strong>Signature:</strong> (name:string * value:string) -&gt; Attribute<br />
@@ -627,7 +630,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '541', 541)" onmouseover="showTip(event, '541', 541)">
-            Product(value)
+            AssemblyInfo.Product(value)
           </code>
           <div class="tip" id="541">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -647,7 +650,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '542', 542)" onmouseover="showTip(event, '542', 542)">
-            StringAttribute(...)
+            AssemblyInfo.StringAttribute(...)
           </code>
           <div class="tip" id="542">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string) -&gt; Attribute<br />
@@ -665,7 +668,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '543', 543)" onmouseover="showTip(event, '543', 543)">
-            StringAttributeEx(...)
+            AssemblyInfo.StringAttributeEx(...)
           </code>
           <div class="tip" id="543">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticName:string * staticValue:string) -&gt; Attribute<br />
@@ -691,7 +694,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '544', 544)" onmouseover="showTip(event, '544', 544)">
-            StringAttributeWithStatic(...)
+            AssemblyInfo.StringAttributeWithStatic(...)
           </code>
           <div class="tip" id="544">
             <strong>Signature:</strong> (name:string * value:string * inNamespace:string * staticName:string * staticValue:string) -&gt; Attribute<br />
@@ -711,7 +714,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '545', 545)" onmouseover="showTip(event, '545', 545)">
-            Title(value)
+            AssemblyInfo.Title(value)
           </code>
           <div class="tip" id="545">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -731,7 +734,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '546', 546)" onmouseover="showTip(event, '546', 546)">
-            Trademark(value)
+            AssemblyInfo.Trademark(value)
           </code>
           <div class="tip" id="546">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -751,7 +754,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '547', 547)" onmouseover="showTip(event, '547', 547)">
-            Version(value)
+            AssemblyInfo.Version(value)
           </code>
           <div class="tip" id="547">
             <strong>Signature:</strong> value:string -&gt; Attribute<br />
@@ -874,7 +877,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

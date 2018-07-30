@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -353,7 +356,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '197', 197)" onmouseover="showTip(event, '197', 197)">
-            Build setBuildParams
+            Build(setBuildParams)
           </code>
           <div class="tip" id="197">
             <strong>Signature:</strong> setBuildParams:(BuildParams -&gt; BuildParams) -&gt; unit<br />
@@ -386,7 +389,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '198', 198)" onmouseover="showTip(event, '198', 198)">
-            commandName 
+            commandName
           </code>
           <div class="tip" id="198">
             <strong>Signature:</strong> string<br />
@@ -402,7 +405,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '199', 199)" onmouseover="showTip(event, '199', 199)">
-            DotnetSDKPath 
+            DotnetSDKPath
           </code>
           <div class="tip" id="199">
             <strong>Signature:</strong> string<br />
@@ -416,7 +419,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '200', 200)" onmouseover="showTip(event, '200', 200)">
-            GetDotNetSDKVersionFromGlobalJson ()
+            GetDotNetSDKVersionFromGlobalJson()
           </code>
           <div class="tip" id="200">
             <strong>Signature:</strong> unit -&gt; string<br />
@@ -432,7 +435,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '201', 201)" onmouseover="showTip(event, '201', 201)">
-            getVersion ()
+            getVersion()
           </code>
           <div class="tip" id="201">
             <strong>Signature:</strong> unit -&gt; string<br />
@@ -448,7 +451,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '202', 202)" onmouseover="showTip(event, '202', 202)">
-            InstallDotNetSDK sdkVersion
+            InstallDotNetSDK(sdkVersion)
           </code>
           <div class="tip" id="202">
             <strong>Signature:</strong> sdkVersion:string -&gt; string<br />
@@ -464,7 +467,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '203', 203)" onmouseover="showTip(event, '203', 203)">
-            isInstalled ()
+            isInstalled()
           </code>
           <div class="tip" id="203">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -480,7 +483,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '204', 204)" onmouseover="showTip(event, '204', 204)">
-            Pack setPackParams
+            Pack(setPackParams)
           </code>
           <div class="tip" id="204">
             <strong>Signature:</strong> setPackParams:(PackParams -&gt; PackParams) -&gt; unit<br />
@@ -513,7 +516,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '205', 205)" onmouseover="showTip(event, '205', 205)">
-            Publish setPublishParams
+            Publish(setPublishParams)
           </code>
           <div class="tip" id="205">
             <strong>Signature:</strong> setPublishParams:(PublishParams -&gt; PublishParams) -&gt; unit<br />
@@ -546,7 +549,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '206', 206)" onmouseover="showTip(event, '206', 206)">
-            Restore setRestoreParams
+            Restore(setRestoreParams)
           </code>
           <div class="tip" id="206">
             <strong>Signature:</strong> setRestoreParams:(RestoreParams -&gt; RestoreParams) -&gt; unit<br />
@@ -631,7 +634,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '209', 209)" onmouseover="showTip(event, '209', 209)">
-            Test setTestParams
+            Test(setTestParams)
           </code>
           <div class="tip" id="209">
             <strong>Signature:</strong> setTestParams:(TestParams -&gt; TestParams) -&gt; unit<br />
@@ -767,7 +770,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -314,7 +317,7 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
-            CreateCppCliAssemblyInfo (...)
+            CreateCppCliAssemblyInfo(...)
           </code>
           <div class="tip" id="114">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
@@ -330,7 +333,7 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
-            CreateCppCliAssemblyInfoWithConfig (...)
+            CreateCppCliAssemblyInfoWithConfig(...)
           </code>
           <div class="tip" id="115">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
@@ -347,7 +350,7 @@ Does not generate an AssemblyVersionInformation class.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
-            CreateCSharpAssemblyInfo (...)
+            CreateCSharpAssemblyInfo(...)
           </code>
           <div class="tip" id="116">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
@@ -364,7 +367,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
-            CreateCSharpAssemblyInfoWithConfig (...)
+            CreateCSharpAssemblyInfoWithConfig(...)
           </code>
           <div class="tip" id="117">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
@@ -381,7 +384,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
-            CreateFSharpAssemblyInfo (...)
+            CreateFSharpAssemblyInfo(...)
           </code>
           <div class="tip" id="118">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
@@ -398,7 +401,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
-            CreateFSharpAssemblyInfoWithConfig (...)
+            CreateFSharpAssemblyInfoWithConfig(...)
           </code>
           <div class="tip" id="119">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
@@ -415,7 +418,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
-            CreateVisualBasicAssemblyInfo (...)
+            CreateVisualBasicAssemblyInfo(...)
           </code>
           <div class="tip" id="120">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
@@ -432,7 +435,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
-            CreateVisualBasicAssemblyInfoWithConfig (...)
+            CreateVisualBasicAssemblyInfoWithConfig(...)
           </code>
           <div class="tip" id="121">
             <strong>Signature:</strong> outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
@@ -470,7 +473,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
-            GetAttributes assemblyInfoFile
+            GetAttributes(assemblyInfoFile)
           </code>
           <div class="tip" id="123">
             <strong>Signature:</strong> assemblyInfoFile:string -&gt; seq&lt;Attribute&gt;<br />
@@ -490,7 +493,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
-            GetAttributeValue (...)
+            GetAttributeValue(...)
           </code>
           <div class="tip" id="124">
             <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; string option<br />
@@ -511,7 +514,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
-            UpdateAttributes (...)
+            UpdateAttributes(...)
           </code>
           <div class="tip" id="125">
             <strong>Signature:</strong> assemblyInfoFile:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
@@ -540,7 +543,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
-            ( |Fsproj|Csproj|Vbproj|Shproj| ) (...)
+            ( |Fsproj|Csproj|Vbproj|Shproj| )(...)
           </code>
           <div class="tip" id="126">
             <strong>Signature:</strong> projFileName:string -&gt; Choice&lt;unit,unit,unit,unit&gt;<br />
@@ -657,7 +660,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

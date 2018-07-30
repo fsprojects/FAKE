@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -312,7 +315,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
-            checkTagsInFile (...)
+            checkTagsInFile(...)
           </code>
           <div class="tip" id="245">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; fileName:string -&gt; string * string<br />
@@ -340,7 +343,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '246', 246)" onmouseover="showTip(event, '246', 246)">
-            checkTagsInObjectString (...)
+            checkTagsInObjectString(...)
           </code>
           <div class="tip" id="246">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; objectString:string -&gt; name:string -&gt; string * string<br />
@@ -368,7 +371,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '247', 247)" onmouseover="showTip(event, '247', 247)">
-            DateRegex 
+            DateRegex
           </code>
           <div class="tip" id="247">
             <strong>Signature:</strong> Regex<br />
@@ -396,7 +399,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '248', 248)" onmouseover="showTip(event, '248', 248)">
-            fileNameFromObject (...)
+            fileNameFromObject(...)
           </code>
           <div class="tip" id="248">
             <strong>Signature:</strong> (navObject:NavObject * fileEnding:string) -&gt; string<br />
@@ -424,7 +427,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '249', 249)" onmouseover="showTip(event, '249', 249)">
-            getHighestTagVersionInFiles (...)
+            getHighestTagVersionInFiles(...)
           </code>
           <div class="tip" id="249">
             <strong>Signature:</strong> versionTag:string -&gt; fileNames:seq&lt;string&gt; -&gt; string<br />
@@ -452,7 +455,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '250', 250)" onmouseover="showTip(event, '250', 250)">
-            getHighestTagVersionInObjects (...)
+            getHighestTagVersionInObjects(...)
           </code>
           <div class="tip" id="250">
             <strong>Signature:</strong> versionTag:string -&gt; sourceCode:string -&gt; string<br />
@@ -508,7 +511,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '252', 252)" onmouseover="showTip(event, '252', 252)">
-            getMissingRequiredTags (...)
+            getMissingRequiredTags(...)
           </code>
           <div class="tip" id="252">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; versionTags:seq&lt;string&gt; -&gt; seq&lt;string&gt;<br />
@@ -536,7 +539,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '253', 253)" onmouseover="showTip(event, '253', 253)">
-            getTagVersionInObject (...)
+            getTagVersionInObject(...)
           </code>
           <div class="tip" id="253">
             <strong>Signature:</strong> versionTag:string -&gt; sourceCode:string -&gt; string<br />
@@ -564,7 +567,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
-            getTagVersionInVersionTagList (...)
+            getTagVersionInVersionTagList(...)
           </code>
           <div class="tip" id="254">
             <strong>Signature:</strong> versionTag:string -&gt; tagList:string -&gt; string<br />
@@ -592,7 +595,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
-            getVersionTagList text
+            getVersionTagList(text)
           </code>
           <div class="tip" id="255">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -620,7 +623,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
-            ModifiedRegex 
+            ModifiedRegex
           </code>
           <div class="tip" id="256">
             <strong>Signature:</strong> Regex<br />
@@ -648,7 +651,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
-            modifyNavisionFiles (...)
+            modifyNavisionFiles(...)
           </code>
           <div class="tip" id="257">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; versionTag:string -&gt; newVersion:string -&gt; removeModified:bool -&gt; newDateTime:DateTime -&gt; fileNames:seq&lt;string&gt; -&gt; unit<br />
@@ -677,7 +680,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
-            NavObjectDateFormat 
+            NavObjectDateFormat
           </code>
           <div class="tip" id="258">
             <strong>Signature:</strong> string<br />
@@ -705,7 +708,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
-            ObjectRegex 
+            ObjectRegex
           </code>
           <div class="tip" id="259">
             <strong>Signature:</strong> Regex<br />
@@ -733,7 +736,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
-            objectsInObjectString text
+            objectsInObjectString(text)
           </code>
           <div class="tip" id="260">
             <strong>Signature:</strong> text:string -&gt; NavObject list<br />
@@ -761,7 +764,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
-            ObjectSplitRegex 
+            ObjectSplitRegex
           </code>
           <div class="tip" id="261">
             <strong>Signature:</strong> Regex<br />
@@ -789,7 +792,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '262', 262)" onmouseover="showTip(event, '262', 262)">
-            removeModifiedFlag text
+            removeModifiedFlag(text)
           </code>
           <div class="tip" id="262">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -845,7 +848,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
-            replaceDateTimeInStringWithFormat (...)
+            replaceDateTimeInStringWithFormat(...)
           </code>
           <div class="tip" id="264">
             <strong>Signature:</strong> dateTime:DateTime -&gt; dateFormat:string -&gt; text:string -&gt; string<br />
@@ -871,7 +874,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
-            replaceInVersionTag (...)
+            replaceInVersionTag(...)
           </code>
           <div class="tip" id="265">
             <strong>Signature:</strong> versionTag:string -&gt; newVersion:string -&gt; tagList:string -&gt; string<br />
@@ -899,7 +902,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
-            replaceVersionTag (...)
+            replaceVersionTag(...)
           </code>
           <div class="tip" id="266">
             <strong>Signature:</strong> versionTag:string -&gt; newVersion:string -&gt; sourceCode:string -&gt; string<br />
@@ -955,7 +958,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '268', 268)" onmouseover="showTip(event, '268', 268)">
-            setVersionTags (...)
+            setVersionTags(...)
           </code>
           <div class="tip" id="268">
             <strong>Signature:</strong> requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; versionTag:string -&gt; newVersion:string -&gt; removeModifiedFlag:bool -&gt; newDateTime:DateTime -&gt; fileNames:seq&lt;string&gt; -&gt; unit<br />
@@ -1012,7 +1015,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '270', 270)" onmouseover="showTip(event, '270', 270)">
-            splitVersionTags tagList
+            splitVersionTags(tagList)
           </code>
           <div class="tip" id="270">
             <strong>Signature:</strong> tagList:string -&gt; string []<br />
@@ -1040,7 +1043,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '271', 271)" onmouseover="showTip(event, '271', 271)">
-            TimeRegex 
+            TimeRegex
           </code>
           <div class="tip" id="271">
             <strong>Signature:</strong> Regex<br />
@@ -1068,7 +1071,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '272', 272)" onmouseover="showTip(event, '272', 272)">
-            VersionRegex 
+            VersionRegex
           </code>
           <div class="tip" id="272">
             <strong>Signature:</strong> Regex<br />
@@ -1199,7 +1202,7 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

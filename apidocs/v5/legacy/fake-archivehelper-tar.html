@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -326,7 +329,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '71', 71)" onmouseover="showTip(event, '71', 71)">
-            addEntry outStream
+            addEntry(outStream)
           </code>
           <div class="tip" id="71">
             <strong>Signature:</strong> outStream:TarOutputStream -&gt; ArchiveFileSpec -&gt; unit<br />
@@ -388,7 +391,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '73', 73)" onmouseover="showTip(event, '73', 73)">
-            CompressDirWithDefaults (...)
+            CompressDirWithDefaults(...)
           </code>
           <div class="tip" id="73">
             <strong>Signature:</strong> baseDir:DirectoryInfo -&gt; archiveFile:FileInfo -&gt; unit<br />
@@ -421,7 +424,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '74', 74)" onmouseover="showTip(event, '74', 74)">
-            createFile file
+            createFile(file)
           </code>
           <div class="tip" id="74">
             <strong>Signature:</strong> file:FileInfo -&gt; TarOutputStream<br />
@@ -486,7 +489,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '76', 76)" onmouseover="showTip(event, '76', 76)">
-            extractStream inner
+            extractStream(inner)
           </code>
           <div class="tip" id="76">
             <strong>Signature:</strong> inner:Stream -&gt; TarInputStream<br />
@@ -610,7 +613,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
-            storeStream inner
+            storeStream(inner)
           </code>
           <div class="tip" id="80">
             <strong>Signature:</strong> inner:Stream -&gt; TarOutputStream<br />
@@ -638,7 +641,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
-            StoreWithDefaults (...)
+            StoreWithDefaults(...)
           </code>
           <div class="tip" id="81">
             <strong>Signature:</strong> baseDir:DirectoryInfo -&gt; archiveFile:FileInfo -&gt; files:seq&lt;FileInfo&gt; -&gt; unit<br />
@@ -775,7 +778,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

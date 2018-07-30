@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -322,7 +325,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '270', 270)" onmouseover="showTip(event, '270', 270)">
-            charsAndDigits
+            String.charsAndDigits
           </code>
           <div class="tip" id="270">
             <strong>Signature:</strong> char list<br />
@@ -342,7 +345,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '271', 271)" onmouseover="showTip(event, '271', 271)">
-            Colon
+            String.Colon
           </code>
           <div class="tip" id="271">
             <strong>Signature:</strong> char<br />
@@ -360,7 +363,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '272', 272)" onmouseover="showTip(event, '272', 272)">
-            convertFileToWindowsLineBreak(...)
+            String.convertFileToWindowsLineBreak(...)
           </code>
           <div class="tip" id="272">
             <strong>Signature:</strong> encoding:Encoding -&gt; fileName:string -&gt; unit<br />
@@ -378,7 +381,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '273', 273)" onmouseover="showTip(event, '273', 273)">
-            convertFileToWindowsLineBreaksWithEncoding(...)
+            String.convertFileToWindowsLineBreaksWithEncoding(...)
           </code>
           <div class="tip" id="273">
             <strong>Signature:</strong> encoding:Encoding -&gt; fileName:string -&gt; unit<br />
@@ -399,7 +402,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '274', 274)" onmouseover="showTip(event, '274', 274)">
-            convertTextToWindowsLineBreaks(text)
+            String.convertTextToWindowsLineBreaks(...)
           </code>
           <div class="tip" id="274">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -419,7 +422,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '275', 275)" onmouseover="showTip(event, '275', 275)">
-            decodeBase64Utf8String(text)
+            String.decodeBase64Utf8String(text)
           </code>
           <div class="tip" id="275">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -439,7 +442,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '276', 276)" onmouseover="showTip(event, '276', 276)">
-            encapsulateApostrophe(text)
+            String.encapsulateApostrophe(text)
           </code>
           <div class="tip" id="276">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -459,7 +462,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '277', 277)" onmouseover="showTip(event, '277', 277)">
-            endsWith(suffix text)
+            String.endsWith suffix text
           </code>
           <div class="tip" id="277">
             <strong>Signature:</strong> suffix:string -&gt; text:string -&gt; bool<br />
@@ -479,7 +482,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '278', 278)" onmouseover="showTip(event, '278', 278)">
-            endsWithSlash
+            String.endsWithSlash
           </code>
           <div class="tip" id="278">
             <strong>Signature:</strong> string -&gt; bool<br />
@@ -500,7 +503,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '279', 279)" onmouseover="showTip(event, '279', 279)">
-            isLetterOrDigit(c)
+            String.isLetterOrDigit(c)
           </code>
           <div class="tip" id="279">
             <strong>Signature:</strong> c:char -&gt; bool<br />
@@ -520,7 +523,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
-            isNotNullOrEmpty(value)
+            String.isNotNullOrEmpty(value)
           </code>
           <div class="tip" id="280">
             <strong>Signature:</strong> value:string -&gt; bool<br />
@@ -540,7 +543,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
-            isNullOrEmpty(value)
+            String.isNullOrEmpty(value)
           </code>
           <div class="tip" id="281">
             <strong>Signature:</strong> value:string -&gt; bool<br />
@@ -560,7 +563,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '282', 282)" onmouseover="showTip(event, '282', 282)">
-            isNullOrWhiteSpace(value)
+            String.isNullOrWhiteSpace(value)
           </code>
           <div class="tip" id="282">
             <strong>Signature:</strong> value:string -&gt; bool<br />
@@ -580,7 +583,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '283', 283)" onmouseover="showTip(event, '283', 283)">
-            isUmlaut(c)
+            String.isUmlaut(c)
           </code>
           <div class="tip" id="283">
             <strong>Signature:</strong> c:char -&gt; bool<br />
@@ -600,7 +603,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
-            liftString(x)
+            String.liftString(x)
           </code>
           <div class="tip" id="284">
             <strong>Signature:</strong> x:string -&gt; string option<br />
@@ -620,7 +623,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '285', 285)" onmouseover="showTip(event, '285', 285)">
-            LinuxLineBreaks
+            String.LinuxLineBreaks
           </code>
           <div class="tip" id="285">
             <strong>Signature:</strong> string<br />
@@ -640,7 +643,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '286', 286)" onmouseover="showTip(event, '286', 286)">
-            MacLineBreaks
+            String.MacLineBreaks
           </code>
           <div class="tip" id="286">
             <strong>Signature:</strong> string<br />
@@ -660,7 +663,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
-            NormalizeVersion(version)
+            String.NormalizeVersion(version)
           </code>
           <div class="tip" id="287">
             <strong>Signature:</strong> version:string -&gt; string<br />
@@ -680,7 +683,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '288', 288)" onmouseover="showTip(event, '288', 288)">
-            removeLineBreaks(text)
+            String.removeLineBreaks(text)
           </code>
           <div class="tip" id="288">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -700,7 +703,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '289', 289)" onmouseover="showTip(event, '289', 289)">
-            replace(pattern replacement text)
+            String.replace pattern replacement text
           </code>
           <div class="tip" id="289">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
@@ -720,7 +723,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '290', 290)" onmouseover="showTip(event, '290', 290)">
-            replaceFirst(pattern replacement text)
+            String.replaceFirst(...)
           </code>
           <div class="tip" id="290">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; text:string -&gt; string<br />
@@ -740,7 +743,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '291', 291)" onmouseover="showTip(event, '291', 291)">
-            separated(delimiter items)
+            String.separated delimiter items
           </code>
           <div class="tip" id="291">
             <strong>Signature:</strong> delimiter:string -&gt; items:seq&lt;string&gt; -&gt; string<br />
@@ -760,7 +763,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '292', 292)" onmouseover="showTip(event, '292', 292)">
-            split(delimiter text)
+            String.split delimiter text
           </code>
           <div class="tip" id="292">
             <strong>Signature:</strong> delimiter:char -&gt; text:string -&gt; string list<br />
@@ -780,7 +783,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '293', 293)" onmouseover="showTip(event, '293', 293)">
-            splitStr(delimiterStr text)
+            String.splitStr delimiterStr text
           </code>
           <div class="tip" id="293">
             <strong>Signature:</strong> delimiterStr:string -&gt; text:string -&gt; string list<br />
@@ -800,7 +803,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '294', 294)" onmouseover="showTip(event, '294', 294)">
-            startsWith(prefix text)
+            String.startsWith prefix text
           </code>
           <div class="tip" id="294">
             <strong>Signature:</strong> prefix:string -&gt; text:string -&gt; bool<br />
@@ -820,7 +823,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
-            toLines(text)
+            String.toLines(text)
           </code>
           <div class="tip" id="295">
             <strong>Signature:</strong> text:seq&lt;string&gt; -&gt; string<br />
@@ -840,7 +843,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '296', 296)" onmouseover="showTip(event, '296', 296)">
-            toLower(s)
+            String.toLower(s)
           </code>
           <div class="tip" id="296">
             <strong>Signature:</strong> s:string -&gt; string<br />
@@ -860,7 +863,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
-            trim(x)
+            String.trim(x)
           </code>
           <div class="tip" id="297">
             <strong>Signature:</strong> x:string -&gt; string<br />
@@ -880,7 +883,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
-            trimChars(chars x)
+            String.trimChars chars x
           </code>
           <div class="tip" id="298">
             <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
@@ -900,7 +903,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
-            trimEndChars(chars x)
+            String.trimEndChars chars x
           </code>
           <div class="tip" id="299">
             <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
@@ -920,7 +923,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
-            trimSeparator(s)
+            String.trimSeparator(s)
           </code>
           <div class="tip" id="300">
             <strong>Signature:</strong> s:string -&gt; string<br />
@@ -940,7 +943,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
-            trimSlash(s)
+            String.trimSlash(s)
           </code>
           <div class="tip" id="301">
             <strong>Signature:</strong> s:string -&gt; string<br />
@@ -960,7 +963,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
-            trimSpecialChars(text)
+            String.trimSpecialChars(text)
           </code>
           <div class="tip" id="302">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -980,7 +983,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
-            trimStartChars(chars x)
+            String.trimStartChars chars x
           </code>
           <div class="tip" id="303">
             <strong>Signature:</strong> chars:char [] -&gt; x:string -&gt; string<br />
@@ -1000,7 +1003,7 @@ matches Path.DirectorySeparatorChar.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
-            WindowsLineBreaks
+            String.WindowsLineBreaks
           </code>
           <div class="tip" id="304">
             <strong>Signature:</strong> string<br />
@@ -1123,7 +1126,7 @@ matches Path.DirectorySeparatorChar.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -278,7 +281,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1343', 1343)" onmouseover="showTip(event, '1343', 1343)">
-            AccountName
+            AppVeyorEnvironment.AccountName
           </code>
           <div class="tip" id="1343">
             <strong>Signature:</strong> string<br />
@@ -294,7 +297,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1344', 1344)" onmouseover="showTip(event, '1344', 1344)">
-            ApiUrl
+            AppVeyorEnvironment.ApiUrl
           </code>
           <div class="tip" id="1344">
             <strong>Signature:</strong> string<br />
@@ -310,7 +313,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1345', 1345)" onmouseover="showTip(event, '1345', 1345)">
-            ArtifactUploadTimeout
+            AppVeyorEnvironment.ArtifactUploadTimeout(...)
           </code>
           <div class="tip" id="1345">
             <strong>Signature:</strong> string<br />
@@ -326,7 +329,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1346', 1346)" onmouseover="showTip(event, '1346', 1346)">
-            BuildFolder
+            AppVeyorEnvironment.BuildFolder
           </code>
           <div class="tip" id="1346">
             <strong>Signature:</strong> string<br />
@@ -342,7 +345,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1347', 1347)" onmouseover="showTip(event, '1347', 1347)">
-            BuildId
+            AppVeyorEnvironment.BuildId
           </code>
           <div class="tip" id="1347">
             <strong>Signature:</strong> string<br />
@@ -358,7 +361,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1348', 1348)" onmouseover="showTip(event, '1348', 1348)">
-            BuildNumber
+            AppVeyorEnvironment.BuildNumber
           </code>
           <div class="tip" id="1348">
             <strong>Signature:</strong> string<br />
@@ -374,7 +377,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1349', 1349)" onmouseover="showTip(event, '1349', 1349)">
-            BuildVersion
+            AppVeyorEnvironment.BuildVersion
           </code>
           <div class="tip" id="1349">
             <strong>Signature:</strong> string<br />
@@ -390,7 +393,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1350', 1350)" onmouseover="showTip(event, '1350', 1350)">
-            BuildWorkerImage
+            AppVeyorEnvironment.BuildWorkerImage
           </code>
           <div class="tip" id="1350">
             <strong>Signature:</strong> string<br />
@@ -406,7 +409,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1351', 1351)" onmouseover="showTip(event, '1351', 1351)">
-            CacheEntryUploadDownloadTimeout
+            AppVeyorEnvironment.CacheEntryUploadDownloadTimeout(...)
           </code>
           <div class="tip" id="1351">
             <strong>Signature:</strong> string<br />
@@ -422,7 +425,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1352', 1352)" onmouseover="showTip(event, '1352', 1352)">
-            CacheSkipRestore
+            AppVeyorEnvironment.CacheSkipRestore
           </code>
           <div class="tip" id="1352">
             <strong>Signature:</strong> string<br />
@@ -438,7 +441,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1353', 1353)" onmouseover="showTip(event, '1353', 1353)">
-            CacheSkipSave
+            AppVeyorEnvironment.CacheSkipSave
           </code>
           <div class="tip" id="1353">
             <strong>Signature:</strong> string<br />
@@ -454,7 +457,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1354', 1354)" onmouseover="showTip(event, '1354', 1354)">
-            Configuration
+            AppVeyorEnvironment.Configuration
           </code>
           <div class="tip" id="1354">
             <strong>Signature:</strong> string<br />
@@ -470,7 +473,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1355', 1355)" onmouseover="showTip(event, '1355', 1355)">
-            FileDownloadTimeout
+            AppVeyorEnvironment.FileDownloadTimeout
           </code>
           <div class="tip" id="1355">
             <strong>Signature:</strong> string<br />
@@ -486,7 +489,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1356', 1356)" onmouseover="showTip(event, '1356', 1356)">
-            IsForcedBuild
+            AppVeyorEnvironment.IsForcedBuild
           </code>
           <div class="tip" id="1356">
             <strong>Signature:</strong> string<br />
@@ -502,7 +505,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1357', 1357)" onmouseover="showTip(event, '1357', 1357)">
-            IsReBuild
+            AppVeyorEnvironment.IsReBuild
           </code>
           <div class="tip" id="1357">
             <strong>Signature:</strong> string<br />
@@ -518,7 +521,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1358', 1358)" onmouseover="showTip(event, '1358', 1358)">
-            IsScheduledBuild
+            AppVeyorEnvironment.IsScheduledBuild
           </code>
           <div class="tip" id="1358">
             <strong>Signature:</strong> string<br />
@@ -534,7 +537,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1359', 1359)" onmouseover="showTip(event, '1359', 1359)">
-            JobId
+            AppVeyorEnvironment.JobId
           </code>
           <div class="tip" id="1359">
             <strong>Signature:</strong> string<br />
@@ -550,7 +553,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1360', 1360)" onmouseover="showTip(event, '1360', 1360)">
-            JobName
+            AppVeyorEnvironment.JobName
           </code>
           <div class="tip" id="1360">
             <strong>Signature:</strong> string<br />
@@ -566,7 +569,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1361', 1361)" onmouseover="showTip(event, '1361', 1361)">
-            JobNumber
+            AppVeyorEnvironment.JobNumber
           </code>
           <div class="tip" id="1361">
             <strong>Signature:</strong> string<br />
@@ -582,7 +585,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1362', 1362)" onmouseover="showTip(event, '1362', 1362)">
-            Platform
+            AppVeyorEnvironment.Platform
           </code>
           <div class="tip" id="1362">
             <strong>Signature:</strong> string<br />
@@ -598,7 +601,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1363', 1363)" onmouseover="showTip(event, '1363', 1363)">
-            ProjectId
+            AppVeyorEnvironment.ProjectId
           </code>
           <div class="tip" id="1363">
             <strong>Signature:</strong> string<br />
@@ -614,7 +617,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1364', 1364)" onmouseover="showTip(event, '1364', 1364)">
-            ProjectName
+            AppVeyorEnvironment.ProjectName
           </code>
           <div class="tip" id="1364">
             <strong>Signature:</strong> string<br />
@@ -630,7 +633,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1365', 1365)" onmouseover="showTip(event, '1365', 1365)">
-            ProjectSlug
+            AppVeyorEnvironment.ProjectSlug
           </code>
           <div class="tip" id="1365">
             <strong>Signature:</strong> string<br />
@@ -646,7 +649,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1366', 1366)" onmouseover="showTip(event, '1366', 1366)">
-            PullRequestNumber
+            AppVeyorEnvironment.PullRequestNumber
           </code>
           <div class="tip" id="1366">
             <strong>Signature:</strong> string<br />
@@ -662,7 +665,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1367', 1367)" onmouseover="showTip(event, '1367', 1367)">
-            PullRequestTitle
+            AppVeyorEnvironment.PullRequestTitle
           </code>
           <div class="tip" id="1367">
             <strong>Signature:</strong> string<br />
@@ -678,7 +681,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1368', 1368)" onmouseover="showTip(event, '1368', 1368)">
-            RepoBranch
+            AppVeyorEnvironment.RepoBranch
           </code>
           <div class="tip" id="1368">
             <strong>Signature:</strong> string<br />
@@ -694,7 +697,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1369', 1369)" onmouseover="showTip(event, '1369', 1369)">
-            RepoCommit
+            AppVeyorEnvironment.RepoCommit
           </code>
           <div class="tip" id="1369">
             <strong>Signature:</strong> string<br />
@@ -710,7 +713,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1370', 1370)" onmouseover="showTip(event, '1370', 1370)">
-            RepoCommitAuthor
+            AppVeyorEnvironment.RepoCommitAuthor
           </code>
           <div class="tip" id="1370">
             <strong>Signature:</strong> string<br />
@@ -726,7 +729,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1371', 1371)" onmouseover="showTip(event, '1371', 1371)">
-            RepoCommitAuthorEmail
+            AppVeyorEnvironment.RepoCommitAuthorEmail(...)
           </code>
           <div class="tip" id="1371">
             <strong>Signature:</strong> string<br />
@@ -742,7 +745,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1372', 1372)" onmouseover="showTip(event, '1372', 1372)">
-            RepoCommitMessage
+            AppVeyorEnvironment.RepoCommitMessage
           </code>
           <div class="tip" id="1372">
             <strong>Signature:</strong> string<br />
@@ -758,7 +761,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1373', 1373)" onmouseover="showTip(event, '1373', 1373)">
-            RepoCommitMessageExtended
+            AppVeyorEnvironment.RepoCommitMessageExtended(...)
           </code>
           <div class="tip" id="1373">
             <strong>Signature:</strong> string<br />
@@ -774,7 +777,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1374', 1374)" onmouseover="showTip(event, '1374', 1374)">
-            RepoCommitTimestamp
+            AppVeyorEnvironment.RepoCommitTimestamp
           </code>
           <div class="tip" id="1374">
             <strong>Signature:</strong> string<br />
@@ -790,7 +793,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1375', 1375)" onmouseover="showTip(event, '1375', 1375)">
-            RepoName
+            AppVeyorEnvironment.RepoName
           </code>
           <div class="tip" id="1375">
             <strong>Signature:</strong> string<br />
@@ -806,7 +809,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1376', 1376)" onmouseover="showTip(event, '1376', 1376)">
-            RepoProvider
+            AppVeyorEnvironment.RepoProvider
           </code>
           <div class="tip" id="1376">
             <strong>Signature:</strong> string<br />
@@ -822,7 +825,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1377', 1377)" onmouseover="showTip(event, '1377', 1377)">
-            RepoScm
+            AppVeyorEnvironment.RepoScm
           </code>
           <div class="tip" id="1377">
             <strong>Signature:</strong> string<br />
@@ -838,7 +841,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1378', 1378)" onmouseover="showTip(event, '1378', 1378)">
-            RepositoryShallowCloneTimeout
+            AppVeyorEnvironment.RepositoryShallowCloneTimeout(...)
           </code>
           <div class="tip" id="1378">
             <strong>Signature:</strong> string<br />
@@ -854,7 +857,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1379', 1379)" onmouseover="showTip(event, '1379', 1379)">
-            RepoTag
+            AppVeyorEnvironment.RepoTag
           </code>
           <div class="tip" id="1379">
             <strong>Signature:</strong> bool<br />
@@ -870,7 +873,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1380', 1380)" onmouseover="showTip(event, '1380', 1380)">
-            RepoTagName
+            AppVeyorEnvironment.RepoTagName
           </code>
           <div class="tip" id="1380">
             <strong>Signature:</strong> string<br />
@@ -989,7 +992,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

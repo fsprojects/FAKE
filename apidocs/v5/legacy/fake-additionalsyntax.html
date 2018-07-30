@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -290,8 +293,8 @@
             ( ? ) f s
           </code>
           <div class="tip" id="11">
-            <strong>Signature:</strong> f:(&#39;?10524 -&gt; &#39;?10525) -&gt; s:&#39;?10524 -&gt; &#39;?10525<br />
-                          <strong>Type parameters:</strong> '?10524, '?10525                            <span>
+            <strong>Signature:</strong> f:(&#39;?10540 -&gt; &#39;?10541) -&gt; s:&#39;?10540 -&gt; &#39;?10541<br />
+                          <strong>Type parameters:</strong> '?10540, '?10541                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(?)&quot;)&gt;]<br />
                 </span>
@@ -318,8 +321,8 @@
             ( ?&lt;- ) f str action
           </code>
           <div class="tip" id="12">
-            <strong>Signature:</strong> f:(&#39;?10527 -&gt; &#39;?10528 -&gt; &#39;?10529) -&gt; str:&#39;?10527 -&gt; action:&#39;?10528 -&gt; &#39;?10529<br />
-                          <strong>Type parameters:</strong> '?10527, '?10528, '?10529                            <span>
+            <strong>Signature:</strong> f:(&#39;?10543 -&gt; &#39;?10544 -&gt; &#39;?10545) -&gt; str:&#39;?10543 -&gt; action:&#39;?10544 -&gt; &#39;?10545<br />
+                          <strong>Type parameters:</strong> '?10543, '?10544, '?10545                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.Core.Target instead (FAKE0001 - package: Fake.Core.Target - member: Fake.Core.TargetOperators.(?&lt;-)&quot;)&gt;]<br />
                 </span>
@@ -483,7 +486,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
-            addDependenciesOnSameLevel (...)
+            addDependenciesOnSameLevel(...)
           </code>
           <div class="tip" id="18">
             <strong>Signature:</strong> target:string -&gt; dependency:string -&gt; unit<br />
@@ -511,7 +514,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
-            addSoftDependenciesOnSameLevel (...)
+            addSoftDependenciesOnSameLevel(...)
           </code>
           <div class="tip" id="19">
             <strong>Signature:</strong> target:string -&gt; dependency:string -&gt; unit<br />
@@ -542,8 +545,8 @@
             And x y
           </code>
           <div class="tip" id="20">
-            <strong>Signature:</strong> x:&#39;?10534 -&gt; y:&#39;?10534 list -&gt; &#39;?10534 list<br />
-                          <strong>Type parameters:</strong> '?10534                            <span>
+            <strong>Signature:</strong> x:&#39;?10550 -&gt; y:&#39;?10550 list -&gt; &#39;?10550 list<br />
+                          <strong>Type parameters:</strong> '?10550                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
                 </span>
@@ -567,11 +570,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
-            Dependency x
+            Dependency(x)
           </code>
           <div class="tip" id="21">
-            <strong>Signature:</strong> x:&#39;?10532 -&gt; &#39;?10532 list<br />
-                          <strong>Type parameters:</strong> '?10532                            <span>
+            <strong>Signature:</strong> x:&#39;?10548 -&gt; &#39;?10548 list<br />
+                          <strong>Type parameters:</strong> '?10548                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Please open an issue and tell us why you need it! (FAKE0002 - no longer supported)&quot;)&gt;]<br />
                 </span>
@@ -623,7 +626,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
-            Run targetName
+            Run(targetName)
           </code>
           <div class="tip" id="23">
             <strong>Signature:</strong> targetName:string -&gt; unit<br />
@@ -651,7 +654,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
-            RunParameterTargetOrDefault (...)
+            RunParameterTargetOrDefault(...)
           </code>
           <div class="tip" id="24">
             <strong>Signature:</strong> parameterName:string -&gt; defaultTarget:string -&gt; unit<br />
@@ -679,7 +682,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
-            RunTarget ()
+            RunTarget()
           </code>
           <div class="tip" id="25">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -707,7 +710,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
-            RunTargetOrDefault defaultTarget
+            RunTargetOrDefault(defaultTarget)
           </code>
           <div class="tip" id="26">
             <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
@@ -735,7 +738,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
-            RunTargetOrListTargets ()
+            RunTargetOrListTargets()
           </code>
           <div class="tip" id="27">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -894,7 +897,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

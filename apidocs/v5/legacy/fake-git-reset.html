@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -286,10 +289,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1811', 1811)" onmouseover="showTip(event, '1811', 1811)">
+          <code onmouseout="hideTip(event, '1815', 1815)" onmouseover="showTip(event, '1815', 1815)">
             hard repositoryDir commit file
           </code>
-          <div class="tip" id="1811">
+          <div class="tip" id="1815">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -321,10 +324,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1812', 1812)" onmouseover="showTip(event, '1812', 1812)">
+          <code onmouseout="hideTip(event, '1816', 1816)" onmouseover="showTip(event, '1816', 1816)">
             mixed repositoryDir commit file
           </code>
-          <div class="tip" id="1812">
+          <div class="tip" id="1816">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -356,10 +359,10 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1813', 1813)" onmouseover="showTip(event, '1813', 1813)">
-            ResetHard repositoryDir
+          <code onmouseout="hideTip(event, '1817', 1817)" onmouseover="showTip(event, '1817', 1817)">
+            ResetHard(repositoryDir)
           </code>
-          <div class="tip" id="1813">
+          <div class="tip" id="1817">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -389,10 +392,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1814', 1814)" onmouseover="showTip(event, '1814', 1814)">
-            ResetMixed repositoryDir
+          <code onmouseout="hideTip(event, '1818', 1818)" onmouseover="showTip(event, '1818', 1818)">
+            ResetMixed(repositoryDir)
           </code>
-          <div class="tip" id="1814">
+          <div class="tip" id="1818">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -422,10 +425,10 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1815', 1815)" onmouseover="showTip(event, '1815', 1815)">
-            ResetSoft repositoryDir
+          <code onmouseout="hideTip(event, '1819', 1819)" onmouseover="showTip(event, '1819', 1819)">
+            ResetSoft(repositoryDir)
           </code>
-          <div class="tip" id="1815">
+          <div class="tip" id="1819">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -455,10 +458,10 @@ Does not touch the index file nor the working tree at all.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1816', 1816)" onmouseover="showTip(event, '1816', 1816)">
+          <code onmouseout="hideTip(event, '1820', 1820)" onmouseover="showTip(event, '1820', 1820)">
             soft repositoryDir commit file
           </code>
-          <div class="tip" id="1816">
+          <div class="tip" id="1820">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -594,7 +597,7 @@ Does not touch the index file nor the working tree at all.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

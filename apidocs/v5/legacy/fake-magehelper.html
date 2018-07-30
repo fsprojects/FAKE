@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -389,7 +392,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
-            MageCreateApp mp
+            MageCreateApp(mp)
           </code>
           <div class="tip" id="508">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -417,7 +420,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '509', 509)" onmouseover="showTip(event, '509', 509)">
-            MageDeployApp mp
+            MageDeployApp(mp)
           </code>
           <div class="tip" id="509">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -445,7 +448,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '510', 510)" onmouseover="showTip(event, '510', 510)">
-            MageRun mp
+            MageRun(mp)
           </code>
           <div class="tip" id="510">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -501,7 +504,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '512', 512)" onmouseover="showTip(event, '512', 512)">
-            MageSignDeploy mp
+            MageSignDeploy(mp)
           </code>
           <div class="tip" id="512">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -529,7 +532,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
-            MageSignManifest mp
+            MageSignManifest(mp)
           </code>
           <div class="tip" id="513">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -557,7 +560,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '514', 514)" onmouseover="showTip(event, '514', 514)">
-            MageUpdateApp mp
+            MageUpdateApp(mp)
           </code>
           <div class="tip" id="514">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -585,7 +588,7 @@ a temporary certificate. And the latter one can be shared in the source control.
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '515', 515)" onmouseover="showTip(event, '515', 515)">
-            MageUpdateDeploy mp
+            MageUpdateDeploy(mp)
           </code>
           <div class="tip" id="515">
             <strong>Signature:</strong> mp:MageParams -&gt; unit<br />
@@ -714,7 +717,7 @@ a temporary certificate. And the latter one can be shared in the source control.
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

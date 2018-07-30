@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -353,7 +356,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '223', 223)" onmouseover="showTip(event, '223', 223)">
-            AlwaysSetProcessEncoding
+            Process.AlwaysSetProcessEncoding
           </code>
           <div class="tip" id="223">
             <strong>Signature:</strong> bool<br />
@@ -374,7 +377,7 @@ If set to false (default) only mono processes will be changed.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '224', 224)" onmouseover="showTip(event, '224', 224)">
-            asyncShellExec(args)
+            Process.asyncShellExec(args)
           </code>
           <div class="tip" id="224">
             <strong>Signature:</strong> args:ExecParams -&gt; Async&lt;int&gt;<br />
@@ -397,7 +400,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '225', 225)" onmouseover="showTip(event, '225', 225)">
-            createEnvironmentMap()
+            Process.createEnvironmentMap()
           </code>
           <div class="tip" id="225">
             <strong>Signature:</strong> unit -&gt; Map&lt;string,string&gt;<br />
@@ -415,7 +418,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '226', 226)" onmouseover="showTip(event, '226', 226)">
-            defaultEnvVar
+            Process.defaultEnvVar
           </code>
           <div class="tip" id="226">
             <strong>Signature:</strong> string<br />
@@ -433,7 +436,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '227', 227)" onmouseover="showTip(event, '227', 227)">
-            directExec(configProcessStartInfoF)
+            Process.directExec(...)
           </code>
           <div class="tip" id="227">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; bool<br />
@@ -453,7 +456,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '228', 228)" onmouseover="showTip(event, '228', 228)">
-            disableRedirectOutput(startInfo)
+            Process.disableRedirectOutput(startInfo)
           </code>
           <div class="tip" id="228">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
@@ -471,7 +474,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '229', 229)" onmouseover="showTip(event, '229', 229)">
-            disableShellExecute(startInfo)
+            Process.disableShellExecute(startInfo)
           </code>
           <div class="tip" id="229">
             <strong>Signature:</strong> startInfo:ProcStartInfo -&gt; ProcStartInfo<br />
@@ -489,7 +492,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '230', 230)" onmouseover="showTip(event, '230', 230)">
-            ensureProcessesHaveStopped(name timeout)
+            Process.ensureProcessesHaveStopped(...)
           </code>
           <div class="tip" id="230">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
@@ -514,7 +517,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '231', 231)" onmouseover="showTip(event, '231', 231)">
-            execElevated(cmd args timeOut)
+            Process.execElevated cmd args timeOut
           </code>
           <div class="tip" id="231">
             <strong>Signature:</strong> cmd:string -&gt; args:string -&gt; timeOut:TimeSpan -&gt; int<br />
@@ -548,7 +551,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '232', 232)" onmouseover="showTip(event, '232', 232)">
-            execRaw(...)
+            Process.execRaw(...)
           </code>
           <div class="tip" id="232">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
@@ -576,7 +579,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '233', 233)" onmouseover="showTip(event, '233', 233)">
-            execSimple(...)
+            Process.execSimple(...)
           </code>
           <div class="tip" id="233">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; timeOut:TimeSpan -&gt; int<br />
@@ -609,7 +612,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '234', 234)" onmouseover="showTip(event, '234', 234)">
-            execWithResult(...)
+            Process.execWithResult(...)
           </code>
           <div class="tip" id="234">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; timeOut:TimeSpan -&gt; ProcessResult<br />
@@ -634,7 +637,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '235', 235)" onmouseover="showTip(event, '235', 235)">
-            findFilesOnPath(file)
+            Process.findFilesOnPath(file)
           </code>
           <div class="tip" id="235">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
@@ -654,7 +657,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '236', 236)" onmouseover="showTip(event, '236', 236)">
-            fireAndForget(configProcessStartInfoF)
+            Process.fireAndForget(...)
           </code>
           <div class="tip" id="236">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; unit<br />
@@ -674,7 +677,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '237', 237)" onmouseover="showTip(event, '237', 237)">
-            getAllByName(name)
+            Process.getAllByName(name)
           </code>
           <div class="tip" id="237">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
@@ -694,7 +697,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '238', 238)" onmouseover="showTip(event, '238', 238)">
-            getProc(config)
+            Process.getProc(config)
           </code>
           <div class="tip" id="238">
             <strong>Signature:</strong> config:(ProcStartInfo -&gt; ProcStartInfo) -&gt; Process<br />
@@ -712,7 +715,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '239', 239)" onmouseover="showTip(event, '239', 239)">
-            getProcessesByName(name)
+            Process.getProcessesByName(name)
           </code>
           <div class="tip" id="239">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
@@ -738,7 +741,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '240', 240)" onmouseover="showTip(event, '240', 240)">
-            getRedirectOutputToTrace()
+            Process.getRedirectOutputToTrace()
           </code>
           <div class="tip" id="240">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -756,7 +759,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '241', 241)" onmouseover="showTip(event, '241', 241)">
-            kill(proc)
+            Process.kill(proc)
           </code>
           <div class="tip" id="241">
             <strong>Signature:</strong> proc:Process -&gt; unit<br />
@@ -776,7 +779,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '242', 242)" onmouseover="showTip(event, '242', 242)">
-            killAllByName(name)
+            Process.killAllByName(name)
           </code>
           <div class="tip" id="242">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -796,7 +799,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '243', 243)" onmouseover="showTip(event, '243', 243)">
-            killAllCreatedProcesses()
+            Process.killAllCreatedProcesses()
           </code>
           <div class="tip" id="243">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -816,7 +819,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '244', 244)" onmouseover="showTip(event, '244', 244)">
-            killById(id)
+            Process.killById(id)
           </code>
           <div class="tip" id="244">
             <strong>Signature:</strong> id:int -&gt; unit<br />
@@ -836,7 +839,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
-            killFSI()
+            Process.killFSI()
           </code>
           <div class="tip" id="245">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -856,7 +859,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '246', 246)" onmouseover="showTip(event, '246', 246)">
-            killMSBuild()
+            Process.killMSBuild()
           </code>
           <div class="tip" id="246">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -876,7 +879,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '247', 247)" onmouseover="showTip(event, '247', 247)">
-            killProcess(name)
+            Process.killProcess(name)
           </code>
           <div class="tip" id="247">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -902,7 +905,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '248', 248)" onmouseover="showTip(event, '248', 248)">
-            killProcessById(id)
+            Process.killProcessById(id)
           </code>
           <div class="tip" id="248">
             <strong>Signature:</strong> id:int -&gt; unit<br />
@@ -928,7 +931,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '249', 249)" onmouseover="showTip(event, '249', 249)">
-            monoVersion
+            Process.monoVersion
           </code>
           <div class="tip" id="249">
             <strong>Signature:</strong> (string * Version option) option<br />
@@ -946,7 +949,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '250', 250)" onmouseover="showTip(event, '250', 250)">
-            ProcessEncoding
+            Process.ProcessEncoding
           </code>
           <div class="tip" id="250">
             <strong>Signature:</strong> Encoding<br />
@@ -966,7 +969,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '251', 251)" onmouseover="showTip(event, '251', 251)">
-            redirectOutput(startInfo)
+            Process.redirectOutput(startInfo)
           </code>
           <div class="tip" id="251">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
@@ -984,7 +987,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '252', 252)" onmouseover="showTip(event, '252', 252)">
-            removeEnvironmentVariable(...)
+            Process.removeEnvironmentVariable(...)
           </code>
           <div class="tip" id="252">
             <strong>Signature:</strong> envKey:string -&gt; startInfo:^a -&gt; ^a<br />
@@ -1004,7 +1007,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '253', 253)" onmouseover="showTip(event, '253', 253)">
-            setCurrentEnvironmentVariables(...)
+            Process.setCurrentEnvironmentVariables(...)
           </code>
           <div class="tip" id="253">
             <strong>Signature:</strong> startInfo:^a -&gt; ^a<br />
@@ -1024,7 +1027,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
-            setEnableProcessTracing
+            Process.setEnableProcessTracing
           </code>
           <div class="tip" id="254">
             <strong>Signature:</strong> bool -&gt; unit<br />
@@ -1042,7 +1045,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
-            setEnvironment(map startInfo)
+            Process.setEnvironment map startInfo
           </code>
           <div class="tip" id="255">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; startInfo:^a -&gt; ^a<br />
@@ -1060,7 +1063,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
-            setEnvironmentVariable(...)
+            Process.setEnvironmentVariable(...)
           </code>
           <div class="tip" id="256">
             <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; startInfo:^a -&gt; ^a<br />
@@ -1081,7 +1084,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
-            setEnvironmentVariables(vars startInfo)
+            Process.setEnvironmentVariables(...)
           </code>
           <div class="tip" id="257">
             <strong>Signature:</strong> vars:seq&lt;string * string&gt; -&gt; startInfo:^a -&gt; ^a<br />
@@ -1101,7 +1104,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
-            setKillCreatedProcesses(enable)
+            Process.setKillCreatedProcesses(enable)
           </code>
           <div class="tip" id="258">
             <strong>Signature:</strong> enable:bool -&gt; unit<br />
@@ -1119,7 +1122,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
-            setRedirectOutput(...)
+            Process.setRedirectOutput(...)
           </code>
           <div class="tip" id="259">
             <strong>Signature:</strong> shouldRedirect:bool -&gt; startInfo:^a -&gt; ^a<br />
@@ -1137,7 +1140,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
-            setRedirectOutputToTrace
+            Process.setRedirectOutputToTrace
           </code>
           <div class="tip" id="260">
             <strong>Signature:</strong> bool -&gt; unit<br />
@@ -1155,7 +1158,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
-            shouldEnableProcessTracing()
+            Process.shouldEnableProcessTracing()
           </code>
           <div class="tip" id="261">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -1173,7 +1176,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '262', 262)" onmouseover="showTip(event, '262', 262)">
-            shouldKillCreatedProcesses()
+            Process.shouldKillCreatedProcesses()
           </code>
           <div class="tip" id="262">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -1191,7 +1194,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '263', 263)" onmouseover="showTip(event, '263', 263)">
-            start(configProcessStartInfoF)
+            Process.start(configProcessStartInfoF)
           </code>
           <div class="tip" id="263">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcStartInfo -&gt; ProcStartInfo) -&gt; unit<br />
@@ -1211,7 +1214,7 @@ Existing values will be overriden.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
-            tryFindFileOnPath(file)
+            Process.tryFindFileOnPath(file)
           </code>
           <div class="tip" id="264">
             <strong>Signature:</strong> file:string -&gt; string option<br />
@@ -1237,7 +1240,7 @@ path to the file.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
-            tryFindTool(envVar tool)
+            Process.tryFindTool envVar tool
           </code>
           <div class="tip" id="265">
             <strong>Signature:</strong> envVar:string -&gt; tool:string -&gt; string option<br />
@@ -1257,7 +1260,7 @@ path to the file.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
-            withFramework(proc)
+            Process.withFramework(proc)
           </code>
           <div class="tip" id="266">
             <strong>Signature:</strong> proc:ProcStartInfo -&gt; ProcStartInfo<br />
@@ -1380,7 +1383,7 @@ path to the file.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

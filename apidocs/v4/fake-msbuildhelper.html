@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -448,7 +451,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '483', 483)" onmouseover="showTip(event, '483', 483)">
-            BuildWebsiteConfig (...)
+            BuildWebsiteConfig(...)
           </code>
           <div class="tip" id="483">
             <strong>Signature:</strong> outputPath:string -&gt; configuration:string -&gt; projectFile:string -&gt; unit<br />
@@ -491,7 +494,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '485', 485)" onmouseover="showTip(event, '485', 485)">
-            BuildWebsitesConfig (...)
+            BuildWebsitesConfig(...)
           </code>
           <div class="tip" id="485">
             <strong>Signature:</strong> outputPath:string -&gt; configuration:string -&gt; projectFiles:seq&lt;string&gt; -&gt; unit<br />
@@ -513,7 +516,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '486', 486)" onmouseover="showTip(event, '486', 486)">
-            getAllKnownPaths 
+            getAllKnownPaths
           </code>
           <div class="tip" id="486">
             <strong>Signature:</strong> string list<br />
@@ -527,7 +530,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '487', 487)" onmouseover="showTip(event, '487', 487)">
-            knownMsBuildEntries 
+            knownMsBuildEntries
           </code>
           <div class="tip" id="487">
             <strong>Signature:</strong> MsBuildEntry list<br />
@@ -541,7 +544,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '488', 488)" onmouseover="showTip(event, '488', 488)">
-            monoVersionToUseMSBuildOn 
+            monoVersionToUseMSBuildOn
           </code>
           <div class="tip" id="488">
             <strong>Signature:</strong> Version<br />
@@ -558,7 +561,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '489', 489)" onmouseover="showTip(event, '489', 489)">
-            MSBuild (...)
+            MSBuild(...)
           </code>
           <div class="tip" id="489">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; properties:(string * string) list -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
@@ -603,7 +606,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '491', 491)" onmouseover="showTip(event, '491', 491)">
-            MSBuildDefaults 
+            MSBuildDefaults
           </code>
           <div class="tip" id="491">
             <strong>Signature:</strong> MSBuildParams<br />
@@ -619,7 +622,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '492', 492)" onmouseover="showTip(event, '492', 492)">
-            msBuildExe 
+            msBuildExe
           </code>
           <div class="tip" id="492">
             <strong>Signature:</strong> string<br />
@@ -649,7 +652,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
-            MSBuildLoggers 
+            MSBuildLoggers
           </code>
           <div class="tip" id="493">
             <strong>Signature:</strong> string list<br />
@@ -665,7 +668,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
-            MSBuildRelease (...)
+            MSBuildRelease(...)
           </code>
           <div class="tip" id="494">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
@@ -687,7 +690,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
-            MSBuildReleaseExt (...)
+            MSBuildReleaseExt(...)
           </code>
           <div class="tip" id="495">
             <strong>Signature:</strong> outputPath:string -&gt; properties:(string * string) list -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
@@ -731,7 +734,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
-            MSBuildWithProjectProperties (...)
+            MSBuildWithProjectProperties(...)
           </code>
           <div class="tip" id="497">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; properties:(string -&gt; (string * string) list) -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
@@ -754,7 +757,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
-            oldMsBuildLocations 
+            oldMsBuildLocations
           </code>
           <div class="tip" id="498">
             <strong>Signature:</strong> string list<br />
@@ -768,7 +771,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
-            toDict items
+            toDict(items)
           </code>
           <div class="tip" id="499">
             <strong>Signature:</strong> items:seq&lt;MsBuildEntry&gt; -&gt; Map&lt;string,string list&gt;<br />
@@ -885,7 +888,7 @@ NOTE: in System.Version 5.0 &gt;= 5.0.0.0 is false while 5.0.0.0 &gt;= 5.0 is tr
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

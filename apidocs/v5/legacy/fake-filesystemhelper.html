@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -287,7 +290,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '405', 405)" onmouseover="showTip(event, '405', 405)">
-            allFilesExist files
+            allFilesExist(files)
           </code>
           <div class="tip" id="405">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; bool<br />
@@ -315,7 +318,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '406', 406)" onmouseover="showTip(event, '406', 406)">
-            checkFileExists fileName
+            checkFileExists(fileName)
           </code>
           <div class="tip" id="406">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
@@ -343,7 +346,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '407', 407)" onmouseover="showTip(event, '407', 407)">
-            currentDirectory 
+            currentDirectory
           </code>
           <div class="tip" id="407">
             <strong>Signature:</strong> string<br />
@@ -363,7 +366,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '408', 408)" onmouseover="showTip(event, '408', 408)">
-            directoryExists dir
+            directoryExists(dir)
           </code>
           <div class="tip" id="408">
             <strong>Signature:</strong> dir:string -&gt; bool<br />
@@ -391,7 +394,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '409', 409)" onmouseover="showTip(event, '409', 409)">
-            directoryInfo path
+            directoryInfo(path)
           </code>
           <div class="tip" id="409">
             <strong>Signature:</strong> path:string -&gt; DirectoryInfo<br />
@@ -419,7 +422,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '410', 410)" onmouseover="showTip(event, '410', 410)">
-            DirectoryName fileName
+            DirectoryName(fileName)
           </code>
           <div class="tip" id="410">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
@@ -447,7 +450,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '411', 411)" onmouseover="showTip(event, '411', 411)">
-            ensureDirectory dir
+            ensureDirectory(dir)
           </code>
           <div class="tip" id="411">
             <strong>Signature:</strong> dir:string -&gt; unit<br />
@@ -475,7 +478,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '412', 412)" onmouseover="showTip(event, '412', 412)">
-            ensureDirExists dir
+            ensureDirExists(dir)
           </code>
           <div class="tip" id="412">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; unit<br />
@@ -503,7 +506,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
-            fileExists fileName
+            fileExists(fileName)
           </code>
           <div class="tip" id="413">
             <strong>Signature:</strong> fileName:string -&gt; bool<br />
@@ -531,7 +534,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
-            fileInfo path
+            fileInfo(path)
           </code>
           <div class="tip" id="414">
             <strong>Signature:</strong> path:string -&gt; FileInfo<br />
@@ -559,7 +562,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
-            filesInDir dir
+            filesInDir(dir)
           </code>
           <div class="tip" id="415">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; FileInfo []<br />
@@ -643,7 +646,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
-            fileSystemInfo path
+            fileSystemInfo(path)
           </code>
           <div class="tip" id="418">
             <strong>Signature:</strong> path:string -&gt; FileSystemInfo<br />
@@ -699,7 +702,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
-            fullAssemblyPath 
+            fullAssemblyPath
           </code>
           <div class="tip" id="420">
             <strong>Signature:</strong> string<br />
@@ -719,7 +722,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '421', 421)" onmouseover="showTip(event, '421', 421)">
-            FullName fileName
+            FullName(fileName)
           </code>
           <div class="tip" id="421">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
@@ -747,7 +750,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '422', 422)" onmouseover="showTip(event, '422', 422)">
-            isDirectory path
+            isDirectory(path)
           </code>
           <div class="tip" id="422">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -767,7 +770,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '423', 423)" onmouseover="showTip(event, '423', 423)">
-            isFile path
+            isFile(path)
           </code>
           <div class="tip" id="423">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -843,7 +846,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '426', 426)" onmouseover="showTip(event, '426', 426)">
-            isValidPath path
+            isValidPath(path)
           </code>
           <div class="tip" id="426">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -863,7 +866,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
-            normalizeFileName fileName
+            normalizeFileName(fileName)
           </code>
           <div class="tip" id="427">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
@@ -883,7 +886,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '428', 428)" onmouseover="showTip(event, '428', 428)">
-            subDirectories dir
+            subDirectories(dir)
           </code>
           <div class="tip" id="428">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; DirectoryInfo []<br />
@@ -1042,7 +1045,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

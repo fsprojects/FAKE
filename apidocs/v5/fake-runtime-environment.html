@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -287,10 +290,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '914', 914)" onmouseover="showTip(event, '914', 914)">
-            environVar name
+          <code onmouseout="hideTip(event, '951', 951)" onmouseover="showTip(event, '951', 951)">
+            environVar(name)
           </code>
-          <div class="tip" id="914">
+          <div class="tip" id="951">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                   </div>
         </td>
@@ -307,10 +310,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '915', 915)" onmouseover="showTip(event, '915', 915)">
+          <code onmouseout="hideTip(event, '952', 952)" onmouseover="showTip(event, '952', 952)">
             environVarOrDefault name defaultValue
           </code>
-          <div class="tip" id="915">
+          <div class="tip" id="952">
             <strong>Signature:</strong> name:string -&gt; defaultValue:string -&gt; string<br />
                                   </div>
         </td>
@@ -327,10 +330,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
-            environVarOrFail name
+          <code onmouseout="hideTip(event, '953', 953)" onmouseover="showTip(event, '953', 953)">
+            environVarOrFail(name)
           </code>
-          <div class="tip" id="916">
+          <div class="tip" id="953">
             <strong>Signature:</strong> name:string -&gt; string<br />
                                   </div>
         </td>
@@ -347,10 +350,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
-            environVarOrNone name
+          <code onmouseout="hideTip(event, '954', 954)" onmouseover="showTip(event, '954', 954)">
+            environVarOrNone(name)
           </code>
-          <div class="tip" id="917">
+          <div class="tip" id="954">
             <strong>Signature:</strong> name:string -&gt; string option<br />
                                   </div>
         </td>
@@ -367,10 +370,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
-            environVars ()
+          <code onmouseout="hideTip(event, '955', 955)" onmouseover="showTip(event, '955', 955)">
+            environVars()
           </code>
-          <div class="tip" id="918">
+          <div class="tip" id="955">
             <strong>Signature:</strong> unit -&gt; (obj * obj) list<br />
                                   </div>
         </td>
@@ -387,10 +390,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
-            fakeVersion 
+          <code onmouseout="hideTip(event, '956', 956)" onmouseover="showTip(event, '956', 956)">
+            fakeVersion
           </code>
-          <div class="tip" id="919">
+          <div class="tip" id="956">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -407,10 +410,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
-            fakeVersionStr 
+          <code onmouseout="hideTip(event, '957', 957)" onmouseover="showTip(event, '957', 957)">
+            fakeVersionStr
           </code>
-          <div class="tip" id="920">
+          <div class="tip" id="957">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -427,10 +430,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
-            getEnvironmentVarAsBool varName
+          <code onmouseout="hideTip(event, '958', 958)" onmouseover="showTip(event, '958', 958)">
+            getEnvironmentVarAsBool(varName)
           </code>
-          <div class="tip" id="921">
+          <div class="tip" id="958">
             <strong>Signature:</strong> varName:string -&gt; bool<br />
                                   </div>
         </td>
@@ -447,10 +450,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '922', 922)" onmouseover="showTip(event, '922', 922)">
-            getEnvironmentVarAsBoolOrDefault (...)
+          <code onmouseout="hideTip(event, '959', 959)" onmouseover="showTip(event, '959', 959)">
+            getEnvironmentVarAsBoolOrDefault(...)
           </code>
-          <div class="tip" id="922">
+          <div class="tip" id="959">
             <strong>Signature:</strong> varName:string -&gt; defaultValue:bool -&gt; bool<br />
                                   </div>
         </td>
@@ -467,10 +470,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '923', 923)" onmouseover="showTip(event, '923', 923)">
-            hasEnvironVar name
+          <code onmouseout="hideTip(event, '960', 960)" onmouseover="showTip(event, '960', 960)">
+            hasEnvironVar(name)
           </code>
-          <div class="tip" id="923">
+          <div class="tip" id="960">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                                   </div>
         </td>
@@ -487,10 +490,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '924', 924)" onmouseover="showTip(event, '924', 924)">
+          <code onmouseout="hideTip(event, '961', 961)" onmouseover="showTip(event, '961', 961)">
             setEnvironVar name value
           </code>
-          <div class="tip" id="924">
+          <div class="tip" id="961">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                                   </div>
         </td>
@@ -611,7 +614,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

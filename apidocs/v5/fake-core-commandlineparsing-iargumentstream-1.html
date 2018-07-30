@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -281,10 +284,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1577', 1577)" onmouseover="showTip(event, '1577', 1577)">
-            Argv
+          <code onmouseout="hideTip(event, '1616', 1616)" onmouseover="showTip(event, '1616', 1616)">
+            x.Argv
           </code>
-          <div class="tip" id="1577">
+          <div class="tip" id="1616">
             <strong>Signature:</strong> string array<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -300,10 +303,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1578', 1578)" onmouseover="showTip(event, '1578', 1578)">
-            CurrentState
+          <code onmouseout="hideTip(event, '1617', 1617)" onmouseover="showTip(event, '1617', 1617)">
+            x.CurrentState
           </code>
-          <div class="tip" id="1578">
+          <div class="tip" id="1617">
             <strong>Signature:</strong> IArgumentStreamState&lt;&#39;TUserState&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -319,10 +322,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1579', 1579)" onmouseover="showTip(event, '1579', 1579)">
-            IsEnd
+          <code onmouseout="hideTip(event, '1618', 1618)" onmouseover="showTip(event, '1618', 1618)">
+            x.IsEnd
           </code>
-          <div class="tip" id="1579">
+          <div class="tip" id="1618">
             <strong>Signature:</strong> bool<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -338,10 +341,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1580', 1580)" onmouseover="showTip(event, '1580', 1580)">
-            Peek()
+          <code onmouseout="hideTip(event, '1619', 1619)" onmouseover="showTip(event, '1619', 1619)">
+            x.Peek()
           </code>
-          <div class="tip" id="1580">
+          <div class="tip" id="1619">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -357,10 +360,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1581', 1581)" onmouseover="showTip(event, '1581', 1581)">
-            PeekFull()
+          <code onmouseout="hideTip(event, '1620', 1620)" onmouseover="showTip(event, '1620', 1620)">
+            x.PeekFull()
           </code>
-          <div class="tip" id="1581">
+          <div class="tip" id="1620">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -376,10 +379,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1582', 1582)" onmouseover="showTip(event, '1582', 1582)">
-            Position
+          <code onmouseout="hideTip(event, '1621', 1621)" onmouseover="showTip(event, '1621', 1621)">
+            x.Position
           </code>
-          <div class="tip" id="1582">
+          <div class="tip" id="1621">
             <strong>Signature:</strong> ArgumentStreamPosition<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -395,10 +398,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1583', 1583)" onmouseover="showTip(event, '1583', 1583)">
-            Read()
+          <code onmouseout="hideTip(event, '1622', 1622)" onmouseover="showTip(event, '1622', 1622)">
+            x.Read()
           </code>
-          <div class="tip" id="1583">
+          <div class="tip" id="1622">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -414,10 +417,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1584', 1584)" onmouseover="showTip(event, '1584', 1584)">
-            ReadFull()
+          <code onmouseout="hideTip(event, '1623', 1623)" onmouseover="showTip(event, '1623', 1623)">
+            x.ReadFull()
           </code>
-          <div class="tip" id="1584">
+          <div class="tip" id="1623">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -433,10 +436,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1585', 1585)" onmouseover="showTip(event, '1585', 1585)">
-            RestoreState(arg1)
+          <code onmouseout="hideTip(event, '1624', 1624)" onmouseover="showTip(event, '1624', 1624)">
+            x.RestoreState(arg1)
           </code>
-          <div class="tip" id="1585">
+          <div class="tip" id="1624">
             <strong>Signature:</strong> IArgumentStreamState&lt;&#39;TUserState&gt; -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -452,10 +455,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1586', 1586)" onmouseover="showTip(event, '1586', 1586)">
-            Seek(arg1)
+          <code onmouseout="hideTip(event, '1625', 1625)" onmouseover="showTip(event, '1625', 1625)">
+            x.Seek(arg1)
           </code>
-          <div class="tip" id="1586">
+          <div class="tip" id="1625">
             <strong>Signature:</strong> ArgumentStreamPosition -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -471,10 +474,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1587', 1587)" onmouseover="showTip(event, '1587', 1587)">
-            Skip()
+          <code onmouseout="hideTip(event, '1626', 1626)" onmouseover="showTip(event, '1626', 1626)">
+            x.Skip()
           </code>
-          <div class="tip" id="1587">
+          <div class="tip" id="1626">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -490,10 +493,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1588', 1588)" onmouseover="showTip(event, '1588', 1588)">
-            SkipAndPeek()
+          <code onmouseout="hideTip(event, '1627', 1627)" onmouseover="showTip(event, '1627', 1627)">
+            x.SkipAndPeek()
           </code>
-          <div class="tip" id="1588">
+          <div class="tip" id="1627">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -509,10 +512,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1589', 1589)" onmouseover="showTip(event, '1589', 1589)">
-            SkipAndPeekFull()
+          <code onmouseout="hideTip(event, '1628', 1628)" onmouseover="showTip(event, '1628', 1628)">
+            x.SkipAndPeekFull()
           </code>
-          <div class="tip" id="1589">
+          <div class="tip" id="1628">
             <strong>Signature:</strong> unit -&gt; string option<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -528,10 +531,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1590', 1590)" onmouseover="showTip(event, '1590', 1590)">
-            SkipFull()
+          <code onmouseout="hideTip(event, '1629', 1629)" onmouseover="showTip(event, '1629', 1629)">
+            x.SkipFull()
           </code>
-          <div class="tip" id="1590">
+          <div class="tip" id="1629">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -547,10 +550,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1591', 1591)" onmouseover="showTip(event, '1591', 1591)">
-            StateTag
+          <code onmouseout="hideTip(event, '1630', 1630)" onmouseover="showTip(event, '1630', 1630)">
+            x.StateTag
           </code>
-          <div class="tip" id="1591">
+          <div class="tip" id="1630">
             <strong>Signature:</strong> int64<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -566,10 +569,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1592', 1592)" onmouseover="showTip(event, '1592', 1592)">
-            UpdateStateTag()
+          <code onmouseout="hideTip(event, '1631', 1631)" onmouseover="showTip(event, '1631', 1631)">
+            x.UpdateStateTag()
           </code>
-          <div class="tip" id="1592">
+          <div class="tip" id="1631">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -585,10 +588,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1593', 1593)" onmouseover="showTip(event, '1593', 1593)">
-            UserState()
+          <code onmouseout="hideTip(event, '1632', 1632)" onmouseover="showTip(event, '1632', 1632)">
+            x.UserState()
           </code>
-          <div class="tip" id="1593">
+          <div class="tip" id="1632">
             <strong>Signature:</strong> unit -&gt; &#39;TUserState<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -604,10 +607,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1594', 1594)" onmouseover="showTip(event, '1594', 1594)">
-            UserState()
+          <code onmouseout="hideTip(event, '1633', 1633)" onmouseover="showTip(event, '1633', 1633)">
+            x.UserState()
           </code>
-          <div class="tip" id="1594">
+          <div class="tip" id="1633">
             <strong>Signature:</strong> unit -&gt; unit<br />
               <strong>Modifiers:</strong> abstract<br />
                                   </div>
@@ -727,7 +730,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

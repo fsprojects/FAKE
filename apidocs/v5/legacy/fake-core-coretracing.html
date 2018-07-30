@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -281,7 +284,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
-            addListener l
+            addListener(l)
           </code>
           <div class="tip" id="1216">
             <strong>Signature:</strong> l:ITraceListener -&gt; unit<br />
@@ -299,7 +302,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
-            areListenersSet ()
+            areListenersSet()
           </code>
           <div class="tip" id="1217">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -317,7 +320,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
-            defaultConsoleTraceListener 
+            defaultConsoleTraceListener
           </code>
           <div class="tip" id="1218">
             <strong>Signature:</strong> ITraceListener<br />
@@ -337,7 +340,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1219', 1219)" onmouseover="showTip(event, '1219', 1219)">
-            ensureConsoleListener ()
+            ensureConsoleListener()
           </code>
           <div class="tip" id="1219">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -355,7 +358,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1220', 1220)" onmouseover="showTip(event, '1220', 1220)">
-            getListeners ()
+            getListeners()
           </code>
           <div class="tip" id="1220">
             <strong>Signature:</strong> unit -&gt; ITraceListener list<br />
@@ -373,7 +376,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1221', 1221)" onmouseover="showTip(event, '1221', 1221)">
-            importantMessagesToStdErr 
+            importantMessagesToStdErr
           </code>
           <div class="tip" id="1221">
             <strong>Signature:</strong> bool<br />
@@ -391,7 +394,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1222', 1222)" onmouseover="showTip(event, '1222', 1222)">
-            postMessage x
+            postMessage(x)
           </code>
           <div class="tip" id="1222">
             <strong>Signature:</strong> x:TraceData -&gt; unit<br />
@@ -411,7 +414,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1223', 1223)" onmouseover="showTip(event, '1223', 1223)">
-            setTraceListeners l
+            setTraceListeners(l)
           </code>
           <div class="tip" id="1223">
             <strong>Signature:</strong> l:ITraceListener list -&gt; unit<br />
@@ -429,7 +432,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1224', 1224)" onmouseover="showTip(event, '1224', 1224)">
-            setTraceListenersPrivate 
+            setTraceListenersPrivate
           </code>
           <div class="tip" id="1224">
             <strong>Signature:</strong> ITraceListener list -&gt; unit<br />
@@ -550,7 +553,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

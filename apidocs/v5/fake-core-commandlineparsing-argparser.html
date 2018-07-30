@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -308,8 +311,8 @@
             ( .&gt;&gt; ) p1 p2
           </code>
           <div class="tip" id="476">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10839,&#39;?10840&gt; -&gt; p2:ArgumentParser&lt;&#39;?10839,&#39;?10841&gt; -&gt; IArgumentStream&lt;&#39;?10839&gt; -&gt; Reply&lt;&#39;?10840&gt;<br />
-                          <strong>Type parameters:</strong> '?10839, '?10840, '?10841                      </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10836,&#39;?10837&gt; -&gt; p2:ArgumentParser&lt;&#39;?10836,&#39;?10838&gt; -&gt; IArgumentStream&lt;&#39;?10836&gt; -&gt; Reply&lt;&#39;?10837&gt;<br />
+                          <strong>Type parameters:</strong> '?10836, '?10837, '?10838                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L290-290" class="github-link">
@@ -326,8 +329,8 @@
             ( .&gt;&gt;. ) p1 p2
           </code>
           <div class="tip" id="477">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10843,&#39;?10844&gt; -&gt; p2:ArgumentParser&lt;&#39;?10843,&#39;?10845&gt; -&gt; IArgumentStream&lt;&#39;?10843&gt; -&gt; Reply&lt;&#39;?10844 * &#39;?10845&gt;<br />
-                          <strong>Type parameters:</strong> '?10843, '?10844, '?10845                      </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10840,&#39;?10841&gt; -&gt; p2:ArgumentParser&lt;&#39;?10840,&#39;?10842&gt; -&gt; IArgumentStream&lt;&#39;?10840&gt; -&gt; Reply&lt;&#39;?10841 * &#39;?10842&gt;<br />
+                          <strong>Type parameters:</strong> '?10840, '?10841, '?10842                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L291-291" class="github-link">
@@ -344,8 +347,8 @@
             ( |&gt;&gt; ) p f
           </code>
           <div class="tip" id="478">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10851,&#39;?10852&gt; -&gt; f:(&#39;?10852 -&gt; &#39;?10853) -&gt; IArgumentStream&lt;&#39;?10851&gt; -&gt; Reply&lt;&#39;?10853&gt;<br />
-                          <strong>Type parameters:</strong> '?10851, '?10852, '?10853                      </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10848,&#39;?10849&gt; -&gt; f:(&#39;?10849 -&gt; &#39;?10850) -&gt; IArgumentStream&lt;&#39;?10848&gt; -&gt; Reply&lt;&#39;?10850&gt;<br />
+                          <strong>Type parameters:</strong> '?10848, '?10849, '?10850                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L294-294" class="github-link">
@@ -380,8 +383,8 @@
             ( &lt;|&gt; ) p1 p2
           </code>
           <div class="tip" id="480">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10864,&#39;?10865&gt; -&gt; p2:ArgumentParser&lt;&#39;?10864,&#39;?10865&gt; -&gt; IArgumentStream&lt;&#39;?10864&gt; -&gt; Reply&lt;&#39;?10865&gt;<br />
-                          <strong>Type parameters:</strong> '?10864, '?10865                      </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10861,&#39;?10862&gt; -&gt; p2:ArgumentParser&lt;&#39;?10861,&#39;?10862&gt; -&gt; IArgumentStream&lt;&#39;?10861&gt; -&gt; Reply&lt;&#39;?10862&gt;<br />
+                          <strong>Type parameters:</strong> '?10861, '?10862                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L357-357" class="github-link">
@@ -398,8 +401,8 @@
             ( &gt;&gt;% ) p x
           </code>
           <div class="tip" id="481">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10831,&#39;?10832&gt; -&gt; x:&#39;?10833 -&gt; IArgumentStream&lt;&#39;?10831&gt; -&gt; Reply&lt;&#39;?10833&gt;<br />
-                          <strong>Type parameters:</strong> '?10831, '?10832, '?10833                      </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10828,&#39;?10829&gt; -&gt; x:&#39;?10830 -&gt; IArgumentStream&lt;&#39;?10828&gt; -&gt; Reply&lt;&#39;?10830&gt;<br />
+                          <strong>Type parameters:</strong> '?10828, '?10829, '?10830                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L288-288" class="github-link">
@@ -416,8 +419,8 @@
             ( &gt;&gt;. ) p1 p2
           </code>
           <div class="tip" id="482">
-            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10835,&#39;?10836&gt; -&gt; p2:ArgumentParser&lt;&#39;?10835,&#39;?10837&gt; -&gt; IArgumentStream&lt;&#39;?10835&gt; -&gt; Reply&lt;&#39;?10837&gt;<br />
-                          <strong>Type parameters:</strong> '?10835, '?10836, '?10837                      </div>
+            <strong>Signature:</strong> p1:ArgumentParser&lt;&#39;?10832,&#39;?10833&gt; -&gt; p2:ArgumentParser&lt;&#39;?10832,&#39;?10834&gt; -&gt; IArgumentStream&lt;&#39;?10832&gt; -&gt; Reply&lt;&#39;?10834&gt;<br />
+                          <strong>Type parameters:</strong> '?10832, '?10833, '?10834                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L289-289" class="github-link">
@@ -452,8 +455,8 @@
             between popen pclose p
           </code>
           <div class="tip" id="484">
-            <strong>Signature:</strong> popen:ArgumentParser&lt;&#39;u,&#39;u&gt; -&gt; pclose:ArgumentParser&lt;&#39;u,&#39;?10848&gt; -&gt; p:ArgumentParser&lt;&#39;u,&#39;?10849&gt; -&gt; IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;?10849&gt;<br />
-                          <strong>Type parameters:</strong> 'u, '?10848, '?10849                      </div>
+            <strong>Signature:</strong> popen:ArgumentParser&lt;&#39;u,&#39;u&gt; -&gt; pclose:ArgumentParser&lt;&#39;u,&#39;?10845&gt; -&gt; p:ArgumentParser&lt;&#39;u,&#39;?10846&gt; -&gt; IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;?10846&gt;<br />
+                          <strong>Type parameters:</strong> 'u, '?10845, '?10846                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L292-292" class="github-link">
@@ -506,8 +509,8 @@
             chooseParser itemType chooser stream
           </code>
           <div class="tip" id="487">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10918 option) -&gt; stream:IArgumentStream&lt;&#39;?10919&gt; -&gt; Reply&lt;&#39;?10918&gt;<br />
-                          <strong>Type parameters:</strong> '?10918, '?10919                      </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10915 option) -&gt; stream:IArgumentStream&lt;&#39;?10916&gt; -&gt; Reply&lt;&#39;?10915&gt;<br />
+                          <strong>Type parameters:</strong> '?10915, '?10916                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L454-454" class="github-link">
@@ -524,8 +527,8 @@
             chooseParser&#39; itemType chooser
           </code>
           <div class="tip" id="488">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10924 option) -&gt; IArgumentStream&lt;&#39;?10925&gt; -&gt; Reply&lt;&#39;?10924&gt;<br />
-                          <strong>Type parameters:</strong> '?10924, '?10925                      </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10921 option) -&gt; IArgumentStream&lt;&#39;?10922&gt; -&gt; Reply&lt;&#39;?10921&gt;<br />
+                          <strong>Type parameters:</strong> '?10921, '?10922                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L478-478" class="github-link">
@@ -542,8 +545,8 @@
             chooseParserFull itemType chooser stream
           </code>
           <div class="tip" id="489">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10921 option) -&gt; stream:IArgumentStream&lt;&#39;?10922&gt; -&gt; Reply&lt;&#39;?10921&gt;<br />
-                          <strong>Type parameters:</strong> '?10921, '?10922                      </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string option -&gt; &#39;?10918 option) -&gt; stream:IArgumentStream&lt;&#39;?10919&gt; -&gt; Reply&lt;&#39;?10918&gt;<br />
+                          <strong>Type parameters:</strong> '?10918, '?10919                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L466-466" class="github-link">
@@ -560,8 +563,8 @@
             chooseParserFull&#39; itemType chooser
           </code>
           <div class="tip" id="490">
-            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10927 option) -&gt; IArgumentStream&lt;&#39;?10928&gt; -&gt; Reply&lt;&#39;?10927&gt;<br />
-                          <strong>Type parameters:</strong> '?10927, '?10928                      </div>
+            <strong>Signature:</strong> itemType:string -&gt; chooser:(string -&gt; &#39;?10924 option) -&gt; IArgumentStream&lt;&#39;?10925&gt; -&gt; Reply&lt;&#39;?10924&gt;<br />
+                          <strong>Type parameters:</strong> '?10924, '?10925                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L484-484" class="github-link">
@@ -593,7 +596,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '492', 492)" onmouseover="showTip(event, '492', 492)">
-            getParser ast
+            getParser(ast)
           </code>
           <div class="tip" id="492">
             <strong>Signature:</strong> ast:UsageAst -&gt; ArgumentParser&lt;DocoptMap,Map&lt;string,DocoptResult&gt;&gt;<br />
@@ -611,11 +614,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
-            many p
+            many(p)
           </code>
           <div class="tip" id="493">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10872,&#39;?10873&gt; -&gt; ArgumentParser&lt;&#39;?10872,&#39;?10873 list&gt;<br />
-                          <strong>Type parameters:</strong> '?10872, '?10873                      </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10869,&#39;?10870&gt; -&gt; ArgumentParser&lt;&#39;?10869,&#39;?10870 list&gt;<br />
+                          <strong>Type parameters:</strong> '?10869, '?10870                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L401-401" class="github-link">
@@ -629,11 +632,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
-            many1 p
+            many1(p)
           </code>
           <div class="tip" id="494">
-            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10875,&#39;?10876&gt; -&gt; ArgumentParser&lt;&#39;?10875,&#39;?10876 list&gt;<br />
-                          <strong>Type parameters:</strong> '?10875, '?10876                      </div>
+            <strong>Signature:</strong> p:ArgumentParser&lt;&#39;?10872,&#39;?10873&gt; -&gt; ArgumentParser&lt;&#39;?10872,&#39;?10873 list&gt;<br />
+                          <strong>Type parameters:</strong> '?10872, '?10873                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L402-402" class="github-link">
@@ -650,8 +653,8 @@
             mergeMap m1 m2
           </code>
           <div class="tip" id="495">
-            <strong>Signature:</strong> m1:Map&lt;&#39;?10947,&#39;?10948&gt; -&gt; m2:Map&lt;&#39;?10947,&#39;?10948&gt; -&gt; Map&lt;&#39;?10947,&#39;?10948&gt;<br />
-                          <strong>Type parameters:</strong> '?10947, '?10948                      </div>
+            <strong>Signature:</strong> m1:Map&lt;&#39;?10944,&#39;?10945&gt; -&gt; m2:Map&lt;&#39;?10944,&#39;?10945&gt; -&gt; Map&lt;&#39;?10944,&#39;?10945&gt;<br />
+                          <strong>Type parameters:</strong> '?10944, '?10945                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L550-550" class="github-link">
@@ -665,11 +668,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
-            mergeMaps maps
+            mergeMaps(maps)
           </code>
           <div class="tip" id="496">
-            <strong>Signature:</strong> maps:seq&lt;Map&lt;&#39;?10950,&#39;?10951&gt;&gt; -&gt; Map&lt;&#39;?10950,&#39;?10951&gt;<br />
-                          <strong>Type parameters:</strong> '?10950, '?10951                      </div>
+            <strong>Signature:</strong> maps:seq&lt;Map&lt;&#39;?10947,&#39;?10948&gt;&gt; -&gt; Map&lt;&#39;?10947,&#39;?10948&gt;<br />
+                          <strong>Type parameters:</strong> '?10947, '?10948                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L552-552" class="github-link">
@@ -683,11 +686,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
-            multipleSaveInMap f
+            multipleSaveInMap(f)
           </code>
           <div class="tip" id="497">
-            <strong>Signature:</strong> f:(&#39;?10944 -&gt; &#39;?10945) -&gt; &#39;?10944 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> '?10944, '?10945                      </div>
+            <strong>Signature:</strong> f:(&#39;?10941 -&gt; &#39;?10942) -&gt; &#39;?10941 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> '?10941, '?10942                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L546-546" class="github-link">
@@ -701,11 +704,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
-            parg argName
+            parg(argName)
           </code>
           <div class="tip" id="498">
-            <strong>Signature:</strong> argName:string -&gt; IArgumentStream&lt;&#39;?10932&gt; -&gt; Reply&lt;string&gt;<br />
-                          <strong>Type parameters:</strong> '?10932                      </div>
+            <strong>Signature:</strong> argName:string -&gt; IArgumentStream&lt;&#39;?10929&gt; -&gt; Reply&lt;string&gt;<br />
+                          <strong>Type parameters:</strong> '?10929                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L497-497" class="github-link">
@@ -719,11 +722,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
-            pcmd cmd
+            pcmd(cmd)
           </code>
           <div class="tip" id="499">
-            <strong>Signature:</strong> cmd:string -&gt; IArgumentStream&lt;&#39;?10930&gt; -&gt; Reply&lt;string&gt;<br />
-                          <strong>Type parameters:</strong> '?10930                      </div>
+            <strong>Signature:</strong> cmd:string -&gt; IArgumentStream&lt;&#39;?10927&gt; -&gt; Reply&lt;string&gt;<br />
+                          <strong>Type parameters:</strong> '?10927                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L492-492" class="github-link">
@@ -737,7 +740,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '500', 500)" onmouseover="showTip(event, '500', 500)">
-            pLongFlag flag
+            pLongFlag(flag)
           </code>
           <div class="tip" id="500">
             <strong>Signature:</strong> flag:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
@@ -794,8 +797,8 @@
             preturn x stream
           </code>
           <div class="tip" id="503">
-            <strong>Signature:</strong> x:&#39;?10821 -&gt; stream:IArgumentStream&lt;&#39;?10822&gt; -&gt; Reply&lt;&#39;?10821&gt;<br />
-                          <strong>Type parameters:</strong> '?10821, '?10822                      </div>
+            <strong>Signature:</strong> x:&#39;?10818 -&gt; stream:IArgumentStream&lt;&#39;?10819&gt; -&gt; Reply&lt;&#39;?10818&gt;<br />
+                          <strong>Type parameters:</strong> '?10818, '?10819                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L273-273" class="github-link">
@@ -809,11 +812,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '504', 504)" onmouseover="showTip(event, '504', 504)">
-            pseq ps
+            pseq(ps)
           </code>
           <div class="tip" id="504">
-            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;?10878,Map&lt;&#39;?10879,&#39;?10880&gt;&gt;&gt; -&gt; ArgumentParser&lt;&#39;?10878,Map&lt;&#39;?10879,&#39;?10880&gt;&gt;<br />
-                          <strong>Type parameters:</strong> '?10878, '?10879, '?10880                      </div>
+            <strong>Signature:</strong> ps:seq&lt;ArgumentParser&lt;&#39;?10875,Map&lt;&#39;?10876,&#39;?10877&gt;&gt;&gt; -&gt; ArgumentParser&lt;&#39;?10875,Map&lt;&#39;?10876,&#39;?10877&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?10875, '?10876, '?10877                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L404-404" class="github-link">
@@ -827,7 +830,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '505', 505)" onmouseover="showTip(event, '505', 505)">
-            pShortFlag flag
+            pShortFlag(flag)
           </code>
           <div class="tip" id="505">
             <strong>Signature:</strong> flag:SafeOption -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
@@ -863,7 +866,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '507', 507)" onmouseover="showTip(event, '507', 507)">
-            punorderedseqWithMany (...)
+            punorderedseqWithMany(...)
           </code>
           <div class="tip" id="507">
             <strong>Signature:</strong> allowEmpty:bool -&gt; allowMissing:bool -&gt; ps:seq&lt;bool * ArgumentParser&lt;&#39;u,&#39;a&gt;&gt; -&gt; stream:IArgumentStream&lt;&#39;u&gt; -&gt; Reply&lt;&#39;a list&gt;<br />
@@ -881,11 +884,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
-            pzero stream
+            pzero(stream)
           </code>
           <div class="tip" id="508">
-            <strong>Signature:</strong> stream:IArgumentStream&lt;&#39;?10824&gt; -&gt; Reply&lt;&#39;?10825&gt;<br />
-                          <strong>Type parameters:</strong> '?10824, '?10825                      </div>
+            <strong>Signature:</strong> stream:IArgumentStream&lt;&#39;?10821&gt; -&gt; Reply&lt;&#39;?10822&gt;<br />
+                          <strong>Type parameters:</strong> '?10821, '?10822                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L274-274" class="github-link">
@@ -902,8 +905,8 @@
             saveInMap key f
           </code>
           <div class="tip" id="509">
-            <strong>Signature:</strong> key:string -&gt; f:(&#39;?10940 -&gt; DocoptResult) -&gt; &#39;?10940 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> '?10940                      </div>
+            <strong>Signature:</strong> key:string -&gt; f:(&#39;?10937 -&gt; DocoptResult) -&gt; &#39;?10937 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> '?10937                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L535-535" class="github-link">
@@ -920,8 +923,8 @@
             saveInMapM keys f
           </code>
           <div class="tip" id="510">
-            <strong>Signature:</strong> keys:seq&lt;string&gt; -&gt; f:(&#39;?10942 -&gt; DocoptResult) -&gt; &#39;?10942 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
-                          <strong>Type parameters:</strong> '?10942                      </div>
+            <strong>Signature:</strong> keys:seq&lt;string&gt; -&gt; f:(&#39;?10939 -&gt; DocoptResult) -&gt; &#39;?10939 -&gt; IArgumentStream&lt;DocoptMap&gt; -&gt; Reply&lt;DocoptMap&gt;<br />
+                          <strong>Type parameters:</strong> '?10939                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.CommandLineParsing/docopt.fs/Docopt/UsageParser.fs#L540-540" class="github-link">
@@ -1074,7 +1077,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -329,7 +332,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '808', 808)" onmouseover="showTip(event, '808', 808)">
-            ComparisonFailure (...)
+            ComparisonFailure(...)
           </code>
           <div class="tip" id="808">
             <strong>Signature:</strong> name:string -&gt; message:string -&gt; details:string -&gt; expected:string -&gt; actual:string -&gt; unit<br />
@@ -345,7 +348,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '809', 809)" onmouseover="showTip(event, '809', 809)">
-            EncapsulateSpecialChars text
+            EncapsulateSpecialChars(text)
           </code>
           <div class="tip" id="809">
             <strong>Signature:</strong> text:string -&gt; string<br />
@@ -377,7 +380,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '811', 811)" onmouseover="showTip(event, '811', 811)">
-            FinishTestSuite testSuiteName
+            FinishTestSuite(testSuiteName)
           </code>
           <div class="tip" id="811">
             <strong>Signature:</strong> testSuiteName:string -&gt; unit<br />
@@ -393,7 +396,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '812', 812)" onmouseover="showTip(event, '812', 812)">
-            getTeamCityBranch ()
+            getTeamCityBranch()
           </code>
           <div class="tip" id="812">
             <strong>Signature:</strong> unit -&gt; string option<br />
@@ -409,7 +412,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '813', 813)" onmouseover="showTip(event, '813', 813)">
-            getTeamCityBranchIsDefault ()
+            getTeamCityBranchIsDefault()
           </code>
           <div class="tip" id="813">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -425,7 +428,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '814', 814)" onmouseover="showTip(event, '814', 814)">
-            getTeamCityBranchName ()
+            getTeamCityBranchName()
           </code>
           <div class="tip" id="814">
             <strong>Signature:</strong> unit -&gt; string option<br />
@@ -442,7 +445,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Working+with+Feature
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '815', 815)" onmouseover="showTip(event, '815', 815)">
-            getTeamCityRecentlyFailedTests ()
+            getTeamCityRecentlyFailedTests()
           </code>
           <div class="tip" id="815">
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt; option<br />
@@ -475,7 +478,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '817', 817)" onmouseover="showTip(event, '817', 817)">
-            IgnoreTestCaseWithDetails (...)
+            IgnoreTestCaseWithDetails(...)
           </code>
           <div class="tip" id="817">
             <strong>Signature:</strong> name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
@@ -491,7 +494,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '818', 818)" onmouseover="showTip(event, '818', 818)">
-            PublishArticfact path
+            PublishArticfact(path)
           </code>
           <div class="tip" id="818">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -513,7 +516,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '819', 819)" onmouseover="showTip(event, '819', 819)">
-            PublishArtifact path
+            PublishArtifact(path)
           </code>
           <div class="tip" id="819">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -545,7 +548,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '821', 821)" onmouseover="showTip(event, '821', 821)">
-            ReportProgress message
+            ReportProgress(message)
           </code>
           <div class="tip" id="821">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -561,7 +564,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '822', 822)" onmouseover="showTip(event, '822', 822)">
-            ReportProgressFinish message
+            ReportProgressFinish(message)
           </code>
           <div class="tip" id="822">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -577,7 +580,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '823', 823)" onmouseover="showTip(event, '823', 823)">
-            ReportProgressStart message
+            ReportProgressStart(message)
           </code>
           <div class="tip" id="823">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -593,7 +596,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '824', 824)" onmouseover="showTip(event, '824', 824)">
-            scrub 
+            scrub
           </code>
           <div class="tip" id="824">
             <strong>Signature:</strong> string -&gt; string<br />
@@ -607,7 +610,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '825', 825)" onmouseover="showTip(event, '825', 825)">
-            sendCloseBlock 
+            sendCloseBlock
           </code>
           <div class="tip" id="825">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -623,7 +626,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '826', 826)" onmouseover="showTip(event, '826', 826)">
-            sendOpenBlock 
+            sendOpenBlock
           </code>
           <div class="tip" id="826">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -639,7 +642,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '827', 827)" onmouseover="showTip(event, '827', 827)">
-            sendStrToTeamCity s
+            sendStrToTeamCity(s)
           </code>
           <div class="tip" id="827">
             <strong>Signature:</strong> s:string -&gt; unit<br />
@@ -655,7 +658,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '828', 828)" onmouseover="showTip(event, '828', 828)">
-            sendTeamCityCheckstyleImport path
+            sendTeamCityCheckstyleImport(path)
           </code>
           <div class="tip" id="828">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -671,7 +674,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '829', 829)" onmouseover="showTip(event, '829', 829)">
-            sendTeamCityDotCoverHome 
+            sendTeamCityDotCoverHome
           </code>
           <div class="tip" id="829">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -687,7 +690,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '830', 830)" onmouseover="showTip(event, '830', 830)">
-            sendTeamCityDotNetCoverageImport path
+            sendTeamCityDotNetCoverageImport(path)
           </code>
           <div class="tip" id="830">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -711,7 +714,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '831', 831)" onmouseover="showTip(event, '831', 831)">
-            sendTeamCityDotNetCoverageImportForTool (...)
+            sendTeamCityDotNetCoverageImportForTool(...)
           </code>
           <div class="tip" id="831">
             <strong>Signature:</strong> path:string -&gt; tool:TeamCityDotNetCoverageTool -&gt; unit<br />
@@ -727,7 +730,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '832', 832)" onmouseover="showTip(event, '832', 832)">
-            sendTeamCityDotNetDupFinderImport path
+            sendTeamCityDotNetDupFinderImport(path)
           </code>
           <div class="tip" id="832">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -743,7 +746,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '833', 833)" onmouseover="showTip(event, '833', 833)">
-            sendTeamCityError error
+            sendTeamCityError(error)
           </code>
           <div class="tip" id="833">
             <strong>Signature:</strong> error:string -&gt; unit<br />
@@ -759,7 +762,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '834', 834)" onmouseover="showTip(event, '834', 834)">
-            sendTeamCityFindBugsImport path
+            sendTeamCityFindBugsImport(path)
           </code>
           <div class="tip" id="834">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -775,7 +778,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '835', 835)" onmouseover="showTip(event, '835', 835)">
-            sendTeamCityFxCopImport path
+            sendTeamCityFxCopImport(path)
           </code>
           <div class="tip" id="835">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -791,7 +794,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '836', 836)" onmouseover="showTip(event, '836', 836)">
-            sendTeamCityFXCopImport path
+            sendTeamCityFXCopImport(path)
           </code>
           <div class="tip" id="836">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -807,7 +810,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '837', 837)" onmouseover="showTip(event, '837', 837)">
-            sendTeamCityGTestImport path
+            sendTeamCityGTestImport(path)
           </code>
           <div class="tip" id="837">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -823,7 +826,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '838', 838)" onmouseover="showTip(event, '838', 838)">
-            sendTeamCityJSLintImport path
+            sendTeamCityJSLintImport(path)
           </code>
           <div class="tip" id="838">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -839,7 +842,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '839', 839)" onmouseover="showTip(event, '839', 839)">
-            sendTeamCityJUnitImport path
+            sendTeamCityJUnitImport(path)
           </code>
           <div class="tip" id="839">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -855,7 +858,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '840', 840)" onmouseover="showTip(event, '840', 840)">
-            sendTeamCityMSTestImport path
+            sendTeamCityMSTestImport(path)
           </code>
           <div class="tip" id="840">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -871,7 +874,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '841', 841)" onmouseover="showTip(event, '841', 841)">
-            sendTeamCityNCover3Home 
+            sendTeamCityNCover3Home
           </code>
           <div class="tip" id="841">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -887,7 +890,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '842', 842)" onmouseover="showTip(event, '842', 842)">
-            sendTeamCityNCover3ReporterArgs 
+            sendTeamCityNCover3ReporterArgs
           </code>
           <div class="tip" id="842">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -903,7 +906,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '843', 843)" onmouseover="showTip(event, '843', 843)">
-            sendTeamCityNCoverExplorerTool 
+            sendTeamCityNCoverExplorerTool
           </code>
           <div class="tip" id="843">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -919,7 +922,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '844', 844)" onmouseover="showTip(event, '844', 844)">
-            sendTeamCityNCoverExplorerToolArgs 
+            sendTeamCityNCoverExplorerToolArgs
           </code>
           <div class="tip" id="844">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -935,7 +938,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '845', 845)" onmouseover="showTip(event, '845', 845)">
-            sendTeamCityNCoverReportOrder 
+            sendTeamCityNCoverReportOrder
           </code>
           <div class="tip" id="845">
             <strong>Signature:</strong> int -&gt; unit<br />
@@ -951,7 +954,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '846', 846)" onmouseover="showTip(event, '846', 846)">
-            sendTeamCityNCoverReportType 
+            sendTeamCityNCoverReportType
           </code>
           <div class="tip" id="846">
             <strong>Signature:</strong> int -&gt; unit<br />
@@ -967,7 +970,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '847', 847)" onmouseover="showTip(event, '847', 847)">
-            sendTeamCityNUnitImport path
+            sendTeamCityNUnitImport(path)
           </code>
           <div class="tip" id="847">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -983,7 +986,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '848', 848)" onmouseover="showTip(event, '848', 848)">
-            sendTeamCityPartCoverReportXslts 
+            sendTeamCityPartCoverReportXslts
           </code>
           <div class="tip" id="848">
             <strong>Signature:</strong> seq&lt;string * string&gt; -&gt; unit<br />
@@ -999,7 +1002,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '849', 849)" onmouseover="showTip(event, '849', 849)">
-            sendTeamCityPmdCpdImport path
+            sendTeamCityPmdCpdImport(path)
           </code>
           <div class="tip" id="849">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -1015,7 +1018,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '850', 850)" onmouseover="showTip(event, '850', 850)">
-            sendTeamCityPmdImport path
+            sendTeamCityPmdImport(path)
           </code>
           <div class="tip" id="850">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -1031,7 +1034,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '851', 851)" onmouseover="showTip(event, '851', 851)">
-            sendTeamCityReSharperInspectCodeImport (...)
+            sendTeamCityReSharperInspectCodeImport(...)
           </code>
           <div class="tip" id="851">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -1047,7 +1050,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '852', 852)" onmouseover="showTip(event, '852', 852)">
-            sendTeamCitySurefireImport path
+            sendTeamCitySurefireImport(path)
           </code>
           <div class="tip" id="852">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -1079,7 +1082,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '854', 854)" onmouseover="showTip(event, '854', 854)">
-            SetBuildNumber buildNumber
+            SetBuildNumber(buildNumber)
           </code>
           <div class="tip" id="854">
             <strong>Signature:</strong> buildNumber:string -&gt; unit<br />
@@ -1127,7 +1130,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '857', 857)" onmouseover="showTip(event, '857', 857)">
-            StartTestCase testCaseName
+            StartTestCase(testCaseName)
           </code>
           <div class="tip" id="857">
             <strong>Signature:</strong> testCaseName:string -&gt; unit<br />
@@ -1143,7 +1146,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '858', 858)" onmouseover="showTip(event, '858', 858)">
-            StartTestSuite testSuiteName
+            StartTestSuite(testSuiteName)
           </code>
           <div class="tip" id="858">
             <strong>Signature:</strong> testSuiteName:string -&gt; unit<br />
@@ -1159,7 +1162,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reorderin
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '859', 859)" onmouseover="showTip(event, '859', 859)">
-            teamCityBlock name
+            teamCityBlock(name)
           </code>
           <div class="tip" id="859">
             <strong>Signature:</strong> name:string -&gt; IDisposable<br />
@@ -1176,7 +1179,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '860', 860)" onmouseover="showTip(event, '860', 860)">
-            TeamCityBuildConfigurationName 
+            TeamCityBuildConfigurationName
           </code>
           <div class="tip" id="860">
             <strong>Signature:</strong> string option<br />
@@ -1192,7 +1195,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '861', 861)" onmouseover="showTip(event, '861', 861)">
-            TeamCityBuildIsPersonal 
+            TeamCityBuildIsPersonal
           </code>
           <div class="tip" id="861">
             <strong>Signature:</strong> bool<br />
@@ -1208,7 +1211,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '862', 862)" onmouseover="showTip(event, '862', 862)">
-            TeamCityBuildNumber 
+            TeamCityBuildNumber
           </code>
           <div class="tip" id="862">
             <strong>Signature:</strong> string option<br />
@@ -1224,7 +1227,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '863', 863)" onmouseover="showTip(event, '863', 863)">
-            TeamCityProjectName 
+            TeamCityProjectName
           </code>
           <div class="tip" id="863">
             <strong>Signature:</strong> string option<br />
@@ -1240,7 +1243,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '864', 864)" onmouseover="showTip(event, '864', 864)">
-            TeamCityVersion 
+            TeamCityVersion
           </code>
           <div class="tip" id="864">
             <strong>Signature:</strong> string option<br />
@@ -1375,7 +1378,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

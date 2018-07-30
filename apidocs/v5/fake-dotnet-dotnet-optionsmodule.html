@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -285,51 +288,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
+          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
             lift f x
           </code>
-          <div class="tip" id="582">
+          <div class="tip" id="584">
             <strong>Signature:</strong> f:(Options -&gt; Options) -&gt; x:^a -&gt; ^a<br />
                           <strong>Type parameters:</strong> ^a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L483-483" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
-            withCustomParams args x
-          </code>
-          <div class="tip" id="583">
-            <strong>Signature:</strong> args:string option -&gt; x:^?11897 -&gt; ^?11897<br />
-                          <strong>Type parameters:</strong> ^?11897                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L499-499" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
-            withDiagnostics diag x
-          </code>
-          <div class="tip" id="584">
-            <strong>Signature:</strong> diag:bool -&gt; x:^?11893 -&gt; ^?11893<br />
-                          <strong>Type parameters:</strong> ^?11893                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L495-495" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L493-493" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -340,32 +307,35 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
-            withDotNetCliPath path x
+            withAdditionalArgs args x
           </code>
           <div class="tip" id="585">
-            <strong>Signature:</strong> path:string -&gt; x:^?11899 -&gt; ^?11899<br />
-                          <strong>Type parameters:</strong> ^?11899                      </div>
+            <strong>Signature:</strong> args:seq&lt;string&gt; -&gt; x:^?11898 -&gt; ^?11898<br />
+                          <strong>Type parameters:</strong> ^?11898                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L501-501" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L513-513" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Sets custom command-line arguments expressed as a sequence of strings.
+This function overwrites and gets overwritten by <code>withCustomParams</code>.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '586', 586)" onmouseover="showTip(event, '586', 586)">
-            withEnvironment map x
+            withCustomParams args x
           </code>
           <div class="tip" id="586">
-            <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; x:^?11887 -&gt; ^?11887<br />
-                          <strong>Type parameters:</strong> ^?11887                      </div>
+            <strong>Signature:</strong> args:string option -&gt; x:^?11896 -&gt; ^?11896<br />
+                          <strong>Type parameters:</strong> ^?11896                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L487-487" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L509-509" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -376,14 +346,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
-            withRedirectOutput shouldRedirect x
+            withDiagnostics diag x
           </code>
           <div class="tip" id="587">
-            <strong>Signature:</strong> shouldRedirect:bool -&gt; x:^?11889 -&gt; ^?11889<br />
-                          <strong>Type parameters:</strong> ^?11889                      </div>
+            <strong>Signature:</strong> diag:bool -&gt; x:^?11892 -&gt; ^?11892<br />
+                          <strong>Type parameters:</strong> ^?11892                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L490-490" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L505-505" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -394,11 +364,29 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
-            withVerbosity verb x
+            withDotNetCliPath path x
           </code>
           <div class="tip" id="588">
-            <strong>Signature:</strong> verb:Verbosity option -&gt; x:^?11895 -&gt; ^?11895<br />
-                          <strong>Type parameters:</strong> ^?11895                      </div>
+            <strong>Signature:</strong> path:string -&gt; x:^?11900 -&gt; ^?11900<br />
+                          <strong>Type parameters:</strong> ^?11900                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L515-515" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '589', 589)" onmouseover="showTip(event, '589', 589)">
+            withEnvironment map x
+          </code>
+          <div class="tip" id="589">
+            <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; x:^?11886 -&gt; ^?11886<br />
+                          <strong>Type parameters:</strong> ^?11886                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L497-497" class="github-link">
@@ -411,15 +399,51 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '589', 589)" onmouseover="showTip(event, '589', 589)">
-            withWorkingDirectory wd x
+          <code onmouseout="hideTip(event, '590', 590)" onmouseover="showTip(event, '590', 590)">
+            withRedirectOutput shouldRedirect x
           </code>
-          <div class="tip" id="589">
-            <strong>Signature:</strong> wd:string -&gt; x:^?11891 -&gt; ^?11891<br />
-                          <strong>Type parameters:</strong> ^?11891                      </div>
+          <div class="tip" id="590">
+            <strong>Signature:</strong> shouldRedirect:bool -&gt; x:^?11888 -&gt; ^?11888<br />
+                          <strong>Type parameters:</strong> ^?11888                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L493-493" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L500-500" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '591', 591)" onmouseover="showTip(event, '591', 591)">
+            withVerbosity verb x
+          </code>
+          <div class="tip" id="591">
+            <strong>Signature:</strong> verb:Verbosity option -&gt; x:^?11894 -&gt; ^?11894<br />
+                          <strong>Type parameters:</strong> ^?11894                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L507-507" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
+            withWorkingDirectory wd x
+          </code>
+          <div class="tip" id="592">
+            <strong>Signature:</strong> wd:string -&gt; x:^?11890 -&gt; ^?11890<br />
+                          <strong>Type parameters:</strong> ^?11890                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Cli/DotNet.fs#L503-503" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -533,7 +557,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

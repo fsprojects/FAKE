@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -282,7 +285,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '346', 346)" onmouseover="showTip(event, '346', 346)">
-            allFiles path
+            allFiles(path)
           </code>
           <div class="tip" id="346">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -340,7 +343,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '349', 349)" onmouseover="showTip(event, '349', 349)">
-            CleanDir path
+            CleanDir(path)
           </code>
           <div class="tip" id="349">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -356,7 +359,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '350', 350)" onmouseover="showTip(event, '350', 350)">
-            CleanDirs dirs
+            CleanDirs(dirs)
           </code>
           <div class="tip" id="350">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
@@ -372,7 +375,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '351', 351)" onmouseover="showTip(event, '351', 351)">
-            CompareFiles (...)
+            CompareFiles(...)
           </code>
           <div class="tip" id="351">
             <strong>Signature:</strong> delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
@@ -518,7 +521,7 @@ If the files are not cached or the original files have a different write time th
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '358', 358)" onmouseover="showTip(event, '358', 358)">
-            CopyFileWithSubfolder (...)
+            CopyFileWithSubfolder(...)
           </code>
           <div class="tip" id="358">
             <strong>Signature:</strong> baseDir:string -&gt; target:string -&gt; fileName:string -&gt; unit<br />
@@ -617,7 +620,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '363', 363)" onmouseover="showTip(event, '363', 363)">
-            CreateDir path
+            CreateDir(path)
           </code>
           <div class="tip" id="363">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -633,7 +636,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '364', 364)" onmouseover="showTip(event, '364', 364)">
-            CreateFile fileName
+            CreateFile(fileName)
           </code>
           <div class="tip" id="364">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
@@ -649,7 +652,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '365', 365)" onmouseover="showTip(event, '365', 365)">
-            DeleteDir path
+            DeleteDir(path)
           </code>
           <div class="tip" id="365">
             <strong>Signature:</strong> path:string -&gt; unit<br />
@@ -665,7 +668,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '366', 366)" onmouseover="showTip(event, '366', 366)">
-            DeleteDirs dirs
+            DeleteDirs(dirs)
           </code>
           <div class="tip" id="366">
             <strong>Signature:</strong> dirs:seq&lt;string&gt; -&gt; unit<br />
@@ -681,7 +684,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '367', 367)" onmouseover="showTip(event, '367', 367)">
-            DeleteFile fileName
+            DeleteFile(fileName)
           </code>
           <div class="tip" id="367">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
@@ -697,7 +700,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '368', 368)" onmouseover="showTip(event, '368', 368)">
-            DeleteFiles files
+            DeleteFiles(files)
           </code>
           <div class="tip" id="368">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; unit<br />
@@ -713,7 +716,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '369', 369)" onmouseover="showTip(event, '369', 369)">
-            directory path
+            directory(path)
           </code>
           <div class="tip" id="369">
             <strong>Signature:</strong> path:string -&gt; string<br />
@@ -733,7 +736,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '370', 370)" onmouseover="showTip(event, '370', 370)">
-            excludeSVNFiles path
+            excludeSVNFiles(path)
           </code>
           <div class="tip" id="370">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -749,7 +752,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '371', 371)" onmouseover="showTip(event, '371', 371)">
-            ext fileName
+            ext(fileName)
           </code>
           <div class="tip" id="371">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
@@ -769,7 +772,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '372', 372)" onmouseover="showTip(event, '372', 372)">
-            filename path
+            filename(path)
           </code>
           <div class="tip" id="372">
             <strong>Signature:</strong> path:string -&gt; string<br />
@@ -789,7 +792,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '373', 373)" onmouseover="showTip(event, '373', 373)">
-            filenameWithouExt path
+            filenameWithouExt(path)
           </code>
           <div class="tip" id="373">
             <strong>Signature:</strong> path:string -&gt; string<br />
@@ -811,7 +814,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '374', 374)" onmouseover="showTip(event, '374', 374)">
-            fileNameWithoutExt path
+            fileNameWithoutExt(path)
           </code>
           <div class="tip" id="374">
             <strong>Signature:</strong> path:string -&gt; string<br />
@@ -847,7 +850,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '376', 376)" onmouseover="showTip(event, '376', 376)">
-            FileVersion fileName
+            FileVersion(fileName)
           </code>
           <div class="tip" id="376">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
@@ -867,7 +870,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '377', 377)" onmouseover="showTip(event, '377', 377)">
-            GeneratePatch (...)
+            GeneratePatch(...)
           </code>
           <div class="tip" id="377">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
@@ -889,7 +892,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '378', 378)" onmouseover="showTip(event, '378', 378)">
-            GeneratePatchWithFindOldFileFunction (...)
+            GeneratePatchWithFindOldFileFunction(...)
           </code>
           <div class="tip" id="378">
             <strong>Signature:</strong> lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
@@ -954,7 +957,7 @@ starting from the BaseDirectory of each FileIncludes.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '381', 381)" onmouseover="showTip(event, '381', 381)">
-            ReadCSVFile file
+            ReadCSVFile(file)
           </code>
           <div class="tip" id="381">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string []&gt;<br />
@@ -987,7 +990,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '383', 383)" onmouseover="showTip(event, '383', 383)">
-            RegexReplaceInFilesWithEncoding (...)
+            RegexReplaceInFilesWithEncoding(...)
           </code>
           <div class="tip" id="383">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; files:seq&lt;string&gt; -&gt; unit<br />
@@ -1010,7 +1013,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '384', 384)" onmouseover="showTip(event, '384', 384)">
-            RegexReplaceInFileWithEncoding (...)
+            RegexReplaceInFileWithEncoding(...)
           </code>
           <div class="tip" id="384">
             <strong>Signature:</strong> pattern:string -&gt; replacement:string -&gt; encoding:Encoding -&gt; file:string -&gt; unit<br />
@@ -1144,7 +1147,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '391', 391)" onmouseover="showTip(event, '391', 391)">
-            TestDir path
+            TestDir(path)
           </code>
           <div class="tip" id="391">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -1160,7 +1163,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '392', 392)" onmouseover="showTip(event, '392', 392)">
-            TestFile path
+            TestFile(path)
           </code>
           <div class="tip" id="392">
             <strong>Signature:</strong> path:string -&gt; bool<br />
@@ -1176,7 +1179,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '393', 393)" onmouseover="showTip(event, '393', 393)">
-            WriteConfigFile (...)
+            WriteConfigFile(...)
           </code>
           <div class="tip" id="393">
             <strong>Signature:</strong> configFileName:string -&gt; parameters:seq&lt;&#39;?12646 * &#39;?12647&gt; -&gt; unit<br />
@@ -1216,7 +1219,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '395', 395)" onmouseover="showTip(event, '395', 395)">
-            ( |File|Directory| ) fileSysInfo
+            ( |File|Directory| )(fileSysInfo)
           </code>
           <div class="tip" id="395">
             <strong>Signature:</strong> fileSysInfo:FileSystemInfo -&gt; Choice&lt;FileInfo,(DirectoryInfo * IEnumerable&lt;FileSystemInfo&gt;)&gt;<br />
@@ -1232,7 +1235,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '396', 396)" onmouseover="showTip(event, '396', 396)">
-            ( |FileInfoFullName| ) f
+            ( |FileInfoFullName| )(f)
           </code>
           <div class="tip" id="396">
             <strong>Signature:</strong> f:FileInfo -&gt; string<br />
@@ -1248,7 +1251,7 @@ delimiter is a ,</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '397', 397)" onmouseover="showTip(event, '397', 397)">
-            ( |FileInfoNameSections| ) f
+            ( |FileInfoNameSections| )(f)
           </code>
           <div class="tip" id="397">
             <strong>Signature:</strong> f:FileInfo -&gt; string * string * string<br />
@@ -1367,7 +1370,7 @@ delimiter is a ,</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

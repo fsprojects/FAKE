@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -286,7 +289,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
-            activateBuildFailure(name)
+            Target.activateBuildFailure(name)
           </code>
           <div class="tip" id="443">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -306,7 +309,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
-            activateFinal(name)
+            Target.activateFinal(name)
           </code>
           <div class="tip" id="444">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -326,7 +329,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
-            create(name body)
+            Target.create name body
           </code>
           <div class="tip" id="445">
             <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
@@ -346,7 +349,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
-            createBuildFailure(name body)
+            Target.createBuildFailure name body
           </code>
           <div class="tip" id="446">
             <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
@@ -366,7 +369,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
-            createFinal(name body)
+            Target.createFinal name body
           </code>
           <div class="tip" id="447">
             <strong>Signature:</strong> name:string -&gt; body:(TargetParameter -&gt; unit) -&gt; unit<br />
@@ -386,7 +389,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
-            deactivateBuildFailure(name)
+            Target.deactivateBuildFailure(name)
           </code>
           <div class="tip" id="448">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -406,7 +409,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
-            deactivateFinal(name)
+            Target.deactivateFinal(name)
           </code>
           <div class="tip" id="449">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -426,7 +429,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
-            DoNothing(_arg1)
+            Target.DoNothing(_arg1)
           </code>
           <div class="tip" id="450">
             <strong>Signature:</strong> _arg1:TargetParameter -&gt; unit<br />
@@ -454,7 +457,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '451', 451)" onmouseover="showTip(event, '451', 451)">
-            get(name)
+            Target.get(name)
           </code>
           <div class="tip" id="451">
             <strong>Signature:</strong> name:string -&gt; Target<br />
@@ -474,7 +477,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '452', 452)" onmouseover="showTip(event, '452', 452)">
-            listAvailable()
+            Target.listAvailable()
           </code>
           <div class="tip" id="452">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -494,7 +497,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '453', 453)" onmouseover="showTip(event, '453', 453)">
-            printDependencyGraph(verbose target)
+            Target.printDependencyGraph(...)
           </code>
           <div class="tip" id="453">
             <strong>Signature:</strong> verbose:bool -&gt; target:string -&gt; unit<br />
@@ -514,7 +517,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '454', 454)" onmouseover="showTip(event, '454', 454)">
-            removeLastDescription
+            Target.removeLastDescription
           </code>
           <div class="tip" id="454">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -532,7 +535,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '455', 455)" onmouseover="showTip(event, '455', 455)">
-            run(parallelJobs targetName args)
+            Target.run parallelJobs targetName args
           </code>
           <div class="tip" id="455">
             <strong>Signature:</strong> parallelJobs:int -&gt; targetName:string -&gt; args:string list -&gt; unit<br />
@@ -552,7 +555,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '456', 456)" onmouseover="showTip(event, '456', 456)">
-            runAndGetContext(...)
+            Target.runAndGetContext(...)
           </code>
           <div class="tip" id="456">
             <strong>Signature:</strong> parallelJobs:int -&gt; targetName:string -&gt; args:string list -&gt; TargetContext<br />
@@ -572,7 +575,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '457', 457)" onmouseover="showTip(event, '457', 457)">
-            runOrDefault(defaultTarget)
+            Target.runOrDefault(defaultTarget)
           </code>
           <div class="tip" id="457">
             <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
@@ -592,7 +595,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
-            runOrDefaultWithArguments(defaultTarget)
+            Target.runOrDefaultWithArguments(...)
           </code>
           <div class="tip" id="458">
             <strong>Signature:</strong> defaultTarget:string -&gt; unit<br />
@@ -612,7 +615,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
-            runOrList()
+            Target.runOrList()
           </code>
           <div class="tip" id="459">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -632,7 +635,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '460', 460)" onmouseover="showTip(event, '460', 460)">
-            runSimple(name args)
+            Target.runSimple name args
           </code>
           <div class="tip" id="460">
             <strong>Signature:</strong> name:string -&gt; args:string list -&gt; TargetResult<br />
@@ -652,7 +655,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '461', 461)" onmouseover="showTip(event, '461', 461)">
-            runSimpleWithContext(name ctx)
+            Target.runSimpleWithContext name ctx
           </code>
           <div class="tip" id="461">
             <strong>Signature:</strong> name:string -&gt; ctx:TargetContext -&gt; TargetResult<br />
@@ -672,7 +675,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '462', 462)" onmouseover="showTip(event, '462', 462)">
-            setLastDescription
+            Target.setLastDescription
           </code>
           <div class="tip" id="462">
             <strong>Signature:</strong> string -&gt; unit<br />
@@ -690,7 +693,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
-            setPrintStackTraceOnError
+            Target.setPrintStackTraceOnError
           </code>
           <div class="tip" id="463">
             <strong>Signature:</strong> bool -&gt; unit<br />
@@ -811,7 +814,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

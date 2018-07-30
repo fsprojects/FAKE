@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -287,7 +290,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '887', 887)" onmouseover="showTip(event, '887', 887)">
-            loadTemplates seq
+            loadTemplates(seq)
           </code>
           <div class="tip" id="887">
             <strong>Signature:</strong> seq:seq&lt;string&gt; -&gt; seq&lt;string * seq&lt;string&gt;&gt;<br />
@@ -343,11 +346,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '889', 889)" onmouseover="showTip(event, '889', 889)">
-            replaceKeywords replacements
+            replaceKeywords(replacements)
           </code>
           <div class="tip" id="889">
-            <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; seq&lt;&#39;?13754 * &#39;?13755&gt; -&gt; seq&lt;&#39;?13754 * seq&lt;string&gt;&gt;<br />
-                          <strong>Type parameters:</strong> '?13754, '?13755                            <span>
+            <strong>Signature:</strong> replacements:seq&lt;string * string&gt; -&gt; seq&lt;&#39;?13770 * &#39;?13771&gt; -&gt; seq&lt;&#39;?13770 * seq&lt;string&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?13770, '?13771                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;Use Fake.IO.Templates instead (FAKE0001 - package: Fake.IO.FileSystem - member: Fake.IO.Templates.replaceKeywords)&quot;)&gt;]<br />
                 </span>
@@ -371,7 +374,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '890', 890)" onmouseover="showTip(event, '890', 890)">
-            saveFiles 
+            saveFiles
           </code>
           <div class="tip" id="890">
             <strong>Signature:</strong> seq&lt;string * seq&lt;string&gt;&gt; -&gt; unit<br />
@@ -502,7 +505,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

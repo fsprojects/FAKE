@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -322,7 +325,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
-            createDirectiveRegex id
+            createDirectiveRegex(id)
           </code>
           <div class="tip" id="320">
             <strong>Signature:</strong> id:string -&gt; Regex<br />
@@ -348,7 +351,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '321', 321)" onmouseover="showTip(event, '321', 321)">
-            executeBuildScriptWithArgsAndFsiArgsAndReturnMessages (...)
+            executeBuildScriptWithArgsAndFsiArgsAndReturnMessages(...)
           </code>
           <div class="tip" id="321">
             <strong>Signature:</strong> script:string -&gt; scriptArgs:string [] -&gt; fsiArgs:string [] -&gt; useCache:bool -&gt; bool * ConsoleMessage list<br />
@@ -376,7 +379,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '322', 322)" onmouseover="showTip(event, '322', 322)">
-            executeBuildScriptWithArgsAndReturnMessages (...)
+            executeBuildScriptWithArgsAndReturnMessages(...)
           </code>
           <div class="tip" id="322">
             <strong>Signature:</strong> script:string -&gt; scriptArgs:string [] -&gt; useCache:bool -&gt; bool * ConsoleMessage list<br />
@@ -432,7 +435,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
-            executeFSIWithArgs (...)
+            executeFSIWithArgs(...)
           </code>
           <div class="tip" id="324">
             <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; bool<br />
@@ -460,7 +463,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
-            executeFSIWithArgsAndReturnMessages (...)
+            executeFSIWithArgsAndReturnMessages(...)
           </code>
           <div class="tip" id="325">
             <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
@@ -488,7 +491,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '326', 326)" onmouseover="showTip(event, '326', 326)">
-            executeFSIWithScriptArgsAndReturnMessages (...)
+            executeFSIWithScriptArgsAndReturnMessages(...)
           </code>
           <div class="tip" id="326">
             <strong>Signature:</strong> script:string -&gt; scriptArgs:string [] -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
@@ -516,7 +519,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '327', 327)" onmouseover="showTip(event, '327', 327)">
-            fsiPath 
+            fsiPath
           </code>
           <div class="tip" id="327">
             <strong>Signature:</strong> string<br />
@@ -544,7 +547,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
-            fsiStartInfo (...)
+            fsiStartInfo(...)
           </code>
           <div class="tip" id="328">
             <strong>Signature:</strong> script:string -&gt; workingDirectory:string -&gt; env:seq&lt;string * string&gt; -&gt; info:ProcessStartInfo -&gt; unit<br />
@@ -572,7 +575,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '329', 329)" onmouseover="showTip(event, '329', 329)">
-            getAllScriptContents pathsAndContents
+            getAllScriptContents(pathsAndContents)
           </code>
           <div class="tip" id="329">
             <strong>Signature:</strong> pathsAndContents:seq&lt;Script&gt; -&gt; seq&lt;string&gt;<br />
@@ -598,7 +601,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '330', 330)" onmouseover="showTip(event, '330', 330)">
-            getAllScripts scriptPath
+            getAllScripts(scriptPath)
           </code>
           <div class="tip" id="330">
             <strong>Signature:</strong> scriptPath:string -&gt; seq&lt;Script&gt;<br />
@@ -624,7 +627,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '331', 331)" onmouseover="showTip(event, '331', 331)">
-            getIncludedAssembly scriptContents
+            getIncludedAssembly(scriptContents)
           </code>
           <div class="tip" id="331">
             <strong>Signature:</strong> scriptContents:string -&gt; seq&lt;string&gt;<br />
@@ -650,7 +653,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '332', 332)" onmouseover="showTip(event, '332', 332)">
-            getScriptHash (...)
+            getScriptHash(...)
           </code>
           <div class="tip" id="332">
             <strong>Signature:</strong> pathsAndContents:seq&lt;Script&gt; -&gt; fsiOptions:seq&lt;string&gt; -&gt; string<br />
@@ -676,7 +679,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '333', 333)" onmouseover="showTip(event, '333', 333)">
-            getSearchPaths scriptContents
+            getSearchPaths(scriptContents)
           </code>
           <div class="tip" id="333">
             <strong>Signature:</strong> scriptContents:string -&gt; seq&lt;string&gt;<br />
@@ -702,7 +705,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '334', 334)" onmouseover="showTip(event, '334', 334)">
-            hashRegex 
+            hashRegex
           </code>
           <div class="tip" id="334">
             <strong>Signature:</strong> Regex<br />
@@ -728,7 +731,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '335', 335)" onmouseover="showTip(event, '335', 335)">
-            loadRegex 
+            loadRegex
           </code>
           <div class="tip" id="335">
             <strong>Signature:</strong> Regex<br />
@@ -754,7 +757,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '336', 336)" onmouseover="showTip(event, '336', 336)">
-            nameParser scriptFileName
+            nameParser(scriptFileName)
           </code>
           <div class="tip" id="336">
             <strong>Signature:</strong> scriptFileName:string -&gt; string * (string -&gt; string) * (string -&gt; string option)<br />
@@ -782,7 +785,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '337', 337)" onmouseover="showTip(event, '337', 337)">
-            rAssemblyRegex 
+            rAssemblyRegex
           </code>
           <div class="tip" id="337">
             <strong>Signature:</strong> Regex<br />
@@ -808,7 +811,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '338', 338)" onmouseover="showTip(event, '338', 338)">
-            runBuildScript (...)
+            runBuildScript(...)
           </code>
           <div class="tip" id="338">
             <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
@@ -836,7 +839,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '339', 339)" onmouseover="showTip(event, '339', 339)">
-            runBuildScriptAt (...)
+            runBuildScriptAt(...)
           </code>
           <div class="tip" id="339">
             <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
@@ -864,7 +867,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '340', 340)" onmouseover="showTip(event, '340', 340)">
-            runBuildScriptWithFsiArgsAt (...)
+            runBuildScriptWithFsiArgsAt(...)
           </code>
           <div class="tip" id="340">
             <strong>Signature:</strong> printDetails:bool -&gt; FsiArgs -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
@@ -892,7 +895,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '341', 341)" onmouseover="showTip(event, '341', 341)">
-            searchPathRegex 
+            searchPathRegex
           </code>
           <div class="tip" id="341">
             <strong>Signature:</strong> Regex<br />
@@ -1021,7 +1024,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

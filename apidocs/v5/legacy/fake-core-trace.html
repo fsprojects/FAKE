@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -310,7 +313,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1436', 1436)" onmouseover="showTip(event, '1436', 1436)">
-            closeAllOpenTags()
+            Trace.closeAllOpenTags()
           </code>
           <div class="tip" id="1436">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -328,7 +331,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1437', 1437)" onmouseover="showTip(event, '1437', 1437)">
-            closeTag(tag)
+            Trace.closeTag(tag)
           </code>
           <div class="tip" id="1437">
             <strong>Signature:</strong> tag:KnownTags -&gt; unit<br />
@@ -356,7 +359,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1438', 1438)" onmouseover="showTip(event, '1438', 1438)">
-            closeTagUnsafe(tag)
+            Trace.closeTagUnsafe(tag)
           </code>
           <div class="tip" id="1438">
             <strong>Signature:</strong> tag:KnownTags -&gt; unit<br />
@@ -374,7 +377,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1439', 1439)" onmouseover="showTip(event, '1439', 1439)">
-            closeTagUnsafeEx(status tag)
+            Trace.closeTagUnsafeEx status tag
           </code>
           <div class="tip" id="1439">
             <strong>Signature:</strong> status:TagStatus -&gt; tag:KnownTags -&gt; unit<br />
@@ -394,7 +397,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1440', 1440)" onmouseover="showTip(event, '1440', 1440)">
-            exceptionAndInnersToString(ex)
+            Trace.exceptionAndInnersToString(ex)
           </code>
           <div class="tip" id="1440">
             <strong>Signature:</strong> ex:Exception -&gt; string<br />
@@ -414,7 +417,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1441', 1441)" onmouseover="showTip(event, '1441', 1441)">
-            log(message)
+            Trace.log(message)
           </code>
           <div class="tip" id="1441">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -434,11 +437,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1442', 1442)" onmouseover="showTip(event, '1442', 1442)">
-            logf(fmt)
+            Trace.logf(fmt)
           </code>
           <div class="tip" id="1442">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?17532,unit&gt; -&gt; &#39;?17532<br />
-                          <strong>Type parameters:</strong> '?17532                      </div>
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?18072,unit&gt; -&gt; &#39;?18072<br />
+                          <strong>Type parameters:</strong> '?18072                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L24-24" class="github-link">
@@ -454,7 +457,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1443', 1443)" onmouseover="showTip(event, '1443', 1443)">
-            logfn(fmt)
+            Trace.logfn(fmt)
           </code>
           <div class="tip" id="1443">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -474,7 +477,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1444', 1444)" onmouseover="showTip(event, '1444', 1444)">
-            logItems(message items)
+            Trace.logItems message items
           </code>
           <div class="tip" id="1444">
             <strong>Signature:</strong> message:string -&gt; items:seq&lt;string&gt; -&gt; unit<br />
@@ -494,7 +497,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1445', 1445)" onmouseover="showTip(event, '1445', 1445)">
-            logToConsole(msg, eventLogEntry)
+            Trace.logToConsole(msg, eventLogEntry)
           </code>
           <div class="tip" id="1445">
             <strong>Signature:</strong> (msg:string * eventLogEntry:EventLogEntryType) -&gt; unit<br />
@@ -514,7 +517,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1446', 1446)" onmouseover="showTip(event, '1446', 1446)">
-            logVerbosefn(fmt)
+            Trace.logVerbosefn(fmt)
           </code>
           <div class="tip" id="1446">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -534,7 +537,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1447', 1447)" onmouseover="showTip(event, '1447', 1447)">
-            openTag(tag description)
+            Trace.openTag tag description
           </code>
           <div class="tip" id="1447">
             <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; unit<br />
@@ -562,7 +565,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1448', 1448)" onmouseover="showTip(event, '1448', 1448)">
-            openTagUnsafe(tag description)
+            Trace.openTagUnsafe tag description
           </code>
           <div class="tip" id="1448">
             <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; unit<br />
@@ -582,7 +585,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1449', 1449)" onmouseover="showTip(event, '1449', 1449)">
-            publish(typ path)
+            Trace.publish typ path
           </code>
           <div class="tip" id="1449">
             <strong>Signature:</strong> typ:ImportData -&gt; path:string -&gt; unit<br />
@@ -600,7 +603,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1450', 1450)" onmouseover="showTip(event, '1450', 1450)">
-            setBuildNumber(number)
+            Trace.setBuildNumber(number)
           </code>
           <div class="tip" id="1450">
             <strong>Signature:</strong> number:string -&gt; unit<br />
@@ -618,7 +621,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1451', 1451)" onmouseover="showTip(event, '1451', 1451)">
-            setBuildState(tag)
+            Trace.setBuildState(tag)
           </code>
           <div class="tip" id="1451">
             <strong>Signature:</strong> tag:TagStatus -&gt; unit<br />
@@ -636,7 +639,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1452', 1452)" onmouseover="showTip(event, '1452', 1452)">
-            testOutput(testName out err)
+            Trace.testOutput testName out err
           </code>
           <div class="tip" id="1452">
             <strong>Signature:</strong> testName:string -&gt; out:string -&gt; err:string -&gt; unit<br />
@@ -654,7 +657,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1453', 1453)" onmouseover="showTip(event, '1453', 1453)">
-            testStatus(testName testStatus)
+            Trace.testStatus testName testStatus
           </code>
           <div class="tip" id="1453">
             <strong>Signature:</strong> testName:string -&gt; testStatus:TestStatus -&gt; unit<br />
@@ -672,7 +675,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1454', 1454)" onmouseover="showTip(event, '1454', 1454)">
-            trace(message)
+            Trace.trace(message)
           </code>
           <div class="tip" id="1454">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -692,7 +695,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1455', 1455)" onmouseover="showTip(event, '1455', 1455)">
-            traceEndFailureTargetUnsafeEx(...)
+            Trace.traceEndFailureTargetUnsafeEx(...)
           </code>
           <div class="tip" id="1455">
             <strong>Signature:</strong> state:TagStatus -&gt; name:string -&gt; unit<br />
@@ -712,7 +715,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1456', 1456)" onmouseover="showTip(event, '1456', 1456)">
-            traceEndFinalTargetUnsafeEx(state name)
+            Trace.traceEndFinalTargetUnsafeEx(...)
           </code>
           <div class="tip" id="1456">
             <strong>Signature:</strong> state:TagStatus -&gt; name:string -&gt; unit<br />
@@ -732,7 +735,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1457', 1457)" onmouseover="showTip(event, '1457', 1457)">
-            traceEndTarget(name)
+            Trace.traceEndTarget(name)
           </code>
           <div class="tip" id="1457">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -760,7 +763,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1458', 1458)" onmouseover="showTip(event, '1458', 1458)">
-            traceEndTargetUnsafe(name)
+            Trace.traceEndTargetUnsafe(name)
           </code>
           <div class="tip" id="1458">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -780,7 +783,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1459', 1459)" onmouseover="showTip(event, '1459', 1459)">
-            traceEndTargetUnsafeEx(state name)
+            Trace.traceEndTargetUnsafeEx state name
           </code>
           <div class="tip" id="1459">
             <strong>Signature:</strong> state:TagStatus -&gt; name:string -&gt; unit<br />
@@ -800,7 +803,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1460', 1460)" onmouseover="showTip(event, '1460', 1460)">
-            traceEndTask(task)
+            Trace.traceEndTask(task)
           </code>
           <div class="tip" id="1460">
             <strong>Signature:</strong> task:string -&gt; unit<br />
@@ -828,7 +831,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1461', 1461)" onmouseover="showTip(event, '1461', 1461)">
-            traceEndTaskUnsafe(task)
+            Trace.traceEndTaskUnsafe(task)
           </code>
           <div class="tip" id="1461">
             <strong>Signature:</strong> task:string -&gt; unit<br />
@@ -848,7 +851,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1462', 1462)" onmouseover="showTip(event, '1462', 1462)">
-            traceEndTaskUnsafeEx(state task)
+            Trace.traceEndTaskUnsafeEx state task
           </code>
           <div class="tip" id="1462">
             <strong>Signature:</strong> state:TagStatus -&gt; task:string -&gt; unit<br />
@@ -868,7 +871,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
-            traceEnvironmentVariables()
+            Trace.traceEnvironmentVariables()
           </code>
           <div class="tip" id="1463">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -888,7 +891,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
-            traceError(error)
+            Trace.traceError(error)
           </code>
           <div class="tip" id="1464">
             <strong>Signature:</strong> error:string -&gt; unit<br />
@@ -908,11 +911,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
-            traceErrorfn(fmt)
+            Trace.traceErrorfn(fmt)
           </code>
           <div class="tip" id="1465">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?17548,unit&gt; -&gt; &#39;?17548<br />
-                          <strong>Type parameters:</strong> '?17548                      </div>
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?18088,unit&gt; -&gt; &#39;?18088<br />
+                          <strong>Type parameters:</strong> '?18088                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L57-57" class="github-link">
@@ -928,7 +931,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
-            traceException(ex)
+            Trace.traceException(ex)
           </code>
           <div class="tip" id="1466">
             <strong>Signature:</strong> ex:Exception -&gt; unit<br />
@@ -948,11 +951,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1467', 1467)" onmouseover="showTip(event, '1467', 1467)">
-            tracef(fmt)
+            Trace.tracef(fmt)
           </code>
           <div class="tip" id="1467">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?17539,unit&gt; -&gt; &#39;?17539<br />
-                          <strong>Type parameters:</strong> '?17539                      </div>
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?18079,unit&gt; -&gt; &#39;?18079<br />
+                          <strong>Type parameters:</strong> '?18079                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L38-38" class="github-link">
@@ -968,7 +971,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1468', 1468)" onmouseover="showTip(event, '1468', 1468)">
-            traceFailureTarget(...)
+            Trace.traceFailureTarget(...)
           </code>
           <div class="tip" id="1468">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
@@ -986,7 +989,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1469', 1469)" onmouseover="showTip(event, '1469', 1469)">
-            traceFAKE(fmt)
+            Trace.traceFAKE(fmt)
           </code>
           <div class="tip" id="1469">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -1006,7 +1009,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1470', 1470)" onmouseover="showTip(event, '1470', 1470)">
-            traceFinalTarget(...)
+            Trace.traceFinalTarget(...)
           </code>
           <div class="tip" id="1470">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
@@ -1024,7 +1027,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1471', 1471)" onmouseover="showTip(event, '1471', 1471)">
-            tracefn(fmt)
+            Trace.tracefn(fmt)
           </code>
           <div class="tip" id="1471">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -1044,7 +1047,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1472', 1472)" onmouseover="showTip(event, '1472', 1472)">
-            traceHeader(name)
+            Trace.traceHeader(name)
           </code>
           <div class="tip" id="1472">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -1064,7 +1067,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
-            traceImportant(text)
+            Trace.traceImportant(text)
           </code>
           <div class="tip" id="1473">
             <strong>Signature:</strong> text:string -&gt; unit<br />
@@ -1084,11 +1087,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1474', 1474)" onmouseover="showTip(event, '1474', 1474)">
-            traceImportantfn(fmt)
+            Trace.traceImportantfn(fmt)
           </code>
           <div class="tip" id="1474">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?17543,unit&gt; -&gt; &#39;?17543<br />
-                          <strong>Type parameters:</strong> '?17543                      </div>
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?18083,unit&gt; -&gt; &#39;?18083<br />
+                          <strong>Type parameters:</strong> '?18083                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L48-48" class="github-link">
@@ -1104,7 +1107,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1475', 1475)" onmouseover="showTip(event, '1475', 1475)">
-            traceLine()
+            Trace.traceLine()
           </code>
           <div class="tip" id="1475">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -1124,7 +1127,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1476', 1476)" onmouseover="showTip(event, '1476', 1476)">
-            traceStartFailureTargetUnsafe(...)
+            Trace.traceStartFailureTargetUnsafe(...)
           </code>
           <div class="tip" id="1476">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
@@ -1144,7 +1147,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1477', 1477)" onmouseover="showTip(event, '1477', 1477)">
-            traceStartFinalTargetUnsafe(...)
+            Trace.traceStartFinalTargetUnsafe(...)
           </code>
           <div class="tip" id="1477">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
@@ -1164,7 +1167,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1478', 1478)" onmouseover="showTip(event, '1478', 1478)">
-            traceStartTarget(...)
+            Trace.traceStartTarget(...)
           </code>
           <div class="tip" id="1478">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
@@ -1192,7 +1195,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1479', 1479)" onmouseover="showTip(event, '1479', 1479)">
-            traceStartTargetUnsafe(...)
+            Trace.traceStartTargetUnsafe(...)
           </code>
           <div class="tip" id="1479">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
@@ -1212,7 +1215,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1480', 1480)" onmouseover="showTip(event, '1480', 1480)">
-            traceStartTask(task description)
+            Trace.traceStartTask task description
           </code>
           <div class="tip" id="1480">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; unit<br />
@@ -1240,7 +1243,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1481', 1481)" onmouseover="showTip(event, '1481', 1481)">
-            traceStartTaskUnsafe(task description)
+            Trace.traceStartTaskUnsafe(...)
           </code>
           <div class="tip" id="1481">
             <strong>Signature:</strong> task:string -&gt; description:string -&gt; unit<br />
@@ -1260,7 +1263,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1482', 1482)" onmouseover="showTip(event, '1482', 1482)">
-            traceTag(tag description)
+            Trace.traceTag tag description
           </code>
           <div class="tip" id="1482">
             <strong>Signature:</strong> tag:KnownTags -&gt; description:string -&gt; ISafeDisposable<br />
@@ -1278,7 +1281,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1483', 1483)" onmouseover="showTip(event, '1483', 1483)">
-            traceTarget(...)
+            Trace.traceTarget(...)
           </code>
           <div class="tip" id="1483">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; ISafeDisposable<br />
@@ -1296,7 +1299,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1484', 1484)" onmouseover="showTip(event, '1484', 1484)">
-            traceTask(name description)
+            Trace.traceTask name description
           </code>
           <div class="tip" id="1484">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; ISafeDisposable<br />
@@ -1316,7 +1319,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1485', 1485)" onmouseover="showTip(event, '1485', 1485)">
-            traceVerbose(s)
+            Trace.traceVerbose(s)
           </code>
           <div class="tip" id="1485">
             <strong>Signature:</strong> s:string -&gt; unit<br />
@@ -1336,11 +1339,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1486', 1486)" onmouseover="showTip(event, '1486', 1486)">
-            useWith(automaticSuccess func trace)
+            Trace.useWith(...)
           </code>
           <div class="tip" id="1486">
-            <strong>Signature:</strong> automaticSuccess:bool -&gt; func:(ISafeDisposable -&gt; &#39;?17588) -&gt; trace:ISafeDisposable -&gt; &#39;?17588<br />
-                          <strong>Type parameters:</strong> '?17588                      </div>
+            <strong>Signature:</strong> automaticSuccess:bool -&gt; func:(ISafeDisposable -&gt; &#39;?18128) -&gt; trace:ISafeDisposable -&gt; &#39;?18128<br />
+                          <strong>Type parameters:</strong> '?18128                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/Trace.fs#L267-267" class="github-link">
@@ -1461,7 +1464,7 @@ Any exception thrown will result in a mark failed and exception re-thrown</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

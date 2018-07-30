@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -285,10 +288,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '730', 730)" onmouseover="showTip(event, '730', 730)">
-            allExist(files)
+          <code onmouseout="hideTip(event, '735', 735)" onmouseover="showTip(event, '735', 735)">
+            File.allExist(files)
           </code>
-          <div class="tip" id="730">
+          <div class="tip" id="735">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; bool<br />
                                   </div>
         </td>
@@ -305,10 +308,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '731', 731)" onmouseover="showTip(event, '731', 731)">
-            append(file lines)
+          <code onmouseout="hideTip(event, '736', 736)" onmouseover="showTip(event, '736', 736)">
+            File.append file lines
           </code>
-          <div class="tip" id="731">
+          <div class="tip" id="736">
             <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -325,10 +328,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '732', 732)" onmouseover="showTip(event, '732', 732)">
-            applyReplace(replaceF fileName)
+          <code onmouseout="hideTip(event, '737', 737)" onmouseover="showTip(event, '737', 737)">
+            File.applyReplace replaceF fileName
           </code>
-          <div class="tip" id="732">
+          <div class="tip" id="737">
             <strong>Signature:</strong> replaceF:(string -&gt; string) -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -345,10 +348,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '733', 733)" onmouseover="showTip(event, '733', 733)">
-            checkExists(fileName)
+          <code onmouseout="hideTip(event, '738', 738)" onmouseover="showTip(event, '738', 738)">
+            File.checkExists(fileName)
           </code>
-          <div class="tip" id="733">
+          <div class="tip" id="738">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -365,10 +368,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '734', 734)" onmouseover="showTip(event, '734', 734)">
-            create(fileName)
+          <code onmouseout="hideTip(event, '739', 739)" onmouseover="showTip(event, '739', 739)">
+            File.create(fileName)
           </code>
-          <div class="tip" id="734">
+          <div class="tip" id="739">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -385,10 +388,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '735', 735)" onmouseover="showTip(event, '735', 735)">
-            delete(fileName)
+          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
+            File.delete(fileName)
           </code>
-          <div class="tip" id="735">
+          <div class="tip" id="740">
             <strong>Signature:</strong> fileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -405,10 +408,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '736', 736)" onmouseover="showTip(event, '736', 736)">
-            deleteAll(files)
+          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
+            File.deleteAll(files)
           </code>
-          <div class="tip" id="736">
+          <div class="tip" id="741">
             <strong>Signature:</strong> files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -425,10 +428,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '737', 737)" onmouseover="showTip(event, '737', 737)">
-            exists(fileName)
+          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
+            File.exists(fileName)
           </code>
-          <div class="tip" id="737">
+          <div class="tip" id="742">
             <strong>Signature:</strong> fileName:string -&gt; bool<br />
                                   </div>
         </td>
@@ -445,10 +448,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '738', 738)" onmouseover="showTip(event, '738', 738)">
-            getEncoding(def filename)
+          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
+            File.getEncoding def filename
           </code>
-          <div class="tip" id="738">
+          <div class="tip" id="743">
             <strong>Signature:</strong> def:Encoding -&gt; filename:string -&gt; Encoding<br />
                                   </div>
         </td>
@@ -463,10 +466,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '739', 739)" onmouseover="showTip(event, '739', 739)">
-            getEncodingOrDefault(def filename)
+          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
+            File.getEncodingOrDefault def filename
           </code>
-          <div class="tip" id="739">
+          <div class="tip" id="744">
             <strong>Signature:</strong> def:Encoding -&gt; filename:string -&gt; Encoding<br />
                                   </div>
         </td>
@@ -483,10 +486,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
-            getVersion(fileName)
+          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
+            File.getVersion(fileName)
           </code>
-          <div class="tip" id="740">
+          <div class="tip" id="745">
             <strong>Signature:</strong> fileName:string -&gt; string<br />
                                   </div>
         </td>
@@ -507,10 +510,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
-            read(file)
+          <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
+            File.read(file)
           </code>
-          <div class="tip" id="741">
+          <div class="tip" id="746">
             <strong>Signature:</strong> file:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
@@ -525,10 +528,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
-            readAsBytes(file)
+          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
+            File.readAsBytes(file)
           </code>
-          <div class="tip" id="742">
+          <div class="tip" id="747">
             <strong>Signature:</strong> file:string -&gt; byte []<br />
                                   </div>
         </td>
@@ -545,10 +548,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
-            readAsString(file)
+          <code onmouseout="hideTip(event, '748', 748)" onmouseover="showTip(event, '748', 748)">
+            File.readAsString(file)
           </code>
-          <div class="tip" id="743">
+          <div class="tip" id="748">
             <strong>Signature:</strong> file:string -&gt; string<br />
                                   </div>
         </td>
@@ -563,10 +566,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
-            readAsStringWithEncoding(encoding file)
+          <code onmouseout="hideTip(event, '749', 749)" onmouseover="showTip(event, '749', 749)">
+            File.readAsStringWithEncoding(...)
           </code>
-          <div class="tip" id="744">
+          <div class="tip" id="749">
             <strong>Signature:</strong> encoding:Encoding -&gt; file:string -&gt; string<br />
                                   </div>
         </td>
@@ -583,10 +586,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
-            readLine(file)
+          <code onmouseout="hideTip(event, '750', 750)" onmouseover="showTip(event, '750', 750)">
+            File.readLine(file)
           </code>
-          <div class="tip" id="745">
+          <div class="tip" id="750">
             <strong>Signature:</strong> file:string -&gt; string<br />
                                   </div>
         </td>
@@ -603,10 +606,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
-            readLineWithEncoding(encoding file)
+          <code onmouseout="hideTip(event, '751', 751)" onmouseover="showTip(event, '751', 751)">
+            File.readLineWithEncoding encoding file
           </code>
-          <div class="tip" id="746">
+          <div class="tip" id="751">
             <strong>Signature:</strong> encoding:Encoding -&gt; file:string -&gt; string<br />
                                   </div>
         </td>
@@ -623,10 +626,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
-            readWithEncoding(encoding file)
+          <code onmouseout="hideTip(event, '752', 752)" onmouseover="showTip(event, '752', 752)">
+            File.readWithEncoding encoding file
           </code>
-          <div class="tip" id="747">
+          <div class="tip" id="752">
             <strong>Signature:</strong> encoding:Encoding -&gt; file:string -&gt; seq&lt;string&gt;<br />
                                   </div>
         </td>
@@ -643,10 +646,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '748', 748)" onmouseover="showTip(event, '748', 748)">
-            replaceContent(fileName text)
+          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
+            File.replaceContent fileName text
           </code>
-          <div class="tip" id="748">
+          <div class="tip" id="753">
             <strong>Signature:</strong> fileName:string -&gt; text:string -&gt; unit<br />
                                   </div>
         </td>
@@ -663,10 +666,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '749', 749)" onmouseover="showTip(event, '749', 749)">
-            write(append fileName lines)
+          <code onmouseout="hideTip(event, '754', 754)" onmouseover="showTip(event, '754', 754)">
+            File.write append fileName lines
           </code>
-          <div class="tip" id="749">
+          <div class="tip" id="754">
             <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -681,10 +684,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '750', 750)" onmouseover="showTip(event, '750', 750)">
-            writeBytes(file bytes)
+          <code onmouseout="hideTip(event, '755', 755)" onmouseover="showTip(event, '755', 755)">
+            File.writeBytes file bytes
           </code>
-          <div class="tip" id="750">
+          <div class="tip" id="755">
             <strong>Signature:</strong> file:string -&gt; bytes:byte [] -&gt; unit<br />
                                   </div>
         </td>
@@ -701,10 +704,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '751', 751)" onmouseover="showTip(event, '751', 751)">
-            writeNew(file lines)
+          <code onmouseout="hideTip(event, '756', 756)" onmouseover="showTip(event, '756', 756)">
+            File.writeNew file lines
           </code>
-          <div class="tip" id="751">
+          <div class="tip" id="756">
             <strong>Signature:</strong> file:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -721,10 +724,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '752', 752)" onmouseover="showTip(event, '752', 752)">
-            writeString(append fileName text)
+          <code onmouseout="hideTip(event, '757', 757)" onmouseover="showTip(event, '757', 757)">
+            File.writeString append fileName text
           </code>
-          <div class="tip" id="752">
+          <div class="tip" id="757">
             <strong>Signature:</strong> append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
                                   </div>
         </td>
@@ -739,10 +742,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
-            writeStringWithEncoding(...)
+          <code onmouseout="hideTip(event, '758', 758)" onmouseover="showTip(event, '758', 758)">
+            File.writeStringWithEncoding(...)
           </code>
-          <div class="tip" id="753">
+          <div class="tip" id="758">
             <strong>Signature:</strong> encoding:Encoding -&gt; append:bool -&gt; fileName:string -&gt; text:string -&gt; unit<br />
                                   </div>
         </td>
@@ -759,10 +762,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '754', 754)" onmouseover="showTip(event, '754', 754)">
-            writeWithEncoding(...)
+          <code onmouseout="hideTip(event, '759', 759)" onmouseover="showTip(event, '759', 759)">
+            File.writeWithEncoding(...)
           </code>
-          <div class="tip" id="754">
+          <div class="tip" id="759">
             <strong>Signature:</strong> encoding:Encoding -&gt; append:bool -&gt; fileName:string -&gt; lines:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -787,10 +790,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '755', 755)" onmouseover="showTip(event, '755', 755)">
-            ( |EndsWith|_| )(extension file)
+          <code onmouseout="hideTip(event, '760', 760)" onmouseover="showTip(event, '760', 760)">
+            File.( |EndsWith|_| ) extension file
           </code>
-          <div class="tip" id="755">
+          <div class="tip" id="760">
             <strong>Signature:</strong> extension:string -&gt; file:string -&gt; unit option<br />
                                   </div>
         </td>
@@ -911,7 +914,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

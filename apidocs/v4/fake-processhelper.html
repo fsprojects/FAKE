@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -333,7 +336,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
-            AlwaysSetProcessEncoding 
+            AlwaysSetProcessEncoding
           </code>
           <div class="tip" id="582">
             <strong>Signature:</strong> bool<br />
@@ -350,7 +353,7 @@ If set to false (default) only mono processes will be changed.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
-            asyncShellExec args
+            asyncShellExec(args)
           </code>
           <div class="tip" id="583">
             <strong>Signature:</strong> args:ExecParams -&gt; Async&lt;int&gt;<br />
@@ -369,7 +372,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
-            defaultParams 
+            defaultParams
           </code>
           <div class="tip" id="584">
             <strong>Signature:</strong> ExecParams<br />
@@ -385,7 +388,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
-            directExec configProcessStartInfoF
+            directExec(configProcessStartInfoF)
           </code>
           <div class="tip" id="585">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
@@ -422,7 +425,7 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
-            ExecProcess (...)
+            ExecProcess(...)
           </code>
           <div class="tip" id="587">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; int<br />
@@ -451,7 +454,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
-            ExecProcessAndReturnMessages (...)
+            ExecProcessAndReturnMessages(...)
           </code>
           <div class="tip" id="588">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; ProcessResult<br />
@@ -494,7 +497,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '590', 590)" onmouseover="showTip(event, '590', 590)">
-            ExecProcessRedirected (...)
+            ExecProcessRedirected(...)
           </code>
           <div class="tip" id="590">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
@@ -515,7 +518,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '591', 591)" onmouseover="showTip(event, '591', 591)">
-            ExecProcessWithLambdas (...)
+            ExecProcessWithLambdas(...)
           </code>
           <div class="tip" id="591">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
@@ -539,7 +542,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
-            fireAndForget configProcessStartInfoF
+            fireAndForget(configProcessStartInfoF)
           </code>
           <div class="tip" id="592">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
@@ -555,7 +558,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '593', 593)" onmouseover="showTip(event, '593', 593)">
-            getProcessesByName name
+            getProcessesByName(name)
           </code>
           <div class="tip" id="593">
             <strong>Signature:</strong> name:string -&gt; seq&lt;Process&gt;<br />
@@ -571,7 +574,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '594', 594)" onmouseover="showTip(event, '594', 594)">
-            kill proc
+            kill(proc)
           </code>
           <div class="tip" id="594">
             <strong>Signature:</strong> proc:Process -&gt; unit<br />
@@ -587,7 +590,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '595', 595)" onmouseover="showTip(event, '595', 595)">
-            killAllCreatedProcesses ()
+            killAllCreatedProcesses()
           </code>
           <div class="tip" id="595">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -603,7 +606,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '596', 596)" onmouseover="showTip(event, '596', 596)">
-            killFSI ()
+            killFSI()
           </code>
           <div class="tip" id="596">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -619,7 +622,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '597', 597)" onmouseover="showTip(event, '597', 597)">
-            killMSBuild ()
+            killMSBuild()
           </code>
           <div class="tip" id="597">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -635,7 +638,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '598', 598)" onmouseover="showTip(event, '598', 598)">
-            killProcess name
+            killProcess(name)
           </code>
           <div class="tip" id="598">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -651,7 +654,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '599', 599)" onmouseover="showTip(event, '599', 599)">
-            killProcessById id
+            killProcessById(id)
           </code>
           <div class="tip" id="599">
             <strong>Signature:</strong> id:int -&gt; unit<br />
@@ -667,7 +670,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '600', 600)" onmouseover="showTip(event, '600', 600)">
-            pathDirectories 
+            pathDirectories
           </code>
           <div class="tip" id="600">
             <strong>Signature:</strong> seq&lt;string&gt;<br />
@@ -683,7 +686,7 @@ info.Arguments &lt;- "-v") (TimeSpan.FromMinutes 5.0)</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '601', 601)" onmouseover="showTip(event, '601', 601)">
-            ProcessEncoding 
+            ProcessEncoding
           </code>
           <div class="tip" id="601">
             <strong>Signature:</strong> Encoding<br />
@@ -700,7 +703,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '602', 602)" onmouseover="showTip(event, '602', 602)">
-            RunRemoteService (...)
+            RunRemoteService(...)
           </code>
           <div class="tip" id="602">
             <strong>Signature:</strong> command:string -&gt; host:string -&gt; serviceName:string -&gt; unit<br />
@@ -732,7 +735,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '604', 604)" onmouseover="showTip(event, '604', 604)">
-            StartProcess configProcessStartInfoF
+            StartProcess(configProcessStartInfoF)
           </code>
           <div class="tip" id="604">
             <strong>Signature:</strong> configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
@@ -764,7 +767,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '606', 606)" onmouseover="showTip(event, '606', 606)">
-            StartService serviceName
+            StartService(serviceName)
           </code>
           <div class="tip" id="606">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
@@ -796,7 +799,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '608', 608)" onmouseover="showTip(event, '608', 608)">
-            StopService serviceName
+            StopService(serviceName)
           </code>
           <div class="tip" id="608">
             <strong>Signature:</strong> serviceName:string -&gt; unit<br />
@@ -812,7 +815,7 @@ If AlwaysSetProcessEncoding is set to false (default) only mono processes will b
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '609', 609)" onmouseover="showTip(event, '609', 609)">
-            tryFindFileOnPath file
+            tryFindFileOnPath(file)
           </code>
           <div class="tip" id="609">
             <strong>Signature:</strong> file:string -&gt; string option<br />
@@ -937,7 +940,7 @@ path to the file.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

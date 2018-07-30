@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -337,10 +340,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2008', 2008)" onmouseover="showTip(event, '2008', 2008)">
-            defaultNpmParams
+          <code onmouseout="hideTip(event, '2044', 2044)" onmouseover="showTip(event, '2044', 2044)">
+            Npm.defaultNpmParams
           </code>
-          <div class="tip" id="2008">
+          <div class="tip" id="2044">
             <strong>Signature:</strong> NpmParams<br />
                                   </div>
         </td>
@@ -357,10 +360,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2009', 2009)" onmouseover="showTip(event, '2009', 2009)">
-            exec(command setParams)
+          <code onmouseout="hideTip(event, '2045', 2045)" onmouseover="showTip(event, '2045', 2045)">
+            Npm.exec command setParams
           </code>
-          <div class="tip" id="2009">
+          <div class="tip" id="2045">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -389,10 +392,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2010', 2010)" onmouseover="showTip(event, '2010', 2010)">
-            install(setParams)
+          <code onmouseout="hideTip(event, '2046', 2046)" onmouseover="showTip(event, '2046', 2046)">
+            Npm.install(setParams)
           </code>
-          <div class="tip" id="2010">
+          <div class="tip" id="2046">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -420,10 +423,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2011', 2011)" onmouseover="showTip(event, '2011', 2011)">
-            installForced(setParams)
+          <code onmouseout="hideTip(event, '2047', 2047)" onmouseover="showTip(event, '2047', 2047)">
+            Npm.installForced(setParams)
           </code>
-          <div class="tip" id="2011">
+          <div class="tip" id="2047">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -451,10 +454,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2012', 2012)" onmouseover="showTip(event, '2012', 2012)">
-            run(command setParams)
+          <code onmouseout="hideTip(event, '2048', 2048)" onmouseover="showTip(event, '2048', 2048)">
+            Npm.run command setParams
           </code>
-          <div class="tip" id="2012">
+          <div class="tip" id="2048">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -483,10 +486,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2013', 2013)" onmouseover="showTip(event, '2013', 2013)">
-            runSilent(command setParams)
+          <code onmouseout="hideTip(event, '2049', 2049)" onmouseover="showTip(event, '2049', 2049)">
+            Npm.runSilent command setParams
           </code>
-          <div class="tip" id="2013">
+          <div class="tip" id="2049">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -515,10 +518,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2014', 2014)" onmouseover="showTip(event, '2014', 2014)">
-            runTest(command setParams)
+          <code onmouseout="hideTip(event, '2050', 2050)" onmouseover="showTip(event, '2050', 2050)">
+            Npm.runTest command setParams
           </code>
-          <div class="tip" id="2014">
+          <div class="tip" id="2050">
             <strong>Signature:</strong> command:string -&gt; setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -547,10 +550,10 @@ WorkingDirectory = "./src/FAKESimple.Web/"
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2015', 2015)" onmouseover="showTip(event, '2015', 2015)">
-            test(setParams)
+          <code onmouseout="hideTip(event, '2051', 2051)" onmouseover="showTip(event, '2051', 2051)">
+            Npm.test(setParams)
           </code>
-          <div class="tip" id="2015">
+          <div class="tip" id="2051">
             <strong>Signature:</strong> setParams:(NpmParams -&gt; NpmParams) -&gt; unit<br />
                                   </div>
         </td>
@@ -682,7 +685,7 @@ WorkingDirectory = "./src/FAKESimple.Web/"
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

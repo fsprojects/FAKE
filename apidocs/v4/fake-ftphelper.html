@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -373,7 +376,7 @@ Does not support FTPS and SFTP.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '454', 454)" onmouseover="showTip(event, '454', 454)">
-            getFtpDirContents (...)
+            getFtpDirContents(...)
           </code>
           <div class="tip" id="454">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; dirPath:string -&gt; string<br />
@@ -396,7 +399,7 @@ Does not support FTPS and SFTP.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '455', 455)" onmouseover="showTip(event, '455', 455)">
-            getServerInfo (...)
+            getServerInfo(...)
           </code>
           <div class="tip" id="455">
             <strong>Signature:</strong> serverNameIp:string -&gt; user:string -&gt; password:string -&gt; ftpMethod:string -&gt; FtpServerInfo<br />
@@ -451,7 +454,7 @@ Does not support FTPS and SFTP.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
-            uploadAFile (...)
+            uploadAFile(...)
           </code>
           <div class="tip" id="458">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; destPath:string -&gt; srcPath:string -&gt; unit<br />
@@ -475,7 +478,7 @@ Does not support FTPS and SFTP.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
-            uploadAFolder (...)
+            uploadAFolder(...)
           </code>
           <div class="tip" id="459">
             <strong>Signature:</strong> server:string -&gt; user:string -&gt; pwd:string -&gt; srcPath:string -&gt; rootDir:string -&gt; unit<br />
@@ -602,7 +605,7 @@ Does not support FTPS and SFTP.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

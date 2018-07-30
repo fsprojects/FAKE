@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -285,10 +288,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '717', 717)" onmouseover="showTip(event, '717', 717)">
-            containsFile(fileInfo dir)
+          <code onmouseout="hideTip(event, '722', 722)" onmouseover="showTip(event, '722', 722)">
+            DirectoryInfo.containsFile fileInfo dir
           </code>
-          <div class="tip" id="717">
+          <div class="tip" id="722">
             <strong>Signature:</strong> fileInfo:FileInfo -&gt; dir:DirectoryInfo -&gt; bool<br />
                                   </div>
         </td>
@@ -305,10 +308,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '718', 718)" onmouseover="showTip(event, '718', 718)">
-            copyRecursiveTo(overwrite outputDir dir)
+          <code onmouseout="hideTip(event, '723', 723)" onmouseover="showTip(event, '723', 723)">
+            DirectoryInfo.copyRecursiveTo(...)
           </code>
-          <div class="tip" id="718">
+          <div class="tip" id="723">
             <strong>Signature:</strong> overwrite:bool -&gt; outputDir:DirectoryInfo -&gt; dir:DirectoryInfo -&gt; string list<br />
                                   </div>
         </td>
@@ -325,10 +328,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '719', 719)" onmouseover="showTip(event, '719', 719)">
-            copyRecursiveToWithFilter(...)
+          <code onmouseout="hideTip(event, '724', 724)" onmouseover="showTip(event, '724', 724)">
+            DirectoryInfo.copyRecursiveToWithFilter(...)
           </code>
-          <div class="tip" id="719">
+          <div class="tip" id="724">
             <strong>Signature:</strong> overwrite:bool -&gt; filter:(DirectoryInfo -&gt; FileInfo -&gt; bool) -&gt; outputDir:DirectoryInfo -&gt; dir:DirectoryInfo -&gt; string list<br />
                                   </div>
         </td>
@@ -345,10 +348,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '720', 720)" onmouseover="showTip(event, '720', 720)">
-            ensure(dir)
+          <code onmouseout="hideTip(event, '725', 725)" onmouseover="showTip(event, '725', 725)">
+            DirectoryInfo.ensure(dir)
           </code>
-          <div class="tip" id="720">
+          <div class="tip" id="725">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; unit<br />
                                   </div>
         </td>
@@ -365,10 +368,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '721', 721)" onmouseover="showTip(event, '721', 721)">
-            exists(dir)
+          <code onmouseout="hideTip(event, '726', 726)" onmouseover="showTip(event, '726', 726)">
+            DirectoryInfo.exists(dir)
           </code>
-          <div class="tip" id="721">
+          <div class="tip" id="726">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; bool<br />
                                   </div>
         </td>
@@ -385,10 +388,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '722', 722)" onmouseover="showTip(event, '722', 722)">
-            getFiles(dir)
+          <code onmouseout="hideTip(event, '727', 727)" onmouseover="showTip(event, '727', 727)">
+            DirectoryInfo.getFiles(dir)
           </code>
-          <div class="tip" id="722">
+          <div class="tip" id="727">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; FileInfo []<br />
                                   </div>
         </td>
@@ -405,10 +408,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '723', 723)" onmouseover="showTip(event, '723', 723)">
-            getMatchingFiles(pattern dir)
+          <code onmouseout="hideTip(event, '728', 728)" onmouseover="showTip(event, '728', 728)">
+            DirectoryInfo.getMatchingFiles(...)
           </code>
-          <div class="tip" id="723">
+          <div class="tip" id="728">
             <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
                                   </div>
         </td>
@@ -425,10 +428,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '724', 724)" onmouseover="showTip(event, '724', 724)">
-            getMatchingFilesRecursive(pattern dir)
+          <code onmouseout="hideTip(event, '729', 729)" onmouseover="showTip(event, '729', 729)">
+            DirectoryInfo.getMatchingFilesRecursive(...)
           </code>
-          <div class="tip" id="724">
+          <div class="tip" id="729">
             <strong>Signature:</strong> pattern:string -&gt; dir:DirectoryInfo -&gt; FileInfo []<br />
                                   </div>
         </td>
@@ -445,10 +448,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '725', 725)" onmouseover="showTip(event, '725', 725)">
-            getSubDirectories(dir)
+          <code onmouseout="hideTip(event, '730', 730)" onmouseover="showTip(event, '730', 730)">
+            DirectoryInfo.getSubDirectories(dir)
           </code>
-          <div class="tip" id="725">
+          <div class="tip" id="730">
             <strong>Signature:</strong> dir:DirectoryInfo -&gt; DirectoryInfo []<br />
                                   </div>
         </td>
@@ -465,10 +468,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '726', 726)" onmouseover="showTip(event, '726', 726)">
-            isSubfolderOf(dir2 dir1)
+          <code onmouseout="hideTip(event, '731', 731)" onmouseover="showTip(event, '731', 731)">
+            DirectoryInfo.isSubfolderOf dir2 dir1
           </code>
-          <div class="tip" id="726">
+          <div class="tip" id="731">
             <strong>Signature:</strong> dir2:DirectoryInfo -&gt; dir1:DirectoryInfo -&gt; bool<br />
                                   </div>
         </td>
@@ -485,10 +488,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '727', 727)" onmouseover="showTip(event, '727', 727)">
-            ofPath(path)
+          <code onmouseout="hideTip(event, '732', 732)" onmouseover="showTip(event, '732', 732)">
+            DirectoryInfo.ofPath(path)
           </code>
-          <div class="tip" id="727">
+          <div class="tip" id="732">
             <strong>Signature:</strong> path:string -&gt; DirectoryInfo<br />
                                   </div>
         </td>
@@ -505,10 +508,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '728', 728)" onmouseover="showTip(event, '728', 728)">
-            setReadOnly(readOnly dir)
+          <code onmouseout="hideTip(event, '733', 733)" onmouseover="showTip(event, '733', 733)">
+            DirectoryInfo.setReadOnly readOnly dir
           </code>
-          <div class="tip" id="728">
+          <div class="tip" id="733">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                                   </div>
         </td>
@@ -525,10 +528,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '729', 729)" onmouseover="showTip(event, '729', 729)">
-            setReadOnlyRecursive(readOnly dir)
+          <code onmouseout="hideTip(event, '734', 734)" onmouseover="showTip(event, '734', 734)">
+            DirectoryInfo.setReadOnlyRecursive(...)
           </code>
-          <div class="tip" id="729">
+          <div class="tip" id="734">
             <strong>Signature:</strong> readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                                   </div>
         </td>
@@ -649,7 +652,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

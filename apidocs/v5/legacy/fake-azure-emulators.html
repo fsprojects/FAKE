@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -283,7 +286,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1123', 1123)" onmouseover="showTip(event, '1123', 1123)">
-            msSdkBasePath
+            Emulators.msSdkBasePath
           </code>
           <div class="tip" id="1123">
             <strong>Signature:</strong> string<br />
@@ -303,11 +306,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1124', 1124)" onmouseover="showTip(event, '1124', 1124)">
-            resetDevStorage(_arg1)
+            Emulators.resetDevStorage(_arg1)
           </code>
           <div class="tip" id="1124">
-            <strong>Signature:</strong> _arg1:&#39;?16432 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?16432                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?16971 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?16971                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L78-78" class="github-link">
@@ -323,11 +326,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1125', 1125)" onmouseover="showTip(event, '1125', 1125)">
-            startComputeEmulator(_arg1)
+            Emulators.startComputeEmulator(_arg1)
           </code>
           <div class="tip" id="1125">
-            <strong>Signature:</strong> _arg1:&#39;?16430 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?16430                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?16969 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?16969                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L68-68" class="github-link">
@@ -343,11 +346,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1126', 1126)" onmouseover="showTip(event, '1126', 1126)">
-            startStorageEmulator(_arg1)
+            Emulators.startStorageEmulator(_arg1)
           </code>
           <div class="tip" id="1126">
-            <strong>Signature:</strong> _arg1:&#39;?16426 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?16426                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?16965 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?16965                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L48-48" class="github-link">
@@ -363,11 +366,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1127', 1127)" onmouseover="showTip(event, '1127', 1127)">
-            stopComputeEmulator(_arg1)
+            Emulators.stopComputeEmulator(_arg1)
           </code>
           <div class="tip" id="1127">
-            <strong>Signature:</strong> _arg1:&#39;?16428 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?16428                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?16967 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?16967                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L58-58" class="github-link">
@@ -383,11 +386,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1128', 1128)" onmouseover="showTip(event, '1128', 1128)">
-            stopStorageEmulator(_arg1)
+            Emulators.stopStorageEmulator(_arg1)
           </code>
           <div class="tip" id="1128">
-            <strong>Signature:</strong> _arg1:&#39;?16424 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?16424                      </div>
+            <strong>Signature:</strong> _arg1:&#39;?16963 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?16963                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Azure.Emulators/Emulators.fs#L38-38" class="github-link">
@@ -506,7 +509,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

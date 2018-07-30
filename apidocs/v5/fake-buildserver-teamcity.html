@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -305,7 +308,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '77', 77)" onmouseover="showTip(event, '77', 77)">
-            block(name description)
+            TeamCity.block name description
           </code>
           <div class="tip" id="77">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; IDisposable<br />
@@ -326,7 +329,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '78', 78)" onmouseover="showTip(event, '78', 78)">
-            defaultTraceListener
+            TeamCity.defaultTraceListener
           </code>
           <div class="tip" id="78">
             <strong>Signature:</strong> ITraceListener<br />
@@ -344,7 +347,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '79', 79)" onmouseover="showTip(event, '79', 79)">
-            detect()
+            TeamCity.detect()
           </code>
           <div class="tip" id="79">
             <strong>Signature:</strong> unit -&gt; bool<br />
@@ -362,7 +365,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
-            install(force)
+            TeamCity.install(force)
           </code>
           <div class="tip" id="80">
             <strong>Signature:</strong> force:bool -&gt; unit<br />
@@ -380,7 +383,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
-            Installer
+            TeamCity.Installer
           </code>
           <div class="tip" id="81">
             <strong>Signature:</strong> BuildServerInstaller<br />
@@ -398,7 +401,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
-            reportBuildStatus(status message)
+            TeamCity.reportBuildStatus(...)
           </code>
           <div class="tip" id="82">
             <strong>Signature:</strong> status:string -&gt; message:string -&gt; unit<br />
@@ -418,7 +421,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
-            reportProgress(message)
+            TeamCity.reportProgress(message)
           </code>
           <div class="tip" id="83">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -438,7 +441,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
-            reportProgressFinish(message)
+            TeamCity.reportProgressFinish(message)
           </code>
           <div class="tip" id="84">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -458,7 +461,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
-            reportProgressStart(message)
+            TeamCity.reportProgressStart(message)
           </code>
           <div class="tip" id="85">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -478,7 +481,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
-            sendTeamCityError(error)
+            TeamCity.sendTeamCityError(error)
           </code>
           <div class="tip" id="86">
             <strong>Signature:</strong> error:string -&gt; unit<br />
@@ -498,7 +501,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
-            setBuildStatistic(key value)
+            TeamCity.setBuildStatistic key value
           </code>
           <div class="tip" id="87">
             <strong>Signature:</strong> key:string -&gt; value:string -&gt; unit<br />
@@ -518,7 +521,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '88', 88)" onmouseover="showTip(event, '88', 88)">
-            setParameter(name value)
+            TeamCity.setParameter name value
           </code>
           <div class="tip" id="88">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
@@ -641,7 +644,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -310,7 +313,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '893', 893)" onmouseover="showTip(event, '893', 893)">
-            closeAllOpenTags ()
+            closeAllOpenTags()
           </code>
           <div class="tip" id="893">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -336,7 +339,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '894', 894)" onmouseover="showTip(event, '894', 894)">
-            closeTag tag
+            closeTag(tag)
           </code>
           <div class="tip" id="894">
             <strong>Signature:</strong> tag:string -&gt; unit<br />
@@ -364,7 +367,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '895', 895)" onmouseover="showTip(event, '895', 895)">
-            console 
+            console
           </code>
           <div class="tip" id="895">
             <strong>Signature:</strong> ITraceListener<br />
@@ -390,7 +393,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '896', 896)" onmouseover="showTip(event, '896', 896)">
-            exceptionAndInnersToString ex
+            exceptionAndInnersToString(ex)
           </code>
           <div class="tip" id="896">
             <strong>Signature:</strong> ex:Exception -&gt; string<br />
@@ -418,7 +421,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '897', 897)" onmouseover="showTip(event, '897', 897)">
-            fakePath 
+            fakePath
           </code>
           <div class="tip" id="897">
             <strong>Signature:</strong> string<br />
@@ -446,7 +449,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '898', 898)" onmouseover="showTip(event, '898', 898)">
-            fakeVersion 
+            fakeVersion
           </code>
           <div class="tip" id="898">
             <strong>Signature:</strong> string<br />
@@ -474,7 +477,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '899', 899)" onmouseover="showTip(event, '899', 899)">
-            fakeVersionStr 
+            fakeVersionStr
           </code>
           <div class="tip" id="899">
             <strong>Signature:</strong> string<br />
@@ -502,7 +505,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '900', 900)" onmouseover="showTip(event, '900', 900)">
-            log message
+            log(message)
           </code>
           <div class="tip" id="900">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -558,11 +561,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '902', 902)" onmouseover="showTip(event, '902', 902)">
-            logf fmt
+            logf(fmt)
           </code>
           <div class="tip" id="902">
-            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?13394,unit&gt; -&gt; &#39;?13394<br />
-                          <strong>Type parameters:</strong> '?13394                            <span>
+            <strong>Signature:</strong> fmt:StringFormat&lt;&#39;?13410,unit&gt; -&gt; &#39;?13410<br />
+                          <strong>Type parameters:</strong> '?13410                            <span>
                     <strong>Attributes:</strong><br />
 [&lt;Obsolete(&quot;use nuget &#39;Fake.Core.Trace&#39; instead (open Fake.Core and use &#39;Trace.&#39;)&quot;)&gt;]<br />
                 </span>
@@ -586,7 +589,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '903', 903)" onmouseover="showTip(event, '903', 903)">
-            logfn fmt
+            logfn(fmt)
           </code>
           <div class="tip" id="903">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -614,7 +617,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '904', 904)" onmouseover="showTip(event, '904', 904)">
-            logToConsole (msg, eventLogEntry)
+            logToConsole(msg, eventLogEntry)
           </code>
           <div class="tip" id="904">
             <strong>Signature:</strong> (msg:string * eventLogEntry:EventLogEntryType) -&gt; unit<br />
@@ -642,7 +645,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '905', 905)" onmouseover="showTip(event, '905', 905)">
-            logVerbosefn fmt
+            logVerbosefn(fmt)
           </code>
           <div class="tip" id="905">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -670,7 +673,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '906', 906)" onmouseover="showTip(event, '906', 906)">
-            openTag tag
+            openTag(tag)
           </code>
           <div class="tip" id="906">
             <strong>Signature:</strong> tag:string -&gt; unit<br />
@@ -698,7 +701,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '907', 907)" onmouseover="showTip(event, '907', 907)">
-            trace message
+            trace(message)
           </code>
           <div class="tip" id="907">
             <strong>Signature:</strong> message:string -&gt; unit<br />
@@ -726,7 +729,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '908', 908)" onmouseover="showTip(event, '908', 908)">
-            traceEndBuild ()
+            traceEndBuild()
           </code>
           <div class="tip" id="908">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -754,7 +757,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '909', 909)" onmouseover="showTip(event, '909', 909)">
-            traceEndTarget name
+            traceEndTarget(name)
           </code>
           <div class="tip" id="909">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -810,7 +813,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '911', 911)" onmouseover="showTip(event, '911', 911)">
-            TraceEnvironmentVariables ()
+            TraceEnvironmentVariables()
           </code>
           <div class="tip" id="911">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -838,7 +841,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '912', 912)" onmouseover="showTip(event, '912', 912)">
-            traceError error
+            traceError(error)
           </code>
           <div class="tip" id="912">
             <strong>Signature:</strong> error:string -&gt; unit<br />
@@ -866,7 +869,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '913', 913)" onmouseover="showTip(event, '913', 913)">
-            traceException ex
+            traceException(ex)
           </code>
           <div class="tip" id="913">
             <strong>Signature:</strong> ex:Exception -&gt; unit<br />
@@ -894,7 +897,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '914', 914)" onmouseover="showTip(event, '914', 914)">
-            tracef fmt
+            tracef(fmt)
           </code>
           <div class="tip" id="914">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -922,7 +925,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '915', 915)" onmouseover="showTip(event, '915', 915)">
-            traceFAKE fmt
+            traceFAKE(fmt)
           </code>
           <div class="tip" id="915">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -950,7 +953,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
-            tracefn fmt
+            tracefn(fmt)
           </code>
           <div class="tip" id="916">
             <strong>Signature:</strong> fmt:StringFormat&lt;&#39;a,unit&gt; -&gt; &#39;a<br />
@@ -978,7 +981,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
-            traceHeader name
+            traceHeader(name)
           </code>
           <div class="tip" id="917">
             <strong>Signature:</strong> name:string -&gt; unit<br />
@@ -1006,7 +1009,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
-            traceImportant text
+            traceImportant(text)
           </code>
           <div class="tip" id="918">
             <strong>Signature:</strong> text:string -&gt; unit<br />
@@ -1034,7 +1037,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
-            traceLine ()
+            traceLine()
           </code>
           <div class="tip" id="919">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -1062,7 +1065,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
-            traceStartBuild ()
+            traceStartBuild()
           </code>
           <div class="tip" id="920">
             <strong>Signature:</strong> unit -&gt; unit<br />
@@ -1090,7 +1093,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
-            traceStartTarget (...)
+            traceStartTarget(...)
           </code>
           <div class="tip" id="921">
             <strong>Signature:</strong> name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
@@ -1175,7 +1178,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '924', 924)" onmouseover="showTip(event, '924', 924)">
-            traceVerbose s
+            traceVerbose(s)
           </code>
           <div class="tip" id="924">
             <strong>Signature:</strong> s:string -&gt; unit<br />
@@ -1306,7 +1309,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

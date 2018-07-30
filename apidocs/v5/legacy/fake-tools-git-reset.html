@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -282,10 +285,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2232', 2232)" onmouseover="showTip(event, '2232', 2232)">
+          <code onmouseout="hideTip(event, '2269', 2269)" onmouseover="showTip(event, '2269', 2269)">
             hard repositoryDir commit file
           </code>
-          <div class="tip" id="2232">
+          <div class="tip" id="2269">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -309,10 +312,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2233', 2233)" onmouseover="showTip(event, '2233', 2233)">
+          <code onmouseout="hideTip(event, '2270', 2270)" onmouseover="showTip(event, '2270', 2270)">
             mixed repositoryDir commit file
           </code>
-          <div class="tip" id="2233">
+          <div class="tip" id="2270">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -336,10 +339,10 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2234', 2234)" onmouseover="showTip(event, '2234', 2234)">
-            ResetHard repositoryDir
+          <code onmouseout="hideTip(event, '2271', 2271)" onmouseover="showTip(event, '2271', 2271)">
+            ResetHard(repositoryDir)
           </code>
-          <div class="tip" id="2234">
+          <div class="tip" id="2271">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -361,10 +364,10 @@ Resets the index and working tree. Any changes to tracked files in the working t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2235', 2235)" onmouseover="showTip(event, '2235', 2235)">
-            ResetMixed repositoryDir
+          <code onmouseout="hideTip(event, '2272', 2272)" onmouseover="showTip(event, '2272', 2272)">
+            ResetMixed(repositoryDir)
           </code>
-          <div class="tip" id="2235">
+          <div class="tip" id="2272">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -386,10 +389,10 @@ Resets the index but not the working tree and reports what has not been updated.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2236', 2236)" onmouseover="showTip(event, '2236', 2236)">
-            ResetSoft repositoryDir
+          <code onmouseout="hideTip(event, '2273', 2273)" onmouseover="showTip(event, '2273', 2273)">
+            ResetSoft(repositoryDir)
           </code>
-          <div class="tip" id="2236">
+          <div class="tip" id="2273">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                                   </div>
         </td>
@@ -411,10 +414,10 @@ Does not touch the index file nor the working tree at all.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2237', 2237)" onmouseover="showTip(event, '2237', 2237)">
+          <code onmouseout="hideTip(event, '2274', 2274)" onmouseover="showTip(event, '2274', 2274)">
             soft repositoryDir commit file
           </code>
-          <div class="tip" id="2237">
+          <div class="tip" id="2274">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                                   </div>
         </td>
@@ -542,7 +545,7 @@ Does not touch the index file nor the working tree at all.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>

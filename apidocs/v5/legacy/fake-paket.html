@@ -132,6 +132,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
@@ -148,7 +149,8 @@
 														<li>
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
-																<li><a href="/apidocs/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
 														<li>
@@ -187,10 +189,11 @@
 															</ul>
 														</li>
 														<li>
-															<a href="/apidocs/v5/index.html#Fake.Tools.Git">Tools</a>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -340,7 +343,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '568', 568)" onmouseover="showTip(event, '568', 568)">
-            GetDependenciesForReferencesFile (...)
+            GetDependenciesForReferencesFile(...)
           </code>
           <div class="tip" id="568">
             <strong>Signature:</strong> referencesFile:string -&gt; (string * string) []<br />
@@ -368,7 +371,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '569', 569)" onmouseover="showTip(event, '569', 569)">
-            Pack setParams
+            Pack(setParams)
           </code>
           <div class="tip" id="569">
             <strong>Signature:</strong> setParams:(PaketPackParams -&gt; PaketPackParams) -&gt; unit<br />
@@ -400,7 +403,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
-            PaketPackDefaults ()
+            PaketPackDefaults()
           </code>
           <div class="tip" id="570">
             <strong>Signature:</strong> unit -&gt; PaketPackParams<br />
@@ -428,7 +431,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
-            PaketPushDefaults ()
+            PaketPushDefaults()
           </code>
           <div class="tip" id="571">
             <strong>Signature:</strong> unit -&gt; PaketPushParams<br />
@@ -456,7 +459,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
-            PaketRestoreDefaults ()
+            PaketRestoreDefaults()
           </code>
           <div class="tip" id="572">
             <strong>Signature:</strong> unit -&gt; PaketRestoreParams<br />
@@ -484,7 +487,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
-            Push setParams
+            Push(setParams)
           </code>
           <div class="tip" id="573">
             <strong>Signature:</strong> setParams:(PaketPushParams -&gt; PaketPushParams) -&gt; unit<br />
@@ -549,7 +552,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
-            Restore setParams
+            Restore(setParams)
           </code>
           <div class="tip" id="575">
             <strong>Signature:</strong> setParams:(PaketRestoreParams -&gt; PaketRestoreParams) -&gt; unit<br />
@@ -684,7 +687,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.2.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
 									</ul>
 								</div>
 							</div>
