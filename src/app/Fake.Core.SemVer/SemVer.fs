@@ -337,5 +337,5 @@ module SemVer =
               Original = Some version }
 
         with
-        | exn ->
-            raise <| exn(sprintf "Can't parse \"%s\"." version, exn)
+        | e ->
+            raise <| exn(sprintf "Can't parse \"%s\"." version, e)
