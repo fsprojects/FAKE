@@ -338,4 +338,4 @@ module SemVer =
 
         with
         | exn ->
-            failwithf "Can't parse \"%s\". %s" version (exn.ToString())
+            raise <| exn(sprintf "Can't parse \"%s\"." version, exn)
