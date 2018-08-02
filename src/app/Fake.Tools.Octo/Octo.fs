@@ -1,12 +1,14 @@
-/// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
-/// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
-module Fake.OctoTools
+[<RequireQualifiedAccess>]
+module Fake.Tools.Octo
 
+open Fake.Core
+open Fake.IO
+open Fake.IO.Globbing
+open Fake.IO.FileSystemOperators
 open System
+open System.IO
 
 /// Octo.exe server options
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type OctoServerOptions = {
     /// The base URL for your Octopus server
     Server: string
@@ -15,7 +17,6 @@ type OctoServerOptions = {
     ApiKey: string }
     
 /// Options for creating a new release
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type CreateReleaseOptions = {
     /// Name of the project
     Project                 : string
@@ -48,7 +49,6 @@ type CreateReleaseOptions = {
     IgnoreChannelRules      : bool }
 
 /// Options for deploying a release to an environment
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type DeployReleaseOptions = {
     /// Name of the project
     Project                     : string
@@ -88,7 +88,6 @@ type DeployReleaseOptions = {
     SpecificMachines            : string option }
 
 /// Options for deleting a range of releases in a project
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type DeleteReleaseOptions = {
     /// Name of the project
     Project     : string
@@ -99,7 +98,6 @@ type DeleteReleaseOptions = {
     /// Maximum (inclusive) version number for the range of versions to delete
     MaxVersion  : string }
 
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type PushOptions = {
     // paths to one or more packages to push to the server
     Packages : string list 
@@ -108,7 +106,6 @@ type PushOptions = {
 }
 
 /// Option type for selecting one command
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type OctoCommand = 
 | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
 | DeployRelease of DeployReleaseOptions
@@ -118,7 +115,6 @@ type OctoCommand =
 
 /// Complete Octo.exe CLI params
 [<CLIMutable>]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 type OctoParams = {
     ToolName            : string
     ToolPath            : string
@@ -129,33 +125,28 @@ type OctoParams = {
 
 
 /// Default server options.
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let serverOptions = { Server = ""; ApiKey = ""; }
 
 /// Default options for 'CreateRelease'
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
     IgnoreExisting = false; Channel = None; IgnoreChannelRules = false }
 
 /// Default options for 'DeployRelease'
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
     DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
     NoRawLog = false; Progress = false }
 
 /// Default options for 'DeleteReleases'
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let deleteOptions = { 
     Project = ""; MinVersion = ""; MaxVersion = "" }
 
 /// Default parameters to call octo.exe.
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let octoParams =
     let toolName = "Octo.exe"
-    { ToolPath = findToolFolderInSubPath toolName (currentDirectory @@ "tools" @@ "OctopusTools")
+    { ToolPath = Tools.findToolFolderInSubPath toolName (Directory.GetCurrentDirectory() @@ "tools" @@ "OctopusTools")
       ToolName = toolName
       Command = ListEnvironments
       Server = serverOptions
@@ -163,21 +154,18 @@ let octoParams =
       WorkingDirectory = "" }
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let optionalStringParam p o = 
     match o with
     | Some s -> sprintf " --%s=\"%s\"" p s
     | None -> ""
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let optionalObjParam p o = 
     match o with
     | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
     | None -> ""
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
@@ -185,31 +173,27 @@ let stringListParam p os =
     sb.ToString()
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let flag p b = if b then sprintf " --%s" p else ""
     
 /// [omit]
-
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let releaseCommandLine (opts:CreateReleaseOptions) =
-    [ (optionalStringParam "project" (liftString opts.Project))
-      (optionalStringParam "version" (liftString opts.Version))
-      (optionalStringParam "packageversion" (liftString opts.PackageVersion))
+    [ (optionalStringParam "project" (String.liftString opts.Project))
+      (optionalStringParam "version" (String.liftString opts.Version))
+      (optionalStringParam "packageversion" (String.liftString opts.PackageVersion))
       (stringListParam "package" opts.Packages)
       (optionalStringParam "packagesfolder" opts.PackagesFolder)
-      (optionalStringParam "releasenotes" (liftString opts.ReleaseNotes))
-      (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile))
+      (optionalStringParam "releasenotes" (String.liftString opts.ReleaseNotes))
+      (optionalStringParam "releasenotesfile" (String.liftString opts.ReleaseNotesFile))
       (flag "ignoreExisting" opts.IgnoreExisting)
       (optionalStringParam "channel" opts.Channel)
       (flag "ignorechannelrules" opts.IgnoreChannelRules) ] 
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let deployCommandLine (opts:DeployReleaseOptions) = 
-    [ (optionalStringParam "project" (liftString opts.Project))
-      (optionalStringParam "deployto" (liftString opts.DeployTo))
-      (optionalStringParam "version" (liftString opts.Version))
+    [ (optionalStringParam "project" (String.liftString opts.Project))
+      (optionalStringParam "deployto" (String.liftString opts.DeployTo))
+      (optionalStringParam "version" (String.liftString opts.Version))
       (flag "force" opts.Force)
       (flag "waitfordeployment" opts.WaitForDeployment)
       (flag "norawlog" opts.NoRawLog)
@@ -220,32 +204,28 @@ let deployCommandLine (opts:DeployReleaseOptions) =
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let deleteCommandLine (opts:DeleteReleaseOptions) =
-    [ (optionalStringParam "project" (liftString opts.Project))
-      (optionalStringParam "minversion" (liftString opts.MinVersion))
-      (optionalStringParam "maxversion" (liftString opts.MaxVersion)) ] 
+    [ (optionalStringParam "project" (String.liftString opts.Project))
+      (optionalStringParam "minversion" (String.liftString opts.MinVersion))
+      (optionalStringParam "maxversion" (String.liftString opts.MaxVersion)) ] 
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let serverCommandLine (opts:OctoServerOptions) = 
-    [ (optionalStringParam "server" (liftString opts.Server))
-      (optionalStringParam "apikey" (liftString opts.ApiKey)) ] 
+    [ (optionalStringParam "server" (String.liftString opts.Server))
+      (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
 /// [omit]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let pushCommandLine (opts : PushOptions) =
     [ stringListParam "package" opts.Packages
       flag "replace-existing" opts.ReplaceExisting ]
-    |> List.fold (+) ""     
+    |> List.fold (+) ""
 
 /// Maps a command to string input for the octopus tools cli.
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let commandLine command =
     match command with
-    | CreateRelease (opts, None) ->        
+    | CreateRelease (opts, None) ->
         sprintf " create-release%s" (releaseCommandLine opts)
     | CreateRelease (opts, Some (dopts)) ->
         sprintf " create-release%s%s" (releaseCommandLine opts) (deployCommandLine dopts)
@@ -258,7 +238,6 @@ let commandLine command =
     | Push opts -> 
         sprintf " push%s" (pushCommandLine opts)
 
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
 /// This task calls the Octo.exe CLI.
@@ -266,7 +245,6 @@ let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { 
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the OctoTools default parameters.
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Octo module instead")>]
 let Octo setParams =
     let octoParams = setParams(octoParams)
     let command = (octoParams.Command.ToString())
@@ -274,14 +252,16 @@ let Octo setParams =
     let args = commandLine octoParams.Command |>(+)<| serverCommandLine octoParams.Server
     let traceArgs = commandLine octoParams.Command |>(+)<| serverCommandLineForTracing octoParams.Server
     
-    use __ = traceStartTaskUsing "Octo " command
-    trace (tool + traceArgs)
+    use __ = Trace.traceTask "Octo " command
+    Trace.trace (tool + traceArgs)
         
     let result = 
-        ExecProcess (fun info ->
-            info.Arguments <- args
-            info.WorkingDirectory <- octoParams.WorkingDirectory
-            info.FileName <- tool
+        Process.execSimple (fun info -> 
+            {info with 
+                Arguments = args
+                WorkingDirectory = octoParams.WorkingDirectory
+                FileName = tool
+            }
         ) octoParams.Timeout
 
     match result with
