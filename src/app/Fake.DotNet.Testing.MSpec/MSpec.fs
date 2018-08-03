@@ -44,7 +44,8 @@ let MSpecDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let internal buildMSpecArgs parameters assemblies =
+///TODO: mark internal
+let buildMSpecArgs parameters assemblies =
     let html, htmlText =
         if String.isNotNullOrEmpty parameters.HtmlOutputDir then
             true, sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar

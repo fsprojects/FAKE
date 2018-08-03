@@ -273,7 +273,8 @@ let getWorkingDir parameters =
                                        "." ]
     |> Path.GetFullPath
 
-let internal buildNUnit3Args parameters assemblies =
+///TODO: mark internal
+let buildNUnit3Args parameters assemblies =
     let appendResultString results sb =
         match results, sb with
         | [], sb -> StringBuilder.append "--noresult" sb

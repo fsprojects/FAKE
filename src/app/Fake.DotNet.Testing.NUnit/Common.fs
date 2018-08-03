@@ -157,7 +157,8 @@ let NUnitDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let internal buildNUnitdArgs parameters assemblies =
+///TODO: mark internal
+let buildNUnitdArgs parameters assemblies =
     new StringBuilder()
     |> StringBuilder.append "-nologo"
     |> StringBuilder.appendIfTrue parameters.DisableShadowCopy "-noshadow"

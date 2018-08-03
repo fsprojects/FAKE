@@ -190,7 +190,8 @@ let XUnit2Defaults =
       Class = None
       Method = None }
 
-let internal buildXUnit2Args assemblies parameters =
+///TODO: mark internal
+let buildXUnit2Args assemblies parameters =
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
     let appendTraits traitsList traitFlag sb =

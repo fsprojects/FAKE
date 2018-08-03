@@ -162,7 +162,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.UserInput", "src\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.VSTest", "src\app\Fake.DotNet.Testing.VSTest\Fake.DotNet.Testing.VSTest.fsproj", "{C4C9D7EE-6A52-42F1-9E04-7C44F0EA8922}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Tools.Rsync", "src\app\Fake.Tools.Rsync\Fake.Tools.Rsync.fsproj", "{26367457-80C0-44C9-9020-56F4013C13E1}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Tools.Rsync", "src\app\Fake.Tools.Rsync\Fake.Tools.Rsync.fsproj", "{26367457-80C0-44C9-9020-56F4013C13E1}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.DotNet.Testing.DotCover", "src\app\Fake.DotNet.Testing.DotCover\Fake.DotNet.Testing.DotCover.fsproj", "{E656E3E2-18D2-4D8E-935C-200DB00E1F19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1014,6 +1016,18 @@ Global
 		{26367457-80C0-44C9-9020-56F4013C13E1}.Release|x64.Build.0 = Release|Any CPU
 		{26367457-80C0-44C9-9020-56F4013C13E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{26367457-80C0-44C9-9020-56F4013C13E1}.Release|x86.Build.0 = Release|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Debug|x64.Build.0 = Debug|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Debug|x86.Build.0 = Debug|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Release|x64.ActiveCfg = Release|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Release|x64.Build.0 = Release|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Release|x86.ActiveCfg = Release|Any CPU
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1091,6 +1105,7 @@ Global
 		{3B0A5EE3-6696-4EBA-BCF9-8136C7F17040} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 		{C4C9D7EE-6A52-42F1-9E04-7C44F0EA8922} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 		{26367457-80C0-44C9-9020-56F4013C13E1} = {901F162F-8925-4390-89C5-9EE2C343F744}
+		{E656E3E2-18D2-4D8E-935C-200DB00E1F19} = {7BFFAE76-DEE9-417A-A79B-6A6644C4553A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {058A0C5E-2216-4306-8AFB-0AE28320C26A}
