@@ -286,7 +286,7 @@ let createRelease setParams =
 let createReleaseAndDeploy setReleaseParams setDeployParams =
     let releaseOptions = setReleaseParams releaseOptions
     let deployOptions = setDeployParams deployOptions
-    exec (CreateRelease (releaseOptions, deployOptions))
+    exec (CreateRelease (releaseOptions, deployOptions)) releaseOptions.Common
 
 /// Deploys releases that have already been created.
 let deployRelease setParams =
