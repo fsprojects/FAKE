@@ -15,7 +15,15 @@ type OctoServerOptions = {
 
     /// Your API key; retrieved from the user profile page.
     ApiKey: string }
-    
+
+/// Common Octo.exe CLI params
+type Options = {
+    ToolName            : string
+    ToolPath            : string
+    WorkingDirectory    : string
+    Server              : OctoServerOptions
+    Timeout             : TimeSpan }
+   
 /// Options for creating a new release
 type CreateReleaseOptions = {
     /// Name of the project
@@ -46,7 +54,10 @@ type CreateReleaseOptions = {
     Channel                 : string option
 
     /// Ignore package version matching rules
-    IgnoreChannelRules      : bool }
+    IgnoreChannelRules      : bool 
+    
+    ///common parameters
+    Common: Options}
 
 /// Options for deploying a release to an environment
 type DeployReleaseOptions = {
@@ -85,10 +96,16 @@ type DeployReleaseOptions = {
     /// A comma-separated list of machine names to target in the
     /// deployed environment. If not specified, all machines in
     /// the environment will be considered.
-    SpecificMachines            : string option }
+    SpecificMachines            : string option 
+
+    /// Channel to use for the new release
+    Channel                     : string option
+
+    /// Common parameters
+    Common                      : Options}
 
 /// Options for deleting a range of releases in a project
-type DeleteReleaseOptions = {
+type DeleteReleasesOptions = {
     /// Name of the project
     Project     : string
 
@@ -96,87 +113,84 @@ type DeleteReleaseOptions = {
     MinVersion  : string
 
     /// Maximum (inclusive) version number for the range of versions to delete
-    MaxVersion  : string }
+    MaxVersion  : string     
+    
+    /// If specified, only releases
+    /// associated with the channel will be deleted;
+    /// specify this argument multiple times to target
+    /// multiple channels
+    Channel     : string option
+
+    /// Common parameters
+    Common      : Options}
 
 type PushOptions = {
     // paths to one or more packages to push to the server
     Packages : string list 
     /// if the package already exists, should this package overwrite it?
-    ReplaceExisting : bool 
-}
+    ReplaceExisting : bool
+    /// Common parameters
+    Common: Options}
 
 /// Option type for selecting one command
-type OctoCommand = 
+type private OctoCommand = 
 | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
 | DeployRelease of DeployReleaseOptions
-| DeleteRelease of DeleteReleaseOptions
+| DeleteReleases of DeleteReleasesOptions
 | ListEnvironments
 | Push of PushOptions
 
-/// Complete Octo.exe CLI params
-[<CLIMutable>]
-type OctoParams = {
-    ToolName            : string
-    ToolPath            : string
-    WorkingDirectory    : string
-    Command             : OctoCommand
-    Server              : OctoServerOptions
-    Timeout             : TimeSpan }
-
-
 /// Default server options.
-let serverOptions = { Server = ""; ApiKey = ""; }
-
-/// Default options for 'CreateRelease'
-let releaseOptions = {
-    Project = ""; Version = ""; PackageVersion = ""; Packages = [];
-    PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
-    IgnoreExisting = false; Channel = None; IgnoreChannelRules = false }
-
-/// Default options for 'DeployRelease'
-let deployOptions = {
-    Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
-    DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
-    NoRawLog = false; Progress = false }
-
-/// Default options for 'DeleteReleases'
-let deleteOptions = { 
-    Project = ""; MinVersion = ""; MaxVersion = "" }
+let private serverOptions = { Server = ""; ApiKey = ""; }
 
 /// Default parameters to call octo.exe.
-let octoParams =
+let private octoParams =
     let toolName = "Octo.exe"
     { ToolPath = Tools.findToolFolderInSubPath toolName (Directory.GetCurrentDirectory() @@ "tools" @@ "OctopusTools")
       ToolName = toolName
-      Command = ListEnvironments
       Server = serverOptions
       Timeout = TimeSpan.MaxValue
       WorkingDirectory = "" }
 
-/// [omit]
-let optionalStringParam p o = 
+/// Default options for 'CreateRelease'
+let private releaseOptions = {
+    Project = ""; Version = ""; PackageVersion = ""; Packages = [];
+    PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
+    IgnoreExisting = false; Channel = None; IgnoreChannelRules = false; Common = octoParams}
+
+/// Default options for 'DeployRelease'
+let private deployOptions = {
+    Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
+    DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
+    NoRawLog = false; Progress = false; Channel = None; Common = octoParams }
+
+/// Default options for 'DeleteReleases'
+let private deleteOptions = { 
+    Project = ""; MinVersion = ""; MaxVersion = ""; Channel = None; Common = octoParams }
+
+/// Default options for 'Push'
+let private pushOptions = {
+    Packages = []; ReplaceExisting = false; Common = octoParams}
+
+let private optionalStringParam p o = 
     match o with
     | Some s -> sprintf " --%s=\"%s\"" p s
     | None -> ""
 
-/// [omit]
-let optionalObjParam p o = 
+let private optionalObjParam p o = 
     match o with
     | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
     | None -> ""
 
-/// [omit]
-let stringListParam p os =
+let private stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
         sb.Append (sprintf " --%s=\"%s\"" p (o.ToString())) |> ignore
     sb.ToString()
 
-/// [omit]
-let flag p b = if b then sprintf " --%s" p else ""
+let private flag p b = if b then sprintf " --%s" p else ""
     
-/// [omit]
-let releaseCommandLine (opts:CreateReleaseOptions) =
+let private releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (String.liftString opts.Project))
       (optionalStringParam "version" (String.liftString opts.Version))
       (optionalStringParam "packageversion" (String.liftString opts.PackageVersion))
@@ -189,8 +203,7 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
       (flag "ignorechannelrules" opts.IgnoreChannelRules) ] 
     |> List.fold (+) ""
 
-/// [omit]
-let deployCommandLine (opts:DeployReleaseOptions) = 
+let private deployCommandLine (opts:DeployReleaseOptions) = 
     [ (optionalStringParam "project" (String.liftString opts.Project))
       (optionalStringParam "deployto" (String.liftString opts.DeployTo))
       (optionalStringParam "version" (String.liftString opts.Version))
@@ -200,30 +213,29 @@ let deployCommandLine (opts:DeployReleaseOptions) =
       (flag "progress" opts.Progress)
       (optionalObjParam "deploymenttimeout" opts.DeploymentTimeout)
       (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle)
-      (optionalStringParam "specificmachines" opts.SpecificMachines) ] 
+      (optionalStringParam "specificmachines" opts.SpecificMachines)
+      (optionalStringParam "channel" opts.Channel) ] 
     |> List.fold (+) ""
 
-/// [omit]
-let deleteCommandLine (opts:DeleteReleaseOptions) =
+let private deleteCommandLine (opts:DeleteReleasesOptions) =
     [ (optionalStringParam "project" (String.liftString opts.Project))
       (optionalStringParam "minversion" (String.liftString opts.MinVersion))
-      (optionalStringParam "maxversion" (String.liftString opts.MaxVersion)) ] 
+      (optionalStringParam "maxversion" (String.liftString opts.MaxVersion)) 
+      (optionalStringParam "channel" (opts.Channel)) ] 
     |> List.fold (+) ""
 
-/// [omit]
-let serverCommandLine (opts:OctoServerOptions) = 
+let private serverCommandLine (opts:OctoServerOptions) = 
     [ (optionalStringParam "server" (String.liftString opts.Server))
       (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
-/// [omit]
-let pushCommandLine (opts : PushOptions) =
+let private pushCommandLine (opts : PushOptions) =
     [ stringListParam "package" opts.Packages
       flag "replace-existing" opts.ReplaceExisting ]
     |> List.fold (+) ""
 
 /// Maps a command to string input for the octopus tools cli.
-let commandLine command =
+let private commandLine command =
     match command with
     | CreateRelease (opts, None) ->
         sprintf " create-release%s" (releaseCommandLine opts)
@@ -231,39 +243,67 @@ let commandLine command =
         sprintf " create-release%s%s" (releaseCommandLine opts) (deployCommandLine dopts)
     | DeployRelease opts ->
         sprintf " deploy-release%s" (deployCommandLine opts)
-    | DeleteRelease opts ->
+    | DeleteReleases opts ->
         sprintf " delete-releases%s" (deleteCommandLine opts)
     | ListEnvironments -> 
-        " list-environments"
+        " list-environments" 
     | Push opts -> 
         sprintf " push%s" (pushCommandLine opts)
 
-let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
-
-/// This task calls the Octo.exe CLI.
-/// See [Octopus-Tools](https://github.com/OctopusDeploy/Octopus-Tools) for more details.
-/// ## Parameters
-///
-///  - `setParams` - Function used to overwrite the OctoTools default parameters.
-let Octo setParams =
-    let octoParams = setParams(octoParams)
-    let command = (octoParams.Command.ToString())
-    let tool = octoParams.ToolPath @@ octoParams.ToolName
-    let args = commandLine octoParams.Command |>(+)<| serverCommandLine octoParams.Server
-    let traceArgs = commandLine octoParams.Command |>(+)<| serverCommandLineForTracing octoParams.Server
+let private exec command options =
     
-    use __ = Trace.traceTask "Octo " command
+    let serverCommandLineForTracing (opts: OctoServerOptions) = 
+        serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
+
+    let tool = options.ToolPath @@ options.ToolName
+    let args = commandLine command |>(+)<| serverCommandLine options.Server
+    let traceArgs = commandLine command |>(+)<| serverCommandLineForTracing options.Server
+    
+    let commandString = command.ToString()
+
+    use __ = Trace.traceTask "Octo "commandString
     Trace.trace (tool + traceArgs)
         
     let result = 
         Process.execSimple (fun info -> 
             {info with 
                 Arguments = args
-                WorkingDirectory = octoParams.WorkingDirectory
+                WorkingDirectory = options.WorkingDirectory
                 FileName = tool
             }
-        ) octoParams.Timeout
+        ) options.Timeout
 
     match result with
     | 0 -> ()
-    | _ -> failwithf "Octo %s failed. Process finished with exit code %i" command result
+    | _ -> failwithf "Octo %s failed. Process finished with exit code %i" commandString result
+
+/// Creates a release.
+let createRelease setParams = 
+    let options = setParams releaseOptions
+    exec (CreateRelease (options, None)) options.Common
+
+/// Creates a release, and optionally deploys it to one or more environments.
+let createReleaseAndDeploy setReleaseParams setDeployParams =
+    let releaseOptions = setReleaseParams releaseOptions
+    let deployOptions = setDeployParams deployOptions
+    exec (CreateRelease (releaseOptions, deployOptions))
+
+/// Deploys releases that have already been created.
+let deployRelease setParams =
+    let options = setParams deployOptions
+    exec (DeployRelease options) options.Common
+
+/// Deletes a range of releases.
+let deleteReleases setParams = 
+    let options = setParams deleteOptions
+    exec (DeleteReleases options) options.Common
+
+/// Lists all environments.
+let listEnvironments setParams =
+    let options = setParams octoParams
+    exec ListEnvironments options
+
+/// Pushes one or more packages to the Octopus built-in repository.
+let push setParams = 
+    let options = setParams pushOptions
+    exec (Push options) options.Common
