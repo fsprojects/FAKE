@@ -100,19 +100,20 @@
 														<li>
 															<a href="/core.html">Core</a>
 															<ul>
-																<li><a href="/core-targets.html">Targets</a></li>
-																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
-																<li><a href="/core-process.html">Process</a></li>
-																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
 																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
-																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
 																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
 																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
-																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
-																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
 																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
-																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/apidocs/v5/fake-core-semver.html">SemVer</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
 																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
 															</ul>
 														</li>
 														<li>
@@ -194,7 +195,7 @@
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
-																<li><a href="/fake-tools-rsync.html">Rsync</a></li>
+																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
 														<li>
@@ -309,26 +310,10 @@ See the <a href="#Add-FAKE-dependencies">Add FAKE dependencies</a> section below
 Some warnings indicate how we want the new FAKE version to be used.</p>
 <p>The most important part to know is that basically every feature/function changes its location and sometimes they were even grouped in different modules
 as the old API was growing several years now and we never could do breaking changes.</p>
-<div class="alert alert-info">
-    <h5>NOTE</h5>
-    <p>If you feel like an API is still in the wrong place. Please let us know and open an issue. We can make breaking changes as long as we are in the alpha/beta phase.</p>
-</div>
-<div class="alert alert-info">
-    <h5>NOTE</h5>
-    <p>It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
-So things might break in the alpha phase. However this doesn't mean you should be afraid to use the new FAKE version.
-In fact due to the modular design we hopefully can make breaking changes a lot more often, without breaking your builds!
-So please try it out and if stuff breaks let us know :).
-The good thing is you can always "lock" the versions of the FAKE modules until you are ready to upgrade.</p>
-</div>
 <p>In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
 "ReadFile argument" (the module probably even opened via <code>[&lt;AutoOpen&gt;]</code>), which is considered bad style now.
 In the new world we would open the <code>Fake.IO.FileSystem</code> namespace to indicate that we are using the file-system.
 At the same time we would write <code>File.Read argument</code>, which is only a bit longer but now the IDE can help you a lot better and the code looks a lot more ideomatic and clean.</p>
-<div class="alert alert-info">
-    <h5>NOTE</h5>
-    <p>If you still find places where we use the "bad" style in the new API, let us know (open an issue).</p>
-</div>
 <p>The "open Fake" and AutoOpen modules are completely obsolete.
 We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".
 This removes a lot of automatically opened stuff and if your build fails you have probably stuff where we forgot to add the obsolete warning (let us know) or that
@@ -482,7 +467,7 @@ For a full reference use <code>--help</code> or the <a href="fake-commandline.ht
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.3.1</a></li>
 									</ul>
 								</div>
 							</div>
