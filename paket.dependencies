@@ -74,9 +74,13 @@ nuget System.ValueTuple copy_local: true, redirects:force
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
-group Docs
+group DocsLegacyV4
     source https://api.nuget.org/v3/index.json
     nuget FAKE ~> 4.0
+
+group DocsLegacyV5
+    source https://api.nuget.org/v3/index.json
+    nuget FAKE ~> 5.0
 
 group TestAdapter
     source https://api.nuget.org/v3/index.json
