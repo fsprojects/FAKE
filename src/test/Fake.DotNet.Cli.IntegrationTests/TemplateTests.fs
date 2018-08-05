@@ -35,7 +35,7 @@ let runTemplate rootDir kind =
     Directory.ensure rootDir
     DotNet.exec 
         ( fun o -> 
-            { o with WorkingDirectory = rootDir; } ) "new" (sprintf "%s --allow-scripts yes --bootstrap %s" templateName (string kind))   
+            { o with WorkingDirectory = rootDir; } ) "new" (sprintf "%s --allow-scripts yes --version 5.3.0 --bootstrap %s" templateName (string kind))   
     |> shouldSucceed "should have run the template successfully"
 
 let invokeScript dir scriptName args =
