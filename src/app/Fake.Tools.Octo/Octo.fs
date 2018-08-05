@@ -9,9 +9,9 @@ open System
 open System.IO
 
 /// Octo.exe server options
-type OctoServerOptions = {
+type ServerOptions = {
     /// The base URL for your Octopus server
-    Server: string
+    ServerUrl: string
 
     /// Your API key; retrieved from the user profile page.
     ApiKey: string }
@@ -21,7 +21,7 @@ type Options = {
     ToolName            : string
     ToolPath            : string
     WorkingDirectory    : string
-    Server              : OctoServerOptions
+    Server              : ServerOptions
     Timeout             : TimeSpan }
    
 /// Options for creating a new release
@@ -133,7 +133,7 @@ type PushOptions = {
     Common: Options}
 
 /// Option type for selecting one command
-type private OctoCommand = 
+type private Command = 
 | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
 | DeployRelease of DeployReleaseOptions
 | DeleteReleases of DeleteReleasesOptions
@@ -141,10 +141,10 @@ type private OctoCommand =
 | Push of PushOptions
 
 /// Default server options.
-let private serverOptions = { Server = ""; ApiKey = ""; }
+let private serverOptions = { ServerUrl = ""; ApiKey = ""; }
 
 /// Default parameters to call octo.exe.
-let private octoParams =
+let private commonOptions =
     let toolName = "Octo.exe"
     { ToolPath = Tools.findToolFolderInSubPath toolName (Directory.GetCurrentDirectory() @@ "tools" @@ "OctopusTools")
       ToolName = toolName
@@ -156,21 +156,21 @@ let private octoParams =
 let private releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
-    IgnoreExisting = false; Channel = None; IgnoreChannelRules = false; Common = octoParams}
+    IgnoreExisting = false; Channel = None; IgnoreChannelRules = false; Common = commonOptions}
 
 /// Default options for 'DeployRelease'
 let private deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
     DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
-    NoRawLog = false; Progress = false; Channel = None; Common = octoParams }
+    NoRawLog = false; Progress = false; Channel = None; Common = commonOptions }
 
 /// Default options for 'DeleteReleases'
 let private deleteOptions = { 
-    Project = ""; MinVersion = ""; MaxVersion = ""; Channel = None; Common = octoParams }
+    Project = ""; MinVersion = ""; MaxVersion = ""; Channel = None; Common = commonOptions }
 
 /// Default options for 'Push'
 let private pushOptions = {
-    Packages = []; ReplaceExisting = false; Common = octoParams}
+    Packages = []; ReplaceExisting = false; Common = commonOptions}
 
 let private optionalStringParam p o = 
     match o with
@@ -224,8 +224,8 @@ let private deleteCommandLine (opts:DeleteReleasesOptions) =
       (optionalStringParam "channel" (opts.Channel)) ] 
     |> List.fold (+) ""
 
-let private serverCommandLine (opts:OctoServerOptions) = 
-    [ (optionalStringParam "server" (String.liftString opts.Server))
+let private serverCommandLine (opts:ServerOptions) = 
+    [ (optionalStringParam "server" (String.liftString opts.ServerUrl))
       (optionalStringParam "apikey" (String.liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
@@ -252,7 +252,7 @@ let private commandLine command =
 
 let private exec command options =
     
-    let serverCommandLineForTracing (opts: OctoServerOptions) = 
+    let serverCommandLineForTracing (opts: ServerOptions) = 
         serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
     let tool = options.ToolPath @@ options.ToolName
@@ -300,7 +300,7 @@ let deleteReleases setParams =
 
 /// Lists all environments.
 let listEnvironments setParams =
-    let options = setParams octoParams
+    let options = setParams commonOptions
     exec ListEnvironments options
 
 /// Pushes one or more packages to the Octopus built-in repository.
