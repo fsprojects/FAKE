@@ -694,17 +694,6 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
-    // Update template
-    let templateFromVersion, templateToVersion = """"defaultValue": "5.*",""", sprintf """"defaultValue": "%s",""" nugetVersion
-    let templateConfigFile = "src/template/fake-template/Content/.template.config/template.json"
-    let replaceInTemplate fromDefault toDefault =
-        [ templateConfigFile ]
-        |> Shell.replaceInFiles [ fromDefault, toDefault ]
-    let configContents = File.ReadAllText(templateConfigFile)
-    if not <| configContents.Contains templateFromVersion then
-        failwithf "Make sure to revert your changes in '%s' or update the build script accordingly" templateConfigFile
-    replaceInTemplate templateFromVersion templateToVersion
-
     // dotnet pack
     DotNet.pack (fun c ->
         { c with
@@ -715,9 +704,6 @@ Target.create "_DotNetPackage" (fun _ ->
                     { c.Common with CustomParams = Some "/m:1" }
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
-
-    // Revert template
-    replaceInTemplate templateToVersion templateFromVersion
 
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
