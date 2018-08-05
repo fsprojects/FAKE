@@ -580,8 +580,10 @@ module Process =
         |> Seq.choose id
         |> Seq.collect (fun (paramName, paramValue) ->
             if String.isNullOrEmpty paramValue || delimiter <> " " then
-              [ flagPrefix + paramName + if String.isNullOrEmpty paramValue then ""
-                                        else delimiter + paramValue ]
+              let delimimeterAndValue =
+                  if String.isNullOrEmpty paramValue then ""
+                  else delimiter + paramValue
+              [ flagPrefix + paramName + delimimeterAndValue ]
             else 
               [ flagPrefix + paramName
                 paramValue ])
