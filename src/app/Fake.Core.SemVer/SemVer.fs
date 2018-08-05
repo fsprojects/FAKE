@@ -143,7 +143,11 @@ type PreRelease =
             | _ -> invalidArg "yobj" "PreRelease: cannot compare to values of different types"
 
 
-/// Contains the version information.
+/// Contains the version information. For parsing use [SemVer.parse](fake-core-semver.html)
+/// 
+/// > Note: If you use `{ version with Patch = myPath; Original = None }` to overwrite some parts of this string make sure to overwrite `Original` to `None` in order to recalculate the version string.
+/// 
+/// > Note: For overwriting the `PreRelease` part use: `{ Version with Original = None; PreRelease = PreRelease.TryParse "alpha.1" }`
 [<CustomEquality; CustomComparison; StructuredFormatDisplay("{AsString}")>]
 type SemVerInfo = 
     { /// MAJOR version when you make incompatible API changes.
@@ -225,6 +229,7 @@ type SemVerInfo =
             | _ -> invalidArg "yobj" "SemVerInfo: cannot compare to values of different types"
 
 ///  Parser which allows to deal with [Semantic Versioning](http://semver.org/) (SemVer).
+///  Make sure to read the documentation in the [SemVerInfo](fake-core-semverinfo.html) record as well if you manually create versions.
 [<RequireQualifiedAccess>]
 module SemVer =
     open System.Numerics
@@ -337,5 +342,5 @@ module SemVer =
               Original = Some version }
 
         with
-        | exn ->
-            failwithf "Can't parse \"%s\". %s" version (exn.ToString())
+        | e ->
+            raise <| exn(sprintf "Can't parse \"%s\"." version, e)

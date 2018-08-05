@@ -1,5 +1,16 @@
 # Release Notes
 
+## 5.3.1 - 2018-08-06
+
+* BUGFIX: Minor code improvements - https://github.com/fsharp/FAKE/pull/2045
+* BUGFIX: Adding newline to fix 'fake --help' formatting - https://github.com/fsharp/FAKE/pull/2051
+* BUGFIX: Proper quotations in `Fake.DotNet.Cli` module - https://github.com/fsharp/FAKE/pull/2053
+* BUGFIX: Proper quotations in `Process.quote` and `Process.quoteIfNeeded` - https://github.com/fsharp/FAKE/pull/2045
+* BUGFIX: The latest template now always installs the latest stable of fake - https://github.com/fsharp/FAKE/pull/2045
+* BUGFIX: Support white spaces in paths when using the template on unix shell - https://github.com/fsharp/FAKE/issues/2054
+* DOCS: Add SemVer module to the docs
+* DOCS: Fix Rsync link in the docs
+
 ## 5.3.0 - 2018-07-30
 
 * NEW: module Fake.Tools.Rsync - https://github.com/fsharp/FAKE/pull/1987

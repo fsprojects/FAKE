@@ -45,29 +45,10 @@ Some warnings indicate how we want the new FAKE version to be used.
 The most important part to know is that basically every feature/function changes its location and sometimes they were even grouped in different modules
 as the old API was growing several years now and we never could do breaking changes.
 
-<div class="alert alert-info">
-    <h5>NOTE</h5>
-    <p>If you feel like an API is still in the wrong place. Please let us know and open an issue. We can make breaking changes as long as we are in the alpha/beta phase.</p>
-</div>
-
-<div class="alert alert-info">
-    <h5>NOTE</h5>
-    <p>It's obvious from the NOTE above, but we are still figuring out the new API (even if I'm quite happy with its current state).
-So things might break in the alpha phase. However this doesn't mean you should be afraid to use the new FAKE version.
-In fact due to the modular design we hopefully can make breaking changes a lot more often, without breaking your builds!
-So please try it out and if stuff breaks let us know :).
-The good thing is you can always "lock" the versions of the FAKE modules until you are ready to upgrade.</p>
-</div>
-
 In this new work you should write "Module.Method a b" instead of "MethodModule a b". Which means in the old world we had lots of methods like
 "ReadFile argument" (the module probably even opened via `[<AutoOpen>]`), which is considered bad style now.
 In the new world we would open the `Fake.IO.FileSystem` namespace to indicate that we are using the file-system.
 At the same time we would write `File.Read argument`, which is only a bit longer but now the IDE can help you a lot better and the code looks a lot more ideomatic and clean.
-
-<div class="alert alert-info">
-    <h5>NOTE</h5>
-    <p>If you still find places where we use the "bad" style in the new API, let us know (open an issue).</p>
-</div>
 
 The "open Fake" and AutoOpen modules are completely obsolete. 
 We urge you to finish your API-Migration (after fixing all warnings) by removing "open Fake".

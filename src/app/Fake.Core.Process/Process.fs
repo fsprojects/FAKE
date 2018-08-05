@@ -536,14 +536,16 @@ module Process =
 
     /// Adds quotes around the string
     /// [omit]
-    let quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
+    let quote (str:string) =
+        // "\"" + str.Replace("\"","\\\"") + "\""
+        CmdLineParsing.windowsArgvToCommandLine [ str ]
 
     /// Adds quotes around the string if needed
     /// [omit]
-    let quoteIfNeeded str = 
-        if String.isNullOrEmpty str then ""
-        elif str.Contains " " then quote str
-        else str
+    let quoteIfNeeded str = quote str
+        //if String.isNullOrEmpty str then ""
+        //elif str.Contains " " then quote str
+        //else str
 
     /// Adds quotes and a blank around the string´.
     /// [omit]
@@ -556,7 +558,7 @@ module Process =
     /// [omit]
     let stringParam (paramName, paramValue) = 
         if String.isNullOrEmpty paramValue then None
-        else Some(paramName, quote paramValue)
+        else Some(paramName, paramValue)
 
     /// [omit]
     let multipleStringParams paramName = Seq.map (fun x -> stringParam (paramName, x)) >> Seq.toList
@@ -564,7 +566,7 @@ module Process =
     /// [omit]
     let optionParam (paramName, paramValue) = 
         match paramValue with
-        | Some x -> Some(paramName, x.ToString() |> quote)
+        | Some x -> Some(paramName, x.ToString())
         | None -> None
 
     /// [omit]
@@ -576,10 +578,16 @@ module Process =
     let parametersToString flagPrefix delimiter parameters = 
         parameters
         |> Seq.choose id
-        |> Seq.map (fun (paramName, paramValue) -> 
-               flagPrefix + paramName + if String.isNullOrEmpty paramValue then ""
-                                        else delimiter + paramValue)
-        |> String.separated " "
+        |> Seq.collect (fun (paramName, paramValue) ->
+            if String.isNullOrEmpty paramValue || delimiter <> " " then
+              let delimimeterAndValue =
+                  if String.isNullOrEmpty paramValue then ""
+                  else delimiter + paramValue
+              [ flagPrefix + paramName + delimimeterAndValue ]
+            else 
+              [ flagPrefix + paramName
+                paramValue ])
+        |> CmdLineParsing.windowsArgvToCommandLine
 
     /// Searches the given directories for all occurrences of the given file name
     /// [omit]
@@ -684,8 +692,8 @@ module Process =
             if String.isLetterOrDigit (str.Chars(str.Length - 1)) then str + " "
             else str
         args
-        |> Seq.map (fun (k, v) -> delimit k + quoteIfNeeded v)
-        |> String.separated " "
+        |> Seq.collect (fun (k, v) -> [ delimit k; v ])
+        |> CmdLineParsing.windowsArgvToCommandLine
 
     /// Execute an external program asynchronously and return the exit code,
     /// logging output and error messages to FAKE output. You can compose the result

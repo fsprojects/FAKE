@@ -38,6 +38,7 @@ nuget Octokit //"
 // We need to use this for now as "regular" Fake breaks when its caching logic cannot find "intellisense.fsx".
 // This is the reason why we need to checkin the "intellisense.fsx" file for now...
 #load ".fake/build.fsx/intellisense.fsx"
+#load "legacy-build.fsx"
 
 open System.Reflection
 
@@ -72,17 +73,6 @@ let gitName = "FAKE"
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
-let packages =
-    ["FAKE.Core",projectDescription
-     "FAKE.Gallio",projectDescription + " Extensions for Gallio"
-     "FAKE.IIS",projectDescription + " Extensions for IIS"
-     "FAKE.FluentMigrator",projectDescription + " Extensions for FluentMigrator"
-     "FAKE.SQL",projectDescription + " Extensions for SQL Server"
-     "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "Fake.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
-     projectName,projectDescription + " This package bundles all extensions."
-     "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
-
 let buildDir = "./build"
 let testDir = "./test"
 let docsDir = "./docs"
@@ -103,18 +93,13 @@ let appDir = srcDir</>"app"
 let templateDir = srcDir</>"template"
 let legacyDir = srcDir</>"legacy"
 
-let additionalFiles = [
-    "License.txt"
-    "README.markdown"
-    "RELEASE_NOTES.md"
-    "./packages/FSharp.Core/lib/net45/FSharp.Core.sigdata"
-    "./packages/FSharp.Core/lib/net45/FSharp.Core.optdata"]
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
 let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
 let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
 let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
 let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
+let buildLegacy = Environment.environVarAsBoolOrDefault "BuildLegacy" false
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
 let mutable secrets = []
@@ -139,59 +124,9 @@ BuildServer.install [
     GitLab.Installer
 ]
 
-let version =
-    let segToString = function
-        | PreReleaseSegment.AlphaNumeric n -> n
-        | PreReleaseSegment.Numeric n -> string n
-    let source, buildMeta =
-        match BuildServer.buildServer with
-        | BuildServer.GitLabCI ->
-            // Workaround for now
-            // We get CI_COMMIT_REF_NAME=master and CI_COMMIT_SHA
-            // Too long for chocolatey (limit = 20) and we don't strictly need it.
-            [ yield PreReleaseSegment.AlphaNumeric GitLab.Environment.PipelineId
-            ], sprintf "gitlab.%s" GitLab.Environment.CommitSha
-        | BuildServer.TeamFoundation ->
-            let sourceBranch = TeamFoundation.Environment.BuildSourceBranch
-            let isPr = sourceBranch.StartsWith "refs/pull/"
-            let firstSegment =
-                if isPr then
-                    let splits = sourceBranch.Split '/'
-                    let prNum = bigint (int splits.[2])
-                    [ PreReleaseSegment.AlphaNumeric "pr"; PreReleaseSegment.Numeric prNum ]
-                else
-                    []
-            let buildId = bigint (int TeamFoundation.Environment.BuildId)
-            [ yield! firstSegment
-              yield PreReleaseSegment.Numeric buildId
-            ], sprintf "vsts.%s" TeamFoundation.Environment.BuildSourceVersion
-        | _ -> [], ""
-
-    let semVer = SemVer.parse release.NugetVersion
-    let prerelease =
-        match semVer.PreRelease with
-        | None -> None
-        | Some p ->
-            let toAdd = System.String.Join(".", source |> Seq.map segToString)
-            let toAdd = if System.String.IsNullOrEmpty toAdd then toAdd else "." + toAdd
-            Some ({p with
-                        Values = p.Values @ source
-                        Origin = p.Origin + toAdd })
-    let fromRepository =
-        match prerelease with
-        | Some _ -> { semVer with PreRelease = prerelease; Original = None; BuildMetaData = buildMeta }
-        | None -> semVer
-
-    match Environment.environVarOrNone "FAKE_VERSION" with
-    | Some ver -> SemVer.parse ver
-    | None -> fromRepository
-
-let simpleVersion = version.AsString
-
-let nugetVersion =
-    if System.String.IsNullOrEmpty version.BuildMetaData
-    then version.AsString
-    else sprintf "%s+%s" version.AsString version.BuildMetaData
+let version = ``Legacy-build``.version
+let simpleVersion = ``Legacy-build``.simpleVersion
+let nugetVersion = ``Legacy-build``.nugetVersion
 let chocoVersion =
     // Replace "." with "-" in the prerelease-string
     let build =
@@ -220,14 +155,7 @@ let inline dtntWorkDir wd =
     >> DotNet.Options.withWorkingDirectory wd
 let inline dtntSmpl arg = DotNet.Options.lift dotnetSdk.Value arg
 
-let publish f =
-    // Workaround
-    let path = Path.GetFullPath f
-    let name = Path.GetFileName path
-    let target = Path.Combine("artifacts", name)
-    let targetDir = Path.GetDirectoryName target
-    Directory.ensure targetDir
-    Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
+let publish f =``Legacy-build``.publish f
 
 let cleanForTests () =
     // Clean NuGet cache (because it might contain appveyor stuff)
@@ -280,43 +208,6 @@ Target.create "Clean" (fun _ ->
     // Clean Data for tests
     cleanForTests()
 )
-
-Target.create "RenameFSharpCompilerService" (fun _ ->
-  for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
-    // for framework in ["net40"; "net45"] do
-    for framework in ["netstandard2.0"; "net45"] do
-      let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
-      let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
-      File.delete targetFile
-
-      let reader =
-          let searchpaths =
-              [ dir; __SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net45" ]
-          let resolve name =
-              let n = AssemblyName(name)
-              match searchpaths
-                      |> Seq.collect (fun p -> Directory.GetFiles(p, "*.dll"))
-                      |> Seq.tryFind (fun f -> f.ToLowerInvariant().Contains(n.Name.ToLowerInvariant())) with
-              | Some f -> f
-              | None ->
-                  failwithf "Could not resolve '%s'" name
-          let readAssemblyE (name:string) (parms: Mono.Cecil.ReaderParameters) =
-              Mono.Cecil.AssemblyDefinition.ReadAssembly(
-                  resolve name,
-                  parms)
-          let readAssembly (name:string) (x:Mono.Cecil.IAssemblyResolver) =
-              readAssemblyE name (new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
-          { new Mono.Cecil.IAssemblyResolver with
-              member x.Dispose () = ()
-              member x.Resolve (name : Mono.Cecil.AssemblyNameReference) = readAssembly name.FullName x
-              member x.Resolve (name : Mono.Cecil.AssemblyNameReference, parms : Mono.Cecil.ReaderParameters) = readAssemblyE name.FullName parms
-               }
-      let readerParams = Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
-      let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </>"FSharp.Compiler.Service.dll", readerParams)
-      asem.Name <- Mono.Cecil.AssemblyNameDefinition("FAKE.FSharp.Compiler.Service", System.Version(1,0,0,0))
-      asem.Write(dir</>"FAKE.FSharp.Compiler.Service.dll")
-)
-
 
 let common = [
     AssemblyInfo.Product "FAKE - F# Make"
@@ -393,31 +284,7 @@ let dotnetAssemblyInfos =
       "Fake.Windows.Registry", "CRUD functionality for Windows registry" ]
 
 let assemblyInfos =
-  [ legacyDir </> "FAKE/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Command line tool"
-        AssemblyInfo.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
-    legacyDir </> "Fake.Deploy/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Deploy tool"
-        AssemblyInfo.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"] @ common
-    legacyDir </> "deploy.web/Fake.Deploy.Web/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Deploy Web"
-        AssemblyInfo.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-    legacyDir </> "Fake.Deploy.Lib/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Deploy Lib"
-        AssemblyInfo.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
-    legacyDir </> "FakeLib/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Lib"
-        AssemblyInfo.InternalsVisibleTo "Test.FAKECore"
-        AssemblyInfo.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
-    legacyDir </> "Fake.SQL/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make SQL Lib"
-        AssemblyInfo.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"] @ common
-    legacyDir </> "Fake.Experimental/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make Experimental Lib"
-        AssemblyInfo.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
-    legacyDir </> "Fake.FluentMigrator/AssemblyInfo.fs",
-      [ AssemblyInfo.Title "FAKE - F# Make FluentMigrator Lib"
-        AssemblyInfo.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ] @
+   (``Legacy-build``.legacyAssemblyInfos |> List.map (fun (proj, desc) -> proj, desc @ common)) @
    (dotnetAssemblyInfos
     |> List.map (fun (project, description) ->
         appDir </> sprintf "%s/AssemblyInfo.fs" project, [AssemblyInfo.Title (sprintf "FAKE - F# Make %s" description) ] @ common))
@@ -449,18 +316,6 @@ Target.create "UnskipAndRevertAssemblyInfo" (fun _ ->
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "update-index --no-skip-worktree %s" assemblyFile)
         Git.CommandHelper.directRunGitCommandAndFail "." (sprintf "checkout HEAD %s" assemblyFile)
         ()
-)
-
-Target.create "_BuildSolution" (fun _ ->
-    MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
-    |> Trace.logItems "AppBuild-Output: "
-
-    // TODO: Check if we run the test in the current build!
-    Directory.ensure "temp"
-    let testZip = "temp/tests-legacy.zip"
-    !! "test/**"
-    |> Zip.zip "." testZip
-    publish testZip
 )
 
 Target.create "GenerateDocs" (fun _ ->
@@ -579,52 +434,58 @@ Target.create "GenerateDocs" (fun _ ->
         File.WriteAllText(v4Name, redirectPage link)
     )
 
-    // FAKE 5 legacy documentation
-    let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
-    Directory.ensure fake5LegacyApidocsDir
-    let fake5LegacyDlls, fake5LegacyLibDirs =
-        !! "build/**/Fake.*.dll"
-          ++ "build/FakeLib.dll"
-          -- "build/**/Fake.Experimental.dll"
-          -- "build/**/FSharp.Compiler.Service.dll"
-          -- "build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
-          -- "build/**/FAKE.FSharp.Compiler.Service.dll"
-          -- "build/**/Fake.IIS.dll"
-          -- "build/**/Fake.Deploy.Lib.dll"
-        |> dllsAndLibDirs
+    // Legacy v4 and v5 documentation
+    let buildLegacyFromDocsDir layoutRoots fakeLegacyApidocsDir prefix githubBranch toolsDir =
+        Directory.ensure fakeLegacyApidocsDir
+        let fakeLegacyDlls, fakeLegacyLibDirs =
+            !! (toolsDir + "/Fake.*.dll")
+              ++ (toolsDir + "/FakeLib.dll")
+              -- (toolsDir + "/Fake.Experimental.dll")
+              -- (toolsDir + "/FSharp.Compiler.Service.dll")
+              -- (toolsDir + "/FAKE.FSharp.Compiler.Service.dll")
+              -- (toolsDir + "/Fake.IIS.dll")
+              -- (toolsDir + "/Fake.Deploy.Lib.dll")
+            |> dllsAndLibDirs
 
-    fake5LegacyDlls
-    |> FSFormatting.createDocsForDlls (fun s ->
-        { s with
-            OutputDirectory = fake5LegacyApidocsDir
-            LayoutRoots = legacyLayoutRoots
-            LibDirs = fake5LegacyLibDirs
-            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
-            SourceRepository = githubLink + "/blob/master" })
+        fakeLegacyDlls
+        |> FSFormatting.createDocsForDlls (fun s ->
+            { s with
+                OutputDirectory = fakeLegacyApidocsDir
+                LayoutRoots = layoutRoots
+                LibDirs = fakeLegacyLibDirs
+                // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+                ProjectParameters = ("api-docs-prefix", prefix) ::("CurrentPage", "APIReference") :: projInfo
+                SourceRepository = githubLink + githubBranch })
+
+    // FAKE 5 legacy documentation
+    if buildLegacy then
+        let fake5LegacyApidocsDir = apidocsDir @@ "v5/legacy"
+        Directory.ensure fake5LegacyApidocsDir
+        let fake5LegacyDlls, fake5LegacyLibDirs =
+            !! "build/**/Fake.*.dll"
+              ++ "build/FakeLib.dll"
+              -- "build/**/Fake.Experimental.dll"
+              -- "build/**/FSharp.Compiler.Service.dll"
+              -- "build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
+              -- "build/**/FAKE.FSharp.Compiler.Service.dll"
+              -- "build/**/Fake.IIS.dll"
+              -- "build/**/Fake.Deploy.Lib.dll"
+            |> dllsAndLibDirs
+
+        fake5LegacyDlls
+        |> FSFormatting.createDocsForDlls (fun s ->
+            { s with
+                OutputDirectory = fake5LegacyApidocsDir
+                LayoutRoots = legacyLayoutRoots
+                LibDirs = fake5LegacyLibDirs
+                // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
+                ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
+                SourceRepository = githubLink + "/blob/master" })
+    else
+        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")        
 
     // FAKE 4 legacy documentation
-    let fake4LegacyApidocsDir = apidocsDir @@ "v4"
-    Directory.ensure fake4LegacyApidocsDir
-    let fake4LegacyDlls, fake4LegacyLibDirs =
-        !! "packages/docs/FAKE/tools/Fake.*.dll"
-          ++ "packages/docs/FAKE/tools/FakeLib.dll"
-          -- "packages/docs/FAKE/tools/Fake.Experimental.dll"
-          -- "packages/docs/FAKE/tools/FSharp.Compiler.Service.dll"
-          -- "packages/docs/FAKE/tools/FAKE.FSharp.Compiler.Service.dll"
-          -- "packages/docs/FAKE/tools/Fake.IIS.dll"
-          -- "packages/docs/FAKE/tools/Fake.Deploy.Lib.dll"
-        |> dllsAndLibDirs
-
-    fake4LegacyDlls
-    |> FSFormatting.createDocsForDlls (fun s ->
-        { s with
-            OutputDirectory = fake4LegacyApidocsDir
-            LayoutRoots = fake4LayoutRoots
-            LibDirs = fake4LegacyLibDirs
-            // TODO: CurrentPage shouldn't be required as it's written in the template, but it is -> investigate
-            ProjectParameters = ("api-docs-prefix", "/apidocs/v4/") ::("CurrentPage", "APIReference") :: projInfo
-            SourceRepository = githubLink + "/blob/hotfix_fake4" })
+    buildLegacyFromDocsDir fake4LayoutRoots (apidocsDir @@ "v4") "/apidocs/v4/" "/blob/hotfix_fake4" ("packages/docslegacyv4/FAKE/tools")
 )
 
 let startWebServer () =
@@ -659,27 +520,6 @@ Target.create "HostDocs" (fun _ ->
     startWebServer()
     Trace.traceImportant "Press any key to stop."
     System.Console.ReadKey() |> ignore
-)
-
-Target.create "CopyLicense" (fun _ ->
-    Shell.copyTo buildDir additionalFiles
-)
-
-Target.create "Test" (fun _ ->
-    !! (testDir @@ "Test.*.dll")
-    |> Seq.filter (fun fileName -> if Environment.isMono then fileName.ToLower().Contains "deploy" |> not else true)
-    |> MSpec.exec (fun p ->
-            {p with
-                ToolPath = Globbing.Tools.findToolInSubPath "mspec-x86-clr4.exe" (Shell.pwd() @@ "tools" @@ "MSpec")
-                ExcludeTags = if Environment.isWindows then ["HTTP"] else ["HTTP"; "WindowsOnly"]
-                TimeOut = System.TimeSpan.FromMinutes 5.
-                HtmlOutputDir = reportDir})
-    try
-        !! (testDir @@ "Test.*.dll")
-          ++ (testDir @@ "FsCheck.Fake.dll")
-        |> XUnit2.run id
-    with e when e.Message.Contains "timed out" && Environment.isUnix ->
-        Trace.traceFAKE "Ignoring xUnit timeout for now, there seems to be something funny going on ..."
 )
 
 Target.create "DotNetCoreIntegrationTests" (fun _ ->
@@ -776,149 +616,6 @@ Target.create "SourceLink" (fun _ ->
 //#endif
 )
 
-Target.create "ILRepack" (fun _ ->
-    Directory.ensure buildMergedDir
-
-    let internalizeIn filename =
-        let toPack =
-            [filename; "FSharp.Compiler.Service.dll"]
-            |> List.map (fun l -> buildDir </> l)
-            |> String.separated " "
-        let targetFile = buildMergedDir </> filename
-
-        let result =
-            Process.execSimple (fun info ->
-            { info with
-                FileName = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
-                Arguments = sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack }
-            ) (System.TimeSpan.FromMinutes 5.)
-
-        if result <> 0 then failwithf "Error during ILRepack execution."
-
-        Shell.copyFile (buildDir </> filename) targetFile
-
-    internalizeIn "FAKE.exe"
-
-    !! (buildDir </> "FSharp.Compiler.Service.**")
-    |> Seq.iter File.delete
-
-    Shell.deleteDir buildMergedDir
-)
-
-Target.create "CreateNuGet" (fun _ ->
-    let path =
-        if Environment.isWindows
-        then "lib" @@ "corflags.exe"
-        else "lib" @@ "xCorFlags.exe"
-    let set64BitCorFlags files =
-        files
-        |> Seq.iter (fun file ->
-            let exitCode =
-                Process.execSimple (fun proc ->
-                { proc with
-                    FileName = Path.GetFullPath path
-                    WorkingDirectory = Path.GetDirectoryName file
-                    Arguments = "/32BIT- /32BITPREF- " + Process.quoteIfNeeded file
-                    }
-                |> Process.withFramework) (System.TimeSpan.FromMinutes 1.)
-            if exitCode <> 0 then failwithf "corflags.exe failed with %d" exitCode)
-
-    let x64ify (package:NuGet.NuGet.NuGetParams) =
-        { package with
-            Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
-            Project = package.Project + ".x64" }
-
-    let nugetExe =
-        let prefs =
-           [ "packages/build/Nuget.CommandLine/tools/NuGet.exe"
-             "packages/build/NuGet.CommandLine/tools/NuGet.exe" ]
-           |> List.map Path.GetFullPath
-        match Seq.tryFind (File.Exists) prefs with
-        | Some pref -> pref
-        | None ->
-            let rec printDir space d =
-                for f in Directory.EnumerateFiles d do
-                    Trace.tracefn "%sFile: %s" space f
-                for sd in Directory.EnumerateDirectories d do
-                    Trace.tracefn "%sDirectory: %s" space sd
-                    printDir (space + "  ") sd
-            printDir "  " (Path.GetFullPath "packages")
-            match !! "packages/**/NuGet.exe" |> Seq.tryHead with
-            | Some e ->
-                Trace.tracefn "Found %s" e
-                e
-            | None ->
-                prefs |> List.head
-
-    for package,description in packages do
-        let nugetDocsDir = nugetLegacyDir @@ "docs"
-        let nugetToolsDir = nugetLegacyDir @@ "tools"
-        let nugetLibDir = nugetLegacyDir @@ "lib"
-        let nugetLib451Dir = nugetLibDir @@ "net451"
-
-        Shell.cleanDir nugetDocsDir
-        Shell.cleanDir nugetToolsDir
-        Shell.cleanDir nugetLibDir
-        Shell.deleteDir nugetLibDir
-
-        File.delete "./build/FAKE.Gallio/Gallio.dll"
-
-        let deleteFCS _ =
-          //!! (dir </> "FSharp.Compiler.Service.**")
-          //|> Seq.iter DeleteFile
-          ()
-
-        Directory.ensure docsDir
-        match package with
-        | p when p = projectName ->
-            !! (buildDir @@ "**/*.*") |> Shell.copy nugetToolsDir
-            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
-            deleteFCS nugetToolsDir
-        | p when p = "FAKE.Core" ->
-            !! (buildDir @@ "*.*") |> Shell.copy nugetToolsDir
-            Shell.copyDir nugetDocsDir docsDir FileFilter.allFiles
-            deleteFCS nugetToolsDir
-        | p when p = "FAKE.Lib" ->
-            Shell.cleanDir nugetLib451Dir
-            {
-                Globbing.BaseDirectory = buildDir
-                Globbing.Includes = [ "FakeLib.dll"; "FakeLib.XML" ]
-                Globbing.Excludes = []
-            }
-            |> Shell.copy nugetLib451Dir
-            deleteFCS nugetLib451Dir
-        | _ ->
-            Shell.copyDir nugetToolsDir (buildDir @@ package) FileFilter.allFiles
-            Shell.copyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.srcsv") |> File.deleteAll
-
-
-        let setParams (p:NuGet.NuGet.NuGetParams) =
-            {p with
-                NuGet.NuGet.NuGetParams.ToolPath = nugetExe
-                NuGet.NuGet.NuGetParams.Authors = authors
-                NuGet.NuGet.NuGetParams.Project = package
-                NuGet.NuGet.NuGetParams.Description = description
-                NuGet.NuGet.NuGetParams.Version = nugetVersion
-                NuGet.NuGet.NuGetParams.OutputPath = nugetLegacyDir
-                NuGet.NuGet.NuGetParams.WorkingDir = nugetLegacyDir
-                NuGet.NuGet.NuGetParams.Summary = projectSummary
-                NuGet.NuGet.NuGetParams.ReleaseNotes = release.Notes |> String.toLines
-                NuGet.NuGet.NuGetParams.Dependencies =
-                    (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
-                       ["FAKE.Core", NuGet.NuGet.RequireExactly (String.NormalizeVersion release.AssemblyVersion)]
-                     else p.Dependencies )
-                NuGet.NuGet.NuGetParams.Publish = false }
-
-        NuGet.NuGet.NuGet setParams "fake.nuspec"
-        !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
-        NuGet.NuGet.NuGet (setParams >> x64ify) "fake.nuspec"
-
-    let legacyZip = releaseDir </> "fake-legacy-packages.zip"
-    !! (nugetLegacyDir </> "**/*.nupkg")
-    |> Zip.zip nugetLegacyDir legacyZip
-    publish legacyZip
-)
 
 let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "linux-x64" ]
@@ -997,6 +694,16 @@ Target.create "_DotNetPackage" (fun _ ->
     Environment.setEnvironVar "PackageProjectUrl" "https://github.com/fsharp/Fake"
     Environment.setEnvironVar "PackageLicenseUrl" "https://github.com/fsharp/FAKE/blob/d86e9b5b8e7ebbb5a3d81c08d2e59518cf9d6da9/License.txt"
 
+    // Update template
+    let templateFromVersion, templateToVersion = """"defaultValue": "5.*",""", sprintf """"defaultValue": "%s",""" nugetVersion
+    let templateConfigFile = "src/template/fake-template/Content/.template.config/template.json"
+    let replaceInTemplate fromDefault toDefault =
+        [ templateConfigFile ]
+        |> Shell.replaceInFiles [ fromDefault, toDefault ]
+    let configContents = File.ReadAllText(templateConfigFile)
+    if not <| configContents.Contains templateFromVersion then
+        failwithf "Make sure to revert your changes in '%s' or update the build script accordingly" templateConfigFile
+    replaceInTemplate templateFromVersion templateToVersion
 
     // dotnet pack
     DotNet.pack (fun c ->
@@ -1008,6 +715,9 @@ Target.create "_DotNetPackage" (fun _ ->
                     { c.Common with CustomParams = Some "/m:1" }
                 else c.Common
         } |> dtntSmpl) "Fake.sln"
+
+    // Revert template
+    replaceInTemplate templateToVersion templateFromVersion
 
     // TODO: Check if we run the test in the current build!
     Directory.ensure "temp"
@@ -1174,17 +884,6 @@ Target.create "DotNetCorePushNuGet" (fun _ ->
         |> Seq.iter (nugetPush 4))
 )
 
-Target.create "PublishNuget" (fun _ ->
-    // uses NugetKey environment variable.
-    // Timeout atm
-    Paket.push(fun p ->
-        { p with
-            PublishUrl = nugetsource
-            DegreeOfParallelism = 2
-            WorkingDir = nugetLegacyDir })
-    //!! (nugetLegacyDir </> "**/*.nupkg")
-    //|> Seq.iter nugetPush
-)
 
 Target.create "ReleaseDocs" (fun _ ->
     Shell.cleanDir "gh-pages"
@@ -1282,15 +981,16 @@ Target.create "PrepareArtifacts" (fun _ ->
         else
             unzip "." (artifactsDir </> "chocolatey-requirements.zip")
 
-        Directory.ensure nugetLegacyDir
-        unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
+        if buildLegacy then
+            Directory.ensure nugetLegacyDir
+            unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
 
-        Directory.ensure "temp/build"
-        !! (nugetLegacyDir </> "*.nupkg")
-        |> Seq.iter (fun pack ->
-            unzip "temp/build" pack
-        )
-        Shell.copyDir "build" "temp/build" (fun _ -> true)
+            Directory.ensure "temp/build"
+            !! (nugetLegacyDir </> "*.nupkg")
+            |> Seq.iter (fun pack ->
+                unzip "temp/build" pack
+            )
+            Shell.copyDir "build" "temp/build" (fun _ -> true)
 
         let linuxRuntime = "linux-x64"
         let debFileName = sprintf "fake-cli.%s.%s.deb" simpleVersion linuxRuntime
@@ -1366,8 +1066,6 @@ Target.create "Default" ignore
 Target.create "_StartDnc" ignore
 Target.description "Simple local command line release"
 Target.create "Release" ignore
-Target.description "Build the full-framework (legacy) solution"
-Target.create "BuildSolution" ignore
 Target.description "dotnet pack pack to build all nuget packages"
 Target.create "DotNetPackage" ignore
 Target.create "_AfterBuild" ignore
@@ -1441,21 +1139,9 @@ for runtime in "current" :: "portable" :: runtimes do
     | None -> "_DotNetPackage" ?=> rawTargetName |> ignore
     prev <- Some rawTargetName
 
+if buildLegacy then
+    ``Legacy-build``.setTargetDependencies fromArtifacts
 
-// Full framework build
-"Clean"
-    ?=> "RenameFSharpCompilerService"
-    ?=> "SetAssemblyInfo"
-    ==> "_BuildSolution"
-    ?=> "UnskipAndRevertAssemblyInfo"
-    ==> "BuildSolution"
-"RenameFSharpCompilerService"
-    ==> "_BuildSolution"
-"_BuildSolution"
-    ==> "BuildSolution"
-// AfterBuild -> Both Builds completed
-"BuildSolution"
-    ==> "_AfterBuild"
 "DotNetPackage"
     ==> "_AfterBuild"
 "DotNetPublish"
@@ -1463,14 +1149,12 @@ for runtime in "current" :: "portable" :: runtimes do
 
 
 // Create artifacts when build is finished
-let prevDocs =
-    "_AfterBuild"
-    ==> "CreateNuGet"
-    ==> "CopyLicense"
+"_AfterBuild"
     =?> ("DotNetCoreCreateChocolateyPackage", Environment.isWindows)
     ==> "DotNetCoreCreateDebianPackage"
     =?> ("GenerateDocs", BuildServer.isLocalBuild && Environment.isWindows)
     ==> "Default"
+
 (if fromArtifacts then "PrepareArtifacts" else "_AfterBuild")
     =?> ("GenerateDocs", not <| Environment.hasEnvironVar "SkipDocs")
     ==> "Default"
@@ -1480,20 +1164,11 @@ let prevDocs =
     ==> "Release_GenerateDocs"
 
 // Build artifacts only (no testing)
-"CreateNuGet"
-    ==> "BuildArtifacts"
 "DotNetCoreCreateChocolateyPackage"
     =?> ("BuildArtifacts", Environment.isWindows)
 "DotNetCoreCreateZipPackages"
     ==> "BuildArtifacts"
 
-// Test the full framework build
-"_BuildSolution"
-    =?> ("Test", not <| Environment.hasEnvironVar "SkipTests")
-    ==> "Default"
-
-"BuildSolution"
-    ==> "Default"
 
 // Test the dotnetcore build
 (if fromArtifacts then "PrepareArtifacts" else "_DotNetPackage")
@@ -1553,14 +1228,8 @@ let prevDocs =
     ==> "FastRelease"
 "EnsureTestsRun" ?=> "DotNetCorePushNuGet"
 
-(if fromArtifacts then "PrepareArtifacts" else "EnsureTestsRun")
-    ==> "PublishNuget"
-    ==> "FastRelease"
-"EnsureTestsRun" ?=> "PublishNuget"
 
 // Gitlab staging (myget release)
-"PublishNuget"
-    ==> "Release_Staging"
 "DotNetCorePushNuGet"
     ==> "Release_Staging"
 "DotNetCorePushChocolateyPackage"
