@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.3.1-alpha - 2018-08-05
+## 5.3.1 - 2018-08-06
 
 * BUGFIX: Minor code improvements - https://github.com/fsharp/FAKE/pull/2045
 * BUGFIX: Adding newline to fix 'fake --help' formatting - https://github.com/fsharp/FAKE/pull/2051
