@@ -2,7 +2,12 @@
 
 ## 5.3.1-alpha - 2018-08-10
 
-* TBD.
+* BUGFIX: Minor code improvements - https://github.com/fsharp/FAKE/pull/2045
+* BUGFIX: Adding newline to fix 'fake --help' formatting - https://github.com/fsharp/FAKE/pull/2051
+* BUGFIX: Proper quotations in `Fake.DotNet.Cli` module - https://github.com/fsharp/FAKE/pull/2053
+* BUGFIX: Proper quotations in `Process.quote` and `Process.quoteIfNeeded` - https://github.com/fsharp/FAKE/pull/2045
+* DOCS: Add SemVer module to the docs
+* DOCS: Fix Rsync link in the docs
 
 ## 5.3.0 - 2018-07-30
 
