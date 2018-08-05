@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5/3.2 - vnext
+
+* TBD.
+
 ## 5.3.1 - 2018-08-06
 
 * BUGFIX: Minor code improvements - https://github.com/fsharp/FAKE/pull/2045
