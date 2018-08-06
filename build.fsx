@@ -368,6 +368,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
+      "Fake.DotNet.Testing.DotCover", "Code coverage with DotCover"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
