@@ -12,6 +12,8 @@ module FileFilter =
 
 [<RequireQualifiedAccess>]
 module File =
+    /// see https://stackoverflow.com/questions/2502990/create-text-file-without-bom
+    let internal utf8WithoutBom = new UTF8Encoding(false)
 
     // Detect the encoding, from https://stackoverflow.com/questions/3825390/effective-way-to-find-any-files-encoding
     let getEncoding def filename = 
@@ -40,6 +42,9 @@ module File =
     let getEncodingOrDefault def filename =
         if not (exists filename) then def
         else getEncoding def filename
+
+    /// Get the encoding from the file or utf8 without BOM if unknown or the file doesn't exist
+    let getEncodingOrUtf8WithoutBom = getEncodingOrDefault utf8WithoutBom
 
     /// Raises an exception if the file doesn't exist on disk.
     let checkExists fileName = 
@@ -86,7 +91,7 @@ module File =
             while not textReader.EndOfStream do
                 yield textReader.ReadLine()
         }
-    let read (file : string) = readWithEncoding (getEncodingOrDefault Encoding.UTF8 file) file
+    let read (file : string) = readWithEncoding (getEncodingOrUtf8WithoutBom file) file
     
     /// Reads the first line of a file. This can be helpful to read a password from file.
     let readLineWithEncoding (encoding:Encoding) (file : string) =
@@ -95,7 +100,7 @@ module File =
         sr.ReadLine()
 
     /// Reads the first line of a file. This can be helpful to read a password from file.
-    let readLine(file : string) = readLineWithEncoding (getEncodingOrDefault Encoding.UTF8 file) file
+    let readLine(file : string) = readLineWithEncoding (getEncodingOrUtf8WithoutBom file) file
 
     /// Writes a file line by line
     let writeWithEncoding (encoding:Encoding) append fileName (lines : seq<string>) =
@@ -104,7 +109,7 @@ module File =
         use writer = new StreamWriter(file, encoding)
         lines |> Seq.iter writer.WriteLine
 
-    let write append fileName (lines : seq<string>) = writeWithEncoding (getEncodingOrDefault Encoding.UTF8 fileName) append fileName lines
+    let write append fileName (lines : seq<string>) = writeWithEncoding (getEncodingOrUtf8WithoutBom fileName) append fileName lines
         
     /// Writes a byte array to a file
     let writeBytes file bytes = File.WriteAllBytes(file, bytes)
@@ -116,7 +121,7 @@ module File =
         use writer = new StreamWriter(file, encoding)
         writer.Write text
 
-    let writeString append fileName (text : string) = writeStringWithEncoding (getEncodingOrDefault Encoding.UTF8 fileName) append fileName text
+    let writeString append fileName (text : string) = writeStringWithEncoding (getEncodingOrUtf8WithoutBom fileName) append fileName text
 
     /// Replaces the file with the given string
     let replaceContent fileName text = 
@@ -134,7 +139,7 @@ module File =
 
     /// Reads a file as one text
     let inline readAsStringWithEncoding encoding file = File.ReadAllText(file, encoding)
-    let inline readAsString file = File.ReadAllText(file, (getEncodingOrDefault Encoding.UTF8 file))
+    let inline readAsString file = File.ReadAllText(file, (getEncodingOrUtf8WithoutBom file))
 
     /// Reads a file as one array of bytes
     let readAsBytes file = File.ReadAllBytes file
