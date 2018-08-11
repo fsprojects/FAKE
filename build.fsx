@@ -149,7 +149,7 @@ Trace.setBuildNumber nugetVersion
 //    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
 
 
-let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_300
+let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
