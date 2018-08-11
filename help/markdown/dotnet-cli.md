@@ -10,7 +10,7 @@ nuget Fake.DotNet.Cli //"
 open Fake.DotNet
 
 // Lazily install DotNet SDK in the correct version if not available
-let install = lazy DotNet.Install DotNet.Release_2_1_4
+let install = lazy DotNet.install DotNet.Versions.Release_2_1_4
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd =
