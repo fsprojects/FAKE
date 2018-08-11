@@ -18,6 +18,7 @@ module GitLabImportExtensions =
     type ImportData with
         member x.GitLabName =
             match x with
+            | ImportData.BuildArtifactWithName _
             | ImportData.BuildArtifact -> "buildArtifact"
             | ImportData.DotNetCoverage _ -> "dotNetCoverage"
             | ImportData.DotNetDupFinder -> "DotNetDupFinder"

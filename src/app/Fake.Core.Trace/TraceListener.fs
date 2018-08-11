@@ -3,6 +3,8 @@ namespace Fake.Core
 
 open System
 
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type KnownTags =
     | Task of name:string
@@ -34,6 +36,8 @@ type KnownTags =
         | Test _ -> "test"
         | Other (t, _) -> t
 
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type DotNetCoverageTool =
     | DotCover
@@ -47,14 +51,19 @@ type DotNetCoverageTool =
         | NCover -> "ncover"
         | NCover3 -> "ncover3"
 
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type NunitDataVersion =
     | Nunit
     | Nunit3
 
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type ImportData =
     | BuildArtifact
+    | BuildArtifactWithName of artifactName:string
     | DotNetCoverage of DotNetCoverageTool
     | DotNetDupFinder
     | PmdCpd
@@ -73,6 +82,8 @@ type ImportData =
     member x.Name =
         match x with
         | BuildArtifact -> "buildArtifact"
+        // Some build servers like TFS allow to group artifacts by name.
+        | BuildArtifactWithName _ -> "buildArtifactWithName"
         | DotNetCoverage _ -> "dotNetCoverage"
         | DotNetDupFinder -> "DotNetDupFinder"
         | PmdCpd -> "pmdCpd"
@@ -91,9 +102,12 @@ type ImportData =
         | Nunit NunitDataVersion.Nunit3 -> "nunit3"
     override x.ToString() =
         match x with
+        | BuildArtifactWithName name -> sprintf "buildArtifact (%s)" name
         | DotNetCoverage tool -> sprintf "dotNetCoverage (%O)" tool
         | _ -> x.Name
 
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type TestStatus =
     | Ignored of message:string
@@ -108,6 +122,8 @@ module TestStatus =
             TestStatus.Failed (f message, f details, None)
         | _ -> t
 
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type TagStatus =
     | Success
@@ -115,6 +131,8 @@ type TagStatus =
     | Failed
 
 /// Defines Tracing information for TraceListeners
+/// Note: Adding new cases to this type is not considered a breaking change!
+/// Please consider not using a match on this type in code external to the fake repository.
 [<RequireQualifiedAccess>]
 type TraceData =
     | ImportData of typ:ImportData * path:string
@@ -173,6 +191,7 @@ module TraceData =
         mapMessage (repl oldString replacement) t
 
 /// Defines a TraceListener interface
+/// Note: Please contribute implementations to the fake repository, as external implementations are not supported.
 type ITraceListener =
     abstract Write : TraceData -> unit
 
