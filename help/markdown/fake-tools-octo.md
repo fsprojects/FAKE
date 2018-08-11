@@ -7,6 +7,8 @@
 
 [Octopus Deploy](http://octopusdeploy.com/) is a great tool for simple and user-friendly release management.
 
+[API-Reference](apidocs/v5/fake-tools-octo.html)
+
 ## Installing Octopus Deploy
 
 You can try the cloud version of Octopus [here](https://octopus.com/cloud). Otherwise you can download it from [http://octopusdeploy.com/downloads](http://octopusdeploy.com/downloads) - and then start a [free trial](https://octopus.com/trial). Then follow the [Installation Instructions](http://octopusdeploy.com/documentation/install/octopus) to get yourself up and running.
