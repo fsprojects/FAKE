@@ -59,7 +59,7 @@
             "type": "parameter",
             "description": "Version of FAKE to install. This parameter is only applicable when either 'tool' or 'project' is used for bootstrapping",
             "dataType": "string",
-            "defaultValue": "5.*",
+            "defaultValue": "latest",
             "replaces": "(version)"
         }
     },
