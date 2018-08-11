@@ -428,9 +428,11 @@ module Process =
         
         //platformInfoAction proc.StartInfo
         if String.isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
-            if Directory.Exists proc.StartInfo.WorkingDirectory |> not then 
-                failwithf "Start of process %s failed. WorkingDir %s does not exist." proc.StartInfo.FileName 
+            if Directory.Exists proc.StartInfo.WorkingDirectory |> not then
+                sprintf "Start of process '%s' failed. WorkingDir '%s' does not exist." proc.StartInfo.FileName 
                     proc.StartInfo.WorkingDirectory
+                |> DirectoryNotFoundException
+                |> raise
         if silent then 
             proc.StartInfo.RedirectStandardOutput <- true
             proc.StartInfo.RedirectStandardError <- true

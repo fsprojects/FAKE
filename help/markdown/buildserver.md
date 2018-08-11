@@ -63,4 +63,4 @@ Target.create "Test" (fun _ ->
 
 ## Implementing support for a build-server
 
-Please look at the existing implementations.
+Please look at the existing implementations. Please contribute new implementations to the repository. Some changes like adding new cases to the `TraceListener` module are not considered breaking changes. Using these types (using `match` on these types to be exact) outside the fake repository is not considered good practice.

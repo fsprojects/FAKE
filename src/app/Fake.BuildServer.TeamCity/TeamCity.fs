@@ -17,6 +17,7 @@ module TeamCityImportExtensions =
     type ImportData with
         member x.TeamCityName =
             match x with
+            | ImportData.BuildArtifactWithName _
             | ImportData.BuildArtifact -> "buildArtifact"
             | ImportData.DotNetCoverage _ -> "dotNetCoverage"
             | ImportData.DotNetDupFinder -> "DotNetDupFinder"
@@ -275,6 +276,7 @@ module TeamCity =
                     ConsoleWriter.write false color true text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
+                | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
                 | TraceData.ImportData (ImportData.BuildArtifact, path) ->
                     publishArtifact path
                 | TraceData.ImportData (ImportData.DotNetCoverage tool, path) ->

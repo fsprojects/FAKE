@@ -1,5 +1,13 @@
 # Release Notes
 
+## 5.4.0 - 2018-08-11
+
+* ENHANCEMENT: Template always uses latest version now - https://github.com/fsharp/FAKE/pull/2055
+* ENHANCEMENT: Add all GITLAB environment variables - https://github.com/fsharp/FAKE/pull/2059
+* ENHANCEMENT: Support naming of artifacts in TFS/VSTS - https://github.com/fsharp/FAKE/pull/2056
+* BUGFIX: Use UTF8 without BOM by default - https://github.com/fsharp/FAKE/issues/2032
+* BUGFIX: Improve error message when starting dotnet-cli with incorrect working directory - https://github.com/fsharp/FAKE/issues/2046
+
 ## 5.3.1 - 2018-08-06
 
 * BUGFIX: Minor code improvements - https://github.com/fsharp/FAKE/pull/2045

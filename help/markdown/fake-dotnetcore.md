@@ -22,7 +22,7 @@ Just install the corresponding package for your system:
 
     <pre>
         <code class="lang-bash">
-        choco install fake -pre
+        choco install fake
         </code>
     </pre>
 
@@ -35,9 +35,13 @@ Just install the corresponding package for your system:
 
     <pre>
         <code class="lang-bash">
-        dotnet tool install fake-cli -g --version=5.*
+        dotnet tool install fake-cli -g
         </code>
     </pre>
+
+- Debian package
+
+  - the .deb file can be downloaded from the [releases-page](https://github.com/fsharp/FAKE/releases)
 
 - Others
 
