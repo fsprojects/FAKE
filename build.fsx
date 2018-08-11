@@ -808,6 +808,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
+            sprintf "/p:RuntimeIdentifiers=%s" runtime
             sprintf "/p:Configuration=%s" "Release" 
             sprintf "/p:PackageVersion=%s" simpleVersion
         ] |> String.concat " "
