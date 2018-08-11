@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.4.1-alpha - vnext
+
+* TBD
+
 ## 5.4.0 - 2018-08-11
 
 * ENHANCEMENT: Template always uses latest version now - https://github.com/fsharp/FAKE/pull/2055
