@@ -544,7 +544,7 @@ module DotNet =
             else workDir </> "global.json"
         let writtenJson =
             match version with
-            | Some version ->
+            | Some version when Directory.Exists workDir ->
                 // make sure to write global.json if we did not read the version from it
                 // We need to do this as the SDK will use this file to select the actual version
                 // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
@@ -556,7 +556,7 @@ module DotNet =
                     let template = sprintf """{ "sdk": { "version": "%s" } }""" version
                     File.WriteAllText(globalJsonPath, template)
                     true
-            | None -> false
+            | _ -> false
         try f ()
         finally if writtenJson then File.delete globalJsonPath
 

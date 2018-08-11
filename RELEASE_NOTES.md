@@ -1,8 +1,11 @@
 # Release Notes
 
-## 5.3.2-alpha - vnext
+## 5.4.0-alpha - vnext
 
-* TBD.
+* ENHANCEMENT: Template always uses latest version now - https://github.com/fsharp/FAKE/pull/2055
+* ENHANCEMENT: Add all environment variables - https://github.com/fsharp/FAKE/pull/2059 
+* BUGFIX: Use UTF8 without BOM by default - https://github.com/fsharp/FAKE/issues/2032
+* BUGFIX: Improve error message when starting dotnet-cli with incorrect working directory - https://github.com/fsharp/FAKE/issues/2046
 
 ## 5.3.1 - 2018-08-06
 
