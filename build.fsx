@@ -795,20 +795,14 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
-    DotNet.restore (fun opt ->
-        { opt with 
-            Common = { opt.Common with WorkingDirectory = "src/app/fake-cli/" } |> dtntSmpl
-            Runtime = Some "linux-x64"}) "fake-cli.fsproj"
-
     let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1" 
     let args = 
         [
-            sprintf "/t:%s" "CreateDeb"  
+            sprintf "/t:%s" "Restore;CreateDeb"  
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:RuntimeIdentifiers=%s" runtime
             sprintf "/p:Configuration=%s" "Release" 
             sprintf "/p:PackageVersion=%s" simpleVersion
         ] |> String.concat " "
