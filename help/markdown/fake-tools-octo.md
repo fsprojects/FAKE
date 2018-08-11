@@ -68,8 +68,8 @@ So once you have created a project you are able to create and push a release int
 open Fake.Tools
 
 Octo.createRelease (fun ps -> {ps with Project = "Your Project"
-								    Version = "latest"
-								    Common = setCommon ps.Common
+								       Version = "latest"
+								       Common = setCommon ps.Common
 							})
 ```
 
@@ -84,8 +84,8 @@ This is often a good idea when you want your FAKE build script to continue on to
 open Fake.Tools
 
 Octo.deployRelease (fun ps -> {ps with Project = "Your Project"
-								    DeployTo = "Staging"
-								    Version = "latest"
-								    Common = setCommon ps.Common
+						               DeployTo = "Staging"
+								       Version = "latest"
+								       Common = setCommon ps.Common
 							})
 ```
