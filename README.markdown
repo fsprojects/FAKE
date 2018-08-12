@@ -9,7 +9,7 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
 
-See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [API documentation](http://fsharp.github.io/FAKE/apidocs/v5/index.html).
+See the [project home page](https://fake.build/) for tutorials and [API documentation](http://fake.build/apidocs/v5/index.html).
 
 # Build the project
 
@@ -17,7 +17,7 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 * Fake5: Install FAKE 5 (for example via `choco install fake -pre`) and run `fake build`
 
 [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake) [![CircleCI build status](https://circleci.com/gh/fsharp/FAKE.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/fsharp/FAKE) [![Gitlab CI build status](https://gitlab.com/matthid/FAKE/badges/release/next/build.svg)](https://gitlab.com/matthid/FAKE)
 
 > Note: The build of the "legacy" parts (FAKE 4) will most likely fail
 >
@@ -32,6 +32,7 @@ Otherwise the test-suite will fail (However, the compilation should work)
 [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/pr)](http://www.issuestats.com/github/fsharp/FAKE) [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/issue)](http://www.issuestats.com/github/fsharp/FAKE)
 
 [![NuGet Badge](https://buildstats.info/nuget/FAKE)](https://www.nuget.org/packages/FAKE)
+[![NuGet Badge](https://buildstats.info/nuget/Fake.Core.Target)](https://www.nuget.org/packages/Fake.Core.Target) [![NuGet Badge](https://buildstats.info/nuget/Fake.Core.Context)](https://www.nuget.org/packages/Fake.Core.Context)
 
 ## How to contribute code
 
