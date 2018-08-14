@@ -92,12 +92,12 @@ type Params =
             WorkingDirectory = ""
         }
 
-type private ResolvedRunMode = | ResolvedDirect | ResolvedDotNet
+type private RunMode = | Direct | DotNetCli
 
 let private getRunMode (assembly: string) =
     match System.IO.Path.GetExtension(assembly).ToLowerInvariant() with
-    | ".dll" -> ResolvedDotNet
-    | ".exe" -> ResolvedDirect
+    | ".dll" -> DotNetCli
+    | ".exe" -> Direct
     | ext ->
         failwithf "Unable to find a way to run expecto test executable with extension %s" ext
 
@@ -109,9 +109,9 @@ let private runAssembly expectoParams testAssembly =
             then expectoParams.WorkingDirectory else Fake.IO.Path.getDirectory testAssembly
         let fileName, argsString =
             match runMode with
-            | ResolvedDotNet ->
+            | DotNetCli ->
                 "dotnet", sprintf "\"%s\" %O" testAssembly expectoParams
-            | ResolvedDirect ->
+            | Direct ->
                 testAssembly, string expectoParams
         (fun (info: ProcStartInfo) ->
             { info with
