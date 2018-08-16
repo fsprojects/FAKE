@@ -3,6 +3,7 @@
 ## 5.4.1 - 2018-08-16
 
 * BUGFIX: Support naming of artifacts in TFS/VSTS - https://github.com/fsharp/FAKE/pull/2060
+* BUGFIX: Detect when expecto should use the .NET CLI - https://github.com/fsharp/FAKE/pull/2064
 
 ## 5.4.0 - 2018-08-11
 
