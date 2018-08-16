@@ -330,19 +330,19 @@ see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</
 <p>Once <code>fake</code> is available you can start creating your script:</p>
 <ul>
 <li>
-Create a new file <code>myscript.fsx</code> with the following contents:
-<code>fsharp
-#r "paket:
-nuget Fake.Core.Target prerelease"
-#load "./.fake/myscript.fsx/intellisense.fsx"</code>
-<div class="alert alert-info">
-<h5>INFO</h5>
-<p><code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
-</div>
-</li>
-</ul>
+<p>Create a new file <code>myscript.fsx</code> with the following contents:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 <p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need.</p>
-<ul>
+</li>
 <li>
 <p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
 This might take some seconds depending on your internet connection
@@ -559,7 +559,7 @@ Now edit the script like this:</p>
 
 <span class="c">// Targets</span>
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">buildDir</span>
+  <span class="id">Shell</span><span class="pn">.</span><span class="id">cleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">buildDir</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
@@ -654,7 +654,7 @@ Now edit the script like this:</p>
 
 <span class="c">// Targets</span>
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs3', 10)" onmouseover="showTip(event, 'fs3', 10)" class="id">testDir</span><span class="pn">]</span>
+  <span class="id">Shell</span><span class="pn">.</span><span class="id">cleanDirs</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="id">buildDir</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs3', 10)" onmouseover="showTip(event, 'fs3', 10)" class="id">testDir</span><span class="pn">]</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;BuildApp&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
@@ -924,7 +924,7 @@ Now edit the script like this:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.4.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.4.1</a></li>
 									</ul>
 								</div>
 							</div>
