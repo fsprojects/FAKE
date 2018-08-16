@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.4.1-alpha - vnext
+## 5.4.1 - 2018-08-16
 
-* TBD
+* BUGFIX: Support naming of artifacts in TFS/VSTS - https://github.com/fsharp/FAKE/pull/2060
 
 ## 5.4.0 - 2018-08-11
 
