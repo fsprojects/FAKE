@@ -140,8 +140,8 @@ module TeamFoundation =
                         | TagStatus.Warning -> "SucceededWithIssues", "WARN"
                         | TagStatus.Failed -> "Failed", "ERROR"
                     setBuildState vsoState msg
-                | TraceData.ImportData (ImportData.BuildArtifactWithName name as typ, path) ->
-                    publishArtifact typ.Name (Some name) path
+                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
+                    publishArtifact name (Some name) path
                 | TraceData.ImportData (typ, path) ->
                     publishArtifact typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
