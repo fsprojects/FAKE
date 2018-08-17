@@ -240,7 +240,7 @@ Target.create "Build" (fun _ ->
     Trace.trace " --- Building the app --- "
 )
 
-Target.create "Rebuild" Target.DoNothing
+Target.create "Rebuild" ignore
 
 // *** Define Dependencies ***
 "Build" ==> "Rebuild"
