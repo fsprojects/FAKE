@@ -62,17 +62,14 @@ There are various ways to install FAKE 5:
 Once `fake` is available you can start creating your script:
 
 * Create a new file `myscript.fsx` with the following contents:
-```fsharp
-#r "paket:
-nuget Fake.Core.Target prerelease"
-#load "./.fake/myscript.fsx/intellisense.fsx"
-```
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p><code>storage: none</code> is currently required because of a bug, but it will be added by default.</p>
-</div>
 
-Where you can add all the [fake modules](fake-fake5-modules.html) you need.
+  ```fsharp
+  #r "paket:
+  nuget Fake.Core.Target prerelease"
+  #load "./.fake/myscript.fsx/intellisense.fsx"
+  ```
+
+  Where you can add all the [fake modules](fake-fake5-modules.html) you need.
 
 * run the script to restore your dependencies and setup the intellisense support: `fake run myscript.fsx`.
   This might take some seconds depending on your internet connection  
@@ -223,7 +220,7 @@ let buildDir = "./build/"
 
 // Targets
 Target.create "Clean" (fun _ ->
-  Shell.CleanDir buildDir
+  Shell.cleanDir buildDir
 )
 
 Target.create "BuildApp" (fun _ ->
@@ -279,7 +276,7 @@ let testDir  = "./test/"
 
 // Targets
 Target.create "Clean" (fun _ ->
-  Shell.CleanDirs [buildDir; testDir]
+  Shell.cleanDirs [buildDir; testDir]
 )
 
 Target.create "BuildApp" (fun _ ->

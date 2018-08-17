@@ -32,7 +32,7 @@ type Params =
       /// Doesn't run tests, print out list of tests instead.
       ListTests : bool
       /// Custom arguments to use in the case the helper not yet supports them
-      CustomArgs: string list
+      CustomArgs : string list
       /// Prints the version on startup. Default is true
       PrintVersion : bool
       /// Working directory
@@ -92,32 +92,45 @@ type Params =
             WorkingDirectory = ""
         }
 
+type private RunMode = | Direct | DotNetCli
+
+let private getRunMode (assembly: string) =
+    match System.IO.Path.GetExtension(assembly).ToLowerInvariant() with
+    | ".dll" -> DotNetCli
+    | ".exe" -> Direct
+    | ext ->
+        failwithf "Unable to find a way to run expecto test executable with extension %s" ext
+
+let private runAssembly expectoParams testAssembly =
+    let fakeStartInfo  =
+        let runMode = getRunMode testAssembly
+        let workingDir =
+            if String.isNotNullOrEmpty expectoParams.WorkingDirectory
+            then expectoParams.WorkingDirectory else Fake.IO.Path.getDirectory testAssembly
+        let fileName, argsString =
+            match runMode with
+            | DotNetCli ->
+                "dotnet", sprintf "\"%s\" %O" testAssembly expectoParams
+            | Direct ->
+                testAssembly, string expectoParams
+        (fun (info: ProcStartInfo) ->
+            { info with
+                FileName = fileName
+                Arguments = argsString
+                WorkingDirectory = workingDir } )
+
+    let exitCode = Process.execSimple fakeStartInfo TimeSpan.MaxValue
+    testAssembly, exitCode
+
 let run (setParams : Params -> Params) (assemblies : string seq) =
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "Expecto" details
 
-    let runAssembly testAssembly =
-        let exitCode =
-            let fakeStartInfo testAssembly args  =
-                let workingDir =
-                    if String.isNotNullOrEmpty args.WorkingDirectory
-                    then args.WorkingDirectory else Fake.IO.Path.getDirectory testAssembly
-                (fun (info: ProcStartInfo) ->
-                    { info with 
-                        FileName = testAssembly
-                        Arguments = string args
-                        WorkingDirectory = workingDir } )
-
-            let execWithExitCode testAssembly argsString timeout = 
-                Process.execSimple (fakeStartInfo testAssembly argsString) timeout
-
-            execWithExitCode testAssembly (setParams Params.DefaultParams) TimeSpan.MaxValue
-
-        testAssembly, exitCode
+    let expectoParams = setParams Params.DefaultParams
 
     let res =
         assemblies
-        |> Seq.map runAssembly
+        |> Seq.map (runAssembly expectoParams)
         |> Seq.filter( snd >> (<>) 0)
         |> Seq.toList
 
@@ -125,7 +138,7 @@ let run (setParams : Params -> Params) (assemblies : string seq) =
     | [] -> ()
     | failedAssemblies ->
         failedAssemblies
-        |> List.map (fun (testAssembly,exitCode) -> 
+        |> List.map (fun (testAssembly,exitCode) ->
             sprintf "Expecto test of assembly '%s' failed. Process finished with exit code %d." testAssembly exitCode )
         |> String.concat System.Environment.NewLine
         |> FailedTestsException |> raise
