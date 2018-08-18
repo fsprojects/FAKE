@@ -277,6 +277,7 @@ let dotnetAssemblyInfos =
       "Fake.Testing.SonarQube", "Analyzing your project with SonarQube"
       "Fake.Tools.Git", "Running git commands"
       "Fake.Tools.GitVersion", "GitVersion helper"
+      "Fake.Tools.Octo", "Octopus Deploy octo.exe tool helper"
       "Fake.Tools.Pickles", "Convert Gherkin to HTML"
       "Fake.Tools.Rsync", "Running Rsync commands"
       "Fake.Tracing.NAntXml", "NAntXml"

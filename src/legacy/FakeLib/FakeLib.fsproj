@@ -338,6 +338,9 @@
     <Compile Include="..\..\app\Fake.Tools.GitVersion\GitVersion.fs">
       <Link>Fake.Tools.GitVersion/GitVersion.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.Tools.Octo\Octo.fs">
+      <Link>Fake.Tools.Octo/Octo.fs</Link>
+    </Compile>
     <Compile Include="..\..\app\Fake.Testing.SonarQube\SonarQube.fs">
       <Link>Fake.Testing.SonarQube/SonarQube.fs</Link>
     </Compile>
