@@ -4,7 +4,6 @@ namespace Fake.BuildServer
 open System
 open System.IO
 open Fake.Core
-open Fake.IO
 open Microsoft.FSharp.Reflection
 open System.Text.RegularExpressions
 
@@ -93,329 +92,162 @@ module internal TeamCityWriter =
     let sendCloseBlock = sendToTeamCity "##teamcity[blockClosed name='%s']"
 
 
-    module private JavaPropertiesFile =
-        open System.Text
-        open System.IO
-        open System.Globalization
+module private JavaPropertiesFile =
+    open System.Text
+    open System.IO
+    open System.Globalization
 
-        type PropertiesFileEntry =
-        | Comment of text : string
-        | KeyValue of key : string * value : string
+    type PropertiesFileEntry =
+    | Comment of text : string
+    | KeyValue of key : string * value : string
 
-        module private Parser =
-            type CharReader = unit -> char option
+    module private Parser =
+        type CharReader = unit -> char option
 
-            let inline (|IsWhitespace|_|) c =
-                match c with
-                | Some c -> if c = ' ' || c = '\t' || c = '\u00ff' then Some c else None
-                | None -> None
+        let inline (|IsWhitespace|_|) c =
+            match c with
+            | Some c -> if c = ' ' || c = '\t' || c = '\u00ff' then Some c else None
+            | None -> None
 
-            type IsEof =
-                | Yes = 1y
-                | No = 0y
+        type IsEof =
+            | Yes = 1y
+            | No = 0y
 
-            let rec readToFirstChar (c: char option) (reader: CharReader) =
-                match c with
-                | IsWhitespace _ ->
-                    readToFirstChar (reader ()) reader
-                | Some '\r'
-                | Some '\n' ->
-                    None, IsEof.No
-                | Some _ -> c, IsEof.No
-                | None -> None, IsEof.Yes
+        let rec readToFirstChar (c: char option) (reader: CharReader) =
+            match c with
+            | IsWhitespace _ ->
+                readToFirstChar (reader ()) reader
+            | Some '\r'
+            | Some '\n' ->
+                None, IsEof.No
+            | Some _ -> c, IsEof.No
+            | None -> None, IsEof.Yes
 
-            let inline (|EscapeSequence|_|) c =
-                match c with
-                | Some c ->
-                    if c = 'r' || c = 'n' || c = 'u' || c = 'f' || c = 't' || c = '"' || c = ''' || c = '\\' then
-                        Some c
-                    else
-                        None
-                | None -> None
+        let inline (|EscapeSequence|_|) c =
+            match c with
+            | Some c ->
+                if c = 'r' || c = 'n' || c = 'u' || c = 'f' || c = 't' || c = '"' || c = ''' || c = '\\' then
+                    Some c
+                else
+                    None
+            | None -> None
 
-            let inline isHex c = (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')
+        let inline isHex c = (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')
 
-            let readEscapeSequence (c: char) (reader: CharReader) =
-                match c with
-                | 'r' -> '\r'
-                | 'n' -> '\n'
-                | 'f' -> '\f'
-                | 't' -> '\t'
-                | 'u' ->
-                    match reader(), reader(), reader(), reader() with
-                    | Some c1, Some c2, Some c3, Some c4 when isHex c1 && isHex c2 && isHex c3 && isHex c4 ->
-                        let hex = System.String([|c1;c2;c3;c4|])
-                        let value = System.UInt16.Parse(hex, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture)
-                        char value
-                    | _ ->
-                        failwith "Invalid unicode escape"
-                | _ -> c
+        let readEscapeSequence (c: char) (reader: CharReader) =
+            match c with
+            | 'r' -> '\r'
+            | 'n' -> '\n'
+            | 'f' -> '\f'
+            | 't' -> '\t'
+            | 'u' ->
+                match reader(), reader(), reader(), reader() with
+                | Some c1, Some c2, Some c3, Some c4 when isHex c1 && isHex c2 && isHex c3 && isHex c4 ->
+                    let hex = System.String([|c1;c2;c3;c4|])
+                    let value = System.UInt16.Parse(hex, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture)
+                    char value
+                | _ ->
+                    failwith "Invalid unicode escape"
+            | _ -> c
 
-            let inline readKey (c: char option) (reader: CharReader) (buffer: StringBuilder) =
-                let rec recurseEnd (result: string) =
-                    match reader () with
-                    | Some ':'
-                    | Some '='
-                    | IsWhitespace _ -> recurseEnd result
-                    | Some '\r'
-                    | Some '\n' -> result, false, None, IsEof.No
-                    | None -> result, false, None, IsEof.Yes
-                    | Some c -> result, true, Some c, IsEof.No
-                let rec recurse (c: char option) (buffer: StringBuilder) (escaping: bool) =
-                    match c with
-                    | EscapeSequence c when escaping ->
-                        let realChar = readEscapeSequence c reader
-                        recurse (reader()) (buffer.Append(realChar)) false
-                    | Some ' ' -> recurseEnd (buffer.ToString())
-                    | Some ':'
-                    | Some '=' when not escaping -> recurseEnd (buffer.ToString())
-                    | Some '\r'
-                    | Some '\n' -> buffer.ToString(), false, None, IsEof.No
-                    | None -> buffer.ToString(), false, None, IsEof.Yes
-                    | Some '\\' -> recurse (reader ()) buffer true
-                    | Some c -> recurse (reader ()) (buffer.Append(c)) false
-
-                recurse c buffer false
-
-            let rec readComment (reader: CharReader) (buffer: StringBuilder) =
+        let inline readKey (c: char option) (reader: CharReader) (buffer: StringBuilder) =
+            let rec recurseEnd (result: string) =
                 match reader () with
+                | Some ':'
+                | Some '='
+                | IsWhitespace _ -> recurseEnd result
+                | Some '\r'
+                | Some '\n' -> result, false, None, IsEof.No
+                | None -> result, false, None, IsEof.Yes
+                | Some c -> result, true, Some c, IsEof.No
+            let rec recurse (c: char option) (buffer: StringBuilder) (escaping: bool) =
+                match c with
+                | EscapeSequence c when escaping ->
+                    let realChar = readEscapeSequence c reader
+                    recurse (reader()) (buffer.Append(realChar)) false
+                | Some ' ' -> recurseEnd (buffer.ToString())
+                | Some ':'
+                | Some '=' when not escaping -> recurseEnd (buffer.ToString())
+                | Some '\r'
+                | Some '\n' -> buffer.ToString(), false, None, IsEof.No
+                | None -> buffer.ToString(), false, None, IsEof.Yes
+                | Some '\\' -> recurse (reader ()) buffer true
+                | Some c -> recurse (reader ()) (buffer.Append(c)) false
+
+            recurse c buffer false
+
+        let rec readComment (reader: CharReader) (buffer: StringBuilder) =
+            match reader () with
+            | Some '\r'
+            | Some '\n' ->
+                Some (Comment (buffer.ToString())), IsEof.No
+            | None ->
+                Some(Comment (buffer.ToString())), IsEof.Yes
+            | Some c ->
+                readComment reader (buffer.Append(c))
+
+        let inline readValue (c: char option) (reader: CharReader) (buffer: StringBuilder) =
+            let rec recurse (c: char option) (buffer: StringBuilder) (escaping: bool) (cr: bool) (lineStart: bool) =
+                match c with
+                | EscapeSequence c when escaping ->
+                    let realChar = readEscapeSequence c reader
+                    recurse (reader()) (buffer.Append(realChar)) false false false
                 | Some '\r'
                 | Some '\n' ->
-                    Some (Comment (buffer.ToString())), IsEof.No
+                    if escaping || (cr && c = Some '\n') then
+                        recurse (reader ()) buffer false (c = Some '\r') true
+                    else
+                        buffer.ToString(), IsEof.No
                 | None ->
-                    Some(Comment (buffer.ToString())), IsEof.Yes
+                    buffer.ToString(), IsEof.Yes
+                | Some _ when lineStart ->
+                    let firstChar, _ = readToFirstChar c reader
+                    recurse firstChar buffer false false false
+                | Some '\\' -> recurse (reader ()) buffer true false false
                 | Some c ->
-                    readComment reader (buffer.Append(c))
+                    recurse (reader()) (buffer.Append(c)) false false false
 
-            let inline readValue (c: char option) (reader: CharReader) (buffer: StringBuilder) =
-                let rec recurse (c: char option) (buffer: StringBuilder) (escaping: bool) (cr: bool) (lineStart: bool) =
-                    match c with
-                    | EscapeSequence c when escaping ->
-                        let realChar = readEscapeSequence c reader
-                        recurse (reader()) (buffer.Append(realChar)) false false false
-                    | Some '\r'
-                    | Some '\n' ->
-                        if escaping || (cr && c = Some '\n') then
-                            recurse (reader ()) buffer false (c = Some '\r') true
-                        else
-                            buffer.ToString(), IsEof.No
-                    | None ->
-                        buffer.ToString(), IsEof.Yes
-                    | Some _ when lineStart ->
-                        let firstChar, _ = readToFirstChar c reader
-                        recurse firstChar buffer false false false
-                    | Some '\\' -> recurse (reader ()) buffer true false false
-                    | Some c ->
-                        recurse (reader()) (buffer.Append(c)) false false false
+            recurse c buffer false false true
 
-                recurse c buffer false false true
+        let rec readLine (reader: CharReader) (buffer: StringBuilder) =
+            match readToFirstChar (reader ()) reader with
+            | Some '#', _
+            | Some '!', _ ->
+                readComment reader (buffer.Clear())
+            | Some firstChar, _ ->
+                let key, hasValue, c, isEof = readKey (Some firstChar) reader (buffer.Clear())
+                let value, isEof =
+                    if hasValue then
+                        // We know that we aren't at the end of the buffer, but readKey can return None if it didn't need the next char
+                        let firstChar = match c with | Some c -> Some c | None -> reader ()
+                        readValue firstChar reader (buffer.Clear())
+                    else
+                        "", isEof
+                Some (KeyValue(key, value)), isEof
+            | None, isEof -> None, isEof
 
-            let rec readLine (reader: CharReader) (buffer: StringBuilder) =
-                match readToFirstChar (reader ()) reader with
-                | Some '#', _
-                | Some '!', _ ->
-                    readComment reader (buffer.Clear())
-                | Some firstChar, _ ->
-                    let key, hasValue, c, isEof = readKey (Some firstChar) reader (buffer.Clear())
-                    let value, isEof =
-                        if hasValue then
-                            // We know that we aren't at the end of the buffer, but readKey can return None if it didn't need the next char
-                            let firstChar = match c with | Some c -> Some c | None -> reader ()
-                            readValue firstChar reader (buffer.Clear())
-                        else
-                            "", isEof
-                    Some (KeyValue(key, value)), isEof
-                | None, isEof -> None, isEof
+        let inline textReaderToReader (reader: TextReader) =
+            let buffer = [| '\u0000' |]
+            fun () ->
+                let eof = reader.Read(buffer, 0, 1) = 0
+                if eof then None else Some (buffer.[0])
 
-            let inline textReaderToReader (reader: TextReader) =
-                let buffer = [| '\u0000' |]
-                fun () ->
-                    let eof = reader.Read(buffer, 0, 1) = 0
-                    if eof then None else Some (buffer.[0])
+        let parseWithReader reader =
+            let buffer = StringBuilder(255)
+            let mutable isEof = IsEof.No
 
-            let parseWithReader reader =
-                let buffer = StringBuilder(255)
-                let mutable isEof = IsEof.No
+            seq {
+                while isEof <> IsEof.Yes do
+                    let line, isEofAfterLine = readLine reader buffer
+                    match line with
+                    | Some line -> yield line
+                    | None -> ()
+                    isEof <- isEofAfterLine
+            }
 
-                seq {
-                    while isEof <> IsEof.Yes do
-                        let line, isEofAfterLine = readLine reader buffer
-                        match line with
-                        | Some line -> yield line
-                        | None -> ()
-                        isEof <- isEofAfterLine
-                }
-
-        let parseTextReader (reader: TextReader) =
-            let reader = Parser.textReaderToReader reader
-            Parser.parseWithReader reader
-
-    /// TeamCity build parameters
-    /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Parameters) for more information
-    module TeamCityBuildParameters =
-        open System
-        open System.IO
-
-        let private get (fileName: string option) =
-            match fileName with
-            | Some fileName when not (isNull fileName) && (File.exists fileName) ->
-                use stream = File.OpenRead(fileName)
-                use reader = new StreamReader(stream)
-
-                reader
-                |> JavaPropertiesFile.parseTextReader
-                |> Seq.choose(function
-                    | JavaPropertiesFile.Comment _ -> None
-                    | JavaPropertiesFile.KeyValue(k, v) -> Some (k,v))
-                |> Map.ofSeq
-            | _ ->
-                Map.empty
-
-        let private systemFile = Environment.GetEnvironmentVariable("TEAMCITY_BUILD_PROPERTIES_FILE")
-        let private system = lazy(get (Some systemFile))
-
-        /// Get all system parameters
-        let getAllSystem () = system.Value
-
-        /// Get the value of a system parameter by name
-        let tryGetSystem name = system.Value |> Map.tryFind name
-
-        let private configurationFile = lazy (tryGetSystem "teamcity.configuration.properties.file")
-        let private configuration = lazy (get configurationFile.Value)
-
-        /// Get all configuration parameters
-        let getAllConfiguration () = configuration.Value
-
-        /// Get the value of a configuration parameter by name
-        let tryGetConfiguration name = configuration.Value |> Map.tryFind name
-
-        let private runnerFile = lazy (tryGetSystem "teamcity.runner.properties.file")
-        let private runner = lazy (get runnerFile.Value)
-
-        /// Get all runner parameters
-        let getAllRunner () = runner.Value
-
-        /// Get the value of a runner parameter by name
-        let tryGetRunner name = runner.Value |> Map.tryFind name
-
-        let private all = lazy (
-            if BuildServer.buildServer = BuildServer.TeamCity then
-                seq {
-                    // Environment variables are available using 'env.foo' syntax in TeamCity configuration
-                    for pair in System.Environment.GetEnvironmentVariables() do
-                        let pair = pair :?> System.Collections.DictionaryEntry
-                        let key = pair.Key :?> string
-                        let value = pair.Value :?> string
-                        yield sprintf "env.%s" key, value
-
-                    // Runner variables aren't available in TeamCity configuration so we choose an arbitrary syntax of 'runner.foo'
-                    for pair in runner.Value do yield sprintf "runner.%s" pair.Key, pair.Value
-
-                    // System variables are prefixed with 'system.' as in TeamCity configuration
-                    for pair in system.Value do yield sprintf "system.%s" pair.Key, pair.Value
-
-                    for pair in configuration.Value do yield pair.Key, pair.Value
-                }
-                |> Map.ofSeq
-            else
-                Map.empty)
-
-        /// Get all parameters
-        /// System ones are prefixed with 'system.', runner ones with 'runner.' and environment variables with 'env.'
-        let getAll () = all.Value
-
-        /// Get the value of a parameter by name
-        /// System ones are prefixed with 'system.', runner ones with 'runner.' and environment variables with 'env.'
-        let tryGet name = all.Value |> Map.tryFind name
-
-    /// Get files changed between builds in TeamCity
-    module TeamCityChangedFiles =
-        /// The type of change that occured
-        type ModificationType =
-            | FileChanged
-            | FileAdded
-            | FileRemoved
-            | FileNotChanged
-            | DirectoryChanged
-            | DirectoryAdded
-            | DirectoryRemoved
-
-        /// Describe a change between builds
-        type FileChange = {
-            /// Path of the file that changed, relative to the current checkout directory ('system.teamcity.build.checkoutDir')
-            filePath: string
-            /// Type of modification for the file
-            modificationType: ModificationType
-            ///
-            revision: string option }
-
-        let private getFileChanges' () =
-            match TeamCityBuildParameters.tryGetSystem "teamcity.build.changedFiles.file" with
-            | Some file when File.exists file ->
-                Some [
-                    for line in File.read file do
-                        let split = line.Split(':')
-                        if split.Length = 3 then
-                            let filePath = split.[0]
-                            let modificationType =
-                                match split.[1].ToUpperInvariant() with
-                                | "CHANGED" -> FileChanged
-                                | "ADDED" -> FileAdded
-                                | "REMOVED" -> FileRemoved
-                                | "NOT_CHANGED" -> FileNotChanged
-                                | "DIRECTORY_CHANGED" -> DirectoryChanged
-                                | "DIRECTORY_ADDED" -> DirectoryAdded
-                                | "DIRECTORY_REMOVED" -> DirectoryRemoved
-                                | _ -> failwithf "Unknown change type: %s" (split.[1])
-                            let revision =
-                                match split.[2] with
-                                | "<personal>" -> None
-                                | revision -> Some revision
-
-                            yield { filePath = filePath; modificationType = modificationType; revision = revision }
-                        else
-                            failwithf "Unable to split change line: %s" line
-                ]
-            | _ -> None
-
-        let private fileChanges = lazy (getFileChanges' ())
-
-        /// Changed files (since previous build) that are included in this build
-        /// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
-        let get () = fileChanges.Value
-
-    let private getRecentlyFailedTests' () =
-        match TeamCityBuildParameters.tryGetSystem "teamcity.tests.recentlyFailedTests.file" with
-        | Some file when File.exists file -> Some(File.read file)
-        | _ -> None
-
-    let private recentlyFailedTests = lazy (getRecentlyFailedTests' ())
-
-    /// Name of recently failing tests
-    /// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
-    let getTeamCityRecentlyFailedTests () = recentlyFailedTests.Value
-
-    /// Get the branch of the main VCS root
-    let getTeamCityBranch () = TeamCityBuildParameters.tryGetConfiguration "vcsroot.branch"
-
-    /// Get the display name of the branch as shown in TeamCity
-    /// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
-    let getTeamCityBranchName () =
-        match TeamCityBuildParameters.tryGetConfiguration "teamcity.build.branch" with
-        | Some _  as branch -> branch
-        | None -> TeamCityBuildParameters.tryGetConfiguration "vcsroot.branch"
-
-    /// Get if the current branch is the one configured as default
-    let getTeamCityBranchIsDefault () =
-        if BuildServer.buildServer = BuildServer.TeamCity then
-            match TeamCityBuildParameters.tryGetConfiguration "teamcity.build.branch.is_default" with
-            | Some "true" -> true
-            | Some _ -> false
-            | None ->
-                // When only one branch is configured, TeamCity doesn't emit this parameter
-                getTeamCityBranch().IsSome
-        else
-            false
+    let parseTextReader (reader: TextReader) =
+        let reader = Parser.textReaderToReader reader
+        Parser.parseWithReader reader
 
 module internal TeamCityRest =
     open Fake.Net

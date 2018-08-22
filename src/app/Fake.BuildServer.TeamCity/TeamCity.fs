@@ -37,10 +37,12 @@ module TeamCityImportExtensions =
 
 [<RequireQualifiedAccess>]
 module TeamCity =
-    // See https://confluence.jetbrains.com/display/TCD10/Build+Script+Interaction+with+TeamCity
+    open Fake.IO
+
+    // See https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity
 
     /// Open Named Block that will be closed when the block is disposed
-    /// Usage: `use __ = teamCityBlock "My Block"`
+    /// Usage: `use __ = TeamCity.block "My Block"`
     let block name description =
         TeamCityWriter.sendOpenBlock name description
         { new System.IDisposable
@@ -130,7 +132,7 @@ module TeamCity =
         TeamCityWriter.sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
 
     /// Finishes the test case.
-    let internal  finishTestCase testCaseName (duration : System.TimeSpan) =
+    let internal finishTestCase testCaseName (duration : System.TimeSpan) =
         let duration =
             duration.TotalMilliseconds
             |> round
@@ -216,6 +218,142 @@ module TeamCity =
             (TeamCityWriter.encapsulateSpecialChars name) (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details)
             (TeamCityWriter.encapsulateSpecialChars expected) (TeamCityWriter.encapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
 
+    /// TeamCity build parameters
+    /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
+    module BuildParameters =
+        open System.IO
+
+        let private get (fileName: string option) =
+            match fileName with
+            | Some fileName when not (isNull fileName) && (File.exists fileName) ->
+                use stream = File.OpenRead(fileName)
+                use reader = new StreamReader(stream)
+
+                reader
+                |> JavaPropertiesFile.parseTextReader
+                |> Seq.choose(function
+                    | JavaPropertiesFile.Comment _ -> None
+                    | JavaPropertiesFile.KeyValue(k, v) -> Some (k,v))
+                |> Map.ofSeq
+            | _ ->
+                Map.empty
+
+        let private systemFile = Environment.environVarOrNone "TEAMCITY_BUILD_PROPERTIES_FILE"
+        let private system = lazy(get (systemFile))
+
+        /// Get all system parameters
+        let getAllSystem () = system.Value
+
+        /// Get the value of a system parameter by name
+        let tryGetSystem name = system.Value |> Map.tryFind name
+
+        let private configurationFile = lazy (tryGetSystem "teamcity.configuration.properties.file")
+        let private configuration = lazy (get configurationFile.Value)
+
+        /// Get all configuration parameters
+        let getAllConfiguration () = configuration.Value
+
+        /// Get the value of a configuration parameter by name
+        let tryGetConfiguration name = configuration.Value |> Map.tryFind name
+
+        let private runnerFile = lazy (tryGetSystem "teamcity.runner.properties.file")
+        let private runner = lazy (get runnerFile.Value)
+
+        /// Get all runner parameters
+        let getAllRunner () = runner.Value
+
+        /// Get the value of a runner parameter by name
+        let tryGetRunner name = runner.Value |> Map.tryFind name
+
+        let private all = lazy (
+            if BuildServer.buildServer = BuildServer.TeamCity then
+                seq {
+                    // Environment variables are available using 'env.foo' syntax in TeamCity configuration
+                    for pair in System.Environment.GetEnvironmentVariables() do
+                        let pair = pair :?> System.Collections.DictionaryEntry
+                        let key = pair.Key :?> string
+                        let value = pair.Value :?> string
+                        yield sprintf "env.%s" key, value
+
+                    // Runner variables aren't available in TeamCity configuration so we choose an arbitrary syntax of 'runner.foo'
+                    for pair in runner.Value do yield sprintf "runner.%s" pair.Key, pair.Value
+
+                    // System variables are prefixed with 'system.' as in TeamCity configuration
+                    for pair in system.Value do yield sprintf "system.%s" pair.Key, pair.Value
+
+                    for pair in configuration.Value do yield pair.Key, pair.Value
+                }
+                |> Map.ofSeq
+            else
+                Map.empty)
+
+        /// Get all parameters
+        /// System ones are prefixed with 'system.', runner ones with 'runner.' and environment variables with 'env.'
+        let getAll () = all.Value
+
+        /// Get the value of a parameter by name
+        /// System ones are prefixed with 'system.', runner ones with 'runner.' and environment variables with 'env.'
+        let tryGet name = all.Value |> Map.tryFind name
+
+    /// The type of change that occured
+    type FileChangeType =
+        | FileChanged
+        | FileAdded
+        | FileRemoved
+        | FileNotChanged
+        | DirectoryChanged
+        | DirectoryAdded
+        | DirectoryRemoved
+
+    /// Describe a change between builds
+    type FileChange = {
+        /// Path of the file that changed, relative to the current checkout directory ('system.teamcity.build.checkoutDir')
+        FilePath: string
+        /// Type of modification for the file
+        ModificationType: FileChangeType
+        ///
+        Revision: string option }
+
+    module private ChangedFiles =
+        let get () =
+            match BuildParameters.tryGetSystem "teamcity.build.changedFiles.file" with
+            | Some file when File.exists file ->
+                Some [
+                    for line in File.read file do
+                        let split = line.Split(':')
+                        if split.Length = 3 then
+                            let filePath = split.[0]
+                            let modificationType =
+                                match split.[1].ToUpperInvariant() with
+                                | "CHANGED" -> FileChanged
+                                | "ADDED" -> FileAdded
+                                | "REMOVED" -> FileRemoved
+                                | "NOT_CHANGED" -> FileNotChanged
+                                | "DIRECTORY_CHANGED" -> DirectoryChanged
+                                | "DIRECTORY_ADDED" -> DirectoryAdded
+                                | "DIRECTORY_REMOVED" -> DirectoryRemoved
+                                | _ -> failwithf "Unknown change type: %s" (split.[1])
+                            let revision =
+                                match split.[2] with
+                                | "<personal>" -> None
+                                | revision -> Some revision
+
+                            yield { FilePath = filePath; ModificationType = modificationType; Revision = revision }
+                        else
+                            failwithf "Unable to split change line: %s" line
+                ]
+            | _ -> None
+
+        let cache = lazy (get ())
+
+    module private RecentlyFailedTests =
+        let get () =
+            match BuildParameters.tryGetSystem "teamcity.tests.recentlyFailedTests.file" with
+            | Some file when File.exists file -> File.read file |> List.ofSeq |> Some
+            | _ -> None
+
+        let cache = lazy (get ())
+
     type Environment =
         /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
         static member Version = Environment.environVarOrNone "TEAMCITY_VERSION"
@@ -235,6 +373,37 @@ module TeamCity =
         /// The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.
         static member BuildNumber = Environment.environVarOrNone "BUILD_NUMBER"
 
+        /// Get the branch of the main VCS root
+        static member Branch with get() = BuildParameters.tryGetConfiguration "vcsroot.branch"
+
+        /// Get the display name of the branch of the main VCS root as shown in TeamCity
+        /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
+        static member BranchDisplayName
+            with get() = 
+                match BuildParameters.tryGetConfiguration "teamcity.build.branch" with
+                | Some _  as branch -> branch
+                | None -> BuildParameters.tryGetConfiguration "vcsroot.branch"
+
+        /// Get if the current branch of the main VCS root is the one configured as default
+        static member IsDefaultBranch
+            with get() =
+                if BuildServer.buildServer = BuildServer.TeamCity then
+                    match BuildParameters.tryGetConfiguration "teamcity.build.branch.is_default" with
+                    | Some "true" -> true
+                    | Some _ -> false
+                    | None ->
+                        // When only one branch is configured, TeamCity doesn't emit this parameter
+                        Environment.Branch.IsSome
+                else
+                    false
+
+        /// Changed files (since previous build) that are included in this build
+        /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+        static member ChangedFiles with get() = ChangedFiles.cache.Value
+
+        /// Name of recently failing tests
+        /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+        static member RecentlyFailedTests with get() = RecentlyFailedTests.cache.Value
 
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
