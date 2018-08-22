@@ -307,11 +307,11 @@ module TeamCity =
 
     /// Describe a change between builds
     type FileChange = {
-        /// Path of the file that changed, relative to the current checkout directory ('system.teamcity.build.checkoutDir')
+        /// Path of the file that changed, relative to the current checkout directory (TemaCity.Environment.CheckoutDirectory)
         FilePath: string
         /// Type of modification for the file
         ModificationType: FileChangeType
-        ///
+        /// File revision in the repository. If the file is a part of change list started via the remote run, then the value will be None
         Revision: string option }
 
     module private ChangedFiles =
@@ -375,6 +375,9 @@ module TeamCity =
 
         /// Get the branch of the main VCS root
         static member Branch with get() = BuildParameters.tryGetConfiguration "vcsroot.branch"
+
+        /// Get the path to the build checkout directory
+        static member CheckoutDirectory with get() = BuildParameters.tryGetSystem "teamcity.build.checkoutDir"
 
         /// Get the display name of the branch of the main VCS root as shown in TeamCity
         /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
