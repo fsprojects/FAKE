@@ -376,9 +376,6 @@ module TeamCity =
         /// Get the branch of the main VCS root
         static member Branch with get() = BuildParameters.tryGetConfiguration "vcsroot.branch"
 
-        /// Get the path to the build checkout directory
-        static member CheckoutDirectory with get() = BuildParameters.tryGetSystem "teamcity.build.checkoutDir"
-
         /// Get the display name of the branch of the main VCS root as shown in TeamCity
         /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
         static member BranchDisplayName
@@ -399,6 +396,9 @@ module TeamCity =
                         Environment.Branch.IsSome
                 else
                     false
+
+        /// Get the path to the build checkout directory
+        static member CheckoutDirectory with get() = BuildParameters.tryGetSystem "teamcity.build.checkoutDir"
 
         /// Changed files (since previous build) that are included in this build
         /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
