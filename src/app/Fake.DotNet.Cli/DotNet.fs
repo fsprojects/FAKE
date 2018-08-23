@@ -544,7 +544,7 @@ module DotNet =
             else workDir </> "global.json"
         let writtenJson =
             match version with
-            | Some version ->
+            | Some version when Directory.Exists workDir ->
                 // make sure to write global.json if we did not read the version from it
                 // We need to do this as the SDK will use this file to select the actual version
                 // See https://github.com/fsharp/FAKE/pull/1963 and related discussions
@@ -556,7 +556,7 @@ module DotNet =
                     let template = sprintf """{ "sdk": { "version": "%s" } }""" version
                     File.WriteAllText(globalJsonPath, template)
                     true
-            | None -> false
+            | _ -> false
         try f ()
         finally if writtenJson then File.delete globalJsonPath
 
@@ -854,7 +854,7 @@ module DotNet =
     let restore setParams project =
         use __ = Trace.traceTask "DotNet:restore" project
         let param = RestoreOptions.Create() |> setParams
-        let args = sprintf "%s %s" project (buildRestoreArgs param)
+        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildRestoreArgs param)
         let result = exec (fun _ -> param.Common) "restore" args
         if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
         __.MarkSuccess()
@@ -952,7 +952,7 @@ module DotNet =
     let pack setParams project =
         use __ = Trace.traceTask "DotNet:pack" project
         let param = PackOptions.Create() |> setParams
-        let args = sprintf "%s %s" project (buildPackArgs param)
+        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildPackArgs param)
         let result = exec (fun _ -> param.Common) "pack" args
         if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
         __.MarkSuccess()
@@ -1025,7 +1025,7 @@ module DotNet =
     let publish setParams project =
         use __ = Trace.traceTask "DotNet:publish" project
         let param = PublishOptions.Create() |> setParams
-        let args = sprintf "%s %s" project (buildPublishArgs param)
+        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildPublishArgs param)
         let result = exec (fun _ -> param.Common) "publish" args
         if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
         __.MarkSuccess()
@@ -1095,7 +1095,7 @@ module DotNet =
     let build setParams project =
         use __ = Trace.traceTask "DotNet:build" project
         let param = BuildOptions.Create() |> setParams
-        let args = sprintf "%s %s" project (buildBuildArgs param)
+        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildBuildArgs param)
         let result = exec (fun _ -> param.Common) "build" args
         if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
         __.MarkSuccess()
@@ -1200,7 +1200,7 @@ module DotNet =
     let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
-        let args = sprintf "%s %s" project (buildTestArgs param)
+        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildTestArgs param)
         let result = exec (fun _ -> param.Common) "test" args
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
         __.MarkSuccess()

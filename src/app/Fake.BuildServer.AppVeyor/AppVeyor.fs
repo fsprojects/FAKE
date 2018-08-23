@@ -19,6 +19,7 @@ module AppVeyorImportExtensions =
     type ImportData with
         member x.AppVeyorName =
             match x with
+            | ImportData.BuildArtifactWithName _
             | ImportData.BuildArtifact -> "buildArtifact"
             | ImportData.DotNetCoverage _ -> "dotNetCoverage"
             | ImportData.DotNetDupFinder -> "DotNetDupFinder"
@@ -292,6 +293,7 @@ module AppVeyor =
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.Xunit path
                 | TraceData.ImportData (ImportData.Junit, path) ->
                     AppVeyorInternal.UploadTestResultsFile AppVeyorInternal.TestResultsType.JUnit path
+                | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
                 | TraceData.ImportData (ImportData.BuildArtifact, path) ->
                     AppVeyorInternal.PushArtifact (fun parms -> { parms with Path = path; FileName = Path.GetFileName path })
                 | TraceData.ImportData (typ, path) ->

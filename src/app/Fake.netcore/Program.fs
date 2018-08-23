@@ -228,7 +228,7 @@ let handleAction (verboseLevel:VerboseLevel) (action:CliAction) =
     0
   | ShowHelp ->
     printf "%s" Cli.fakeUsage
-    printf "Hint: Run 'fake run <script.fsx> --help' to get help from your script."
+    printfn "Hint: Run 'fake run <script.fsx> --help' to get help from your script."
     0
   | InvalidUsage str ->
     eprintfn "%s" str
