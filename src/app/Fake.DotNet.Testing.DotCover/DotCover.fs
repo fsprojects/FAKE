@@ -197,7 +197,7 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
     use __ = Trace.traceTask "DotCoverNUnit" details
 
     let parameters = NUnit.Common.NUnitDefaults |> setNUnitParams
-    let args = NUnit.Common.buildNUnitdArgs parameters assemblies
+    let args = NUnit.Common.buildArgs parameters assemblies
     
     DotCover (fun p ->
                     {p with
@@ -225,7 +225,7 @@ let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUn
     use __ = Trace.traceTask "DotCoverNUnit3" details
 
     let parameters = NUnit3Defaults |> setNUnitParams
-    let args = NUnit3.buildNUnit3Args parameters assemblies
+    let args = NUnit3.buildArgs parameters assemblies
     
     DotCover (fun p ->
                     {p with
@@ -251,7 +251,7 @@ let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUn
     use __ = Trace.traceTask "DotCoverXUnit2" details
 
     let parameters = XUnit2.XUnit2Defaults |> setXUnit2Params
-    let args = XUnit2.buildXUnit2Args assemblies parameters 
+    let args = XUnit2.buildArgs parameters assemblies
     
     DotCover (fun p ->
                     {p with
@@ -325,7 +325,7 @@ let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpe
 
     let parameters = MSpecDefaults |> setMSpecParams            
    
-    let args = MSpec.buildMSpecArgs parameters assemblies
+    let args = MSpec.buildArgs parameters assemblies
     
     DotCover (fun p ->
                     {p with

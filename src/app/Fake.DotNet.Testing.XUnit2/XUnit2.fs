@@ -190,8 +190,8 @@ let XUnit2Defaults =
       Class = None
       Method = None }
 
-///TODO: mark internal
-let buildXUnit2Args assemblies parameters =
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+let buildArgs (parameters:XUnit2Params) (assemblies: string seq)=
     let formatTrait traitFlag (name, value) =
         sprintf @"%s ""%s=%s""" traitFlag name value
     let appendTraits traitsList traitFlag sb =
@@ -280,7 +280,7 @@ let run setParams assemblies =
         { info with
             FileName = parameters.ToolPath
             WorkingDirectory = defaultArg parameters.WorkingDir "."
-            Arguments = parameters |> buildXUnit2Args assemblies}) >> Process.withFramework) parameters.TimeOut
+            Arguments = buildArgs parameters assemblies}) >> Process.withFramework) parameters.TimeOut
 
     ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result
     __.MarkSuccess()

@@ -69,8 +69,7 @@ let MSTestDefaults =
       NoIsolation = true }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
-/// [omit]
-let internal buildMSTestArgs parameters assembly = 
+let buildArgs (parameters:MSTestParams) (assembly: string) = 
     let testResultsFile = 
         if parameters.ResultsDir <> null then 
             sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
@@ -111,7 +110,7 @@ let exec (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) =
             Trace.traceError message
             failwith message
     for assembly in assemblies do
-        let args = buildMSTestArgs parameters assembly
+        let args = buildArgs parameters assembly
         Process.execSimple ((fun info ->
         { info with
             FileName = parameters.ToolPath

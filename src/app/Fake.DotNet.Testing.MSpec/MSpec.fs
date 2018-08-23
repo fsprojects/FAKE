@@ -43,9 +43,7 @@ let MSpecDefaults =
       ErrorLevel = Error }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
-/// [omit]
-///TODO: mark internal
-let buildMSpecArgs parameters assemblies =
+let buildArgs (parameters:MSpecParams) (assemblies: string seq) =
     let html, htmlText =
         if String.isNotNullOrEmpty parameters.HtmlOutputDir then
             true, sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
@@ -88,7 +86,7 @@ let exec setParams assemblies =
     let details = String.separated ", " assemblies
     use __ = Trace.traceTask "MSpec" details
     let parameters = setParams MSpecDefaults
-    let args = buildMSpecArgs parameters assemblies
+    let args = buildArgs parameters assemblies
     Trace.trace (parameters.ToolPath + " " + args)
     if 0 <> Process.execSimple ((fun info -> 
             { info with
