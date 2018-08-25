@@ -25,6 +25,9 @@ module TeamFoundation =
         sprintf "##vso[%s%s]%s" action formattedProperties message
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
+
+    let setVariable variableName value =
+        write "task.setvariable" ["variable", variableName] value
         
     let private toType t o =
         o |> Option.map (fun value -> t, value)
