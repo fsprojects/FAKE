@@ -82,6 +82,9 @@ module TeamFoundation =
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
+    /// Access (secret) build variables
+    let variables = Vault.fromEnvironmentVariableOrEmpty "FAKE_VSTS_VAULT_VARIABLES"  
+
     type Environment =
         static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
         static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"

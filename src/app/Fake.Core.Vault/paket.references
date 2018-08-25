@@ -1,0 +1,6 @@
+group netcore
+
+FSharp.Core
+NETStandard.Library
+System.Security.Cryptography.Algorithms
+Newtonsoft.Json
