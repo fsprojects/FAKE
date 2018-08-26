@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.4.2-alpha - 2018-08-26
+## 5.5.0 - 2018-08-26
 
 * DOCS: Update core-targets.md - https://github.com/fsharp/FAKE/pull/2067
 * NEW: module Fake.Tools.Octo to use Octopus Deploy - https://github.com/fsharp/FAKE/pull/2048
