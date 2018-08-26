@@ -16,6 +16,7 @@ Goals:
 * Prevent accidental leakage
 * Hide from environment variable listing
 * Hide from process snapshots
+* Forward secret variables from your build server into FAKE without implicit access for all sub-processes started by FAKE
 
 Non-Goals:
 
