@@ -104,15 +104,22 @@ module Vault =
             |> Map.ofSeq
         { Key = key; Variables = variables }
 
-    let empty =
+    /// Create a new key with the given path to the secret file (or Path.GetTempFileName() otherwise)
+    let createKey (file : string option) =
         let rnd = new RNGCryptoServiceProvider()
         let iv = Array.zeroCreate 16
         rnd.GetBytes(iv)
         let key = Array.zeroCreate 32
         rnd.GetBytes(key)
-        let keyFile = Path.GetTempFileName()
+        let keyFile = 
+            match file with
+            | Some f -> f
+            | None -> Path.GetTempFileName()
         File.WriteAllText(keyFile, Convert.ToBase64String(key))
-        { Key = { KeyFile = keyFile; Iv = Convert.ToBase64String(iv) }; Variables = Map.empty }
+        { KeyFile = keyFile; Iv = Convert.ToBase64String(iv) }
+
+    /// An empty vault without any variables
+    let empty = { Key = { KeyFile = null; Iv = null }; Variables = Map.empty }
 
     /// Read in a vault from a given json string, make sure to delete the source of the json after using this API
     let fromJson s =
