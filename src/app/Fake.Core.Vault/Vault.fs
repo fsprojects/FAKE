@@ -3,7 +3,7 @@ namespace Fake.Core
 #nowarn "44"
 
 /// Provices a encrypted store of variables to prevent accidential leakage 
-/// Please read the [documentation](/fake-core-vault.html)
+/// Please read the [documentation](/core-vault.html)
 [<RequireQualifiedAccess>]
 module Vault =
     open System
