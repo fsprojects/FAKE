@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.5.1-alpha - tbd
+
+* Tbd.
+
 ## 5.5.0 - 2018-08-26
 
 * DOCS: Update core-targets.md - https://github.com/fsharp/FAKE/pull/2067
