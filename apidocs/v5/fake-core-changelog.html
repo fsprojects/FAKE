@@ -112,6 +112,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/core-trace.html">Trace</a></li>
 																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
+																<li><a href="/apidocs/v5/fake-core-vault.html">Vault</a></li>
 																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
 															</ul>
 														</li>
@@ -194,6 +195,7 @@
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-octo.html">Octo</a></li>
 																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
@@ -391,10 +393,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
+          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
             Changelog.create(...)
           </code>
-          <div class="tip" id="427">
+          <div class="tip" id="442">
             <strong>Signature:</strong> description:string option -&gt; unreleased:Unreleased option -&gt; entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
@@ -409,10 +411,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '428', 428)" onmouseover="showTip(event, '428', 428)">
+          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
             Changelog.createWithCustomHeader(...)
           </code>
-          <div class="tip" id="428">
+          <div class="tip" id="443">
             <strong>Signature:</strong> header:string -&gt; description:string option -&gt; unreleased:Unreleased option -&gt; entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
@@ -427,10 +429,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '429', 429)" onmouseover="showTip(event, '429', 429)">
+          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
             Changelog.fromEntries(entries)
           </code>
-          <div class="tip" id="429">
+          <div class="tip" id="444">
             <strong>Signature:</strong> entries:ChangelogEntry list -&gt; Changelog<br />
                                   </div>
         </td>
@@ -445,10 +447,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '430', 430)" onmouseover="showTip(event, '430', 430)">
+          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
             Changelog.load(filename)
           </code>
-          <div class="tip" id="430">
+          <div class="tip" id="445">
             <strong>Signature:</strong> filename:string -&gt; Changelog<br />
                                   </div>
         </td>
@@ -471,10 +473,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '431', 431)" onmouseover="showTip(event, '431', 431)">
+          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
             Changelog.parse(data)
           </code>
-          <div class="tip" id="431">
+          <div class="tip" id="446">
             <strong>Signature:</strong> data:seq&lt;string&gt; -&gt; Changelog<br />
                                   </div>
         </td>
@@ -495,10 +497,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '432', 432)" onmouseover="showTip(event, '432', 432)">
+          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
             Changelog.parseVersions(line)
           </code>
-          <div class="tip" id="432">
+          <div class="tip" id="447">
             <strong>Signature:</strong> line:string -&gt; Match * Match<br />
                                   </div>
         </td>
@@ -513,10 +515,10 @@ These files have to be in a format as described on <a href="http://keepachangelo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '433', 433)" onmouseover="showTip(event, '433', 433)">
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
             Changelog.promoteUnreleased(...)
           </code>
-          <div class="tip" id="433">
+          <div class="tip" id="448">
             <strong>Signature:</strong> version:string -&gt; changelog:Changelog -&gt; Changelog<br />
                                   </div>
         </td>
@@ -541,10 +543,10 @@ to a new changelog entry with the given version</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '434', 434)" onmouseover="showTip(event, '434', 434)">
+          <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
             Changelog.save filename changelog
           </code>
-          <div class="tip" id="434">
+          <div class="tip" id="449">
             <strong>Signature:</strong> filename:string -&gt; changelog:Changelog -&gt; unit<br />
                                   </div>
         </td>
@@ -670,7 +672,7 @@ to a new changelog entry with the given version</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.4.1</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.0</a></li>
 									</ul>
 								</div>
 							</div>

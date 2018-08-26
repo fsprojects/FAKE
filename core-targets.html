@@ -113,6 +113,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/core-trace.html">Trace</a></li>
 																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
+																<li><a href="/apidocs/v5/fake-core-vault.html">Vault</a></li>
 																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
 															</ul>
 														</li>
@@ -195,6 +196,7 @@
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
 																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-octo.html">Octo</a></li>
 																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
 															</ul>
 														</li>
@@ -560,7 +562,7 @@ say that target B has a soft dependency on target A:</p>
     <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 <span class="pn">)</span>
 
-<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Rebuild&quot;</span> <span class="id">Target</span><span class="pn">.</span><span class="id">DoNothing</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Rebuild&quot;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">ignore</span>
 
 <span class="c">// *** Define Dependencies ***</span>
 <span class="s">&quot;Build&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
@@ -571,6 +573,7 @@ say that target B has a soft dependency on target A:</p>
 </tr>
 </table>
 
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
 
                       </article>
 								</div>
@@ -676,7 +679,7 @@ say that target B has a soft dependency on target A:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.4.1</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.0</a></li>
 									</ul>
 								</div>
 							</div>

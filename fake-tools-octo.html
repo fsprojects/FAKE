@@ -1,0 +1,502 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Automating Deployment using FAKE and Octopus Deploy
+</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="/help-supporters.html">Supporters</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-semver.html">SemVer</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
+																<li><a href="/apidocs/v5/fake-core-vault.html">Vault</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core-targets.html">DSL</a>
+															<ul>
+																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-octo.html">Octo</a></li>
+																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li >
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+
+									<!-- Content -->
+                      <article>
+<h1><a name="Automating-Deployment-using-FAKE-and-Octopus-Deploy" class="anchor" href="#Automating-Deployment-using-FAKE-and-Octopus-Deploy">Automating Deployment using FAKE and Octopus Deploy</a></h1>
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="apidocs/v4/fake-octotools.html">here</a></p>
+</div>
+<p><a href="http://octopusdeploy.com/">Octopus Deploy</a> is a great tool for simple and user-friendly release management.</p>
+<p><a href="apidocs/v5/fake-tools-octo.html">API-Reference</a></p>
+<h2><a name="Installing-Octopus-Deploy" class="anchor" href="#Installing-Octopus-Deploy">Installing Octopus Deploy</a></h2>
+<p>You can try the cloud version of Octopus <a href="https://octopus.com/cloud">here</a>. Otherwise you can download it from <a href="http://octopusdeploy.com/downloads"><a href="http://octopusdeploy.com/downloads">http://octopusdeploy.com/downloads</a></a> - and then start a <a href="https://octopus.com/trial">free trial</a>. Then follow the <a href="http://octopusdeploy.com/documentation/install/octopus">Installation Instructions</a> to get yourself up and running.</p>
+<p>You will also need to install and configure at least one <a href="http://octopusdeploy.com/documentation/install/tentacle">Tentacle</a> which you will deploy your software and services to.</p>
+<h2><a name="Octo-exe-CLI-tool" class="anchor" href="#Octo-exe-CLI-tool">Octo.exe CLI tool</a></h2>
+<p>This module is a wrapper around the <a href="https://octopus.com/docs/api-and-integration/octo.exe-command-line">Octo.exe</a> CLI tool which controls Octopus Deploy API. You'll need the Octo.exe tool itself accessible to your FAKE script. Download it from <a href="https://octopus.com/downloads">here</a>.</p>
+<h3><a name="Generate-an-API-Key" class="anchor" href="#Generate-an-API-Key">Generate an API Key</a></h3>
+<p>In order to communicate with the Octopus Deploy API you will need an <em>API key</em> to authenticate with.</p>
+<p>It is a good idea to create an account in Octopus Deploy for your Continuous Integration systems (eg: <a href="docs/teamcity.html">TeamCity</a>) - and then generate a new API key for that account, that can be safely used from within your build process.</p>
+<p><img src="pics/octopusdeploy/myprofile.png" alt="My Profile" title="My Profile" /></p>
+<p><img src="pics/octopusdeploy/apikey.png" alt="Generate API Key" title="Generate API Key" /></p>
+<h2><a name="Define-common-options" class="anchor" href="#Define-common-options">Define common options</a></h2>
+<p>You can define a function defining shared parameters like <code>ToolPath</code>  or your Octopus Deploy instance details. Then the function can be used in subsequent <code>Octo</code> calls.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">setCommon</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">ps</span><span class="pn">:</span><span class="id">Octo</span><span class="pn">.</span><span class="id">Options</span><span class="pn">)</span> <span class="o">=</span> 
+	<span class="pn">{</span>
+		<span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">ps</span> <span class="k">with</span> <span class="id">ToolPath</span> <span class="o">=</span> <span class="s">&quot;path to your octo.exe&quot;</span>
+			    <span class="id">Server</span> <span class="o">=</span> <span class="pn">{</span>
+    	                    <span class="id">ServerUrl</span> <span class="o">=</span> <span class="s">&quot;Your Octopus Server URL&quot;</span>
+               		        <span class="id">ApiKey</span> <span class="o">=</span> <span class="s">&quot;Your API key&quot;</span>
+                          <span class="pn">}</span>
+    <span class="pn">}</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Push-a-package" class="anchor" href="#Push-a-package">Push a package</a></h2>
+<p>Packages can be pushed to the built-in Octopus repository with the push command:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
+
+<span class="id">Octo</span><span class="pn">.</span><span class="id">push</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">ps</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">ps</span> <span class="k">with</span> <span class="id">Packages</span> <span class="o">=</span> <span class="pn">[</span><span class="s">&quot;mypackage.nupkg&quot;</span><span class="pn">;</span> <span class="s">&quot;mypackage2.nupkg&quot;</span><span class="pn">]</span>
+                              <span class="id">Common</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span><span class="pn">}</span><span class="pn">)</span> 
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Create-a-Release" class="anchor" href="#Create-a-Release">Create a Release</a></h2>
+<p>Octopus Deploy relies on the concept of a <strong>release</strong>, which should be an immutable <em>NuGet Package</em> which has been built, tested, <a href="apidocs/v5/legacy/fake-nugethelper.html">packaged and published</a> from your Continuous Integration systems - which you can of course completely manage with your FAKE script.</p>
+<p>So once you have created a project you are able to create and push a release into Octopus Deploy. This can be done through the Octopus UI, command line tool, or in our case - from a FAKE script.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
+
+<span class="id">Octo</span><span class="pn">.</span><span class="id">createRelease</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">ps</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">ps</span> <span class="k">with</span> <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Your Project&quot;</span>
+								       <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;latest&quot;</span>
+								       <span class="id">Common</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span>
+							<span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Deploy-a-Release" class="anchor" href="#Deploy-a-Release">Deploy a Release</a></h2>
+<p>You can automatically deploy a release when you create it, but using the optional deploy options when you create your release.</p>
+<p>This is often a good idea when you want your FAKE build script to continue on to a second set of perhaps slower, unit tests that exercise behaviors in a more complete and perhaps integrated environment.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Tools</span>
+
+<span class="id">Octo</span><span class="pn">.</span><span class="id">deployRelease</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">ps</span> <span class="k">-&gt;</span> <span class="pn">{</span><span class="id">ps</span> <span class="k">with</span> <span class="id">Project</span> <span class="o">=</span> <span class="s">&quot;Your Project&quot;</span>
+						               <span class="id">DeployTo</span> <span class="o">=</span> <span class="s">&quot;Staging&quot;</span>
+								       <span class="id">Version</span> <span class="o">=</span> <span class="s">&quot;latest&quot;</span>
+								       <span class="id">Common</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="id">setCommon</span> <span class="id">ps</span><span class="pn">.</span><span class="id">Common</span>
+							<span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">val setCommon : ps:&#39;a -&gt; &#39;a</div>
+<div class="tip" id="fs2">val ps : &#39;a</div>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.0</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
+
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
+	</body>
+</html>
