@@ -1,4 +1,4 @@
-version 5.176.4
+version 5.176.9
 content: none
 // just in case we need some special nuget feature again...
 //source https://ci.appveyor.com/nuget/paket
@@ -177,6 +177,8 @@ group netcore
     nuget Mono.Cecil prerelease
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility
+    nuget System.Security.Cryptography.Algorithms
+    
     // Testing
     nuget Expecto >= 5.0
 

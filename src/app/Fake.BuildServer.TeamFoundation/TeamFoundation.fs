@@ -25,6 +25,9 @@ module TeamFoundation =
         sprintf "##vso[%s%s]%s" action formattedProperties message
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
+
+    let setVariable variableName value =
+        write "task.setvariable" ["variable", variableName] value
         
     let private toType t o =
         o |> Option.map (fun value -> t, value)
@@ -81,6 +84,9 @@ module TeamFoundation =
 
     let internal setLogDetailFinished id result =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
+
+    /// Access (secret) build variables
+    let variables = Vault.fromEnvironmentVariableOrEmpty "FAKE_VSTS_VAULT_VARIABLES"  
 
     type Environment =
         static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"

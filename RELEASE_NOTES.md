@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.5.0 - 2018-08-26
+
+* DOCS: Update core-targets.md - https://github.com/fsharp/FAKE/pull/2067
+* NEW: module Fake.Tools.Octo to use Octopus Deploy - https://github.com/fsharp/FAKE/pull/2048
+* NEW: module Fake.Core.Vault to store secrets - https://github.com/fsharp/FAKE/pull/2068/commits/929ec55bcb05b0d9ece0066c4d2c4f0ad2bce783
+* ENHANCEMENT: Fake.BuildServer.TeamFoundation now supports secret variables - https://github.com/isaacabraham/vsts-fsharp/pull/16
+
 ## 5.4.1 - 2018-08-16
 
 * BUGFIX: Support naming of artifacts in TFS/VSTS - https://github.com/fsharp/FAKE/pull/2060
