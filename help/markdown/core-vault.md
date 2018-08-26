@@ -23,6 +23,8 @@ Non-Goals:
 * Complete fool-proof implementation
 * Hiding variables from build script writers
 * Hiding variables from the build output (see below)
+* Manage secrets in your repository instead of your build server (ie. committing the json)
+  > Please look at related tools like [git-secret](https://github.com/sobolevn/git-secret) instead
 
 ## API Usage
 
