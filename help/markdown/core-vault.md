@@ -21,6 +21,7 @@ Non-Goals:
 
 * Complete fool-proof implementation
 * Hiding variables from build script writers
+* Hiding variables from the build output (see below)
 
 ## API Usage
 
@@ -54,3 +55,10 @@ let tryUsage2 = vault.TryGet "my other variable"
 ```
 
 You can reference [`Fake.Core.Vault`](https://www.nuget.org/packages/Fake.Core.Vault/) in your regular project and use `Vault.encryptVariable` to simplify the creation of the json.
+
+## Hide from Build output
+
+By default the vault will not keep unencrypted variables in memory in order to 'protect' against memory dumps.
+Once you retrieve a secret variable we recommend to use build server features (like VSTS secret variables) to remove values from the output.
+If that is not an option you can use the [protect secrets](https://fake.build/core-trace.html#Protect-secrets) feature of the trace module.
+Keep in mind that this keeps the variables in memory and is therefore an explicit opt-in for the variables you use.
