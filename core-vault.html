@@ -113,7 +113,7 @@
 																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
 																<li><a href="/core-trace.html">Trace</a></li>
 																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
-																<li><a href="/apidocs/v5/fake-core-vault.html">Vault</a></li>
+																<li><a href="/core-vault.html">Vault</a></li>
 																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
 															</ul>
 														</li>
@@ -273,11 +273,13 @@
 <li>Prevent accidental leakage</li>
 <li>Hide from environment variable listing</li>
 <li>Hide from process snapshots</li>
+<li>Forward secret variables from your build server into FAKE without implicit access for all sub-processes started by FAKE</li>
 </ul>
 <p>Non-Goals:</p>
 <ul>
 <li>Complete fool-proof implementation</li>
 <li>Hiding variables from build script writers</li>
+<li>Hiding variables from the build output (see below)</li>
 </ul>
 <h2><a name="API-Usage" class="anchor" href="#API-Usage">API Usage</a></h2>
 <p>In order to get variables into FAKE you need to encrypt them via AES. When in doubt consult the source code of <code>Vault.encryptVariable</code> or look at the <code>myVault.ts</code> implementation of the <a href="https://github.com/isaacabraham/vsts-fsharp">vsts fake 5 task</a>.</p>
@@ -322,6 +324,11 @@
 </tr>
 </table>
 <p>You can reference <a href="https://www.nuget.org/packages/Fake.Core.Vault/"><code>Fake.Core.Vault</code></a> in your regular project and use <code>Vault.encryptVariable</code> to simplify the creation of the json.</p>
+<h2><a name="Hide-from-Build-output" class="anchor" href="#Hide-from-Build-output">Hide from Build output</a></h2>
+<p>By default the vault will not keep unencrypted variables in memory in order to 'protect' against memory dumps.
+Once you retrieve a secret variable we recommend to use build server features (like VSTS secret variables) to remove values from the output.
+If that is not an option you can use the <a href="https://fake.build/core-trace.html#Protect-secrets">protect secrets</a> feature of the trace module.
+Keep in mind that this keeps the variables in memory and is therefore an explicit opt-in for the variables you use.</p>
 
 
                       </article>
@@ -428,7 +435,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.1-alpha.403</a></li>
 									</ul>
 								</div>
 							</div>
