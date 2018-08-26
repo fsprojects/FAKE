@@ -15,15 +15,14 @@ open Fake.DotNet.Testing.MSpec
 open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.Testing.XUnit2
 
-type DotCoverReportType = 
+type ReportType = 
   | Html = 0
   | Json = 1
   | Xml = 2
   | NDependXml = 3
 
 /// The dotCover parameter type for running coverage
-[<CLIMutable>]
-type DotCoverParams = 
+type Params = 
     { ToolPath: string
       WorkingDir: string
       TargetExecutable: string
@@ -36,7 +35,7 @@ type DotCoverParams =
       CustomParameters: string }
 
 /// The dotCover default parameters
-let internal DotCoverDefaults = 
+let internal Defaults = 
     { ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath "dotCover.exe" ((Path.GetFullPath ".") @@ "tools" @@ "DotCover")
       WorkingDir = ""
       TargetExecutable = ""
@@ -48,8 +47,7 @@ let internal DotCoverDefaults =
       CustomParameters = "" 
       ErrorLevel = ErrorLevel.Error} 
 
-[<CLIMutable>]
-type DotCoverMergeParams = 
+type MergeParams = 
     { ToolPath: string
       WorkingDir: string
       Source: string list
@@ -57,7 +55,7 @@ type DotCoverMergeParams =
       TempDir: string
       CustomParameters: string }
 
-let internal DotCoverMergeDefaults =
+let internal MergeDefaults =
      { ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath "dotCover.exe" ((Path.GetFullPath ".") @@ "tools" @@ "DotCover")
        WorkingDir = ""
        Source = []
@@ -65,24 +63,23 @@ let internal DotCoverMergeDefaults =
        TempDir = ""
        CustomParameters = "" }
 
-[<CLIMutable>]
-type DotCoverReportParams = 
+type ReportParams = 
     { ToolPath: string
       WorkingDir: string
       Source: string
       Output: string
-      ReportType: DotCoverReportType
+      ReportType: ReportType
       CustomParameters: string }
 
-let internal DotCoverReportDefaults : DotCoverReportParams =
+let internal ReportDefaults : ReportParams =
      { ToolPath = Fake.IO.Globbing.Tools.findToolInSubPath "dotCover.exe" ((Path.GetFullPath ".") @@ "tools" @@ "DotCover")
        WorkingDir = ""
        Source = ""
        Output = "dotCoverReport.xml"
-       ReportType = DotCoverReportType.Xml
+       ReportType = ReportType.Xml
        CustomParameters = "" }
 
-let internal buildDotCoverArgs parameters =
+let internal buildArgs parameters =
     new StringBuilder()
     |> StringBuilder.append "cover"
     |> StringBuilder.appendIfNotNullOrEmpty parameters.TargetExecutable "/TargetExecutable="
@@ -94,7 +91,7 @@ let internal buildDotCoverArgs parameters =
     |> StringBuilder.appendWithoutQuotes parameters.CustomParameters
     |> StringBuilder.toText
 
-let internal buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
+let internal buildMergeArgs (parameters:MergeParams) =
     new StringBuilder()
     |> StringBuilder.append "merge"
     |> StringBuilder.appendIfNotNullOrEmpty (parameters.Source |> String.concat ";") "/Source="
@@ -103,7 +100,7 @@ let internal buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
     |> StringBuilder.appendWithoutQuotes parameters.CustomParameters
     |> StringBuilder.toText
 
-let internal buildDotCoverReportArgs parameters =
+let internal buildReportArgs parameters =
     new StringBuilder()
     |> StringBuilder.append "report"
     |> StringBuilder.appendIfNotNullOrEmpty parameters.Source "/Source="
@@ -142,9 +139,9 @@ let internal buildParamsAndExecute parameters buildArguments toolPath workingDir
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the dotCover default parameters.
-let DotCover (setParams: DotCoverParams -> DotCoverParams) =
-    let parameters = (DotCoverDefaults |> setParams)
-    buildParamsAndExecute parameters buildDotCoverArgs parameters.ToolPath parameters.WorkingDir (parameters.ErrorLevel <> ErrorLevel.DontFailBuild)
+let run (setParams: Params -> Params) =
+    let parameters = (Defaults |> setParams)
+    buildParamsAndExecute parameters buildArgs parameters.ToolPath parameters.WorkingDir (parameters.ErrorLevel <> ErrorLevel.DontFailBuild)
 
 /// Runs the dotCover "merge" command. This combines dotCover snaphots into a single
 /// snapshot, enabling you to merge test coverage from multiple test running frameworks
@@ -154,13 +151,13 @@ let DotCover (setParams: DotCoverParams -> DotCoverParams) =
 ///
 /// ## Sample
 ///
-///     DotCoverMerge (fun p -> { p with 
+///     merge (fun p -> { p with 
 ///                         Source = [artifactsDir @@ "NUnitDotCoverSnapshot.dcvr"
 ///                                   artifactsDir @@ "MSpecDotCoverSnapshot.dcvr"]
 ///                         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" }) 
-let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
-    let parameters = (DotCoverMergeDefaults |> setParams)
-    buildParamsAndExecute parameters buildDotCoverMergeArgs parameters.ToolPath parameters.WorkingDir false 
+let merge (setParams: MergeParams -> MergeParams) =
+    let parameters = (MergeDefaults |> setParams)
+    buildParamsAndExecute parameters buildMergeArgs parameters.ToolPath parameters.WorkingDir false 
    
 /// Runs the dotCover "report" command. This generates a report from a dotCover snapshot
 /// ## Parameters
@@ -169,13 +166,13 @@ let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
 ///
 /// ## Sample
 ///
-///     DotCoverReport (fun p -> { p with 
+///     report (fun p -> { p with 
 ///                         Source = artifactsDir @@ "dotCoverSnapshot.dcvr"
 ///                         Output = artifactsDir @@ "dotCoverReport.xml"
-///                         ReportType = DotCoverReportType.Xml })
-let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
-    let parameters = (DotCoverReportDefaults |> setParams)
-    buildParamsAndExecute parameters buildDotCoverReportArgs parameters.ToolPath parameters.WorkingDir
+///                         ReportType = ReportType.Xml })
+let report (setParams: ReportParams -> ReportParams) =
+    let parameters = (ReportDefaults |> setParams)
+    buildParamsAndExecute parameters buildReportArgs parameters.ToolPath parameters.WorkingDir
 
 /// Runs the dotCover "cover" command against the NUnit test runner.
 /// ## Parameters
@@ -186,12 +183,12 @@ let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-///         |> DotCoverNUnit 
+///         |> runNUnit 
 ///             (fun dotCoverOptions -> { dotCoverOptions with 
 ///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
 ///             (fun nUnitOptions -> { nUnitOptions with
 ///                     DisableShadowCopy = true })
-let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnit.Common.NUnitParams -> NUnit.Common.NUnitParams) (assemblies: string seq) =
+let runNUnit (setDotCoverParams: Params -> Params) (setNUnitParams: NUnit.Common.NUnitParams -> NUnit.Common.NUnitParams) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> String.separated ", "
     use __ = Trace.traceTask "DotCoverNUnit" details
@@ -199,7 +196,7 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
     let parameters = NUnit.Common.NUnitDefaults |> setNUnitParams
     let args = NUnit.Common.buildArgs parameters assemblies
     
-    DotCover (fun p ->
+    run (fun p ->
                     {p with
                         TargetExecutable = parameters.ToolPath @@ parameters.ToolName
                         TargetArguments = args
@@ -214,12 +211,12 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-///         |> DotCoverNUnit 
+///         |> runNUnit3 
 ///             (fun dotCoverOptions -> { dotCoverOptions with 
-///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
-///             (fun nUnitOptions -> { nUnitOptions with
+///                     Output = artifactsDir @@ "NUnit3DotCoverSnapshot.dcvr" }) 
+///             (fun nUnit3Options -> { nUnit3Options with
 ///                     DisableShadowCopy = true })
-let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
+let runNUnit3 (setDotCoverParams: Params -> Params) (setNUnitParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> String.separated ", "
     use __ = Trace.traceTask "DotCoverNUnit3" details
@@ -227,7 +224,7 @@ let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUn
     let parameters = NUnit3Defaults |> setNUnitParams
     let args = NUnit3.buildArgs parameters assemblies
     
-    DotCover (fun p ->
+    run (fun p ->
                     {p with
                         TargetExecutable = parameters.ToolPath
                         TargetArguments = args
@@ -242,10 +239,10 @@ let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUn
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-///         |> DotCoverXUnit2 
+///         |> runXUnit2 
 ///             (fun  -> dotCoverOptions )
 ///             (fun nUnitOptions -> nUnitOptions) 
-let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUnit2Params: XUnit2.XUnit2Params -> XUnit2.XUnit2Params) (assemblies: string seq) =
+let runXUnit2 (setDotCoverParams: Params -> Params) (setXUnit2Params: XUnit2.XUnit2Params -> XUnit2.XUnit2Params) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> String.separated ", "
     use __ = Trace.traceTask "DotCoverXUnit2" details
@@ -253,7 +250,7 @@ let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUn
     let parameters = XUnit2.XUnit2Defaults |> setXUnit2Params
     let args = XUnit2.buildArgs parameters assemblies
     
-    DotCover (fun p ->
+    run (fun p ->
                     {p with
                         TargetExecutable = parameters.ToolPath 
                         TargetArguments = args
@@ -287,10 +284,10 @@ let internal buildMSTestArgsForDotCover parameters assemblies =
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-///         |> MSTest 
+///         |> runMSTest 
 ///             (fun  -> dotCoverOptions )
 ///             (fun MSTestOptions -> MSTestOptions) 
-let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSTestParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
+let runMSTest (setDotCoverParams: Params -> Params) (setMSTestParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> String.separated ", "
     use __ = Trace.traceTask "DotCoverMSTest " details
@@ -298,7 +295,7 @@ let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMST
     let parameters = MSTestDefaults |> setMSTestParams
     let args = buildMSTestArgsForDotCover parameters assemblies
     
-    DotCover (fun p ->
+    run (fun p ->
                     {p with
                         TargetExecutable = parameters.ToolPath 
                         TargetArguments = args
@@ -313,12 +310,12 @@ let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMST
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-///         |> DotCoverMSpec 
+///         |> runMSpec 
 ///             (fun dotCoverOptions -> { dotCoverOptions with 
 ///                     Output = artifactsDir @@ "MSpecDotCoverSnapshot.dcvr" }) 
 ///             (fun mSpecOptions -> { mSpecOptions with
 ///                     Silent = true })
-let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpecParams: MSpecParams -> MSpecParams) (assemblies: string seq) =
+let runMSpec (setDotCoverParams: Params -> Params) (setMSpecParams: MSpecParams -> MSpecParams) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> String.separated ", "
     use __ = Trace.traceTask "DotCoverMSpec" details
@@ -327,7 +324,7 @@ let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpe
    
     let args = MSpec.buildArgs parameters assemblies
     
-    DotCover (fun p ->
+    run (fun p ->
                     {p with
                         TargetExecutable = parameters.ToolPath
                         TargetArguments = args
