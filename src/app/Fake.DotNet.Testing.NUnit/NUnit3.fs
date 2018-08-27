@@ -273,7 +273,8 @@ let getWorkingDir parameters =
                                        "." ]
     |> Path.GetFullPath
 
-let internal buildNUnit3Args parameters assemblies =
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+let buildArgs (parameters:NUnit3Params) (assemblies: string seq) =
     let appendResultString results sb =
         match results, sb with
         | [], sb -> StringBuilder.append "--noresult" sb
@@ -315,7 +316,7 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
-    let args = buildNUnit3Args parameters assemblies
+    let args = buildArgs parameters assemblies
     Trace.trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result =

@@ -91,8 +91,7 @@ let private VSTestDefaults =
       TestAdapterPath = null }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
-/// [omit]
-let private buildVSTestArgs (parameters : VSTestParams) assembly = 
+let buildArgs (parameters : VSTestParams) (assembly: string) = 
     let testsToRun = 
         if not (Seq.isEmpty parameters.Tests) then 
             sprintf @"/Tests:%s" (parameters.Tests |> String.separated ",")
@@ -141,7 +140,7 @@ let run (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) =
             Trace.traceError message
             failwith message
     for assembly in assemblies do
-        let args = buildVSTestArgs parameters assembly
+        let args = buildArgs parameters assembly
         Process.execSimple (fun info -> 
             { info with 
                 FileName = parameters.ToolPath
