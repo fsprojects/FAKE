@@ -15,7 +15,6 @@ module DotNet =
     open System.Security.Cryptography
     open System.Text
     open Newtonsoft.Json.Linq
-    open System
 
     /// .NET Core SDK default install directory (set to default SDK installer paths (%HOME/.dotnet or %LOCALAPPDATA%/Microsoft/dotnet).
     let internal defaultUserInstallDir =
@@ -1205,3 +1204,111 @@ module DotNet =
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
         __.MarkSuccess()
 
+    /// dotnet msbuild command options
+    type MSBuildOptions =
+        {
+            /// Common tool options
+            Common: Options
+            /// Targets to run (/target)
+            Targets : string option
+            /// Set or override project-level properties (/property)
+            Properties : (string * string) list
+            /// Maximum number of concurrent processes (/maxcpucount)
+            MaxCpuCount : int
+            /// version of the MSBuild Toolset (/toolsversion)
+            ToolsVersion : string option
+            /// Logging verbosity (/verbosity)
+            Verbosity : Verbosity option
+            /// Disable console logger (/noconsolelogger)
+            NoConsoleLogger : bool
+            /// Warning codes to treats as errors (/warnaserror)
+            WarnAsError : string list
+            /// Warning codes to treats as messages (/warnasmesssage)
+            WarnAsMessage : string list
+            /// Extensions to ignore when determining which project file to build. (/ignoreprojectextensions)
+            IgnoreProjectExtensions : string list
+            ///  Enables or Disables the reuse of MSBuild nodes. (/nodeReuse)
+            NodeReuse : bool
+            /// Creates a single, aggregated project file (/preprocess)
+            Preprocess : string option
+            /// Shows detailed information at the end of the build (/detailedsummary)
+            DetailedSummary : bool
+            /// Runs a target named Restore prior to building other targets (/restore)
+            Restore : bool
+            /// Set or override project-level properties during restore (/restoreProperty)
+            RestoreProperties : (string * string) list
+            /// Profiles MSBuild evaluation and writes result to file (/profileevaluation)
+            ProfileEvaluation : bool
+            /// Do not auto-include any MSBuild.rsp files (/noautoresponse)
+            NoAutoResponse : bool
+            /// Do not display the startup banner and copyright message (/nologo)
+            NoLogo : bool
+        }
+        /// Parameter default values.
+        static member Create() = {
+            Common = Options.Create()
+            Targets = None
+            Properties = List.empty
+            MaxCpuCount = 1
+            ToolsVersion = None
+            Verbosity = None
+            NoConsoleLogger = false
+            WarnAsError = List.empty
+            WarnAsMessage = List.empty
+            IgnoreProjectExtensions = List.empty
+            NodeReuse = true
+            Preprocess = None
+            DetailedSummary = false
+            Restore = true
+            RestoreProperties = List.empty
+            ProfileEvaluation = false
+            NoAutoResponse = false
+            NoLogo = false
+        }
+
+    let private msbuildArgList name values =
+        let values =
+            values
+            |> Seq.map (fun x -> sprintf @"""%s""" x)
+            |> String.concat ";"
+
+        (sprintf "/%s:%s" name values)
+
+    let private msbuildProps name values =
+        let values =
+            values
+            |> Seq.map (fun (x, v) -> sprintf @"""%s=%s""" x v)
+            |> String.concat ";"
+
+        (sprintf "/%s:%s" name values)
+
+    let private msbuildArg name value =
+        sprintf "/%s:%s" name (value.ToString().ToLowerInvariant())
+
+    let private buildMSBuildArgs (param : MSBuildOptions) =
+        [
+            param.Targets |> Option.toList |> msbuildArgList "t"
+            param.Properties |> msbuildProps "p"
+            param.MaxCpuCount |> msbuildArg "m"
+            param.ToolsVersion |> Option.toList |> msbuildArgList "tv"
+            param.Verbosity |> msbuildArg "v"
+            boolToFlag param.NoConsoleLogger "/noconlog"
+            param.WarnAsError |> msbuildArgList "err"
+            param.WarnAsMessage |> msbuildArgList "nowarn"
+            param.IgnoreProjectExtensions |> msbuildArgList "ignore"
+            boolToFlag param.NodeReuse "/nr"
+            param.Preprocess |> msbuildArg "pp"
+            boolToFlag param.DetailedSummary "/ds"
+            boolToFlag param.Restore "/r"
+            param.ProfileEvaluation |> msbuildArg "profileevaluation"
+            boolToFlag param.NoAutoResponse "/noautorsp"
+            boolToFlag param.NoLogo "/nologo"
+        ] |> Seq.filter String.isNotNullOrEmpty |> String.concat " "
+
+    let msbuild setParams project =
+        use __ = Trace.traceTask "DotNet:msbuild" project
+        let param = MSBuildOptions.Create() |> setParams
+        let args = sprintf "%s %s" project (buildMSBuildArgs param)
+        let result = exec (fun _ -> param.Common) "msbuild" args
+        if not result.OK then failwithf "dotnet msbuild failed with code %i" result.ExitCode
+        __.MarkSuccess()
