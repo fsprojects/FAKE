@@ -219,81 +219,26 @@ module TeamCity =
             (TeamCityWriter.encapsulateSpecialChars expected) (TeamCityWriter.encapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
 
     /// TeamCity build parameters
+    ///
     /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
-    module BuildParameters =
-        open System.IO
+    type BuildParameters =
+        /// Get all system build parameters (Without the 'system.' prefix)
+        static member System
+            with get() = TeamCityBuildParameters.getAllSystem()
 
-        let private get (fileName: string option) =
-            match fileName with
-            | Some fileName when not (isNull fileName) && (File.exists fileName) ->
-                use stream = File.OpenRead(fileName)
-                use reader = new StreamReader(stream)
+        /// Get all configuration build parameters
+        static member Configuration
+            with get() = TeamCityBuildParameters.getAllConfiguration()
 
-                reader
-                |> JavaPropertiesFile.parseTextReader
-                |> Seq.choose(function
-                    | JavaPropertiesFile.Comment _ -> None
-                    | JavaPropertiesFile.KeyValue(k, v) -> Some (k,v))
-                |> Map.ofSeq
-            | _ ->
-                Map.empty
+        /// Get all runner build parameters
+        static member Runner
+            with get() = TeamCityBuildParameters.getAllRunner()
 
-        let private systemFile = Environment.environVarOrNone "TEAMCITY_BUILD_PROPERTIES_FILE"
-        let private system = lazy(get (systemFile))
-
-        /// Get all system parameters
-        let getAllSystem () = system.Value
-
-        /// Get the value of a system parameter by name
-        let tryGetSystem name = system.Value |> Map.tryFind name
-
-        let private configurationFile = lazy (tryGetSystem "teamcity.configuration.properties.file")
-        let private configuration = lazy (get configurationFile.Value)
-
-        /// Get all configuration parameters
-        let getAllConfiguration () = configuration.Value
-
-        /// Get the value of a configuration parameter by name
-        let tryGetConfiguration name = configuration.Value |> Map.tryFind name
-
-        let private runnerFile = lazy (tryGetSystem "teamcity.runner.properties.file")
-        let private runner = lazy (get runnerFile.Value)
-
-        /// Get all runner parameters
-        let getAllRunner () = runner.Value
-
-        /// Get the value of a runner parameter by name
-        let tryGetRunner name = runner.Value |> Map.tryFind name
-
-        let private all = lazy (
-            if BuildServer.buildServer = BuildServer.TeamCity then
-                seq {
-                    // Environment variables are available using 'env.foo' syntax in TeamCity configuration
-                    for pair in System.Environment.GetEnvironmentVariables() do
-                        let pair = pair :?> System.Collections.DictionaryEntry
-                        let key = pair.Key :?> string
-                        let value = pair.Value :?> string
-                        yield sprintf "env.%s" key, value
-
-                    // Runner variables aren't available in TeamCity configuration so we choose an arbitrary syntax of 'runner.foo'
-                    for pair in runner.Value do yield sprintf "runner.%s" pair.Key, pair.Value
-
-                    // System variables are prefixed with 'system.' as in TeamCity configuration
-                    for pair in system.Value do yield sprintf "system.%s" pair.Key, pair.Value
-
-                    for pair in configuration.Value do yield pair.Key, pair.Value
-                }
-                |> Map.ofSeq
-            else
-                Map.empty)
-
-        /// Get all parameters
+        /// Get all build parameters
+        ///
         /// System ones are prefixed with 'system.', runner ones with 'runner.' and environment variables with 'env.'
-        let getAll () = all.Value
-
-        /// Get the value of a parameter by name
-        /// System ones are prefixed with 'system.', runner ones with 'runner.' and environment variables with 'env.'
-        let tryGet name = all.Value |> Map.tryFind name
+        static member All
+            with get() = TeamCityBuildParameters.getAll()
 
     /// The type of change that occured
     type FileChangeType =
@@ -316,7 +261,7 @@ module TeamCity =
 
     module private ChangedFiles =
         let get () =
-            match BuildParameters.tryGetSystem "teamcity.build.changedFiles.file" with
+            match BuildParameters.System |> Map.tryFind "teamcity.build.changedFiles.file" with
             | Some file when File.exists file ->
                 Some [
                     for line in File.read file do
@@ -348,7 +293,7 @@ module TeamCity =
 
     module private RecentlyFailedTests =
         let get () =
-            match BuildParameters.tryGetSystem "teamcity.tests.recentlyFailedTests.file" with
+            match BuildParameters.System |> Map.tryFind "teamcity.tests.recentlyFailedTests.file" with
             | Some file when File.exists file -> File.read file |> List.ofSeq |> Some
             | _ -> None
 
@@ -374,21 +319,23 @@ module TeamCity =
         static member BuildNumber = Environment.environVarOrNone "BUILD_NUMBER"
 
         /// Get the branch of the main VCS root
-        static member Branch with get() = BuildParameters.tryGetConfiguration "vcsroot.branch"
+        static member Branch
+            with get() = BuildParameters.Configuration |> Map.tryFind "vcsroot.branch"
 
         /// Get the display name of the branch of the main VCS root as shown in TeamCity
+        ///
         /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
         static member BranchDisplayName
             with get() = 
-                match BuildParameters.tryGetConfiguration "teamcity.build.branch" with
+                match BuildParameters.Configuration |> Map.tryFind "teamcity.build.branch" with
                 | Some _  as branch -> branch
-                | None -> BuildParameters.tryGetConfiguration "vcsroot.branch"
+                | None -> Environment.Branch
 
         /// Get if the current branch of the main VCS root is the one configured as default
         static member IsDefaultBranch
             with get() =
                 if BuildServer.buildServer = BuildServer.TeamCity then
-                    match BuildParameters.tryGetConfiguration "teamcity.build.branch.is_default" with
+                    match BuildParameters.Configuration |> Map.tryFind "teamcity.build.branch.is_default" with
                     | Some "true" -> true
                     | Some _ -> false
                     | None ->
@@ -398,15 +345,20 @@ module TeamCity =
                     false
 
         /// Get the path to the build checkout directory
-        static member CheckoutDirectory with get() = BuildParameters.tryGetSystem "teamcity.build.checkoutDir"
+        static member CheckoutDirectory
+            with get() = BuildParameters.System |> Map.tryFind "teamcity.build.checkoutDir"
 
         /// Changed files (since previous build) that are included in this build
+        ///
         /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
-        static member ChangedFiles with get() = ChangedFiles.cache.Value
+        static member ChangedFiles
+            with get() = ChangedFiles.cache.Value
 
         /// Name of recently failing tests
+        ///
         /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
-        static member RecentlyFailedTests with get() = RecentlyFailedTests.cache.Value
+        static member RecentlyFailedTests
+            with get() = RecentlyFailedTests.cache.Value
 
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
