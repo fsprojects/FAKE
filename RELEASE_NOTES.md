@@ -2,6 +2,9 @@
 
 ## 5.5.1-alpha - tbd
 
+* BUGFIX: template now contains `storage: none` - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Improve error message when nuget cache is possibly broken - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Invalidate cache if files don't exist - https://github.com/fsharp/FAKE/pull/2070
 * Tbd.
 
 ## 5.5.0 - 2018-08-26

@@ -279,9 +279,9 @@ let findAndLoadInRuntimeDepsCached =
 Full framework assemblies are not supported!
 - You might try to load a legacy-script with the new netcore runner.
   Please take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html
-- The nuget cache might be broken.
+- The nuget cache (or packages folder) might be broken.
   Please save your state, open an issue and then 
-  - delete '%s' from the '~/.nuget' cache
+  - delete '%s' from the '~/.nuget' cache (and the 'packages' folder)
   - delete 'paket-files/paket.restore.cached' if it exists
   - delete '<script.fsx>.lock' if it exists
   - try running fake again
