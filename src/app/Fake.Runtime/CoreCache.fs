@@ -275,7 +275,17 @@ let findAndLoadInRuntimeDepsCached =
             wasCalled <- true
             findAndLoadInRuntimeDeps loadContext name logLevel runtimeDependencies))
         if wasCalled && isNull result then
-            failwithf "Could not load '%A'.\nFull framework assemblies are not supported!\nYou might try to load a legacy-script with the new netcore runner.\nPlease take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html" name
+            failwithf """Could not load '%A'.
+Full framework assemblies are not supported!
+- You might try to load a legacy-script with the new netcore runner.
+  Please take a look at the migration guide: https://fake.build/fake-migrate-to-fake-5.html
+- The nuget cache might be broken.
+  Please save your state, open an issue and then 
+  - delete '%s' from the '~/.nuget' cache
+  - delete 'paket-files/paket.restore.cached' if it exists
+  - delete '<script.fsx>.lock' if it exists
+  - try running fake again
+  - the package should be downloaded again""" name name.Name
         if not wasCalled && not (isNull result) then
             let loadedName = result.GetName()
             let isPerfectMatch = loadedName.Name = name.Name && loadedName.Version = name.Version
