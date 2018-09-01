@@ -33,7 +33,7 @@ let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath @@ parameters.ToolName
-    let args = buildNUnitdArgs parameters assemblies
+    let args = buildArgs parameters assemblies
     Trace.trace (tool + " " + args)
     let result = 
         Process.execSimple ((fun info ->
