@@ -249,6 +249,62 @@ module private JavaPropertiesFile =
         let reader = Parser.textReaderToReader reader
         Parser.parseWithReader reader
 
+module internal TeamCityBuildParameters =
+    let private get (fileName: string option) =
+        match fileName with
+        | Some fileName when not (isNull fileName) && (File.Exists fileName) ->
+            use stream = File.OpenRead(fileName)
+            use reader = new StreamReader(stream)
+
+            reader
+            |> JavaPropertiesFile.parseTextReader
+            |> Seq.choose(function
+                | JavaPropertiesFile.Comment _ -> None
+                | JavaPropertiesFile.KeyValue(k, v) -> Some (k,v))
+            |> Map.ofSeq
+        | _ ->
+            Map.empty
+
+    let private systemFile = Environment.environVarOrNone "TEAMCITY_BUILD_PROPERTIES_FILE"
+    let private system = lazy(get (systemFile))
+
+    let getAllSystem () = system.Value
+
+    let private configurationFile = lazy (getAllSystem() |> Map.tryFind "teamcity.configuration.properties.file")
+    let private configuration = lazy (get configurationFile.Value)
+
+    let getAllConfiguration () = configuration.Value
+
+    let private runnerFile = lazy (getAllSystem() |> Map.tryFind "teamcity.runner.properties.file")
+    let private runner = lazy (get runnerFile.Value)
+    
+    let getAllRunner () = runner.Value
+
+    let private all = lazy (
+        if BuildServer.buildServer = BuildServer.TeamCity then
+            seq {
+                // Environment variables are available using 'env.foo' syntax in TeamCity configuration
+                for pair in System.Environment.GetEnvironmentVariables() do
+                    let pair = pair :?> System.Collections.DictionaryEntry
+                    let key = pair.Key :?> string
+                    let value = pair.Value :?> string
+                    yield sprintf "env.%s" key, value
+
+                // Runner variables aren't available in TeamCity configuration so we choose an arbitrary syntax of 'runner.foo'
+                for pair in runner.Value do yield sprintf "runner.%s" pair.Key, pair.Value
+
+                // System variables are prefixed with 'system.' as in TeamCity configuration
+                for pair in system.Value do yield sprintf "system.%s" pair.Key, pair.Value
+
+                for pair in configuration.Value do yield pair.Key, pair.Value
+            }
+            |> Map.ofSeq
+        else
+            Map.empty)
+
+    let getAll () = all.Value
+
+
 module internal TeamCityRest =
     open Fake.Net
 
@@ -336,58 +392,3 @@ module internal TeamCityRest =
         getFirstNode serverURL username password "/httpAuth/app/rest/projects"
         |> Xml.parse "projects" Xml.getChilds
         |> Seq.map (Xml.getAttribute "id")
-    
-module internal TeamCityBuildParameters =
-    let private get (fileName: string option) =
-        match fileName with
-        | Some fileName when not (isNull fileName) && (File.Exists fileName) ->
-            use stream = File.OpenRead(fileName)
-            use reader = new StreamReader(stream)
-
-            reader
-            |> JavaPropertiesFile.parseTextReader
-            |> Seq.choose(function
-                | JavaPropertiesFile.Comment _ -> None
-                | JavaPropertiesFile.KeyValue(k, v) -> Some (k,v))
-            |> Map.ofSeq
-        | _ ->
-            Map.empty
-
-    let private systemFile = Environment.environVarOrNone "TEAMCITY_BUILD_PROPERTIES_FILE"
-    let private system = lazy(get (systemFile))
-
-    let getAllSystem () = system.Value
-
-    let private configurationFile = lazy (getAllSystem() |> Map.tryFind "teamcity.configuration.properties.file")
-    let private configuration = lazy (get configurationFile.Value)
-
-    let getAllConfiguration () = configuration.Value
-
-    let private runnerFile = lazy (getAllSystem() |> Map.tryFind "teamcity.runner.properties.file")
-    let private runner = lazy (get runnerFile.Value)
-    
-    let getAllRunner () = runner.Value
-
-    let private all = lazy (
-        if BuildServer.buildServer = BuildServer.TeamCity then
-            seq {
-                // Environment variables are available using 'env.foo' syntax in TeamCity configuration
-                for pair in System.Environment.GetEnvironmentVariables() do
-                    let pair = pair :?> System.Collections.DictionaryEntry
-                    let key = pair.Key :?> string
-                    let value = pair.Value :?> string
-                    yield sprintf "env.%s" key, value
-
-                // Runner variables aren't available in TeamCity configuration so we choose an arbitrary syntax of 'runner.foo'
-                for pair in runner.Value do yield sprintf "runner.%s" pair.Key, pair.Value
-
-                // System variables are prefixed with 'system.' as in TeamCity configuration
-                for pair in system.Value do yield sprintf "system.%s" pair.Key, pair.Value
-
-                for pair in configuration.Value do yield pair.Key, pair.Value
-            }
-            |> Map.ofSeq
-        else
-            Map.empty)
-
-    let getAll () = all.Value
