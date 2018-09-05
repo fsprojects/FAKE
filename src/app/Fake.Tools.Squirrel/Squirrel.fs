@@ -1,18 +1,19 @@
 /// Contains types and utility functions related to creating [Squirrel](https://github.com/Squirrel/Squirrel.Windows) installer.
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Squirrel module instead")>]
-module Fake.Squirrel
+[<RequireQualifiedAccess>]
+module Fake.Tools.Squirrel
 
-open Fake
+open Fake.Core
+open Fake.IO
+open Fake.IO.FileSystemOperators
+open Fake.IO.Globbing
 open System
+open System.IO
 open System.Text
 
 /// The [Squirrel](https://github.com/Squirrel/Squirrel.Windows) Console Parameters type.
-/// FAKE will use [SquirrelDefaults](fake-squirrel.html) for values not provided.
 ///
 /// For reference, see: [Squirrel Command Line Options](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md)
-[<CLIMutable>]
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Squirrel module instead")>]
-type SquirrelParams =
+type ReleasifyParams =
     {
         /// The output directory for the generated installer
         ReleaseDir : string
@@ -47,23 +48,7 @@ type SquirrelParams =
         /// The secret key for the code signing certificate
         SigningSecret : string option }
 
-/// The Squirrel default parameters.
-///
-/// ## Defaults
-///
-/// - `ReleaseDir` - `""`
-/// - `WorkingDir` - `None`
-/// - `BootstrapperExe` - `None`
-/// - `LoadingGif` - `None`
-/// - `SetupIcon` - `None`
-/// - `NoMsi` - `false`
-/// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
-/// - `TimeOut` - 10 minutes
-/// - `SignExecutable` - `None`
-/// - `SigningKeyFile` - `None`
-/// - `SigningSecret` - `None`
-[<System.Obsolete("FAKE0001 Use the Fake.Tools.Squirrel module instead")>]
-let SquirrelDefaults =
+let internal defaultParams = lazy(
     let toolname = "Squirrel.exe"
     {
         ReleaseDir = ""
@@ -72,31 +57,31 @@ let SquirrelDefaults =
         LoadingGif = None
         SetupIcon = None
         NoMsi = false
-        ToolPath = findToolInSubPath toolname (currentDirectory @@ "tools" @@ "Squirrel")
+        ToolPath = Tools.findToolInSubPath toolname ( Directory.GetCurrentDirectory() </> "tools" </> "Squirrel")
         TimeOut = TimeSpan.FromMinutes 10.
         SignExecutable = None
         SigningKeyFile = None
-        SigningSecret = None }
+        SigningSecret = None })
 
-let private createSigningArgs (parameters : SquirrelParams) =
+let private createSigningArgs (parameters : ReleasifyParams) =
     new StringBuilder()
-    |> appendWithoutQuotes "--signWithParams=\""
-    |> appendWithoutQuotes "/a"
-    |> appendIfSome parameters.SigningKeyFile (sprintf "/f %s")
-    |> appendIfSome parameters.SigningSecret  (sprintf "/p %s")
-    |> appendWithoutQuotes "\""
-    |> toText
+    |> StringBuilder.appendWithoutQuotes "--signWithParams=\""
+    |> StringBuilder.appendWithoutQuotes "/a"
+    |> StringBuilder.appendIfSome parameters.SigningKeyFile (sprintf "/f %s")
+    |> StringBuilder.appendIfSome parameters.SigningSecret  (sprintf "/p %s")
+    |> StringBuilder.appendWithoutQuotes "\""
+    |> StringBuilder.toText
 
 let internal buildSquirrelArgs parameters nugetPackage =
     new StringBuilder()
-    |> appendIfNotNullOrEmpty nugetPackage "--releasify="
-    |> appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
-    |> appendIfSome parameters.LoadingGif (sprintf "\"--loadingGif=%s\"")
-    |> appendIfSome parameters.SetupIcon (sprintf "\"--setupIcon=%s\"")
-    |> appendIfTrue parameters.NoMsi "--no-msi"
-    |> appendIfSome parameters.BootstrapperExe (sprintf "\"--bootstrapperExe=%s\"")
-    |> appendIfSome parameters.SignExecutable (fun s -> createSigningArgs parameters)
-    |> toText
+    |> StringBuilder.appendIfNotNullOrEmpty nugetPackage "--releasify="
+    |> StringBuilder.appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
+    |> StringBuilder.appendIfSome parameters.LoadingGif (sprintf "\"--loadingGif=%s\"")
+    |> StringBuilder.appendIfSome parameters.SetupIcon (sprintf "\"--setupIcon=%s\"")
+    |> StringBuilder.appendIfTrue parameters.NoMsi "--no-msi"
+    |> StringBuilder.appendIfSome parameters.BootstrapperExe (sprintf "\"--bootstrapperExe=%s\"")
+    |> StringBuilder.appendIfSome parameters.SignExecutable (fun _ -> createSigningArgs parameters)
+    |> StringBuilder.toText
 
 module internal ResultHandling =
     let (|OK|Failure|) = function
@@ -122,20 +107,37 @@ module internal ResultHandling =
 ///
 /// ## Sample usage
 ///
-///     Target "CreatePackage" (fun _ ->
-///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
+///     Target.create "CreatePackage" (fun _ ->
+///         Squirrel.pack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
 ///     )
-[<System.Obsolete("FAKE0001 Use Fake.Tools.Squirrel.releasify instead")>]
-let SquirrelPack setParams nugetPackage =
-    use __ = traceStartTaskUsing "Squirrel" ""
-    let parameters = SquirrelDefaults |> setParams
+/// 
+/// ## Defaults for setParams
+///
+/// - `ReleaseDir` - `""`
+/// - `WorkingDir` - `None`
+/// - `BootstrapperExe` - `None`
+/// - `LoadingGif` - `None`
+/// - `SetupIcon` - `None`
+/// - `NoMsi` - `false`
+/// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
+/// - `TimeOut` - 10 minutes
+/// - `SignExecutable` - `None`
+/// - `SigningKeyFile` - `None`
+/// - `SigningSecret` - `None`
+let releasify (setParams: ReleasifyParams -> ReleasifyParams) (nugetPackage: string): unit =
+    use __ = Trace.traceTask "Squirrel" nugetPackage
+    let parameters = defaultParams.Value |> setParams
     let args = buildSquirrelArgs parameters nugetPackage
-    trace args
+    Trace.tracefn "%s" args
 
     let result =
-        ExecProcess (fun info ->
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
-            info.Arguments <- args) parameters.TimeOut
+        Process.execSimple
+            (fun info -> { info with
+                            FileName = parameters.ToolPath
+                            WorkingDirectory = defaultArg parameters.WorkingDir "."
+                            Arguments = args})
+            parameters.TimeOut
 
     ResultHandling.failBuildIfSquirrelReportedError result
+    
+    __.MarkSuccess()
