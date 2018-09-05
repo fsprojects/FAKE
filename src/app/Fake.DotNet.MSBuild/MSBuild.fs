@@ -82,8 +82,8 @@ module private MSBuildExeFromVsWhere =
             Directory.EnumerateDirectories(versionsDir)
             |> Seq.map (fun d -> Path.GetFileName(d), d)
             |> Seq.filter (fun (v, _) -> re.Value.IsMatch v)
-            |> Seq.map (fun (v, d) -> v, Path.Combine(d, "Bin", "MSBuild.exe"))
-            |> Seq.filter (fun (_, f) -> File.Exists(f))
+            |> Seq.map (fun (v, d) -> v, Path.Combine(d, "Bin"))
+            |> Seq.filter (fun (_, f) -> Directory.Exists(f))
             |> List.ofSeq
         else
             []
