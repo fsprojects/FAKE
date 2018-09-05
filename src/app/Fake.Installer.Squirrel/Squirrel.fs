@@ -1,6 +1,6 @@
 /// Contains types and utility functions related to creating [Squirrel](https://github.com/Squirrel/Squirrel.Windows) installer.
 [<RequireQualifiedAccess>]
-module Fake.Tools.Squirrel
+module Fake.Installer.Squirrel
 
 open Fake.Core
 open Fake.IO
@@ -13,55 +13,54 @@ open System.Text
 /// The [Squirrel](https://github.com/Squirrel/Squirrel.Windows) Console Parameters type.
 ///
 /// For reference, see: [Squirrel Command Line Options](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md)
-type ReleasifyParams =
-    {
-        /// The output directory for the generated installer
-        ReleaseDir : string
+type ReleasifyParams = {
+    /// The output directory for the generated installer
+    ReleaseDir : string
 
-        /// The working directory.
-        WorkingDir : string option
+    /// The working directory.
+    WorkingDir : string option
 
-        /// The full path to an optional setup.exe template
-        BootstrapperExe : string option
+    /// The full path to an optional setup.exe template
+    BootstrapperExe : string option
 
-        /// The full path to an optional animated gif to be displayed during installation
-        LoadingGif : string option
+    /// The full path to an optional animated gif to be displayed during installation
+    LoadingGif : string option
 
-        /// The full path to an optional icon, which will be used for the generated installer.
-        SetupIcon : string option
+    /// The full path to an optional icon, which will be used for the generated installer.
+    SetupIcon : string option
 
-        /// Do not create an MSI file
-        NoMsi : bool
+    /// Do not create an MSI file
+    NoMsi : bool
 
-        /// The path to Squirrel: `squirrel.exe`
-        ToolPath : string
+    /// The path to Squirrel: `squirrel.exe`
+    ToolPath : string
 
-        /// Maximum time to allow Squirrel to run before being killed.
-        TimeOut : TimeSpan
+    /// Maximum time to allow Squirrel to run before being killed.
+    TimeOut : TimeSpan
 
-        /// Sign the installer with signtool.exe
-        SignExecutable : bool option
+    /// Sign the installer with signtool.exe
+    SignExecutable : bool option
 
-        /// The code signing certificate to be used for signing
-        SigningKeyFile : string option
+    /// The code signing certificate to be used for signing
+    SigningKeyFile : string option
 
-        /// The secret key for the code signing certificate
-        SigningSecret : string option }
+    /// The secret key for the code signing certificate
+    SigningSecret : string option
+}
 
 let internal defaultParams = lazy(
     let toolname = "Squirrel.exe"
-    {
-        ReleaseDir = ""
-        WorkingDir = None
-        BootstrapperExe = None
-        LoadingGif = None
-        SetupIcon = None
-        NoMsi = false
-        ToolPath = Tools.findToolInSubPath toolname ( Directory.GetCurrentDirectory() </> "tools" </> "Squirrel")
-        TimeOut = TimeSpan.FromMinutes 10.
-        SignExecutable = None
-        SigningKeyFile = None
-        SigningSecret = None })
+    { ReleaseDir = ""
+      WorkingDir = None
+      BootstrapperExe = None
+      LoadingGif = None
+      SetupIcon = None
+      NoMsi = false
+      ToolPath = Tools.findToolInSubPath toolname ( Directory.GetCurrentDirectory() </> "tools" </> "Squirrel")
+      TimeOut = TimeSpan.FromMinutes 10.
+      SignExecutable = None
+      SigningKeyFile = None
+      SigningSecret = None })
 
 let private createSigningArgs (parameters : ReleasifyParams) =
     new StringBuilder()
@@ -108,7 +107,7 @@ module internal ResultHandling =
 /// ## Sample usage
 ///
 ///     Target.create "CreatePackage" (fun _ ->
-///         Squirrel.pack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
+///         Squirrel.releasify "./my.nupkg" (fun p -> { p with ReleaseDir = "./squirrel_release")
 ///     )
 /// 
 /// ## Defaults for setParams
@@ -124,7 +123,7 @@ module internal ResultHandling =
 /// - `SignExecutable` - `None`
 /// - `SigningKeyFile` - `None`
 /// - `SigningSecret` - `None`
-let releasify (setParams: ReleasifyParams -> ReleasifyParams) (nugetPackage: string): unit =
+let releasify (nugetPackage: string) (setParams: ReleasifyParams -> ReleasifyParams): unit =
     use __ = Trace.traceTask "Squirrel" nugetPackage
     let parameters = defaultParams.Value |> setParams
     let args = buildSquirrelArgs parameters nugetPackage

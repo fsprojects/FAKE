@@ -7,7 +7,7 @@
 
 [Squirrel.Windows](https://github.com/Squirrel/Squirrel.Windows) is an installation an auto-update system for Windows desktop apps.
 
-[API-Reference](apidocs/v5/fake-tools-squirrel.html)
+[API-Reference](apidocs/v5/fake-installer-squirrel.html)
 
 ## Squirrel.exe CLI tool
 
@@ -18,8 +18,8 @@ This module is a wrapper around the [Squirrel.exe](https://github.com/Squirrel/S
 [Releasifying](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/getting-started/2-packaging.md#releasifying) create all files necessary for release from a NuGet package
 
 ```fsharp
-open Fake.Tools
+open Fake.Installer
 
-Squirrel.releasify (fun p -> { p with ReleaseDir = "squirrel_release") "bin/myProject.nupkg"
+Squirrel.releasify "./my.nupkg" (fun p -> { p with ReleaseDir = "./squirrel_release")
 ```
 

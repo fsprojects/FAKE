@@ -170,7 +170,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Tools.Octo", "src\app\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Core.Vault", "src\app\Fake.Core.Vault\Fake.Core.Vault.fsproj", "{AAAF92C5-C40D-40B8-84BA-137DF0E98B56}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Tools.Squirrel", "src\app\Fake.Tools.Squirrel\Fake.Tools.Squirrel.fsproj", "{3DEF2E95-4BF8-413F-930E-32103A39364A}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Fake.Installer.Squirrel", "src\app\Fake.Installer.Squirrel\Fake.Installer.Squirrel.fsproj", "{3DEF2E95-4BF8-413F-930E-32103A39364A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
