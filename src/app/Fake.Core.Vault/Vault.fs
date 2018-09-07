@@ -133,12 +133,21 @@ module Vault =
         Environment.SetEnvironmentVariable(envVar, null)
         vault
 
-    /// Read a vault from an environment variable or return an empty vault
-    let fromEnvironmentVariableOrEmpty envVar =
+    /// Read a vault from an environment variable or return None
+    let fromEnvironmentVariableOrNone envVar =
         let vars = Environment.GetEnvironmentVariable envVar
         if String.IsNullOrEmpty vars then
-            empty
-        else fromEnvironmentVariable envVar
+            None
+        else Some (fromEnvironmentVariable envVar)
+
+    /// Read a vault from an environment variable or return an empty vault
+    let fromEnvironmentVariableOrEmpty envVar =
+        defaultArg (fromEnvironmentVariableOrNone envVar) empty
+
+    /// Read a vault from `FAKE_VAULT_VARIABLES`
+    let fromFakeEnvironmentOrNone() =
+        fromEnvironmentVariableOrNone "FAKE_VAULT_VARIABLES"
+
 
     /// Read a vault from `FAKE_VAULT_VARIABLES`
     let fromFakeEnvironmentVariable() =

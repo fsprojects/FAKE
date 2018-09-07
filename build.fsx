@@ -14,6 +14,7 @@ nuget Fake.BuildServer.TeamFoundation prerelease
 nuget Fake.BuildServer.GitLab prerelease
 nuget Fake.Core.Target prerelease
 nuget Fake.Core.SemVer prerelease
+nuget Fake.Core.Vault prerelease
 nuget Fake.IO.FileSystem prerelease
 nuget Fake.IO.Zip prerelease
 nuget Fake.Core.ReleaseNotes prerelease
@@ -66,7 +67,6 @@ let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
-let github_release_user = Environment.environVarOrDefault "github_release_user" "fsharp"
 
 // The name of the project on GitHub
 let gitName = "FAKE"
@@ -95,18 +95,34 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
-let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
-let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
-let buildLegacy = Environment.environVarAsBoolOrDefault "BuildLegacy" false
+let vault =
+    let envVar = "FAKE_VAULT_VARIABLES"
+    let vars = Environment.environVarOrDefault envVar ""
+    if System.String.IsNullOrEmpty vars then
+        TeamFoundation.variables
+    else Vault.fromEnvironmentVariable envVar
+
+let getVarOrDefault name def =
+    match vault.TryGet name with
+    | Some v -> v
+    | None -> Environment.environVarOrDefault name def
+
+let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
+let artifactsDir = getVarOrDefault "artifactsdirectory" ""
+let docsDomain = getVarOrDefault "docs_domain" "fake.build"
+let buildLegacy = System.Boolean.Parse(getVarOrDefault "BuildLegacy" "false")
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
 let mutable secrets = []
 let releaseSecret replacement name =
     let secret =
         lazy
-            let env = Environment.environVarOrFail name
+            let env = 
+                match getVarOrDefault name "default_unset" with
+                | "default_unset" -> failwithf "variable '%s' is not set" name
+                | s -> s
             TraceSecrets.register replacement env
             env
     secrets <- secret :: secrets
@@ -892,7 +908,7 @@ Target.create "FastRelease" (fun _ ->
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
 
-    let gitDirectory = Environment.environVarOrDefault "git_directory" ""
+    let gitDirectory = getVarOrDefault "git_directory" ""
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
