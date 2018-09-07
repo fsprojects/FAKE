@@ -265,6 +265,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
+      "Fake.Installer.Squirrel", "Squirrel for windows Squirrel.exe tool helper"
       "Fake.Installer.Wix", "WiX helper to create msi installers"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
@@ -280,7 +281,6 @@ let dotnetAssemblyInfos =
       "Fake.Tools.Git", "Running git commands"
       "Fake.Tools.GitVersion", "GitVersion helper"
       "Fake.Tools.Octo", "Octopus Deploy octo.exe tool helper"
-      "Fake.Installer.Squirrel", "Squirrel for windows Squirrel.exe tool helper"
       "Fake.Tools.Pickles", "Convert Gherkin to HTML"
       "Fake.Tools.Rsync", "Running Rsync commands"
       "Fake.Tracing.NAntXml", "NAntXml"
@@ -486,7 +486,7 @@ Target.create "GenerateDocs" (fun _ ->
                 ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
                 SourceRepository = githubLink + "/blob/master" })
     else
-        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")        
+        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")
 
     // FAKE 4 legacy documentation
     buildLegacyFromDocsDir fake4LayoutRoots (apidocsDir @@ "v4") "/apidocs/v4/" "/blob/hotfix_fake4" ("packages/docslegacyv4/FAKE/tools")
@@ -800,14 +800,14 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
-    let targetFramework =  "netcoreapp2.1" 
-    let args = 
+    let targetFramework =  "netcoreapp2.1"
+    let args =
         [
-            sprintf "/t:%s" "Restore;CreateDeb"  
+            sprintf "/t:%s" "Restore;CreateDeb"
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release" 
+            sprintf "/p:Configuration=%s" "Release"
             sprintf "/p:PackageVersion=%s" simpleVersion
         ] |> String.concat " "
     let result =
@@ -818,7 +818,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     if result.OK |> not then
         failwith "Debian package creation failed"
 
-    
+
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
     let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
     Directory.ensure nugetDncDir
