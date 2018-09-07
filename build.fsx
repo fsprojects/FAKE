@@ -123,7 +123,9 @@ let releaseSecret replacement name =
                 match getVarOrDefault name "default_unset" with
                 | "default_unset" -> failwithf "variable '%s' is not set" name
                 | s -> s
-            TraceSecrets.register replacement env
+            if BuildServer.buildServer <> BuildServer.TeamFoundation then
+                // on TFS/VSTS the build will take care of this.
+                TraceSecrets.register replacement env
             env
     secrets <- secret :: secrets
     secret
