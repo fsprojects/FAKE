@@ -3,3 +3,4 @@ group netcore
 FSharp.Core
 NETStandard.Library
 Expecto
+Expecto.TestResults

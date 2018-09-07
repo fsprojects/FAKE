@@ -4,3 +4,4 @@ Paket.Core
 FSharp.Core
 NETStandard.Library
 Expecto
+Expecto.TestResults
