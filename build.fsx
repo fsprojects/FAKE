@@ -95,12 +95,16 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-let vault =
+// until bugfix in Vault.fs is released
+#load "src/app/Fake.Core.Vault/Vault.fs"
+
+let vault = Vault.fromFakeEnvironmentVariable()
+    (*
     let envVar = "FAKE_VAULT_VARIABLES"
     let vars = Environment.environVarOrDefault envVar ""
     if System.String.IsNullOrEmpty vars then
         TeamFoundation.variables
-    else Vault.fromEnvironmentVariable envVar
+    else Vault.fromEnvironmentVariable envVar*)
 
 let getVarOrDefault name def =
     match vault.TryGet name with
