@@ -5,3 +5,5 @@ FSharp.Core
 NETStandard.Library
 Expecto
 Expecto.TestResults
+Expecto.FsCheck
+FsCheck
