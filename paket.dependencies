@@ -107,7 +107,7 @@ group Build
 // [ FAKE GROUP ]
 group NetcoreBuild
     source https://api.nuget.org/v3/index.json
-    //source https://www.myget.org/F/fake-vsts/api/v3/index.json
+    source https://www.myget.org/F/fake-vsts/api/v3/index.json
     storage: none
     //source https://ci.appveyor.com/nuget/fake
 
