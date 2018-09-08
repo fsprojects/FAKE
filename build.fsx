@@ -96,7 +96,7 @@ let legacyDir = srcDir</>"legacy"
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
 let vault =
-    match Vault.fromFakeEnvironmentVariableOrNone() with
+    match Vault.fromFakeEnvironmentOrNone() with
     | Some v -> v
     | None -> TeamFoundation.variables
 
