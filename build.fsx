@@ -162,9 +162,24 @@ let chocoVersion =
 
 Trace.setBuildNumber nugetVersion
 
-//let current = CoreTracing.getListeners()
-//if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
-//    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
+// TODO: Get rid of me
+let private publishTests runnerType (resultsFiles:string seq) (mergeResults:bool) (platform:string) (config:string) (runTitle:string) (publishRunAttachments:bool) =
+    TeamFoundation.write "results.publish"
+        [ yield "type", runnerType
+          if mergeResults then
+            yield "mergeResults", "true"
+          if String.isNotNullOrEmpty platform then
+            yield "platform", platform
+          if String.isNotNullOrEmpty config then
+            yield "config", config
+          if String.isNotNullOrEmpty runTitle then
+            yield "runTitle", runTitle
+          if publishRunAttachments then
+            yield "publishRunAttachments", "true"
+          if not (Seq.isEmpty resultsFiles) then
+            yield "resultFiles", System.String.Join(",", resultsFiles)
+          yield "testRunSystem", "VSTSTask" ]
+        ""
 
 
 let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
@@ -549,14 +564,16 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_Core_IntegrationTests.TestResults.xml"] false "" "" "" true
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let processResult =
         DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_DotNet_Cli_IntegrationTests.TestResults.xml"] false "" "" "" true
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
@@ -565,14 +582,16 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_Core_UnitTests.TestResults.xml"] false "" "" "" true
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_Core_CommandLine_UnitTests.TestResults.xml"] false "" "" "" true
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
