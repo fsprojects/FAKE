@@ -177,7 +177,7 @@ let private publishTests runnerType (resultsFiles:string seq) (mergeResults:bool
           if publishRunAttachments then
             yield "publishRunAttachments", "true"
           if not (Seq.isEmpty resultsFiles) then
-            yield "resultFiles", System.String.Join(",", resultsFiles)
+            yield "resultFiles", System.String.Join(",", resultsFiles |> Seq.map Path.GetFullPath)
           yield "testRunSystem", "VSTSTask" ]
         ""
 

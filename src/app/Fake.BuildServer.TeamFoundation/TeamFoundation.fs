@@ -75,7 +75,7 @@ module TeamFoundation =
               if publishRunAttachments then
                 yield "publishRunAttachments", "true"
               if not (Seq.isEmpty resultsFiles) then
-                yield "resultFiles", seqToPropValue resultsFiles
+                yield "resultFiles", resultsFiles |> Seq.map Path.GetFullPath |> seqToPropValue
               yield "testRunSystem", "VSTSTask" ]
             ""
 
