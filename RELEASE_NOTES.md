@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.6.1 - tbd
+
+* tbd.
+
 ## 5.6.0 - 2018-09-09
 
 * NEW: Fake.DotNet.Testing.DotCover module - https://github.com/fsharp/FAKE/pull/2058
