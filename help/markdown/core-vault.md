@@ -16,11 +16,15 @@ Goals:
 * Prevent accidental leakage
 * Hide from environment variable listing
 * Hide from process snapshots
+* Forward secret variables from your build server into FAKE without implicit access for all sub-processes started by FAKE
 
 Non-Goals:
 
 * Complete fool-proof implementation
 * Hiding variables from build script writers
+* Hiding variables from the build output (see below)
+* Manage secrets in your repository instead of your build server (ie. committing the json)
+  > Please look at related tools like [git-secret](https://github.com/sobolevn/git-secret) instead
 
 ## API Usage
 
@@ -54,3 +58,10 @@ let tryUsage2 = vault.TryGet "my other variable"
 ```
 
 You can reference [`Fake.Core.Vault`](https://www.nuget.org/packages/Fake.Core.Vault/) in your regular project and use `Vault.encryptVariable` to simplify the creation of the json.
+
+## Hide from Build output
+
+By default the vault will not keep unencrypted variables in memory in order to 'protect' against memory dumps.
+Once you retrieve a secret variable we recommend to use build server features (like VSTS secret variables) to remove values from the output.
+If that is not an option you can use the [protect secrets](https://fake.build/core-trace.html#Protect-secrets) feature of the trace module.
+Keep in mind that this keeps the variables in memory and is therefore an explicit opt-in for the variables you use.

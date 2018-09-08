@@ -4,10 +4,20 @@ module Fake.Core.ProcessTests
 open System
 open Fake.Core
 open Expecto
+open FsCheck
+
+let fsCheckConfig = { FsCheckConfig.defaultConfig with maxTest = 1000  }
 
 [<Tests>]
 let tests = 
   testList "Fake.Core.Process.Tests" [
+    testPropertyWithConfig fsCheckConfig "toWindowsCommandLine is the inverse of fromWindowsCommandLine" <|
+        fun (x: NonNull<string> list) ->
+            let input = x |> List.map (fun (NonNull s) -> s)
+            let escaped = Args.toWindowsCommandLine input
+            let backAgain = Args.fromWindowsCommandLine escaped
+            Expect.sequenceEqual backAgain input (sprintf "Expect argument lists to be equal, intermediate was '%s'" escaped)
+
     testCase "Test that we have a nice error message when a file doesn't exist" <| fun _ ->
         try
             Process.start(fun proc ->

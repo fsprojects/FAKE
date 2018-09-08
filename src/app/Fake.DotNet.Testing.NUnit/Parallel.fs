@@ -48,7 +48,7 @@ let run (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let tool = parameters.ToolPath @@ parameters.ToolName
 
     let runSingleAssembly parameters name outputFile =
-        let args = buildNUnitdArgs { parameters with OutputFile = outputFile } [ name ]
+        let args = buildArgs { parameters with OutputFile = outputFile } [ name ]
         let errout = StringBuilder()
         let stdout = StringBuilder()
         Trace.tracefn "Run NUnit tests from %s." name

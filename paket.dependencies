@@ -181,6 +181,9 @@ group netcore
     
     // Testing
     nuget Expecto >= 5.0
+    nuget Expecto.TestResults
+    nuget Expecto.FsCheck
+    nuget FsCheck
 
     nuget System.Runtime.Numerics
     nuget System.Xml.XPath

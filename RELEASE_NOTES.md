@@ -1,5 +1,17 @@
 # Release Notes
 
+## 5.6.0 - 2018-09-09
+
+* NEW: Fake.DotNet.Testing.DotCover module - https://github.com/fsharp/FAKE/pull/2058
+* NEW: Fake.Installer.Squirrel module - https://github.com/fsharp/FAKE/pull/2076
+* ENHANCEMENT: Fake.BuildServer.TeamCity now contains all parameters - https://github.com/fsharp/FAKE/pull/2069
+* BUGFIX: template now contains `storage: none` - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Improve error message when nuget cache is possibly broken - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Invalidate cache if files don't exist - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Vault.fs was not decrypting/encrypting properly - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Fix an issue with empty arguments in command line parsing - https://github.com/fsharp/FAKE/pull/2070
+* BUGFIX: Do not allow tripple quotes in command line - https://github.com/fsharp/FAKE/pull/2070
+
 ## 5.5.0 - 2018-08-26
 
 * DOCS: Update core-targets.md - https://github.com/fsharp/FAKE/pull/2067

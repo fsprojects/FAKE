@@ -11,21 +11,29 @@ module TeamFoundation =
     // See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md
     
     let write action properties message =
-        let ensureProp (s:string) =
-            // TODO: Escaping!
+        // https://github.com/Microsoft/vsts-task-lib/blob/3a7905b99d698a535d9f5a477efc124894b8d2ae/node/taskcommand.ts
+        let ensurePropVal (s:string) =
+            s.Replace("\r", "%0D")
+             .Replace("\n", "%0A")
+             .Replace("]", "%5D")
+             .Replace(";", "%3B")
+        let ensurePropName (s:string)=
             if s.Contains ";" || s.Contains "=" || s.Contains "]" then
-                failwithf "property name or value cannot contain ';', '=' or ']'"
-            s            
+                failwithf "property name cannot contain ';', '=' or ']'"
+            s
+        let ensureMsg (s:string) =
+            s.Replace("\r", "%0D").Replace("\n", "%0A");                  
         let formattedProperties =
             let temp =
                 properties  
-                |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensureProp prop) (ensureProp value))
+                |> Seq.map (fun (prop, value) -> sprintf "%s=%s;" (ensurePropName prop) (ensurePropVal value))
                 |> String.separated ""
             if String.isNullOrWhiteSpace temp then "" else " " + temp
         sprintf "##vso[%s%s]%s" action formattedProperties message
         // printf is racing with others in parallel mode
         |> fun s -> System.Console.WriteLine("\n{0}", s)
 
+    let private seqToPropValue (args:_ seq) = System.String.Join(",", args)
     let setVariable variableName value =
         write "task.setvariable" ["variable", variableName] value
         
@@ -44,13 +52,32 @@ module TeamFoundation =
 
     let private publishArtifact artifactFolder artifactName path =
         let parameters = ["containerfolder", artifactFolder] @ toList "artifactname" artifactName
-        write "artifact.upload" parameters path
+        write "artifact.upload" parameters (Path.GetFullPath path)
 
     let private setBuildNumber number =
         write "build.updatebuildnumber" [] number
 
     let setBuildState state message =
         write "task.complete" ["result", state] message
+
+    // undocumented API: https://github.com/Microsoft/vsts-task-lib/blob/3a7905b99d698a535d9f5a477efc124894b8d2ae/node/task.ts#L1717
+    let private publishTests runnerType (resultsFiles:string seq) (mergeResults:bool) (platform:string) (config:string) (runTitle:string) (publishRunAttachments:bool) =
+        write "results.publish"
+            [ yield "type", runnerType
+              if mergeResults then
+                yield "mergeResults", "true"
+              if String.isNotNullOrEmpty platform then
+                yield "platform", platform
+              if String.isNotNullOrEmpty config then
+                yield "config", config
+              if String.isNotNullOrEmpty runTitle then
+                yield "runTitle", runTitle
+              if publishRunAttachments then
+                yield "publishRunAttachments", "true"
+              if not (Seq.isEmpty resultsFiles) then
+                yield "resultFiles", resultsFiles |> Seq.map Path.GetFullPath |> seqToPropValue
+              yield "testRunSystem", "VSTSTask" ]
+            ""
 
     type internal LogDetailState =
         | Unknown
@@ -86,7 +113,7 @@ module TeamFoundation =
         logDetailRaw id None None None None None None None (Some Completed) (Some result) "Setting logdetail to finished."    
 
     /// Access (secret) build variables
-    let variables = Vault.fromEnvironmentVariableOrEmpty "FAKE_VSTS_VAULT_VARIABLES"  
+    let variables = Vault.fromEnvironmentVariable "FAKE_VSTS_VAULT_VARIABLES"  
 
     type Environment =
         static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
@@ -146,6 +173,14 @@ module TeamFoundation =
                         | TagStatus.Warning -> "SucceededWithIssues", "WARN"
                         | TagStatus.Failed -> "Failed", "ERROR"
                     setBuildState vsoState msg
+                | TraceData.ImportData (ImportData.Junit _, path) ->
+                    publishTests "JUnit" [path] false "" "" "" true
+                | TraceData.ImportData (ImportData.Nunit _, path) ->
+                    publishTests "NUnit" [path] false "" "" "" true
+                | TraceData.ImportData (ImportData.Mstest _, path) ->
+                    publishTests "VSTest" [path] false "" "" "" true
+                | TraceData.ImportData (ImportData.Xunit _, path) ->
+                    publishTests "XUnit" [path] false "" "" "" true
                 | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
                     publishArtifact name (Some name) path
                 | TraceData.ImportData (typ, path) ->

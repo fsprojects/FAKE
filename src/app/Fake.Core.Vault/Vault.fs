@@ -3,7 +3,7 @@ namespace Fake.Core
 #nowarn "44"
 
 /// Provices a encrypted store of variables to prevent accidential leakage 
-/// Please read the [documentation](/fake-core-vault.html)
+/// Please read the [documentation](/core-vault.html)
 [<RequireQualifiedAccess>]
 module Vault =
     open System
@@ -13,6 +13,7 @@ module Vault =
     open Newtonsoft.Json
 
     let private aesCtrTransform(key:byte[], salt:byte[], inputStream:Stream, outputStream:Stream) =
+        // https://stackoverflow.com/a/51188472/1269722
         let aes = new AesManaged(Mode = CipherMode.ECB, Padding = PaddingMode.None)
         let blockSize = aes.BlockSize / 8
 
@@ -24,6 +25,14 @@ module Vault =
                         salt.Length, blockSize))
 
         let counter = salt.Clone() :?> byte[]
+        let increaseCounter () =
+            // https://security.stackexchange.com/questions/4606/is-this-how-to-implement-ctr-around-a-system-that-only-implements-cbc-cfb-cts
+            seq {
+                for i2 in counter.Length - 1 .. -1 .. 0  do
+                    counter.[i2] <- counter.[i2] + 1uy
+                    if (counter.[i2] <> 0uy) then
+                        yield ()
+            } |> Seq.tryItem 0 |> ignore
 
         let xorMask = new Queue<byte>()
 
@@ -39,13 +48,7 @@ module Vault =
                     counter, 0, counter.Length, counterModeBlock, 0)
                     |> ignore
 
-                seq {
-                    for i2 in counter.Length - 1 .. 0 do
-                        counter.[i2] <- counter.[i2] + 1uy
-                        if (counter.[i2] <> 0uy) then
-                            yield ()
-                } |> Seq.tryItem 0 |> ignore
-
+                increaseCounter()
                 for b2 in counterModeBlock do
                     xorMask.Enqueue(b2)
 
@@ -129,21 +132,28 @@ module Vault =
     /// Read a vault from an environment variable.    
     let fromEnvironmentVariable envVar =
         let result = Environment.GetEnvironmentVariable(envVar)
-        let vault = fromJson result
-        Environment.SetEnvironmentVariable(envVar, null)
-        vault
+        if String.IsNullOrEmpty result then
+            empty
+        else        
+            let vault = fromJson result
+            Environment.SetEnvironmentVariable(envVar, null)
+            vault
 
-    /// Read a vault from an environment variable or return an empty vault
-    let fromEnvironmentVariableOrEmpty envVar =
+    /// Read a vault from an environment variable or return None
+    let fromEnvironmentVariableOrNone envVar =
         let vars = Environment.GetEnvironmentVariable envVar
         if String.IsNullOrEmpty vars then
-            empty
-        else fromEnvironmentVariable envVar
+            None
+        else Some (fromEnvironmentVariable envVar)
+
+    /// Read a vault from `FAKE_VAULT_VARIABLES`
+    let fromFakeEnvironmentOrNone() =
+        fromEnvironmentVariableOrNone "FAKE_VAULT_VARIABLES"
 
     /// Read a vault from `FAKE_VAULT_VARIABLES`
     let fromFakeEnvironmentVariable() =
         fromEnvironmentVariable "FAKE_VAULT_VARIABLES"
-
+    
     /// Retrieve the value from a given variable
     let private fromVariable (key:KeyInfo) (v:Variable) =
         if v.Secret then

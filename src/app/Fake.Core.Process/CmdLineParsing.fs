@@ -37,9 +37,13 @@ module internal CmdLineParsing =
         sb.ToString(0, System.Math.Max(0, sb.Length - 1))
 
     let windowsCommandLineToArgv (arguments:string) =
+        if arguments.Contains "\"\"\"" then
+            invalidArg "arguments" (sprintf "tripple quotes are not allowed in the command line ('%s') as they behave different across programs, see https://github.com/vbfox/FoxSharp/issues/1 to escape a quote use backslash and the rules from https://docs.microsoft.com/en-US/cpp/cpp/parsing-cpp-command-line-arguments?view=vs-2017." arguments)
+
         // https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L443-L522
         let currentArgument = new System.Text.StringBuilder()
         let mutable inQuotes = false
+        let mutable atLeastEmpty = false
         let results = System.Collections.Generic.List<_>()
 
         // Iterate through all of the characters in the argument string.
@@ -73,12 +77,14 @@ module internal CmdLineParsing =
                 // Anything within quotes will be treated as a single argument, even if
                 // it contains spaces.
                 | '"' ->
-                    inQuotes <-  not inQuotes
+                    atLeastEmpty <- true
+                    inQuotes <- not inQuotes
                 // If this is a space/tab and we're not in quotes, we're done with the current
                 // argument, and if we've built up any characters in the current argument,
                 // it should be added to the results and then reset for the next one.
                 | ' ' | '\t' when not inQuotes ->
-                    if currentArgument.Length > 0 then
+                    if currentArgument.Length > 0 || atLeastEmpty then
+                        atLeastEmpty <- false
                         results.Add(currentArgument.ToString())
                         currentArgument.Clear() |> ignore
                 // Nothing special; add the character to the current argument.
@@ -88,7 +94,7 @@ module internal CmdLineParsing =
 
         // If we reach the end of the string and we still have anything in our current
         // argument buffer, treat it as an argument to be added to the results.
-        if currentArgument.Length > 0 then
+        if currentArgument.Length > 0 || atLeastEmpty then
             results.Add(currentArgument.ToString())
 
         results.ToArray()

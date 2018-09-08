@@ -246,26 +246,26 @@ let ComparisonFailure name message details expected actual =
         (EncapsulateSpecialChars expected) (EncapsulateSpecialChars actual) |> sendStrToTeamCity
 
 /// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
-[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.Version instead")>]
 let TeamCityVersion = environVarOrNone "TEAMCITY_VERSION"
 
 /// The Name of the project the current build belongs to or None if it's not on TeamCity.
-[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.ProjectName instead")>]
 let TeamCityProjectName = environVarOrNone "TEAMCITY_PROJECT_NAME"
 
 /// The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.
-[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.BuildConfigurationName instead")>]
 let TeamCityBuildConfigurationName = environVarOrNone "TEAMCITY_BUILDCONF_NAME"
 
 /// Is set to true if the build is a personal one.
-[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.BuildIsPersonal instead")>]
 let TeamCityBuildIsPersonal =
     match environVarOrNone "BUILD_IS_PERSONAL" with
     | Some _ -> true
     | None -> false
 
 /// The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.
-[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.<> instead")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.BuildNumber instead")>]
 let TeamCityBuildNumber = environVarOrNone "BUILD_NUMBER"
 
 module private JavaPropertiesFile =
@@ -426,8 +426,8 @@ module private JavaPropertiesFile =
         Parser.parseWithReader reader
 
 /// TeamCity build parameters
-/// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Parameters) for more information
-[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
+/// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.BuildParameters instead")>]
 module TeamCityBuildParameters =
     open System
     open System.IO
@@ -505,7 +505,7 @@ module TeamCityBuildParameters =
     let tryGet name = all.Value |> Map.tryFind name
 
 /// Get files changed between builds in TeamCity
-[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.ChangedFiles instead")>]
 module TeamCityChangedFiles =
     /// The type of change that occured
     type ModificationType =
@@ -558,7 +558,7 @@ module TeamCityChangedFiles =
     let private fileChanges = lazy (getFileChanges' ())
 
     /// Changed files (since previous build) that are included in this build
-    /// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+    /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
     let get () = fileChanges.Value
 
 let private getRecentlyFailedTests' () =
@@ -569,24 +569,24 @@ let private getRecentlyFailedTests' () =
 let private recentlyFailedTests = lazy (getRecentlyFailedTests' ())
 
 /// Name of recently failing tests
-/// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
-[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
+/// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner) for more information
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.RecentlyFailedTests instead")>]
 let getTeamCityRecentlyFailedTests () = recentlyFailedTests.Value
 
 /// Get the branch of the main VCS root
-[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.Branch instead")>]
 let getTeamCityBranch () = TeamCityBuildParameters.tryGetConfiguration "vcsroot.branch"
 
 /// Get the display name of the branch as shown in TeamCity
-/// See [the documentation](https://confluence.jetbrains.com/display/TCD10/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
-[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
+/// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec) for more information
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.BranchDisplayName instead")>]
 let getTeamCityBranchName () =
     match TeamCityBuildParameters.tryGetConfiguration "teamcity.build.branch" with
     | Some _  as branch -> branch
     | None -> TeamCityBuildParameters.tryGetConfiguration "vcsroot.branch"
 
 /// Get if the current branch is the one configured as default
-[<System.Obsolete("please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.")>]
+[<System.Obsolete("please use nuget 'Fake.BuildServer.TeamCity', open Fake.BuildServer and use TeamCity.Environment.IsDefaultBranch instead")>]
 let getTeamCityBranchIsDefault () =
     if buildServer = TeamCity then
         match TeamCityBuildParameters.tryGetConfiguration "teamcity.build.branch.is_default" with

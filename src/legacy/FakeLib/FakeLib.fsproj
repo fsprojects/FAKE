@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\Microsoft.Net.UWPCoreRuntimeSdk\build\Microsoft.Net.UWPCoreRuntimeSdk.props" Condition="Exists('..\..\..\packages\Microsoft.Net.UWPCoreRuntimeSdk\build\Microsoft.Net.UWPCoreRuntimeSdk.props')" Label="Paket" />
-  <Import Project="..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.props" Condition="Exists('..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.props')" Label="Paket" />
   <Import Project="..\..\..\packages\FSharp.Compiler.Tools\build\FSharp.Compiler.Tools.props" Condition="Exists('..\..\..\packages\FSharp.Compiler.Tools\build\FSharp.Compiler.Tools.props')" Label="Paket" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -428,6 +417,9 @@
     <Compile Include="..\..\app\Fake.DotNet.Fsi\Fsi.fs">
       <Link>Fake.DotNet.Fsi\Fsi.fs</Link>
     </Compile>
+    <Compile Include="..\..\app\Fake.DotNet.Testing.DotCover\DotCover.fs">
+      <Link>Fake.DotNet.Testing.DotCover/DotCover.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
@@ -810,7 +802,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
       <ItemGroup>
         <Reference Include="Microsoft.CSharp">
           <HintPath>..\..\..\packages\Microsoft.CSharp\lib\netstandard2.0\Microsoft.CSharp.dll</HintPath>
@@ -819,7 +811,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
       <ItemGroup>
         <Reference Include="Microsoft.CSharp">
           <HintPath>..\..\..\packages\Microsoft.CSharp\ref\netstandard2.0\Microsoft.CSharp.dll</HintPath>
@@ -2416,7 +2408,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Reflection.TypeExtensions">
           <HintPath>..\..\..\packages\System.Reflection.TypeExtensions\lib\netstandard2.0\System.Reflection.TypeExtensions.dll</HintPath>
@@ -2425,7 +2417,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0'">
       <ItemGroup>
         <Reference Include="System.Reflection.TypeExtensions">
           <HintPath>..\..\..\packages\System.Reflection.TypeExtensions\ref\netstandard2.0\System.Reflection.TypeExtensions.dll</HintPath>
@@ -2485,7 +2477,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.0'">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')">
       <ItemGroup>
         <Reference Include="System.Runtime.CompilerServices.Unsafe">
           <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe\lib\netcoreapp2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -2494,7 +2486,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v1.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
       <ItemGroup>
         <Reference Include="System.Runtime.CompilerServices.Unsafe">
           <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -2503,16 +2495,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v1.6')">
-      <ItemGroup>
-        <Reference Include="System.Runtime.CompilerServices.Unsafe">
-          <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe\ref\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-          <Private>False</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Runtime.CompilerServices.Unsafe">
           <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -3219,7 +3202,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v1.6')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')) Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v1.6') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
       <ItemGroup>
         <Reference Include="System.Threading.Tasks.Extensions">
           <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions\lib\netstandard1.0\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -3232,6 +3215,24 @@
       <ItemGroup>
         <Reference Include="System.Threading.Tasks.Extensions">
           <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions\ref\netstandard1.0\System.Threading.Tasks.Extensions.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2')) Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == 'v5.0')">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Extensions">
+          <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v2.0') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0')">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Extensions">
+          <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions\ref\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
           <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
@@ -3416,15 +3417,5 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\Microsoft.Net.Native.Compiler\build\Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
   <Import Project="..\..\..\packages\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets" Condition="Exists('..\..\..\packages\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.Compiler\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.Compiler\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.Compiler\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('..\..\..\packages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets')" Label="Paket" />
 </Project>

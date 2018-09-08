@@ -14,7 +14,7 @@ open Paket.FolderScanner
 let sw = System.Diagnostics.Stopwatch.StartNew()
 
 let printVersion() =
-    traceFAKE "%s" fakeVersionStr
+    traceFAKE "%s (this line is written to standard error, see https://github.com/fsharp/FAKE/issues/2066)" fakeVersionStr
 
 let printFakePath() =
     traceFAKE "FakePath: %s" fakePath

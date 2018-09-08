@@ -14,6 +14,7 @@ nuget Fake.BuildServer.TeamFoundation prerelease
 nuget Fake.BuildServer.GitLab prerelease
 nuget Fake.Core.Target prerelease
 nuget Fake.Core.SemVer prerelease
+nuget Fake.Core.Vault prerelease
 nuget Fake.IO.FileSystem prerelease
 nuget Fake.IO.Zip prerelease
 nuget Fake.Core.ReleaseNotes prerelease
@@ -66,7 +67,6 @@ let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"; "Matthias Dittrich"]
-let github_release_user = Environment.environVarOrDefault "github_release_user" "fsharp"
 
 // The name of the project on GitHub
 let gitName = "FAKE"
@@ -95,19 +95,41 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-let nugetsource = Environment.environVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
-let chocosource = Environment.environVarOrDefault "chocosource" "https://push.chocolatey.org/"
-let artifactsDir = Environment.environVarOrDefault "artifactsdirectory" ""
-let docsDomain = Environment.environVarOrDefault "docs_domain" "fake.build"
-let buildLegacy = Environment.environVarAsBoolOrDefault "BuildLegacy" false
+// until bugfix in Vault.fs is released
+#load "src/app/Fake.Core.Vault/Vault.fs"
+
+let vault = Vault.fromFakeEnvironmentVariable()
+    (*
+    let envVar = "FAKE_VAULT_VARIABLES"
+    let vars = Environment.environVarOrDefault envVar ""
+    if System.String.IsNullOrEmpty vars then
+        TeamFoundation.variables
+    else Vault.fromEnvironmentVariable envVar*)
+
+let getVarOrDefault name def =
+    match vault.TryGet name with
+    | Some v -> v
+    | None -> Environment.environVarOrDefault name def
+
+let github_release_user = getVarOrDefault "github_release_user" "fsharp"
+let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
+let chocosource = getVarOrDefault "chocosource" "https://push.chocolatey.org/"
+let artifactsDir = getVarOrDefault "artifactsdirectory" ""
+let docsDomain = getVarOrDefault "docs_domain" "fake.build"
+let buildLegacy = System.Boolean.Parse(getVarOrDefault "BuildLegacy" "false")
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
 let mutable secrets = []
 let releaseSecret replacement name =
     let secret =
         lazy
-            let env = Environment.environVarOrFail name
-            TraceSecrets.register replacement env
+            let env = 
+                match getVarOrDefault name "default_unset" with
+                | "default_unset" -> failwithf "variable '%s' is not set" name
+                | s -> s
+            if BuildServer.buildServer <> BuildServer.TeamFoundation then
+                // on TFS/VSTS the build will take care of this.
+                TraceSecrets.register replacement env
             env
     secrets <- secret :: secrets
     secret
@@ -144,9 +166,24 @@ let chocoVersion =
 
 Trace.setBuildNumber nugetVersion
 
-//let current = CoreTracing.getListeners()
-//if current |> Seq.contains CoreTracing.defaultConsoleTraceListener |> not then
-//    CoreTracing.setTraceListeners (CoreTracing.defaultConsoleTraceListener :: current)
+// TODO: Get rid of me
+let private publishTests runnerType (resultsFiles:string seq) (mergeResults:bool) (platform:string) (config:string) (runTitle:string) (publishRunAttachments:bool) =
+    TeamFoundation.write "results.publish"
+        [ yield "type", runnerType
+          if mergeResults then
+            yield "mergeResults", "true"
+          if String.isNotNullOrEmpty platform then
+            yield "platform", platform
+          if String.isNotNullOrEmpty config then
+            yield "config", config
+          if String.isNotNullOrEmpty runTitle then
+            yield "runTitle", runTitle
+          if publishRunAttachments then
+            yield "publishRunAttachments", "true"
+          if not (Seq.isEmpty resultsFiles) then
+            yield "resultFiles", System.String.Join(",", resultsFiles |> Seq.map Path.GetFullPath)
+          yield "testRunSystem", "VSTSTask" ]
+        ""
 
 
 let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
@@ -260,10 +297,12 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Testing.VSTest", "Running vstest test runner"
       "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
       "Fake.DotNet.Testing.OpenCover", "Code coverage with OpenCover"
+      "Fake.DotNet.Testing.DotCover", "Code coverage with DotCover"
       "Fake.DotNet.Testing.SpecFlow", "BDD with Gherkin and SpecFlow"
       "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
       "Fake.DotNet.Xamarin", "Running Xamarin builds"
       "Fake.Installer.InnoSetup", "Creating installers with InnoSetup"
+      "Fake.Installer.Squirrel", "Squirrel for windows Squirrel.exe tool helper"
       "Fake.Installer.Wix", "WiX helper to create msi installers"
       "Fake.IO.FileSystem", "Core Filesystem utilities and globbing support"
       "Fake.IO.Zip", "Core Zip functionality"
@@ -484,7 +523,7 @@ Target.create "GenerateDocs" (fun _ ->
                 ProjectParameters = ("api-docs-prefix", "/apidocs/v5/legacy/") :: ("CurrentPage", "APIReference") :: projInfo
                 SourceRepository = githubLink + "/blob/master" })
     else
-        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")        
+        buildLegacyFromDocsDir legacyLayoutRoots (apidocsDir @@ "v5/legacy") "/apidocs/v5/legacy/" "/blob/master" ("packages/docslegacyv5/FAKE/tools")
 
     // FAKE 4 legacy documentation
     buildLegacyFromDocsDir fake4LayoutRoots (apidocsDir @@ "v4") "/apidocs/v4/" "/blob/hotfix_fake4" ("packages/docslegacyv4/FAKE/tools")
@@ -529,14 +568,17 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
-
     if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_Core_IntegrationTests.TestResults.xml"] false "" "" "" true
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let processResult =
         DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_DotNet_Cli_IntegrationTests.TestResults.xml"] false "" "" "" true
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
@@ -545,12 +587,16 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_Core_UnitTests.TestResults.xml"] false "" "" "" true
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
+    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
+    publishTests "NUnit" ["Fake_Core_CommandLine_UnitTests.TestResults.xml"] false "" "" "" true
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
@@ -564,6 +610,7 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
             [ ".fake/testbuild.fsx/packages"
               ".fake/testbuild.fsx/paket.depedencies.sha1"
               ".fake/testbuild.fsx/paket.lock"
+              ".fake/testbuild.fsx/assemblies.cached"
               "testbuild.fsx.lock" ]
             |> List.iter Shell.rm_rf
             // TODO: Clean a potentially cached dll as well.
@@ -798,14 +845,14 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
-    let targetFramework =  "netcoreapp2.1" 
-    let args = 
+    let targetFramework =  "netcoreapp2.1"
+    let args =
         [
-            sprintf "/t:%s" "Restore;CreateDeb"  
+            sprintf "/t:%s" "Restore;CreateDeb"
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
-            sprintf "/p:Configuration=%s" "Release" 
+            sprintf "/p:Configuration=%s" "Release"
             sprintf "/p:PackageVersion=%s" simpleVersion
         ] |> String.concat " "
     let result =
@@ -816,7 +863,7 @@ Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     if result.OK |> not then
         failwith "Debian package creation failed"
 
-    
+
     let fileName = sprintf "fake-cli.%s.%s.deb" simpleVersion runtime
     let sourceFile = sprintf "src/app/fake-cli/bin/Release/%s/%s/%s" targetFramework runtime fileName
     Directory.ensure nugetDncDir
@@ -891,7 +938,7 @@ Target.create "FastRelease" (fun _ ->
     let auth = sprintf "%s:x-oauth-basic@" token
     let url = sprintf "https://%sgithub.com/%s/%s.git" auth github_release_user gitName
 
-    let gitDirectory = Environment.environVarOrDefault "git_directory" ""
+    let gitDirectory = getVarOrDefault "git_directory" ""
     if not BuildServer.isLocalBuild then
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.email matthi.d@gmail.com"
         Git.CommandHelper.directRunGitCommandAndFail gitDirectory "config user.name \"Matthias Dittrich\""
