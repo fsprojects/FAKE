@@ -51,6 +51,7 @@ Try to not use fake:
 
 Examples:
 
+- [Scripting with FAKE](https://atlemann.github.io/fsharp/2018/06/15/standalone-scripts-with-fake-cli.html)
 - [Twitter](https://twitter.com/JonathanOhlrich/status/1031591590186442753)
 - [(Video) Immutable application deployments with F# Make - Nikolay Norman Andersen](https://www.youtube.com/watch?v=_sZT0CpJ6Vo)
 - [(fake 4 API) Elasticsearch.Net](https://www.elastic.co/de/blog/solidifying-releases-with-fsharp-make)
