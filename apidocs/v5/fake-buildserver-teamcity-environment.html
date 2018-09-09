@@ -137,6 +137,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
@@ -152,6 +153,7 @@
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
 																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
 																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
@@ -287,15 +289,56 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1380', 1380)" onmouseover="showTip(event, '1380', 1380)">
-            Environment.BuildConfigurationName
+          <code onmouseout="hideTip(event, '1400', 1400)" onmouseover="showTip(event, '1400', 1400)">
+            Environment.Branch
           </code>
-          <div class="tip" id="1380">
+          <div class="tip" id="1400">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L227-227" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L322-322" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get the branch of the main VCS root</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1401', 1401)" onmouseover="showTip(event, '1401', 1401)">
+            Environment.BranchDisplayName
+          </code>
+          <div class="tip" id="1401">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L328-328" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get the display name of the branch of the main VCS root as shown in TeamCity</p>
+<p>See <a href="https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec">the documentation</a> for more information</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1402', 1402)" onmouseover="showTip(event, '1402', 1402)">
+            Environment.BuildConfigurationName
+          </code>
+          <div class="tip" id="1402">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L310-310" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -307,15 +350,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1381', 1381)" onmouseover="showTip(event, '1381', 1381)">
+          <code onmouseout="hideTip(event, '1403', 1403)" onmouseover="showTip(event, '1403', 1403)">
             Environment.BuildIsPersonal
           </code>
-          <div class="tip" id="1381">
+          <div class="tip" id="1403">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L230-230" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L313-313" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -327,15 +370,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1382', 1382)" onmouseover="showTip(event, '1382', 1382)">
+          <code onmouseout="hideTip(event, '1404', 1404)" onmouseover="showTip(event, '1404', 1404)">
             Environment.BuildNumber
           </code>
-          <div class="tip" id="1382">
+          <div class="tip" id="1404">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L236-236" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L319-319" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -347,15 +390,76 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1383', 1383)" onmouseover="showTip(event, '1383', 1383)">
-            Environment.ProjectName
+          <code onmouseout="hideTip(event, '1405', 1405)" onmouseover="showTip(event, '1405', 1405)">
+            Environment.ChangedFiles
           </code>
-          <div class="tip" id="1383">
+          <div class="tip" id="1405">
+            <strong>Signature:</strong> FileChange list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L354-354" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Changed files (since previous build) that are included in this build</p>
+<p>See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner">the documentation</a> for more information</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1406', 1406)" onmouseover="showTip(event, '1406', 1406)">
+            Environment.CheckoutDirectory
+          </code>
+          <div class="tip" id="1406">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L224-224" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L348-348" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get the path to the build checkout directory</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1407', 1407)" onmouseover="showTip(event, '1407', 1407)">
+            Environment.IsDefaultBranch
+          </code>
+          <div class="tip" id="1407">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L335-335" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get if the current branch of the main VCS root is the one configured as default</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1408', 1408)" onmouseover="showTip(event, '1408', 1408)">
+            Environment.ProjectName
+          </code>
+          <div class="tip" id="1408">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L307-307" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -367,15 +471,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1384', 1384)" onmouseover="showTip(event, '1384', 1384)">
+          <code onmouseout="hideTip(event, '1409', 1409)" onmouseover="showTip(event, '1409', 1409)">
+            Environment.RecentlyFailedTests
+          </code>
+          <div class="tip" id="1409">
+            <strong>Signature:</strong> string list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L360-360" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Name of recently failing tests</p>
+<p>See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner">the documentation</a> for more information</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1410', 1410)" onmouseover="showTip(event, '1410', 1410)">
             Environment.Version
           </code>
-          <div class="tip" id="1384">
+          <div class="tip" id="1410">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L221-221" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L304-304" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -491,7 +616,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.1-alpha.403</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
 									</ul>
 								</div>
 							</div>

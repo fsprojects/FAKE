@@ -138,6 +138,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
@@ -153,6 +154,7 @@
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
 																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
 																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
@@ -280,6 +282,10 @@
 <li>Complete fool-proof implementation</li>
 <li>Hiding variables from build script writers</li>
 <li>Hiding variables from the build output (see below)</li>
+<li>
+Manage secrets in your repository instead of your build server (ie. committing the json)
+&gt; Please look at related tools like <a href="https://github.com/sobolevn/git-secret">git-secret</a> instead
+</li>
 </ul>
 <h2><a name="API-Usage" class="anchor" href="#API-Usage">API Usage</a></h2>
 <p>In order to get variables into FAKE you need to encrypt them via AES. When in doubt consult the source code of <code>Vault.encryptVariable</code> or look at the <code>myVault.ts</code> implementation of the <a href="https://github.com/isaacabraham/vsts-fsharp">vsts fake 5 task</a>.</p>
@@ -435,7 +441,7 @@ Keep in mind that this keeps the variables in memory and is therefore an explici
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.1-alpha.403</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
 									</ul>
 								</div>
 							</div>

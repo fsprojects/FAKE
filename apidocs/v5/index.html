@@ -137,6 +137,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
@@ -152,6 +153,7 @@
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
 																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
 																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
@@ -1708,10 +1710,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
     <tbody>
         <tr>
           <td class="module-name">
-            <a href="fake-dotnet-testing-expecto.html">Expecto</a>
+            <a href="fake-dotnet-testing-dotcover.html">DotCover</a>
           </td>
           <td class="xmldoc">
-          <p>Contains tasks to run <a href="https://github.com/haf/expecto">Expecto</a> unit tests.</p>
+          <p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
 
 
           </td>
@@ -1748,6 +1750,26 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
         </tr>
         <tr>
           <td class="module-name">
+            <a href="fake-dotnet-testing-xunit2.html">XUnit2</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-expecto.html">Expecto</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains tasks to run <a href="https://github.com/haf/expecto">Expecto</a> unit tests.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
             <a href="fake-dotnet-testing-opencover.html">OpenCover</a>
           </td>
           <td class="xmldoc">
@@ -1772,16 +1794,6 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           </td>
           <td class="xmldoc">
           <p>Contains tasks to run <a href="https://msdn.microsoft.com/en-us/library/ms182486.aspx">VSTest</a> unit tests.</p>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fake-dotnet-testing-xunit2.html">XUnit2</a>
-          </td>
-          <td class="xmldoc">
-          <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v2 unit tests.</p>
 
 
           </td>
@@ -2183,6 +2195,16 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           </td>
           <td class="xmldoc">
           <p>This module contains helper functions to create <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a> installers.</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-installer-squirrel.html">Squirrel</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains types and utility functions related to creating <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> installer.</p>
 
 
           </td>
@@ -2820,7 +2842,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.1-alpha.403</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
 									</ul>
 								</div>
 							</div>

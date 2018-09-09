@@ -138,6 +138,7 @@
 																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
 																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
 																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
 																<li><a href="/dotnet-nuget.html">NuGet</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
 																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
@@ -153,6 +154,7 @@
 															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
 															<ul>
 																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
 																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
 															</ul>
 														</li>
@@ -260,9 +262,17 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
-<h2><a name="5-5-1-alpha-tbd" class="anchor" href="#5-5-1-alpha-tbd">5.5.1-alpha - tbd</a></h2>
+<h2><a name="5-6-0-2018-09-09" class="anchor" href="#5-6-0-2018-09-09">5.6.0 - 2018-09-09</a></h2>
 <ul>
-<li>Tbd.</li>
+<li>NEW: Fake.DotNet.Testing.DotCover module - <a href="https://github.com/fsharp/FAKE/pull/2058">https://github.com/fsharp/FAKE/pull/2058</a></li>
+<li>NEW: Fake.Installer.Squirrel module - <a href="https://github.com/fsharp/FAKE/pull/2076">https://github.com/fsharp/FAKE/pull/2076</a></li>
+<li>ENHANCEMENT: Fake.BuildServer.TeamCity now contains all parameters - <a href="https://github.com/fsharp/FAKE/pull/2069">https://github.com/fsharp/FAKE/pull/2069</a></li>
+<li>BUGFIX: template now contains <code>storage: none</code> - <a href="https://github.com/fsharp/FAKE/pull/2070">https://github.com/fsharp/FAKE/pull/2070</a></li>
+<li>BUGFIX: Improve error message when nuget cache is possibly broken - <a href="https://github.com/fsharp/FAKE/pull/2070">https://github.com/fsharp/FAKE/pull/2070</a></li>
+<li>BUGFIX: Invalidate cache if files don't exist - <a href="https://github.com/fsharp/FAKE/pull/2070">https://github.com/fsharp/FAKE/pull/2070</a></li>
+<li>BUGFIX: Vault.fs was not decrypting/encrypting properly - <a href="https://github.com/fsharp/FAKE/pull/2070">https://github.com/fsharp/FAKE/pull/2070</a></li>
+<li>BUGFIX: Fix an issue with empty arguments in command line parsing - <a href="https://github.com/fsharp/FAKE/pull/2070">https://github.com/fsharp/FAKE/pull/2070</a></li>
+<li>BUGFIX: Do not allow tripple quotes in command line - <a href="https://github.com/fsharp/FAKE/pull/2070">https://github.com/fsharp/FAKE/pull/2070</a></li>
 </ul>
 <h2><a name="5-5-0-2018-08-26" class="anchor" href="#5-5-0-2018-08-26">5.5.0 - 2018-08-26</a></h2>
 <ul>
@@ -2024,7 +2034,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.5.1-alpha.403</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
 									</ul>
 								</div>
 							</div>
