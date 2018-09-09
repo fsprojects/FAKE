@@ -314,6 +314,11 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 <span class="l">38: </span>
 <span class="l">39: </span>
 <span class="l">40: </span>
+<span class="l">41: </span>
+<span class="l">42: </span>
+<span class="l">43: </span>
+<span class="l">44: </span>
+<span class="l">45: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
 <span class="s">nuget Fake.BuildServer.TeamCity</span>
@@ -335,7 +340,7 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Test&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">File</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">WriteAllText</span><span class="pn">(</span><span class="s">&quot;myfile.txt&quot;</span><span class="pn">,</span> <span class="s">&quot;some content&quot;</span><span class="pn">)</span>
 
-    <span class="c">// traceTag can be used to open scopes/blocks. They will be shown in the build-server visualization supported.</span>
+    <span class="c">// traceTag can be used to open scopes/blocks. They will be shown in the build-server visualization if supported.</span>
     <span class="pn">(</span> <span class="k">use</span> <span class="id">testsuite</span> <span class="o">=</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">traceTag</span> <span class="pn">(</span><span class="id">KnownTags</span><span class="pn">.</span><span class="id">TestSuite</span> <span class="s">&quot;some-testsuite&quot;</span><span class="pn">)</span> <span class="s">&quot;Starting unit test&quot;</span>
       <span class="pn">(</span> <span class="k">use</span> <span class="id">_</span> <span class="o">=</span> <span class="id">Trace</span><span class="pn">.</span><span class="id">traceTag</span> <span class="pn">(</span><span class="id">KnownTags</span><span class="pn">.</span><span class="id">Test</span> <span class="s">&quot;some-test&quot;</span><span class="pn">)</span> <span class="s">&quot;Starting unit test 1&quot;</span>
         <span class="c">// Scope of the test</span>
@@ -346,6 +351,11 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 
     <span class="c">// Uploads an artifact no matter the build-server</span>
     <span class="id">Trace</span><span class="pn">.</span><span class="id">publish</span> <span class="id">ImportData</span><span class="pn">.</span><span class="id">BuildArtifact</span> <span class="s">&quot;myfile.txt&quot;</span>
+
+    <span class="c">// Uploads test results no matter the build-server</span>
+    <span class="c">// Note: There might be limitations on some system with some imports.</span>
+    <span class="c">// Please help by testing, submitting issues and pull requests.</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">publish</span> <span class="pn">(</span><span class="id">ImportData</span><span class="pn">.</span><span class="id">Nunit</span> <span class="id">NunitDataVersion</span><span class="pn">.</span><span class="id">Nunit</span><span class="pn">)</span> <span class="s">&quot;Fake_Core_CommandLine_UnitTests.TestResults.xml&quot;</span>
 
     <span class="id">Trace</span><span class="pn">.</span><span class="id">setBuildNumber</span> <span class="s">&quot;my-build-number&quot;</span>
 
@@ -360,6 +370,24 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 </table>
 <h2><a name="Implementing-support-for-a-build-server" class="anchor" href="#Implementing-support-for-a-build-server">Implementing support for a build-server</a></h2>
 <p>Please look at the existing implementations. Please contribute new implementations to the repository. Some changes like adding new cases to the <code>TraceListener</code> module are not considered breaking changes. Using these types (using <code>match</code> on these types to be exact) outside the fake repository is not considered good practice.</p>
+<h2><a name="Example-FAKE-repository" class="anchor" href="#Example-FAKE-repository">Example FAKE repository</a></h2>
+<p>Fake itself uses AppVeyor and TeamFoundation support for importing and displaying test results:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// import test result</span>
+<span class="id">Trace</span><span class="pn">.</span><span class="id">publish</span> <span class="pn">(</span><span class="id">ImportData</span><span class="pn">.</span><span class="id">Nunit</span> <span class="id">NunitDataVersion</span><span class="pn">.</span><span class="id">Nunit</span><span class="pn">)</span> <span class="s">&quot;Fake_Core_CommandLine_UnitTests.TestResults.xml&quot;</span>
+
+<span class="c">// upload artifacts</span>
+<span class="id">Trace</span><span class="pn">.</span><span class="id">publish</span> <span class="id">ImportData</span><span class="pn">.</span><span class="id">BuildArtifact</span> <span class="pn">(</span><span class="s">&quot;release/dotnetcore/fake-dotnetcore-win7-x64.zip&quot;</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Look at this <a href="https://fakebuild.visualstudio.com/FSProjects/FSProjects%20Team/_build/results?buildId=425">CI-build</a> for an example on how it looks in VSTS.</p>
+<p><img src="/pics/buildserver/AppVeyor_imported_tests.png" alt="AppVeyor test import" /></p>
 
 <div class="tip" id="fs1">namespace System</div>
 <div class="tip" id="fs2">namespace System.IO</div>
@@ -470,7 +498,7 @@ By using the <code>Fake.Core.Trace</code>-Api Fake will use all available build-
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.1</a></li>
 									</ul>
 								</div>
 							</div>

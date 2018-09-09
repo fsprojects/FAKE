@@ -330,42 +330,8 @@ see this <a href="https://github.com/FakeBuild/fake-bootstrap">example project</
 </li>
 <li><p>Bootstrap via paket <code>clitool</code>, basically the same as <code>DotNetCliToolReference</code> but managed via paket. See the <a href="https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool"><code>paket_clitool</code> branch of <code>fake-bootstrap</code></a> in particular the <a href="https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj">build.proj</a> file.</p></li>
 </ul>
-<h2><a name="Create-and-Edit-scripts-with-Intellisense" class="anchor" href="#Create-and-Edit-scripts-with-Intellisense">Create and Edit scripts with Intellisense</a></h2>
-<p>Once <code>fake</code> is available you can start creating your script:</p>
-<ul>
-<li>
-<p>Create a new file <code>myscript.fsx</code> with the following contents:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
-<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
-<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
-</code></pre></td>
-</tr>
-</table>
-<p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need.</p>
-</li>
-<li>
-<p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
-This might take some seconds depending on your internet connection
-<div class="alert alert-info">
-<h5>INFO</h5>
-<p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
-</div></p>
-</li>
-<li>
-<p>now open the script in VS Code with ionide-fsharp extension or Visual Studio.
-<div class="alert alert-info">
-<h5>INFO</h5>
-<p>
-If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
-Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
-</p>
-</div></p>
-</li>
-</ul>
+<h2><a name="One-note-on-Intellisense" class="anchor" href="#One-note-on-Intellisense">One note on Intellisense</a></h2>
+<p>Whenever you update the dependencies (part of the example) delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files and intellisense!</p>
 <h2><a name="Example-Compiling-and-building-your-NET-application" class="anchor" href="#Example-Compiling-and-building-your-NET-application">Example - Compiling and building your .NET application</a></h2>
 <p>This example will guide you by adding a fake script to your existing .NET application.</p>
 <h3><a name="Getting-started" class="anchor" href="#Getting-started">Getting started</a></h3>
@@ -382,7 +348,7 @@ Create a new file with Visual Studio or Visual Studio Code (with ionide) and pas
 </tr>
 </table>
 <p>This is all we need for now to declare that we need the <code>Fake.Core.Target</code> module and want to enable intellisense.</p>
-<p>Now run <code>fake run build.fsx</code> to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some Editors).</p>
+<p>Now run <code>fake run build.fsx</code> to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some editors).</p>
 <p>Now that we have setup our basic environment to edit the script file we add our first target:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -477,7 +443,7 @@ Create a new file with Visual Studio or Visual Studio Code (with ionide) and pas
 
 <span class="c">// Targets</span>
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
-  <span class="id">Shell</span><span class="pn">.</span><span class="id">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">buildDir</span>
+  <span class="id">Shell</span><span class="pn">.</span><span class="id">cleanDir</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">buildDir</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
@@ -928,7 +894,7 @@ Now edit the script like this:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.1</a></li>
 									</ul>
 								</div>
 							</div>

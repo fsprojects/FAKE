@@ -341,16 +341,42 @@ dotnet new fake
 <h2><a name="Buildserver-support" class="anchor" href="#Buildserver-support">Buildserver support</a></h2>
 <p>AppVeyor: <a href="https://github.com/fsharp/FAKE/blob/master/appveyor.yml"><a href="https://github.com/fsharp/FAKE/blob/master/appveyor.yml">https://github.com/fsharp/FAKE/blob/master/appveyor.yml</a></a>
 Travis: <a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml"><a href="https://github.com/fsharp/FAKE/blob/master/.travis.yml">https://github.com/fsharp/FAKE/blob/master/.travis.yml</a></a></p>
-<h2><a name="Why" class="anchor" href="#Why">Why?</a></h2>
-<p>The goals are:</p>
+<h2><a name="One-note-on-Intellisense" class="anchor" href="#One-note-on-Intellisense">One note on Intellisense</a></h2>
+<p>This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the <code>&lt;script&gt;.fsx.lock</code> file and re-run fake to update all files)</p>
 <ul>
-<li>Provide a easy to use cross platform way to use FAKE. With a good bootstrapping experience</li>
-<li>Cleanup 'FakeLib'</li>
-<li>Extract reusable libraries and make them usable for your projects or the fsi!</li>
-<li>Make it easier to extend FAKE for your own use-case</li>
-<li>Provide an easy way for simple scripting, automate everything, everywhere.</li>
+<li>
+<p>Assume you have a script <code>myscript.fsx</code> with the following contents:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target prerelease&quot;</span>
+<span class="pp">#load</span> <span class="s">&quot;./.fake/myscript.fsx/intellisense.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Where you can add all the <a href="fake-fake5-modules.html">fake modules</a> you need (work through the example below if you see this the first time).</p>
+</li>
+<li>
+<p>run the script to restore your dependencies and setup the intellisense support: <code>fake run myscript.fsx</code>.
+This might take some seconds depending on your internet connection
+<div class="alert alert-info">
+<h5>INFO</h5>
+<p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
+</div></p>
+</li>
+<li>
+<p>now open the script in VS Code with ionide-fsharp extension or Visual Studio.
+<div class="alert alert-info">
+<h5>INFO</h5>
+<p>
+If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
+Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
+</p>
+</div></p>
+</li>
 </ul>
-<p>Please read <a href="https://github.com/fsharp/FAKE/issues/1232">https://github.com/fsharp/FAKE/issues/1232</a></p>
 <h2><a name="What-is-the-migration-path" class="anchor" href="#What-is-the-migration-path">What is the migration path?</a></h2>
 <p>See <a href="fake-migrate-to-fake-5.html">Fake 5 Migration Guide</a></p>
 <h2><a name="How-to-specify-dependencies" class="anchor" href="#How-to-specify-dependencies">How to specify dependencies?</a></h2>
@@ -546,7 +572,7 @@ fake run build.fsx
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.1</a></li>
 									</ul>
 								</div>
 							</div>

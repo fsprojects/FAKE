@@ -262,6 +262,9 @@
 									<!-- Content -->
                       <article>
 <h1><a name="F-Make-What-is-FAKE" class="anchor" href="#F-Make-What-is-FAKE">F# Make - What is FAKE?</a></h1>
+<blockquote>
+<p>This a general discussion about FAKE, <a href="fake-fake5-learn-more.html">here you can learn about the FAKE 5 upgrade</a> or see <a href="contributing.html">how to contribute</a></p>
+</blockquote>
 <p><a href="https://gitter.im/fsharp/FAKE?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/fsharp/FAKE" /></a></p>
 <p>"FAKE - F# Make" is a cross platform build automation system. Due to its integration
 in F#, all benefits of the .NET Framework and functional programming can be used, including
@@ -269,6 +272,52 @@ the extensive class library, powerful debuggers and integrated development envir
 Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.</p>
 <p>The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.</p>
 <p>See the <a href="index.html">project home page</a> for tutorials and <a href="apidocs/v5/index.html">API documentation</a>.</p>
+<h2><a name="Why-FAKE" class="anchor" href="#Why-FAKE">Why FAKE?</a></h2>
+<p>The industry movement towards "DevOps" and "infrastructure as code" leads to the fact that reproducible builds and automation becomes more and more important for basically every project.
+Question is: Why do we build our automations in "old" and error-prone scripting languages like <code>bash</code>, <code>cmd</code> or <code>powershell</code> instead of a full featured language with IDE support, static typing and compile-time errors?
+We believe there are different answers to that:</p>
+<ul>
+<li>The build/release process starts very simple, often with a single command. Setup a C# project or installing dependencies feels like overkill</li>
+<li>People use/depend on external systems and deeply integrate into those.</li>
+<li>Lack of awareness of other options</li>
+</ul>
+<p>FAKE addresses the problem in the following ways:</p>
+<ul>
+<li>It builds on top of a fully featured statically typed and productive language (F#) with several IDE options.</li>
+<li>It lowers the entry point by working on top of script files. No project file or dependencies besides the fake runner.</li>
+<li>
+Remove dependencies from the CI/CD system while providing full integration. Make features available locally.
+With FAKE you can choose and switch between multiple system easily while having almost native integrations.
+</li>
+<li>Provide modules for the most commonly used tasks.</li>
+<li>Make it easy to start external processes through various APIs.</li>
+<li>Add all your automation scripts to your repository.</li>
+</ul>
+<h2><a name="When-should-I-use-FAKE" class="anchor" href="#When-should-I-use-FAKE">When should I use FAKE</a></h2>
+<p>Use FAKE in the following ways:</p>
+<ul>
+<li>Remove/reduce dependencies on your CI/CD system</li>
+<li>Make automations reproducable and testable</li>
+<li>Replace existing Shell-Scripts</li>
+<li>Automate manual tasks</li>
+</ul>
+<p>Try to not use fake:</p>
+<ul>
+<li>To replace msbuild</li>
+<li>
+To replace/rewrite existing tools you currently execute as part of your build process
+
+&gt; Using a fake module is preferred over calling external processes directly.
+</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><a href="https://twitter.com/JonathanOhlrich/status/1031591590186442753">Twitter</a></li>
+<li><a href="https://www.youtube.com/watch?v=_sZT0CpJ6Vo">(Video) Immutable application deployments with F# Make - Nikolay Norman Andersen</a></li>
+<li><a href="https://www.elastic.co/de/blog/solidifying-releases-with-fsharp-make">(fake 4 API) Elasticsearch.Net</a></li>
+</ul>
+<h2><a name="Get-started" class="anchor" href="#Get-started">Get started</a></h2>
+<p>With our <a href="fake-dotnetcore.html">quickstart</a> and <a href="fake-gettingstarted.html">getting-started</a> guides.</p>
 
 
                       </article>
@@ -375,7 +424,7 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.0</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.1</a></li>
 									</ul>
 								</div>
 							</div>
