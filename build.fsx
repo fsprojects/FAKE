@@ -547,10 +547,11 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
+    let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
     let processResult =
-        DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
+        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
