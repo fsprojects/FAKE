@@ -1,8 +1,9 @@
 # Release Notes
 
-## 5.6.1-alpha - tbd
+## 5.6.1 - 2018-09-09
 
-* tbd.
+* BUGFIX: dotnet restore with configfile did not work - https://github.com/fsharp/FAKE/issues/2082
+* DOCS: various improvements in the documentation - https://github.com/fsharp/FAKE/pull/2081
 
 ## 5.6.0 - 2018-09-09
 
