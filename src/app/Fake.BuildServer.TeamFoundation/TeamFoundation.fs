@@ -6,6 +6,37 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
+/// native support for TeamFoundation/VSTS specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html)
+/// 
+/// ### Secret Variables
+/// 
+/// This CI server supports the concept of secret variables and uses the [Vault](/core-vault.html) to store them.
+/// In order to access secret variables you need to use one of the fake 5 tasks from [vsts-fsharp](https://github.com/isaacabraham/vsts-fsharp).
+/// 
+/// #### Example implementation (supports runner and vault tasks)
+///
+///        // Either use a local vault filled by the 'FAKE_VAULT_VARIABLES' environment variable
+///        // or fall back to the build process if none is given
+///        let vault =
+///            match Vault.fromFakeEnvironmentOrNone() with
+///            | Some v -> v // fake 5 vault task, uses 'FAKE_VAULT_VARIABLES' by default
+///            | None -> TeamFoundation.variables // fake 5 runner task
+///        
+///        // Only needed if you want to fallback to 'normal' environment variables (locally for example)
+///        let getVarOrDefault name =
+///            match vault.TryGet name with
+///            | Some v -> v
+///            | None -> Environment.environVarOrFail name
+///        Target.create "Deploy" (fun _ ->
+///            let token = getVarOrDefault "github_token"
+///            // Use token to deploy to github
+/// 
+///            let apiKey = getVarOrDefault "nugetkey"
+///            // Use apiKey to deploy to nuget
+///            ()
+///        )
+///
 [<RequireQualifiedAccess>]
 module TeamFoundation =
     // See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md

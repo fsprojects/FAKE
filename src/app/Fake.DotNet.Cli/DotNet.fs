@@ -518,25 +518,31 @@ module DotNet =
     /// [omit]
     let private argList2 name values =
         values
-        |> Seq.collect (fun v -> ["--" + name; sprintf @"""%s""" v])
-        |> String.concat " "
+        |> List.collect (fun v -> ["--" + name; v])
 
     /// [omit]
     let private argOption name value =
         match value with
-            | true -> sprintf "--%s" name
-            | false -> ""
+            | true -> [ sprintf "--%s" name ]
+            | false -> []
 
     /// [omit]
     let private buildCommonArgs (param: Options) =
-        [   defaultArg param.CustomParams ""
-            param.Verbosity |> Option.toList |> Seq.map (fun v -> v.ToString().ToLowerInvariant()) |> argList2 "verbosity"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        [   defaultArg param.CustomParams "" |> Args.fromWindowsCommandLine |> Seq.toList
+            param.Verbosity
+                |> Option.toList
+                |> List.map (fun v -> v.ToString().ToLowerInvariant())
+                |> argList2 "verbosity"
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
     /// [omit]
     let private buildSdkOptionsArgs (param: Options) =
         [   param.Diagnostics |> argOption "--diagostics"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
     let internal withGlobalJson workDir version f =
         let globalJsonPath =
@@ -566,7 +572,7 @@ module DotNet =
     /// - 'options' - common execution options
     /// - 'command' - the sdk command to execute 'test', 'new', 'build', ...
     /// - 'args' - command arguments
-    let exec (buildOptions: Options -> Options) command args =
+    let exec (buildOptions: Options -> Options) (command:string) (args:string) =
         let results = new System.Collections.Generic.List<Fake.Core.ConsoleMessage>()
         let timeout = TimeSpan.MaxValue
 
@@ -581,7 +587,12 @@ module DotNet =
         let options = buildOptions (Options.Create())
         let sdkOptions = buildSdkOptionsArgs options
         let commonOptions = buildCommonArgs options
-        let cmdArgs = sprintf "%s %s %s %s" sdkOptions command commonOptions args
+        let cmdArgs = 
+            [ sdkOptions
+              command |> Args.fromWindowsCommandLine |> Seq.toList
+              commonOptions
+              args |> Args.fromWindowsCommandLine |> Seq.toList ]
+            |> List.concat          
 
         let result =
             let f (info:ProcStartInfo) =
@@ -593,7 +604,7 @@ module DotNet =
                 { info with
                     FileName = options.DotNetCliPath
                     WorkingDirectory = options.WorkingDirectory
-                    Arguments = cmdArgs }
+                    Arguments = Args.toWindowsCommandLine cmdArgs }
                 |> Process.setEnvironment options.Environment
                 |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
 
@@ -838,12 +849,14 @@ module DotNet =
     let private buildRestoreArgs (param: RestoreOptions) =
         [   param.Sources |> argList2 "source"
             param.Packages |> argList2 "packages"
-            param.ConfigFile |> Option.toList |> argList2 "configFile"
+            param.ConfigFile |> Option.toList |> argList2 "configfile"
             param.NoCache |> argOption "no-cache"
             param.Runtime |> Option.toList |> argList2 "runtime"
             param.IgnoreFailedSources |> argOption "ignore-failed-sources"
             param.DisableParallel |> argOption "disable-parallel"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet restore command
@@ -854,8 +867,8 @@ module DotNet =
     let restore setParams project =
         use __ = Trace.traceTask "DotNet:restore" project
         let param = RestoreOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildRestoreArgs param)
-        let result = exec (fun _ -> param.Common) "restore" args
+        let args = project :: buildRestoreArgs param
+        let result = exec (fun _ -> param.Common) "restore" (Args.toWindowsCommandLine args)
         if not result.OK then failwithf "dotnet restore failed with code %i" result.ExitCode
         __.MarkSuccess()
 
@@ -890,7 +903,7 @@ module DotNet =
 
     /// [omit]
     let private buildConfigurationArg (param: BuildConfiguration) =
-        sprintf "--configuration %O" param
+        argList2 "configuration" [param.ToString()]
 
     /// dotnet pack command options
     type PackOptions =
@@ -941,7 +954,9 @@ module DotNet =
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
             param.NoBuild |> argOption "no-build"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet pack command
@@ -952,8 +967,8 @@ module DotNet =
     let pack setParams project =
         use __ = Trace.traceTask "DotNet:pack" project
         let param = PackOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildPackArgs param)
-        let result = exec (fun _ -> param.Common) "pack" args
+        let args = project :: buildPackArgs param
+        let result = exec (fun _ -> param.Common) "pack" (Args.toWindowsCommandLine args)
         if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
         __.MarkSuccess()
 
@@ -1014,7 +1029,9 @@ module DotNet =
             param.OutputPath |> Option.toList |> argList2 "output"
             param.VersionSuffix |> Option.toList |> argList2 "version-suffix"
             param.NoBuild |> argOption "no-build"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet publish command
@@ -1025,8 +1042,8 @@ module DotNet =
     let publish setParams project =
         use __ = Trace.traceTask "DotNet:publish" project
         let param = PublishOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildPublishArgs param)
-        let result = exec (fun _ -> param.Common) "publish" args
+        let args = project :: buildPublishArgs param
+        let result = exec (fun _ -> param.Common) "publish" (Args.toWindowsCommandLine args)
         if not result.OK then failwithf "dotnet publish failed with code %i" result.ExitCode
         __.MarkSuccess()
 
@@ -1083,8 +1100,10 @@ module DotNet =
             param.Runtime |> Option.toList |> argList2 "runtime"
             param.BuildBasePath |> Option.toList |> argList2 "build-base-path"
             param.OutputPath |> Option.toList |> argList2 "output"
-            (if param.Native then "--native" else "")
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+            (if param.Native then [ "--native" ] else [])
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet build command
@@ -1095,8 +1114,8 @@ module DotNet =
     let build setParams project =
         use __ = Trace.traceTask "DotNet:build" project
         let param = BuildOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildBuildArgs param)
-        let result = exec (fun _ -> param.Common) "build" args
+        let args = project :: buildBuildArgs param
+        let result = exec (fun _ -> param.Common) "build" (Args.toWindowsCommandLine args)
         if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
         __.MarkSuccess()
 
@@ -1189,7 +1208,9 @@ module DotNet =
             param.ResultsDirectory |> Option.toList |> argList2 "results-directory"
             param.Collect |> Option.toList |> argList2 "collect"
             param.NoRestore |> argOption "no-restore"
-        ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
+        ]
+        |> List.concat
+        |> List.filter (not << String.IsNullOrEmpty)
 
 
     /// Execute dotnet build command
@@ -1200,8 +1221,8 @@ module DotNet =
     let test setParams project =
         use __ = Trace.traceTask "DotNet:test" project
         let param = TestOptions.Create() |> setParams
-        let args = sprintf "%s %s" (Process.quoteIfNeeded project) (buildTestArgs param)
-        let result = exec (fun _ -> param.Common) "test" args
+        let args = project :: buildTestArgs param
+        let result = exec (fun _ -> param.Common) "test" (Args.toWindowsCommandLine args)
         if not result.OK then failwithf "dotnet test failed with code %i" result.ExitCode
         __.MarkSuccess()
 

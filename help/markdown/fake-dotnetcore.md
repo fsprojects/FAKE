@@ -78,17 +78,35 @@ See [Fake command line](fake-commandline.html)
 AppVeyor: [https://github.com/fsharp/FAKE/blob/master/appveyor.yml](https://github.com/fsharp/FAKE/blob/master/appveyor.yml)
 Travis: [https://github.com/fsharp/FAKE/blob/master/.travis.yml](https://github.com/fsharp/FAKE/blob/master/.travis.yml)
 
-## Why?
+## One note on Intellisense
 
-The goals are:
+This section is to clarify when an how the intellisense updates when you add new modules (short form: Delete the `<script>.fsx.lock` file and re-run fake to update all files)
 
-- Provide a easy to use cross platform way to use FAKE. With a good bootstrapping experience
-- Cleanup 'FakeLib'
-- Extract reusable libraries and make them usable for your projects or the fsi!
-- Make it easier to extend FAKE for your own use-case
-- Provide an easy way for simple scripting, automate everything, everywhere.
+* Assume you have a script `myscript.fsx` with the following contents:
 
-Please read https://github.com/fsharp/FAKE/issues/1232
+  ```fsharp
+  #r "paket:
+  nuget Fake.Core.Target prerelease"
+  #load "./.fake/myscript.fsx/intellisense.fsx"
+  ```
+
+  Where you can add all the [fake modules](fake-fake5-modules.html) you need (work through the example below if you see this the first time).
+
+* run the script to restore your dependencies and setup the intellisense support: `fake run myscript.fsx`.
+  This might take some seconds depending on your internet connection  
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
+</div>
+
+* now open the script in VS Code with ionide-fsharp extension or Visual Studio.
+<div class="alert alert-info">
+    <h5>INFO</h5>
+    <p>
+    If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
+    Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
+    </p>
+</div>
 
 ## What is the migration path?
 

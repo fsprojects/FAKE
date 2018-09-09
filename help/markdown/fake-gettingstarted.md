@@ -57,35 +57,9 @@ There are various ways to install FAKE 5:
 
 * Bootstrap via paket `clitool`, basically the same as `DotNetCliToolReference` but managed via paket. See the [`paket_clitool` branch of `fake-bootstrap`](https://github.com/FakeBuild/fake-bootstrap/tree/paket_clitool) in particular the [build.proj](https://github.com/FakeBuild/fake-bootstrap/blob/paket_clitool/build.proj) file.
 
-## Create and Edit scripts with Intellisense
+## One note on Intellisense
 
-Once `fake` is available you can start creating your script:
-
-* Create a new file `myscript.fsx` with the following contents:
-
-  ```fsharp
-  #r "paket:
-  nuget Fake.Core.Target prerelease"
-  #load "./.fake/myscript.fsx/intellisense.fsx"
-  ```
-
-  Where you can add all the [fake modules](fake-fake5-modules.html) you need.
-
-* run the script to restore your dependencies and setup the intellisense support: `fake run myscript.fsx`.
-  This might take some seconds depending on your internet connection  
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>The warning <code>FS0988: Main module of program is empty: nothing will happen when it is run</code> indicates that you have not written any code into the script yet.</p>
-</div>
-
-* now open the script in VS Code with ionide-fsharp extension or Visual Studio.
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>
-    If you change your dependencies you need to delete <code>myscript.fsx.lock</code> and run the script again for intellisense to update.
-    Intellisense is shown for the full framework while the script is run as <code>netcoreapp20</code> therefore intellisense might show APIs which are not actually usable.
-    </p>
-</div>
+Whenever you update the dependencies (part of the example) delete the `<script>.fsx.lock` file and re-run fake to update all files and intellisense!
 
 ## Example - Compiling and building your .NET application
 
@@ -104,7 +78,7 @@ nuget Fake.Core.Target //"
 
 This is all we need for now to declare that we need the `Fake.Core.Target` module and want to enable intellisense.
 
-Now run `fake run build.fsx` to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some Editors).
+Now run `fake run build.fsx` to make fake prepare our environment. Now our IDE can load the dependencies and will have intellisense enabled (you might need to reopen the script file on some editors).
 
 Now that we have setup our basic environment to edit the script file we add our first target:
 
@@ -164,7 +138,7 @@ let buildDir = "./build/"
 
 // Targets
 Target.create "Clean" (fun _ ->
-  Shell.CleanDir buildDir
+  Shell.cleanDir buildDir
 )
 
 Target.create "Default" (fun _ ->

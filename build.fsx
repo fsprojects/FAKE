@@ -95,16 +95,10 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-// until bugfix in Vault.fs is released
-#load "src/app/Fake.Core.Vault/Vault.fs"
-
-let vault = Vault.fromFakeEnvironmentVariable()
-    (*
-    let envVar = "FAKE_VAULT_VARIABLES"
-    let vars = Environment.environVarOrDefault envVar ""
-    if System.String.IsNullOrEmpty vars then
-        TeamFoundation.variables
-    else Vault.fromEnvironmentVariable envVar*)
+let vault =
+    match Vault.fromFakeEnvironmentOrNone() with
+    | Some v -> v
+    | None -> TeamFoundation.variables
 
 let getVarOrDefault name def =
     match vault.TryGet name with
@@ -165,26 +159,6 @@ let chocoVersion =
     result
 
 Trace.setBuildNumber nugetVersion
-
-// TODO: Get rid of me
-let private publishTests runnerType (resultsFiles:string seq) (mergeResults:bool) (platform:string) (config:string) (runTitle:string) (publishRunAttachments:bool) =
-    TeamFoundation.write "results.publish"
-        [ yield "type", runnerType
-          if mergeResults then
-            yield "mergeResults", "true"
-          if String.isNotNullOrEmpty platform then
-            yield "platform", platform
-          if String.isNotNullOrEmpty config then
-            yield "config", config
-          if String.isNotNullOrEmpty runTitle then
-            yield "runTitle", runTitle
-          if publishRunAttachments then
-            yield "publishRunAttachments", "true"
-          if not (Seq.isEmpty resultsFiles) then
-            yield "resultFiles", System.String.Join(",", resultsFiles |> Seq.map Path.GetFullPath)
-          yield "testRunSystem", "VSTSTask" ]
-        ""
-
 
 let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
 let inline dtntWorkDir wd =
@@ -569,16 +543,14 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.IntegrationTests/bin/Release/netcoreapp2.1/Fake.Core.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet Core Integration tests failed."
-    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
-    publishTests "NUnit" ["Fake_Core_IntegrationTests.TestResults.xml"] false "" "" "" true
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_IntegrationTests.TestResults.xml"
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
     let processResult =
         DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
-    publishTests "NUnit" ["Fake_DotNet_Cli_IntegrationTests.TestResults.xml"] false "" "" "" true
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
@@ -587,16 +559,14 @@ Target.create "DotNetCoreUnitTests" (fun _ ->
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests failed."
-    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
-    publishTests "NUnit" ["Fake_Core_UnitTests.TestResults.xml"] false "" "" "" true
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_UnitTests.TestResults.xml"
 
     // dotnet run --project src/test/Fake.Core.CommandLine.UnitTests/Fake.Core.CommandLine.UnitTests.fsproj
     let processResult =
         DotNet.exec (dtntWorkDir root) "src/test/Fake.Core.CommandLine.UnitTests/bin/Release/netcoreapp2.1/Fake.Core.CommandLine.UnitTests.dll" "--summary"
 
     if processResult.ExitCode <> 0 then failwithf "Unit-Tests for Fake.Core.CommandLine failed."
-    //Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
-    publishTests "NUnit" ["Fake_Core_CommandLine_UnitTests.TestResults.xml"] false "" "" "" true
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_Core_CommandLine_UnitTests.TestResults.xml"
 )
 
 Target.create "BootstrapTestDotNetCore" (fun _ ->
@@ -610,7 +580,6 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
             [ ".fake/testbuild.fsx/packages"
               ".fake/testbuild.fsx/paket.depedencies.sha1"
               ".fake/testbuild.fsx/paket.lock"
-              ".fake/testbuild.fsx/assemblies.cached"
               "testbuild.fsx.lock" ]
             |> List.iter Shell.rm_rf
             // TODO: Clean a potentially cached dll as well.

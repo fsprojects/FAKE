@@ -396,7 +396,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
         let ver = splits.[1]
         let loc = Path.readPathFromCache config.ScriptFilePath splits.[2]
         let fullName = splits.[3]
-        if not (File.Exists fullName) then
+        if not (File.Exists loc) then
             failwithf "Cache is invalid as '%s' doesn't exist" fullName
         { IsReferenceAssembly = isRef
           Info =
