@@ -903,7 +903,7 @@ module DotNet =
 
     /// [omit]
     let private buildConfigurationArg (param: BuildConfiguration) =
-        [ sprintf "--configuration %O" param ]
+        argList2 "configuration" [param.ToString()]
 
     /// dotnet pack command options
     type PackOptions =

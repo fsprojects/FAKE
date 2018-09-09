@@ -580,7 +580,6 @@ Target.create "BootstrapTestDotNetCore" (fun _ ->
             [ ".fake/testbuild.fsx/packages"
               ".fake/testbuild.fsx/paket.depedencies.sha1"
               ".fake/testbuild.fsx/paket.lock"
-              ".fake/testbuild.fsx/assemblies.cached"
               "testbuild.fsx.lock" ]
             |> List.iter Shell.rm_rf
             // TODO: Clean a potentially cached dll as well.
