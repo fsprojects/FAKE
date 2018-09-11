@@ -943,21 +943,6 @@ Target.create "FastRelease" (fun _ ->
 Target.create "Release_Staging" (fun _ -> ())
 
 open System.IO.Compression
-let unzip target (fileName : string) =
-    use stream = new FileStream(fileName, FileMode.Open)
-    use zipFile = new ZipArchive(stream)
-    for zipEntry in zipFile.Entries do
-        let unzipPath = Path.Combine(target, zipEntry.FullName)
-        let directoryPath = Path.GetDirectoryName(unzipPath)
-        if unzipPath.EndsWith "/" then
-            Directory.CreateDirectory(unzipPath) |> ignore
-        else
-            // unzip the file
-            Directory.ensure directoryPath
-            let zipStream = zipEntry.Open()
-            if unzipPath.EndsWith "/" |> not then
-                use unzippedFileStream = File.Create(unzipPath)
-                zipStream.CopyTo(unzippedFileStream)
 
 Target.create "PrepareArtifacts" (fun _ ->
     if not fromArtifacts then
@@ -972,23 +957,23 @@ Target.create "PrepareArtifacts" (fun _ ->
         files
         |> Shell.copy (nugetDncDir </> "Fake.netcore")
 
-        unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
+        Zip.unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
 
         if Environment.isWindows then
             Directory.ensure chocoReleaseDir
             let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
             Shell.copyFile (sprintf "%s/%s" chocoReleaseDir name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
-            unzip "." (artifactsDir </> "chocolatey-requirements.zip")
+            Zip.unzip "." (artifactsDir </> "chocolatey-requirements.zip")
 
         if buildLegacy then
             Directory.ensure nugetLegacyDir
-            unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
+            Zip.unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
 
             Directory.ensure "temp/build"
             !! (nugetLegacyDir </> "*.nupkg")
             |> Seq.iter (fun pack ->
-                unzip "temp/build" pack
+                Zip.unzip "temp/build" pack
             )
             Shell.copyDir "build" "temp/build" (fun _ -> true)
 
@@ -1001,7 +986,7 @@ Target.create "PrepareArtifacts" (fun _ ->
         let unzipIfExists dir file =
             Directory.ensure dir
             if File.Exists file then
-                unzip dir file
+                Zip.unzip dir file
 
         // File is not available in case we already have build the full docs
         unzipIfExists "help" (artifactsDir </> "help-markdown.zip")
