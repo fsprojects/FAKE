@@ -151,6 +151,11 @@ let ProgramFiles =
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let ProgramFilesX86 = Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86
 
+/// The path to vswhere utility which helps determine VS2017+ installation directory
+[<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
+let VSWhere = ProgramFilesX86 + @"\Microsoft Visual Studio\Installer\vswhere.exe"
+
+
 /// The system root environment variable. Typically "C:\Windows"
 [<System.Obsolete("Use Fake.Core.Environment instead (FAKE0001 - package: Fake.Core.Environment)")>]
 let SystemRoot = environVar "SystemRoot"

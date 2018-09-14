@@ -105,6 +105,17 @@ let msBuildExe =
             ]
             defaultArg (sources |> List.choose id |> List.tryHead) "xbuild"
         | false, _ ->
+            let getVSPathFromVSWhere ver =
+                try 
+                    ExecProcessAndReturnMessages(fun info ->
+                        info.FileName <- VSWhere
+                        info.Arguments <- sprintf "-version %s -property installationPath" ver) TimeSpan.MaxValue
+                    |> fun processResult ->
+                           if processResult.OK then
+                               processResult.Messages.ToArray() |> Array.tryHead
+                               |> Option.map(fun vsRoot -> sprintf @"%s\MSBuild\%s\Bin" vsRoot ver)
+                           else Option.None
+                with _ -> Option.None
 
             let configIgnoreMSBuild =
                 if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
@@ -113,8 +124,12 @@ let msBuildExe =
             let findOnVSPathsThenSystemPath =
                 let dict = toDict knownMsBuildEntries
                 let vsVersionPaths =
-                    defaultArg (EnvironmentHelper.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
-                    |> List.map ((@@) ProgramFilesX86)
+                    let version = EnvironmentHelper.environVarOrNone "VisualStudioVersion"
+                    let paths =
+                        defaultArg (version |> Option.bind dict.TryFind) getAllKnownPaths
+                        |> List.map ((@@) ProgramFilesX86)
+                    Option.bind getVSPathFromVSWhere version
+                    |> Option.fold(fun paths path -> path :: paths) paths
 
                 ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
 

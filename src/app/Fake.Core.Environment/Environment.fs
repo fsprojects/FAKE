@@ -145,6 +145,9 @@ module Environment =
         | _ -> environVar "ProgramFiles"
         |> fun detected -> if isNull detected then @"C:\Program Files (x86)\" else detected
 
+    /// The path to vswhere utility which helps determine VS2017+ installation directory
+    let VSWhere = ProgramFilesX86 + @"\Microsoft Visual Studio\Installer\vswhere.exe"
+
     /// The system root environment variable. Typically "C:\Windows"
     let SystemRoot = environVar "SystemRoot"
 
