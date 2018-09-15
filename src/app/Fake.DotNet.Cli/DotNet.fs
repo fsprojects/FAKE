@@ -337,6 +337,36 @@ module DotNet =
                 Version = Version "2.1.302"
             }
 
+        let Release_2_1_400 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.400"
+            }
+
+        let Release_2_1_401 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.401"
+            }
+
+        let Release_2_1_402 option =
+            { option with
+                InstallerOptions = (fun io ->
+                    { io with
+                        Branch = "release/2.1"
+                    })
+                Channel = None
+                Version = Version "2.1.402"
+            }
+
         let FromGlobalJson option =
             { option with
                 InstallerOptions = id
