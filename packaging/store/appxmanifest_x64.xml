@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+	xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4" 
+  xmlns:iot2="http://schemas.microsoft.com/appx/manifest/iot/windows10/2" 
+>
+  <Identity Name="64328yaaf.fakebuild" Version="0.1.1.0" Publisher="CN=F33A9EBD-533F-4056-8FF9-EECCC35CAD66" ProcessorArchitecture="x64" />
+    <Properties>
+       <DisplayName>fakebuild</DisplayName>
+       <PublisherDisplayName>yaaf</PublisherDisplayName>
+       <Description>F# Make (fake.exe) command line tool</Description>
+      <Logo>logo.png</Logo>
+    </Properties>
+    <Resources>
+      <Resource Language="en-us" />
+    </Resources>
+	  <Dependencies>
+      <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14316.0" MaxVersionTested="10.0.15063.0" />
+	  </Dependencies>
+	  <Capabilities>
+	    <rescap:Capability Name="runFullTrust"/>
+        <rescap:Capability Name="broadFileSystemAccess" />
+	  </Capabilities>
+    <Applications>
+      <Application Id="fakebuild" Executable="fake.exe" EntryPoint="Windows.FullTrustApplication" 
+      desktop4:Subsystem="console" 
+      desktop4:SupportsMultipleInstances="true" 
+      iot2:Subsystem="console" 
+      iot2:SupportsMultipleInstances="true" >
+        <uap:VisualElements DisplayName="Fake" Description="F# Make (fake.exe) command line tool"	Square150x150Logo="logo.png"
+				   Square44x44Logo="logo.png"	BackgroundColor="#464646" />
+                   
+      <Extensions>
+          <uap5:Extension 
+            Category="windows.appExecutionAlias" 
+            Executable="fake.exe" 
+            EntryPoint="Windows.FullTrustApplication">
+            <uap5:AppExecutionAlias desktop4:Subsystem="console" iot2:Subsystem="console" >
+              <uap5:ExecutionAlias Alias="fake.exe" />
+            </uap5:AppExecutionAlias>
+          </uap5:Extension>
+      </Extensions>
+      </Application>
+     </Applications>
+  </Package>
