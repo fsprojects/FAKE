@@ -13,7 +13,7 @@ let tests =
             Properties = ["OutputPath", "C:\\Test\\"] }
         |> MSBuild.serializeMSBuildParams
       let expected =
-        if Environment.isUnix then "\"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
-        else "\"/m\" \"/nodeReuse:False\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
+        if Environment.isUnix then "\"/clp:ForceConsoleColor\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
+        else "\"/m\" \"/nodeReuse:False\" \"/clp:ForceConsoleColor\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
       Expect.equal cmdLine expected "Expected a given cmdline."
   ]
