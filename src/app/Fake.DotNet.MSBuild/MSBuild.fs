@@ -65,6 +65,42 @@ type MSBuildDistributedLoggerConfig =
       AssemblyPath : string
       Parameters : (string * string) list option }
 
+#if !NETSTANDARD1_6
+module private MSBuildExeFromVsWhere =
+    open BlackFox.VsWhere
+    open System.Text.RegularExpressions
+
+    let private getAllVsPath () =
+        VsInstances.getWithPackage "Microsoft.Component.MSBuild" false
+        |> List.map (fun vs -> vs.InstallationPath)
+
+    let private re = lazy(Regex(@"^\d+\.\d+$", RegexOptions.Compiled))
+
+    let private getAllMsBuildPaths vsPath =
+        let versionsDir = Path.Combine(vsPath, "MSBuild")
+        if Directory.Exists(versionsDir) then
+            Directory.EnumerateDirectories(versionsDir)
+            |> Seq.map (fun d -> Path.GetFileName(d), d)
+            |> Seq.filter (fun (v, _) -> re.Value.IsMatch v)
+            |> Seq.map (fun (v, d) -> v, Path.Combine(d, "Bin"))
+            |> Seq.filter (fun (_, f) -> Directory.Exists(f))
+            |> List.ofSeq
+        else
+            []
+
+    let private all = lazy(
+        getAllVsPath ()
+        |> List.collect getAllMsBuildPaths
+        |> List.groupBy fst
+        |> List.map (fun (v, dirs) -> v, dirs |> List.map snd)
+        |> Map.ofList)
+
+    let get () = all.Value
+#else
+module private MSBuildExeFromVsWhere =
+    let get() = Map.empty
+#endif
+
 module private MSBuildExe =
   let knownMSBuildEntries =
     [
@@ -162,12 +198,18 @@ module private MSBuildExe =
 #endif
                     None
             let findOnVSPathsThenSystemPath =
-                let dict = toDict knownMSBuildEntries
+                let visualStudioVersion = Environment.environVarOrNone "VisualStudioVersion"
                 let vsVersionPaths =
-                    defaultArg (Environment.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
+                    let dict = toDict knownMSBuildEntries
+                    defaultArg (visualStudioVersion |> Option.bind dict.TryFind) getAllKnownPaths
                     |> List.map ((@@) Environment.ProgramFilesX86)
+                let vsWhereVersionPaths =
+                    let dict = MSBuildExeFromVsWhere.get()
+                    let all = dict |> Map.toList |> List.collect snd
+                    defaultArg (visualStudioVersion |> Option.bind dict.TryFind) all
+                let fullList = vsWhereVersionPaths @ vsVersionPaths |> List.distinct
 
-                Process.tryFindFile vsVersionPaths "MSBuild.exe"
+                Process.tryFindFile fullList "MSBuild.exe"
 
             let sources = [
                 msbuildEnvironVar |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
