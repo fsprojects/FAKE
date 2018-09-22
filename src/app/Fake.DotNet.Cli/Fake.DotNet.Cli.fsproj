@@ -21,7 +21,7 @@
     <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
-    <ProjectReference Include="..\Fake.DotNet.MsBuild\Fake.DotNet.MsBuild.fsproj" />
+    <ProjectReference Include="..\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
