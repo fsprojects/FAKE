@@ -826,8 +826,6 @@ module DotNet =
         Trace.tracefn ".NET Core SDK installed to %s" exe
         (fun opt -> { opt with DotNetCliPath = exe; Version = passVersion})
 
-
-
     /// dotnet restore command options
     type MSBuildOptions =
         {
@@ -873,7 +871,6 @@ module DotNet =
         let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
         let result = exec (fun _ -> common) command args
         MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
-        //result
 
     /// Runs a MSBuild project
     /// ## Parameters
@@ -883,8 +880,7 @@ module DotNet =
     /// ## Sample
     ///
     ///     open Fake.DotNet
-    ///     let buildMode = Environment.environVarOrDefault "buildMode" "Release"
-    ///     let setParams (defaults:MSBuildOptions) =
+    ///     let setMsBuildParams (defaults:MSBuild.CliArguments) =
     ///             { defaults with
     ///                 Verbosity = Some(Quiet)
     ///                 Targets = ["Build"]
@@ -892,9 +888,14 @@ module DotNet =
     ///                     [
     ///                         "Optimize", "True"
     ///                         "DebugSymbols", "True"
-    ///                         "Configuration", buildMode
+    ///                         "Configuration", "Release"
     ///                     ]
     ///              }
+    ///     let setParams (defaults:DotNet.MSBuildOptions) =
+    ///             { defaults with
+    ///                 MSBuildParams = setMsBuildParams defaults.MSBuildParams
+    ///              }
+    ///     
     ///     DotNet.msbuild setParams "./MySolution.sln"
     let msbuild setParams project =
         use __ = Trace.traceTask "DotNet:msbuild" project
@@ -904,8 +905,6 @@ module DotNet =
         let args = Args.toWindowsCommandLine args
         execWithBinLog project param.Common "msbuild" args param.MSBuildParams
         __.MarkSuccess()
-
-
 
     /// dotnet restore command options
     type RestoreOptions =
@@ -990,7 +989,6 @@ module DotNet =
         | Debug
         | Release
         | Custom of string
-    with
         /// Convert the build configuration to a string that can be passed to the .NET CLI
         override this.ToString() =
             match this with
