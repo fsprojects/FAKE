@@ -816,9 +816,11 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1"
+    // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
-            sprintf "/t:%s" "Restore;CreateDeb"
+            sprintf "/restore"
+            sprintf "/t:%s" "CreateDeb"
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
