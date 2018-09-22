@@ -1,4 +1,5 @@
 group netcore
 
 FSharp.Core
+MSBuild.StructuredLogger
 NETStandard.Library
