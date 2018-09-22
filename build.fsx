@@ -160,7 +160,7 @@ let chocoVersion =
 
 Trace.setBuildNumber nugetVersion
 
-let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
+let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
