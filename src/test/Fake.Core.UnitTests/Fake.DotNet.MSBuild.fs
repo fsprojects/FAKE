@@ -8,12 +8,13 @@ open Expecto
 let tests =
   testList "Fake.DotNet.MSBuild.Tests" [
     testCase "Test that we can create simple msbuild cmdline" <| fun _ ->
-      let cmdLine =
-        { MSBuildParams.Create() with
-            Properties = ["OutputPath", "C:\\Test\\"] }
-        |> MSBuild.serializeMSBuildParams
+      let _, cmdLine =
+        MSBuild.buildArgs (fun defaults ->
+          { defaults with
+              ConsoleLogParameters = []
+              Properties = ["OutputPath", "C:\\Test\\"] })
       let expected =
-        if Environment.isUnix then "\"/clp:ForceConsoleColor\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
-        else "\"/m\" \"/nodeReuse:False\" \"/clp:ForceConsoleColor\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
+        if Environment.isUnix then "\"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
+        else "\"/m\" \"/nodeReuse:False\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:\\Test\\\\\""    
       Expect.equal cmdLine expected "Expected a given cmdline."
   ]
