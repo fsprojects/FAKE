@@ -550,7 +550,7 @@ module MSBuild =
             | ShowEventId -> "ShowEventId"
             | ForceNoAlign -> "ForceNoAlign"
             | DisableConsoleColor -> "DisableConsoleColor"
-            | ForceConsoleColor -> "ForceConsoleColor "
+            | ForceConsoleColor -> "ForceConsoleColor"
             | DisableMPLogging -> "DisableMPLogging"
             | EnableMPLogging -> "EnableMPLogging"
             | LogParameter o -> o
