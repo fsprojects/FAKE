@@ -1,0 +1,784 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>CliArguments - FAKE - F# Make</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
+		<!--<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/Primer/10.5.0/build.css" rel="stylesheet">
+		<link rel="stylesheet" href="/assets/css/iconmonstr-iconic-font.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+
+			<!-- Header Wrapper -->
+				<div id="header-wrapper">
+					<div class="container">
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+
+									<!-- Logo -->
+										<h1><a href="/index.html" id="logo">FAKE 5</a></h1>
+
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+												<li >
+													<a href="/legacy-index.html">FAKE 4</a>
+													<ul>
+														<li><a href="/legacy-gettingstarted.html">Getting Started Tutorial</a></li>
+														<li><a href="/help-docs.html">Where is XYZ???</a></li>
+														<li><a href="/legacy-commandline.html">Running FAKE from command line</a></li>
+														<li><a href="/legacy-core-targets.html">Targets</a></li>
+													</ul>
+												</li>
+                                                <li >
+                                                    <a href="/fake-gettingstarted.html">Tutorials</a>
+                                                    <ul>
+                                                        <li><a href="/fake-gettingstarted.html">Getting Started Tutorial</a></li>
+                                                        <li><a href="/fake-cache.html">Build script caching</a></li>
+                                                        <li><a href="/fake-commandline.html">Running FAKE from command line</a></li>
+                                                        <li><a href="/fake-dotnetcore.html">FAKE 5 quickstart</a></li>
+                                                        <li><a href="/fake-template.html">FAKE Template</a></li>
+                                                        <li><a href="/fake-migrate-to-fake-5.html">FAKE 5 migration</a></li>
+                                                        <li><a href="/fake-debugging.html">Debugging Scripts</a></li>
+                                                    </ul>
+                                                </li>
+												<li >
+													<a href="/fake-what-is-fake.html">Project</a>
+													<ul>
+														<li><a href="/help-users.html">Who is using FAKE?</a></li>
+														<li><a href="/help-supporters.html">Supporters</a></li>
+														<li><a href="https://www.nuget.org/packages/FAKE">NuGet</a></li>
+														<li><a href="https://chocolatey.org/packages/fake">Chocolatey</a></li>
+														<li><a href="https://github.com/fsharp/FAKE"><i style="font-size: 15px;" class="im im-github"></i> GitHub</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/blob/master/License.txt">License</a></li>
+														<li><a href="/RELEASE_NOTES.html">Release Notes</a></li>
+														<li><a href="/contributing.html">Contributing</a></li>
+														<li><a href="https://github.com/fsharp/FAKE/issues/new"><i style="font-size: 15px;" class="im im-mail"></i> Ask a question or report a bug</a></li>
+													</ul>
+												</li>
+												<li >
+													<a href="/fake-fake5-modules.html">Modules</a>
+													<ul>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Api">API</a>
+															<ul>
+																<li><a href="/api-slack.html">Slack</a></li>
+																<li><a href="/apidocs/v5/fake-api-github.html">GitHub</a></li>
+																<li><a href="/apidocs/v5/fake-api-hockeyapp.html">HockeyApp</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Azure">Azure</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-azure-cloudservices.html">CloudServices</a></li>
+																<li><a href="/apidocs/v5/fake-azure-emulators.html">Emulators</a></li>
+																<li><a href="/apidocs/v5/fake-azure-kudu.html">Kudu</a></li>
+																<li><a href="/apidocs/v5/fake-azure-webjobs.html">WebJobs</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/buildserver.html">BuildServer</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core.html">Core</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-core-buildserver.html">BuildServer</a></li>
+																<li><a href="/apidocs/v5/fake-core-changelog.html">ChangeLog</a></li>
+																<li><a href="/core-commandlineparsing.html">CommandLineParsing</a></li>
+																<li><a href="/apidocs/v5/fake-core-context.html">Context</a></li>
+																<li><a href="/apidocs/v5/fake-core-environment.html">Environment</a></li>
+																<li><a href="/core-process.html">Process</a></li>
+																<li><a href="/apidocs/v5/fake-core-releasenotes.html">ReleaseNotes</a></li>
+																<li><a href="/apidocs/v5/fake-core-semver.html">SemVer</a></li>
+																<li><a href="/apidocs/v5/fake-core-string.html">String</a></li>
+																<li><a href="/core-targets.html">Targets</a></li>
+																<li><a href="/apidocs/v5/fake-core-taskrunner.html">Tasks</a></li>
+																<li><a href="/core-trace.html">Trace</a></li>
+																<li><a href="/apidocs/v5/fake-core-userinput.html">UserInput</a></li>
+																<li><a href="/core-vault.html">Vault</a></li>
+																<li><a href="/apidocs/v5/fake-core-xml.html">Xml</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Documentation">Documentation</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-documentation-docfx.html">DocFx</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.DotNet">DotNet</a>
+															<ul>
+																<li><a href="/dotnet-cli.html">Cli</a></li>
+																<li><a href="/dotnet-assemblyinfo.html">AssemblyInfoFile</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsc.html">Fsc</a></li>
+                                                                <li><a href="/apidocs/v5/fake-dotnet-fsi.html">Fsi</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-msbuild.html">MSBuild</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-nunit3.html">Testing - NUnit</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-mspec.html">Testing - MSpec</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-xunit2.html">Testing - XUnit2</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-expecto.html">Testing - Expecto</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-vstest.html">Testing - VSTest</a></li>
+																<li><a href="/fake-dotnet-testing-specflow.html">Testing - SpecFlow</a></li>
+																<li><a href="/dotnet-testing-opencover.html">Testing - OpenCover</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">Testing - DotCover</a></li>
+																<li><a href="/dotnet-nuget.html">NuGet</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-mage.html">Mage</a></li>
+																<li><a href="/apidocs/v5/fake-dotnet-paket.html">Paket</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/core-targets.html">DSL</a>
+															<ul>
+																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.Installer">Installer</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-installer-innosetup.html">InnoSetup</a></li>
+                                                                <li><a href="/fake-installer-squirrel.html">Squirrel</a></li>
+																<li><a href="/apidocs/v5/fake-installer-wix.html">Wix</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/index.html#Fake.IO">IO</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.IO">FileSystem</a></li>
+																<li><a href="/apidocs/v5/fake-io-changewatcher.html">Change Watcher</a></li>
+																<li><a href="/apidocs/v5/fake-io-globbing-operators.html">Globbing</a></li>
+																<li><a href="/apidocs/v5/fake-io-zip.html#Functions and values">Zip</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.JavaScript">JavaScript</a>
+															<ul>
+																<li><a href="/apidocs/v5/fake-javascript-npm.html">Npm</a></li>
+																<li><a href="/apidocs/v5/fake-javascript-yarn.html">Yarn</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Net">Net</a>
+															<ul>
+																<li><a href="/net-http.html">Http</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
+															<ul>
+																<li><a href="/sql-dacpac.html">DacPac</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Testing">Testing</a>
+															<ul>
+																<li><a href="/testing-sonarqube.html">SonarQube</a></li>
+																<li><a href="/testing-reportgenerator.html">ReportGenerator</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Tools">Tools</a>
+															<ul>
+																<li><a href="/apidocs/v5/index.html#Fake.Tools.Git">Git</a></li>
+																<li><a href="/fake-tools-pickles.html">Pickles</a></li>
+																<li><a href="/fake-tools-octo.html">Octo</a></li>
+																<li><a href="/apidocs/v5/fake-tools-rsync.html">Rsync</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/index.html#Fake.Windows">Windows</a>
+															<ul>
+																<li><a href="/windows-chocolatey.html">Chocolatey</a></li>
+															</ul>
+                                                            <ul>
+																<li><a href="/apidocs/v5/fake-windows-registry.html">Registry</a></li>
+															</ul>
+														</li>
+														<li>
+															<a href="/apidocs/v5/legacy/index.html#Fake">Legacy / Not Migrated</a>
+															<ul>
+																<li><a href="/todo-fluentmigrator.html">?.?.FluentMigrator</a></li>
+																<li><a href="/todo-androidpublisher.html">?.?.AndroidPublisher</a></li>
+																<li><a href="/todo-wix.html">Windows.WiX</a></li>
+																<li><a href="/todo-msteamsnotification.html">API.MsTeams</a></li>
+																<li><a href="/todo-stylecop.html">DotNet.StyleCop</a></li>
+																<li><a href="/todo-deploy.html">Fake.Deploy</a></li>
+																<li><a href="/todo-iis.html">?.?.IIS</a></li>
+																<li><a href="/todo-vagrant.html">?.?.Vagrant</a></li>
+																<li><a href="/todo-fxcop.html">DotNet.FxCop</a></li>
+																<li><a href="/todo-canopy.html">DotNet.Testing.Canopy</a></li>
+																<li><a href="/todo-octopusdeploy.html">?.?.OctopusDeploy</a></li>
+																<li><a href="/todo-typescript.html">JavaScript?.TypeScript</a></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+												<li class="current_page_item">
+                                                    <a href="/apidocs/v5/index.html">API Reference</a>
+                                                    <ul>
+														<li><a href="/apidocs/v5/index.html">FAKE 5 API Reference</a></li>
+	                                                    <li><a href="/apidocs/v5/legacy/index.html">FAKE 5 Migration API</a></li>
+	                                                    <li><a href="/apidocs/v4/index.html">FAKE 4 API Reference</a></li>
+													</ul>
+                                                </li>
+											</ul>
+										</nav>
+
+								</div>
+							</header>
+
+						<!-- Banner -->
+							
+
+					</div>
+				</div>
+
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+          			
+
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
+                                            <div class="alert alert-info">
+                                                <h5>INFO</h5>
+                                                <p>This API documentation is for FAKE version 5.0 or later. The old API documentation can be found
+                                                    <a href="/apidocs/v5/legacy/index.html">here for migration</a> or <a href="/apidocs/v4/index.html">here for fake 4</a>
+                                                </p>
+                                                <p>
+                                                    This is part of the <a href="https://www.nuget.org/packages/Fake.DotNet.MSBuild" >Fake.DotNet.MSBuild</a> module.
+                                                </p>
+                                            </div> 
+                                
+                                   
+                                    
+									<!-- Content -->
+                      <article>
+          			
+
+
+<p>
+
+</p>
+<a name="CliArguments" class="anchor" href="#CliArguments" ><h1>CliArguments</h1></a>
+<div class="xmldoc">
+<p>A type for MSBuild task parameters</p>
+
+</div>
+  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Record Field</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2115', 2115)" onmouseover="showTip(event, '2115', 2115)">
+            BinaryLoggers
+          </code>
+          <div class="tip" id="2115">
+            <strong>Signature:</strong> string list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L346-346" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/bl'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2116', 2116)" onmouseover="showTip(event, '2116', 2116)">
+            ConsoleLogParameters
+          </code>
+          <div class="tip" id="2116">
+            <strong>Signature:</strong> MSBuildLogParameter list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L348-348" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/consoleloggerparameters'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2117', 2117)" onmouseover="showTip(event, '2117', 2117)">
+            DisableInternalBinLog
+          </code>
+          <div class="tip" id="2117">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L342-342" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Fake attaches a binlog-logger in order to report errors and warnings. You can disable this behavior with this flag</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2118', 2118)" onmouseover="showTip(event, '2118', 2118)">
+            DistributedLoggers
+          </code>
+          <div class="tip" id="2118">
+            <strong>Signature:</strong> (MSBuildLoggerConfig * MSBuildLoggerConfig option) list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L352-352" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/dl'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2119', 2119)" onmouseover="showTip(event, '2119', 2119)">
+            DoRestore
+          </code>
+          <div class="tip" id="2119">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L333-333" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Execute a restore before executing the targets (/restore flag)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2120', 2120)" onmouseover="showTip(event, '2120', 2120)">
+            FileLoggers
+          </code>
+          <div class="tip" id="2120">
+            <strong>Signature:</strong> MSBuildFileLoggerConfig list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L344-344" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/fl'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2121', 2121)" onmouseover="showTip(event, '2121', 2121)">
+            Loggers
+          </code>
+          <div class="tip" id="2121">
+            <strong>Signature:</strong> MSBuildLoggerConfig list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L350-350" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/l'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2122', 2122)" onmouseover="showTip(event, '2122', 2122)">
+            MaxCpuCount
+          </code>
+          <div class="tip" id="2122">
+            <strong>Signature:</strong> int option option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L331-331" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/m':
+- 'None' will omit the option.
+- 'Some None' will emit '/m'.
+- 'Some 2' will emit '/m:2'.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2123', 2123)" onmouseover="showTip(event, '2123', 2123)">
+            NoConsoleLogger
+          </code>
+          <div class="tip" id="2123">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L338-338" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2124', 2124)" onmouseover="showTip(event, '2124', 2124)">
+            NodeReuse
+          </code>
+          <div class="tip" id="2124">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L335-335" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2125', 2125)" onmouseover="showTip(event, '2125', 2125)">
+            NoLogo
+          </code>
+          <div class="tip" id="2125">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L334-334" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2126', 2126)" onmouseover="showTip(event, '2126', 2126)">
+            NoWarn
+          </code>
+          <div class="tip" id="2126">
+            <strong>Signature:</strong> string list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L340-340" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2127', 2127)" onmouseover="showTip(event, '2127', 2127)">
+            Properties
+          </code>
+          <div class="tip" id="2127">
+            <strong>Signature:</strong> (string * string) list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L326-326" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2128', 2128)" onmouseover="showTip(event, '2128', 2128)">
+            Targets
+          </code>
+          <div class="tip" id="2128">
+            <strong>Signature:</strong> string list<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L325-325" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2129', 2129)" onmouseover="showTip(event, '2129', 2129)">
+            ToolsVersion
+          </code>
+          <div class="tip" id="2129">
+            <strong>Signature:</strong> string option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L336-336" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2130', 2130)" onmouseover="showTip(event, '2130', 2130)">
+            Verbosity
+          </code>
+          <div class="tip" id="2130">
+            <strong>Signature:</strong> MSBuildVerbosity option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L337-337" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2131', 2131)" onmouseover="showTip(event, '2131', 2131)">
+            WarnAsError
+          </code>
+          <div class="tip" id="2131">
+            <strong>Signature:</strong> string list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L339-339" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a name="Static members" class="anchor" href="#Static members"><h3>Static members</h3></a>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2132', 2132)" onmouseover="showTip(event, '2132', 2132)">
+            CliArguments.Create()
+          </code>
+          <div class="tip" id="2132">
+            <strong>Signature:</strong> unit -&gt; CliArguments<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L353-353" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                      </article>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Important Links</h2>
+										<ul class="divided">
+											<li><a href="/fake-gettingstarted.html">Getting started</a></li>
+											<li><a href="/fake-fake5-modules.html">Modules</a></li>
+											<li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="3u 12u(mobile)">
+
+								<!-- Links -->
+									<section>
+										<h2>Further projects</h2>
+										<ul class="divided">
+											<li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+											<li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+											<li><a href="http://fsharp.org/">F#</a></li>
+											<li><a href="http://ionide.io/">Ionide</a></li>
+											<li><a href="http://forge.run/">Forge</a></li>
+											<li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+										</ul>
+									</section>
+
+								<!-- Links
+									<section>
+										<h2>Learn F#</h2>
+										<ul class="divided">
+											<li><a href="/404.html">Tutorial 1</a></li>
+											<li><a href="/404.html">Tutorial 2</a></li>
+											<li><a href="/404.html">Tutorial 3</a></li>
+											<li><a href="/404.html">Tutorial 4</a></li>
+										</ul>
+									</section>-->
+
+							</div>
+							<div class="6u 12u(mobile)">
+
+								<!-- About -->
+									<section>
+										<h2><strong>FAKE 5</strong> is a community effort.</h2>
+										<p>Please help with the development of <strong>FAKE 5</strong>, a free, fully open source
+										DSL and Runtime for running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">Github</a>,
+                                        discuss new features, fix bugs and send pull requests!</p>
+										<a href="/contributing.html" class="button alt icon fa-arrow-circle-right">Learn More</a>
+									</section>
+
+								<!-- Contact -->
+									<section>
+										<h2>Get in touch</h2>
+										<div>
+											<div class="row">
+												<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Twitter</dt>
+														<dd><a href="https://twitter.com/fsharpMake">@fsharpMake</a></dd>
+														<dt>WWW</dt>
+														<dd><a href="https://fake.build">fake.build</a></dd>
+														<dt>Github</dt>
+														<dd><a href="https://github.com/fsharp/FAKE/issues/new">Github</a></dd>
+														<dt>F# Slack</dt>
+														<dd><a href="https://fsharp.slack.com/">Slack</a></dd>
+													</dl>
+												</div>
+												<!--<div class="6u 12u(mobile)">
+													<dl class="contact">
+														<dt>Address</dt>
+														<dd>
+															1234 Fictional Rd<br />
+															Nashville, TN 00000-0000<br />
+															USA
+														</dd>
+														<dt>Phone</dt>
+														<dd>(000) 000-0000</dd>
+													</dl>
+												</div>-->
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; FAKE. All rights reserved</li>
+										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.6.2-alpha.491</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<!--<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>-->
+			<script src="/assets/js/tips.js" type="text/javascript"></script>
+			<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/skel-viewport.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+                  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-fsharp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-batch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/toolbar/prism-toolbar.js"></script>
+
+        <script src="/assets/js/clipboardTooltip.js"></script>
+	</body>
+	</body>
+</html>
