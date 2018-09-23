@@ -279,8 +279,12 @@ module AppVeyor =
                     | _ -> ConsoleWriter.writeAnsiColor false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
-                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                | TraceData.ImportantMessage text ->
                     ConsoleWriter.writeAnsiColor false color true text
+                    AppVeyorInternal.AddMessage AppVeyorInternal.MessageCategory.Warning "" text
+                | TraceData.ErrorMessage text ->
+                    ConsoleWriter.writeAnsiColor false color true text
+                    AppVeyorInternal.AddMessage AppVeyorInternal.MessageCategory.Error "" text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.writeAnsiColor false color newLine text
                 | TraceData.ImportData (ImportData.Nunit NunitDataVersion.Nunit, path) ->
