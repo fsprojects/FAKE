@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.7.0-alpha - 2018-09-23
+## 5.7.0 - 2018-09-23
 
 * ENHANCEMENT: Use VSWhere to detect msbuild location - https://github.com/fsharp/FAKE/pull/2077
 * ENHANCEMENT: Add Dotnet SDK 2.1.400, 2.1.401 and 2.1.402 - https://github.com/fsharp/FAKE/pull/2089
