@@ -658,7 +658,12 @@ module MSBuild =
       let cache = System.Collections.Concurrent.ConcurrentDictionary<string, Version>()
       fun (exePath:string) (callMsbuildExe: string -> string) ->
           let getFromCall() =
-            try Version.Parse(callMsbuildExe "/version /nologo")
+            try
+                let result = callMsbuildExe "/version /nologo"
+                let line =
+                    if result.Contains "DOTNET_CLI_TELEMETRY_OPTOUT" then result.Split('\n') |> Seq.filter (String.IsNullOrWhiteSpace >> not) |> Seq.last
+                    else result
+                Version.Parse(line)
             with e ->
                 Trace.traceFAKE "Could not detect msbuild version from '%s': %O" exePath e
                 new Version(13,0,0,0)
