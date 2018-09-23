@@ -118,6 +118,19 @@ module BuildServer =
     /// Is true when the current build is a local build.
     let isLocalBuild = LocalBuild = buildServer
 
+    let mutable ansiColorSupport =
+        match buildServer with
+        | Jenkins -> false
+        | TeamCity -> true
+        | CCNet -> false
+        | Travis -> true
+        | AppVeyor -> true
+        | GitLabCI -> true
+        | TeamFoundation -> false
+        | Bamboo -> false
+        | BitbucketPipelines -> false
+        | LocalBuild -> false
+
 
     let install (servers: BuildServerInstaller list) =
         servers

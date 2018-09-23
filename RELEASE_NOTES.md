@@ -1,8 +1,15 @@
 # Release Notes
 
-## 5.6.2-alpha tbd
+## 5.7.0-alpha - 2018-09-23
 
-* tbd
+* ENHANCEMENT: Use VSWhere to detect msbuild location - https://github.com/fsharp/FAKE/pull/2077
+* ENHANCEMENT: Add Dotnet SDK 2.1.400, 2.1.401 and 2.1.402 - https://github.com/fsharp/FAKE/pull/2089
+* ENHANCEMENT: Improve error reporting of msbuild errors across all CI servers - https://github.com/fsharp/FAKE/issues/2096
+* ENHANCEMENT: Add /logger support for MSBuild - https://github.com/fsharp/FAKE/issues/1712
+* ENHANCEMENT: Add /consoleloggerparameters support for MSBuild - https://github.com/fsharp/FAKE/issues/1607
+* ENHANCEMENT: Added `DotNet.msbuild` to call `dotnet msbuild` - https://github.com/fsharp/FAKE/pull/2098
+* ENHANCEMENT: Added `MSBuildParams` to `DotNet.restore`, `DotNet.build`, `DotNet.pack`, `DotNet.publish` and `DotNet.test` in order to add regular msbuild parameters - https://github.com/fsharp/FAKE/pull/2098
+* ENHANCEMENT: AppVeyor now reports errors and warnings to the 'Messages'-tab - https://github.com/fsharp/FAKE/pull/2098
 
 ## 5.6.1 - 2018-09-09
 

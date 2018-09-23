@@ -178,6 +178,7 @@ group netcore
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility
     nuget System.Security.Cryptography.Algorithms
+    nuget MSBuild.StructuredLogger
     nuget BlackFox.VsWhere
 
     // Testing
