@@ -20,6 +20,8 @@ do_build:
     TERM: "xterm-256color"
     MSBUILDDISABLENODEREUSE: "1"
     BuildInParallel: "false"
+    LANG: "C"
+    LC_ALL: "C"
   
   script: |
     export PATH=$PATH:$PWD/fake-dotnetcore/

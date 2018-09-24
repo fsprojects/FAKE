@@ -248,7 +248,7 @@ let internal filesAsSpecsExt flatten workingDir (files:IGlobbingPattern) =
 ///                 |> Zip.moveToFolder "project3"
 ///         ]
 ///         |> Seq.concat
-///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion) "" Zip.DefaultZipLevel
+///         |> Zip.zipSpec (sprintf @"ci/deploy/project.%s.zip" buildVersion)
 ///     )
 ///
 let filesAsSpecs workingDir files = filesAsSpecsExt false workingDir files

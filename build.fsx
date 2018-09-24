@@ -160,7 +160,7 @@ let chocoVersion =
 
 Trace.setBuildNumber nugetVersion
 
-let dotnetSdk = lazy DotNet.install DotNet.Versions.Release_2_1_302
+let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
     DotNet.Options.lift dotnetSdk.Value
     >> DotNet.Options.withWorkingDirectory wd
@@ -547,10 +547,11 @@ Target.create "DotNetCoreIntegrationTests" (fun _ ->
 )
 
 Target.create "TemplateIntegrationTests" (fun _ ->
+    let targetDir = srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests"
     let processResult =
-        DotNet.exec (dtntWorkDir (srcDir </> "test" </> "Fake.DotNet.Cli.IntegrationTests")) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
+        DotNet.exec (dtntWorkDir targetDir) "bin/Release/netcoreapp2.1/Fake.DotNet.Cli.IntegrationTests.dll" "--summary"
     if processResult.ExitCode <> 0 then failwithf "DotNet CLI Template Integration tests failed."
-    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) "Fake_DotNet_Cli_IntegrationTests.TestResults.xml"
+    Trace.publish (ImportData.Nunit NunitDataVersion.Nunit) (targetDir </> "Fake_DotNet_Cli_IntegrationTests.TestResults.xml")
 )
 
 Target.create "DotNetCoreUnitTests" (fun _ ->
@@ -815,9 +816,11 @@ Target.create "CheckReleaseSecrets" (fun _ ->
 Target.create "DotNetCoreCreateDebianPackage" (fun _ ->
     let runtime = "linux-x64"
     let targetFramework =  "netcoreapp2.1"
+    // See https://github.com/dotnet/cli/issues/9823
     let args =
         [
-            sprintf "/t:%s" "Restore;CreateDeb"
+            sprintf "/restore"
+            sprintf "/t:%s" "CreateDeb"
             sprintf "/p:TargetFramework=%s" targetFramework
             sprintf "/p:CustomTarget=%s" "CreateDeb"
             sprintf "/p:RuntimeIdentifier=%s" runtime
@@ -942,21 +945,6 @@ Target.create "FastRelease" (fun _ ->
 Target.create "Release_Staging" (fun _ -> ())
 
 open System.IO.Compression
-let unzip target (fileName : string) =
-    use stream = new FileStream(fileName, FileMode.Open)
-    use zipFile = new ZipArchive(stream)
-    for zipEntry in zipFile.Entries do
-        let unzipPath = Path.Combine(target, zipEntry.FullName)
-        let directoryPath = Path.GetDirectoryName(unzipPath)
-        if unzipPath.EndsWith "/" then
-            Directory.CreateDirectory(unzipPath) |> ignore
-        else
-            // unzip the file
-            Directory.ensure directoryPath
-            let zipStream = zipEntry.Open()
-            if unzipPath.EndsWith "/" |> not then
-                use unzippedFileStream = File.Create(unzipPath)
-                zipStream.CopyTo(unzippedFileStream)
 
 Target.create "PrepareArtifacts" (fun _ ->
     if not fromArtifacts then
@@ -971,23 +959,23 @@ Target.create "PrepareArtifacts" (fun _ ->
         files
         |> Shell.copy (nugetDncDir </> "Fake.netcore")
 
-        unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
+        Zip.unzip nugetDncDir (artifactsDir </> "fake-dotnetcore-packages.zip")
 
         if Environment.isWindows then
             Directory.ensure chocoReleaseDir
             let name = sprintf "%s.%s.nupkg" "fake" chocoVersion
             Shell.copyFile (sprintf "%s/%s" chocoReleaseDir name) (artifactsDir </> sprintf "chocolatey-%s" name)
         else
-            unzip "." (artifactsDir </> "chocolatey-requirements.zip")
+            Zip.unzip "." (artifactsDir </> "chocolatey-requirements.zip")
 
         if buildLegacy then
             Directory.ensure nugetLegacyDir
-            unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
+            Zip.unzip nugetLegacyDir (artifactsDir </> "fake-legacy-packages.zip")
 
             Directory.ensure "temp/build"
             !! (nugetLegacyDir </> "*.nupkg")
             |> Seq.iter (fun pack ->
-                unzip "temp/build" pack
+                Zip.unzip "temp/build" pack
             )
             Shell.copyDir "build" "temp/build" (fun _ -> true)
 
@@ -1000,7 +988,7 @@ Target.create "PrepareArtifacts" (fun _ ->
         let unzipIfExists dir file =
             Directory.ensure dir
             if File.Exists file then
-                unzip dir file
+                Zip.unzip dir file
 
         // File is not available in case we already have build the full docs
         unzipIfExists "help" (artifactsDir </> "help-markdown.zip")

@@ -153,7 +153,7 @@ group netcorerunner
     nuget Mono.Cecil
     nuget Microsoft.NETCore.App framework: netstandard1.6, netstandard2.0, netcoreapp1.1
     nuget NETStandard.Library  ~> 2.0
-    nuget Packaging.Targets 
+    nuget Packaging.Targets
 
 group netcore
     //source https://ci.appveyor.com/nuget/paket
@@ -178,7 +178,9 @@ group netcore
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility
     nuget System.Security.Cryptography.Algorithms
-    
+    nuget MSBuild.StructuredLogger
+    nuget BlackFox.VsWhere
+
     // Testing
     nuget Expecto >= 5.0
     nuget Expecto.TestResults
@@ -196,4 +198,4 @@ group netcore
     nuget System.IO.Compression.ZipFile
     nuget System.Runtime.Loader
     nuget System.IO.FileSystem.Watcher
-    
+

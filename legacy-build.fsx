@@ -184,13 +184,7 @@ let legacyAssemblyInfos =
         AssemblyInfo.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common ]
 
 let publish f =
-    // Workaround
-    let path = Path.GetFullPath f
-    let name = Path.GetFileName path
-    let target = Path.Combine("artifacts", name)
-    let targetDir = Path.GetDirectoryName target
-    Directory.ensure targetDir
-    Trace.publish ImportData.BuildArtifact (Path.GetFullPath f)
+    Trace.publish ImportData.BuildArtifact f
 
 Target.create "_Legacy_BuildSolution" (fun _ ->
     MSBuild.runWithDefaults "Build" ["./src/Legacy-FAKE.sln"; "./src/Legacy-FAKE.Deploy.Web.sln"]
