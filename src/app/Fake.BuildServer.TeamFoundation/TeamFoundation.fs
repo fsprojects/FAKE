@@ -166,7 +166,9 @@ module TeamFoundation =
                 let color = ConsoleWriter.colorMap msg
                 let writeConsole = ConsoleWriter.write
                 match msg with
-                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                | TraceData.ErrorMessage text ->
+                    logIssue false None None None None text
+                | TraceData.ImportantMessage text ->
                     logIssue true None None None None text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     writeConsole false color newLine text

@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET40;NO_DOTNETCORE_BOOTSTRAP;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET40;NO_DOTNETCORE_BOOTSTRAP;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG;NO_VSWHERE;NO_MSBUILD_BINLOG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>
@@ -35,7 +35,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\build\</OutputPath>
-    <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG</DefineConstants>
+    <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP;FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG;NO_VSWHERE;NO_MSBUILD_BINLOG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
@@ -200,9 +200,6 @@
     </Compile>
     <Compile Include="..\..\app\Fake.Core.UserInput\UserInput.fs">
       <Link>Fake.Core.UserInput/UserInput.fs</Link>
-    </Compile>
-    <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuildLogger.fs">
-      <Link>Fake.DotNet.MSBuild/MSBuildLogger.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.DotNet.MSBuild\MSBuild.fs">
       <Link>Fake.DotNet.MSBuild/MSBuild.fs</Link>
@@ -392,6 +389,9 @@
     </Compile>
     <Compile Include="..\..\app\Fake.BuildServer.Travis\Travis.fs">
       <Link>Fake.BuildServer.Travis/Travis.fs</Link>
+    </Compile>
+    <Compile Include="..\..\app\Fake.Core.Vault\Vault.fs">
+      <Link>Fake.Core.Vault/Vault.fs</Link>
     </Compile>
     <Compile Include="..\..\app\Fake.BuildServer.TeamFoundation\TeamFoundation.fs">
       <Link>Fake.BuildServer.TeamFoundation/TeamFoundation.fs</Link>
