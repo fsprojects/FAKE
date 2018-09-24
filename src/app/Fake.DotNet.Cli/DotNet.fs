@@ -858,9 +858,15 @@ module DotNet =
         // used for detection
         let callMsBuildExe args =
             let result =
-                exec (fun _ -> 
-                    { common with
-                       RedirectOutput = true }) "msbuild" args
+                exec (fun _ ->
+                    { RedirectOutput = true
+                      DotNetCliPath = common.DotNetCliPath
+                      Version = common.Version
+                      Environment = common.Environment
+                      WorkingDirectory = common.WorkingDirectory
+                      CustomParams = None
+                      Verbosity = None
+                      Diagnostics = false }) "msbuild" args
             if not result.OK then
                 failwithf "msbuild failed with exitcode '%d'" result.ExitCode
             String.Join("\n", result.Messages)
