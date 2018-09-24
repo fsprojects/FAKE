@@ -87,7 +87,7 @@ type MSBuildDistributedLoggerConfig =
 
 type MSBuildLoggerConfig = MSBuildDistributedLoggerConfig
 
-#if !NETSTANDARD1_6
+#if !NO_VSWHERE // legacy fakelib
 module private MSBuildExeFromVsWhere =
     open BlackFox.VsWhere
     open System.Text.RegularExpressions
@@ -672,6 +672,7 @@ module MSBuild =
   let private versionToUseBinLog = System.Version("15.3")
   let private versionToUseStructuredLogger = System.Version("14.0")
   let internal addBinaryLogger (exePath:string) (callMsbuildExe: string -> string) (args:string) (disableFakeBinLoger:bool) =
+#if !NO_MSBUILD_BINLOG
     if disableFakeBinLoger then
         None, args
     else
@@ -695,24 +696,32 @@ module MSBuild =
             Some path, Args.toWindowsCommandLine (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
         else
             Trace.traceFAKE "msbuild version '%O' doesn't support binary logger, pelase set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning." v
+#endif
             None, args
 
   let internal handleAfterRun command binLogPath exitCode project =
     let msgs =
+#if !NO_MSBUILD_BINLOG
         match binLogPath with
         | Some f -> 
             let r = MSBuildBinLog.getErrorsAndWarnings f
             try File.Delete(f) with e -> Trace.traceFAKE "Could not delete '%s': %O" f e
             r
-        | None -> []
-    MSBuildBinLog.emitMessages msgs    
+        | None ->
+#endif    
+            []
+
+#if !NO_MSBUILD_BINLOG
+    MSBuildBinLog.emitMessages msgs
+#endif
     if exitCode <> 0 then
         let errors =
             msgs
             |> List.choose (fun m -> if m.IsError then Some m.Message else None)
         let errorMessage = sprintf "'%s %s' failed with exitcode %d." command project exitCode
         raise (MSBuildException(errorMessage, errors))
-    
+
+
   /// Runs a MSBuild project
   /// ## Parameters
   ///  - `setParams` - A function that overwrites the default MSBuildParams
