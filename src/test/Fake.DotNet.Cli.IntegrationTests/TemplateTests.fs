@@ -14,11 +14,19 @@ let templateName = "fake"
 
 //TODO: add DotNetCli helpers for the `new` command
 
+let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
+
+let inline opts () = DotNet.Options.lift dotnetSdk.Value
+
+let inline dtntWorkDir wd =
+    DotNet.Options.lift dotnetSdk.Value
+    >> DotNet.Options.withWorkingDirectory wd
+    
 let uninstallTemplate () =
-    DotNet.exec id "new" (sprintf "-u %s" templatePackageName)
+    DotNet.exec (opts()) "new" (sprintf "-u %s" templatePackageName)
 
 let installTemplateFrom pathToNupkg =
-    DotNet.exec id "new" (sprintf "-i %s" pathToNupkg)
+    DotNet.exec (opts()) "new" (sprintf "-i %s" pathToNupkg)
 
 type BootstrapKind =
 | Tool
@@ -33,9 +41,7 @@ let timeout = (System.TimeSpan.FromMinutes 10.)
 
 let runTemplate rootDir kind =
     Directory.ensure rootDir
-    DotNet.exec 
-        ( fun o -> 
-            { o with WorkingDirectory = rootDir; } ) "new" (sprintf "%s --allow-scripts yes --version 5.3.0 --bootstrap %s" templateName (string kind))   
+    DotNet.exec (dtntWorkDir rootDir) "new" (sprintf "%s --allow-scripts yes --version 5.3.0 --bootstrap %s" templateName (string kind))   
     |> shouldSucceed "should have run the template successfully"
 
 let invokeScript dir scriptName args =
