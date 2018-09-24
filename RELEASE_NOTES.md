@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.7.2-alpha
+
+* tbd
+
 ## 5.7.1 - 2018-09-24
 
 * BUGFIX: Ignore some arguments when running `dotnet msbuild /version` - https://github.com/fsharp/FAKE/issues/2102
