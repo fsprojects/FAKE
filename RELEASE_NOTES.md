@@ -1,11 +1,8 @@
 # Release Notes
 
-## 5.7.2-alpha
+## 5.7.2 - 2018-09-24
 
-* tbd
-
-## 5.7.1 - 2018-09-24
-
+* ENHANCEMENT: TeamFoundation now reports errors as errors instead of warnings - https://github.com/fsharp/FAKE/pull/2103
 * BUGFIX: Ignore some arguments when running `dotnet msbuild /version` - https://github.com/fsharp/FAKE/issues/2102
 
 ## 5.7.0 - 2018-09-23
