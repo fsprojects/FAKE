@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.7.3-alpha
+
+* tbd
+
 ## 5.7.2 - 2018-09-24
 
 * ENHANCEMENT: TeamFoundation now reports errors as errors instead of warnings - https://github.com/fsharp/FAKE/pull/2103
