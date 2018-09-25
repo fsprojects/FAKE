@@ -48,6 +48,7 @@ Here is the old sidebar:
 * [Azure WebJobs support](azurewebjobs.html)
 * [Azure Cloud Services support](azurecloudservices.html)
 * [SQL DACPAC support](dacpac.html)
+* [SQL Server support](sqlserver.html)
 * [FluentMigrator support](fluentmigrator.html)
 * [Android publisher](androidpublisher.html)
 * [File Watcher](watch.html)
