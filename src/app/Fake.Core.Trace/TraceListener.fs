@@ -331,7 +331,7 @@ module CoreTracing =
 
     let private traceListenersVar = "Fake.Core.Trace.TraceListeners"
     let private getTraceListeners, _, (setTraceListenersPrivate:ITraceListener list -> unit) =
-        Fake.Core.FakeVar.define traceListenersVar
+        Fake.Core.FakeVar.defineOrNone traceListenersVar
 
     let areListenersSet () =
         match getTraceListeners() with
