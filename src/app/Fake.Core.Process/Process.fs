@@ -5,6 +5,8 @@ namespace Fake.Core
 open System
 open System.Diagnostics
 open System
+open System.Collections.Immutable
+open System.Collections.Generic
 
 /// A record type which captures console messages
 type ConsoleMessage = 
@@ -35,20 +37,38 @@ type ProcessResult =
         { ExitCode = exitCode
           Results = results }
 
+type IMap<'TKey, 'TValue> = ImmutableDictionary<'TKey, 'TValue>
+module IMap =
+    let inline empty<'key, 'value> = ImmutableDictionary.Empty : ImmutableDictionary<'key, 'value>
+    let inline tryFind k (m:IMap<_,_>) =
+        match m.TryGetValue k with
+        | true, v -> Some v
+        | _ -> None
+
+    let inline remove k (m:IMap<_,_>) : IMap<_,_> =
+        m.Remove(k)
+    let inline iter f (m:IMap<_,_>) =
+        for kv in m do
+            f kv.Key kv.Value
+    let inline add k v (m:IMap<_,_>) : IMap<_,_> =
+        m.SetItem(k, v)
+
+    let inline toSeq (m:IMap<_,_>) :seq<_ * _> =
+        m |> Seq.map (fun kv -> kv.Key, kv.Value)
+
 module private ProcStartInfoData =
     let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
 
-    let createEnvironmentMap () = Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
-    let checkMap (map:Map<string,string>) =
-        if Environment.isWindows then
-            let hs = new System.Collections.Generic.HashSet<string>(StringComparer.OrdinalIgnoreCase)
-            for kv in map do
-                if not (hs.Add kv.Key) then
-                    // Environment variables are case sensitive and this is invalid!
-                    let existing = hs |> Seq.find (fun s -> s.Equals(kv.Key, StringComparison.OrdinalIgnoreCase))
-                    failwithf "Detected invalid environment map the key '%s' was used as '%s' as well, however in windows environment variables are case-insensitive. This error shouldn't happen if you use the process helpers like 'Process.setEnvironmentVariable' instead of setting the map manually." kv.Key existing
+    let createEnvironmentMap () =
+        (if Environment.isWindows
+         then IMap.empty.WithComparers(StringComparer.OrdinalIgnoreCase)
+         else IMap.empty)
+            .AddRange(Environment.environVars () |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
+        |> IMap.add defaultEnvVar defaultEnvVar
 
 open ProcStartInfoData
+
+
 
 type ProcStartInfo =
     { /// Gets or sets the set of command-line arguments to use when starting the application.
@@ -60,7 +80,7 @@ type ProcStartInfo =
       /// Gets the environment variables that apply to this process and its child processes.
       /// NOTE: Recommendation is to not use this Field, but instead use the helper function in the Proc module (for example Process.setEnvironmentVariable)
       /// NOTE: This field is ignored when UseShellExecute is true.
-      Environment : Map<string, string>
+      Environment : IMap<string, string>
 #if FX_ERROR_DIALOG
       /// Gets or sets a value indicating whether an error dialog box is displayed to the user if the process cannot be started.
       ErrorDialog : bool
@@ -136,16 +156,16 @@ type ProcStartInfo =
         p.CreateNoWindow <- x.CreateNoWindow
         if not (isNull x.Domain) then
             p.Domain <- x.Domain
-
-        ProcStartInfoData.checkMap x.Environment
-        match x.Environment |> Map.tryFind defaultEnvVar with
+        
+        //ProcStartInfoData.checkMap x.Environment
+        match x.Environment |> IMap.tryFind defaultEnvVar with
         | None -> failwithf "Your environment variables look like they are set manually, but you are missing the default variables. Use the `Process.` helpers to change the 'Environment' field to inherit default values! See https://github.com/fsharp/FAKE/issues/1776#issuecomment-365431982"
         | Some _ ->
             if not x.UseShellExecute then  
                 p.Environment.Clear()
                 x.Environment
-                |> Map.remove defaultEnvVar
-                |> Map.iter (fun var key ->
+                |> IMap.remove defaultEnvVar
+                |> IMap.iter (fun var key ->
                     p.Environment.[var] <- key)
 
 #if FX_ERROR_DIALOG
@@ -379,9 +399,9 @@ module Process =
     let inline redirectOutput (startInfo : ^a) = setRedirectOutput true startInfo
     let inline disableRedirectOutput (startInfo : ^a) = setRedirectOutput false startInfo
 
-    let inline setEnvironment (map:Map<string, string>) (startInfo : ^a) =
+    let inline setEnvironment (map:IMap<string, string>) (startInfo : ^a) =
         //let inline getEnv s = ((^a) : (member Environment : unit -> Map<string, string>) (s))
-        let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
+        let inline setEnv s e = ((^a) : (member WithEnvironment : IMap<string, string> -> ^a) (s, e))
         setEnv startInfo map
         //{ startInfo with Environment = map }
 
@@ -391,28 +411,21 @@ module Process =
     /// Sets the given environment variable for the given startInfo.
     /// Existing values will be overriden.
     let inline setEnvironmentVariable envKey (envVar:string) (startInfo : ^a) =
-        let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
-        let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
+        let inline getEnv s = ((^a) : (member Environment : IMap<string, string>) (s))
+        let inline setEnv s e = ((^a) : (member WithEnvironment : IMap<string, string> -> ^a) (s, e))
         
-        let env = getEnv startInfo
-        env
-        |> (match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
-            | Some oldKey -> Map.remove oldKey.Key
-            | None -> id)
-        |> Map.add envKey envVar
+        getEnv startInfo
+        |> IMap.remove envKey
+        |> IMap.add envKey envVar
         |> setEnv startInfo
         
     /// Unsets the given environment variable for the started process
     let inline removeEnvironmentVariable envKey (startInfo : ^a) =
-        let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
-        let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
+        let inline getEnv s = ((^a) : (member Environment : IMap<string, string>) (s))
+        let inline setEnv s e = ((^a) : (member WithEnvironment : IMap<string, string> -> ^a) (s, e))
         
-        let env = getEnv startInfo
-        env
-        |> (match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
-            | Some oldKey -> Map.remove oldKey.Key
-            | None -> id)
-        //|> Map.remove envKey
+        getEnv startInfo
+        |> IMap.remove envKey
         |> setEnv startInfo
 
     /// Sets the given environment variables.
@@ -888,7 +901,7 @@ module ProcStartInfoExtensions =
         /// Gets or sets a value that identifies the domain to use when starting the process.
         member x.WithDomain domain = { x with Domain = domain }
         /// Remove the current Environment Variables and use the default
-        member x.WithoutEnvironment () = { x with Environment = Map.empty } |> Process.setCurrentEnvironmentVariables
+        member x.WithoutEnvironment () = { x with Environment = IMap.empty } |> Process.setCurrentEnvironmentVariables
         /// Sets the given environment variable for the given startInfo.
         member x.WithEnvironmentVariable(envKey, envVar) =
             Process.setEnvironmentVariable envKey envVar x

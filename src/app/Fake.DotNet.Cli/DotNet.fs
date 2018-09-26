@@ -483,7 +483,7 @@ module DotNet =
             /// Gets the environment variables that apply to this process and its child processes.
             /// NOTE: Recommendation is to not use this Field, but instead use the helper function in the Proc module (for example Process.setEnvironmentVariable)
             /// NOTE: This field is ignored when UseShellExecute is true.
-            Environment : Map<string, string>
+            Environment : IMap<string, string>
         }
         static member Create() = {
             DotNetCliPath =
@@ -499,11 +499,11 @@ module DotNet =
             RedirectOutput = false
             Environment =
                 Process.createEnvironmentMap()
-                |> Map.remove "MSBUILD_EXE_PATH"
-                |> Map.remove "MSBuildExtensionsPath"
-                |> Map.remove "MSBuildLoadMicrosoftTargetsReadOnly"
-                |> Map.remove "MSBuildSDKsPath"
-                |> Map.remove "DOTNET_HOST_PATH"
+                |> IMap.remove "MSBUILD_EXE_PATH"
+                |> IMap.remove "MSBuildExtensionsPath"
+                |> IMap.remove "MSBuildLoadMicrosoftTargetsReadOnly"
+                |> IMap.remove "MSBuildSDKsPath"
+                |> IMap.remove "DOTNET_HOST_PATH"
         }
         [<Obsolete("Use Options.Create instead")>]
         static member Default = Options.Create()
@@ -628,7 +628,7 @@ module DotNet =
             let f (info:ProcStartInfo) =
                 let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
                 let oldPath =
-                    match options.Environment |> Map.tryFind "PATH" with
+                    match options.Environment |> IMap.tryFind "PATH" with
                     | None -> ""
                     | Some s -> s
                 { info with
