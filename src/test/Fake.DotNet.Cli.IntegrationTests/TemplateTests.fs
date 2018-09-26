@@ -74,7 +74,7 @@ let tests =
             let c = DotNet.Options.Create() |> dotnetSdk.Value
             let d = Path.GetDirectoryName c.DotNetCliPath
             if not (p.StartsWith d) then
-                Environment.SetEnvironmentVariable("PATH", sprintf "%s%c%s" d Path.DirectorySeparatorChar p)
+                Environment.SetEnvironmentVariable("PATH", sprintf "%s%c%s" d Path.PathSeparator p)
             
             printfn "PATH: %s" <| Environment.GetEnvironmentVariable "PATH"
 
