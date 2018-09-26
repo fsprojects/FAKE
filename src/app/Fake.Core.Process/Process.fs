@@ -4,6 +4,7 @@ namespace Fake.Core
 
 open System
 open System.Diagnostics
+open System
 
 /// A record type which captures console messages
 type ConsoleMessage = 
@@ -38,6 +39,14 @@ module private ProcStartInfoData =
     let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
 
     let createEnvironmentMap () = Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
+    let checkMap (map:Map<string,string>) =
+        if Environment.isWindows then
+            let hs = new System.Collections.Generic.HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            for kv in map do
+                if not (hs.Add kv.Key) then
+                    // Environment variables are case sensitive and this is invalid!
+                    let existing = hs |> Seq.find (fun s -> s.Equals(kv.Key, StringComparison.OrdinalIgnoreCase))
+                    failwithf "Detected invalid environment map the key '%s' was used as '%s' as well, however in windows environment variables are case-insensitive. This error shouldn't happen if you use the process helpers like 'Process.setEnvironmentVariable' instead of setting the map manually." kv.Key existing
 
 open ProcStartInfoData
 
@@ -128,6 +137,7 @@ type ProcStartInfo =
         if not (isNull x.Domain) then
             p.Domain <- x.Domain
 
+        ProcStartInfoData.checkMap x.Environment
         match x.Environment |> Map.tryFind defaultEnvVar with
         | None -> failwithf "Your environment variables look like they are set manually, but you are missing the default variables. Use the `Process.` helpers to change the 'Environment' field to inherit default values! See https://github.com/fsharp/FAKE/issues/1776#issuecomment-365431982"
         | Some _ ->
@@ -384,7 +394,11 @@ module Process =
         let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
         let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
         
-        getEnv startInfo
+        let env = getEnv startInfo
+        env
+        |> (match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
+            | Some oldKey -> Map.remove oldKey.Key
+            | None -> id)
         |> Map.add envKey envVar
         |> setEnv startInfo
         
@@ -393,8 +407,12 @@ module Process =
         let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
         let inline setEnv s e = ((^a) : (member WithEnvironment : Map<string, string> -> ^a) (s, e))
         
-        getEnv startInfo
-        |> Map.remove envKey
+        let env = getEnv startInfo
+        env
+        |> (match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
+            | Some oldKey -> Map.remove oldKey.Key
+            | None -> id)
+        //|> Map.remove envKey
         |> setEnv startInfo
 
     /// Sets the given environment variables.

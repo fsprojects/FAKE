@@ -35,7 +35,11 @@ type BootstrapKind =
 with override x.ToString () = match x with | Tool -> "tool" | Project -> "project" | None -> "none"
 
 let shouldSucceed message (r: ProcessResult) =
-    Expect.isTrue r.OK (sprintf "%s. Results:\n:%A" message r)
+    let errorStr =
+        r.Results
+        |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message)
+        |> fun s -> String.Join("\n", s)
+    Expect.isTrue r.OK (sprintf "%s. Results:\n:%s" message errorStr)
 
 let timeout = (System.TimeSpan.FromMinutes 10.)
 
@@ -66,7 +70,15 @@ let tests =
             Process.setEnableProcessTracing true            
             uninstallTemplate () |> shouldSucceed "should clear out preexisting templates"
             printfn "%s" Environment.CurrentDirectory
+            let p = Environment.GetEnvironmentVariable "PATH"
+            let c = DotNet.Options.Create() |> dotnetSdk.Value
+            let d = Path.GetDirectoryName c.DotNetCliPath
+            if not (p.StartsWith d) then
+                Environment.SetEnvironmentVariable("PATH", sprintf "%s%c%s" d Path.DirectorySeparatorChar p)
+            
             printfn "PATH: %s" <| Environment.GetEnvironmentVariable "PATH"
+
+
             printfn "DOTNET_ROOT: %s" <| Environment.GetEnvironmentVariable "DOTNET_ROOT"
             let templateNupkg = GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg" |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__ |> Seq.head
             installTemplateFrom templateNupkg |> shouldSucceed "should install new FAKE template"
