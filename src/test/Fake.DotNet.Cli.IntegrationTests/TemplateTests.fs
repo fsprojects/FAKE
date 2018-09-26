@@ -46,6 +46,7 @@ let runTemplate rootDir kind =
 
 let invokeScript dir scriptName args =
     let fullScriptPath = Path.Combine(dir, scriptName)
+    
     Process.execWithResult 
         (fun x -> 
             x.WithWorkingDirectory(dir)
@@ -62,8 +63,11 @@ let tests =
     // we need to (uninstall) the template, install the packed version, and then execute that template
     testList "Fake.DotNet.Cli.IntegrationTests.Template tests" [
         testList "can install and run the template" [
+            Process.setEnableProcessTracing true            
             uninstallTemplate () |> shouldSucceed "should clear out preexisting templates"
             printfn "%s" Environment.CurrentDirectory
+            printfn "PATH: %s" <| Environment.GetEnvironmentVariable "PATH"
+            printfn "DOTNET_ROOT: %s" <| Environment.GetEnvironmentVariable "DOTNET_ROOT"
             let templateNupkg = GlobbingPattern.create "../../../release/dotnetcore/fake-template.*.nupkg" |> GlobbingPattern.setBaseDir __SOURCE_DIRECTORY__ |> Seq.head
             installTemplateFrom templateNupkg |> shouldSucceed "should install new FAKE template"
 
