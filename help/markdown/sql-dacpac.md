@@ -19,9 +19,10 @@ Ensure that you have already built your database project (you can do this with s
 
     /// the database for local development + compile
     Target.create "DeployLocalDb" (fun _ ->
-        let connectionString = "Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True;Database=MyDatabase;Pooling=False"
+        let connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True;Database=MyDatabase;Pooling=False"
         let dacPacPath = "path/to/dbProject.dacpac"
-        DacPac.deployDb (fun args -> { args with Source = dacPacPath; Destination = localDbConnectionString }) |> ignore)
+        DacPac.deployDb (fun args -> { args with Source = dacPacPath; Destination = connectionString }) |> ignore
+    )
 
 ## Deployment Options
 

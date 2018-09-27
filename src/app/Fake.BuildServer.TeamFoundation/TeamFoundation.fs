@@ -6,7 +6,7 @@ open System.IO
 open Fake.Core
 open Fake.IO
 
-/// native support for TeamFoundation/VSTS specific APIs.
+/// native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
 /// The general documentation on how to use CI server integration can be found [here](/buildserver.html)
 /// 
 /// ### Secret Variables
