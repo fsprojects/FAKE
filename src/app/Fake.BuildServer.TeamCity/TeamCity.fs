@@ -35,6 +35,10 @@ module TeamCityImportExtensions =
             | ImportData.Nunit _ -> "nunit"
             | ImportData.Xunit _ -> "nunit"
 
+/// native support for TeamCity specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
 [<RequireQualifiedAccess>]
 module TeamCity =
     open Fake.IO
