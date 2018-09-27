@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.8.1 tbd
+
+* tbd
+
 ## 5.8.0 - 2018-09-27
 
 * NEW: Fake.Sql.SqlServer module - https://github.com/fsharp/FAKE/pull/2074
