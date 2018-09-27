@@ -187,7 +187,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
     // be compatible with the runtime we are currently running on.
     let rootDir = Directory.GetCurrentDirectory()
     let packageName = Domain.PackageName("NETStandard.Library")
-    let version = SemVer.Parse("2.0.2")
+    let version = SemVer.Parse("2.0.3")
     let existingpkg = NuGetCache.GetTargetUserNupkg packageName version
     let extractedFolder =
       if File.Exists existingpkg then

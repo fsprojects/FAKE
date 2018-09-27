@@ -39,11 +39,13 @@ module TeamCityImportExtensions =
 /// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
+/// 
+/// For more information on TeamCity interaction from builc scripts [see here](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity)
 [<RequireQualifiedAccess>]
 module TeamCity =
     open Fake.IO
 
-    // See https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity
+    
 
     /// Open Named Block that will be closed when the block is disposed
     /// Usage: `use __ = TeamCity.block "My Block"`
@@ -222,6 +224,14 @@ module TeamCity =
             (TeamCityWriter.encapsulateSpecialChars name) (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details)
             (TeamCityWriter.encapsulateSpecialChars expected) (TeamCityWriter.encapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
 
+    /// Sends a warning message.
+    let internal warning message =
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" message
+
+    /// Sends an error message.
+    let internal error message =
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" message
+
     /// TeamCity build parameters
     ///
     /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
@@ -365,9 +375,8 @@ module TeamCity =
             with get() = RecentlyFailedTests.cache.Value
 
     /// Implements a TraceListener for TeamCity build servers.
-    /// ## Parameters
-    ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
-    ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
+    /// 
+    /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity) for more information
     type internal TeamCityTraceListener() =
 
         interface ITraceListener with
@@ -386,8 +395,10 @@ module TeamCity =
                     testFailed testName message detail
                 | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     comparisonFailure testName message detail expected actual
+                | TraceData.BuildState TagStatus.Success ->
+                    reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState state ->
-                    ConsoleWriter.write false color true (sprintf "Changing BuildState to: %A" state)
+                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" (state.ToString()))
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
@@ -398,10 +409,15 @@ module TeamCity =
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
+                | TraceData.CloseTag (tag, _, TagStatus.Failed) ->
+                    TeamCityWriter.sendCloseBlock tag.Name
+                    reportBuildStatus "FAILURE" (sprintf "Failure in %s" tag.Name)
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
-                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
-                    ConsoleWriter.write false color true text
+                | TraceData.ImportantMessage text ->
+                    warning text
+                | TraceData.ErrorMessage text ->
+                    error text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
                 | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
