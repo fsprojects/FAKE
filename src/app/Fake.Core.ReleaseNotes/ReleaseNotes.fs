@@ -126,7 +126,10 @@ let private parseAllComplex (text: seq<string>) =
             loop (newReleaseNotes::releaseNotes) rest
         | None -> releaseNotes
 
-    loop [] (text |> Seq.map (String.trimStartChars [|' '; '*'|] >> String.trimEndChars [|' '|]) |> Seq.toList)
+    let result = loop [] (text |> Seq.map (String.trimStartChars [|' '; '*'|] >> String.trimEndChars [|' '|]) |> Seq.toList)
+    if List.isEmpty result then
+        failwithf "release note files containing only top level headers are not allowed"
+    else result
 
 
 /// Parses a Release Notes text and returns all release notes.
@@ -156,9 +159,12 @@ let parseAll (data: seq<string>) =
 /// ## Parameters
 ///  - `data` - Release notes text
 let parse (data: seq<string>) =
-    data
-    |> parseAll
-    |> Seq.head
+    match
+        data
+        |> parseAll
+        |> Seq.tryHead with
+    | Some head -> head
+    | None -> failwithf "The release notes document was not valid, see https://fake.build/apidocs/v5/fake-core-releasenotes.html for the allowed formats"
 
 /// Parses a Release Notes text file and returns the lastest release notes.
 ///

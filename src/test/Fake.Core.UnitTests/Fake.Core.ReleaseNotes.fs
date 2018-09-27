@@ -3,7 +3,6 @@ module Fake.Core.ReleaseNotesTests
 open Fake.Core
 open Expecto
 
-
 [<Tests>]
 let tests = 
   testList "Fake.Core.ReleaseNotes.Tests" [
@@ -86,4 +85,20 @@ let tests =
          { AssemblyVersion = "1.1.0"; NugetVersion = "1.1.0"; SemVer = SemVer.parse "1.1.0"; Date = Some (System.DateTime(2017,04,12)); Notes = ["- Some change 3"; "- Some change 4"] }
       
       Expect.equal expected releaseNotes "Simple parse failure"
+
+    testCase "Test that we provide proper error #2085" <| fun _ ->
+      let releaseNotesLines = [
+        "# 1.3.7"
+        ""
+        "* Bugfixes and public release"
+        ""
+        "# 1.3.2"
+        ""
+        "* Fix various bugs in the FAKE runner."
+        ""
+      ]
+      Expect.throwsC
+        (fun () -> ignore <| ReleaseNotes.parse releaseNotesLines)
+        (fun e ->
+          Expect.stringContains e.Message "files containing only top level headers are not allowed" "Expected nice error message")
   ]    
