@@ -392,7 +392,7 @@ module TeamCity =
                 | TraceData.BuildState state when state = TagStatus.Success ->
                     reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState state ->
-                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" state)
+                    reportBuildStatus "FAILURE" (sprintf "%o - {build.status.text}" state)
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->

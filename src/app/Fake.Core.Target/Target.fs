@@ -449,7 +449,7 @@ module Target =
                 Trace.setBuildState TagStatus.Success
             else
                 alignedError "Status:" "Failure" null
-                Trace.setBuildState TagStatus.Failure
+                Trace.setBuildState TagStatus.Failed
         else
             Trace.traceError "No target was successfully completed"
             Trace.setBuildState TagStatus.Warning
