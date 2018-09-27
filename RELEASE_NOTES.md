@@ -1,8 +1,13 @@
 # Release Notes
 
-## 5.7.3-alpha
+## 5.8.0 - 2018-09-27
 
-* tbd
+* NEW: Fake.Sql.SqlServer module - https://github.com/fsharp/FAKE/pull/2074
+* ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
+* ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
+* BUGFIX: Environment variables are case insensitive on windows, fake will now throw exceptions if it detects invalid environment maps
+* BUGFIX: MSBuild properties containing special characters lead to errors - https://github.com/fsharp/FAKE/issues/2112
+* DOCS: Fix syntax errors in dacpac docs - https://github.com/fsharp/FAKE/pull/2115
 
 ## 5.7.2 - 2018-09-24
 
