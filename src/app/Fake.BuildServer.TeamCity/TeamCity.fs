@@ -390,8 +390,10 @@ module TeamCity =
                     testFailed testName message detail
                 | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     comparisonFailure testName message detail expected actual
+                | TraceData.BuildState state when state = TagStatus.Success ->
+                    reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState state ->
-                    ConsoleWriter.write false color true (sprintf "Changing BuildState to: %A" state)
+                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" state)
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
