@@ -389,10 +389,10 @@ module TeamCity =
                     testFailed testName message detail
                 | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     comparisonFailure testName message detail expected actual
-                | TraceData.BuildState state when state = TagStatus.Success ->
+                | TraceData.BuildState TagStatus.Success ->
                     reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState state ->
-                    reportBuildStatus "FAILURE" (sprintf "%o - {build.status.text}" state)
+                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" (state.ToString()))
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
@@ -403,7 +403,7 @@ module TeamCity =
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
-                | TraceData.CloseTag (tag, _, status) when status = TagStatus.Failed ->
+                | TraceData.CloseTag (tag, _, TagStatus.Failed) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                     reportBuildStatus "FAILURE" (sprintf "Failure in %s" tag.Name)
                 | TraceData.CloseTag (tag, _, _) ->
