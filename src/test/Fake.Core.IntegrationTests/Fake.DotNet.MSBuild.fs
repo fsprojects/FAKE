@@ -45,7 +45,7 @@ let simplePropertyTest propValue =
     let dllPath = System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly().Location)
     let setParams (defaults:MSBuildParams) =
         { defaults with
-            Verbosity = Some(MSBuildVerbosity.Diagnostic)
+            Verbosity = Some(MSBuildVerbosity.Minimal)
             Targets = ["Test"]
             NoLogo = true
             Properties =

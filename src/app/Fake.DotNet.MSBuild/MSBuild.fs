@@ -498,6 +498,8 @@ module MSBuild =
     let escapePropertyValue (v:string) =
         // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
         v.Replace("%", "%25")
+         .Replace("\\", "%5C")
+         .Replace("\"", "%22")
          .Replace(";", "%3B")
          .Replace(",", "%2C")
          .Replace("$", "%24")
