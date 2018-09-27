@@ -796,7 +796,13 @@ module Target =
                     match DocoptResult.tryGetArgument "<target>" results with
                     | None ->
                         match DocoptResult.tryGetArgument "--target" results with
-                        | None -> Environment.environVarOrNone "target"
+                        | None ->
+                            match Environment.environVarOrNone "target" with
+                            | Some arg ->
+                                Trace.log
+                                    <| sprintf "Using target '%s' from the 'target' environment variable." arg
+                                Some arg
+                            | None -> None                                                                
                         | Some arg -> Some arg
                     | Some arg ->
                         match DocoptResult.tryGetArgument "--target" results with

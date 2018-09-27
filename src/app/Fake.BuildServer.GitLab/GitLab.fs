@@ -37,6 +37,10 @@ module GitLabImportExtensions =
             | ImportData.Junit -> "junit"
             | ImportData.Xunit -> "xunit"
 
+/// native support for GitLab specific APIs.
+/// The general documentation on how to use CI server integration can be found [here](/buildserver.html).
+/// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+/// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
 [<RequireQualifiedAccess>]
 module GitLab =
 

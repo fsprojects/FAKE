@@ -78,6 +78,8 @@ project.lock.json
 
 #src/app/*/any
 
+/fake-dotnetcore
+/fake-dotnetcore*.zip
 /testbuild.fsx
 /testbuild.fsx.lock
 /src/legacy/deploy.web/Fake.Deploy.Web/App_Data/Providers/**/*.dll

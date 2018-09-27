@@ -4,15 +4,20 @@ module Fake.Core.FakeVar
 
 open Fake.Core.Context
 
+let internal getFrom<'a> name context = 
+    context
+    |> getFakeContext name
+    |> Option.map (fun o -> 
+        try
+            o :?> 'a
+        with e -> 
+            raise <| exn(sprintf "Cast error on variable '%s'" name, e))
+    
+
 /// Gets a strongly typed FakeVar by name returning an option type
 let get<'a> name =
     forceFakeContext()
-    |> getFakeContext name
-    |> Option.map (fun o -> try
-                                o :?> 'a
-                            with e -> 
-                                raise <| exn(sprintf "Cast error on variable '%s'" name, e)
-                  )
+    |> getFrom<'a> name
 
 /// Gets a strongly typed FakeVar by name will fail if variable is not found
 let getOrFail<'a> name =
@@ -27,36 +32,72 @@ let getOrDefault<'a> name defaultValue =
     | _ -> defaultValue
   
 /// Removes a FakeVar by name
+let internal removeFrom name context =
+    context
+    |> removeFakeContext name
+    |> ignore
+
+/// Removes a FakeVar by name
 let remove name =
     forceFakeContext()
-    |> removeFakeContext name
+    |> removeFrom name
+
+/// Sets value of a FakeVar
+let internal setFrom name (v:'a) context =
+    context
+    |> setFakeContext name v (fun _ -> v :> obj)
     |> ignore
 
 /// Sets value of a FakeVar
 let set name (v:'a) =
     forceFakeContext()
-    |> setFakeContext name v (fun _ -> v :> obj)
-    |> ignore
+    |> setFrom name v
 
 /// Define a named FakeVar providing the get, remove and set
-/// Will fail if there is no context
+/// And of the functions will fail if there is no context
 let define<'a> name =
-    if isFakeContext() then
-        (fun () -> get name : 'a option),
-        (fun () -> remove name),
-        (fun (v : 'a) -> set name v)
-    else
-        failwithf "Cannot define variable '%s' without context" name
+    (fun () ->
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> getFrom name context : 'a option
+        | _ -> failwithf "Cannot retrieve '%s' as we have no fake context" name),
+    (fun () ->
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> removeFrom name context
+        | _ -> failwithf "Cannot remove '%s' as we have no fake context" name),
+    (fun (v : 'a) -> 
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> setFrom name v context
+        | _ -> failwithf "Cannot set '%s' as we have no fake context" name)
 
 /// Define a named FakeVar providing the get, remove and set
-/// Will create a local variable if there is no context
+/// Will use a local variable if there is no context
 let defineAllowNoContext<'a> name =
-    if isFakeContext() then
-        (fun () -> get name : 'a option),
-        (fun () -> remove name),
-        (fun (v : 'a) -> set name v)
-    else         
-        let mutable varWithoutContext = None
-        (fun () -> varWithoutContext),
-        (fun () -> varWithoutContext <- None),
-        (fun (v : 'a) -> varWithoutContext <- Some v)
+    let mutable varWithoutContext = None
+    (fun () ->
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> getFrom name context : 'a option
+        | _ -> varWithoutContext),
+    (fun () ->
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> removeFrom name context
+        | _ -> varWithoutContext <- None),
+    (fun (v : 'a) -> 
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> setFrom name v context
+        | _ -> varWithoutContext <- Some v)
+
+/// Define a named FakeVar providing the get, remove and set
+/// Will always return 'None' when no context is set and 'throw' on set
+let defineOrNone<'a> name =
+    (fun () ->
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> getFrom name context : 'a option
+        | _ -> None),
+    (fun () ->
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> removeFrom name context
+        | _ -> failwithf "Cannot remove '%s' as we have no fake context" name),
+    (fun (v : 'a) -> 
+        match getExecutionContext() |> getFakeExecutionContext with
+        | Some context -> setFrom name v context
+        | _ -> failwithf "Cannot set '%s' as we have no fake context" name)
