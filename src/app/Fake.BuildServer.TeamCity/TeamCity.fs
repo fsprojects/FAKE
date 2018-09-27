@@ -369,6 +369,8 @@ module TeamCity =
             with get() = RecentlyFailedTests.cache.Value
 
     /// Implements a TraceListener for TeamCity build servers.
+    /// 
+    /// See [the documentation](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity) for more information
     /// ## Parameters
     ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
     ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
