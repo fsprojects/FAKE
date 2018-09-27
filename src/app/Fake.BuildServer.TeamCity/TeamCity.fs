@@ -222,6 +222,10 @@ module TeamCity =
     let internal warning message =
         TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" message
 
+    /// Sends a warning message.
+    let internal error message =
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" message
+
     /// TeamCity build parameters
     ///
     /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
@@ -403,7 +407,7 @@ module TeamCity =
                 | TraceData.ImportantMessage text ->
                     warning text
                 | TraceData.ErrorMessage text ->
-                    ConsoleWriter.write false color true text
+                    error text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
                 | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
