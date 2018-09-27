@@ -316,7 +316,11 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
-    let args = buildArgs parameters assemblies
+    let generatedArgs = buildArgs parameters assemblies
+    let path = Path.Combine(Path.GetTempPath(), (sprintf "%s.txt" (Guid.NewGuid().ToString())))
+    File.WriteAllText(path, generatedArgs)
+    Trace.trace(sprintf "Saved args to '%s' with value: %s" path generatedArgs)
+    let args = (sprintf "@%s" path)
     Trace.trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result =
@@ -325,6 +329,9 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
             FileName = tool
             WorkingDirectory = getWorkingDir parameters
             Arguments = args }) >> Process.withFramework) processTimeout
+
+    File.Delete(path)
+    
     let errorDescription error =
         match error with
         | OK -> "OK"
