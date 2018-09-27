@@ -1,8 +1,10 @@
 # Release Notes
 
-## 5.8.1 tbd
+## 5.8.1 - 2018-09-27
 
-* tbd
+* BUGFIX: Improve error message when release notes are invalid - https://github.com/fsharp/FAKE/issues/2085
+* BUGFIX: Improve error message when globbing pattern is invalid - https://github.com/fsharp/FAKE/issues/2073
+* BUGFIX: Do no longer provide the `--parallel` argument by default when running expecto - https://github.com/fsharp/FAKE/issues/2039
 
 ## 5.8.0 - 2018-09-27
 

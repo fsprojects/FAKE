@@ -95,15 +95,10 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-let vault =
-    match Vault.fromFakeEnvironmentOrNone() with
-    | Some v -> v
-    | None -> TeamFoundation.variables
 
-let getVarOrDefault name def =
-    match vault.TryGet name with
-    | Some v -> v
-    | None -> Environment.environVarOrDefault name def
+let vault = ``Legacy-build``.vault
+let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
+let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
 let github_release_user = getVarOrDefault "github_release_user" "fsharp"
 let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
@@ -113,20 +108,6 @@ let docsDomain = getVarOrDefault "docs_domain" "fake.build"
 let buildLegacy = System.Boolean.Parse(getVarOrDefault "BuildLegacy" "false")
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
-let mutable secrets = []
-let releaseSecret replacement name =
-    let secret =
-        lazy
-            let env = 
-                match getVarOrDefault name "default_unset" with
-                | "default_unset" -> failwithf "variable '%s' is not set" name
-                | s -> s
-            if BuildServer.buildServer <> BuildServer.TeamFoundation then
-                // on TFS/VSTS the build will take care of this.
-                TraceSecrets.register replacement env
-            env
-    secrets <- secret :: secrets
-    secret
 
 let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
@@ -139,6 +120,8 @@ BuildServer.install [
     TeamFoundation.Installer
     GitLab.Installer
 ]
+
+
 
 let version = ``Legacy-build``.version
 let simpleVersion = ``Legacy-build``.simpleVersion
@@ -809,7 +792,7 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
-    for secret in secrets do
+    for secret in ``Legacy-build``.secrets do
         secret.Force() |> ignore
 )
 
