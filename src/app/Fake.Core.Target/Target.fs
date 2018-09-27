@@ -444,11 +444,15 @@ module Target =
                     | Some e -> alignedError name time e.Message)
 
             aligned "Total:" total null
-            if not context.HasError then aligned "Status:" "Ok" null
+            if not context.HasError then 
+                aligned "Status:" "Ok" null
+                Trace.setBuildState TagStatus.Success
             else
                 alignedError "Status:" "Failure" null
+                Trace.setBuildState TagStatus.Failure
         else
             Trace.traceError "No target was successfully completed"
+            Trace.setBuildState TagStatus.Warning
 
         Trace.traceLine()
 
