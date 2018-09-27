@@ -402,6 +402,9 @@ module TeamCity =
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
+                | TraceData.CloseTag (tag, _, status) when status = TagStatus.Failed ->
+                    TeamCityWriter.sendCloseBlock tag.Name
+                    reportBuildStatus "FAILURE" (sprintf "Failure in %s" tag.Name)
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text ->
