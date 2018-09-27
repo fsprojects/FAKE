@@ -218,6 +218,10 @@ module TeamCity =
             (TeamCityWriter.encapsulateSpecialChars name) (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details)
             (TeamCityWriter.encapsulateSpecialChars expected) (TeamCityWriter.encapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
 
+    /// Sends a warning message.
+    let internal warning message =
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" message
+
     /// TeamCity build parameters
     ///
     /// See [Predefined Build Parameters documentation](https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters) for more information
@@ -396,7 +400,9 @@ module TeamCity =
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
-                | TraceData.ImportantMessage text | TraceData.ErrorMessage text ->
+                | TraceData.ImportantMessage text ->
+                    warning text
+                | TraceData.ErrorMessage text ->
                     ConsoleWriter.write false color true text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
