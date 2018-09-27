@@ -207,6 +207,9 @@ type NUnit3Params =
 
       /// A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons
       Params : string
+
+      /// A path to store args to for passing to NUnit
+      ArgsPath: string option
     }
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
@@ -235,6 +238,7 @@ type NUnit3Params =
 /// - `TraceLevel` - `Default` (By default NUnit3 sets this to off internally)
 /// - `SkipNonTestAssemblies` - `false`
 /// - `Params` - `""`
+/// - `ArgsPath` - `None`
 /// ## Defaults
 let NUnit3Defaults =
     {
@@ -263,6 +267,7 @@ let NUnit3Defaults =
       TraceLevel= NUnit3TraceLevel.Default
       SkipNonTestAssemblies = false
       Params = ""
+      ArgsPath = None
     }
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
@@ -316,7 +321,12 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
-    let args = buildArgs parameters assemblies
+    let generatedArgs = buildArgs parameters assemblies
+    let args = match parameters.ArgsPath with
+               | Some path -> File.WriteAllText(path, generatedArgs)
+                              Trace.trace(sprintf "Saved args to '%s' with value: %s" path generatedArgs)
+                              (sprintf "@%s" path)
+               |_ -> generatedArgs 
     Trace.trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result =
