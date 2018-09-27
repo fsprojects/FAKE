@@ -252,6 +252,7 @@ type MSBuildParams =
     {
       /// Set the MSBuild executable to use. Defaults to the latest installed MSBuild.
       ToolPath : string
+      WorkingDirectory : string
       Targets : string list
       Properties : (string * string) list
       /// corresponds to the msbuild option '/m':
@@ -286,6 +287,7 @@ type MSBuildParams =
     static member Create() =
         { ToolPath = MSBuildExe.msBuildExe
           Targets = []
+          WorkingDirectory = System.IO.Directory.GetCurrentDirectory()
           Properties = []
           MaxCpuCount = Some None
           DoRestore = false
@@ -492,7 +494,21 @@ module MSBuild =
         | [] -> None
         | t -> Some("t", t |> Seq.map (String.replace "." "_") |> String.separated ";")
 
-    let properties = p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=%s" k v))
+    // see https://github.com/fsharp/FAKE/issues/2112
+    let escapePropertyValue (v:string) =
+        // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
+        v.Replace("%", "%25")
+         .Replace(";", "%3B")
+         .Replace(",", "%2C")
+         .Replace("$", "%24")
+         .Replace("@", "%40")
+         .Replace("'", "%27")
+         .Replace("?", "%3F")
+         .Replace("*", "%2A")
+
+    let properties =
+        p.Properties
+        |> List.map (fun (k, v) -> Some("p", sprintf "%s=%s" k (escapePropertyValue v)))
 
     let maxcpu =
         match p.MaxCpuCount with
@@ -695,7 +711,7 @@ module MSBuild =
 
             Some path, Args.toWindowsCommandLine (argList @ [ sprintf "/logger:BinaryLogger,%s;%s" assemblyPath path ])
         else
-            Trace.traceFAKE "msbuild version '%O' doesn't support binary logger, pelase set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning." v
+            Trace.traceFAKE "msbuild version '%O' doesn't support binary logger, please set the msbuild argument 'DisableInternalBinLog' to 'true' to disable this warning." v
 #endif
             None, args
 
@@ -703,10 +719,14 @@ module MSBuild =
     let msgs =
 #if !NO_MSBUILD_BINLOG
         match binLogPath with
-        | Some f -> 
-            let r = MSBuildBinLog.getErrorsAndWarnings f
-            try File.Delete(f) with e -> Trace.traceFAKE "Could not delete '%s': %O" f e
-            r
+        | Some f ->
+            if File.Exists f then
+                let r = MSBuildBinLog.getErrorsAndWarnings f
+                try File.Delete(f) with e -> Trace.traceFAKE "Could not delete '%s': %O" f e
+                r
+            else
+                Trace.traceFAKE "msbuild has not created the binlog file as expected, no warnings or errors are reported using native CI capabilities. Use 'DisableInternalBinLog' to 'true' to disable this warning."
+                []            
         | None ->
 #endif    
             []
@@ -762,11 +782,16 @@ module MSBuild =
         String.Join("\n", result.Messages)
 
     let binlogPath, args = addBinaryLogger msBuildParams.ToolPath callMsBuildExe args msBuildParams.DisableInternalBinLog
-    Trace.tracefn "Building project: %s\n  %s %s" project msBuildParams.ToolPath args
+    let wd =
+        if msBuildParams.WorkingDirectory = System.IO.Directory.GetCurrentDirectory()
+        then ""
+        else sprintf "%s>" msBuildParams.WorkingDirectory
+    Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
     let exitCode =
         Process.execSimple (fun info ->
         { info with
             FileName = msBuildParams.ToolPath
+            WorkingDirectory = msBuildParams.WorkingDirectory
             Arguments = args }
         |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
     handleAfterRun "msbuild" binlogPath exitCode project
