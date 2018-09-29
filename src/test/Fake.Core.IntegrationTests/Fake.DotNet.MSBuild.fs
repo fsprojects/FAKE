@@ -58,7 +58,12 @@ let simplePropertyTest propValue =
     match buildWithRedirect setParams "testdata/testProperty.proj" with
     | Choice1Of2 result ->
         let lines = String.Join("\n", result.Results |> Seq.map (fun r -> r.Message))
-        Expect.stringContains lines (sprintf "$Property1: '%s'" propValue) "Expected to find property value in msbuild output"
+        if Environment.isWindows then
+            Expect.stringContains lines (sprintf "$Property1: '%s'" propValue) "Expected to find property value in msbuild output"
+        else
+            // TODO: Report me as msbuild bug?
+            let fixedPropValue = propValue.Replace("\\", "/")
+            Expect.stringContains lines (sprintf "$Property1: '%s'" fixedPropValue) "Expected to find property value in msbuild output"
         Expect.stringContains lines "$Property2: ''" "Expected to find empty Property2"
     | Choice2Of2 (e, result) ->
         let lines = String.Join("\n", result.Results |> Seq.map (fun r -> sprintf "%s: %s" (if r.IsError then "stderr" else "stdout") r.Message))
