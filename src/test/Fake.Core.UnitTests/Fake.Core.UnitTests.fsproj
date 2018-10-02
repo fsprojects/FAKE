@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Testing.NUnit\Fake.DotNet.Testing.NUnit.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.Testing.SpecFlow\Fake.DotNet.Testing.SpecFlow.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Testing.ReportGenerator\Fake.Testing.ReportGenerator.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.SemVer\Fake.Core.SemVer.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Target\Fake.Core.Target.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.ReleaseNotes\Fake.Core.ReleaseNotes.fsproj" />
@@ -30,6 +31,7 @@
     <Compile Include="Fake.DotNet.MSBuild.fs" />
     <Compile Include="Fake.DotNet.Testing.NUnit.fs" />
     <Compile Include="Fake.DotNet.Testing.SpecFlow.fs" />
+    <Compile Include="Fake.Testing.ReportGenerator.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
     <Compile Include="Fake.Core.Process.fs" />
