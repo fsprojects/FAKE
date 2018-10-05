@@ -602,7 +602,7 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
   let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
 
   { Runners.FakeConfig.VerboseLevel = logLevel
-    Runners.FakeConfig.ScriptFilePath = scriptPath
+    Runners.FakeConfig.ScriptFilePath = Path.GetFullPath scriptPath
     Runners.FakeConfig.ScriptTokens = tokenized
     Runners.FakeConfig.CompileOptions = 
       { FsiOptions = newFsiOptions; RuntimeDependencies = [] }
