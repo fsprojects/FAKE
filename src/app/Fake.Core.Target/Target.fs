@@ -446,13 +446,13 @@ module Target =
             aligned "Total:" total null
             if not context.HasError then 
                 aligned "Status:" "Ok" null
-                Trace.setBuildState TagStatus.Success
+                //Trace.setBuildState TagStatus.Success
             else
                 alignedError "Status:" "Failure" null
-                Trace.setBuildState TagStatus.Failed
+                //Trace.setBuildState TagStatus.Failed
         else
             Trace.traceError "No target was successfully completed"
-            Trace.setBuildState TagStatus.Warning
+            //Trace.setBuildState TagStatus.Warning
 
         Trace.traceLine()
 
