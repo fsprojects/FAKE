@@ -386,10 +386,7 @@ module Process =
         match getEnableProcessTracing() with
         | Some v -> v
         | None ->
-          let shouldEnable = Fake.Core.Context.isFakeContext()
-          setEnableProcessTracing shouldEnable
-          shouldEnable
-
+          Fake.Core.Context.isFakeContext()
     let defaultEnvVar = ProcStartInfoData.defaultEnvVar
 
     let createEnvironmentMap () = ProcStartInfoData.createEnvironmentMap()

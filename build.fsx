@@ -60,6 +60,7 @@ open Fake.DotNet
 open Fake.DotNet.Testing
 
 // WORKAROUND TEAMCITY
+#if !BOOTSTRAP
 module Kernel32 =
     open System
     open System.Text
@@ -106,7 +107,7 @@ do
                         Path.GetFullPath(dotnetExe)
                with _ -> false)
         |> Seq.iter Process.kill
-
+#endif
 
 // Set this to true if you have lots of breaking changes, for small breaking changes use #if BOOTSTRAP, setting this flag will not be accepted
 let disableBootstrap = false
