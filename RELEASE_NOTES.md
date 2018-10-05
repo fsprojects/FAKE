@@ -1,8 +1,7 @@
 # Release Notes
 
-## 5.8.2 - 2018-09-27
+## 5.8.3 - 2018-10-05
 
-* NEW: Fake.Sql.SqlServer module - https://github.com/fsharp/FAKE/pull/2074
 * ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
 * ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
 * ENHANCEMENT: Improve TeamCity support - https://github.com/fsharp/FAKE/pull/2111
