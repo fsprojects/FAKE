@@ -1,23 +1,20 @@
 ﻿@{
-  Layout = "template";
-  Title = Properties["page-title"];
-  //Description = Properties["project-summary"];
-  
-  // Properties["current-page"] = "APIReference";
-  ViewBag.CurrentPage = "APIReference";
+	Layout = "template";
+	Title = Properties["page-title"];
+	ViewBag.CurrentPage = "APIReference";
 }
 
-					<div class="wrapper style2">
-						<div class="inner">
-							<div class="container">
-								<div id="content">
+<section id="content" class="section">
+	<div class="columns">
+		<div class="column is-9-desktop is-12-mobile">
+			<article class="content">
+				@Properties["document"]
+				@Properties["tooltips"]
+			</article>
+		</div>
 
-									<!-- Content -->
-                      <article>
-@Properties["document"]
-@Properties["tooltips"]
-                      </article>
-								</div>
-							</div>
-						</div>
-					</div>
+		<aside class="menu column is-3 is-hidden-touch">
+			<ul class="menu-list"></ul>
+		</aside>
+	</div>
+</section>

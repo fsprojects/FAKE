@@ -1,9 +1,4 @@
-# Getting started with FAKE - F# Make
-
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-gettingstarted.html">here</a></p>
-</div>
+# Getting started
 
 In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
 

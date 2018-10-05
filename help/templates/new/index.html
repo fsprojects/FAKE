@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" class="has-navbar-fixed-top">
+
+<head>
+    <title>FAKE - F# Make - A DSL for build tasks and more</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+    <link rel="stylesheet" href="bulmaswatch.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/toolbar/prism-toolbar.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/line-numbers/prism-line-numbers.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item no-hover" href="/">
+                <img src="logo_brand.png" alt="FAKE - F# Make - A DSL for build tasks and more" width="28" height="28">
+                <span class="p-l-sm">FAKE</span>
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">Tutorials</a>
+                    <div class="navbar-dropdown">
+                        <a href="/fake-gettingstarted.html" class="navbar-item">Getting started</a>
+                        <a href="/fake-commandane.html" class="navbar-item">Running FAKE from command line</a>
+                        <a href="/fake-template.html" class="navbar-item">FAKE template</a>
+                        <a href="/fake-debugging.html" class="navbar-item">Debugging scripts</a>
+                        <a href="/fake-cache.html" class="navbar-item">Build script caching</a>
+                    </div>
+                </div>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">About</a>
+                    <div class="navbar-dropdown" class="navbar-item">
+                        <a href="/help-users.html" class="navbar-item">Who is using FAKE?</a>
+                        <a href="/help-supporters.html" class="navbar-item">Supporters</a>
+                        <a href="https://www.nuget.org/packages/FAKE" class="navbar-item">NuGet</a>
+                        <a href="https://chocolatey.org/packages/fake" class="navbar-item">Chocolatey</a>
+                        <a href="https://github.com/fsharp/FAKE/blob/master/License.txt" class="navbar-item">License</a>
+                        <a href="/RELEASE_NOTES.html" class="navbar-item">Release Notes</a>
+                        <a href="/contributing.html" class="navbar-item">Contributing</a>
+                        <a href="https://github.com/fsharp/FAKE/issues/new" class="navbar-item">Ask a question or
+                            report a bug</a>
+                    </div>
+                </div>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a href="/fake-fake5-modules.html" class="navbar-link">Modules</a>
+                    <div class="navbar-dropdown" class="navbar-item">
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Api" class="navbar-link">API</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/api-slack.html" class="navbar-item">Slack</a>
+                                <a href="/apidocs/v5/fake-api-github.html" class="navbar-item">GitHub</a>
+                                <a href="/apidocs/v5/fake-api-hockeyapp.html" class="navbar-item">HockeyApp</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Azure" class="navbar-link">Azure</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-azure-cloudservices.html" class="navbar-item">CloudServices</a>
+                                <a href="/apidocs/v5/fake-azure-emulators.html" class="navbar-item">Emulators</a>
+                                <a href="/apidocs/v5/fake-azure-kudu.html" class="navbar-item">Kudu</a>
+                                <a href="/apidocs/v5/fake-azure-webjobs.html" class="navbar-item">WebJobs</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/buildserver.html" class="navbar-link">BuildServer</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/index.html#Fake.BuildServer" class="navbar-item">Api-Reference</a>
+                                <a href="/apidocs/v5/fake-buildserver-appveyor.html" class="navbar-item">AppVeyor</a>
+                                <a href="/apidocs/v5/fake-buildserver-teamfoundation.html" class="navbar-item">Azure
+                                    DevOps</a>
+                                <a href="/apidocs/v5/fake-buildserver-gitlab.html" class="navbar-item">GitLab</a>
+                                <a href="/apidocs/v5/fake-buildserver-teamcity.html" class="navbar-item">TeamCity</a>
+                                <a href="/apidocs/v5/fake-buildserver-travis.html" class="navbar-item">Travis</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/core.html" class="navbar-link">Core</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-core-buildserver.html" class="navbar-item">BuildServer</a>
+                                <a href="/apidocs/v5/fake-core-changelog.html" class="navbar-item">ChangeLog</a>
+                                <a href="/core-commandlineparsing.html" class="navbar-item">CommandLineParsing</a>
+                                <a href="/apidocs/v5/fake-core-context.html" class="navbar-item">Context</a>
+                                <a href="/apidocs/v5/fake-core-environment.html" class="navbar-item">Environment</a>
+                                <a href="/core-process.html" class="navbar-item">Process</a>
+                                <a href="/apidocs/v5/fake-core-releasenotes.html" class="navbar-item">ReleaseNotes</a>
+                                <a href="/apidocs/v5/fake-core-semver.html" class="navbar-item">SemVer</a>
+                                <a href="/apidocs/v5/fake-core-string.html" class="navbar-item">String</a>
+                                <a href="/core-targets.html" class="navbar-item">Targets</a>
+                                <a href="/apidocs/v5/fake-core-taskrunner.html" class="navbar-item">Tasks</a>
+                                <a href="/core-trace.html" class="navbar-item">Trace</a>
+                                <a href="/apidocs/v5/fake-core-userinput.html" class="navbar-item">UserInput</a>
+                                <a href="/core-vault.html" class="navbar-item">Vault</a>
+                                <a href="/apidocs/v5/fake-core-xml.html" class="navbar-item">Xml</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Documentation" class="navbar-link">Documentation</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-documentation-docfx.html" class="navbar-item">DocFx</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.DotNet" class="navbar-link">DotNet</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/dotnet-cli.html" class="navbar-item">Cli</a>
+                                <a href="/dotnet-assemblyinfo.html" class="navbar-item">AssemblyInfoFile</a>
+                                <a href="/apidocs/v5/fake-dotnet-fsc.html" class="navbar-item">Fsc</a>
+                                <a href="/apidocs/v5/fake-dotnet-fsi.html" class="navbar-item">Fsi</a>
+                                <a href="/apidocs/v5/fake-dotnet-msbuild.html" class="navbar-item">MSBuild</a>
+                                <a href="/apidocs/v5/fake-dotnet-testing-nunit3.html" class="navbar-item">Testing -
+                                    NUnit</a>
+                                <a href="/apidocs/v5/fake-dotnet-testing-mspec.html" class="navbar-item">Testing -
+                                    MSpec</a>
+                                <a href="/apidocs/v5/fake-dotnet-testing-xunit2.html" class="navbar-item">Testing -
+                                    XUnit2</a>
+                                <a href="/apidocs/v5/fake-dotnet-testing-expecto.html" class="navbar-item">Testing -
+                                    Expecto</a>
+                                <a href="/apidocs/v5/fake-dotnet-testing-vstest.html" class="navbar-item">Testing -
+                                    VSTest</a>
+                                <a href="/fake-dotnet-testing-specflow.html" class="navbar-item">Testing - SpecFlow</a>
+                                <a href="/dotnet-testing-opencover.html" class="navbar-item">Testing - OpenCover</a>
+                                <a href="/apidocs/v5/fake-dotnet-testing-dotcover.html" class="navbar-item">Testing -
+                                    DotCover</a>
+                                <a href="/dotnet-nuget.html" class="navbar-item">NuGet</a>
+                                <a href="/apidocs/v5/fake-dotnet-mage.html" class="navbar-item">Mage</a>
+                                <a href="/apidocs/v5/fake-dotnet-paket.html" class="navbar-item">Paket</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/core-targets.html" class="navbar-link">DSL</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="https://github.com/xakebuild/Xake" class="navbar-item">Xake</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/index.html#Fake.Installer" class="navbar-link">Installer</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-installer-innosetup.html" class="navbar-item">InnoSetup</a>
+                                <a href="/fake-installer-squirrel.html" class="navbar-item">Squirrel</a>
+                                <a href="/apidocs/v5/fake-installer-wix.html" class="navbar-item">Wix</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/index.html#Fake.IO" class="navbar-link">IO</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/index.html#Fake.IO" class="navbar-item">FileSystem</a>
+                                <a href="/apidocs/v5/fake-io-changewatcher.html" class="navbar-item">Change Watcher</a>
+                                <a href="/apidocs/v5/fake-io-globbing-operators.html" class="navbar-item">Globbing</a>
+                                <a href="/apidocs/v5/fake-io-zip.html#Functions and values" class="navbar-item">Zip</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.JavaScript" class="navbar-link">JavaScript</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-javascript-npm.html" class="navbar-item">Npm</a>
+                                <a href="/apidocs/v5/fake-javascript-yarn.html" class="navbar-item">Yarn</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Net" class="navbar-link">Net</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/net-http.html" class="navbar-item">Http</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Sql" class="navbar-link">Sql</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/sql-dacpac.html" class="navbar-item">DacPac</a>
+                                <a href="/sql-sqlserver.html" class="navbar-item">SQL Server</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Testing" class="navbar-link">Testing</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/testing-sonarqube.html" class="navbar-item">SonarQube</a>
+                                <a href="/testing-reportgenerator.html" class="navbar-item">ReportGenerator</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Tools" class="navbar-link">Tools</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/index.html#Fake.Tools.Git" class="navbar-item">Git</a>
+                                <a href="/fake-tools-pickles.html" class="navbar-item">Pickles</a>
+                                <a href="/fake-tools-octo.html" class="navbar-item">Octo</a>
+                                <a href="/apidocs/v5/fake-tools-rsync.html" class="navbar-item">Rsync</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/index.html#Fake.Windows" class="navbar-link">Windows</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/windows-chocolatey.html" class="navbar-item">Chocolatey</a>
+                            </div>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/apidocs/v5/fake-windows-registry.html" class="navbar-item">Registry</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="/apidocs/v5/legacy/index.html#Fake" class="navbar-link">Legacy / Not Migrated</a>
+                            <div class="navbar-dropdown" class="navbar-item">
+                                <a href="/todo-fluentmigrator.html" class="navbar-item">?.?.FluentMigrator</a>
+                                <a href="/todo-androidpublisher.html" class="navbar-item">?.?.AndroidPublisher</a>
+                                <a href="/todo-wix.html" class="navbar-item">Windows.WiX</a>
+                                <a href="/todo-msteamsnotification.html" class="navbar-item">API.MsTeams</a>
+                                <a href="/todo-stylecop.html" class="navbar-item">DotNet.StyleCop</a>
+                                <a href="/todo-deploy.html" class="navbar-item">Fake.Deploy</a>
+                                <a href="/todo-iis.html" class="navbar-item">?.?.IIS</a>
+                                <a href="/todo-vagrant.html" class="navbar-item">?.?.Vagrant</a>
+                                <a href="/todo-fxcop.html" class="navbar-item">DotNet.FxCop</a>
+                                <a href="/todo-canopy.html" class="navbar-item">DotNet.Testing.Canopy</a>
+                                <a href="/todo-octopusdeploy.html" class="navbar-item">?.?.OctopusDeploy</a>
+                                <a href="/todo-typescript.html" class="navbar-item">JavaScript?.TypeScript</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a href="/apidocs/v5/index.html" class="navbar-link">API Reference</a>
+                    <div class="navbar-dropdown is-right">
+                        <a href="/apidocs/v5/index.html" class="navbar-item">FAKE 5 API Reference</a>
+                        <a href="/apidocs/v5/legacy/index.html" class="navbar-item">FAKE 5 Migration API</a>
+                        <a href="/apidocs/v4/index.html" class="navbar-item">FAKE 4 API Reference</a>
+                    </div>
+                </div>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">FAKE 4</a>
+                    <div class="navbar-dropdown is-right">
+                        <a href="/fake-migrate-to-fake-5.html" class="navbar-item">FAKE migration</a>
+                        <a href="/legacy-gettingstarted.html" class="navbar-item">Getting started</a>
+                        <a href="/help-docs.html" class="navbar-item">Where is XYZ???</a>
+                        <a href="/legacy-commandane.html" class="navbar-item">Running FAKE from command line</a>
+                        <a href="/legacy-core-targets.html" class="navbar-item">Targets</a>
+                    </div>
+                </div>
+                <div class="navbar-item no-hover">
+                    <div class="buttons">
+                        <a href="https://github.com/fsharp/FAKE" class="m-r-sm">
+                            <i class="fab fa-github fa-lg fa-fw"></i>
+                        </a>
+                        <a href="https://github.com/fsharp/FAKE" class="m-r-sm">
+                            <i class="fab fa-twitter fa-lg fa-fw"></i>
+                        </a>
+                        <a href="https://fsharp.slack.com/" class="m-r-sm">
+                            <i class="fab fa-slack fa-lg fa-fw"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero is-dark is-medium">
+        <div class="hero-body has-text-centered">
+            <div class="container">
+                <h1 class="title is-1 is-spaced is-1">
+                    FAKE
+                </h1>
+
+                <h2 class="subtitle is-2 is-uppercase">
+                    <div>A DSL for build tasks and more</div>
+                    <div>The power of F# - anywhere - anytime</div>
+                </h2>
+
+                <a href="fake-gettingstarted.html" class="button is-primary is-large">Learn more</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="section is-small">
+            <div class="hero">
+                <div class="hero-body">
+                    <div class="container">
+                        <h2 class="title is-2 is-uppercase">Why use Fake?</h2>
+                        <h3 class="subtitle is-3 is-uppercase">Fake was built on several key design principles ...</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container is-fluid columns">
+                <div class="column">
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-3x fa-cubes fa-fw"></i>
+                        </div>
+                        <div class="media-content">
+                            <h5 class="title is-5 is-uppercase">Modularization</h5>
+                            <h6 class="subtitle is-6">Only pay for what you need</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-3x fa-cogs fa-fw"></i>
+                        </div>
+                        <div class="media-content">
+                            <h5 class="title is-5 is-uppercase">Extensibility</h5>
+                            <h6 class="subtitle is-6">Integrate your own modules</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-3x fa-stopwatch fa-fw"></i>
+                        </div>
+                        <div class="media-content">
+                            <h5 class="title is-5 is-uppercase">Quickstart</h5>
+                            <h6 class="subtitle is-6">Get started as fast as possible</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section is-small">
+            <div class="columns same-height-columns">
+                <div class="column is-6 same-height-column">
+                    <h2 class="title is-2 is-spaced">
+                        Bootstrapping
+                    </h2>
+                    <h4 class="subtitle is-4">
+                        Every project has different needs. Therefore, FAKE supports several ways to
+                        bootstrap the build process. From an assumed installation - for example via
+                        chocolatey - to automatically updated bootstrapping scripts.
+                    </h4>
+
+                    <a href="fake-gettingstarted.html" class="button is-primary is-large at-bottom">Start now</a>
+                </div>
+
+                <div class="column is-6 same-height-column">
+                    <h2 class="title is-2 is-spaced">
+                        Migration
+                    </h2>
+
+                    <h4 class="subtitle is-4">
+                        Still using FAKE 4? No, your current build scripts will not break, but the
+                        development of new features for FAKE 4 and the old way of using FAKE are no longer
+                        supported.
+                    </h4>
+
+                    <a href="fake-migrate-to-fake-5.html" class="button is-primary is-large at-bottom">Migrate now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="columns">
+                <div class="column is-6">
+                    <h3 class="title is-3 is-spaced">A simple build script</h3>
+                    <h5 class="subtitle is-5">This is a simple build script in FAKE. Build scripts can contain multiple
+                        targets which can do different things like building your app or publishing it. They are written
+                        in F# and can contain references to third party library by including them directly or via
+                        Paket.</h5>
+                </div>
+
+                <div class="column is-6">
+
+                    <pre class="fssnip highlighted line-numbers">
+                        <code class="language-fsharp">
+                            #r "paket:
+                            nuget Fake.Core.Target //"
+                            #load "./.fake/build.fsx/intellisense.fsx"
+                            
+                            open Fake.Core
+                            
+                            // Default target
+                            Target.create "Default" (fun _ ->
+                                Trace.trace "Hello World from FAKE"
+                            )
+                            
+                            // start build
+                            Target.runOrDefault "Default"
+                        </code>
+                    </pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="columns">
+                <div class="column is-6">
+                    <h3 class="title is-3 is-spaced">Target dependencies</h3>
+                    <h5 class="subtitle is-5">Targets in your build script might have dependencies on other targets
+                        like cleaning up your output folder before building your app. FAKE supports specifing
+                        dependenies between your targets. While it might look a bit strange at first, just read it from
+                        the bottom to the top.</h5>
+                </div>
+
+                <div class="column is-6">
+                    <pre class="fssnip highlighted line-numbers">
+                        <code class="language-fsharp">
+                                #r "paket:
+                                nuget Fake.IO.FileSystem
+                                nuget Fake.Core.Target //"
+                                #load "./.fake/build.fsx/intellisense.fsx"
+                                
+                                open Fake.Core
+                                open Fake.IO
+                                
+                                // Properties
+                                let buildDir = "./build/"
+                                
+                                // Targets
+                                Target.create "Clean" (fun _ ->
+                                  Shell.cleanDir buildDir
+                                )
+                                
+                                Target.create "Default" (fun _ ->
+                                  Trace.trace "Hello World from FAKE"
+                                )
+                                
+                                // Dependencies
+                                open Fake.Core.TargetOperators
+                                
+                                "Clean"
+                                  ==> "Default"
+                                
+                                // start build
+                                Target.runOrDefault "Default"
+                        </code>
+                    </pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="columns">
+                <div class="column is-6">
+                    <h3 class="title is-3 is-spaced">Globbing</h3>
+                    <h5 class="subtitle is-5">In order to search for files deep down in your folder structure, FAKE
+                        supports globbing. The following build script can search for project files in a given folder
+                        path and compile them using MSBuild. To give you even more power, FAKE can exclude and include
+                        additional files.</h5>
+                </div>
+
+                <div class="column is-6">
+                    <pre class="fssnip highlighted line-numbers">
+                        <code class="language-fsharp">
+                                #r "paket:
+                                nuget Fake.IO.FileSystem
+                                nuget Fake.DotNet.MSBuild
+                                nuget Fake.Core.Target //"
+                                #load "./.fake/build.fsx/intellisense.fsx"
+                                
+                                open Fake.IO
+                                open Fake.IO.Globbing.Operators //enables !! and globbing
+                                open Fake.DotNet
+                                open Fake.Core
+                                
+                                // Properties
+                                let buildDir = "./build/"
+                                
+                                // Targets
+                                Target.create "Clean" (fun _ ->
+                                  Shell.cleanDir buildDir
+                                )
+                                
+                                Target.create "BuildApp" (fun _ ->
+                                  !! "src/app/**/*.csproj"
+                                  ++ "src/*/*.target"
+                                  -- "src/*/*.vbproj"
+                                    |> MSBuild.runRelease id buildDir "Build"
+                                    |> Trace.logItems "AppBuild-Output: "
+                                )
+                                
+                                Target.create "Default" (fun _ ->
+                                  Trace.trace "Hello World from FAKE"
+                                )
+                                
+                                open Fake.Core.TargetOperators
+                                
+                                "Clean"
+                                  ==> "BuildApp"
+                                  ==> "Default"
+                                
+                                // start build
+                                Target.runOrDefault "Default"
+                        </code>
+                    </pre>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="hero is-black">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="columns">
+                        <div class="column is-6">
+                            <div class="columns">            
+                                <div class="column is-6">
+                                    <h4 class="title is-4">Important links</h4>
+                                    <ul class="has-text-grey-light">
+                                        <li><a href="/fake-gettingstarted.html">Getting started</a></li>
+                                        <li><a href="/fake-fake5-modules.html">Modules</a></li>
+                                        <li><a href="/fake-fake5-modules.html#Declaring-FAKE-5-Header">FAKE Header</a></li>
+                                    </ul>
+                                </div>
+                                <div class="column is-6">
+                                    <h4 class="title is-4">Further projects</h4>
+                                    <ul class="has-text-grey-light">
+                                        <li><a href="https://fsprojects.github.io/Paket/">Paket</a></li>
+                                        <li><a href="https://fsprojects.github.io/FSharp.Formatting/">FSharp Formatting</a></li>
+                                        <li><a href="http://fsharp.org/">F#</a></li>
+                                        <li><a href="http://ionide.io/">Ionide</a></li>
+                                        <li><a href="http://forge.run/">Forge</a></li>
+                                        <li><a href="https://fsharp.github.io/FSharp.Compiler.Service/">FSharp.Compiler.Service</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="p-t-lg">© FAKE. All rights reserved | Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">@Properties["version"]</a></div>
+                        </div>
+                        <div class="column is-6">
+                            <h4 class="title is-4">FAKE is a community effort</h4>
+                            <p>Please help with the development of FAKE 5, a free, fully open source DSL and Runtime for
+                                running F# scripts. Look at the open issues at <a href="https://github.com/fsharp/FAKE/issues">GitHub</a>,
+                                discuss new features, fix bugs and
+                                send pull requests!</p>
+                            <a href="/contributing.html" class="button is-light is-medium m-t-md">Learn more</a>
+
+                            <h4 class="title is-4 m-t-lg">Get in touch</h4>
+
+                            <div class="footer-contact">
+                                <div class="columns">
+                                    <div class="column is-2">Twitter</div>
+                                    <div class="column is-6"><a href="https://twitter.com/fsharpMake">@fsharpMake</a></div>
+                                </div>
+                                <div class="columns">
+                                    <div class="column is-2">WWW</div>
+                                    <div class="column is-6"><a href="https://fake.build">fake.build</a></div>
+                                </div>
+                                <div class="columns">
+                                    <div class="column is-2">GitHub</div>
+                                    <div class="column is-6"><a href="https://github.com/fsharp/FAKE">GitHub</a></div>
+                                </div>
+                                <div class="columns">
+                                    <div class="column is-2">F# Slack</div>
+                                    <div class="column is-6"><a href="https://fsharp.slack.com/">Slack</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-fsharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-batch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/toolbar/prism-toolbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/line-numbers/prism-line-numbers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="bulma.js"></script>
+</body>
+
+</html>

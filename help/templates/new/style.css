@@ -1,13 +1,3 @@
-body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-}
-  
-#content {
-    flex: 1;
-}
-  
 nav.navbar {
     z-index: 99 !important;
 }
@@ -66,14 +56,6 @@ aside.menu {
     top: 65px;
     right: 0;
     z-index: 95;
-}
-
-section.is-small {
-    padding: 6rem 1.5rem;
-}
-
-.content a {
-    color: #222;
 }
 
 @media screen and (min-width: 1088px) {
@@ -174,58 +156,14 @@ span.omitted {
     padding: 0px 0px 1px 0px;
 }
 
-/* tool tip */
-
-div.tip {
-    background: #475b5f;
-    border-radius: 4px;
-    font: 11pt 'Droid Sans', arial, sans-serif;
-    padding: 6px 8px 6px 8px;
-    display: none;
-    color: #d1d1d1;
-}
-
-div.tip strong {
-    color: #d1d1d1;
-}
-
 table.pre pre {
     padding: 0px;
     margin: 0px;
     border: none;
 }
 
-table.pre,
-pre.fssnip,
-pre {
-    line-height: 13pt;
-    border: 1px solid #d8d8d8;
-    border-collapse: separate;
-    white-space: pre;
-    font: 9pt 'Droid Sans Mono', consolas, monospace;
-    width: 90%;
-    background-color: #2d2d2d;
-    padding: 10px;
-    border-radius: 5px;
-    color: #d1d1d1;
-}
-
-table.pre pre {
-    padding: 0px;
-    margin: 0px;
-    border-radius: 0px;
-    width: 100%;
-}
-
-table.pre td {
-    padding: 0px;
-    white-space: normal;
-    margin: 0px;
-    border: none;
-}
-
-table.pre td.lines {
-    width: 30px;
+section.is-small {
+    padding: 6rem 1.5rem;
 }
 
 /* Spacing Helper */
