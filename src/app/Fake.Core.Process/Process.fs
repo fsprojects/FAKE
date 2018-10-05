@@ -224,6 +224,8 @@ open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.Core.GuardedAwaitObservable
 
+
+#if !FX_NO_HANDLE
 module internal Kernel32 =
     open System
     open System.Text
@@ -244,7 +246,8 @@ module internal Kernel32 =
             let hresult = Marshal.GetHRForLastWin32Error()
             Marshal.ThrowExceptionForHR hresult
             "Error = " + string hresult + " when calling GetProcessImageFileName"
-        
+#endif
+
 [<RequireQualifiedAccess>]
 module Process =
 
@@ -778,9 +781,11 @@ module Process =
 
     /// Retrieve the file-path of the running executable of the given process.
     let getFileName (p:Process) =
+#if !FX_NO_HANDLE
         if Environment.isWindows then
             Kernel32.getPathToApp p
         else
+#endif    
             p.MainModule.FileName
 
     /// Returns all processes with the given name
