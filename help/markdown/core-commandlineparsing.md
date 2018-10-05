@@ -55,33 +55,35 @@ You can also take a look at the test-suite:
 - We return the arguments in the user given order in the result map (difference to `docopt.fs`)
 - We parse arguments starting with `-` as positional arguments. For example consider:
 
-```bash
-usage: prog (NAME | --foo NAME)
+  ```bash
+  usage: prog (NAME | --foo NAME)
+  
+  options: --foo
+  ```
 
-options: --foo
-```
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>Note that --foo has no argument because it was not specified in the options section!</p>
-</div>
+  <div class="alert alert-info">
+      <h5>INFO</h5>
+      <p>Note that --foo has no argument because it was not specified in the options section!</p>
+  </div>
+  
+  In this scenario `prog --foo 10` is parsed as `--foo` and `NAME` argument because that is the only   option. However `prog --foo=10` is parsed as `NAME` argument without any `--foo` option. Usually to   prefer `--foo` you should put it first in the usage string:
+  
+  ```bash
+  usage: prog (--foo NAME | NAME)
+  
+  options: --foo
+  ```
+  
+  However, in this particular case it doesn't make any difference (as the options section is missing to indicate that `--foo` has an argument).
 
-In this scenario `prog --foo 10` is parsed as `--foo` and `NAME` argument because that is the only option. However `prog --foo=10` is parsed as `NAME` argument without any `--foo` option. Usually to prefer `--foo` you should put it first in the usage string:
-
-```bash
-usage: prog (--foo NAME | NAME)
-
-options: --foo
-```
-
-  However, in this particular case it doesn't make any difference.
 - `[]` is not inherited for all items, only for the group. To have all items optional use `[]` on every item. For example `usage: prog [go go]` means to have either two `go` or none. A single one is not allowed.
 - We do not merge external "options" in the usage string with `[options]`. For example:
 
-```bash
-usage: prog [options] [-a]
-
-options: -a
-         -b
-```
-
-Means that `-a` is actually allowed twice.
+  ```bash
+  usage: prog [options] [-a]
+  
+  options: -a
+           -b
+  ```
+  
+  Means that `-a` is actually allowed twice.
