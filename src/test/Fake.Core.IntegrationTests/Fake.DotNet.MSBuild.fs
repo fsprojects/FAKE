@@ -53,10 +53,10 @@ let simplePropertyTest propValue =
 let tests =
   testList "Fake.DotNet.MSBuild.IntegrationTests" [
     Process.setEnableProcessTracing true
-    testCase "#2112" <| fun _ ->
+    yield testCase "#2112" <| fun _ ->
         let value = "Data Source=xxx,1433;Initial Catalog=xxx;User Id=xxx;Password=xxx;Integrated Security=False;Persist Security Info=True;Connect Timeout=30;Encrypt=True;MultipleActiveResultSets=True"
         simplePropertyTest value
-    testCase "#2112 (2)" <| fun _ ->
+    yield testCase "#2112 (2)" <| fun _ ->
         let value = "=asd?*&(($!&%%_^$#_+=-['}{|\';\\'\"\\\"ad"
         simplePropertyTest value
   ]
