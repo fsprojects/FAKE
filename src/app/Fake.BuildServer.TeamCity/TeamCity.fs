@@ -40,7 +40,7 @@ module TeamCityImportExtensions =
 /// This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
 /// If some integration is not working as expected or you have features you would like to use directly please open an issue. 
 /// 
-/// For more information on TeamCity interaction from builc scripts [see here](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity)
+/// For more information on TeamCity interaction from build scripts [see here](https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity)
 [<RequireQualifiedAccess>]
 module TeamCity =
     open Fake.IO

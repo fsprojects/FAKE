@@ -743,6 +743,43 @@ module MSBuild =
         let errorMessage = sprintf "'%s %s' failed with exitcode %d." command project exitCode
         raise (MSBuildException(errorMessage, errors))
 
+  // TODO: Make this API public? Remove "Choice" return value
+  let internal buildWithRedirect setParams project =
+    let msBuildParams, argsString = buildArgs setParams
+
+    let args = Process.toParam project + " " +  argsString
+
+    // used for detection
+    let callMsBuildExe args =
+        let result =
+            Process.execWithResult (fun info ->
+            { info with
+                FileName = msBuildParams.ToolPath
+                Arguments = args }
+            |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
+        if not result.OK then
+            failwithf "msbuild failed with exitcode '%d'" result.ExitCode
+        String.Join("\n", result.Messages)
+
+    let binlogPath, args = addBinaryLogger msBuildParams.ToolPath callMsBuildExe args msBuildParams.DisableInternalBinLog
+    let wd =
+        if msBuildParams.WorkingDirectory = System.IO.Directory.GetCurrentDirectory()
+        then ""
+        else sprintf "%s>" msBuildParams.WorkingDirectory
+    Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
+
+    let result =
+        Process.execWithResult (fun info ->
+        { info with
+            FileName = msBuildParams.ToolPath
+            WorkingDirectory = msBuildParams.WorkingDirectory
+            Arguments = args }
+        |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
+    try 
+        handleAfterRun "msbuild" binlogPath result.ExitCode project
+        Choice1Of2 result
+    with e -> Choice2Of2 (e, result)
+
 
   /// Runs a MSBuild project
   /// ## Parameters

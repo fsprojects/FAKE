@@ -5,45 +5,19 @@ open Fake.Core
 open Fake.DotNet
 open Expecto
 
-let buildWithRedirect setParams project =
-    let msBuildParams, argsString = MSBuild.buildArgs setParams
+// Use `dotnet msbuild` for now as it will be the same version across all CI servers
+let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 
-    let args = Process.toParam project + " " +  argsString
+let inline opts () = DotNet.Options.lift dotnetSdk.Value
 
-    // used for detection
-    let callMsBuildExe args =
-        let result =
-            Process.execWithResult (fun info ->
-            { info with
-                FileName = msBuildParams.ToolPath
-                Arguments = args }
-            |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
-        if not result.OK then
-            failwithf "msbuild failed with exitcode '%d'" result.ExitCode
-        String.Join("\n", result.Messages)
-
-    let binlogPath, args = MSBuild.addBinaryLogger msBuildParams.ToolPath callMsBuildExe args msBuildParams.DisableInternalBinLog
-    let wd =
-        if msBuildParams.WorkingDirectory = System.IO.Directory.GetCurrentDirectory()
-        then ""
-        else sprintf "%s>" msBuildParams.WorkingDirectory
-    Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
-
-    let result =
-        Process.execWithResult (fun info ->
-        { info with
-            FileName = msBuildParams.ToolPath
-            WorkingDirectory = msBuildParams.WorkingDirectory
-            Arguments = args }
-        |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
-    try 
-        MSBuild.handleAfterRun "msbuild" binlogPath result.ExitCode project
-        Choice1Of2 result
-    with e -> Choice2Of2 (e, result)
+let inline dtntWorkDir wd =
+    DotNet.Options.lift dotnetSdk.Value
+    >> DotNet.Options.withWorkingDirectory wd
+    >> DotNet.Options.withRedirectOutput true
 
 let simplePropertyTest propValue =
     let dllPath = System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly().Location)
-    let setParams (defaults:MSBuildParams) =
+    let setMSBuildParams (defaults:MSBuild.CliArguments) =
         { defaults with
             Verbosity = Some(MSBuildVerbosity.Minimal)
             Targets = ["Test"]
@@ -52,10 +26,13 @@ let simplePropertyTest propValue =
                 [
                     "Property1", propValue
                 ]
-            WorkingDirectory = dllPath
         }
+    let setParams (p:DotNet.MSBuildOptions) =
+        p.WithMSBuildParams setMSBuildParams
+        |> dtntWorkDir dllPath
 
-    match buildWithRedirect setParams "testdata/testProperty.proj" with
+
+    match DotNet.msbuildWithResult setParams "testdata/testProperty.proj" with
     | Choice1Of2 result ->
         let lines = String.Join("\n", result.Results |> Seq.map (fun r -> r.Message))
         if Environment.isWindows then

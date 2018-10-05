@@ -853,6 +853,10 @@ module DotNet =
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f =
             { x with Common = f x.Common }
+    
+        /// Changes the "MSBuildParams" properties according to the given function
+        member inline x.WithMSBuildParams f =
+            { x with MSBuildParams = f x.MSBuildParams }
 
     let internal addBinaryLogger disableFakeBinLog args (common:Options) =
         // used for detection
@@ -877,6 +881,15 @@ module DotNet =
         let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
         let result = exec (fun _ -> common) command args
         MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
+
+    let internal tryExecWithBinLog project common command args msBuildArgs =
+        let argString = MSBuild.fromCliArguments msBuildArgs
+        let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
+        let result = exec (fun _ -> common) command args
+        try
+            MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
+            Choice1Of2 result
+        with e -> Choice2Of2 (e, result)
 
     /// Runs a MSBuild project
     /// ## Parameters
@@ -911,6 +924,18 @@ module DotNet =
         let args = Args.toWindowsCommandLine args
         execWithBinLog project param.Common "msbuild" args param.MSBuildParams
         __.MarkSuccess()
+
+    // TODO: Make this API public? change return code?
+    let internal msbuildWithResult setParams project =
+        //use __ = Trace.traceTask "DotNet:msbuild" project
+        
+        let param = MSBuildOptions.Create() |> setParams
+        let args = [project]
+        let args = Args.toWindowsCommandLine args
+        let r = tryExecWithBinLog project param.Common "msbuild" args param.MSBuildParams
+        //__.MarkSuccess()
+        r  
+
 
     /// dotnet restore command options
     type RestoreOptions =
