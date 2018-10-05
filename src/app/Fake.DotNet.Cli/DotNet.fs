@@ -794,6 +794,21 @@ module DotNet =
         let passVersion = if fromGlobalJson then None else checkVersion
         let installScript = downloadInstaller param.InstallerOptions
 
+        // check if existing processes exists:
+        let dotnetExe = Path.Combine(dir, if Environment.isUnix then "dotnet" else "dotnet.exe")
+        if Environment.isWindows && File.Exists(dotnetExe) then
+            System.Diagnostics.Process.GetProcesses()
+            |> Seq.filter (fun p -> 
+                   try 
+                       not p.HasExited
+                   with _ -> false)
+            |> Seq.filter (fun p -> 
+                   try 
+                       Path.GetFullPath(Process.getFileName p).ToLowerInvariant() =
+                            Path.GetFullPath(dotnetExe)
+                   with _ -> false)
+            |> Seq.iter Process.kill              
+            ()
         let exitCode =
             let args, fileName =
                 if Environment.isUnix then

@@ -59,6 +59,55 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
+// WORKAROUND TEAMCITY
+module Kernel32 =
+    open System
+    open System.Text
+    open System.Diagnostics
+    open System.Runtime.InteropServices
+    [<DllImport("Kernel32.dll", SetLastError = true)>]
+    extern UInt32 QueryFullProcessImageName(IntPtr hProcess, UInt32 flags, StringBuilder text, [<Out>] UInt32& size)
+    
+    let getPathToApp (proc:Process) =
+        let mutable nChars = 256u
+        let Buff = new StringBuilder(int nChars);
+
+        let success = QueryFullProcessImageName(proc.Handle, 0u, Buff, &nChars)
+
+        if (0u <> success) then
+            Buff.ToString()
+        else
+            let hresult = Marshal.GetHRForLastWin32Error()
+            Marshal.ThrowExceptionForHR hresult
+            "Error = " + string hresult + " when calling GetProcessImageFileName"
+
+do
+    let dir =
+        if Environment.isUnix
+        then Environment.environVar "HOME" @@ ".dotnet"
+        else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
+
+    let getProcessFileName (p:System.Diagnostics.Process) =
+        if Environment.isWindows then
+            Kernel32.getPathToApp p
+        else
+            p.MainModule.FileName
+    
+    let dotnetExe = Path.Combine(dir, if Environment.isUnix then "dotnet" else "dotnet.exe")
+    if File.Exists(dotnetExe) then
+        System.Diagnostics.Process.GetProcesses()
+        |> Seq.filter (fun p -> 
+               try 
+                   not p.HasExited
+               with _ -> false)
+        |> Seq.filter (fun p -> 
+               try 
+                   Path.GetFullPath(getProcessFileName p).ToLowerInvariant() =
+                        Path.GetFullPath(dotnetExe)
+               with _ -> false)
+        |> Seq.iter Process.kill
+
+
 // Set this to true if you have lots of breaking changes, for small breaking changes use #if BOOTSTRAP, setting this flag will not be accepted
 let disableBootstrap = false
 

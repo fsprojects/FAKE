@@ -1,11 +1,13 @@
 # Release Notes
 
-## 5.8.3 - 2018-10-05
+## 5.8.4-alpha - 2018-10-05
 
 * ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
 * ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
 * ENHANCEMENT: Improve TeamCity support - https://github.com/fsharp/FAKE/pull/2111
 * ENHANCEMENT: Update Netstandard.Library package to `2.0.3` - https://github.com/fsharp/FAKE/pull/2106
+* ENHANCEMENT: Add `Process.getFileName` api to retrieve the full-path of a given process
+* ENHANCEMENT: Kill existing running `dotnet.exe` processes before running the dotnet-cli installer
 * BUGFIX: Environment variables are case insensitive on windows, fake will now throw exceptions if it detects invalid environment maps
 * BUGFIX: MSBuild properties containing special characters lead to errors - https://github.com/fsharp/FAKE/issues/2112
 * BUGFIX: Improve error message when release notes are invalid - https://github.com/fsharp/FAKE/issues/2085
