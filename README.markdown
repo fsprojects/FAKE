@@ -24,7 +24,7 @@ See the [project home page](https://fake.build/) for tutorials and [API document
 > - when you are on linux and do not have mono installed
 > - when you are on windows and do not have Visual Studio installed
 >
-> Either build only the `netcore` parts via `fake build target FullDotNetCore` or install the requirements accoding to the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
+> Either build only the `netcore` parts via `fake build target FullDotNetCore` or install the requirements according to the [contributing page](http://fsharp.github.com/FAKE/contributing.html)
 
 Make sure to have long path enabled: https://superuser.com/questions/1119883/windows-10-enable-ntfs-long-paths-policy-option-missing
 Otherwise the test-suite will fail (However, the compilation should work)

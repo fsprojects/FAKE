@@ -115,7 +115,7 @@
 * NEW: module Fake.Tools.GitVersion to interact with gitversion.exe - https://github.com/fsharp/FAKE/pull/1988
 * ENHANCEMENT: Add `traceImportantf` and `traceErrorf` - https://github.com/fsharp/FAKE/pull/1986
 * ENHANCEMENT: Minimalize dependencies between FAKE packages - https://github.com/fsharp/FAKE/pull/1980
-* ENHANCEMENT: Change chocolatey package accoding to feedback - https://github.com/fsharp/FAKE/pull/1983
+* ENHANCEMENT: Change chocolatey package according to feedback - https://github.com/fsharp/FAKE/pull/1983
 * BUGFIX: Fix locating kudusync.cmd in Fake.Azure.Kudu - https://github.com/fsharp/FAKE/pull/1995
 * NEW: module Fake.Core.UserInput - https://github.com/fsharp/FAKE/pull/1997
 
@@ -150,7 +150,7 @@
 
 ## 5.0.0-rc017 - 2018-05-22
 
-* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
+* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes according to API-Guidelines (Target, Globbing, AssemblyInfoFile)
 * ENHANCEMENT: Mark `Target.DoNothing` as obsolete
 * ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
 * BUGFIX: Includes fixes from 4.64.12
