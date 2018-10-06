@@ -8,5 +8,5 @@
 #endif
 
 // Issue https://github.com/fsharp/FAKE/issues/2121
-System.Environment.CurrentDirectory <- System.IO.Path.GetFullPath "test"
+System.Environment.CurrentDirectory <- System.IO.Path.GetFullPath "mydir"
 failwith "runtime error"
