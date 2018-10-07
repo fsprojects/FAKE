@@ -446,16 +446,12 @@ module Target =
             aligned "Total:" total null
             if not context.HasError then 
                 aligned "Status:" "Ok" null
-                //Trace.setBuildState TagStatus.Success
             else
                 alignedError "Status:" "Failure" null
-                //Trace.setBuildState TagStatus.Failed
         else
             Trace.traceError "No target was successfully completed"
-            //Trace.setBuildState TagStatus.Warning
 
         Trace.traceLine()
-
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
@@ -763,7 +759,14 @@ module Target =
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 
     /// Runs a target and its dependencies
-    let run parallelJobs targetName args = runInternal false parallelJobs targetName args |> ignore
+    let run parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> ignore
+
+    /// Updates build status based on TargetContext
+    let updateBuildStatus context =
+        match context.PreviousTargets.Length, context.HasError with
+        | 0, _ -> Trace.setBuildState TagStatus.Warning
+        | _, true -> Trace.setBuildState TagStatus.Failed
+        | _, _ -> Trace.setBuildState TagStatus.Success        
 
     let internal runWithDefault allowArgs fDefault =
         let ctx = Fake.Core.Context.forceFakeContext ()
