@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -275,6 +281,12 @@
 <a name="TeamCity" class="anchor" href="#TeamCity"><h1>TeamCity</h1></a>
 
 <div class="xmldoc">
+<p>native support for TeamCity specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+<p>For more information on TeamCity interaction from build scripts <a href="https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity">see here</a></p>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -287,10 +299,41 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-buildserver-teamcity-buildparameters.html">BuildParameters</a>
+          </td>
+          <td class="xmldoc">
+            <p>TeamCity build parameters</p>
+<p>See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters">Predefined Build Parameters documentation</a> for more information</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-buildserver-teamcity-environment.html">Environment</a>
           </td>
           <td class="xmldoc">
             
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-buildserver-teamcity-filechange.html">FileChange</a>
+          </td>
+          <td class="xmldoc">
+            <p>Describe a change between builds</p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-buildserver-teamcity-filechangetype.html">FileChangeType</a>
+          </td>
+          <td class="xmldoc">
+            <p>The type of change that occured</p>
+
+
           </td>
         </tr>
     </tbody>
@@ -315,12 +358,12 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L43-43" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L52-52" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
           <p>Open Named Block that will be closed when the block is disposed
-Usage: <code>use __ = teamCityBlock "My Block"</code></p>
+Usage: <code>use __ = TeamCity.block "My Block"</code></p>
 
 
         </td>
@@ -336,7 +379,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L286-286" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L435-435" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -354,7 +397,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L288-288" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L437-437" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -372,7 +415,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L290-290" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L439-439" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -390,7 +433,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L295-295" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L444-444" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -408,7 +451,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L188-188" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L197-197" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -428,7 +471,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L174-174" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L183-183" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -448,7 +491,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L180-180" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L189-189" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -468,7 +511,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L177-177" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L186-186" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -488,7 +531,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L49-49" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L58-58" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -508,7 +551,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L197-197" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L206-206" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -528,7 +571,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L202-202" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamCity/TeamCity.fs#L211-211" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -644,7 +687,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

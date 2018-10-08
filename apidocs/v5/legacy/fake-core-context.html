@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -319,10 +325,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1203', 1203)" onmouseover="showTip(event, '1203', 1203)">
+          <code onmouseout="hideTip(event, '1206', 1206)" onmouseover="showTip(event, '1206', 1206)">
             fakeVar(name)
           </code>
-          <div class="tip" id="1203">
+          <div class="tip" id="1206">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -345,10 +351,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1204', 1204)" onmouseover="showTip(event, '1204', 1204)">
+          <code onmouseout="hideTip(event, '1207', 1207)" onmouseover="showTip(event, '1207', 1207)">
             fakeVarAllowNoContext(name)
           </code>
-          <div class="tip" id="1204">
+          <div class="tip" id="1207">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -371,10 +377,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1205', 1205)" onmouseover="showTip(event, '1205', 1205)">
+          <code onmouseout="hideTip(event, '1208', 1208)" onmouseover="showTip(event, '1208', 1208)">
             forceFakeContext()
           </code>
-          <div class="tip" id="1205">
+          <div class="tip" id="1208">
             <strong>Signature:</strong> unit -&gt; FakeExecutionContext<br />
                                   </div>
         </td>
@@ -389,10 +395,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1206', 1206)" onmouseover="showTip(event, '1206', 1206)">
+          <code onmouseout="hideTip(event, '1209', 1209)" onmouseover="showTip(event, '1209', 1209)">
             getExecutionContext()
           </code>
-          <div class="tip" id="1206">
+          <div class="tip" id="1209">
             <strong>Signature:</strong> unit -&gt; RuntimeContext<br />
                                   </div>
         </td>
@@ -407,10 +413,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1207', 1207)" onmouseover="showTip(event, '1207', 1207)">
+          <code onmouseout="hideTip(event, '1210', 1210)" onmouseover="showTip(event, '1210', 1210)">
             getFakeContext name f
           </code>
-          <div class="tip" id="1207">
+          <div class="tip" id="1210">
             <strong>Signature:</strong> name:string -&gt; f:FakeExecutionContext -&gt; obj option<br />
                                   </div>
         </td>
@@ -425,10 +431,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1208', 1208)" onmouseover="showTip(event, '1208', 1208)">
+          <code onmouseout="hideTip(event, '1211', 1211)" onmouseover="showTip(event, '1211', 1211)">
             getFakeExecutionContext(e)
           </code>
-          <div class="tip" id="1208">
+          <div class="tip" id="1211">
             <strong>Signature:</strong> e:RuntimeContext -&gt; FakeExecutionContext option<br />
                                   </div>
         </td>
@@ -443,10 +449,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1209', 1209)" onmouseover="showTip(event, '1209', 1209)">
+          <code onmouseout="hideTip(event, '1212', 1212)" onmouseover="showTip(event, '1212', 1212)">
             getFakeVar(name)
           </code>
-          <div class="tip" id="1209">
+          <div class="tip" id="1212">
             <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -469,10 +475,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1210', 1210)" onmouseover="showTip(event, '1210', 1210)">
+          <code onmouseout="hideTip(event, '1213', 1213)" onmouseover="showTip(event, '1213', 1213)">
             isFakeContext()
           </code>
-          <div class="tip" id="1210">
+          <div class="tip" id="1213">
             <strong>Signature:</strong> unit -&gt; bool<br />
                                   </div>
         </td>
@@ -487,10 +493,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1211', 1211)" onmouseover="showTip(event, '1211', 1211)">
+          <code onmouseout="hideTip(event, '1214', 1214)" onmouseover="showTip(event, '1214', 1214)">
             removeFakeContext name f
           </code>
-          <div class="tip" id="1211">
+          <div class="tip" id="1214">
             <strong>Signature:</strong> name:string -&gt; f:FakeExecutionContext -&gt; obj option<br />
                                   </div>
         </td>
@@ -505,10 +511,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1212', 1212)" onmouseover="showTip(event, '1212', 1212)">
+          <code onmouseout="hideTip(event, '1215', 1215)" onmouseover="showTip(event, '1215', 1215)">
             removeFakeVar(name)
           </code>
-          <div class="tip" id="1212">
+          <div class="tip" id="1215">
             <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -531,10 +537,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1213', 1213)" onmouseover="showTip(event, '1213', 1213)">
+          <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
             setExecutionContext(e)
           </code>
-          <div class="tip" id="1213">
+          <div class="tip" id="1216">
             <strong>Signature:</strong> e:RuntimeContext -&gt; unit<br />
                                   </div>
         </td>
@@ -549,10 +555,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1214', 1214)" onmouseover="showTip(event, '1214', 1214)">
+          <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
             setFakeContext name v updateF f
           </code>
-          <div class="tip" id="1214">
+          <div class="tip" id="1217">
             <strong>Signature:</strong> name:string -&gt; v:obj -&gt; updateF:(obj -&gt; obj) -&gt; f:FakeExecutionContext -&gt; obj<br />
                                   </div>
         </td>
@@ -567,10 +573,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1215', 1215)" onmouseover="showTip(event, '1215', 1215)">
+          <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
             setFakeVar name v
           </code>
-          <div class="tip" id="1215">
+          <div class="tip" id="1218">
             <strong>Signature:</strong> name:string -&gt; v:&#39;a -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -697,7 +703,7 @@ This allows us to run some modules without any context and change behavior depen
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

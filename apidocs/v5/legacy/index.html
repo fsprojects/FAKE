@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -627,7 +633,7 @@ These files have to be in a format as described on <a href="http://keepachangelo
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>FAKE0001 Use the Fake.DotNet.Testing.DotCover module instead</p>
             </div> 
           <p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
 
@@ -1198,7 +1204,7 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>FAKE0001 Use the Fake.Tools.Octo module instead</p>
             </div> 
           <p>Contains tasks which can be used for automated deployment via <a href="http://octopusdeploy.com/">Octopus Deploy</a>.
 There is also a tutorial about the <a href="../octopusdeploy.html">Octopus deployment helper</a> available.</p>
@@ -1589,7 +1595,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>FAKE0001 Use the Fake.Installer.Squirrel module instead</p>
             </div> 
           <p>Contains types and utility functions related to creating <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> installer.</p>
 
@@ -2186,7 +2192,12 @@ functions from the Side-by-side helper module</p>
             <a href="fake-buildserver-appveyor.html">AppVeyor</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for AppVeyor specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2202,7 +2213,13 @@ functions from the Side-by-side helper module</p>
             <a href="fake-buildserver-teamcity.html">TeamCity</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for TeamCity specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+<p>For more information on TeamCity interaction from build scripts <a href="https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity">see here</a></p>
+
+
           </td>
         </tr>
         <tr>
@@ -2218,7 +2235,65 @@ functions from the Side-by-side helper module</p>
             <a href="fake-buildserver-teamfoundation.html">TeamFoundation</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a></p>
+<h3>Secret Variables</h3>
+<p>This CI server supports the concept of secret variables and uses the <a href="/core-vault.html">Vault</a> to store them.
+In order to access secret variables you need to use one of the fake 5 tasks from <a href="https://github.com/isaacabraham/vsts-fsharp">vsts-fsharp</a>.</p>
+<h4>Example implementation (supports runner and vault tasks)</h4>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="c">// Either use a local vault filled by the &#39;FAKE_VAULT_VARIABLES&#39; environment variable</span>
+   <span class="c">// or fall back to the build process if none is given</span>
+   <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">vault</span> <span class="o">=</span>
+       <span class="k">match</span> <span class="id">Vault</span><span class="pn">.</span><span class="id">fromFakeEnvironmentOrNone</span><span class="pn">(</span><span class="pn">)</span> <span class="k">with</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="uc">Some</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">v</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">v</span> <span class="c">// fake 5 vault task, uses &#39;FAKE_VAULT_VARIABLES&#39; by default</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="uc">None</span> <span class="k">-&gt;</span> <span class="id">TeamFoundation</span><span class="pn">.</span><span class="id">variables</span> <span class="c">// fake 5 runner task</span>
+
+   <span class="c">// Only needed if you want to fallback to &#39;normal&#39; environment variables (locally for example)</span>
+   <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="fn">getVarOrDefault</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">name</span> <span class="o">=</span>
+       <span class="k">match</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">vault</span><span class="pn">.</span><span class="id">TryGet</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="id">name</span> <span class="k">with</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="uc">Some</span> <span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="id">v</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs7', 12)" onmouseover="showTip(event, 'fs7', 12)" class="id">v</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs4', 13)" onmouseover="showTip(event, 'fs4', 13)" class="uc">None</span> <span class="k">-&gt;</span> <span class="id">Environment</span><span class="pn">.</span><span class="id">environVarOrFail</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">name</span>
+   <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+       <span class="k">let</span> <span class="id">token</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs5', 15)" onmouseover="showTip(event, 'fs5', 15)" class="id">getVarOrDefault</span> <span class="s">&quot;github_token&quot;</span>
+       <span class="c">// Use token to deploy to github</span>
+
+       <span class="k">let</span> <span class="id">apiKey</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs5', 16)" onmouseover="showTip(event, 'fs5', 16)" class="id">getVarOrDefault</span> <span class="s">&quot;nugetkey&quot;</span>
+       <span class="c">// Use apiKey to deploy to nuget</span>
+       <span class="pn">(</span><span class="pn">)</span>
+   <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val vault : obj</div>
+<div class="tip" id="fs2">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs3">val v : obj</div>
+<div class="tip" id="fs4">union case Option.None: Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs5">val getVarOrDefault : name:&#39;a -&gt; &#39;b</div>
+<div class="tip" id="fs6">val name : &#39;a</div>
+<div class="tip" id="fs7">val v : &#39;b</div>
+
+
           </td>
         </tr>
         <tr>
@@ -2226,7 +2301,12 @@ functions from the Side-by-side helper module</p>
             <a href="fake-buildserver-travis.html">Travis</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for Travis specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+
+
           </td>
         </tr>
     </tbody>
@@ -2422,7 +2502,10 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-dotnetcoveragetool.html">DotNetCoverageTool</a>
           </td>
           <td class="xmldoc">
-            
+            <p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2448,7 +2531,8 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-itracelistener.html">ITraceListener</a>
           </td>
           <td class="xmldoc">
-            <p>Defines a TraceListener interface</p>
+            <p>Defines a TraceListener interface
+Note: Please contribute implementations to the fake repository, as external implementations are not supported.</p>
 
 
           </td>
@@ -2458,7 +2542,10 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-importdata.html">ImportData</a>
           </td>
           <td class="xmldoc">
-            
+            <p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2466,7 +2553,10 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-knowntags.html">KnownTags</a>
           </td>
           <td class="xmldoc">
-            
+            <p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2474,7 +2564,10 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-nunitdataversion.html">NunitDataVersion</a>
           </td>
           <td class="xmldoc">
-            
+            <p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2518,7 +2611,11 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-semverinfo.html">SemVerInfo</a>
           </td>
           <td class="xmldoc">
-            <p>Contains the version information.</p>
+            <p>Contains the version information. For parsing use <a href="fake-core-semver.html">SemVer.parse</a></p>
+<blockquote>
+<p>Note: If you use <code>{ version with Patch = myPath; Original = None }</code> to overwrite some parts of this string make sure to overwrite <code>Original</code> to <code>None</code> in order to recalculate the version string.
+Note: For overwriting the <code>PreRelease</code> part use: <code>{ Version with Original = None; PreRelease = PreRelease.TryParse "alpha.1" }</code></p>
+</blockquote>
 
 
           </td>
@@ -2538,7 +2635,10 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-tagstatus.html">TagStatus</a>
           </td>
           <td class="xmldoc">
-            
+            <p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2570,7 +2670,10 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-teststatus.html">TestStatus</a>
           </td>
           <td class="xmldoc">
-            
+            <p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -2578,7 +2681,9 @@ See <code>Samples/CMakeSupport</code> for usage examples.</p>
             <a href="fake-core-tracedata.html">TraceData</a>
           </td>
           <td class="xmldoc">
-            <p>Defines Tracing information for TraceListeners</p>
+            <p>Defines Tracing information for TraceListeners
+Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
 
 
           </td>
@@ -2736,7 +2841,8 @@ This allows us to run some modules without any context and change behavior depen
             <a href="fake-core-semver.html">SemVer</a>
           </td>
           <td class="xmldoc">
-          <p>Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
+          <p>Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).
+Make sure to read the documentation in the <a href="fake-core-semverinfo.html">SemVerInfo</a> record as well if you manually create versions.</p>
 
 
           </td>
@@ -2839,6 +2945,25 @@ This allows us to run some modules without any context and change behavior depen
           <p>Helpers for capturing user input</p>
 
 
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-vault.html">Vault</a>
+          </td>
+          <td class="xmldoc">
+          <p>Provices a encrypted store of variables to prevent accidential leakage
+Please read the <a href="/core-vault.html">documentation</a></p>
+
+
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-core-vaultext.html">VaultExt</a>
+          </td>
+          <td class="xmldoc">
+          
           </td>
         </tr>
         <tr>
@@ -3124,9 +3249,18 @@ This allows us to run some modules without any context and change behavior depen
             <a href="fake-dotnet-msbuildlogparameter.html">MSBuildLogParameter</a>
           </td>
           <td class="xmldoc">
-            <p>MSBuild log option</p>
+            <p>MSBuild log option
+See <a href="https://docs.microsoft.com/de-de/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2015">https://docs.microsoft.com/de-de/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2015</a></p>
 
 
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-msbuildloggerconfig.html">MSBuildLoggerConfig</a>
+          </td>
+          <td class="xmldoc">
+            
           </td>
         </tr>
         <tr>
@@ -3225,16 +3359,6 @@ This allows us to run some modules without any context and change behavior depen
           </td>
           <td class="xmldoc">
           
-          </td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fake-dotnet-msbuildlogger.html">MSBuildLogger</a>
-          </td>
-          <td class="xmldoc">
-          <p>Contains Logger implementations for MSBuild.</p>
-
-
           </td>
         </tr>
         <tr>
@@ -3340,6 +3464,16 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr><td>Module</td><td>Description</td></tr>
     </thead>
     <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-dotnet-testing-dotcover.html">DotCover</a>
+          </td>
+          <td class="xmldoc">
+          <p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
+
+
+          </td>
+        </tr>
         <tr>
           <td class="module-name">
             <a href="fake-dotnet-testing-expecto.html">Expecto</a>
@@ -4296,7 +4430,7 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>This API is obsolete. There is no alternative in FAKE 5 yet. You can help by porting this module.</p>
+                <p>FAKE0001 Use the Fake.Sql module instead.</p>
             </div> 
           
           </td>
@@ -4415,6 +4549,14 @@ This module is part of the <code>Fake.IO.FileSystem</code> package</p>
         <tr>
           <td class="module-name">
             <a href="fake-tools-gitversion.html">GitVersion</a>
+          </td>
+          <td class="xmldoc">
+          
+          </td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-tools-octo.html">Octo</a>
           </td>
           <td class="xmldoc">
           
@@ -4810,7 +4952,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

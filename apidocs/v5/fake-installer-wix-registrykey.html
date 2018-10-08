@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -291,10 +297,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3016', 3016)" onmouseover="showTip(event, '3016', 3016)">
+          <code onmouseout="hideTip(event, '3020', 3020)" onmouseover="showTip(event, '3020', 3020)">
             ForceCreateOnInstall
           </code>
-          <div class="tip" id="3016">
+          <div class="tip" id="3020">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -313,10 +319,10 @@ Windows Installer creates keys as needed to store subkeys and values. The defaul
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3017', 3017)" onmouseover="showTip(event, '3017', 3017)">
+          <code onmouseout="hideTip(event, '3021', 3021)" onmouseover="showTip(event, '3021', 3021)">
             ForceDeleteOnUninstall
           </code>
-          <div class="tip" id="3017">
+          <div class="tip" id="3021">
             <strong>Signature:</strong> YesOrNo<br />
                                   </div>
         </td>
@@ -335,10 +341,10 @@ MSI already removes all values and subkeys that it creates, so this option just 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3018', 3018)" onmouseover="showTip(event, '3018', 3018)">
+          <code onmouseout="hideTip(event, '3022', 3022)" onmouseover="showTip(event, '3022', 3022)">
             Id
           </code>
-          <div class="tip" id="3018">
+          <div class="tip" id="3022">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -355,10 +361,10 @@ MSI already removes all values and subkeys that it creates, so this option just 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3019', 3019)" onmouseover="showTip(event, '3019', 3019)">
+          <code onmouseout="hideTip(event, '3023', 3023)" onmouseover="showTip(event, '3023', 3023)">
             Key
           </code>
-          <div class="tip" id="3019">
+          <div class="tip" id="3023">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
@@ -376,10 +382,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3020', 3020)" onmouseover="showTip(event, '3020', 3020)">
+          <code onmouseout="hideTip(event, '3024', 3024)" onmouseover="showTip(event, '3024', 3024)">
             Keys
           </code>
-          <div class="tip" id="3020">
+          <div class="tip" id="3024">
             <strong>Signature:</strong> seq&lt;RegistryKey&gt;<br />
                                   </div>
         </td>
@@ -396,10 +402,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3021', 3021)" onmouseover="showTip(event, '3021', 3021)">
+          <code onmouseout="hideTip(event, '3025', 3025)" onmouseover="showTip(event, '3025', 3025)">
             Root
           </code>
-          <div class="tip" id="3021">
+          <div class="tip" id="3025">
             <strong>Signature:</strong> Option&lt;RegistryRootType&gt;<br />
                                   </div>
         </td>
@@ -416,10 +422,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3022', 3022)" onmouseover="showTip(event, '3022', 3022)">
+          <code onmouseout="hideTip(event, '3026', 3026)" onmouseover="showTip(event, '3026', 3026)">
             Values
           </code>
-          <div class="tip" id="3022">
+          <div class="tip" id="3026">
             <strong>Signature:</strong> seq&lt;RegistryValue&gt;<br />
                                   </div>
         </td>
@@ -444,10 +450,10 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3023', 3023)" onmouseover="showTip(event, '3023', 3023)">
+          <code onmouseout="hideTip(event, '3027', 3027)" onmouseover="showTip(event, '3027', 3027)">
             x.createAttributeList()
           </code>
-          <div class="tip" id="3023">
+          <div class="tip" id="3027">
             <strong>Signature:</strong> unit -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
@@ -566,7 +572,7 @@ If the parent element is a RegistryKey, this value may be omitted to use the pat
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

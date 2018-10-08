@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -337,10 +343,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '705', 705)" onmouseover="showTip(event, '705', 705)">
+          <code onmouseout="hideTip(event, '707', 707)" onmouseover="showTip(event, '707', 707)">
             findNuget(defaultPath)
           </code>
-          <div class="tip" id="705">
+          <div class="tip" id="707">
             <strong>Signature:</strong> defaultPath:string -&gt; string<br />
                                   </div>
         </td>
@@ -357,10 +363,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '706', 706)" onmouseover="showTip(event, '706', 706)">
+          <code onmouseout="hideTip(event, '708', 708)" onmouseover="showTip(event, '708', 708)">
             RestoreMSSolutionPackages(...)
           </code>
-          <div class="tip" id="706">
+          <div class="tip" id="708">
             <strong>Signature:</strong> setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; solutionFile:string -&gt; unit<br />
                                   </div>
         </td>
@@ -403,10 +409,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '707', 707)" onmouseover="showTip(event, '707', 707)">
+          <code onmouseout="hideTip(event, '709', 709)" onmouseover="showTip(event, '709', 709)">
             RestorePackage setParams packageFile
           </code>
-          <div class="tip" id="707">
+          <div class="tip" id="709">
             <strong>Signature:</strong> setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; packageFile:string -&gt; unit<br />
                                   </div>
         </td>
@@ -449,10 +455,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '708', 708)" onmouseover="showTip(event, '708', 708)">
+          <code onmouseout="hideTip(event, '710', 710)" onmouseover="showTip(event, '710', 710)">
             RestorePackageDefaults
           </code>
-          <div class="tip" id="708">
+          <div class="tip" id="710">
             <strong>Signature:</strong> RestorePackageParams<br />
                                   </div>
         </td>
@@ -469,10 +475,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '709', 709)" onmouseover="showTip(event, '709', 709)">
+          <code onmouseout="hideTip(event, '711', 711)" onmouseover="showTip(event, '711', 711)">
             RestorePackageId setParams packageId
           </code>
-          <div class="tip" id="709">
+          <div class="tip" id="711">
             <strong>Signature:</strong> setParams:(RestoreSinglePackageParams -&gt; RestoreSinglePackageParams) -&gt; packageId:string -&gt; unit<br />
                                   </div>
         </td>
@@ -489,10 +495,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '710', 710)" onmouseover="showTip(event, '710', 710)">
+          <code onmouseout="hideTip(event, '712', 712)" onmouseover="showTip(event, '712', 712)">
             RestorePackages()
           </code>
-          <div class="tip" id="710">
+          <div class="tip" id="712">
             <strong>Signature:</strong> unit -&gt; unit<br />
                                   </div>
         </td>
@@ -509,10 +515,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '711', 711)" onmouseover="showTip(event, '711', 711)">
+          <code onmouseout="hideTip(event, '713', 713)" onmouseover="showTip(event, '713', 713)">
             RestoreSinglePackageDefaults
           </code>
-          <div class="tip" id="711">
+          <div class="tip" id="713">
             <strong>Signature:</strong> RestoreSinglePackageParams<br />
                                   </div>
         </td>
@@ -633,7 +639,7 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

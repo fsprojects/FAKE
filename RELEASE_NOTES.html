@@ -95,6 +95,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -184,6 +189,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -262,6 +268,21 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-8-4-2018-10-08" class="anchor" href="#5-8-4-2018-10-08">5.8.4 - 2018-10-08</a></h2>
+<ul>
+<li>ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)</li>
+<li>ENHANCEMENT: Inform when the <code>target</code> environment variable is used - <a href="https://github.com/fsharp/FAKE/issues/2107">https://github.com/fsharp/FAKE/issues/2107</a></li>
+<li>ENHANCEMENT: Improve TeamCity support - <a href="https://github.com/fsharp/FAKE/pull/2111">https://github.com/fsharp/FAKE/pull/2111</a></li>
+<li>ENHANCEMENT: Update Netstandard.Library package to <code>2.0.3</code> - <a href="https://github.com/fsharp/FAKE/pull/2106">https://github.com/fsharp/FAKE/pull/2106</a></li>
+<li>ENHANCEMENT: Add <code>Process.getFileName</code> api to retrieve the full-path of a given process</li>
+<li>ENHANCEMENT: Kill existing running <code>dotnet.exe</code> processes before running the dotnet-cli installer</li>
+<li>BUGFIX: Environment variables are case insensitive on windows, fake will now throw exceptions if it detects invalid environment maps</li>
+<li>BUGFIX: MSBuild properties containing special characters lead to errors - <a href="https://github.com/fsharp/FAKE/issues/2112">https://github.com/fsharp/FAKE/issues/2112</a></li>
+<li>BUGFIX: Improve error message when release notes are invalid - <a href="https://github.com/fsharp/FAKE/issues/2085">https://github.com/fsharp/FAKE/issues/2085</a></li>
+<li>BUGFIX: Improve error message when globbing pattern is invalid - <a href="https://github.com/fsharp/FAKE/issues/2073">https://github.com/fsharp/FAKE/issues/2073</a></li>
+<li>BUGFIX: Do no longer provide the <code>--parallel</code> argument by default when running expecto - <a href="https://github.com/fsharp/FAKE/issues/2039">https://github.com/fsharp/FAKE/issues/2039</a></li>
+<li>DOCS: Fix syntax errors in dacpac docs - <a href="https://github.com/fsharp/FAKE/pull/2115">https://github.com/fsharp/FAKE/pull/2115</a></li>
+</ul>
 <h2><a name="5-7-2-2018-09-24" class="anchor" href="#5-7-2-2018-09-24">5.7.2 - 2018-09-24</a></h2>
 <ul>
 <li>ENHANCEMENT: TeamFoundation now reports errors as errors instead of warnings - <a href="https://github.com/fsharp/FAKE/pull/2103">https://github.com/fsharp/FAKE/pull/2103</a></li>
@@ -362,7 +383,7 @@
 <li>NEW: module Fake.Tools.GitVersion to interact with gitversion.exe - <a href="https://github.com/fsharp/FAKE/pull/1988">https://github.com/fsharp/FAKE/pull/1988</a></li>
 <li>ENHANCEMENT: Add <code>traceImportantf</code> and <code>traceErrorf</code> - <a href="https://github.com/fsharp/FAKE/pull/1986">https://github.com/fsharp/FAKE/pull/1986</a></li>
 <li>ENHANCEMENT: Minimalize dependencies between FAKE packages - <a href="https://github.com/fsharp/FAKE/pull/1980">https://github.com/fsharp/FAKE/pull/1980</a></li>
-<li>ENHANCEMENT: Change chocolatey package accoding to feedback - <a href="https://github.com/fsharp/FAKE/pull/1983">https://github.com/fsharp/FAKE/pull/1983</a></li>
+<li>ENHANCEMENT: Change chocolatey package according to feedback - <a href="https://github.com/fsharp/FAKE/pull/1983">https://github.com/fsharp/FAKE/pull/1983</a></li>
 <li>BUGFIX: Fix locating kudusync.cmd in Fake.Azure.Kudu - <a href="https://github.com/fsharp/FAKE/pull/1995">https://github.com/fsharp/FAKE/pull/1995</a></li>
 <li>NEW: module Fake.Core.UserInput - <a href="https://github.com/fsharp/FAKE/pull/1997">https://github.com/fsharp/FAKE/pull/1997</a></li>
 </ul>
@@ -397,7 +418,7 @@
 </ul>
 <h2><a name="5-0-0-rc017-2018-05-22" class="anchor" href="#5-0-0-rc017-2018-05-22">5.0.0-rc017 - 2018-05-22</a></h2>
 <ul>
-<li>BREAKING: Add some <code>[&lt;RequireQualifiedAccess&gt;]</code> attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)</li>
+<li>BREAKING: Add some <code>[&lt;RequireQualifiedAccess&gt;]</code> attributes according to API-Guidelines (Target, Globbing, AssemblyInfoFile)</li>
 <li>ENHANCEMENT: Mark <code>Target.DoNothing</code> as obsolete</li>
 <li>ENHANCEMENT: Mark <code>Target.Description</code> as obsolete and add <code>Target.description</code></li>
 <li>BUGFIX: Includes fixes from 4.64.12</li>
@@ -2056,7 +2077,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

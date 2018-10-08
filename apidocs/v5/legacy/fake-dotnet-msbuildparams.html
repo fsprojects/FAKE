@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -286,15 +292,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5398', 5398)" onmouseover="showTip(event, '5398', 5398)">
+          <code onmouseout="hideTip(event, '5502', 5502)" onmouseover="showTip(event, '5502', 5502)">
             BinaryLoggers
           </code>
-          <div class="tip" id="5398">
+          <div class="tip" id="5502">
             <strong>Signature:</strong> string list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L209-209" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L280-280" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -306,15 +312,55 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5399', 5399)" onmouseover="showTip(event, '5399', 5399)">
-            DistributedLoggers
+          <code onmouseout="hideTip(event, '5503', 5503)" onmouseover="showTip(event, '5503', 5503)">
+            ConsoleLogParameters
           </code>
-          <div class="tip" id="5399">
-            <strong>Signature:</strong> (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option<br />
+          <div class="tip" id="5503">
+            <strong>Signature:</strong> MSBuildLogParameter list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L211-211" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L274-274" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/consoleloggerparameters'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5504', 5504)" onmouseover="showTip(event, '5504', 5504)">
+            DisableInternalBinLog
+          </code>
+          <div class="tip" id="5504">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L276-276" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Fake attaches a binlog-logger in order to report errors and warnings. You can disable this behavior with this flag</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5505', 5505)" onmouseover="showTip(event, '5505', 5505)">
+            DistributedLoggers
+          </code>
+          <div class="tip" id="5505">
+            <strong>Signature:</strong> (MSBuildLoggerConfig * MSBuildLoggerConfig option) list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L284-284" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -326,15 +372,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5400', 5400)" onmouseover="showTip(event, '5400', 5400)">
+          <code onmouseout="hideTip(event, '5506', 5506)" onmouseover="showTip(event, '5506', 5506)">
+            DoRestore
+          </code>
+          <div class="tip" id="5506">
+            <strong>Signature:</strong> bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L264-264" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Execute a restore before executing the targets (/restore flag)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5507', 5507)" onmouseover="showTip(event, '5507', 5507)">
             Environment
           </code>
-          <div class="tip" id="5400">
+          <div class="tip" id="5507">
             <strong>Signature:</strong> Map&lt;string,string&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L212-212" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L285-285" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -344,15 +410,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5401', 5401)" onmouseover="showTip(event, '5401', 5401)">
+          <code onmouseout="hideTip(event, '5508', 5508)" onmouseover="showTip(event, '5508', 5508)">
             FileLoggers
           </code>
-          <div class="tip" id="5401">
+          <div class="tip" id="5508">
             <strong>Signature:</strong> MSBuildFileLoggerConfig list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L207-207" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L278-278" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -364,15 +430,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5402', 5402)" onmouseover="showTip(event, '5402', 5402)">
+          <code onmouseout="hideTip(event, '5509', 5509)" onmouseover="showTip(event, '5509', 5509)">
+            Loggers
+          </code>
+          <div class="tip" id="5509">
+            <strong>Signature:</strong> MSBuildLoggerConfig list option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L282-282" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>corresponds to the msbuild option '/l'</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5510', 5510)" onmouseover="showTip(event, '5510', 5510)">
             MaxCpuCount
           </code>
-          <div class="tip" id="5402">
+          <div class="tip" id="5510">
             <strong>Signature:</strong> int option option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L197-197" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L262-262" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -387,15 +473,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5403', 5403)" onmouseover="showTip(event, '5403', 5403)">
+          <code onmouseout="hideTip(event, '5511', 5511)" onmouseover="showTip(event, '5511', 5511)">
             NoConsoleLogger
           </code>
-          <div class="tip" id="5403">
+          <div class="tip" id="5511">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L270-270" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -405,15 +491,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5404', 5404)" onmouseover="showTip(event, '5404', 5404)">
+          <code onmouseout="hideTip(event, '5512', 5512)" onmouseover="showTip(event, '5512', 5512)">
             NodeReuse
           </code>
-          <div class="tip" id="5404">
+          <div class="tip" id="5512">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L266-266" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -423,15 +509,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5405', 5405)" onmouseover="showTip(event, '5405', 5405)">
+          <code onmouseout="hideTip(event, '5513', 5513)" onmouseover="showTip(event, '5513', 5513)">
             NoLogo
           </code>
-          <div class="tip" id="5405">
+          <div class="tip" id="5513">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L198-198" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L265-265" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -441,15 +527,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5406', 5406)" onmouseover="showTip(event, '5406', 5406)">
+          <code onmouseout="hideTip(event, '5514', 5514)" onmouseover="showTip(event, '5514', 5514)">
             NoWarn
           </code>
-          <div class="tip" id="5406">
+          <div class="tip" id="5514">
             <strong>Signature:</strong> string list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L205-205" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L272-272" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -459,15 +545,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5407', 5407)" onmouseover="showTip(event, '5407', 5407)">
+          <code onmouseout="hideTip(event, '5515', 5515)" onmouseover="showTip(event, '5515', 5515)">
             Properties
           </code>
-          <div class="tip" id="5407">
+          <div class="tip" id="5515">
             <strong>Signature:</strong> (string * string) list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L192-192" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L257-257" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -477,15 +563,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5408', 5408)" onmouseover="showTip(event, '5408', 5408)">
+          <code onmouseout="hideTip(event, '5516', 5516)" onmouseover="showTip(event, '5516', 5516)">
             RestorePackagesFlag
           </code>
-          <div class="tip" id="5408">
+          <div class="tip" id="5516">
             <strong>Signature:</strong> bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L200-200" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L267-267" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -495,15 +581,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5409', 5409)" onmouseover="showTip(event, '5409', 5409)">
+          <code onmouseout="hideTip(event, '5517', 5517)" onmouseover="showTip(event, '5517', 5517)">
             Targets
           </code>
-          <div class="tip" id="5409">
+          <div class="tip" id="5517">
             <strong>Signature:</strong> string list<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L191-191" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L256-256" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -513,15 +599,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5410', 5410)" onmouseover="showTip(event, '5410', 5410)">
+          <code onmouseout="hideTip(event, '5518', 5518)" onmouseover="showTip(event, '5518', 5518)">
             ToolPath
           </code>
-          <div class="tip" id="5410">
+          <div class="tip" id="5518">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L190-190" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L254-254" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -533,15 +619,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5411', 5411)" onmouseover="showTip(event, '5411', 5411)">
+          <code onmouseout="hideTip(event, '5519', 5519)" onmouseover="showTip(event, '5519', 5519)">
             ToolsVersion
           </code>
-          <div class="tip" id="5411">
+          <div class="tip" id="5519">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L201-201" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L268-268" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -551,15 +637,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5412', 5412)" onmouseover="showTip(event, '5412', 5412)">
+          <code onmouseout="hideTip(event, '5520', 5520)" onmouseover="showTip(event, '5520', 5520)">
             Verbosity
           </code>
-          <div class="tip" id="5412">
+          <div class="tip" id="5520">
             <strong>Signature:</strong> MSBuildVerbosity option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L202-202" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L269-269" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -569,15 +655,33 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5413', 5413)" onmouseover="showTip(event, '5413', 5413)">
+          <code onmouseout="hideTip(event, '5521', 5521)" onmouseover="showTip(event, '5521', 5521)">
             WarnAsError
           </code>
-          <div class="tip" id="5413">
+          <div class="tip" id="5521">
             <strong>Signature:</strong> string list option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L204-204" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L271-271" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5522', 5522)" onmouseover="showTip(event, '5522', 5522)">
+            WorkingDirectory
+          </code>
+          <div class="tip" id="5522">
+            <strong>Signature:</strong> string<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L255-255" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -595,15 +699,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5414', 5414)" onmouseover="showTip(event, '5414', 5414)">
+          <code onmouseout="hideTip(event, '5523', 5523)" onmouseover="showTip(event, '5523', 5523)">
             x.WithEnvironment(map)
           </code>
-          <div class="tip" id="5414">
+          <div class="tip" id="5523">
             <strong>Signature:</strong> map:Map&lt;string,string&gt; -&gt; MSBuildParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L240-240" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L320-320" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -623,15 +727,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5415', 5415)" onmouseover="showTip(event, '5415', 5415)">
+          <code onmouseout="hideTip(event, '5524', 5524)" onmouseover="showTip(event, '5524', 5524)">
             MSBuildParams.Create()
           </code>
-          <div class="tip" id="5415">
+          <div class="tip" id="5524">
             <strong>Signature:</strong> unit -&gt; MSBuildParams<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L214-214" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L287-287" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -643,10 +747,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5416', 5416)" onmouseover="showTip(event, '5416', 5416)">
+          <code onmouseout="hideTip(event, '5525', 5525)" onmouseover="showTip(event, '5525', 5525)">
             MSBuildParams.Empty
           </code>
-          <div class="tip" id="5416">
+          <div class="tip" id="5525">
             <strong>Signature:</strong> MSBuildParams<br />
                                         <span>
                     <strong>Attributes:</strong><br />
@@ -659,7 +763,7 @@
                 <h5>OBSOLETE</h5>
                 <p>Please use &#39;Create()&#39; instead and make sure to properly set Environment via Process-module funtions!</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L237-237" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuild.fs#L317-317" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -773,7 +877,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

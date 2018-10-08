@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -275,6 +281,64 @@
 <a name="TeamFoundation" class="anchor" href="#TeamFoundation"><h1>TeamFoundation</h1></a>
 
 <div class="xmldoc">
+<p>native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a></p>
+<h3>Secret Variables</h3>
+<p>This CI server supports the concept of secret variables and uses the <a href="/core-vault.html">Vault</a> to store them.
+In order to access secret variables you need to use one of the fake 5 tasks from <a href="https://github.com/isaacabraham/vsts-fsharp">vsts-fsharp</a>.</p>
+<h4>Example implementation (supports runner and vault tasks)</h4>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="c">// Either use a local vault filled by the &#39;FAKE_VAULT_VARIABLES&#39; environment variable</span>
+   <span class="c">// or fall back to the build process if none is given</span>
+   <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">vault</span> <span class="o">=</span>
+       <span class="k">match</span> <span class="id">Vault</span><span class="pn">.</span><span class="id">fromFakeEnvironmentOrNone</span><span class="pn">(</span><span class="pn">)</span> <span class="k">with</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="uc">Some</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">v</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">v</span> <span class="c">// fake 5 vault task, uses &#39;FAKE_VAULT_VARIABLES&#39; by default</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="uc">None</span> <span class="k">-&gt;</span> <span class="id">TeamFoundation</span><span class="pn">.</span><span class="id">variables</span> <span class="c">// fake 5 runner task</span>
+
+   <span class="c">// Only needed if you want to fallback to &#39;normal&#39; environment variables (locally for example)</span>
+   <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="fn">getVarOrDefault</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">name</span> <span class="o">=</span>
+       <span class="k">match</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">vault</span><span class="pn">.</span><span class="id">TryGet</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="id">name</span> <span class="k">with</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="uc">Some</span> <span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="id">v</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs7', 12)" onmouseover="showTip(event, 'fs7', 12)" class="id">v</span>
+       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs4', 13)" onmouseover="showTip(event, 'fs4', 13)" class="uc">None</span> <span class="k">-&gt;</span> <span class="id">Environment</span><span class="pn">.</span><span class="id">environVarOrFail</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">name</span>
+   <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+       <span class="k">let</span> <span class="id">token</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs5', 15)" onmouseover="showTip(event, 'fs5', 15)" class="id">getVarOrDefault</span> <span class="s">&quot;github_token&quot;</span>
+       <span class="c">// Use token to deploy to github</span>
+
+       <span class="k">let</span> <span class="id">apiKey</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs5', 16)" onmouseover="showTip(event, 'fs5', 16)" class="id">getVarOrDefault</span> <span class="s">&quot;nugetkey&quot;</span>
+       <span class="c">// Use apiKey to deploy to nuget</span>
+       <span class="pn">(</span><span class="pn">)</span>
+   <span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val vault : obj</div>
+<div class="tip" id="fs2">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs3">val v : obj</div>
+<div class="tip" id="fs4">union case Option.None: Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs5">val getVarOrDefault : name:&#39;a -&gt; &#39;b</div>
+<div class="tip" id="fs6">val name : &#39;a</div>
+<div class="tip" id="fs7">val v : &#39;b</div>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -315,7 +379,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L228-228" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -333,7 +397,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L154-154" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L230-230" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -351,7 +415,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L156-156" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L232-232" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -369,7 +433,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L161-161" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L237-237" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -387,7 +451,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L33-33" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L75-75" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -405,7 +469,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L49-49" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L91-91" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -423,7 +487,7 @@
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L79-79" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L140-140" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -434,14 +498,52 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1174', 1174)" onmouseover="showTip(event, '1174', 1174)">
-            TeamFoundation.write(...)
+            TeamFoundation.setVariable(...)
           </code>
           <div class="tip" id="1174">
+            <strong>Signature:</strong> variableName:string -&gt; value:string -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L68-68" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1175', 1175)" onmouseover="showTip(event, '1175', 1175)">
+            TeamFoundation.variables
+          </code>
+          <div class="tip" id="1175">
+            <strong>Signature:</strong> Vault<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L147-147" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Access (secret) build variables</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1176', 1176)" onmouseover="showTip(event, '1176', 1176)">
+            TeamFoundation.write(...)
+          </code>
+          <div class="tip" id="1176">
             <strong>Signature:</strong> action:string -&gt; properties:seq&lt;string * string&gt; -&gt; message:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L13-13" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.BuildServer.TeamFoundation/TeamFoundation.fs#L44-44" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -555,7 +657,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

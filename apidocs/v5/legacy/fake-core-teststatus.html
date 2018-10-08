@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -274,6 +280,9 @@
 </p>
 <a name="TestStatus" class="anchor" href="#TestStatus" ><h1>TestStatus</h1></a>
 <div class="xmldoc">
+<p>Note: Adding new cases to this type is not considered a breaking change!
+Please consider not using a match on this type in code external to the fake repository.</p>
+
 </div>
   <a name="Union Cases" class="anchor" href="#Union Cases"><h3>Union Cases</h3></a>
   <table class="table table-bordered member-list">
@@ -284,15 +293,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4713', 4713)" onmouseover="showTip(event, '4713', 4713)">
+          <code onmouseout="hideTip(event, '4787', 4787)" onmouseover="showTip(event, '4787', 4787)">
             Failed(message,details,expectedActual)
           </code>
-          <div class="tip" id="4713">
+          <div class="tip" id="4787">
             <strong>Signature:</strong> string * string * (string * string) option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L100-100" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L114-114" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -302,15 +311,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4714', 4714)" onmouseover="showTip(event, '4714', 4714)">
+          <code onmouseout="hideTip(event, '4788', 4788)" onmouseover="showTip(event, '4788', 4788)">
             Ignored(message)
           </code>
-          <div class="tip" id="4714">
+          <div class="tip" id="4788">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L99-99" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Trace/TraceListener.fs#L113-113" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -424,7 +433,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

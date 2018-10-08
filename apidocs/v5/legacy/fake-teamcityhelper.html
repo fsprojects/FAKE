@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -317,10 +323,10 @@
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.BuildParameters instead</p>
             </div> 
           <p>TeamCity build parameters
-See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Parameters">Predefined Build Parameters documentation</a> for more information</p>
+See <a href="https://confluence.jetbrains.com/display/TCD18/Predefined+Build+Parameters">Predefined Build Parameters documentation</a> for more information</p>
 
 
           </td>
@@ -332,7 +338,7 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
           <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.ChangedFiles instead</p>
             </div> 
           <p>Get files changed between builds in TeamCity</p>
 
@@ -472,14 +478,14 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
             <strong>Signature:</strong> unit -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.Branch instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.Branch instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L578-578" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -500,14 +506,14 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
             <strong>Signature:</strong> unit -&gt; bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.IsDefaultBranch instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.IsDefaultBranch instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L590-590" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -528,21 +534,21 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Par
             <strong>Signature:</strong> unit -&gt; string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BranchDisplayName instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BranchDisplayName instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L583-583" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
           <p>Get the display name of the branch as shown in TeamCity
-See <a href="https://confluence.jetbrains.com/display/TCD10/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec">the documentation</a> for more information</p>
+See <a href="https://confluence.jetbrains.com/display/TCD18/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec">the documentation</a> for more information</p>
 
 
         </td>
@@ -557,21 +563,21 @@ See <a href="https://confluence.jetbrains.com/display/TCD10/Working+with+Feature
             <strong>Signature:</strong> unit -&gt; seq&lt;string&gt; option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.RecentlyFailedTests instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please check the Fake.BuildServer.TeamCity module for a replacement and send a PR to include this into FAKE 5 if needed.</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.RecentlyFailedTests instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L574-574" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
           <p>Name of recently failing tests
-See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner">the documentation</a> for more information</p>
+See <a href="https://confluence.jetbrains.com/display/TCD18/Risk+Tests+Reordering+in+Custom+Test+Runner">the documentation</a> for more information</p>
 
 
         </td>
@@ -1751,14 +1757,14 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
             <strong>Signature:</strong> string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildConfigurationName instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildConfigurationName instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L258-258" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1779,14 +1785,14 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
             <strong>Signature:</strong> bool<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildIsPersonal instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildIsPersonal instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L262-262" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1807,14 +1813,14 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
             <strong>Signature:</strong> string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildNumber instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.BuildNumber instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L269-269" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1835,14 +1841,14 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
             <strong>Signature:</strong> string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.ProjectName instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.ProjectName instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L254-254" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -1863,14 +1869,14 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
             <strong>Signature:</strong> string option<br />
                                         <span>
                     <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead&quot;)&gt;]<br />
+[&lt;Obsolete(&quot;please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.Version instead&quot;)&gt;]<br />
                 </span>
           </div>
         </td>
         <td class="xmldoc">
             <div class="alert alert-warning">
                 <h5>OBSOLETE</h5>
-                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.&lt;&gt; instead</p>
+                <p>please use nuget &#39;Fake.BuildServer.TeamCity&#39;, open Fake.BuildServer and use TeamCity.Environment.Version instead</p>
             </div> 
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/legacy/FakeLib/TeamCityHelper.fs#L250-250" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
@@ -2016,7 +2022,7 @@ Usage: <code>use __ = teamCityBlock "My Block"</code></p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

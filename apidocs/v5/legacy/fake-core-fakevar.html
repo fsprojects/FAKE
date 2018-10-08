@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -290,20 +296,20 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
+          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
             FakeVar.define(name)
           </code>
-          <div class="tip" id="1267">
+          <div class="tip" id="1270">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L43-43" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L58-58" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
           <p>Define a named FakeVar providing the get, remove and set
-Will fail if there is no context</p>
+And of the functions will fail if there is no context</p>
 
 
         </td>
@@ -311,20 +317,20 @@ Will fail if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
+          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
             FakeVar.defineAllowNoContext(name)
           </code>
-          <div class="tip" id="1268">
+          <div class="tip" id="1271">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L53-53" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L74-74" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
           <p>Define a named FakeVar providing the get, remove and set
-Will create a local variable if there is no context</p>
+Will use a local variable if there is no context</p>
 
 
         </td>
@@ -332,15 +338,36 @@ Will create a local variable if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1269', 1269)" onmouseover="showTip(event, '1269', 1269)">
+          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
+            FakeVar.defineOrNone(name)
+          </code>
+          <div class="tip" id="1272">
+            <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L91-91" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Define a named FakeVar providing the get, remove and set
+Will always return 'None' when no context is set and 'throw' on set</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
             FakeVar.get(name)
           </code>
-          <div class="tip" id="1269">
+          <div class="tip" id="1273">
             <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L8-8" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L18-18" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -352,15 +379,15 @@ Will create a local variable if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1270', 1270)" onmouseover="showTip(event, '1270', 1270)">
+          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
             FakeVar.getOrDefault name defaultValue
           </code>
-          <div class="tip" id="1270">
+          <div class="tip" id="1274">
             <strong>Signature:</strong> name:string -&gt; defaultValue:&#39;a -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L24-24" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L29-29" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -372,15 +399,15 @@ Will create a local variable if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
+          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
             FakeVar.getOrFail(name)
           </code>
-          <div class="tip" id="1271">
+          <div class="tip" id="1275">
             <strong>Signature:</strong> name:string -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L18-18" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L23-23" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -392,15 +419,15 @@ Will create a local variable if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
             FakeVar.remove(name)
           </code>
-          <div class="tip" id="1272">
+          <div class="tip" id="1276">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L30-30" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L41-41" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -412,15 +439,15 @@ Will create a local variable if there is no context</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
             FakeVar.set name v
           </code>
-          <div class="tip" id="1273">
+          <div class="tip" id="1277">
             <strong>Signature:</strong> name:string -&gt; v:&#39;a -&gt; unit<br />
                           <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L36-36" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.FakeVar/FakeVar.fs#L52-52" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -536,7 +563,7 @@ Will create a local variable if there is no context</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

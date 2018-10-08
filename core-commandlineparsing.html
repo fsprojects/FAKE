@@ -95,6 +95,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -184,6 +189,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -338,13 +344,13 @@ The strong ordering enables you to have a nice CLI on your script or to write yo
 <h2><a name="Differences-to-the-python-reference-Docopt-implementation" class="anchor" href="#Differences-to-the-python-reference-Docopt-implementation">Differences to the python reference Docopt implementation</a></h2>
 <ul>
 <li>
-The parser doesn't differentiate between arguments with and without <code>-</code> with regards to ordering. They are subject to the same rules as other arguments. The only exception is when defining multiple arguments like <code>[-a -b -c]</code>, then the ordering of the group doesn't matter.
-(So in other words: If a group <code>()</code> or <code>[]</code> only has options then the order doesn't matter)
+<p>The parser doesn't differentiate between arguments with and without <code>-</code> with regards to ordering. They are subject to the same rules as other arguments. The only exception is when defining multiple arguments like <code>[-a -b -c]</code>, then the ordering of the group doesn't matter.
+(So in other words: If a group <code>()</code> or <code>[]</code> only has options then the order doesn't matter)</p>
 </li>
-<li>Uniquely identifiable prefixes like <code>--fsia</code> are not supported</li>
-<li>We return the arguments in the user given order in the result map (difference to <code>docopt.fs</code>)</li>
-<li>We parse arguments starting with <code>-</code> as positional arguments. For example consider:</li>
-</ul>
+<li><p>Uniquely identifiable prefixes like <code>--fsia</code> are not supported</p></li>
+<li><p>We return the arguments in the user given order in the result map (difference to <code>docopt.fs</code>)</p></li>
+<li>
+<p>We parse arguments starting with <code>-</code> as positional arguments. For example consider:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -357,7 +363,7 @@ options: --foo
     <h5>INFO</h5>
     <p>Note that --foo has no argument because it was not specified in the options section!</p>
 </div>
-<p>In this scenario <code>prog --foo 10</code> is parsed as <code>--foo</code> and <code>NAME</code> argument because that is the only option. However <code>prog --foo=10</code> is parsed as <code>NAME</code> argument without any <code>--foo</code> option. Usually to prefer <code>--foo</code> you should put it first in the usage string:</p>
+<p>In this scenario <code>prog --foo 10</code> is parsed as <code>--foo</code> and <code>NAME</code> argument because that is the only   option. However <code>prog --foo=10</code> is parsed as <code>NAME</code> argument without any <code>--foo</code> option. Usually to   prefer <code>--foo</code> you should put it first in the usage string:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -366,9 +372,11 @@ options: --foo
 
 options: --foo
 </code></pre></td></tr></table>
-<p>However, in this particular case it doesn't make any difference.
-- <code>[]</code> is not inherited for all items, only for the group. To have all items optional use <code>[]</code> on every item. For example <code>usage: prog [go go]</code> means to have either two <code>go</code> or none. A single one is not allowed.
-- We do not merge external "options" in the usage string with <code>[options]</code>. For example:</p>
+<p>However, in this particular case it doesn't make any difference (as the options section is missing to indicate that <code>--foo</code> has an argument).</p>
+</li>
+<li><p><code>[]</code> is not inherited for all items, only for the group. To have all items optional use <code>[]</code> on every item. For example <code>usage: prog [go go]</code> means to have either two <code>go</code> or none. A single one is not allowed.</p></li>
+<li>
+<p>We do not merge external "options" in the usage string with <code>[options]</code>. For example:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -380,6 +388,8 @@ options: -a
          -b
 </code></pre></td></tr></table>
 <p>Means that <code>-a</code> is actually allowed twice.</p>
+</li>
+</ul>
 
 <div class="tip" id="fs1">val cli : string</div>
 <div class="tip" id="fs2">val ctx : obj</div>
@@ -495,7 +505,7 @@ options: -a
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

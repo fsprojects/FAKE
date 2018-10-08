@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -443,7 +449,12 @@
             <a href="fake-buildserver-appveyor.html">AppVeyor</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for AppVeyor specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -459,7 +470,12 @@
             <a href="fake-buildserver-gitlab.html">GitLab</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for GitLab specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+
+
           </td>
         </tr>
         <tr>
@@ -475,7 +491,13 @@
             <a href="fake-buildserver-teamcity.html">TeamCity</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for TeamCity specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+<p>For more information on TeamCity interaction from build scripts <a href="https://confluence.jetbrains.com/display/TCD18/Build+Script+Interaction+with+TeamCity">see here</a></p>
+
+
           </td>
         </tr>
         <tr>
@@ -491,7 +513,7 @@
             <a href="fake-buildserver-teamfoundation.html">TeamFoundation</a>
           </td>
           <td class="xmldoc">
-          <p>native support for TeamFoundation/VSTS specific APIs.
+          <p>native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
 The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a></p>
 <h3>Secret Variables</h3>
 <p>This CI server supports the concept of secret variables and uses the <a href="/core-vault.html">Vault</a> to store them.
@@ -557,7 +579,12 @@ In order to access secret variables you need to use one of the fake 5 tasks from
             <a href="fake-buildserver-travis.html">Travis</a>
           </td>
           <td class="xmldoc">
-          
+          <p>native support for Travis specific APIs.
+The general documentation on how to use CI server integration can be found <a href="/buildserver.html">here</a>.
+This module does not provide any special APIs please use FAKE APIs and they should integrate into this CI server.
+If some integration is not working as expected or you have features you would like to use directly please open an issue.</p>
+
+
           </td>
         </tr>
     </tbody>
@@ -2909,7 +2936,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

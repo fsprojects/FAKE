@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -274,7 +280,11 @@
 </p>
 <a name="SemVerInfo" class="anchor" href="#SemVerInfo" ><h1>SemVerInfo</h1></a>
 <div class="xmldoc">
-<p>Contains the version information.</p>
+<p>Contains the version information. For parsing use <a href="fake-core-semver.html">SemVer.parse</a></p>
+<blockquote>
+<p>Note: If you use <code>{ version with Patch = myPath; Original = None }</code> to overwrite some parts of this string make sure to overwrite <code>Original</code> to <code>None</code> in order to recalculate the version string.
+Note: For overwriting the <code>PreRelease</code> part use: <code>{ Version with Original = None; PreRelease = PreRelease.TryParse "alpha.1" }</code></p>
+</blockquote>
 
 </div>
   <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
@@ -286,15 +296,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4680', 4680)" onmouseover="showTip(event, '4680', 4680)">
+          <code onmouseout="hideTip(event, '4754', 4754)" onmouseover="showTip(event, '4754', 4754)">
             Build
           </code>
-          <div class="tip" id="4680">
+          <div class="tip" id="4754">
             <strong>Signature:</strong> bigint<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L158-158" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L162-162" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -306,15 +316,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4681', 4681)" onmouseover="showTip(event, '4681', 4681)">
+          <code onmouseout="hideTip(event, '4755', 4755)" onmouseover="showTip(event, '4755', 4755)">
             BuildMetaData
           </code>
-          <div class="tip" id="4681">
+          <div class="tip" id="4755">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L163-163" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -324,15 +334,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4682', 4682)" onmouseover="showTip(event, '4682', 4682)">
+          <code onmouseout="hideTip(event, '4756', 4756)" onmouseover="showTip(event, '4756', 4756)">
             Major
           </code>
-          <div class="tip" id="4682">
+          <div class="tip" id="4756">
             <strong>Signature:</strong> uint32<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L150-150" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L154-154" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -344,15 +354,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4683', 4683)" onmouseover="showTip(event, '4683', 4683)">
+          <code onmouseout="hideTip(event, '4757', 4757)" onmouseover="showTip(event, '4757', 4757)">
             Minor
           </code>
-          <div class="tip" id="4683">
+          <div class="tip" id="4757">
             <strong>Signature:</strong> uint32<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L152-152" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L156-156" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -364,15 +374,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4684', 4684)" onmouseover="showTip(event, '4684', 4684)">
+          <code onmouseout="hideTip(event, '4758', 4758)" onmouseover="showTip(event, '4758', 4758)">
             Original
           </code>
-          <div class="tip" id="4684">
+          <div class="tip" id="4758">
             <strong>Signature:</strong> string option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L161-161" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L165-165" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -382,15 +392,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4685', 4685)" onmouseover="showTip(event, '4685', 4685)">
+          <code onmouseout="hideTip(event, '4759', 4759)" onmouseover="showTip(event, '4759', 4759)">
             Patch
           </code>
-          <div class="tip" id="4685">
+          <div class="tip" id="4759">
             <strong>Signature:</strong> uint32<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L154-154" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L158-158" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -402,15 +412,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4686', 4686)" onmouseover="showTip(event, '4686', 4686)">
+          <code onmouseout="hideTip(event, '4760', 4760)" onmouseover="showTip(event, '4760', 4760)">
             PreRelease
           </code>
-          <div class="tip" id="4686">
+          <div class="tip" id="4760">
             <strong>Signature:</strong> PreRelease option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L156-156" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L160-160" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -430,15 +440,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4687', 4687)" onmouseover="showTip(event, '4687', 4687)">
+          <code onmouseout="hideTip(event, '4761', 4761)" onmouseover="showTip(event, '4761', 4761)">
             x.AsString
           </code>
-          <div class="tip" id="4687">
+          <div class="tip" id="4761">
             <strong>Signature:</strong> string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L184-184" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L188-188" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -448,15 +458,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4688', 4688)" onmouseover="showTip(event, '4688', 4688)">
+          <code onmouseout="hideTip(event, '4762', 4762)" onmouseover="showTip(event, '4762', 4762)">
             x.CompareTo(y)
           </code>
-          <div class="tip" id="4688">
+          <div class="tip" id="4762">
             <strong>Signature:</strong> y:SemVerInfo -&gt; int<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L197-197" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L201-201" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -466,15 +476,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4689', 4689)" onmouseover="showTip(event, '4689', 4689)">
+          <code onmouseout="hideTip(event, '4763', 4763)" onmouseover="showTip(event, '4763', 4763)">
             x.Equals(y)
           </code>
-          <div class="tip" id="4689">
+          <div class="tip" id="4763">
             <strong>Signature:</strong> y:SemVerInfo -&gt; bool<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L187-187" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L191-191" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -484,15 +494,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4690', 4690)" onmouseover="showTip(event, '4690', 4690)">
+          <code onmouseout="hideTip(event, '4764', 4764)" onmouseover="showTip(event, '4764', 4764)">
             x.Normalize()
           </code>
-          <div class="tip" id="4690">
+          <div class="tip" id="4764">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L163-163" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L167-167" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -502,15 +512,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4691', 4691)" onmouseover="showTip(event, '4691', 4691)">
+          <code onmouseout="hideTip(event, '4765', 4765)" onmouseover="showTip(event, '4765', 4765)">
             x.NormalizeToShorter()
           </code>
-          <div class="tip" id="4691">
+          <div class="tip" id="4765">
             <strong>Signature:</strong> unit -&gt; string<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L174-174" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.SemVer/SemVer.fs#L178-178" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -624,7 +634,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

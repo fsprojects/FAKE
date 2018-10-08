@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -295,10 +301,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '907', 907)" onmouseover="showTip(event, '907', 907)">
+          <code onmouseout="hideTip(event, '909', 909)" onmouseover="showTip(event, '909', 909)">
             Zip.createZip(...)
           </code>
-          <div class="tip" id="907">
+          <div class="tip" id="909">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -324,10 +330,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '908', 908)" onmouseover="showTip(event, '908', 908)">
+          <code onmouseout="hideTip(event, '910', 910)" onmouseover="showTip(event, '910', 910)">
             Zip.createZipOfIncludes(...)
           </code>
-          <div class="tip" id="908">
+          <div class="tip" id="910">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; files:seq&lt;string * IGlobbingPattern&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -351,10 +357,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '909', 909)" onmouseover="showTip(event, '909', 909)">
+          <code onmouseout="hideTip(event, '911', 911)" onmouseover="showTip(event, '911', 911)">
             Zip.createZipSpec(...)
           </code>
-          <div class="tip" id="909">
+          <div class="tip" id="911">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -378,10 +384,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '910', 910)" onmouseover="showTip(event, '910', 910)">
+          <code onmouseout="hideTip(event, '912', 912)" onmouseover="showTip(event, '912', 912)">
             Zip.DefaultZipLevel
           </code>
-          <div class="tip" id="910">
+          <div class="tip" id="912">
             <strong>Signature:</strong> int<br />
                                   </div>
         </td>
@@ -398,10 +404,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '911', 911)" onmouseover="showTip(event, '911', 911)">
+          <code onmouseout="hideTip(event, '913', 913)" onmouseover="showTip(event, '913', 913)">
             Zip.filesAsSpecs workingDir files
           </code>
-          <div class="tip" id="911">
+          <div class="tip" id="913">
             <strong>Signature:</strong> workingDir:string -&gt; files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
@@ -461,10 +467,10 @@ This method will convert a given glob pattern with the given workingDir to a seq
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '912', 912)" onmouseover="showTip(event, '912', 912)">
+          <code onmouseout="hideTip(event, '914', 914)" onmouseover="showTip(event, '914', 914)">
             Zip.filesAsSpecsFlatten(files)
           </code>
-          <div class="tip" id="912">
+          <div class="tip" id="914">
             <strong>Signature:</strong> files:IGlobbingPattern -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
@@ -523,10 +529,10 @@ This method will convert a given glob pattern with the given workingDir to a seq
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '913', 913)" onmouseover="showTip(event, '913', 913)">
+          <code onmouseout="hideTip(event, '915', 915)" onmouseover="showTip(event, '915', 915)">
             Zip.moveToFolder path items
           </code>
-          <div class="tip" id="913">
+          <div class="tip" id="915">
             <strong>Signature:</strong> path:string -&gt; items:seq&lt;string * string&gt; -&gt; seq&lt;string * string&gt;<br />
                                   </div>
         </td>
@@ -586,10 +592,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '914', 914)" onmouseover="showTip(event, '914', 914)">
+          <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
             Zip.unzip target fileName
           </code>
-          <div class="tip" id="914">
+          <div class="tip" id="916">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -611,10 +617,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '915', 915)" onmouseover="showTip(event, '915', 915)">
+          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
             Zip.unzipFirstMatchingFileInMemory(...)
           </code>
-          <div class="tip" id="915">
+          <div class="tip" id="917">
             <strong>Signature:</strong> predicate:(ZipArchiveEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                                   </div>
         </td>
@@ -636,10 +642,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
+          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
             Zip.unzipSingleFileInMemory(...)
           </code>
-          <div class="tip" id="916">
+          <div class="tip" id="918">
             <strong>Signature:</strong> fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                                   </div>
         </td>
@@ -661,10 +667,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
+          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
             Zip.zip workingDir fileName files
           </code>
-          <div class="tip" id="917">
+          <div class="tip" id="919">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -687,10 +693,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
+          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
             Zip.zipFile fileName targetFileName
           </code>
-          <div class="tip" id="918">
+          <div class="tip" id="920">
             <strong>Signature:</strong> fileName:string -&gt; targetFileName:string -&gt; unit<br />
                                   </div>
         </td>
@@ -712,10 +718,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
+          <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
             Zip.zipOfIncludes fileName files
           </code>
-          <div class="tip" id="919">
+          <div class="tip" id="921">
             <strong>Signature:</strong> fileName:string -&gt; files:seq&lt;string * IGlobbingPattern&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -774,10 +780,10 @@ This function will move a given list of zip specifications to the given folder (
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
+          <code onmouseout="hideTip(event, '922', 922)" onmouseover="showTip(event, '922', 922)">
             Zip.zipSpec fileName items
           </code>
-          <div class="tip" id="920">
+          <div class="tip" id="922">
             <strong>Signature:</strong> fileName:string -&gt; items:seq&lt;string * string&gt; -&gt; unit<br />
                                   </div>
         </td>
@@ -903,7 +909,7 @@ This function will move a given list of zip specifications to the given folder (
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>

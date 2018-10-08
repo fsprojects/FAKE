@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>MSBuildLogger - FAKE - F# Make</title>
+		<title>DotCover - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -94,6 +94,11 @@
 															<a href="/buildserver.html">BuildServer</a>
 															<ul>
 																<li><a href="/apidocs/v5/index.html#Fake.BuildServer">Api-Reference</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-appveyor.html">AppVeyor</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamfoundation.html">Azure DevOps</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-gitlab.html">GitLab</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-teamcity.html">TeamCity</a></li>
+																<li><a href="/apidocs/v5/fake-buildserver-travis.html">Travis</a></li>
 															</ul>
 														</li>
 														<li>
@@ -183,6 +188,7 @@
 															<a href="/apidocs/v5/index.html#Fake.Sql">Sql</a>
 															<ul>
 																<li><a href="/sql-dacpac.html">DacPac</a></li>
+																<li><a href="/sql-sqlserver.html">SQL Server</a></li>
 															</ul>
 														</li>
 														<li>
@@ -260,7 +266,7 @@
                                     <p>
                                         <strong>Note: This is the migration API reference for FAKE 5. The new (modularized) API documentation can be found 
                                             <a href="/apidocs/v5/index.html">here</a>.
-                                            If the API is already migrated you can check <a href="/apidocs/v5/fake-dotnet-msbuildlogger-msbuildlogger.html">here if exists in a module</a>.
+                                            If the API is already migrated you can check <a href="/apidocs/v5/fake-dotnet-testing-dotcover.html">here if exists in a module</a>.
                                             More information regarding the migration can be found <a href="/fake-migrate-to-fake-5.html">here</a>
                                         </strong>
                                     </p>
@@ -272,60 +278,363 @@
 <p>
 
 </p>
-<a name="MSBuildLogger" class="anchor" href="#MSBuildLogger" ><h1>MSBuildLogger</h1></a>
+<a name="DotCover" class="anchor" href="#DotCover"><h1>DotCover</h1></a>
+
 <div class="xmldoc">
-<p>Abstract MSBuild Logger class.</p>
+<p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
 
 </div>
-  <a name="Constructors" class="anchor" href="#Constructors"><h3>Constructors</h3></a>
-  <table class="table table-bordered member-list">
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
     <thead>
-      <tr><td>Constructor</td><td>Description</td></tr>
+      <tr><td>Type</td><td>Description</td></tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="member-name">
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-testing-dotcover-mergeparams.html">MergeParams</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-testing-dotcover-params.html">Params</a>
+          </td>
+          <td class="xmldoc">
+            <p>The dotCover parameter type for running coverage</p>
 
-          <code onmouseout="hideTip(event, '5243', 5243)" onmouseover="showTip(event, '5243', 5243)">
-            new()
-          </code>
-          <div class="tip" id="5243">
-            <strong>Signature:</strong> unit -&gt; MSBuildLogger<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuildLogger.fs#L16-16" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
+
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-testing-dotcover-reportparams.html">ReportParams</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-testing-dotcover-reporttype.html">ReportType</a>
+          </td>
+          <td class="xmldoc">
+            
+          </td>
+        </tr>
     </tbody>
   </table>
-  <a name="Instance members" class="anchor" href="#Instance members"><h3>Instance members</h3></a>
+
+  </div>
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5244', 5244)" onmouseover="showTip(event, '5244', 5244)">
-            x.RegisterEvents(arg1)
+          <code onmouseout="hideTip(event, '1752', 1752)" onmouseover="showTip(event, '1752', 1752)">
+            DotCover.merge(setParams)
           </code>
-          <div class="tip" id="5244">
-            <strong>Signature:</strong> IEventSource -&gt; unit<br />
-              <strong>Modifiers:</strong> abstract<br />
+          <div class="tip" id="1752">
+            <strong>Signature:</strong> setParams:(MergeParams -&gt; MergeParams) -&gt; unit<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.MSBuild/MSBuildLogger.fs#L21-21" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L158-158" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          <p>Abstract function which registers an event listener.</p>
+          <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
+snapshot, enabling you to merge test coverage from multiple test running frameworks</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the dotCover merge default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">merge</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+                    <span class="id">Source</span> <span class="o">=</span> <span class="pn">[</span><span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;NUnitDotCoverSnapshot.dcvr&quot;</span>
+                              <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;MSpecDotCoverSnapshot.dcvr&quot;</span><span class="pn">]</span>
+                    <span class="id">Output</span> <span class="o">=</span> <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;dotCoverSnapshot.dcvr&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1753', 1753)" onmouseover="showTip(event, '1753', 1753)">
+            DotCover.report(setParams)
+          </code>
+          <div class="tip" id="1753">
+            <strong>Signature:</strong> setParams:(ReportParams -&gt; ReportParams) -&gt; bool -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L173-173" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the dotCover report default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">report</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+                    <span class="id">Source</span> <span class="o">=</span> <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;dotCoverSnapshot.dcvr&quot;</span>
+                    <span class="id">Output</span> <span class="o">=</span> <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;dotCoverReport.xml&quot;</span>
+                    <span class="id">ReportType</span> <span class="o">=</span> <span class="id">ReportType</span><span class="pn">.</span><span class="id">Xml</span> <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1754', 1754)" onmouseover="showTip(event, '1754', 1754)">
+            DotCover.run(setParams)
+          </code>
+          <div class="tip" id="1754">
+            <strong>Signature:</strong> setParams:(Params -&gt; Params) -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L142-142" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the dotCover default parameters.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1755', 1755)" onmouseover="showTip(event, '1755', 1755)">
+            DotCover.runMSpec(...)
+          </code>
+          <div class="tip" id="1755">
+            <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setMSpecParams:(MSpecParams -&gt; MSpecParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L318-318" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
+<li><code>setMSpecParams</code> - Function used to overwrite the MSpec default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="id">@@</span> <span class="id">buildMode</span> <span class="id">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">runMSpec</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">dotCoverOptions</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">dotCoverOptions</span> <span class="k">with</span> 
+                <span class="id">Output</span> <span class="o">=</span> <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;MSpecDotCoverSnapshot.dcvr&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">mSpecOptions</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">mSpecOptions</span> <span class="k">with</span>
+                <span class="id">Silent</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1756', 1756)" onmouseover="showTip(event, '1756', 1756)">
+            DotCover.runMSTest(...)
+          </code>
+          <div class="tip" id="1756">
+            <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setMSTestParams:(MSTestParams -&gt; MSTestParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L290-290" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
+<li><code>setMSTestParams</code> - Function used to overwrite the MSTest default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="id">@@</span> <span class="id">buildMode</span> <span class="id">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">runMSTest</span> 
+        <span class="pn">(</span><span class="k">fun</span>  <span class="k">-&gt;</span> <span class="id">dotCoverOptions</span> <span class="pn">)</span>
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">MSTestOptions</span> <span class="k">-&gt;</span> <span class="id">MSTestOptions</span><span class="pn">)</span> 
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1757', 1757)" onmouseover="showTip(event, '1757', 1757)">
+            DotCover.runNUnit(...)
+          </code>
+          <div class="tip" id="1757">
+            <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setNUnitParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L191-191" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
+<li><code>setNUnitParams</code> - Function used to overwrite the NUnit default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="id">@@</span> <span class="id">buildMode</span> <span class="id">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">runNUnit</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">dotCoverOptions</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">dotCoverOptions</span> <span class="k">with</span> 
+                <span class="id">Output</span> <span class="o">=</span> <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;NUnitDotCoverSnapshot.dcvr&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">nUnitOptions</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">nUnitOptions</span> <span class="k">with</span>
+                <span class="id">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1758', 1758)" onmouseover="showTip(event, '1758', 1758)">
+            DotCover.runNUnit3(...)
+          </code>
+          <div class="tip" id="1758">
+            <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setNUnitParams:(NUnit3Params -&gt; NUnit3Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L219-219" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
+<li><code>setNUnitParams</code> - Function used to overwrite the NUnit default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="id">@@</span> <span class="id">buildMode</span> <span class="id">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">runNUnit3</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">dotCoverOptions</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">dotCoverOptions</span> <span class="k">with</span> 
+                <span class="id">Output</span> <span class="o">=</span> <span class="id">artifactsDir</span> <span class="id">@@</span> <span class="s">&quot;NUnit3DotCoverSnapshot.dcvr&quot;</span> <span class="pn">}</span><span class="pn">)</span> 
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">nUnit3Options</span> <span class="k">-&gt;</span> <span class="pn">{</span> <span class="id">nUnit3Options</span> <span class="k">with</span>
+                <span class="id">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span> <span class="pn">}</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1759', 1759)" onmouseover="showTip(event, '1759', 1759)">
+            DotCover.runXUnit2(...)
+          </code>
+          <div class="tip" id="1759">
+            <strong>Signature:</strong> setDotCoverParams:(Params -&gt; Params) -&gt; setXUnit2Params:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.DotNet.Testing.DotCover/DotCover.fs#L245-245" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
+<li><code>setXUnit2Params</code> - Function used to overwrite the XUnit2 default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="pn">(</span><span class="id">buildDir</span> <span class="id">@@</span> <span class="id">buildMode</span> <span class="id">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span><span class="pn">)</span> 
+    <span class="o">|&gt;</span> <span class="id">runXUnit2</span> 
+        <span class="pn">(</span><span class="k">fun</span>  <span class="k">-&gt;</span> <span class="id">dotCoverOptions</span> <span class="pn">)</span>
+        <span class="pn">(</span><span class="k">fun</span> <span class="id">nUnitOptions</span> <span class="k">-&gt;</span> <span class="id">nUnitOptions</span><span class="pn">)</span> 
+</code></pre></td>
+</tr>
+</table>
 
 
         </td>
@@ -437,7 +746,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.7.2</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.4</a></li>
 									</ul>
 								</div>
 							</div>
