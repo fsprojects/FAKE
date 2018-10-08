@@ -190,7 +190,7 @@ module TraceData =
         | TraceData.ErrorMessage text -> TraceData.ErrorMessage (f text)
         | TraceData.LogMessage (text, d) -> TraceData.LogMessage (f text, d)
         | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
-        | TraceData.BuildState (TagStatus.FailedWithMessage text) -> TraceData.BuildState (FailedWithMessage (f text))
+        | TraceData.BuildState (TagStatus.FailedWithMessage text) -> TraceData.BuildState (TagStatus.FailedWithMessage (f text))
         | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
         | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
         | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))

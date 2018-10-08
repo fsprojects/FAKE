@@ -739,7 +739,7 @@ module Target =
 
     let internal getBuildFailedException (context:TargetContext) =
         let errorTargets =
-            context.Value.PreviousTargets
+            context.PreviousTargets
             |> List.choose (fun tres ->
                 match tres.Error with
                 | Some er -> Some (er, tres.Target)
@@ -752,15 +752,15 @@ module Target =
             else
                 sprintf "Targets '%s' failed." targetStr
         let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
-        BuildFailedException(context.Value, errorMsg, inner)
+        BuildFailedException(context, errorMsg, inner)
 
     /// Updates build status based on `TargetContext option`
     /// Will not update status if `TargetContext option` is `None`
     let updateBuildStatusOption (context:TargetContext option) =
         match context with
-        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning
-        | Some c when c.HasError -> Trace.setBuildState TagStatus.FailedWithMessage (getBuildFailedException context).Message)
-        | Some c -> Trace.setBuildState TagStatus.Success
+        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState(TagStatus.Warning)
+        | Some c when c.HasError -> Trace.setBuildState(TagStatus.FailedWithMessage ((getBuildFailedException context.Value).Message))
+        | Some c -> Trace.setBuildState(TagStatus.Success)
         | _ -> ()
         context
 
@@ -770,7 +770,7 @@ module Target =
     /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
     let raiseIfErrorOption (context:TargetContext option)  =
         if context.IsSome && context.Value.HasError && not context.Value.CancellationToken.IsCancellationRequested then
-            getBuildFailedException context
+            getBuildFailedException context.Value
             |> raise
         context
 
@@ -871,7 +871,7 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
-        runOrDefaultAndGetContext defaultTarget |> raiseIfError |> ignore  
+        runOrDefaultAndGetContext defaultTarget |> raiseIfErrorOption |> ignore  
 
     /// Runs the command given on the command line or the given target when no target is given & get context
     let runOrDefaultWithArgumentsAndGetContext defaultTarget =
@@ -881,7 +881,7 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefaultWithArguments defaultTarget =
-        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfError |> ignore 
+        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfErrorOption |> ignore 
 
     /// Runs the target given by the target parameter or lists the available targets & get context
     let runOrListAndGetContext() =
@@ -891,4 +891,4 @@ module Target =
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        runOrListAndGetContext() |> raiseIfError |> ignore
+        runOrListAndGetContext() |> raiseIfErrorOption |> ignore
