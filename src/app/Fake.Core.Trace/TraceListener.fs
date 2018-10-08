@@ -192,6 +192,7 @@ module TraceData =
         | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
         | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
         | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))
+        | TraceData.OpenTag(tag, None) -> TraceData.OpenTag((mapKnownTags f tag), None)
         | TraceData.CloseTag(tag, time, status) -> TraceData.CloseTag((mapKnownTags f tag), time, status)        
         | _ -> t
 
