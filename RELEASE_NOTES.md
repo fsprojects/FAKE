@@ -1,6 +1,10 @@
 # Release Notes
 
-## 5.8.4-alpha - 2018-10-05
+## 5.8.5-alpha - tbd
+
+* tbd
+
+## 5.8.4 - 2018-10-08
 
 * ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
 * ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
