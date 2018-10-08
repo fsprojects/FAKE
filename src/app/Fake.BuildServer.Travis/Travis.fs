@@ -42,7 +42,7 @@ module Travis =
                     write false color true (sprintf "Build Number: %s" number)
                 | TraceData.TestStatus (test, status) ->
                     write false color true (sprintf "Test '%s' status: %A" test status)
-                | TraceData.BuildState (state, _) ->
+                | TraceData.BuildState state ->
                     write false color true (sprintf "Build State: %A" state)
 
     let defaultTraceListener =

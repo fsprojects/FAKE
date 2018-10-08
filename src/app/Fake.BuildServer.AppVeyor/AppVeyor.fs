@@ -275,7 +275,7 @@ module AppVeyor =
                     currentTestSuite <- Some name
                 | TraceData.CloseTag (KnownTags.TestSuite name, _, _) ->
                     currentTestSuite <- None
-                | TraceData.BuildState (state, _) ->
+                | TraceData.BuildState state ->
                     ConsoleWriter.writeAnsiColor false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.OpenTag (tag, descr) ->
                     match descr with

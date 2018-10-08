@@ -191,7 +191,7 @@ module GitLab =
                     | _ -> write false color true (sprintf "Starting %s '%s'" tag.Type tag.Name)  
                 | TraceData.CloseTag (tag, time, state) ->
                     write false color true (sprintf "Finished (%A) '%s' in %O" state tag.Name time)
-                | TraceData.BuildState (state, _) ->
+                | TraceData.BuildState state ->
                     write false color true (sprintf "Changing BuildState to: %A" state)
                 | TraceData.ImportData (typ, path) ->
                     let name = Path.GetFileName path
