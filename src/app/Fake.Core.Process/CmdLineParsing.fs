@@ -120,7 +120,7 @@ module Args =
 
 /// Represents a list of arguments
 type Arguments = 
-    private { Args : string array }
+    internal { Args : string array }
     static member Empty = { Args = [||] }
     /// See https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     static member OfWindowsCommandLine cmd =
@@ -136,3 +136,9 @@ type Arguments =
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
     /// Create a new command line string which can be used in a ProcessStartInfo object.
     member x.ToStartInfo = CmdLineParsing.toProcessStartInfo x.Args
+
+module Arguments =
+    let withPrefix s (a:Arguments) =
+        Arguments.OfArgs(Seq.append s a.Args)
+    let append s (a:Arguments) =
+        Arguments.OfArgs(Seq.append a.Args s)

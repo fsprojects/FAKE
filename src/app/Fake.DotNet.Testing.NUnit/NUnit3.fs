@@ -309,28 +309,27 @@ let buildArgs (parameters:NUnit3Params) (assemblies: string seq) =
     |> StringBuilder.appendFileNamesIfNotNull assemblies
     |> StringBuilder.toText
 
-let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
-    let details = assemblies |> String.separated ", "
-    use __ = Trace.traceTask "NUnit" details
+let internal createProcess (setParams : NUnit3Params -> NUnit3Params) (assemblies : string[]) =
     let parameters = NUnit3Defaults |> setParams
-    let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
     let generatedArgs = buildArgs parameters assemblies
-    let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
+    //let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
+    
     let path = Path.GetTempFileName()
-
-    try        
+    let args = (sprintf "@%s" path)
+    CreateProcess.fromRawWindowsCommandLine tool args
+    |> CreateProcess.withFramework
+    |> CreateProcess.withWorkingDirectory (getWorkingDir parameters)
+    //|> CreateProcess.withTimeout processTimeout
+    |> CreateProcess.addOnSetup (fun () ->
         File.WriteAllText(path, generatedArgs)
         Trace.trace(sprintf "Saved args to '%s' with value: %s" path generatedArgs)
-        let args = (sprintf "@%s" path)
-        Trace.trace (tool + " " + args)
-
-        let result = Process.execSimple ((fun info -> { info with
-                                                            FileName = tool
-                                                            WorkingDirectory = getWorkingDir parameters
-                                                            Arguments = args }) >> Process.withFramework) processTimeout
-
+    )
+    |> CreateProcess.addOnFinally (fun () ->
+        File.Delete(path)
+    )
+    |> CreateProcess.addOnExited (fun result ->
         let errorDescription error =
             match error with
             | OK -> "OK"
@@ -346,8 +345,14 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
             match result with
             | OK -> ()
             | _ -> raise (FailedTestsException(errorDescription result))
+    )
 
-    finally
-        File.Delete(path)    
-    
+let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
+    let assemblies = assemblies |> Seq.toArray
+    let details = assemblies |> String.separated ", "
+    use __ = Trace.traceTask "NUnit" details
+    let p = createProcess setParams assemblies
+    p
+    |> Proc.run
+
     __.MarkSuccess()

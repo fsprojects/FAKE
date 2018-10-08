@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="VisibleTo.fs" />
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="Event.fs" />
     <Compile Include="Async.fs" />

@@ -1,7 +1,44 @@
 ﻿namespace Fake.Core
 
+open System
 open System.Reflection
+open Fake.Core
 open Fake.Core.ProcessHelpers
+open System.Collections.Immutable
+open System.Collections.Generic
+
+
+type IMap<'TKey, 'TValue> = IImmutableDictionary<'TKey, 'TValue>
+module IMap =
+    let inline empty<'key, 'value> = ImmutableDictionary.Empty :> IMap<'key, 'value>
+    let inline tryFind k (m:IMap<_,_>) =
+        match m.TryGetValue k with
+        | true, v -> Some v
+        | _ -> None
+    let inline remove k (m:IMap<_,_>) : IMap<_,_> =
+        m.Remove(k)
+    let inline iter f (m:IMap<_,_>) =
+        for kv in m do
+            f kv.Key kv.Value
+    let inline add k v (m:IMap<_,_>) : IMap<_,_> =
+        m.SetItem(k, v)
+    let inline toSeq (m:IMap<_,_>) :seq<_ * _> =
+        m |> Seq.map (fun kv -> kv.Key, kv.Value)
+
+type EnvMap = IMap<string, string>
+module EnvMap =
+    let empty = 
+        if Environment.isWindows
+        then ImmutableDictionary.Empty.WithComparers(StringComparer.OrdinalIgnoreCase) :> EnvMap
+        else IMap.empty
+
+    let ofSeq l =
+        empty.AddRange(l |> Seq.map (fun (k, v) -> KeyValuePair<_,_>(k, v)))
+
+    let create() =
+        ofSeq (Environment.environVars ())
+        //|> IMap.add defaultEnvVar defaultEnvVar
+
 
 /// The type of command to execute
 type Command =
@@ -40,7 +77,7 @@ type RawCreateProcess =
     internal {
         Command : Command
         WorkingDirectory : string option
-        Environment : (string * string) list option
+        Environment : EnvMap option
         StandardInput : StreamSpecification 
         StandardOutput : StreamSpecification 
         StandardError : StreamSpecification
@@ -67,18 +104,22 @@ type RawCreateProcess =
             p.RedirectStandardOutput <- false
         | UseStream _ | CreatePipe _ ->
             p.RedirectStandardOutput <- true
+            if Environment.isMono || Process.AlwaysSetProcessEncoding then
+                p.StandardOutputEncoding <-  Process.ProcessEncoding
         match x.StandardError with
         | Inherit ->
             p.RedirectStandardError <- false
         | UseStream _ | CreatePipe _ ->
             p.RedirectStandardError <- true
+            if Environment.isMono || Process.AlwaysSetProcessEncoding then
+                p.StandardErrorEncoding  <- Process.ProcessEncoding
                 
         let setEnv key var =
             p.Environment.[key] <- var
         x.Environment
             |> Option.iter (fun env ->
                 p.Environment.Clear()
-                env |> Seq.iter (fun (key, value) -> setEnv key value))
+                env |> IMap.iter (fun key value -> setEnv key value))
 #if FX_WINDOWSTLE    
         p.WindowStyle <- System.Diagnostics.ProcessWindowStyle.Hidden
 #endif
@@ -91,7 +132,7 @@ type RawCreateProcess =
         | RawCommand (f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
 
 type IProcessStarter =
-    abstract Start : RawCreateProcess -> Async<int * ProcessOutput option>
+    abstract Start : RawCreateProcess * (System.Diagnostics.Process -> unit) -> Async<int * ProcessOutput option>
 
 module RawProc =
     // mono sets echo off for some reason, therefore interactive mode doesn't work as expected
@@ -115,9 +156,9 @@ module RawProc =
         
     open System.Diagnostics
     open System.IO
-    let mutable processStarter = 
+    let createProcessStarter globalStartFunc =
         { new IProcessStarter with
-            member __.Start c = async {
+            member __.Start (c, startFunc) = async {
                 let p = c.ToStartInfo
                 let commandLine = 
                     sprintf "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
@@ -135,7 +176,9 @@ module RawProc =
                     if not <| !isStarted then
                         toolProcess.EnableRaisingEvents <- true
                         setEcho true |> ignore
-                        Process.rawStartProcess toolProcess
+                        Process.rawStartProcessNoRecord toolProcess
+                        globalStartFunc toolProcess
+                        startFunc toolProcess
                         isStarted := true
                         
                         let handleStream parameter processStream isInputStream =
@@ -206,3 +249,5 @@ module RawProc =
                 
                 return toolProcess.ExitCode, output }
         }
+
+    let mutable processStarter = createProcessStarter Process.recordProcess

@@ -98,7 +98,7 @@ type ProcStartInfo =
 #endif
       /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
       WorkingDirectory : string
-      } 
+      }
     static member Create() =
       { Arguments = null
         CreateNoWindow = false
@@ -125,7 +125,7 @@ type ProcStartInfo =
         Verb = ""
 #endif
         WorkingDirectory = "" }
-    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
+    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]
     static member Empty = ProcStartInfo.Create()
     /// Sets the current environment variables.
     member x.WithEnvironment map =
@@ -340,11 +340,7 @@ module Process =
     /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
     let mutable ProcessEncoding = Encoding.UTF8
 
-    let internal rawStartProcess (proc : Process) =
-        try
-            let result = proc.Start()
-            if not result then failwithf "Could not start process (Start() returned false)."
-        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
+    let inline internal recordProcess (proc:Process) =
         let startTime =
             try proc.StartTime with
             | :? System.InvalidOperationException
@@ -357,6 +353,16 @@ module Process =
                     Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
                 DateTime.Now               
         addStartedProcess(proc.Id, startTime) |> ignore
+
+    let inline internal rawStartProcessNoRecord (proc:Process) =
+        try
+            let result = proc.Start()
+            if not result then failwithf "Could not start process (Start() returned false)."
+        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
+
+    let internal rawStartProcess (proc : Process) =
+        rawStartProcessNoRecord proc
+        recordProcess proc
 
     /// [omit]
     [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
