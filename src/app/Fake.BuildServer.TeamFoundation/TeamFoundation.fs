@@ -5,6 +5,7 @@ open System
 open System.IO
 open Fake.Core
 open Fake.IO
+open Fake.SystemHelper
 
 /// native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
 /// The general documentation on how to use CI server integration can be found [here](/buildserver.html)
@@ -146,11 +147,60 @@ module TeamFoundation =
     /// Access (secret) build variables
     let variables = Vault.fromEnvironmentVariable "FAKE_VSTS_VAULT_VARIABLES"  
 
+    type BuildReason =
+        | Manual
+        | IndividualCI
+        | BatchedCI
+        | Schedule
+        | ValidateShelveset
+        | CheckInShelvset
+        | PullRequest
+        | BuildCompletion
+        | Other of string
+
+
     type Environment =
         static member BuildSourceBranch = Environment.environVar "BUILD_SOURCEBRANCH"
         static member BuildSourceBranchName = Environment.environVar "BUILD_SOURCEBRANCHNAME"
         static member BuildSourceVersion = Environment.environVar "BUILD_SOURCEVERSION"
         static member BuildId = Environment.environVar "BUILD_BUILDID"
+        static member BuildReason =
+            match Environment.environVar "BUILD_REASON" with
+            | "Manual" -> BuildReason.Manual
+            | "IndividualCI" -> BuildReason.IndividualCI
+            | "BatchedCI" -> BuildReason.BatchedCI
+            | "Schedule" -> BuildReason.Schedule
+            | "ValidateShelveset" -> BuildReason.ValidateShelveset
+            | "CheckInShelvset" -> BuildReason.CheckInShelvset
+            | "PullRequest" -> BuildReason.PullRequest
+            | "BuildCompletion" -> BuildReason.BuildCompletion
+            | s -> BuildReason.Other s
+
+        static member SystemPullRequestIsFork =
+            let s = Environment.environVar "SYSTEM_PULLREQUEST_ISFORK"
+            if String.IsNullOrEmpty s  then None
+            else
+                match bool.TryParse(s) with
+                | true, v -> Some v
+                | _ -> None
+        static member SystemPullRequestPullRequestId = Environment.environVar "SYSTEM_PULLREQUEST_PULLREQUESTID"
+        static member SystemPullRequestSourceBranch = Environment.environVar "SYSTEM_PULLREQUEST_SOURCEBRANCH"
+        static member SystemPullRequestSourceRepositoryURI = Environment.environVar "SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"
+        static member SystemPullRequestTargetBranch = Environment.environVar "SYSTEM_PULLREQUEST_TARGETBRANCH"
+
+
+    let private publishArtifactIfOk artifactFolder artifactName path =
+        let pushAnyWay = Environment.environVarAsBoolOrDefault "FAKE_VSO_PUSH_ALWAYS" false
+        let canPush =
+            match Environment.SystemPullRequestIsFork with
+            | Some true when Environment.BuildReason = BuildReason.PullRequest -> false
+            | _ -> true
+        if pushAnyWay || canPush then
+            publishArtifact artifactFolder artifactName path    
+        else
+            logIssue true None None None None 
+                (sprintf "Cannot publish artifact '%s' in PR because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html. You can set FAKE_VSO_PUSH_ALWAYS to true in order to try to push anyway (when the bug has been fixed)."
+                    path)
 
     /// Implements a TraceListener for TeamCity build servers.
     /// ## Parameters
@@ -215,9 +265,9 @@ module TeamFoundation =
                 | TraceData.ImportData (ImportData.Xunit _, path) ->
                     publishTests "XUnit" [path] false "" "" "" true
                 | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
-                    publishArtifact name (Some name) path
+                    publishArtifactIfOk name (Some name) path
                 | TraceData.ImportData (typ, path) ->
-                    publishArtifact typ.Name (Some "fake-artifacts") path
+                    publishArtifactIfOk typ.Name (Some "fake-artifacts") path
                 | TraceData.TestOutput (test, out, err) ->
                     writeConsole false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
                 | TraceData.BuildNumber number ->
