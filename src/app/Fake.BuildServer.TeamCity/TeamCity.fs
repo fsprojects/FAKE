@@ -196,6 +196,9 @@ module TeamCity =
     /// Reports the build status.
     let reportBuildStatus status message = buildStatus status message |> TeamCityWriter.sendStrToTeamCity
 
+    /// Reports build problem
+    let reportBuildProblem message = (sprintf "##teamcity[buildProblem description='%s']" (TeamCityWriter.encapsulateSpecialChars message)) |> TeamCityWriter.sendStrToTeamCity
+
     /// Publishes an artifact on the TeamcCity build server.
     let internal publishArtifact path = TeamCityWriter.encapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
@@ -395,13 +398,14 @@ module TeamCity =
                     testFailed testName message detail
                 | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     comparisonFailure testName message detail expected actual
-                | TraceData.BuildState TagStatus.Success ->
+                | TraceData.BuildState (TagStatus.Success, _) ->
                     reportBuildStatus "SUCCESS" "{build.status.text}"
-                | TraceData.BuildState TagStatus.Warning ->
+                | TraceData.BuildState (TagStatus.Warning, _) ->
                     warning "Setting build state to warning."
-                    //reportBuildStatus "SUCCESS" "{build.status.text}"
-                | TraceData.BuildState TagStatus.Failed ->
+                | TraceData.BuildState (TagStatus.Failed, None) ->
                     reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" ("Failed"))
+                | TraceData.BuildState (TagStatus.Failed, Some desc) ->
+                    reportBuildProblem desc
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
