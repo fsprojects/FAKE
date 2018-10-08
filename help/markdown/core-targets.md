@@ -160,7 +160,7 @@ open Fake.Core.TargetOperators
 
 // *** Start Build ***
 match Target.runOrDefaultAndGetContext "Deploy" with
-| Some result -> Target.updateBuildStatus result
+| Some result -> Target.updateBuildStatus result |> Target.raiseIfError
 | None -> ignore()
 ```
 

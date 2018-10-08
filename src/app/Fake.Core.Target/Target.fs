@@ -705,26 +705,7 @@ module Target =
 
         let context = runFinalTargets {context with IsRunningFinalTargets=true}
         writeTaskTimeSummary watch.Elapsed context
-        context
-
-    let internal raiseIfError context =
-        if context.HasError && not context.CancellationToken.IsCancellationRequested then
-            let errorTargets =
-                context.PreviousTargets
-                |> List.choose (fun tres ->
-                    match tres.Error with
-                    | Some er -> Some (er, tres.Target)
-                    | None -> None)
-            let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
-            let targetStr = String.Join(", ", targets)
-            let errorMsg =
-                if errorTargets.Length = 1 then
-                    sprintf "Target '%s' failed." targetStr
-                else
-                    sprintf "Targets '%s' failed." targetStr
-            let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
-            BuildFailedException(context, errorMsg, inner)
-            |> raise
+        context             
 
     /// Creates a target in case of build failure (not activated).
     let createBuildFailure name body =
@@ -757,17 +738,39 @@ module Target =
         getFinalTargets().[name] <- false
 
     /// Updates build status based on TargetContext
-    let updateBuildStatus context =
+    let updateBuildStatus (context:TargetContext) =
         match context.PreviousTargets.Length, context.HasError with
         | 0, _ -> Trace.setBuildState TagStatus.Warning
         | _, true -> Trace.setBuildState TagStatus.Failed
         | _, _ -> Trace.setBuildState TagStatus.Success   
+        context
+
+    /// If context has error, raise it as a BuildFailedException
+    let raiseIfError (context:TargetContext) =
+        if context.HasError && not context.CancellationToken.IsCancellationRequested then
+            let errorTargets =
+                context.PreviousTargets
+                |> List.choose (fun tres ->
+                    match tres.Error with
+                    | Some er -> Some (er, tres.Target)
+                    | None -> None)
+            let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+            let targetStr = String.Join(", ", targets)
+            let errorMsg =
+                if errorTargets.Length = 1 then
+                    sprintf "Target '%s' failed." targetStr
+                else
+                    sprintf "Targets '%s' failed." targetStr
+            let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
+            BuildFailedException(context, errorMsg, inner)
+            |> raise
+        context       
     
     /// Runs a target and its dependencies, used for testing - usually not called in scripts.
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 
     /// Runs a target and its dependencies
-    let run parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> raiseIfError
+    let run parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> raiseIfError |> ignore
        
     let internal getRunFunction allowArgs defaultTarget =
         let ctx = Fake.Core.Context.forceFakeContext ()
@@ -857,7 +860,7 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
-        runOrDefaultAndGetContext defaultTarget |> raiseIfError  
+        runOrDefaultAndGetContext defaultTarget |> raiseIfError |> ignore  
 
     /// Runs the command given on the command line or the given target when no target is given & get context
     let runOrDefaultWithArgumentsAndGetContext defaultTarget =
@@ -867,7 +870,7 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefaultWithArguments defaultTarget =
-        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfError   
+        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfError |> ignore 
 
     /// Runs the target given by the target parameter or lists the available targets & get context
     let runOrListAndGetContext() =
@@ -877,4 +880,4 @@ module Target =
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        runOrListAndGetContext() |> raiseIfError
+        runOrListAndGetContext() |> raiseIfError |> ignore
