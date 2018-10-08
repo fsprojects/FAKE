@@ -316,28 +316,38 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath
-    let args = buildArgs parameters assemblies
-    Trace.trace (tool + " " + args)
+    let generatedArgs = buildArgs parameters assemblies
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
-    let result =
-        Process.execSimple ((fun info ->
-        { info with
-            FileName = tool
-            WorkingDirectory = getWorkingDir parameters
-            Arguments = args }) >> Process.withFramework) processTimeout
-    let errorDescription error =
-        match error with
-        | OK -> "OK"
-        | TestsFailed -> sprintf "NUnit test failed (%d)." error
-        | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
+    let path = Path.GetTempFileName()
 
-    match parameters.ErrorLevel with
-    | NUnit3ErrorLevel.DontFailBuild ->
-        match result with
-        | OK | TestsFailed -> ()
-        | _ -> raise (FailedTestsException(errorDescription result))
-    | NUnit3ErrorLevel.Error | FailOnFirstError ->
-        match result with
-        | OK -> ()
-        | _ -> raise (FailedTestsException(errorDescription result))
+    try        
+        File.WriteAllText(path, generatedArgs)
+        Trace.trace(sprintf "Saved args to '%s' with value: %s" path generatedArgs)
+        let args = (sprintf "@%s" path)
+        Trace.trace (tool + " " + args)
+
+        let result = Process.execSimple ((fun info -> { info with
+                                                            FileName = tool
+                                                            WorkingDirectory = getWorkingDir parameters
+                                                            Arguments = args }) >> Process.withFramework) processTimeout
+
+        let errorDescription error =
+            match error with
+            | OK -> "OK"
+            | TestsFailed -> sprintf "NUnit test failed (%d)." error
+            | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
+
+        match parameters.ErrorLevel with
+        | NUnit3ErrorLevel.DontFailBuild ->
+            match result with
+            | OK | TestsFailed -> ()
+            | _ -> raise (FailedTestsException(errorDescription result))
+        | NUnit3ErrorLevel.Error | FailOnFirstError ->
+            match result with
+            | OK -> ()
+            | _ -> raise (FailedTestsException(errorDescription result))
+
+    finally
+        File.Delete(path)    
+    
     __.MarkSuccess()
