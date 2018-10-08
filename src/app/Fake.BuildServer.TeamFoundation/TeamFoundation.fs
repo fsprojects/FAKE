@@ -5,7 +5,6 @@ open System
 open System.IO
 open Fake.Core
 open Fake.IO
-open Fake.SystemHelper
 
 /// native support for Azure DevOps (previously VSTS) / Team Foundation Server specific APIs.
 /// The general documentation on how to use CI server integration can be found [here](/buildserver.html)
