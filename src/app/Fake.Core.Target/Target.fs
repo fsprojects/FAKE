@@ -705,6 +705,9 @@ module Target =
 
         let context = runFinalTargets {context with IsRunningFinalTargets=true}
         writeTaskTimeSummary watch.Elapsed context
+        context
+
+    let internal raiseIfError context =
         if context.HasError && not context.CancellationToken.IsCancellationRequested then
             let errorTargets =
                 context.PreviousTargets
@@ -722,8 +725,6 @@ module Target =
             let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
             BuildFailedException(context, errorMsg, inner)
             |> raise
-
-        context
 
     /// Creates a target in case of build failure (not activated).
     let createBuildFailure name body =
@@ -755,19 +756,19 @@ module Target =
         let t = get name // test if target is defined
         getFinalTargets().[name] <- false
 
-    /// Runs a target and its dependencies, used for testing - usually not called in scripts.
-    let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
-
-    /// Runs a target and its dependencies
-    let run parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> ignore
-
     /// Updates build status based on TargetContext
     let updateBuildStatus context =
         match context.PreviousTargets.Length, context.HasError with
         | 0, _ -> Trace.setBuildState TagStatus.Warning
         | _, true -> Trace.setBuildState TagStatus.Failed
-        | _, _ -> Trace.setBuildState TagStatus.Success        
+        | _, _ -> Trace.setBuildState TagStatus.Success   
+    
+    /// Runs a target and its dependencies, used for testing - usually not called in scripts.
+    let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 
+    /// Runs a target and its dependencies
+    let run parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> raiseIfError
+       
     let internal getRunFunction allowArgs defaultTarget =
         let ctx = Fake.Core.Context.forceFakeContext ()
         let trySplitEnvArg (arg:string) =
@@ -856,7 +857,7 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
-        runOrDefaultAndGetContext defaultTarget |> ignore  
+        runOrDefaultAndGetContext defaultTarget |> raiseIfError  
 
     /// Runs the command given on the command line or the given target when no target is given & get context
     let runOrDefaultWithArgumentsAndGetContext defaultTarget =
@@ -866,7 +867,7 @@ module Target =
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefaultWithArguments defaultTarget =
-        runOrDefaultWithArgumentsAndGetContext defaultTarget |> ignore   
+        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfError   
 
     /// Runs the target given by the target parameter or lists the available targets & get context
     let runOrListAndGetContext() =
@@ -876,4 +877,4 @@ module Target =
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        runOrListAndGetContext() |> ignore
+        runOrListAndGetContext() |> raiseIfError
