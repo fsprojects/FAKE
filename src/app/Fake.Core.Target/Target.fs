@@ -737,19 +737,24 @@ module Target =
         let t = get name // test if target is defined
         getFinalTargets().[name] <- false
 
-    /// Updates build status based on TargetContext
-    let updateBuildStatus (context:TargetContext) =
-        match context.PreviousTargets.Length, context.HasError with
-        | 0, _ -> Trace.setBuildState TagStatus.Warning
-        | _, true -> Trace.setBuildState TagStatus.Failed
-        | _, _ -> Trace.setBuildState TagStatus.Success   
+    /// Updates build status based on `TargetContext option`
+    /// Will not update status if `TargetContext option` is `None`
+    let updateBuildStatusOption (context:TargetContext option) =
+        match context with
+        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning
+        | Some c when c.HasError -> Trace.setBuildState TagStatus.Failed
+        | Some c -> Trace.setBuildState TagStatus.Success
+        | _ -> ()
         context
 
-    /// If context has error, raise it as a BuildFailedException
-    let raiseIfError (context:TargetContext) =
-        if context.HasError && not context.CancellationToken.IsCancellationRequested then
+    /// Updates build status based on `TargetContext`
+    let updateBuildStatus (context:TargetContext)  = updateBuildStatusOption (Some(context))
+
+    /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
+    let raiseIfErrorOption (context:TargetContext option)  =
+        if context.IsSome && context.Value.HasError && not context.Value.CancellationToken.IsCancellationRequested then
             let errorTargets =
-                context.PreviousTargets
+                context.Value.PreviousTargets
                 |> List.choose (fun tres ->
                     match tres.Error with
                     | Some er -> Some (er, tres.Target)
@@ -762,10 +767,13 @@ module Target =
                 else
                     sprintf "Targets '%s' failed." targetStr
             let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
-            BuildFailedException(context, errorMsg, inner)
+            BuildFailedException(context.Value, errorMsg, inner)
             |> raise
-        context       
-    
+        context
+
+    /// If `TargetContext` has error, raise it as a BuildFailedException
+    let raiseIfError (context:TargetContext)  = raiseIfErrorOption (Some(context))
+   
     /// Runs a target and its dependencies, used for testing - usually not called in scripts.
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 

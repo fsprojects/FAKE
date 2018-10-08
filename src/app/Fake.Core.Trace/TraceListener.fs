@@ -146,7 +146,7 @@ type TraceData =
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan * TagStatus
-    | BuildState of TagStatus
+    | BuildState of TagStatus * text:string
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -171,7 +171,7 @@ type TraceData =
         | TestOutput _
         | ImportData _
         | OpenTag _
-        | BuildState _
+        | BuildState (_, text) -> Some text
         | CloseTag _ -> None
 
 module TraceData =
