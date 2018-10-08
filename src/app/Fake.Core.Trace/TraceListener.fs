@@ -175,6 +175,14 @@ type TraceData =
         | CloseTag _ -> None
 
 module TraceData =
+    let inline mapKnownTags f (t:KnownTags) = 
+        match t with
+        | KnownTags.Task tag -> KnownTags.Task(f tag)
+        | KnownTags.Target tag -> KnownTags.Target(f tag)
+        | KnownTags.FinalTarget tag -> KnownTags.FinalTarget(f tag)
+        | KnownTags.FailureTarget tag -> KnownTags.FailureTarget(f tag)
+        | _ -> t
+
     let inline mapMessage f (t:TraceData) =
         match t with
         | TraceData.ImportantMessage text -> TraceData.ImportantMessage (f text)
@@ -183,6 +191,9 @@ module TraceData =
         | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
         | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
         | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
+        | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))
+        | TraceData.OpenTag(tag, None) -> TraceData.OpenTag((mapKnownTags f tag), None)
+        | TraceData.CloseTag(tag, time, status) -> TraceData.CloseTag((mapKnownTags f tag), time, status)        
         | _ -> t
 
     let internal repl (oldStr:string) (repl:string) (s:string) =
