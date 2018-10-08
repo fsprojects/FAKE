@@ -295,7 +295,7 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
-            | TraceData.BuildState state ->
+            | TraceData.BuildState (state, _) ->
                 write false color true (sprintf "Changing BuildState to: %A" state)
             | TraceData.TestOutput (test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)

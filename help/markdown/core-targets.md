@@ -160,8 +160,8 @@ open Fake.Core.TargetOperators
 
 // *** Start Build ***
 Target.runOrDefaultAndGetContext "Deploy"
-|> Target.updateBuildStatus 
-|> Target.raiseIfError
+|> Target.updateBuildStatusOption 
+|> Target.raiseIfErrorOption
 ```
 
 ## Final targets

@@ -758,7 +758,7 @@ module Target =
     /// Will not update status if `TargetContext option` is `None`
     let updateBuildStatusOption (context:TargetContext option) =
         match context with
-        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning Some("No Targets Run"))()
+        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning (Some("No Targets Run"))
         | Some c when c.HasError -> Trace.setBuildState TagStatus.Failed (Some((getBuildFailedException context).Message))
         | Some c -> Trace.setBuildState TagStatus.Success None
         | _ -> ()
