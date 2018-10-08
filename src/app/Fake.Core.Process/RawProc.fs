@@ -3,6 +3,7 @@
 open System.Reflection
 open Fake.Core.ProcessHelpers
 
+/// The type of command to execute
 type Command =
     | ShellCommand of string
     /// Windows: https://msdn.microsoft.com/en-us/library/windows/desktop/bb776391(v=vs.85).aspx
@@ -10,6 +11,8 @@ type Command =
     /// Linux(netcore): See https://github.com/fsharp/FAKE/pull/1281/commits/285e585ec459ac7b89ca4897d1323c5a5b7e4558 and https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L443-L522
     | RawCommand of executable:FilePath * arguments:Arguments
 
+/// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
+/// Used to retrieve "pipes"
 type DataRef<'T> =
     internal { retrieveRaw : (unit -> 'T) ref }
     static member Empty =
@@ -19,15 +22,20 @@ type DataRef<'T> =
     member x.Value = (!x.retrieveRaw)()
 
 type StreamRef = DataRef<System.IO.Stream>
-//type DataRef =
-//    static member Empty<'T> = DataRef
+
+/// Various options to redirect streams.
 type StreamSpecification =
+    /// Do not redirect, or use normal process inheritance
     | Inherit
+    /// Redirect to the given stream (the stream is provided by the user and is written only for 'stdout' & 'stderr' and read only for 'stdin')
     | UseStream of closeOnExit:bool * stream:System.IO.Stream
+    /// Retrieve the raw pipe from the process (the StreamRef is set with a stream you can write into for 'stdin' and read from for 'stdout' and 'stderr')
     | CreatePipe of StreamRef // The underlying framework creates pipes already
 
+/// The output of the process. If ordering between stdout and stderr is important you need to use streams.
 type ProcessOutput = { Output : string; Error : string }
 
+/// A raw (untyped) way to start a process
 type RawCreateProcess =
     internal {
         Command : Command

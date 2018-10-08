@@ -108,15 +108,19 @@ module internal CmdLineParsing =
 
 type FilePath = string
 
+/// Helper functions for proper command line parsing
 module Args =
+    /// Convert the given argument list to a conforming windows command line string, escapes parameter in quotes if needed (currently always but this might change).
     let toWindowsCommandLine args = CmdLineParsing.windowsArgvToCommandLine args
+    /// Escape the given argument list according to a unix shell (bash)
     let toLinuxShellCommandLine args =
         System.String.Join(" ", args |> Seq.map CmdLineParsing.escapeCommandLineForShell)
-
+    /// Read a windows command line string into its arguments
     let fromWindowsCommandLine cmd = CmdLineParsing.windowsCommandLineToArgv cmd
-    
+
+/// Represents a list of arguments
 type Arguments = 
-    { Args : string array }
+    private { Args : string array }
     static member Empty = { Args = [||] }
     /// See https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     static member OfWindowsCommandLine cmd =
@@ -126,6 +130,9 @@ type Arguments =
     member x.ToWindowsCommandLine = Args.toWindowsCommandLine x.Args
     member x.ToLinuxShellCommandLine = Args.toLinuxShellCommandLine x.Args
 
-    static member OfArgs args = { Args = args }
+    /// Create a new arguments object from the given list of arguments
+    static member OfArgs (args:string seq) = { Args = args |> Seq.toArray }
+    /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
-    member internal x.ToStartInfo = CmdLineParsing.toProcessStartInfo x.Args
+    /// Create a new command line string which can be used in a ProcessStartInfo object.
+    member x.ToStartInfo = CmdLineParsing.toProcessStartInfo x.Args

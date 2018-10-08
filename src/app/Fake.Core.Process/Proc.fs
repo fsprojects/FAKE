@@ -219,7 +219,7 @@ module CreateProcess  =
         { c with
             Setup = fun _ -> combine (c.Setup()) (f()) }
             
-    let withEnvironment env (c:CreateProcess<_>)=
+    let withEnvironment (env: (string * string) list) (c:CreateProcess<_>)=
         { c with
             Environment = Some env }
     let withStandardOutput stdOut (c:CreateProcess<_>)=
