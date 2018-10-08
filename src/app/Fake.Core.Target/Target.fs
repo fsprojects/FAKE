@@ -737,13 +737,30 @@ module Target =
         let t = get name // test if target is defined
         getFinalTargets().[name] <- false
 
+    let internal getBuildFailedException (context:TargetContext) =
+        let errorTargets =
+            context.Value.PreviousTargets
+            |> List.choose (fun tres ->
+                match tres.Error with
+                | Some er -> Some (er, tres.Target)
+                | None -> None)
+        let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+        let targetStr = String.Join(", ", targets)
+        let errorMsg =
+            if errorTargets.Length = 1 then
+                sprintf "Target '%s' failed." targetStr
+            else
+                sprintf "Targets '%s' failed." targetStr
+        let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
+        BuildFailedException(context.Value, errorMsg, inner)
+
     /// Updates build status based on `TargetContext option`
     /// Will not update status if `TargetContext option` is `None`
     let updateBuildStatusOption (context:TargetContext option) =
         match context with
-        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning
-        | Some c when c.HasError -> Trace.setBuildState TagStatus.Failed
-        | Some c -> Trace.setBuildState TagStatus.Success
+        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning Some("No Targets Run"))()
+        | Some c when c.HasError -> Trace.setBuildState TagStatus.Failed (Some((getBuildFailedException context).Message))
+        | Some c -> Trace.setBuildState TagStatus.Success None
         | _ -> ()
         context
 
@@ -753,21 +770,7 @@ module Target =
     /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
     let raiseIfErrorOption (context:TargetContext option)  =
         if context.IsSome && context.Value.HasError && not context.Value.CancellationToken.IsCancellationRequested then
-            let errorTargets =
-                context.Value.PreviousTargets
-                |> List.choose (fun tres ->
-                    match tres.Error with
-                    | Some er -> Some (er, tres.Target)
-                    | None -> None)
-            let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
-            let targetStr = String.Join(", ", targets)
-            let errorMsg =
-                if errorTargets.Length = 1 then
-                    sprintf "Target '%s' failed." targetStr
-                else
-                    sprintf "Targets '%s' failed." targetStr
-            let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
-            BuildFailedException(context.Value, errorMsg, inner)
+            getBuildFailedException context
             |> raise
         context
 
