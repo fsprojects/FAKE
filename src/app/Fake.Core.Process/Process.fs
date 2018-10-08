@@ -224,6 +224,30 @@ open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.Core.GuardedAwaitObservable
 
+
+#if !FX_NO_HANDLE
+module internal Kernel32 =
+    open System
+    open System.Text
+    open System.Diagnostics
+    open System.Runtime.InteropServices
+    [<DllImport("Kernel32.dll", SetLastError = true)>]
+    extern UInt32 QueryFullProcessImageName(IntPtr hProcess, UInt32 flags, StringBuilder text, [<Out>] UInt32& size)
+    
+    let getPathToApp (proc:Process) =
+        let mutable nChars = 256u
+        let Buff = new StringBuilder(int nChars);
+
+        let success = QueryFullProcessImageName(proc.Handle, 0u, Buff, &nChars)
+
+        if (0u <> success) then
+            Buff.ToString()
+        else
+            let hresult = Marshal.GetHRForLastWin32Error()
+            Marshal.ThrowExceptionForHR hresult
+            "Error = " + string hresult + " when calling GetProcessImageFileName"
+#endif
+
 [<RequireQualifiedAccess>]
 module Process =
 
@@ -362,10 +386,7 @@ module Process =
         match getEnableProcessTracing() with
         | Some v -> v
         | None ->
-          let shouldEnable = Fake.Core.Context.isFakeContext()
-          setEnableProcessTracing shouldEnable
-          shouldEnable
-
+          Fake.Core.Context.isFakeContext()
     let defaultEnvVar = ProcStartInfoData.defaultEnvVar
 
     let createEnvironmentMap () = ProcStartInfoData.createEnvironmentMap()
@@ -754,6 +775,15 @@ module Process =
     let killById id = Process.GetProcessById id |> kill
     [<System.Obsolete("use Process.killById instead.")>]
     let killProcessById id = killById id
+
+    /// Retrieve the file-path of the running executable of the given process.
+    let getFileName (p:Process) =
+#if !FX_NO_HANDLE
+        if Environment.isWindows then
+            Kernel32.getPathToApp p
+        else
+#endif    
+            p.MainModule.FileName
 
     /// Returns all processes with the given name
     let getAllByName (name : string) = 

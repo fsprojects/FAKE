@@ -6,6 +6,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
     <ProjectReference Include="..\..\app\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.DotNet.Cli\Fake.DotNet.Cli.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Runtime\Fake.Runtime.fsproj" />
   </ItemGroup>

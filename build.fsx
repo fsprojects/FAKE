@@ -59,6 +59,56 @@ open Fake.Windows
 open Fake.DotNet
 open Fake.DotNet.Testing
 
+// WORKAROUND TEAMCITY
+#if !BOOTSTRAP
+module Kernel32 =
+    open System
+    open System.Text
+    open System.Diagnostics
+    open System.Runtime.InteropServices
+    [<DllImport("Kernel32.dll", SetLastError = true)>]
+    extern UInt32 QueryFullProcessImageName(IntPtr hProcess, UInt32 flags, StringBuilder text, [<Out>] UInt32& size)
+    
+    let getPathToApp (proc:Process) =
+        let mutable nChars = 256u
+        let Buff = new StringBuilder(int nChars);
+
+        let success = QueryFullProcessImageName(proc.Handle, 0u, Buff, &nChars)
+
+        if (0u <> success) then
+            Buff.ToString()
+        else
+            let hresult = Marshal.GetHRForLastWin32Error()
+            Marshal.ThrowExceptionForHR hresult
+            "Error = " + string hresult + " when calling GetProcessImageFileName"
+
+do
+    let dir =
+        if Environment.isUnix
+        then Environment.environVar "HOME" @@ ".dotnet"
+        else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
+
+    let getProcessFileName (p:System.Diagnostics.Process) =
+        if Environment.isWindows then
+            Kernel32.getPathToApp p
+        else
+            p.MainModule.FileName
+    
+    let dotnetExe = Path.Combine(dir, if Environment.isUnix then "dotnet" else "dotnet.exe")
+    if File.Exists(dotnetExe) then
+        System.Diagnostics.Process.GetProcesses()
+        |> Seq.filter (fun p -> 
+               try 
+                   not p.HasExited
+               with _ -> false)
+        |> Seq.filter (fun p -> 
+               try 
+                   Path.GetFullPath(getProcessFileName p).ToLowerInvariant() =
+                        Path.GetFullPath(dotnetExe)
+               with _ -> false)
+        |> Seq.iter Process.kill
+#endif
+
 // Set this to true if you have lots of breaking changes, for small breaking changes use #if BOOTSTRAP, setting this flag will not be accepted
 let disableBootstrap = false
 
@@ -95,15 +145,10 @@ let legacyDir = srcDir</>"legacy"
 
 let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
 
-let vault =
-    match Vault.fromFakeEnvironmentOrNone() with
-    | Some v -> v
-    | None -> TeamFoundation.variables
 
-let getVarOrDefault name def =
-    match vault.TryGet name with
-    | Some v -> v
-    | None -> Environment.environVarOrDefault name def
+let vault = ``Legacy-build``.vault
+let getVarOrDefault name def = ``Legacy-build``.getVarOrDefault name def
+let releaseSecret replacement name = ``Legacy-build``.releaseSecret replacement name
 
 let github_release_user = getVarOrDefault "github_release_user" "fsharp"
 let nugetsource = getVarOrDefault "nugetsource" "https://www.nuget.org/api/v2/package"
@@ -113,20 +158,6 @@ let docsDomain = getVarOrDefault "docs_domain" "fake.build"
 let buildLegacy = System.Boolean.Parse(getVarOrDefault "BuildLegacy" "false")
 let fromArtifacts = not <| String.isNullOrEmpty artifactsDir
 
-let mutable secrets = []
-let releaseSecret replacement name =
-    let secret =
-        lazy
-            let env = 
-                match getVarOrDefault name "default_unset" with
-                | "default_unset" -> failwithf "variable '%s' is not set" name
-                | s -> s
-            if BuildServer.buildServer <> BuildServer.TeamFoundation then
-                // on TFS/VSTS the build will take care of this.
-                TraceSecrets.register replacement env
-            env
-    secrets <- secret :: secrets
-    secret
 
 let apikey = releaseSecret "<nugetkey>" "nugetkey"
 let chocoKey = releaseSecret "<chocokey>" "CHOCOLATEY_API_KEY"
@@ -139,6 +170,8 @@ BuildServer.install [
     TeamFoundation.Installer
     GitLab.Installer
 ]
+
+
 
 let version = ``Legacy-build``.version
 let simpleVersion = ``Legacy-build``.simpleVersion
@@ -809,7 +842,7 @@ Target.create "DotNetCorePushChocolateyPackage" (fun _ ->
 )
 
 Target.create "CheckReleaseSecrets" (fun _ ->
-    for secret in secrets do
+    for secret in ``Legacy-build``.secrets do
         secret.Force() |> ignore
 )
 

@@ -1,12 +1,18 @@
 # Release Notes
 
-## 5.8.0 - 2018-09-27
+## 5.8.4 - 2018-10-08
 
-* NEW: Fake.Sql.SqlServer module - https://github.com/fsharp/FAKE/pull/2074
 * ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
 * ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
+* ENHANCEMENT: Improve TeamCity support - https://github.com/fsharp/FAKE/pull/2111
+* ENHANCEMENT: Update Netstandard.Library package to `2.0.3` - https://github.com/fsharp/FAKE/pull/2106
+* ENHANCEMENT: Add `Process.getFileName` api to retrieve the full-path of a given process
+* ENHANCEMENT: Kill existing running `dotnet.exe` processes before running the dotnet-cli installer
 * BUGFIX: Environment variables are case insensitive on windows, fake will now throw exceptions if it detects invalid environment maps
 * BUGFIX: MSBuild properties containing special characters lead to errors - https://github.com/fsharp/FAKE/issues/2112
+* BUGFIX: Improve error message when release notes are invalid - https://github.com/fsharp/FAKE/issues/2085
+* BUGFIX: Improve error message when globbing pattern is invalid - https://github.com/fsharp/FAKE/issues/2073
+* BUGFIX: Do no longer provide the `--parallel` argument by default when running expecto - https://github.com/fsharp/FAKE/issues/2039
 * DOCS: Fix syntax errors in dacpac docs - https://github.com/fsharp/FAKE/pull/2115
 
 ## 5.7.2 - 2018-09-24
@@ -109,7 +115,7 @@
 * NEW: module Fake.Tools.GitVersion to interact with gitversion.exe - https://github.com/fsharp/FAKE/pull/1988
 * ENHANCEMENT: Add `traceImportantf` and `traceErrorf` - https://github.com/fsharp/FAKE/pull/1986
 * ENHANCEMENT: Minimalize dependencies between FAKE packages - https://github.com/fsharp/FAKE/pull/1980
-* ENHANCEMENT: Change chocolatey package accoding to feedback - https://github.com/fsharp/FAKE/pull/1983
+* ENHANCEMENT: Change chocolatey package according to feedback - https://github.com/fsharp/FAKE/pull/1983
 * BUGFIX: Fix locating kudusync.cmd in Fake.Azure.Kudu - https://github.com/fsharp/FAKE/pull/1995
 * NEW: module Fake.Core.UserInput - https://github.com/fsharp/FAKE/pull/1997
 
@@ -144,7 +150,7 @@
 
 ## 5.0.0-rc017 - 2018-05-22
 
-* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
+* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes according to API-Guidelines (Target, Globbing, AssemblyInfoFile)
 * ENHANCEMENT: Mark `Target.DoNothing` as obsolete
 * ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
 * BUGFIX: Includes fixes from 4.64.12
