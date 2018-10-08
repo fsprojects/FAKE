@@ -159,8 +159,9 @@ open Fake.Core.TargetOperators
     ==> "Deploy"
 
 // *** Start Build ***
-Target.runOrDefault "Deploy"
-|> Target.updateBuildStatus
+match Target.runOrDefault "Deploy" with
+| Some result -> Target.updateBuildStatus result
+| None -> ignore()
 ```
 
 ## Final targets

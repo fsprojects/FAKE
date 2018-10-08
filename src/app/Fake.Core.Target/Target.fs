@@ -768,7 +768,7 @@ module Target =
         | _, true -> Trace.setBuildState TagStatus.Failed
         | _, _ -> Trace.setBuildState TagStatus.Success        
 
-    let internal runWithDefault allowArgs fDefault =
+    let internal getRunFunction allowArgs defaultTarget =
         let ctx = Fake.Core.Context.forceFakeContext ()
         let trySplitEnvArg (arg:string) =
             let idx = arg.IndexOf('=')
@@ -793,11 +793,14 @@ module Target =
 
             if DocoptResult.hasFlag "--list" results then
                 listAvailable()
+                None
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
                 printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
+                None
             elif DocoptResult.hasFlag "--version" results then
                 printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
+                None
             else
                 let target =
                     match DocoptResult.tryGetArgument "<target>" results with
@@ -837,22 +840,36 @@ module Target =
                 if not allowArgs && arguments <> [] then
                     failwithf "The following arguments could not be parsed: %A\nTo forward arguments to your targets you need to use \nTarget.runOrDefaultWithArguments instead of Target.runOrDefault" arguments
                 match target with
-                | Some t -> runInternal singleTarget parallelJobs t arguments |> ignore
-                | None -> fDefault singleTarget parallelJobs arguments
+                | Some t -> Some(fun () -> runInternal singleTarget parallelJobs t arguments)
+                | None when defaultTarget = "***FAKE-ListAvailable***" -> listAvailable()
+                                                                          None
+                | None -> Some(fun () -> runInternal singleTarget parallelJobs defaultTarget arguments)
         | Choice2Of2 e ->
             // To ensure exit code.
             raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
 
+    /// Runs the command given on the command line or the given target when no target is given & get context
+    let runOrDefaultAndGetContext defaultTarget =
+        match getRunFunction false defaultTarget with
+        | Some f -> Some(f())
+        | _ -> None   
+
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
-        runWithDefault false (fun singleTarget parallelJobs arguments ->
-            runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
+        runOrDefaultAndGetContext defaultTarget |> ignore  
+
+    /// Runs the command given on the command line or the given target when no target is given & get context
+    let runOrDefaultWithArgumentsAndGetContext defaultTarget =
+        match getRunFunction true defaultTarget with
+        | Some f -> Some(f())
+        | _ -> None
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefaultWithArguments defaultTarget =
-        runWithDefault true (fun singleTarget parallelJobs arguments ->
-            runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
+        runOrDefaultWithArgumentsAndGetContext defaultTarget |> ignore   
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        runWithDefault false (fun _ _ _ -> listAvailable())
+        match getRunFunction false "***FAKE-ListAvailable***" with
+        | Some f -> f() |> ignore
+        | _ -> ignore()
