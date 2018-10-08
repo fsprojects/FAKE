@@ -119,7 +119,7 @@ type FsiParams = {
     /// Sets the path to the fsharpi / fsi.exe to use
     ToolPath : FsiTool
     /// Environment variables
-    Environment : Map<string, string>
+    Environment : IMap<string, string>
     /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
     WorkingDirectory : string
 }
@@ -280,7 +280,7 @@ module internal ExternalFsi =
                     FileName = fsiExe
                     Arguments = args
                     WorkingDirectory = ""
-                }.WithEnvironmentVariables (parameters.Environment |> Map.toSeq)) TimeSpan.MaxValue        
+                }.WithEnvironmentVariables (parameters.Environment |> IMap.toSeq)) TimeSpan.MaxValue        
 
         if r.ExitCode <> 0 then
             List.iter Trace.traceError r.Errors

@@ -282,7 +282,7 @@ type MSBuildParams =
       Loggers : (MSBuildLoggerConfig) list option
       /// corresponds to the msbuild option '/dl'
       DistributedLoggers : (MSBuildLoggerConfig * MSBuildLoggerConfig option) list option
-      Environment : Map<string, string> }
+      Environment : IMap<string, string> }
     /// Defines a default for MSBuild task parameters
     static member Create() =
         { ToolPath = MSBuildExe.msBuildExe
@@ -309,10 +309,10 @@ type MSBuildParams =
           Loggers = None
           Environment =
             Process.createEnvironmentMap()
-            |> Map.remove "MSBUILD_EXE_PATH"
-            |> Map.remove "MSBuildExtensionsPath"
-            |> Map.remove "MSBuildLoadMicrosoftTargetsReadOnly"
-            |> Map.remove "MSBuildSDKsPath" }
+            |> IMap.remove "MSBUILD_EXE_PATH"
+            |> IMap.remove "MSBuildExtensionsPath"
+            |> IMap.remove "MSBuildLoadMicrosoftTargetsReadOnly"
+            |> IMap.remove "MSBuildSDKsPath" }
     [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]
     static member Empty = MSBuildParams.Create()
 
