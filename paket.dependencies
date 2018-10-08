@@ -7,7 +7,7 @@ source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 4.1 redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core prerelease
+nuget Paket.Core //prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu >= 3.3.0
@@ -115,7 +115,7 @@ group NetcoreBuild
     nuget FSharp.Core < 4.5
     nuget Suave
     nuget System.AppContext prerelease
-    nuget Paket.Core prerelease
+    nuget Paket.Core // prerelease
     nuget Fake.Api.GitHub prerelease
     nuget Fake.Core.Target prerelease
     nuget Fake.Core.SemVer prerelease
@@ -173,7 +173,7 @@ group netcore
     nuget FParsec
     nuget Octokit
     nuget Newtonsoft.Json
-    nuget Paket.Core prerelease
+    nuget Paket.Core // prerelease
     nuget Mono.Cecil prerelease
     nuget FSharp.Control.Reactive
     nuget System.Reactive.Compatibility
