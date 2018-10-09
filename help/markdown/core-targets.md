@@ -159,8 +159,9 @@ open Fake.Core.TargetOperators
     ==> "Deploy"
 
 // *** Start Build ***
-Target.runOrDefaultAndGetContext "Deploy"
+Target.runOrDefaultAndGetContext "Deploy"  //Could also use: Target.runAndGetOptionalContext "Deploy"
 |> Target.updateBuildStatusOption 
+|> Target.updateBuildFailureMessages
 |> Target.raiseIfErrorOption
 ```
 
