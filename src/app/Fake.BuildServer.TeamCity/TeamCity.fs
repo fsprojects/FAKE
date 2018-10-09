@@ -229,11 +229,11 @@ module TeamCity =
 
     /// Sends a warning message.
     let internal warning message =
-        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" message
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" (TeamCityWriter.encapsulateSpecialChars message)
 
     /// Sends an error message.
     let internal error message =
-        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" message
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" (TeamCityWriter.encapsulateSpecialChars message)
 
     /// TeamCity build parameters
     ///
