@@ -773,9 +773,16 @@ module Target =
                                     if c.ErrorTargets.Length = 1 then
                                         Trace.setBuildState(TagStatus.FailedWithMessage (sprintf "Target '%s' failed." targetStr))
                                     else
-                                        Trace.setBuildState(TagStatus.FailedWithMessage (sprintf "Targets '%s' failed." targetStr))
-                                    c.ErrorTargets |> Seq.iter(fun (error, _) -> Trace.setBuildState(TagStatus.FailureMessage error.Message))                                    
+                                        Trace.setBuildState(TagStatus.FailedWithMessage (sprintf "Targets '%s' failed." targetStr))                                    
         | Some c -> Trace.setBuildState(TagStatus.Success)
+        | _ -> ()
+        context
+
+    /// Updates build failure messages based on `OptionalTargetContext`
+    /// Will not update if `OptionalTargetContext` is `MaybeSet` with value `None`
+    let updateBuildFailureMessages (context:OptionalTargetContext) =
+        match getTargetContext(context) with
+        | Some c when c.HasError -> c.ErrorTargets |> Seq.iter(fun (error, _) -> Trace.setBuildState(TagStatus.FailureMessage error.Message))                                 
         | _ -> ()
         context
 
@@ -792,9 +799,6 @@ module Target =
 
     /// Runs a target and its dependencies and returns an `OptionalTargetContext`
     let runAndGetOptionalContext parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> OptionalTargetContext.Set
-
-    /// Runs a target and its dependencies and will update the build state
-    let runAndUpdateBuildState parallelJobs targetName args = runAndGetOptionalContext parallelJobs targetName args |> updateBuildStatus |> raiseIfError |> ignore
 
     /// Runs a target and its dependencies
     let run parallelJobs targetName args = runAndGetOptionalContext parallelJobs targetName args |> raiseIfError |> ignore
