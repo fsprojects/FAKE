@@ -5,14 +5,15 @@
     <AssemblyName>Fake.Tools.Pickles</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <PropertyGroup>
+    <PropertyGroup>
     <DefineConstants>$(DefineConstants);NETSTANDARD;USE_HTTPCLIENT</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="VisibleTo.fs" />
     <Compile Include="Pickles.fs" />
   </ItemGroup>
   <ItemGroup>
