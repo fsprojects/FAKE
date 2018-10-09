@@ -130,6 +130,10 @@ type internal RawCreateProcess =
 #if FX_WINDOWSTLE    
         p.WindowStyle <- System.Diagnostics.ProcessWindowStyle.Hidden
 #endif
+        match x.WorkingDirectory with
+        | Some work ->
+            p.WorkingDirectory <- work
+        | None -> ()        
         p
 
     member x.CommandLine = x.Command.CommandLine

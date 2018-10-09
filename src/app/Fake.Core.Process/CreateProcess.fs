@@ -455,7 +455,9 @@ module CreateProcess =
             (fun state proc -> 
                 state.Stopwatch.Restart()
                 async {
-                    do! Async.Sleep(int timeout.TotalMilliseconds)
+                    let ms = int64 timeout.TotalMilliseconds
+                    let msMax = int <| Math.Min(ms, int64 Int32.MaxValue)
+                    do! Async.Sleep(msMax)
                     try
                         if not state.HasExited && not proc.HasExited then
                             proc.Kill()
