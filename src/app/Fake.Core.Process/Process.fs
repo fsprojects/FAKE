@@ -38,7 +38,8 @@ type ProcessResult =
 module private ProcStartInfoData =
     let defaultEnvVar = "__FAKE_CHECK_USER_ERROR"
 
-    let createEnvironmentMap () = Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
+    let createEnvironmentMap () =
+        Environment.environVars () |> Map.ofSeq |> Map.add defaultEnvVar defaultEnvVar
     let checkMap (map:Map<string,string>) =
         if Environment.isWindows then
             let hs = new System.Collections.Generic.HashSet<string>(StringComparer.OrdinalIgnoreCase)
