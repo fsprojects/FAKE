@@ -16,6 +16,7 @@
     <Compile Include="SimpleHelloWorldTests.fs" />
     <Compile Include="Main.fs" />
     <None Include="testdata/testProperty.proj" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="testdata/testPath.proj" CopyToOutputDirectory="PreserveNewest" />
     <None Include="Script.fsx" />
     <None Include="paket.references" />
   </ItemGroup>

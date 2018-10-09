@@ -417,11 +417,26 @@ module Process =
         
         let env = getEnv startInfo
         env
-        |> (match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
-            | Some oldKey -> Map.remove oldKey.Key
-            | None -> id)
+        |> (if Environment.isWindows then
+                match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
+                | Some oldKey -> Map.remove oldKey.Key
+                | None -> id
+            else Map.remove envKey)
         |> Map.add envKey envVar
         |> setEnv startInfo
+
+    let inline getEnvironmentVariable envKey (startInfo : ^a) =
+        let inline getEnv s = ((^a) : (member Environment : Map<string, string>) (s))
+        
+        let env = getEnv startInfo
+
+        if Environment.isWindows then
+            env
+            |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase))
+            |> Option.map (fun kv -> kv.Value)
+        else
+            env
+            |> Map.tryFind envKey
         
     /// Unsets the given environment variable for the started process
     let inline removeEnvironmentVariable envKey (startInfo : ^a) =
@@ -430,9 +445,11 @@ module Process =
         
         let env = getEnv startInfo
         env
-        |> (match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
-            | Some oldKey -> Map.remove oldKey.Key
-            | None -> id)
+        |> (if Environment.isWindows then
+                match env |> Seq.tryFind (fun kv -> kv.Key.Equals(envKey, StringComparison.OrdinalIgnoreCase)) with
+                | Some oldKey -> Map.remove oldKey.Key
+                | None -> id
+            else Map.remove envKey)
         //|> Map.remove envKey
         |> setEnv startInfo
 
