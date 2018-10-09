@@ -35,10 +35,10 @@ let tests =
       Expect.stringStarts arg "@" "Expected arg to start with @"
       let argFile = arg.Substring(1)
       
-      ( use hook = cp.Setup()
+      ( use state = cp.Hook.PrepareState()
         let contents = File.ReadAllText argFile
         let args = Args.fromWindowsCommandLine contents
         Expect.sequenceEqual args ["--noheader"; "assembly.dll"] "Expected arg file to be correct"
-        hook.ProcessExited 0 |> Async.RunSynchronously)
+        )
       Expect.isFalse (File.Exists argFile) "File should be deleted"
   ]

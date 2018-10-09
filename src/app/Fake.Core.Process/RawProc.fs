@@ -47,6 +47,11 @@ type Command =
     /// Linux(mono): https://github.com/mono/mono/blob/0bcbe39b148bb498742fc68416f8293ccd350fb6/eglib/src/gshell.c#L32-L104 (because we need to create a commandline string internally which need to go through that code)
     /// Linux(netcore): See https://github.com/fsharp/FAKE/pull/1281/commits/285e585ec459ac7b89ca4897d1323c5a5b7e4558 and https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L443-L522
     | RawCommand of executable:FilePath * arguments:Arguments
+    
+    member x.CommandLine =
+        match x with
+        | ShellCommand s -> s
+        | RawCommand (f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
 
 /// Represents basically an "out" parameter, allows to retrieve a value after a certain point in time.
 /// Used to retrieve "pipes"
@@ -69,31 +74,11 @@ type StreamSpecification =
     /// Retrieve the raw pipe from the process (the StreamRef is set with a stream you can write into for 'stdin' and read from for 'stdout' and 'stderr')
     | CreatePipe of StreamRef // The underlying framework creates pipes already
 
-/// The output of the process. If ordering between stdout and stderr is important you need to use streams.
-type ProcessOutput = { Output : string; Error : string }
-
-/// A raw (untyped) way to start a process
-type RawCreateProcess =
-    internal {
-        Command : Command
-        WorkingDirectory : string option
-        Environment : EnvMap option
-        StandardInput : StreamSpecification 
-        StandardOutput : StreamSpecification 
-        StandardError : StreamSpecification
-        GetRawOutput : (unit -> ProcessOutput) option
-    }
-    member internal x.ToStartInfo =
-        let p = new System.Diagnostics.ProcessStartInfo()
-        match x.Command with
-        | ShellCommand s ->
-            p.UseShellExecute <- true
-            p.FileName <- s
-            p.Arguments <- null
-        | RawCommand (filename, args) ->
-            p.UseShellExecute <- false
-            p.FileName <- filename
-            p.Arguments <- args.ToStartInfo
+type internal StreamSpecs =
+    { StandardInput : StreamSpecification 
+      StandardOutput : StreamSpecification 
+      StandardError : StreamSpecification }
+    member x.SetStartInfo (p:System.Diagnostics.ProcessStartInfo) =
         match x.StandardInput with
         | Inherit ->
             p.RedirectStandardInput <- false
@@ -114,6 +99,32 @@ type RawCreateProcess =
             if Environment.isMono || Process.AlwaysSetProcessEncoding then
                 p.StandardErrorEncoding  <- Process.ProcessEncoding
                 
+
+type internal IRawProcessHook =
+    abstract member Prepare : StreamSpecs -> StreamSpecs
+    abstract member OnStart : System.Diagnostics.Process -> unit
+    //abstract member Retrieve : IDisposable * System.Threading.Tasks.Task<int> -> Async<'TRes>
+
+/// A raw (untyped) way to start a process
+type RawCreateProcess =
+    internal {
+        Command : Command
+        WorkingDirectory : string option
+        Environment : EnvMap option
+        Streams : StreamSpecs
+        OutputHook : IRawProcessHook
+    }
+    member internal x.ToStartInfo =
+        let p = new System.Diagnostics.ProcessStartInfo()
+        match x.Command with
+        | ShellCommand s ->
+            p.UseShellExecute <- true
+            p.FileName <- s
+            p.Arguments <- null
+        | RawCommand (filename, args) ->
+            p.UseShellExecute <- false
+            p.FileName <- filename
+            p.Arguments <- args.ToStartInfo
         let setEnv key var =
             p.Environment.[key] <- var
         x.Environment
@@ -125,14 +136,12 @@ type RawCreateProcess =
 #endif
         p
 
-    member x.OutputRedirected = x.GetRawOutput.IsSome
-    member x.CommandLine =
-        match x.Command with
-        | ShellCommand s -> s
-        | RawCommand (f, arg) -> sprintf "%s %s" f arg.ToWindowsCommandLine
+    member x.CommandLine = x.Command.CommandLine
+
+type RawProcessResult = { RawExitCode : int }
 
 type IProcessStarter =
-    abstract Start : RawCreateProcess * (System.Diagnostics.Process -> unit) -> Async<int * ProcessOutput option>
+    abstract Start : RawCreateProcess -> Async<System.Threading.Tasks.Task<RawProcessResult>>
 
 module RawProc =
     // mono sets echo off for some reason, therefore interactive mode doesn't work as expected
@@ -158,8 +167,11 @@ module RawProc =
     open System.IO
     let createProcessStarter globalStartFunc =
         { new IProcessStarter with
-            member __.Start (c, startFunc) = async {
+            member __.Start c = async {
                 let p = c.ToStartInfo
+                let streamSpec = c.OutputHook.Prepare c.Streams
+                streamSpec.SetStartInfo p
+
                 let commandLine = 
                     sprintf "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
 
@@ -178,7 +190,7 @@ module RawProc =
                         setEcho true |> ignore
                         Process.rawStartProcessNoRecord toolProcess
                         globalStartFunc toolProcess
-                        startFunc toolProcess
+                        c.OutputHook.OnStart (toolProcess)
                         isStarted := true
                         
                         let handleStream parameter processStream isInputStream =
@@ -202,52 +214,54 @@ module RawProc =
         
                         if p.RedirectStandardInput then
                             redirectStdInTask <-
-                              handleStream c.StandardInput toolProcess.StandardInput.BaseStream true
+                              handleStream streamSpec.StandardInput toolProcess.StandardInput.BaseStream true
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
                               
                         if p.RedirectStandardOutput then
                             readOutputTask <-
-                              handleStream c.StandardOutput toolProcess.StandardOutput.BaseStream false
+                              handleStream streamSpec.StandardOutput toolProcess.StandardOutput.BaseStream false
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
         
                         if p.RedirectStandardError then
                             readErrorTask <-
-                              handleStream c.StandardError toolProcess.StandardError.BaseStream false
+                              handleStream streamSpec.StandardError toolProcess.StandardError.BaseStream false
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
             
                 // Wait for the process to finish
-                let! exitEvent = 
+                let exitEvent = 
                     toolProcess.Exited
                         // This way the handler gets added before actually calling start or "EnableRaisingEvents"
                         |> Event.guard start
                         |> Async.AwaitEvent
                         |> Async.StartImmediateAsTask
-                // Waiting for the process to exit (buffers)
-                toolProcess.WaitForExit()
-        
-                let delay = System.Threading.Tasks.Task.Delay 500
-                let all =  System.Threading.Tasks.Task.WhenAll([readErrorTask; readOutputTask; redirectStdInTask])
-                let! t = System.Threading.Tasks.Task.WhenAny(all, delay)
-                         |> Async.AwaitTask
-                if t = delay then
-                    Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
-                tok.Cancel()
+                let exitCode =
+                    async {
+                        do! exitEvent |> Async.AwaitTask |> Async.Ignore
+                        // Waiting for the process to exit (buffers)
+                        toolProcess.WaitForExit()
                 
-                // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
-                // workaround with continuewith
-                let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTask
-                for s in streams do s.Dispose()
-                setEcho false |> ignore
-                
-                let output =
-                    match c.GetRawOutput with
-                    | Some f -> Some (f())
-                    | None -> None
-                
-                return toolProcess.ExitCode, output }
+                        let delay = System.Threading.Tasks.Task.Delay 500
+                        let all =  System.Threading.Tasks.Task.WhenAll([readErrorTask; readOutputTask; redirectStdInTask])
+                        let! t = System.Threading.Tasks.Task.WhenAny(all, delay)
+                                 |> Async.AwaitTask
+                        if t = delay then
+                            Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
+                        tok.Cancel()
+                        
+                        // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
+                        // workaround with continuewith
+                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTask
+                        for s in streams do s.Dispose()
+                        setEcho false |> ignore
+                        
+                        return { RawExitCode = toolProcess.ExitCode } 
+                    }
+                    |> Async.StartImmediateAsTask
+
+                return exitCode }
         }
 
     let mutable processStarter = createProcessStarter Process.recordProcess

@@ -329,7 +329,7 @@ let internal createProcess (setParams : NUnit3Params -> NUnit3Params) (assemblie
     |> CreateProcess.addOnFinally (fun () ->
         File.Delete(path)
     )
-    |> CreateProcess.addOnExited (fun result ->
+    |> CreateProcess.addOnExited (fun result exitCode ->
         let errorDescription error =
             match error with
             | OK -> "OK"
@@ -338,13 +338,13 @@ let internal createProcess (setParams : NUnit3Params -> NUnit3Params) (assemblie
 
         match parameters.ErrorLevel with
         | NUnit3ErrorLevel.DontFailBuild ->
-            match result with
+            match exitCode with
             | OK | TestsFailed -> ()
-            | _ -> raise (FailedTestsException(errorDescription result))
+            | _ -> raise (FailedTestsException(errorDescription exitCode))
         | NUnit3ErrorLevel.Error | FailOnFirstError ->
-            match result with
+            match exitCode with
             | OK -> ()
-            | _ -> raise (FailedTestsException(errorDescription result))
+            | _ -> raise (FailedTestsException(errorDescription exitCode))
     )
 
 let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
