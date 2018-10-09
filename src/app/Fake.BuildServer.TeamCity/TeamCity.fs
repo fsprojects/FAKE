@@ -196,9 +196,6 @@ module TeamCity =
     /// Reports the build status.
     let reportBuildStatus status message = buildStatus status message |> TeamCityWriter.sendStrToTeamCity
 
-    /// Reports build problem
-    let reportBuildProblem message = (sprintf "##teamcity[buildProblem description='%s']" (TeamCityWriter.encapsulateSpecialChars message)) |> TeamCityWriter.sendStrToTeamCity
-
     /// Publishes an artifact on the TeamcCity build server.
     let internal publishArtifact path = TeamCityWriter.encapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
@@ -405,7 +402,7 @@ module TeamCity =
                 | TraceData.BuildState (TagStatus.Failed) ->
                     reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" ("Failed"))
                 | TraceData.BuildState (TagStatus.FailedWithMessage desc) ->
-                    reportBuildProblem desc
+                    sendTeamCityError desc
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
@@ -416,9 +413,6 @@ module TeamCity =
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
-                | TraceData.CloseTag (tag, _, TagStatus.Failed) ->
-                    TeamCityWriter.sendCloseBlock tag.Name
-                    //reportBuildStatus "FAILURE" (sprintf "Failure in %s" tag.Name)
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text ->
