@@ -19,18 +19,26 @@ let tests =
         match cp.Command with
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
-      if not Environment.isMono then
-        Expect.equal file "mynunit.exe" "Expected mynunit.exe"
-        Expect.equal args.Args.Length 1 "expected a single argument"
-        let arg = args.Args.[0]
-        Expect.stringStarts arg "@" "Expected arg to start with @"
-        let argFile = arg.Substring(1)
-        
-        ( use hook = cp.Setup()
-          let contents = File.ReadAllText argFile
-          let args = Args.fromWindowsCommandLine contents
-          Expect.sequenceEqual args ["--noheader"; "assembly.dll"] "Expected arg file to be correct"
-          hook.ProcessExited 0 |> Async.RunSynchronously)
-        Expect.isFalse (File.Exists argFile) "File should be deleted"
-
+      let file, args =
+        match Environment.isWindows, Process.monoPath with
+        | false, Some s when file = s ->
+          Expect.equal args.Args.Length 3 "Expected mono arguments"
+          Expect.equal args.Args.[0] "--debug" "Expected --debug flag"
+          args.Args.[1], Arguments.OfArgs args.Args.[2..]
+        | true, _ -> file, args
+        | _ ->
+          Trace.traceFAKE "Mono was not found in test!"
+          file, args
+      Expect.equal file "mynunit.exe" "Expected mynunit.exe"
+      Expect.equal args.Args.Length 1 "expected a single argument"
+      let arg = args.Args.[0]
+      Expect.stringStarts arg "@" "Expected arg to start with @"
+      let argFile = arg.Substring(1)
+      
+      ( use hook = cp.Setup()
+        let contents = File.ReadAllText argFile
+        let args = Args.fromWindowsCommandLine contents
+        Expect.sequenceEqual args ["--noheader"; "assembly.dll"] "Expected arg file to be correct"
+        hook.ProcessExited 0 |> Async.RunSynchronously)
+      Expect.isFalse (File.Exists argFile) "File should be deleted"
   ]
