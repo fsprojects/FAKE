@@ -782,7 +782,7 @@ module Target =
     /// Will not update if `OptionalTargetContext` is `MaybeSet` with value `None`
     let updateBuildFailureMessages (context:OptionalTargetContext) =
         match getTargetContext(context) with
-        | Some c when c.HasError -> c.ErrorTargets |> Seq.iter(fun (error, _) -> Trace.setBuildState(TagStatus.FailureMessage error.Message))                                 
+        | Some c when c.HasError -> c.ErrorTargets |> Seq.iter(fun (error, _) -> Trace.setBuildState(TagStatus.FailureMessage (error.ToString())))
         | _ -> ()
         context
 
