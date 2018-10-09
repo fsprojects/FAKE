@@ -628,15 +628,17 @@ module DotNet =
             let f (info:ProcStartInfo) =
                 let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
                 let oldPath =
-                    match options.Environment |> Map.tryFind "PATH" with
-                    | None -> ""
-                    | Some s -> s
+                    options
+                    |> Process.getEnvironmentVariable "PATH"
                 { info with
                     FileName = options.DotNetCliPath
                     WorkingDirectory = options.WorkingDirectory
                     Arguments = Args.toWindowsCommandLine cmdArgs }
                 |> Process.setEnvironment options.Environment
-                |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
+                |> Process.setEnvironmentVariable "PATH" (
+                    match oldPath with
+                    | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+                    | None -> dir)
 
 
             withGlobalJson options.WorkingDirectory options.Version (fun () ->
