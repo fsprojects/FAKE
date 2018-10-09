@@ -130,6 +130,7 @@ type TagStatus =
     | Warning
     | Failed
     | FailedWithMessage of message:string
+    | FailureMessage of message:string
 
 /// Defines Tracing information for TraceListeners
 /// Note: Adding new cases to this type is not considered a breaking change!
@@ -191,6 +192,7 @@ module TraceData =
         | TraceData.LogMessage (text, d) -> TraceData.LogMessage (f text, d)
         | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
         | TraceData.BuildState (TagStatus.FailedWithMessage text) -> TraceData.BuildState (TagStatus.FailedWithMessage (f text))
+        | TraceData.BuildState (TagStatus.FailureMessage text) -> TraceData.BuildState (TagStatus.FailureMessage (f text))
         | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
         | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
         | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))

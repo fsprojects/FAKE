@@ -54,6 +54,10 @@ and [<NoComparison>] [<NoEquality>] TargetContext =
         x.PreviousTargets |> List.tryFind (fun t -> t.Target.Name = name)
     member x.TryFindTarget name =
         x.AllExecutingTargets |> List.tryFind (fun t -> t.Name = name)
+    member x.ErrorTargets = 
+        x.PreviousTargets |> List.choose (fun tres -> match tres.Error with
+                                                      | Some er -> Some (er, tres.Target)
+                                                      | None -> None)    
 
 and [<NoComparison>] [<NoEquality>] TargetParameter =
     { TargetInfo : Target
@@ -738,20 +742,14 @@ module Target =
         getFinalTargets().[name] <- false
 
     let internal getBuildFailedException (context:TargetContext) =
-        let errorTargets =
-            context.PreviousTargets
-            |> List.choose (fun tres ->
-                match tres.Error with
-                | Some er -> Some (er, tres.Target)
-                | None -> None)
-        let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+        let targets = context.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
         let targetStr = String.Join(", ", targets)
         let errorMsg =
-            if errorTargets.Length = 1 then
+            if context.ErrorTargets.Length = 1 then
                 sprintf "Target '%s' failed." targetStr
             else
                 sprintf "Targets '%s' failed." targetStr
-        let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
+        let inner = AggregateException(AggregateException().Message, context.ErrorTargets |> Seq.map fst)
         BuildFailedException(context, errorMsg, inner)
 
     /// Updates build status based on `TargetContext option`
@@ -759,7 +757,14 @@ module Target =
     let updateBuildStatusOption (context:TargetContext option) =
         match context with
         | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState(TagStatus.Warning)
-        | Some c when c.HasError -> Trace.setBuildState(TagStatus.FailedWithMessage ((getBuildFailedException context.Value).Message))
+        | Some c when c.HasError -> Trace.setBuildState(TagStatus.Failure)
+                                    let targets = c.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+                                    let targetStr = String.Join(", ", targets)
+                                    if c.ErrorTargets.Length = 1 then
+                                        Trace.setBuildState(TagStatus.FailedWithMessage (sprintf "Target '%s' failed." targetStr))
+                                    else
+                                        Trace.setBuildState(TagStatus.FailedWithMessage (sprintf "Targets '%s' failed." targetStr))
+                                    c.ErrorTargets |> Seq.iter(fun (error, _) -> Trace.setBuildState(TagStatus.FailureMessage error.Message))                                    
         | Some c -> Trace.setBuildState(TagStatus.Success)
         | _ -> ()
         context

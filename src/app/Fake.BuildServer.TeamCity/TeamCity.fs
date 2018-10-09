@@ -57,6 +57,9 @@ module TeamCity =
     /// Sends an error to TeamCity
     let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
+    /// Reports build problem
+    let reportBuildProblem message = (sprintf "##teamcity[buildProblem description='%s']" (TeamCityWriter.encapsulateSpecialChars message)) |> TeamCityWriter.sendStrToTeamCity
+
     let internal sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
 
     module internal Import =
@@ -400,9 +403,11 @@ module TeamCity =
                 | TraceData.BuildState (TagStatus.Warning) ->
                     warning "Setting build state to warning."
                 | TraceData.BuildState (TagStatus.Failed) ->
-                    sendTeamCityError "{build.status.text}"
-                | TraceData.BuildState (TagStatus.FailedWithMessage desc) ->
-                    sendTeamCityError desc
+                    reportBuildStatus "FAILURE" "Failure - {build.status.text}"
+                | TraceData.BuildState (TagStatus.FailedWithMessage message) ->
+                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" message)
+                | TraceData.BuildState (TagStatus.FailureMessage message) ->
+                    reportBuildProblem message
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
