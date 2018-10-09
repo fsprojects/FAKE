@@ -21,6 +21,10 @@ type ProcessResult =
     { ExitCode : int
       Results : ConsoleMessage list}
     member x.OK = x.ExitCode = 0
+
+    member internal x.ReportString =
+        String.Join("\n", x.Results |> Seq.map (fun m -> sprintf "%s: %s" (if m.IsError then "stderr" else "stdout") m.Message))
+                
     member x.Messages =
         x.Results
         |> List.choose (function
@@ -333,6 +337,30 @@ module Process =
     //        psi.Arguments <- getMonoArguments() + " \"" + psi.FileName + "\" " + psi.Arguments
     //        psi.FileName <- Environment.monoPath
 
+    /// [omit]
+    //let mutable redirectOutputToTrace = false
+
+    let private redirectOutputToTraceVar = "Fake.Core.Process.redirectOutputToTrace"
+    let private tryGetRedirectOutputToTrace, _, public setRedirectOutputToTrace = 
+        Fake.Core.FakeVar.defineAllowNoContext redirectOutputToTraceVar
+    let getRedirectOutputToTrace () =
+        match tryGetRedirectOutputToTrace() with
+        | Some v -> v
+        | None ->
+          let shouldEnable = false
+          setRedirectOutputToTrace shouldEnable
+          shouldEnable
+
+    /// [omit]
+    //let mutable enableProcessTracing = true
+    let private enableProcessTracingVar = "Fake.Core.Process.enableProcessTracing"
+    let private getEnableProcessTracing, private removeEnableProcessTracing, public setEnableProcessTracing = 
+        Fake.Core.FakeVar.defineAllowNoContext enableProcessTracingVar
+    let shouldEnableProcessTracing () =
+        match getEnableProcessTracing() with
+        | Some v -> v
+        | None ->
+          Fake.Core.Context.isFakeContext()
 
     /// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
     /// If set to false (default) only mono processes will be changed.
@@ -357,6 +385,12 @@ module Process =
         addStartedProcess(proc.Id, startTime) |> ignore
 
     let inline internal rawStartProcessNoRecord (proc:Process) =
+        if String.isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
+            if Directory.Exists proc.StartInfo.WorkingDirectory |> not then
+                sprintf "Start of process '%s' failed. WorkingDir '%s' does not exist." proc.StartInfo.FileName 
+                    proc.StartInfo.WorkingDirectory
+                |> DirectoryNotFoundException
+                |> raise
         try
             let result = proc.Start()
             if not result then failwithf "Could not start process (Start() returned false)."
@@ -368,9 +402,17 @@ module Process =
 
     let mutable internal processStarter =
         RawProc.createProcessStarter (fun p ->
+            let si = p.StartInfo
             if Environment.isMono || AlwaysSetProcessEncoding then
-                p.StartInfo.StandardOutputEncoding <- ProcessEncoding
-                p.StartInfo.StandardErrorEncoding <- ProcessEncoding
+                si.StandardOutputEncoding <- ProcessEncoding
+                si.StandardErrorEncoding <- ProcessEncoding
+
+            if shouldEnableProcessTracing() then 
+                let commandLine = 
+                    sprintf "%s> \"%s\" %s" si.WorkingDirectory si.FileName si.Arguments
+                //Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
+                Trace.tracefn "%s (In: %b, Out: %b, Err: %b)" commandLine si.RedirectStandardInput si.RedirectStandardOutput si.RedirectStandardError
+
             rawStartProcessNoRecord p
             recordProcess p)
 
@@ -381,23 +423,35 @@ module Process =
           async {
             let hook = c.Hook
             
-            use state = hook.PrepareState ()
-            let procRaw =
-              { Command = c.Command
-                WorkingDirectory = c.WorkingDirectory
-                Environment = c.Environment
-                Streams = c.Streams
-                OutputHook =
-                    { new IRawProcessHook with
-                        member x.Prepare streams = hook.PrepareStreams(state, streams)
-                        member x.OnStart (p) = hook.ProcessStarted (state, p) } }
+            let state = hook.PrepareState ()
+            let! exitCode =
+                async {
+                    let procRaw =
+                      { Command = c.Command
+                        WorkingDirectory = c.WorkingDirectory
+                        Environment = c.Environment
+                        Streams = c.Streams
+                        OutputHook =
+                            { new IRawProcessHook with
+                                member x.Prepare streams = hook.PrepareStreams(state, streams)
+                                member x.OnStart (p) = hook.ProcessStarted (state, p) } }
 
-            let! exitCode = processStarter.Start(procRaw)
+                    let! e = processStarter.Start(procRaw)
+                    return e
+                }
             
-            let output = 
+            let output =
                 hook.RetrieveResult (state, exitCode)
                 |> Async.StartImmediateAsTask
-
+            async {
+                try
+                    let all = System.Threading.Tasks.Task.WhenAll([exitCode :> System.Threading.Tasks.Task; output:> System.Threading.Tasks.Task])
+                    let! streams =
+                        all.ContinueWith (new System.Func<System.Threading.Tasks.Task, unit> (fun t -> ()))
+                        |> Async.AwaitTaskWithoutAggregate
+                    state.Dispose()
+                with e -> Trace.traceFAKE "Error in state dispose: %O" e }
+                |> Async.Start
             return { Result = output; Raw = exitCode }
           }
           // Immediate makes sure we set the ref cell before we return the task...
@@ -406,7 +460,7 @@ module Process =
         let start c = 
             async {
                 let! result = startRaw c
-                return! result.Result |> Async.AwaitTask
+                return! result.Result |> Async.AwaitTaskWithoutAggregate
             }
             |> Async.StartImmediateAsTask
         let startRawSync c = (startRaw c).Result
@@ -420,29 +474,6 @@ module Process =
         rawStartProcess proc
         true
 
-    /// [omit]
-    //let mutable redirectOutputToTrace = false
-    let private redirectOutputToTraceVar = "Fake.Core.Process.redirectOutputToTrace"
-    let private tryGetRedirectOutputToTrace, _, public setRedirectOutputToTrace = 
-        Fake.Core.FakeVar.defineAllowNoContext redirectOutputToTraceVar
-    let getRedirectOutputToTrace () =
-        match tryGetRedirectOutputToTrace() with
-        | Some v -> v
-        | None ->
-          let shouldEnable = false
-          setRedirectOutputToTrace shouldEnable
-          shouldEnable
-
-    /// [omit]
-    //let mutable enableProcessTracing = true
-    let private enableProcessTracingVar = "Fake.Core.Process.enableProcessTracing"
-    let private getEnableProcessTracing, private removeEnableProcessTracing, public setEnableProcessTracing = 
-        Fake.Core.FakeVar.defineAllowNoContext enableProcessTracingVar
-    let shouldEnableProcessTracing () =
-        match getEnableProcessTracing() with
-        | Some v -> v
-        | None ->
-          Fake.Core.Context.isFakeContext()
     let defaultEnvVar = ProcStartInfoData.defaultEnvVar
 
     let createEnvironmentMap () = ProcStartInfoData.createEnvironmentMap()
@@ -504,7 +535,7 @@ module Process =
         |> setEnvironmentVariable defaultEnvVar defaultEnvVar
 
 
-    let inline internal getProcI config =
+    let internal getProcI config =
         let startInfo : ProcStartInfo =
             config { ProcStartInfo.Create() with UseShellExecute = false }
         CreateProcess.ofStartInfo startInfo.AsStartInfo
@@ -534,7 +565,9 @@ module Process =
             if silent then
                 cp
                 |> CreateProcess.redirectOutput
-                |> CreateProcess.withOutputEvents messageF errorF
+                |> CreateProcess.withOutputEvents
+                    (fun m -> if isNull m |> not then messageF m)
+                    (fun m -> if isNull m |> not then errorF m)
                 |> CreateProcess.mapResult (fun p -> ())
             else
                 cp
@@ -631,7 +664,7 @@ module Process =
     [<Obsolete "Use the Arguments and Args modules/types instead">]
     let quote (str:string) =
         // "\"" + str.Replace("\"","\\\"") + "\""
-        CmdLineParsing.windowsArgvToCommandLine [ str ]
+        CmdLineParsing.windowsArgvToCommandLine true [ str ]
 
     /// Adds quotes around the string if needed
     /// [omit]
@@ -688,7 +721,7 @@ module Process =
             else 
               [ flagPrefix + paramName
                 paramValue ])
-        |> CmdLineParsing.windowsArgvToCommandLine
+        |> CmdLineParsing.windowsArgvToCommandLine true
 
     [<Obsolete "Use ProcessUtils.findFiles instead">]
     let findFiles dirs file = ProcessUtils.findFiles dirs file
@@ -744,7 +777,7 @@ module Process =
             else str
         args
         |> Seq.collect (fun (k, v) -> [ delimit k; v ])
-        |> CmdLineParsing.windowsArgvToCommandLine
+        |> CmdLineParsing.windowsArgvToCommandLine true
 
     /// Execute an external program asynchronously and return the exit code,
     /// logging output and error messages to FAKE output. You can compose the result

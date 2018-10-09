@@ -172,25 +172,23 @@ module internal RawProc =
                 let streamSpec = c.OutputHook.Prepare c.Streams
                 streamSpec.SetStartInfo p
 
-                let commandLine = 
-                    sprintf "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
-
-                Trace.tracefn "%s... RedirectInput: %b, RedirectOutput: %b, RedirectError: %b" commandLine p.RedirectStandardInput p.RedirectStandardOutput p.RedirectStandardError
-                
                 let toolProcess = new Process(StartInfo = p)
                 
-                let isStarted = ref false
+                let mutable isStarted = false
+                let mutable startTrigger = System.Threading.Tasks.TaskCompletionSource<_>()
                 let mutable readOutputTask = System.Threading.Tasks.Task.FromResult Stream.Null
                 let mutable readErrorTask = System.Threading.Tasks.Task.FromResult Stream.Null
                 let mutable redirectStdInTask = System.Threading.Tasks.Task.FromResult Stream.Null
                 let tok = new System.Threading.CancellationTokenSource()
                 let start() =
-                    if not <| !isStarted then
+                    if not <| isStarted then
                         toolProcess.EnableRaisingEvents <- true
                         setEcho true |> ignore
-                        startProcessRaw toolProcess
+                        try
+                            startProcessRaw toolProcess
+                        finally
+                            setEcho false |> ignore
                         c.OutputHook.OnStart (toolProcess)
-                        isStarted := true
                         
                         let handleStream parameter processStream isInputStream =
                             async {
@@ -200,10 +198,10 @@ module internal RawProc =
                                 | UseStream (shouldClose, stream) ->
                                     if isInputStream then
                                         do! stream.CopyToAsync(processStream, 81920, tok.Token)
-                                            |> Async.AwaitTask
+                                            |> Async.AwaitTaskWithoutAggregate
                                     else
                                         do! processStream.CopyToAsync(stream, 81920, tok.Token)
-                                            |> Async.AwaitTask
+                                            |> Async.AwaitTaskWithoutAggregate
                                     return
                                         if shouldClose then stream else Stream.Null
                                 | CreatePipe (r) ->
@@ -229,32 +227,39 @@ module internal RawProc =
                               // Immediate makes sure we set the ref cell before we return...
                               |> fun a -> Async.StartImmediateAsTask(a, cancellationToken = tok.Token)
             
+                let syncStart () =
+                    try
+                        start()
+                        startTrigger.SetResult()
+                    with e -> startTrigger.SetException(e)
+
                 // Wait for the process to finish
                 let exitEvent = 
                     toolProcess.Exited
                         // This way the handler gets added before actually calling start or "EnableRaisingEvents"
-                        |> Event.guard start
+                        |> Event.guard syncStart
                         |> Async.AwaitEvent
                         |> Async.StartImmediateAsTask
+
+                do! startTrigger.Task |> Async.AwaitTaskWithoutAggregate
                 let exitCode =
                     async {
-                        do! exitEvent |> Async.AwaitTask |> Async.Ignore
+                        do! exitEvent |> Async.AwaitTaskWithoutAggregate |> Async.Ignore
                         // Waiting for the process to exit (buffers)
                         toolProcess.WaitForExit()
                 
                         let delay = System.Threading.Tasks.Task.Delay 500
                         let all =  System.Threading.Tasks.Task.WhenAll([readErrorTask; readOutputTask; redirectStdInTask])
                         let! t = System.Threading.Tasks.Task.WhenAny(all, delay)
-                                 |> Async.AwaitTask
+                                 |> Async.AwaitTaskWithoutAggregate
                         if t = delay then
                             Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
                         tok.Cancel()
                         
                         // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
                         // workaround with continuewith
-                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTask
+                        let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
                         for s in streams do s.Dispose()
-                        setEcho false |> ignore
                         
                         let code = toolProcess.ExitCode
                         toolProcess.Dispose()

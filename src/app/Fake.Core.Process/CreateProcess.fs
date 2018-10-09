@@ -64,7 +64,7 @@ module CreateProcess =
             member __.ProcessStarted (_,_) = ()
             member __.RetrieveResult (_, t) =
                 async {
-                    let! raw = Async.AwaitTask t
+                    let! raw = Async.AwaitTaskWithoutAggregate t
                     return { ExitCode = raw.RawExitCode; Result = () } 
                 } }
 
@@ -122,7 +122,7 @@ module CreateProcess =
         | CreatePipe pipe ->
             CreatePipe (StreamRef.Map (fun s -> Stream.InterceptStream(s, target)) pipe)
     let interceptStream target (s:StreamSpecification) =
-        interceptStreamFallback (fun _ -> Inherit) target s
+        interceptStreamFallback (fun _ -> failwithf "cannot intercept stream when it is not redirected. Please redirect the stream first!") target s
     
     let copyRedirectedProcessOutputsToStandardOutputs (c:CreateProcess<_>)=
         { c with
@@ -315,13 +315,13 @@ module CreateProcess =
                     StandardOutput =
                         interceptStreamFallback (fun _ -> UseStream (false, outMem)) outMem streams.StandardOutput
                     StandardError =
-                        interceptStreamFallback (fun _ -> UseStream (false, errMem)) outMem streams.StandardError
+                        interceptStreamFallback (fun _ -> UseStream (false, errMem)) errMem streams.StandardError
                 })
             (fun (outMem, errMem) p -> ())
             (fun prev (outMem, errMem) exitCode ->
                 async {
                     let! prevResult = prev
-                    let! exitCode = exitCode |> Async.AwaitTask
+                    let! exitCode = exitCode |> Async.AwaitTaskWithoutAggregate
                     outMem.Position <- 0L
                     errMem.Position <- 0L
                     let stdErr = (new StreamReader(errMem)).ReadToEnd()
@@ -444,28 +444,31 @@ module CreateProcess =
             else data)
 
     type internal TimeoutState =
-        { Stopwatch : System.Diagnostics.Stopwatch }
+        { Stopwatch : System.Diagnostics.Stopwatch
+          mutable HasExited : bool }
     let withTimeout (timeout:System.TimeSpan) (c:CreateProcess<_>) =
         c
         |> appendSimpleFuncs 
             (fun _ -> 
-                { Stopwatch = System.Diagnostics.Stopwatch.StartNew() })
+                { Stopwatch = System.Diagnostics.Stopwatch.StartNew()
+                  HasExited = false })
             (fun state proc -> 
                 state.Stopwatch.Restart()
                 async {
                     do! Async.Sleep(int timeout.TotalMilliseconds)
-                    if not proc.HasExited then
-                        try
+                    try
+                        if not state.HasExited && not proc.HasExited then
                             proc.Kill()
-                        with exn ->
-                            Trace.traceError 
-                            <| sprintf "Could not kill process %s  %s after timeout: %O" proc.StartInfo.FileName 
-                                   proc.StartInfo.Arguments exn
+                    with exn ->
+                        Trace.traceError 
+                        <| sprintf "Could not kill process %s  %s after timeout: %O" proc.StartInfo.FileName 
+                               proc.StartInfo.Arguments exn
                 }
                 |> Async.StartImmediate)
             (fun prev state exitCode -> 
                 async {
-                    let! e = exitCode |> Async.AwaitTask
+                    let! e = exitCode |> Async.AwaitTaskWithoutAggregate
+                    state.HasExited <- true
                     state.Stopwatch.Stop()
                     let! prevResult = prev
                     match e.RawExitCode with

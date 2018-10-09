@@ -36,6 +36,12 @@ type internal RuntimeContextWrapper(t: RuntimeContext) =
     inherit System.MarshalByRefObject()
 #endif
     member x.Type = t
+    override x.ToString() =
+      match t with
+      | Fake f -> sprintf "Wrapper(ScriptFile=%s)" f.ScriptFile
+      | UnknownObj o -> sprintf "Wrapper(UnknownObj=%O)" o
+      | Unknown -> sprintf "Wrapper(Unknown)"
+
 
 #if USE_ASYNC_LOCAL
 open System.Threading
@@ -54,6 +60,7 @@ let private getDataDict() =
 #endif
 
 let private setContext (name:string) (o : obj) : unit =
+  //printfn "set context '%s' -> %A, threadId '%d'" name o System.Threading.Thread.CurrentThread.ManagedThreadId
 #if USE_ASYNC_LOCAL
   let d = getDataDict()
   d.AddOrUpdate(name, o, fun _ old -> o) |> ignore
@@ -62,15 +69,17 @@ let private setContext (name:string) (o : obj) : unit =
 #endif
 
 let private getContext (name:string) : obj =
+  let result =
 #if USE_ASYNC_LOCAL
-  let d = getDataDict()
-  match d.TryGetValue(name) with
-  | true, v -> v
-  | false, _ -> null
+    let d = getDataDict()
+    match d.TryGetValue(name) with
+    | true, v -> v
+    | false, _ -> null
 #else
-  System.Runtime.Remoting.Messaging.CallContext.LogicalGetData(name)
+    System.Runtime.Remoting.Messaging.CallContext.LogicalGetData(name)
 #endif
-
+  //printfn "get context '%s' -> '%A', threadId '%d'" name result System.Threading.Thread.CurrentThread.ManagedThreadId
+  result
 let private fake_ExecutionType = "fake_context_execution_type"
 
 let getExecutionContext () =
@@ -80,6 +89,8 @@ let getExecutionContext () =
   | o -> RuntimeContext.UnknownObj o
 
 let setExecutionContext (e:RuntimeContext) = setContext fake_ExecutionType (new RuntimeContextWrapper(e))
+
+let removeExecutionContext () = setContext fake_ExecutionType null
 
 let getFakeExecutionContext (e:RuntimeContext) =
   match e with
