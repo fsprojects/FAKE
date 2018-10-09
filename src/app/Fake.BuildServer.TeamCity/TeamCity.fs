@@ -400,7 +400,7 @@ module TeamCity =
                 | TraceData.BuildState (TagStatus.Warning) ->
                     warning "Setting build state to warning."
                 | TraceData.BuildState (TagStatus.Failed) ->
-                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" ("Failed"))
+                    sendTeamCityError "{build.status.text}"
                 | TraceData.BuildState (TagStatus.FailedWithMessage desc) ->
                     sendTeamCityError desc
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
