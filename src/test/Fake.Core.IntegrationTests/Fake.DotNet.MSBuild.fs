@@ -87,15 +87,31 @@ let simplPathTest pathCased propValue =
 let tests =
   testList "Fake.DotNet.MSBuild.IntegrationTests" [
     Process.setEnableProcessTracing true
+    let prefixPath =
+        if Environment.isWindows then ""
+        else
+            match Process.tryFindFileOnPath "sh" with
+            | Some shPath ->
+                System.IO.Path.GetDirectoryName shPath + string System.IO.Path.PathSeparator
+            | None -> failwithf "sh is required for msbuild"
     yield testCase "#2134" <| fun _ ->
-        let value = "C:\\Test\\Dir"
-        simplPathTest "Path" value
+        let value = 
+            if Environment.isWindows
+            then "C:\\Test\\Dir"
+            else "/some/root/path"
+        simplPathTest "Path" (prefixPath + value)
     yield testCase "#2134 (2)" <| fun _ ->
-        let value = "C:\\Test\\Dir"
-        simplPathTest "PATH" value
+        let value = 
+            if Environment.isWindows
+            then "C:\\Test\\Dir"
+            else "/some/root/path"
+        simplPathTest "PATH" (prefixPath + value)
     yield testCase "#2134 (3)" <| fun _ ->
-        let value = "C:\\Test\\Dir"
-        simplPathTest "path" value
+        let value = 
+            if Environment.isWindows
+            then "C:\\Test\\Dir"
+            else "/some/root/path"
+        simplPathTest "path" (prefixPath + value)
     yield testCase "#2112" <| fun _ ->
         let value = "Data Source=xxx,1433;Initial Catalog=xxx;User Id=xxx;Password=xxx;Integrated Security=False;Persist Security Info=True;Connect Timeout=30;Encrypt=True;MultipleActiveResultSets=True"
         simplePropertyTest value
