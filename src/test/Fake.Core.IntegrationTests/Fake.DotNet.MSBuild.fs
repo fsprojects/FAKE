@@ -88,13 +88,22 @@ let tests =
   testList "Fake.DotNet.MSBuild.IntegrationTests" [
     Process.setEnableProcessTracing true
     yield testCase "#2134" <| fun _ ->
-        let value = "C:\\Test\\Dir"
+        let value = 
+            if Environment.isWindows
+            then "C:\\Test\\Dir"
+            else "/some/root/path"
         simplPathTest "Path" value
     yield testCase "#2134 (2)" <| fun _ ->
-        let value = "C:\\Test\\Dir"
+        let value = 
+            if Environment.isWindows
+            then "C:\\Test\\Dir"
+            else "/some/root/path"
         simplPathTest "PATH" value
     yield testCase "#2134 (3)" <| fun _ ->
-        let value = "C:\\Test\\Dir"
+        let value = 
+            if Environment.isWindows
+            then "C:\\Test\\Dir"
+            else "/some/root/path"
         simplPathTest "path" value
     yield testCase "#2112" <| fun _ ->
         let value = "Data Source=xxx,1433;Initial Catalog=xxx;User Id=xxx;Password=xxx;Integrated Security=False;Persist Security Info=True;Connect Timeout=30;Encrypt=True;MultipleActiveResultSets=True"
