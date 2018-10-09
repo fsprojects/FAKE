@@ -144,12 +144,15 @@ module internal RawProc =
     // mono sets echo off for some reason, therefore interactive mode doesn't work as expected
     // this enables this tty feature which makes the interactive mode work as expected
     let private setEcho (b:bool) =
-        // See https://github.com/mono/mono/blob/master/mcs/class/corlib/System/ConsoleDriver.cs#L289
-        let t = System.Type.GetType("System.ConsoleDriver").GetTypeInfo()
         if Environment.isMono then
+            // See https://github.com/mono/mono/blob/master/mcs/class/corlib/System/ConsoleDriver.cs#L289
+            let t =
+                match System.Type.GetType("System.ConsoleDriver") with
+                | null -> null
+                | cd -> cd.GetTypeInfo()
             let flags = System.Reflection.BindingFlags.Static ||| System.Reflection.BindingFlags.NonPublic
             if isNull t then
-                Trace.traceFAKE "Expected to find System.ConsoleDriver.SetEcho"
+                Trace.traceFAKE "Expected to find System.ConsoleDriver type"
                 false
             else
                 let setEchoMethod = t.GetMethod("SetEcho", flags)

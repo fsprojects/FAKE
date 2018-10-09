@@ -409,8 +409,9 @@ module Process =
                 return! result.Result |> Async.AwaitTask
             }
             |> Async.StartImmediateAsTask
+        let startRawSync c = (startRaw c).Result
+        
         let startAndAwait c = start c |> Async.AwaitTaskWithoutAggregate
-        let runRaw c = (startRaw c).Result
         let run c = startAndAwait c |> Async.RunSynchronously
 
     /// [omit]
@@ -606,7 +607,7 @@ module Process =
     [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let fireAndForget configProcessStartInfoF =
         getProcI configProcessStartInfoF
-        |> Proc.start
+        |> Proc.startRawSync
         |> ignore
         //rawStartProcess proc
 
@@ -622,7 +623,7 @@ module Process =
     [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let start configProcessStartInfoF = 
         getProcI configProcessStartInfoF
-        |> Proc.start
+        |> Proc.startRawSync
         |> ignore
 
     /// Adds quotes around the string
@@ -1033,6 +1034,7 @@ module Proc =
         do! hook.ParseSuccess exitCode
         return { ExitCode = exitCode; CreateProcess = c; Result = result }*)
     
+    let startRawSync c = Process.Proc.startRawSync c
     let start c = Process.Proc.start c
 
     /// Convenience method when you immediatly want to await the result of 'start', just note that
@@ -1040,5 +1042,4 @@ module Proc =
     /// (ie if you use StartAsTask and access reference cells in CreateProcess after that returns)
     let startAndAwait c = Process.Proc.startAndAwait c
 
-    let runRaw c = Process.Proc.runRaw c
     let run c = Process.Proc.run
