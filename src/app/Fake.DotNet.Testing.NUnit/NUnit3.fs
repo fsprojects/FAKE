@@ -351,8 +351,7 @@ let run (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details = assemblies |> String.separated ", "
     use __ = Trace.traceTask "NUnit" details
-    let p = createProcess setParams assemblies
-    p
+    createProcess setParams assemblies
     |> Proc.run
 
     __.MarkSuccess()
