@@ -652,6 +652,11 @@ module Target =
             |> Observable.subscribe (fun _ ->  Environment.Exit 1)
         Process.killAllCreatedProcesses() |> ignore
         cts.Cancel()
+    
+    /// Optional `TargetContext`
+    type OptionalTargetContext = 
+        | Set of TargetContext
+        | MaybeSet of TargetContext option
 
     /// Runs a target and its dependencies.
     let internal runInternal singleTarget parallelJobs targetName args =
@@ -705,11 +710,12 @@ module Target =
 
             if context.HasError && not context.CancellationToken.IsCancellationRequested then
                     runBuildFailureTargets context
-            else context
+            else 
+                context
 
         let context = runFinalTargets {context with IsRunningFinalTargets=true}
         writeTaskTimeSummary watch.Elapsed context
-        context             
+        context           
 
     /// Creates a target in case of build failure (not activated).
     let createBuildFailure name body =
@@ -752,13 +758,17 @@ module Target =
         let inner = AggregateException(AggregateException().Message, context.ErrorTargets |> Seq.map fst)
         BuildFailedException(context, errorMsg, inner)
 
-    /// Updates build status based on `TargetContext option`
-    /// Will not update status if `TargetContext option` is `None`
-    let updateBuildStatusOption (context:TargetContext option) =
+    let private getTargetContext (context:OptionalTargetContext) =
         match context with
+        | Set c -> Some(c)
+        | MaybeSet c -> c
+
+    /// Updates build status based on `OptionalTargetContext`
+    /// Will not update status if `OptionalTargetContext` is `MaybeSet` with value `None`
+    let updateBuildStatus (context:OptionalTargetContext) =
+        match getTargetContext(context) with
         | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState(TagStatus.Warning)
-        | Some c when c.HasError -> Trace.setBuildState(TagStatus.Failure)
-                                    let targets = c.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+        | Some c when c.HasError -> let targets = c.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
                                     let targetStr = String.Join(", ", targets)
                                     if c.ErrorTargets.Length = 1 then
                                         Trace.setBuildState(TagStatus.FailedWithMessage (sprintf "Target '%s' failed." targetStr))
@@ -769,24 +779,25 @@ module Target =
         | _ -> ()
         context
 
-    /// Updates build status based on `TargetContext`
-    let updateBuildStatus (context:TargetContext)  = updateBuildStatusOption (Some(context))
-
     /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
-    let raiseIfErrorOption (context:TargetContext option)  =
-        if context.IsSome && context.Value.HasError && not context.Value.CancellationToken.IsCancellationRequested then
-            getBuildFailedException context.Value
+    let raiseIfError (context:OptionalTargetContext) =
+        let c = getTargetContext(context)
+        if c.IsSome && c.Value.HasError && not c.Value.CancellationToken.IsCancellationRequested then
+            getBuildFailedException c.Value
             |> raise
         context
-
-    /// If `TargetContext` has error, raise it as a BuildFailedException
-    let raiseIfError (context:TargetContext)  = raiseIfErrorOption (Some(context))
    
-    /// Runs a target and its dependencies, used for testing - usually not called in scripts.
+    /// Runs a target and its dependencies and returns a `TargetContext`
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 
+    /// Runs a target and its dependencies and returns an `OptionalTargetContext`
+    let runAndGetOptionalContext parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> OptionalTargetContext.Set
+
+    /// Runs a target and its dependencies and will update the build state
+    let runAndUpdateBuildState parallelJobs targetName args = runAndGetOptionalContext parallelJobs targetName args |> updateBuildStatus |> raiseIfError |> ignore
+
     /// Runs a target and its dependencies
-    let run parallelJobs targetName args = runAndGetContext parallelJobs targetName args |> raiseIfError |> ignore
+    let run parallelJobs targetName args = runAndGetOptionalContext parallelJobs targetName args |> raiseIfError |> ignore
        
     let internal getRunFunction allowArgs defaultTarget =
         let ctx = Fake.Core.Context.forceFakeContext ()
@@ -868,32 +879,31 @@ module Target =
             // To ensure exit code.
             raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
 
+    let private runFunction (targetFunction:(unit -> TargetContext option) Option) = 
+        match targetFunction with
+        | Some f -> OptionalTargetContext.MaybeSet(f())
+        | _ -> OptionalTargetContext.MaybeSet(None)
+    
     /// Runs the command given on the command line or the given target when no target is given & get context
     let runOrDefaultAndGetContext defaultTarget =
-        match getRunFunction false (Some(defaultTarget)) with
-        | Some f -> f()
-        | _ -> None   
+        getRunFunction false (Some(defaultTarget)) |> runFunction
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefault defaultTarget =
-        runOrDefaultAndGetContext defaultTarget |> raiseIfErrorOption |> ignore  
+        runOrDefaultAndGetContext defaultTarget |> raiseIfError |> ignore  
 
     /// Runs the command given on the command line or the given target when no target is given & get context
     let runOrDefaultWithArgumentsAndGetContext defaultTarget =
-        match getRunFunction true (Some(defaultTarget)) with
-        | Some f -> f()
-        | _ -> None
+        getRunFunction true (Some(defaultTarget)) |> runFunction
 
     /// Runs the command given on the command line or the given target when no target is given
     let runOrDefaultWithArguments defaultTarget =
-        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfErrorOption |> ignore 
+        runOrDefaultWithArgumentsAndGetContext defaultTarget |> raiseIfError |> ignore 
 
     /// Runs the target given by the target parameter or lists the available targets & get context
     let runOrListAndGetContext() =
-        match getRunFunction false None with
-        | Some f -> f()
-        | _ -> None   
+        getRunFunction false None |> runFunction
 
     /// Runs the target given by the target parameter or lists the available targets
     let runOrList() =
-        runOrListAndGetContext() |> raiseIfErrorOption |> ignore
+        runOrListAndGetContext() |> raiseIfError |> ignore
