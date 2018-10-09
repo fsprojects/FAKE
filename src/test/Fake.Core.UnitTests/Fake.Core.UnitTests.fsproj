@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\app\Fake.IO.Zip\Fake.IO.Zip.fsproj" />
     <ProjectReference Include="..\..\app\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Tools.Git\Fake.Tools.Git.fsproj" />
+    <ProjectReference Include="..\..\app\Fake.Tools.Pickles\Fake.Tools.Pickles.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Context\Fake.Core.Context.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.FakeVar\Fake.Core.FakeVar.fsproj" />
     <ProjectReference Include="..\..\app\Fake.Core.Process\Fake.Core.Process.fsproj" />
@@ -33,6 +34,7 @@
     <Compile Include="Fake.DotNet.Testing.SpecFlow.fs" />
     <Compile Include="Fake.Testing.ReportGenerator.fs" />
     <Compile Include="Fake.Tools.Git.fs" />
+    <Compile Include="Fake.Tools.Pickles.fs" />
     <Compile Include="Fake.IO.Zip.fs" />
     <Compile Include="Fake.Core.Process.fs" />
     <Compile Include="Fake.Core.Target.fs" />
