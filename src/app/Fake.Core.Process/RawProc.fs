@@ -89,15 +89,11 @@ type internal StreamSpecs =
             p.RedirectStandardOutput <- false
         | UseStream _ | CreatePipe _ ->
             p.RedirectStandardOutput <- true
-            if Environment.isMono || Process.AlwaysSetProcessEncoding then
-                p.StandardOutputEncoding <-  Process.ProcessEncoding
         match x.StandardError with
         | Inherit ->
             p.RedirectStandardError <- false
         | UseStream _ | CreatePipe _ ->
             p.RedirectStandardError <- true
-            if Environment.isMono || Process.AlwaysSetProcessEncoding then
-                p.StandardErrorEncoding  <- Process.ProcessEncoding
                 
 
 type internal IRawProcessHook =
@@ -106,7 +102,7 @@ type internal IRawProcessHook =
     //abstract member Retrieve : IDisposable * System.Threading.Tasks.Task<int> -> Async<'TRes>
 
 /// A raw (untyped) way to start a process
-type RawCreateProcess =
+type internal RawCreateProcess =
     internal {
         Command : Command
         WorkingDirectory : string option
@@ -140,10 +136,11 @@ type RawCreateProcess =
 
 type RawProcessResult = { RawExitCode : int }
 
-type IProcessStarter =
+type internal IProcessStarter =
     abstract Start : RawCreateProcess -> Async<System.Threading.Tasks.Task<RawProcessResult>>
 
-module RawProc =
+module internal RawProc =
+
     // mono sets echo off for some reason, therefore interactive mode doesn't work as expected
     // this enables this tty feature which makes the interactive mode work as expected
     let private setEcho (b:bool) =
@@ -165,7 +162,7 @@ module RawProc =
         
     open System.Diagnostics
     open System.IO
-    let createProcessStarter globalStartFunc =
+    let internal createProcessStarter startProcessRaw =
         { new IProcessStarter with
             member __.Start c = async {
                 let p = c.ToStartInfo
@@ -177,7 +174,7 @@ module RawProc =
 
                 Trace.tracefn "%s... RedirectInput: %b, RedirectOutput: %b, RedirectError: %b" commandLine p.RedirectStandardInput p.RedirectStandardOutput p.RedirectStandardError
                 
-                use toolProcess = new Process(StartInfo = p)
+                let toolProcess = new Process(StartInfo = p)
                 
                 let isStarted = ref false
                 let mutable readOutputTask = System.Threading.Tasks.Task.FromResult Stream.Null
@@ -188,8 +185,7 @@ module RawProc =
                     if not <| !isStarted then
                         toolProcess.EnableRaisingEvents <- true
                         setEcho true |> ignore
-                        Process.rawStartProcessNoRecord toolProcess
-                        globalStartFunc toolProcess
+                        startProcessRaw toolProcess
                         c.OutputHook.OnStart (toolProcess)
                         isStarted := true
                         
@@ -257,11 +253,11 @@ module RawProc =
                         for s in streams do s.Dispose()
                         setEcho false |> ignore
                         
-                        return { RawExitCode = toolProcess.ExitCode } 
+                        let code = toolProcess.ExitCode
+                        toolProcess.Dispose()
+                        return { RawExitCode = code } 
                     }
                     |> Async.StartImmediateAsTask
 
                 return exitCode }
         }
-
-    let mutable processStarter = createProcessStarter Process.recordProcess
