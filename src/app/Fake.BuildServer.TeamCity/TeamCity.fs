@@ -398,11 +398,11 @@ module TeamCity =
                     testFailed testName message detail
                 | TraceData.TestStatus (testName,TestStatus.Failed(message, detail, Some (expected, actual))) ->
                     comparisonFailure testName message detail expected actual
-                | TraceData.BuildState (TagStatus.Success) ->
+                | TraceData.BuildState TagStatus.Success ->
                     reportBuildStatus "SUCCESS" "{build.status.text}"
-                | TraceData.BuildState (TagStatus.Warning) ->
+                | TraceData.BuildState TagStatus.Warning ->
                     warning "Setting build state to warning."
-                | TraceData.BuildState (TagStatus.Failed) ->
+                | TraceData.BuildState TagStatus.Failed ->
                     reportBuildStatus "FAILURE" "Failure - {build.status.text}"
                 | TraceData.BuildState (TagStatus.FailedWithMessage message) ->
                     reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" message)
