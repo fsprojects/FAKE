@@ -1,5 +1,11 @@
 # Release Notes
 
+## 5.8.5 - 2018-10-10
+
+* BUGFIX: PATH Variable was overwritten when using the `DotNet.Cli` module - https://github.com/fsharp/FAKE/issues/2134
+* BUGFIX: Fix an instance where TraceSecrets did not work - https://github.com/fsharp/FAKE/issues/2122
+* WORKAROUND: Do not try to publish artifacts on github PRs when using Azure Pipelines - https://github.com/fsharp/FAKE/pull/2129/commits/bb723c41160f60002169246cb70ecbb9aad45fa3
+
 ## 5.8.4 - 2018-10-08
 
 * ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)

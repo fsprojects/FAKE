@@ -50,7 +50,7 @@ _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
 tools/SourceLink.Fake
-
+.ionide/
 /integrationtests/*/temp
 /temp
 
