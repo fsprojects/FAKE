@@ -129,6 +129,7 @@ type TagStatus =
     | Success
     | Warning
     | Failed
+    | FailedWithMessage of message:string
 
 /// Defines Tracing information for TraceListeners
 /// Note: Adding new cases to this type is not considered a breaking change!
@@ -189,6 +190,7 @@ module TraceData =
         | TraceData.ErrorMessage text -> TraceData.ErrorMessage (f text)
         | TraceData.LogMessage (text, d) -> TraceData.LogMessage (f text, d)
         | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
+        | TraceData.BuildState (TagStatus.FailedWithMessage text) -> TraceData.BuildState (TagStatus.FailedWithMessage (f text))
         | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
         | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
         | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))
@@ -294,7 +296,7 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
-            | TraceData.BuildState state ->
+            | TraceData.BuildState (state) ->
                 write false color true (sprintf "Changing BuildState to: %A" state)
             | TraceData.TestOutput (test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)

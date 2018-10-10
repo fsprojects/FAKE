@@ -57,6 +57,9 @@ module TeamCity =
     /// Sends an error to TeamCity
     let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
+    /// Reports build problem
+    let reportBuildProblem message = (sprintf "##teamcity[buildProblem description='%s']" (TeamCityWriter.encapsulateSpecialChars message)) |> TeamCityWriter.sendStrToTeamCity
+
     let internal sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
 
     module internal Import =
@@ -199,6 +202,9 @@ module TeamCity =
     /// Publishes an artifact on the TeamcCity build server.
     let internal publishArtifact path = TeamCityWriter.encapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
+    /// Publishes an artifact on the TeamcCity build server with a name.
+    let internal publishNamedArtifact name path = TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s' => '%s']" (TeamCityWriter.encapsulateSpecialChars path) (TeamCityWriter.encapsulateSpecialChars name)
+
     /// Sets the TeamCity build number.
     let internal setBuildNumber buildNumber = TeamCityWriter.encapsulateSpecialChars buildNumber |> TeamCityWriter.sendToTeamCity "##teamcity[buildNumber '%s']"
 
@@ -226,11 +232,11 @@ module TeamCity =
 
     /// Sends a warning message.
     let internal warning message =
-        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" message
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" (TeamCityWriter.encapsulateSpecialChars message)
 
     /// Sends an error message.
     let internal error message =
-        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" message
+        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" (TeamCityWriter.encapsulateSpecialChars message)
 
     /// TeamCity build parameters
     ///
@@ -399,9 +405,10 @@ module TeamCity =
                     reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState TagStatus.Warning ->
                     warning "Setting build state to warning."
-                    //reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState TagStatus.Failed ->
-                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" ("Failed"))
+                    reportBuildStatus "FAILURE" "Failure - {build.status.text}"
+                | TraceData.BuildState (TagStatus.FailedWithMessage message) ->
+                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" message)
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
@@ -412,9 +419,6 @@ module TeamCity =
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
-                | TraceData.CloseTag (tag, _, TagStatus.Failed) ->
-                    TeamCityWriter.sendCloseBlock tag.Name
-                    //reportBuildStatus "FAILURE" (sprintf "Failure in %s" tag.Name)
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text ->
@@ -423,7 +427,8 @@ module TeamCity =
                     error text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
-                | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
+                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path)
+                    publishNamedArtifact name path
                 | TraceData.ImportData (ImportData.BuildArtifact, path) ->
                     publishArtifact path
                 | TraceData.ImportData (ImportData.DotNetCoverage tool, path) ->

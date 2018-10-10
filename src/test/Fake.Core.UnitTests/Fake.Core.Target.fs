@@ -4,18 +4,10 @@ open Fake.Core
 open Expecto
 
 let run targetName =
-    try Target.runAndGetContext 1 targetName []
-    with | :? BuildFailedException as bfe ->
-        match bfe.Info with
-        | Some context -> context
-        | None -> failwithf "No context given!"
+    Target.runAndGetContext 1 targetName []
 
 let runParallel targetName =
-    try Target.runAndGetContext 3 targetName []
-    with | :? BuildFailedException as bfe ->
-        match bfe.Info with
-        | Some context -> context
-        | None -> failwithf "No context given!"
+    Target.runAndGetContext 3 targetName []
 
 open Fake.Core.TargetOperators
 

@@ -126,6 +126,45 @@ Everything after the target will be interpreted as argument for the target:
 
 You can access the arguments from every target executed along the way.
 
+## Setting build status
+
+You can set the build status automatically using `Target.updateBuildStatus`
+
+Example: 
+
+```fsharp
+#r "paket:
+nuget Fake.Core.Target //"
+
+open Fake.Core
+
+// *** Define Targets ***
+Target.create "Clean" (fun p ->
+    Trace.trace " --- Cleaning stuff --- "
+)
+
+Target.create "Build" (fun _ ->
+    Trace.trace " --- Building the app --- "
+)
+
+Target.create "Deploy" (fun _ ->
+    Trace.trace " --- Deploying app --- "
+)
+
+open Fake.Core.TargetOperators
+
+// *** Define Dependencies ***
+"Clean"
+    ==> "Build"
+    ==> "Deploy"
+
+// *** Start Build ***
+Target.runOrDefaultAndGetContext "Deploy"  //Could also use: Target.runAndGetOptionalContext "Deploy"
+|> Target.updateBuildStatusOption 
+|> Target.updateBuildFailureMessages
+|> Target.raiseIfErrorOption
+```
+
 ## Final targets
 
 Final targets can be used for TearDown functionality.
