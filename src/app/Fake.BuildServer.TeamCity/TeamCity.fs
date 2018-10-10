@@ -199,6 +199,9 @@ module TeamCity =
     /// Publishes an artifact on the TeamcCity build server.
     let internal publishArtifact path = TeamCityWriter.encapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
+    /// Publishes an artifact on the TeamcCity build server with a name.
+    let internal publishNamedArtifact name path = TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s' => '%s']" (TeamCityWriter.encapsulateSpecialChars path) (TeamCityWriter.encapsulateSpecialChars name)
+
     /// Sets the TeamCity build number.
     let internal setBuildNumber buildNumber = TeamCityWriter.encapsulateSpecialChars buildNumber |> TeamCityWriter.sendToTeamCity "##teamcity[buildNumber '%s']"
 
@@ -423,7 +426,8 @@ module TeamCity =
                     error text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
-                | TraceData.ImportData (ImportData.BuildArtifactWithName _, path)
+                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path)
+                    publishNamedArtifact name path
                 | TraceData.ImportData (ImportData.BuildArtifact, path) ->
                     publishArtifact path
                 | TraceData.ImportData (ImportData.DotNetCoverage tool, path) ->
