@@ -11,9 +11,48 @@ SpecFlow is open source and provided under a BSD license. As part of the Cucumbe
 
 The package Fake.DotNet.Testing.SpecFlow is a bridge to the [SpecFlow] CLI (specflow.exe).
 
+**If you use SpecFlow in a version >= 2.4, then please use the SpecFlowNext module**
+
 [API-Reference](https://fake.build/apidocs/v5/fake-dotnet-testing-specflow.html)
 
-## Minimal working example
+## Minimal working example (v2.4+)
+
+```fsharp
+#r "paket:
+nuget Fake.Core.Target
+nuget Fake.DotNet.Testing.SpecFlow //"
+
+open Fake.Core
+open Fake.DotNet.Testing
+
+let specsProject = "IntegrationTests.csproj"
+
+Target.create "Regenerate Test Classes" (fun _ ->
+    SpecFlowNext.run (fun p ->
+        { p with ProjectFile = specsProject })
+)
+
+Target.create "Create StepDefinition Report" (fun _ ->
+    SpecFlowNext.run (fun p ->
+        { p with SubCommand = StepDefinitionReport
+                 ProjectFile = specsProject
+                 BinFolder = Some "bin/Debug"
+                 OutputFile = Some "StepDefinitionReport.html" })
+)
+
+Target.create "Default" Target.DoNothing
+
+"Clean"
+==> "Regenerate Test Classes"
+==> "Build"
+==> "Run Integration Tests"
+==> "Create StepDefinition Report"
+==> "Default"
+
+Target.runOrDefault "Default"
+```
+
+## Minimal working example (pre v2.4)
 
 ```fsharp
 #r "paket:
