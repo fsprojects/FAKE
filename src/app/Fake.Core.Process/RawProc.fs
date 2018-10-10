@@ -252,21 +252,35 @@ module internal RawProc =
                         // Waiting for the process to exit (buffers)
                         toolProcess.WaitForExit()
                 
-                        let delay = System.Threading.Tasks.Task.Delay 500
+                        let code = toolProcess.ExitCode
+                        toolProcess.Dispose()
+                
                         let all =  System.Threading.Tasks.Task.WhenAll([readErrorTask; readOutputTask; redirectStdInTask])
-                        let! t = System.Threading.Tasks.Task.WhenAny(all, delay)
-                                 |> Async.AwaitTaskWithoutAggregate
-                        if t = delay then
-                            Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
-                        tok.Cancel()
+                        let tryWait () =
+                            async {
+                                let delay = System.Threading.Tasks.Task.Delay 500
+                                let! t =
+                                    System.Threading.Tasks.Task.WhenAny(all, delay)
+                                    |> Async.AwaitTaskWithoutAggregate
+                                return t <> delay
+                            }
+                        let mutable allFinished = false
+                        let mutable retries = 10
+                        while not allFinished && retries > 0 do
+                            let! ok = tryWait()
+                            retries <- retries - 1
+                            if retries = 2 then
+                                tok.Cancel()
+                            if not ok then
+                                Trace.traceFAKE "At least one redirection task did not finish: \nReadErrorTask: %O, ReadOutputTask: %O, RedirectStdInTask: %O" readErrorTask.Status readOutputTask.Status redirectStdInTask.Status
+                            allFinished <- ok
+                        //tok.Cancel()
                         
                         // wait for finish -> AwaitTask has a bug which makes it unusable for chanceled tasks.
                         // workaround with continuewith
                         let! streams = all.ContinueWith (new System.Func<System.Threading.Tasks.Task<Stream[]>, Stream[]> (fun t -> t.GetAwaiter().GetResult())) |> Async.AwaitTaskWithoutAggregate
                         for s in streams do s.Dispose()
                         
-                        let code = toolProcess.ExitCode
-                        toolProcess.Dispose()
                         return { RawExitCode = code } 
                     }
                     |> Async.StartImmediateAsTask
