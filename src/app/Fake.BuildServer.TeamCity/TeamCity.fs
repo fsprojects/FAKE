@@ -55,188 +55,148 @@ module TeamCity =
             with member __.Dispose() = TeamCityWriter.sendCloseBlock name }
 
     /// Sends an error to TeamCity
-    let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
+    let sendTeamCityError error = TeamCityWriter.sendBuildStatus "FAILURE" error
 
     /// Reports build problem
-    let reportBuildProblem message = (sprintf "##teamcity[buildProblem description='%s']" (TeamCityWriter.encapsulateSpecialChars message)) |> TeamCityWriter.sendStrToTeamCity
-
-    let internal sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
+    let reportBuildProblem message = TeamCityWriter.sendBuildProblem message
 
     module internal Import =
         /// Sends an NUnit results filename to TeamCity
-        let sendNUnit path = sendTeamCityImportData "nunit" path
+        let sendNUnit path = TeamCityWriter.sendImportData "nunit" path
 
         /// Sends an FXCop results filename to TeamCity
-        let sendFXCop path = sendTeamCityImportData "FxCop" path
+        let sendFXCop path = TeamCityWriter.sendImportData "FxCop" path
 
         /// Sends an JUnit Ant task results filename to TeamCity
-        let sendJUnit path = sendTeamCityImportData "junit" path
+        let sendJUnit path = TeamCityWriter.sendImportData "junit" path
 
         /// Sends an Maven Surefire results filename to TeamCity
-        let sendSurefire path = sendTeamCityImportData "surefire" path
+        let sendSurefire path = TeamCityWriter.sendImportData "surefire" path
 
         /// Sends an MSTest results filename to TeamCity
-        let sendMSTest path = sendTeamCityImportData "mstest" path
+        let sendMSTest path = TeamCityWriter.sendImportData "mstest" path
 
         /// Sends an Google Test results filename to TeamCity
-        let sendGTest path = sendTeamCityImportData "gtest" path
+        let sendGTest path = TeamCityWriter.sendImportData "gtest" path
 
         /// Sends an Checkstyle results filename to TeamCity
-        let sendCheckstyle path = sendTeamCityImportData "checkstyle" path
+        let sendCheckstyle path = TeamCityWriter.sendImportData "checkstyle" path
 
         /// Sends an FindBugs results filename to TeamCity
-        let sendFindBugs path = sendTeamCityImportData "findBugs" path
+        let sendFindBugs path = TeamCityWriter.sendImportData "findBugs" path
 
         /// Sends an JSLint results filename to TeamCity
-        let sendJSLint path = sendTeamCityImportData "jslint" path
+        let sendJSLint path = TeamCityWriter.sendImportData "jslint" path
 
         /// Sends an ReSharper inspectCode.exe results filename to TeamCity
-        let sendReSharperInspectCode path = sendTeamCityImportData "ReSharperInspectCode" path
+        let sendReSharperInspectCode path = TeamCityWriter.sendImportData "ReSharperInspectCode" path
 
         /// Sends an PMD inspections results filename to TeamCity
-        let sendPmd path = sendTeamCityImportData "pmd" path
+        let sendPmd path = TeamCityWriter.sendImportData "pmd" path
 
         /// Sends an PMD Copy/Paste Detector results filename to TeamCity
-        let sendPmdCpd path = sendTeamCityImportData "pmdCpd" path
+        let sendPmdCpd path = TeamCityWriter.sendImportData "pmdCpd" path
 
         /// Sends an ReSharper dupfinder.exe results filename to TeamCity
-        let sendDotNetDupFinder path = sendTeamCityImportData "DotNetDupFinder" path
+        let sendDotNetDupFinder path = TeamCityWriter.sendImportData "DotNetDupFinder" path
 
         /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity
-        let sendDotNetCoverageForTool path (tool : DotNetCoverageTool) =
-            sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (tool.TeamCityName |> TeamCityWriter.scrub) (path |> TeamCityWriter.scrub)
-            |> TeamCityWriter.sendStrToTeamCity
+        let sendDotNetCoverageForTool path (tool : DotNetCoverageTool) = TeamCityWriter.sendImportDataWithTool "dotNetCoverage" tool.TeamCityName path
 
     /// Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity
-    let internal sendTeamCityDotCoverHome = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage dotcover_home='%s']"
+    let internal sendTeamCityDotCoverHome = TeamCityWriter.sendDotNetCoverage "dotcover_home"
 
     /// Sends the full path to NCover installation folder to TeamCity
-    let internal sendTeamCityNCover3Home = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover3_home='%s']"
+    let internal sendTeamCityNCover3Home = TeamCityWriter.sendDotNetCoverage "ncover3_home"
 
     /// Sends arguments for the NCover report generator to TeamCity
-    let internal sendTeamCityNCover3ReporterArgs = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover3_reporter_args='%s']"
+    let internal sendTeamCityNCover3ReporterArgs = TeamCityWriter.sendDotNetCoverage "ncover3_reporter_args"
 
     /// Sends the path to NCoverExplorer to TeamCity
-    let internal sendTeamCityNCoverExplorerTool = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_tool='%s']"
+    let internal sendTeamCityNCoverExplorerTool = TeamCityWriter.sendDotNetCoverage "ncover_explorer_tool"
 
     /// Sends additional arguments for NCover 1.x to TeamCity
-    let internal sendTeamCityNCoverExplorerToolArgs = TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_tool_args='%s']"
+    let internal sendTeamCityNCoverExplorerToolArgs = TeamCityWriter.sendDotNetCoverage "ncover_explorer_tool_args"
 
     /// Sends the value for NCover /report: argument to TeamCity
-    let internal sendTeamCityNCoverReportType : int -> unit = string >> TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_report_type='%s']"
+    let internal sendTeamCityNCoverReportType : int -> unit = string >> TeamCityWriter.sendDotNetCoverage "ncover_explorer_report_type"
 
     /// Sends the value for NCover  /sort: argument to TeamCity
-    let internal sendTeamCityNCoverReportOrder : int -> unit = string >> TeamCityWriter.sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_report_order='%s']"
+    let internal sendTeamCityNCoverReportOrder : int -> unit = string >> TeamCityWriter.sendDotNetCoverage "ncover_explorer_report_order"
 
     /// Send the PartCover xslt transformation rules (Input xlst and output files) to TeamCity
     let internal sendTeamCityPartCoverReportXslts : seq<string * string> -> unit =
         Seq.map (fun (xslt, output) -> sprintf "%s=>%s" xslt output)
-        >> Seq.map TeamCityWriter.encapsulateSpecialChars
-        >> String.concat "|n"
-        >> sprintf "##teamcity[dotNetCoverage partcover_report_xslts='%s']"
-        >> TeamCityWriter.sendStrToTeamCity
+        >> String.concat "\n"
+        >> TeamCityWriter.sendDotNetCoverage "partcover_report_xslts"
 
     /// Starts the test case.
-    let internal startTestCase testCaseName =
-        TeamCityWriter.sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
+    let internal startTestCase testCaseName = TeamCityWriter.sendTestStarted testCaseName
 
     /// Finishes the test case.
-    let internal finishTestCase testCaseName (duration : System.TimeSpan) =
-        let duration =
-            duration.TotalMilliseconds
-            |> round
-            |> string
-        sprintf "##teamcity[testFinished name='%s' duration='%s']" (TeamCityWriter.encapsulateSpecialChars testCaseName) duration
-        |> TeamCityWriter.sendStrToTeamCity
+    let internal finishTestCase testCaseName (duration : System.TimeSpan) = 
+        TeamCityWriter.sendTestFinished testCaseName (duration.TotalMilliseconds |> round |> string)
 
     /// Ignores the test case.
     let internal ignoreTestCase name message =
-        startTestCase name
-        sprintf "##teamcity[testIgnored name='%s' message='%s']" (TeamCityWriter.encapsulateSpecialChars name)
-            (TeamCityWriter.encapsulateSpecialChars message) |> TeamCityWriter.sendStrToTeamCity
-
+        TeamCityWriter.sendTestStarted name
+        TeamCityWriter.sendTestIgnored name message
 
     /// Report Standard-Output for a given test-case
-    let internal reportTestOutput name output =
-        sprintf "##teamcity[testStdOut name='%s' out='%s']"
-            (TeamCityWriter.encapsulateSpecialChars name)
-            (TeamCityWriter.encapsulateSpecialChars output)
-        |> TeamCityWriter.sendStrToTeamCity
+    let internal reportTestOutput name output = TeamCityWriter.sendTestStdOut name output
 
     /// Report Standard-Error for a given test-case
-    let internal reportTestError name output =
-        sprintf "##teamcity[testStdErr name='%s' out='%s']"
-            (TeamCityWriter.encapsulateSpecialChars name)
-            (TeamCityWriter.encapsulateSpecialChars output)
-        |> TeamCityWriter.sendStrToTeamCity
+    let internal reportTestError name output = TeamCityWriter.sendTestStdError name output
 
     /// Ignores the test case.
     let internal ignoreTestCaseWithDetails name message details =
-        ignoreTestCase name (message + " " + details)
+        TeamCityWriter.sendTestStarted name
+        TeamCityWriter.sendTestIgnored name (message + " " + details)
 
     /// Finishes the test suite.
-    let internal finishTestSuite testSuiteName =
-        TeamCityWriter.encapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteFinished name='%s']"
+    let internal finishTestSuite testSuiteName = TeamCityWriter.sendTestSuiteFinished testSuiteName
 
     /// Starts the test suite.
-    let internal startTestSuite testSuiteName =
-        TeamCityWriter.encapsulateSpecialChars testSuiteName |> TeamCityWriter.sendToTeamCity "##teamcity[testSuiteStarted name='%s']"
+    let internal startTestSuite testSuiteName = TeamCityWriter.sendTestSuiteStarted testSuiteName
 
     /// Reports the progress.
-    let reportProgress message = TeamCityWriter.encapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressMessage '%s']"
+    let reportProgress message = TeamCityWriter.sendProgressMessage message
 
     /// Reports the progress start.
-    let reportProgressStart message = TeamCityWriter.encapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressStart '%s']"
+    let reportProgressStart message = TeamCityWriter.sendProgressStart message
 
     /// Reports the progress end.
-    let reportProgressFinish message = TeamCityWriter.encapsulateSpecialChars message |> TeamCityWriter.sendToTeamCity "##teamcity[progressFinish '%s']"
-
-    /// Create  the build status.
-    /// [omit]
-    let buildStatus status message =
-        sprintf "##teamcity[buildStatus status='%s' text='%s']" (TeamCityWriter.encapsulateSpecialChars status) (TeamCityWriter.encapsulateSpecialChars message)
+    let reportProgressFinish message = TeamCityWriter.sendProgressFinish message
 
     /// Reports the build status.
-    let reportBuildStatus status message = buildStatus status message |> TeamCityWriter.sendStrToTeamCity
+    let reportBuildStatus status message = TeamCityWriter.sendBuildStatus status message
 
     /// Publishes an artifact on the TeamcCity build server.
-    let internal publishArtifact path = TeamCityWriter.encapsulateSpecialChars path |> TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s']"
+    let internal publishArtifact path = TeamCityWriter.sendPublishArtifact path
 
     /// Publishes an artifact on the TeamcCity build server with a name.
-    let internal publishNamedArtifact name path = TeamCityWriter.sendToTeamCity "##teamcity[publishArtifacts '%s' => '%s']" (TeamCityWriter.encapsulateSpecialChars path) (TeamCityWriter.encapsulateSpecialChars name)
+    let internal publishNamedArtifact name path = TeamCityWriter.sendPublishNamedArtifact name path
 
     /// Sets the TeamCity build number.
-    let internal setBuildNumber buildNumber = TeamCityWriter.encapsulateSpecialChars buildNumber |> TeamCityWriter.sendToTeamCity "##teamcity[buildNumber '%s']"
+    let internal setBuildNumber buildNumber = TeamCityWriter.sendBuildNumber buildNumber
 
     /// Reports a build statistic.
-    let setBuildStatistic key value =
-        sprintf "##teamcity[buildStatisticValue key='%s' value='%s']" (TeamCityWriter.encapsulateSpecialChars key)
-            (TeamCityWriter.encapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
+    let setBuildStatistic key value = TeamCityWriter.sendBuildStatistic key value
 
     /// Reports a parameter value
-    let setParameter name value =
-        sprintf "##teamcity[setParameter name='%s' value='%s']" (TeamCityWriter.encapsulateSpecialChars name)
-            (TeamCityWriter.encapsulateSpecialChars value) |> TeamCityWriter.sendStrToTeamCity
+    let setParameter name value = TeamCityWriter.sendSetParameter name value
+       
+    /// Reports a failed test
+    let internal testFailed name message details = TeamCityWriter.sendTestFailed name message details
 
-    /// Reports a failed test.
-    let internal testFailed name message details =
-        sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']" (TeamCityWriter.encapsulateSpecialChars name)
-            (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details) |> TeamCityWriter.sendStrToTeamCity
-
-    /// Reports a failed comparison.
-    let internal comparisonFailure name message details expected actual =
-        sprintf
-            "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-            (TeamCityWriter.encapsulateSpecialChars name) (TeamCityWriter.encapsulateSpecialChars message) (TeamCityWriter.encapsulateSpecialChars details)
-            (TeamCityWriter.encapsulateSpecialChars expected) (TeamCityWriter.encapsulateSpecialChars actual) |> TeamCityWriter.sendStrToTeamCity
+    /// Reports a failed comparison
+    let internal comparisonFailure name message details expected actual = TeamCityWriter.sendComparisonFailed name message details expected actual
 
     /// Sends a warning message.
-    let internal warning message =
-        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='WARNING']" message
+    let internal warning message = TeamCityWriter.sendMessage "WARNING" message
 
     /// Sends an error message.
-    let internal error message =
-        TeamCityWriter.sendToTeamCity "##teamcity[message text='%s' status='ERROR']" message
+    let internal error message = TeamCityWriter.sendMessage "ERROR" message
 
     /// TeamCity build parameters
     ///
@@ -425,14 +385,14 @@ module TeamCity =
                     error text
                 | TraceData.LogMessage(text, newLine) | TraceData.TraceMessage(text, newLine) ->
                     ConsoleWriter.write false color newLine text
-                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path)
+                | TraceData.ImportData (ImportData.BuildArtifactWithName name, path) ->
                     publishNamedArtifact name path
                 | TraceData.ImportData (ImportData.BuildArtifact, path) ->
                     publishArtifact path
                 | TraceData.ImportData (ImportData.DotNetCoverage tool, path) ->
                     Import.sendDotNetCoverageForTool path tool
                 | TraceData.ImportData (typ, path) ->
-                    sendTeamCityImportData typ.TeamCityName path
+                    TeamCityWriter.sendImportData typ.TeamCityName path
                 | TraceData.BuildNumber number -> setBuildNumber number
 
     let defaultTraceListener =
