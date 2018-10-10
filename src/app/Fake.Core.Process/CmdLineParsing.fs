@@ -3,7 +3,7 @@
 module internal CmdLineParsing =
     let escapeCommandLineForShell (cmdLine:string) =
         sprintf "'%s'" (cmdLine.Replace("'", "'\\''"))
-    let windowsArgvToCommandLine args =
+    let windowsArgvToCommandLine shorten args =
         let escapeBackslashes (sb:System.Text.StringBuilder) (s:string) (lastSearchIndex:int) =
             // Backslashes must be escaped if and only if they precede a double quote.
             [ lastSearchIndex .. -1 .. 0]
@@ -14,25 +14,29 @@ module internal CmdLineParsing =
         
         let sb = new System.Text.StringBuilder()
         for (s:string) in args do
-            sb.Append('"') |> ignore
-            // Escape double quotes (") and backslashes (\).
-            let mutable searchIndex = 0
-            
-            // Put this test first to support zero length strings.
-            let mutable quoteIndex = 0
-            while searchIndex < s.Length && quoteIndex >= 0 do
+            if shorten && s.Length > 0 && s.IndexOfAny([|' '; '\"'; '\\'; '\t'|]) < 0 then
+                sb.Append s |> ignore
+                sb.Append " " |> ignore
+            else
+                sb.Append('"') |> ignore
+                // Escape double quotes (") and backslashes (\).
+                let mutable searchIndex = 0
+                
+                // Put this test first to support zero length strings.
+                let mutable quoteIndex = 0
+                while searchIndex < s.Length && quoteIndex >= 0 do
 
-                quoteIndex <- s.IndexOf('"', searchIndex)
-                if quoteIndex >= 0 then
-                    sb.Append(s, searchIndex, quoteIndex - searchIndex) |> ignore
-                    escapeBackslashes sb s (quoteIndex - 1)
-                    sb.Append('\\') |> ignore
-                    sb.Append('"') |> ignore
-                    searchIndex <- quoteIndex + 1
-            
-            sb.Append(s, searchIndex, s.Length - searchIndex) |> ignore
-            escapeBackslashes sb s (s.Length - 1)
-            sb.Append(@""" ") |> ignore
+                    quoteIndex <- s.IndexOf('"', searchIndex)
+                    if quoteIndex >= 0 then
+                        sb.Append(s, searchIndex, quoteIndex - searchIndex) |> ignore
+                        escapeBackslashes sb s (quoteIndex - 1)
+                        sb.Append('\\') |> ignore
+                        sb.Append('"') |> ignore
+                        searchIndex <- quoteIndex + 1
+                
+                sb.Append(s, searchIndex, s.Length - searchIndex) |> ignore
+                escapeBackslashes sb s (s.Length - 1)
+                sb.Append(@""" ") |> ignore
         
         sb.ToString(0, System.Math.Max(0, sb.Length - 1))
 
@@ -100,7 +104,7 @@ module internal CmdLineParsing =
         results.ToArray()
 
     let toProcessStartInfo args =
-        let cmd = windowsArgvToCommandLine args
+        let cmd = windowsArgvToCommandLine true args
         if Environment.isMono && Environment.isLinux then
             // See https://bugzilla.xamarin.com/show_bug.cgi?id=19296
             cmd.Replace("\\$", "\\\\$").Replace("\\`", "\\\\`")
@@ -108,15 +112,19 @@ module internal CmdLineParsing =
 
 type FilePath = string
 
+/// Helper functions for proper command line parsing
 module Args =
-    let toWindowsCommandLine args = CmdLineParsing.windowsArgvToCommandLine args
+    /// Convert the given argument list to a conforming windows command line string, escapes parameter in quotes if needed (currently always but this might change).
+    let toWindowsCommandLine args = CmdLineParsing.windowsArgvToCommandLine true args
+    /// Escape the given argument list according to a unix shell (bash)
     let toLinuxShellCommandLine args =
         System.String.Join(" ", args |> Seq.map CmdLineParsing.escapeCommandLineForShell)
-
+    /// Read a windows command line string into its arguments
     let fromWindowsCommandLine cmd = CmdLineParsing.windowsCommandLineToArgv cmd
-    
+
+/// Represents a list of arguments
 type Arguments = 
-    { Args : string array }
+    internal { Args : string array }
     static member Empty = { Args = [||] }
     /// See https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
     static member OfWindowsCommandLine cmd =
@@ -126,6 +134,15 @@ type Arguments =
     member x.ToWindowsCommandLine = Args.toWindowsCommandLine x.Args
     member x.ToLinuxShellCommandLine = Args.toLinuxShellCommandLine x.Args
 
-    static member OfArgs args = { Args = args }
+    /// Create a new arguments object from the given list of arguments
+    static member OfArgs (args:string seq) = { Args = args |> Seq.toArray }
+    /// Create a new arguments object from a given startinfo-conforming-escaped command line string.
     static member OfStartInfo cmd = Arguments.OfWindowsCommandLine cmd
-    member internal x.ToStartInfo = CmdLineParsing.toProcessStartInfo x.Args
+    /// Create a new command line string which can be used in a ProcessStartInfo object.
+    member x.ToStartInfo = CmdLineParsing.toProcessStartInfo x.Args
+
+module Arguments =
+    let withPrefix s (a:Arguments) =
+        Arguments.OfArgs(Seq.append s a.Args)
+    let append s (a:Arguments) =
+        Arguments.OfArgs(Seq.append a.Args s)

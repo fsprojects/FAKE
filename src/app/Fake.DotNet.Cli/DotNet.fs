@@ -779,7 +779,7 @@ module DotNet =
                             let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet; Version = None}))
                             result = version
                         with e ->
-                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %s" e.Message
+                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %O" e
                             false
                     )
                 ), passVersion

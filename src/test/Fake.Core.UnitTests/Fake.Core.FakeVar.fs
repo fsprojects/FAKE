@@ -71,8 +71,8 @@ let tests =
     testCase "Ability to define variable with no context when context required" <| fun _ ->
         let myGet, _, _ = FakeVar.define<string> "Test"
         try
-            myGet() |> ignore
-            Tests.failtest "Expected exception"
+            let result = myGet()
+            Tests.failtest (sprintf "Expected exception, but got '%A'" result)
         with e ->
             Expect.equal "Cannot retrieve 'Test' as we have no fake context" e.Message "Incorrect failure message for variable failure case"
   ]

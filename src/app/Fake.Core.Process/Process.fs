@@ -21,6 +21,10 @@ type ProcessResult =
     { ExitCode : int
       Results : ConsoleMessage list}
     member x.OK = x.ExitCode = 0
+
+    member internal x.ReportString =
+        String.Join("\n", x.Results |> Seq.map (fun m -> sprintf "%s: %s" (if m.IsError then "stderr" else "stdout") m.Message))
+                
     member x.Messages =
         x.Results
         |> List.choose (function
@@ -99,7 +103,7 @@ type ProcStartInfo =
 #endif
       /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
       WorkingDirectory : string
-      } 
+      }
     static member Create() =
       { Arguments = null
         CreateNoWindow = false
@@ -126,7 +130,7 @@ type ProcStartInfo =
         Verb = ""
 #endif
         WorkingDirectory = "" }
-    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]    
+    [<Obsolete("Please use 'Create()' instead and make sure to properly set Environment via Process-module funtions!")>]
     static member Empty = ProcStartInfo.Create()
     /// Sets the current environment variables.
     member x.WithEnvironment map =
@@ -249,6 +253,8 @@ module internal Kernel32 =
             "Error = " + string hresult + " when calling GetProcessImageFileName"
 #endif
 
+type AsyncProcessResult<'a> = { Result : System.Threading.Tasks.Task<'a>; Raw : System.Threading.Tasks.Task<RawProcessResult> }
+
 [<RequireQualifiedAccess>]
 module Process =
 
@@ -332,41 +338,9 @@ module Process =
     //        psi.Arguments <- getMonoArguments() + " \"" + psi.FileName + "\" " + psi.Arguments
     //        psi.FileName <- Environment.monoPath
 
-
-    /// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
-    /// If set to false (default) only mono processes will be changed.
-    let mutable AlwaysSetProcessEncoding = false
-     
-    // The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
-    /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
-    let mutable ProcessEncoding = Encoding.UTF8
-
-    let internal rawStartProcess (proc : Process) =
-        try
-            let result = proc.Start()
-            if not result then failwithf "Could not start process (Start() returned false)."
-        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
-        let startTime =
-            try proc.StartTime with
-            | :? System.InvalidOperationException
-            | :? System.ComponentModel.Win32Exception as e ->
-                let hasExited =
-                    try proc.HasExited with
-                    | :? System.InvalidOperationException
-                    | :? System.ComponentModel.Win32Exception -> false
-                if not hasExited then
-                    Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
-                DateTime.Now               
-        addStartedProcess(proc.Id, startTime) |> ignore
-
-    /// [omit]
-    [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
-    let startProcess (proc : Process) =
-        rawStartProcess proc
-        true
-
     /// [omit]
     //let mutable redirectOutputToTrace = false
+
     let private redirectOutputToTraceVar = "Fake.Core.Process.redirectOutputToTrace"
     let private tryGetRedirectOutputToTrace, _, public setRedirectOutputToTrace = 
         Fake.Core.FakeVar.defineAllowNoContext redirectOutputToTraceVar
@@ -388,6 +362,119 @@ module Process =
         | Some v -> v
         | None ->
           Fake.Core.Context.isFakeContext()
+
+    /// If set to true the ProcessHelper will start all processes with a custom ProcessEncoding.
+    /// If set to false (default) only mono processes will be changed.
+    let mutable AlwaysSetProcessEncoding = false
+     
+    // The ProcessHelper will start all processes with this encoding if AlwaysSetProcessEncoding is set to true.
+    /// If AlwaysSetProcessEncoding is set to false (default) only mono processes will be changed.
+    let mutable ProcessEncoding = Encoding.UTF8
+
+    let inline internal recordProcess (proc:Process) =
+        let startTime =
+            try proc.StartTime with
+            | :? System.InvalidOperationException
+            | :? System.ComponentModel.Win32Exception as e ->
+                let hasExited =
+                    try proc.HasExited with
+                    | :? System.InvalidOperationException
+                    | :? System.ComponentModel.Win32Exception -> false
+                if not hasExited then
+                    Trace.traceFAKE "Error while retrieving StartTime of started process: %O" e
+                DateTime.Now               
+        addStartedProcess(proc.Id, startTime) |> ignore
+
+    let inline internal rawStartProcessNoRecord (proc:Process) =
+        if String.isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
+            if Directory.Exists proc.StartInfo.WorkingDirectory |> not then
+                sprintf "Start of process '%s' failed. WorkingDir '%s' does not exist." proc.StartInfo.FileName 
+                    proc.StartInfo.WorkingDirectory
+                |> DirectoryNotFoundException
+                |> raise
+        try
+            let result = proc.Start()
+            if not result then failwithf "Could not start process (Start() returned false)."
+        with ex -> raise <| exn(sprintf "Start of process '%s' failed." proc.StartInfo.FileName, ex)
+
+    let internal rawStartProcess (proc : Process) =
+        rawStartProcessNoRecord proc
+        recordProcess proc
+
+    let mutable internal processStarter =
+        RawProc.createProcessStarter (fun p ->
+            let si = p.StartInfo
+            if Environment.isMono || AlwaysSetProcessEncoding then
+                si.StandardOutputEncoding <- ProcessEncoding
+                si.StandardErrorEncoding <- ProcessEncoding
+
+            if shouldEnableProcessTracing() then 
+                let commandLine = 
+                    sprintf "%s> \"%s\" %s" si.WorkingDirectory si.FileName si.Arguments
+                //Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
+                Trace.tracefn "%s (In: %b, Out: %b, Err: %b)" commandLine si.RedirectStandardInput si.RedirectStandardOutput si.RedirectStandardError
+
+            rawStartProcessNoRecord p
+            recordProcess p)
+
+    [<RequireQualifiedAccess>]
+    module internal Proc =
+        open Fake.Core.ProcessHelpers
+        let startRaw (c:CreateProcess<_>) =
+          async {
+            let hook = c.Hook
+            
+            let state = hook.PrepareState ()
+            let! exitCode =
+                async {
+                    let procRaw =
+                      { Command = c.Command
+                        WorkingDirectory = c.WorkingDirectory
+                        Environment = c.Environment
+                        Streams = c.Streams
+                        OutputHook =
+                            { new IRawProcessHook with
+                                member x.Prepare streams = hook.PrepareStreams(state, streams)
+                                member x.OnStart (p) = hook.ProcessStarted (state, p) } }
+
+                    let! e = processStarter.Start(procRaw)
+                    return e
+                }
+            
+            let output =
+                hook.RetrieveResult (state, exitCode)
+                |> Async.StartImmediateAsTask
+            async {
+                try
+                    let all = System.Threading.Tasks.Task.WhenAll([exitCode :> System.Threading.Tasks.Task; output:> System.Threading.Tasks.Task])
+                    let! streams =
+                        all.ContinueWith (new System.Func<System.Threading.Tasks.Task, unit> (fun t -> ()))
+                        |> Async.AwaitTaskWithoutAggregate
+                    state.Dispose()
+                with e -> Trace.traceFAKE "Error in state dispose: %O" e }
+                |> Async.Start
+            return { Result = output; Raw = exitCode }
+          }
+          // Immediate makes sure we set the ref cell before we return the task...
+          |> Async.StartImmediateAsTask
+        
+        let start c = 
+            async {
+                let! result = startRaw c
+                return! result.Result |> Async.AwaitTaskWithoutAggregate
+            }
+            |> Async.StartImmediateAsTask
+        let startRawSync c = (startRaw c).Result
+        
+        let startAndAwait c = start c |> Async.AwaitTaskWithoutAggregate
+        let run c = startAndAwait c |> Async.RunSynchronously
+
+    /// [omit]
+    [<Obsolete("Do not use. If you have to use this, open an issue and explain why.")>]
+    let startProcess (proc : Process) =
+        rawStartProcess proc
+        true
+
     let defaultEnvVar = ProcStartInfoData.defaultEnvVar
 
     let createEnvironmentMap () = ProcStartInfoData.createEnvironmentMap()
@@ -466,12 +553,20 @@ module Process =
         |> setEnvironmentVariable defaultEnvVar defaultEnvVar
 
 
+    let internal getProcI config =
+        let startInfo : ProcStartInfo =
+            config { ProcStartInfo.Create() with UseShellExecute = false }
+        CreateProcess.ofStartInfo startInfo.AsStartInfo
+        //|> CreateProcess.getProcess
+
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let inline getProc config =
         let startInfo : ProcStartInfo =
             config { ProcStartInfo.Create() with UseShellExecute = false }
         let proc = new Process()
         proc.StartInfo <- startInfo.AsStartInfo
         proc
+
     /// Runs the given process and returns the exit code.
     /// ## Parameters
     ///
@@ -480,51 +575,33 @@ module Process =
     ///  - `silent` - If this flag is set then the process output is redirected to the given output functions `errorF` and `messageF`.
     ///  - `errorF` - A function which will be called with the error log.
     ///  - `messageF` - A function which will be called with the message log.
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let execRaw configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
-        use proc = getProc configProcessStartInfoF
+        let cp = getProcI configProcessStartInfoF
         
-        //platformInfoAction proc.StartInfo
-        if String.isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
-            if Directory.Exists proc.StartInfo.WorkingDirectory |> not then
-                sprintf "Start of process '%s' failed. WorkingDir '%s' does not exist." proc.StartInfo.FileName 
-                    proc.StartInfo.WorkingDirectory
-                |> DirectoryNotFoundException
-                |> raise
-        if silent then 
-            proc.StartInfo.RedirectStandardOutput <- true
-            proc.StartInfo.RedirectStandardError <- true
-            if Environment.isMono || AlwaysSetProcessEncoding then
-                proc.StartInfo.StandardOutputEncoding <- ProcessEncoding
-                proc.StartInfo.StandardErrorEncoding  <- ProcessEncoding
-            proc.ErrorDataReceived.Add(fun d -> 
-                if isNull d.Data |> not then errorF d.Data)
-            proc.OutputDataReceived.Add(fun d -> 
-                if isNull d.Data |> not then messageF d.Data)
-        if shouldEnableProcessTracing() && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
-            Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
-        rawStartProcess proc
-        if silent then 
-            proc.BeginErrorReadLine()
-            proc.BeginOutputReadLine()
-        if timeOut = TimeSpan.MaxValue then proc.WaitForExit()
-        else 
-            if not <| proc.WaitForExit(int timeOut.TotalMilliseconds) then 
-                try 
-                    proc.Kill()
-                with exn ->
-                    Trace.traceError 
-                    <| sprintf "Could not kill process %s  %s after timeout: %O" proc.StartInfo.FileName 
-                           proc.StartInfo.Arguments exn
-                failwithf "Process %s %s timed out." proc.StartInfo.FileName proc.StartInfo.Arguments
-        // See http://stackoverflow.com/a/16095658/1149924 why WaitForExit must be called twice.
-        proc.WaitForExit()
-        proc.ExitCode
+        let cp =
+            if silent then
+                cp
+                |> CreateProcess.redirectOutput
+                |> CreateProcess.withOutputEvents
+                    (fun m -> if isNull m |> not then messageF m)
+                    (fun m -> if isNull m |> not then errorF m)
+                |> CreateProcess.mapResult (fun p -> ())
+            else
+                cp
+
+        let result =
+            cp
+            |> CreateProcess.withTimeout timeOut
+            |> Proc.run
+        result.ExitCode
 
     /// Runs the given process and returns the process result.
     /// ## Parameters
     ///
     ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
     ///  - `timeOut` - The timeout for the process.
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let execWithResult configProcessStartInfoF timeOut = 
         let messages = ref []
         
@@ -550,6 +627,7 @@ module Process =
     ///                       info.Arguments <- "-v") (TimeSpan.FromMinutes 5.0)
     ///     
     ///     if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let execSimple configProcessStartInfoF timeOut = 
         execRaw configProcessStartInfoF timeOut (getRedirectOutputToTrace()) Trace.traceError Trace.trace
 
@@ -577,30 +655,38 @@ module Process =
         myExecElevated cmd args timeOut
 
     /// Starts the given process and returns immediatly.
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let fireAndForget configProcessStartInfoF =
-        use proc = getProc configProcessStartInfoF
-        rawStartProcess proc
+        getProcI configProcessStartInfoF
+        |> Proc.startRawSync
+        |> ignore
+        //rawStartProcess proc
 
     /// Runs the given process, waits for its completion and returns if it succeeded.
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let directExec configProcessStartInfoF = 
-        use proc = getProc configProcessStartInfoF
-        rawStartProcess proc
-        proc.WaitForExit()
-        proc.ExitCode = 0
+        let result =
+            getProcI configProcessStartInfoF
+            |> Proc.run
+        result.ExitCode = 0
 
     /// Starts the given process and forgets about it.
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let start configProcessStartInfoF = 
-        use proc = getProc configProcessStartInfoF
-        rawStartProcess proc
+        getProcI configProcessStartInfoF
+        |> Proc.startRawSync
+        |> ignore
 
     /// Adds quotes around the string
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let quote (str:string) =
         // "\"" + str.Replace("\"","\\\"") + "\""
-        CmdLineParsing.windowsArgvToCommandLine [ str ]
+        CmdLineParsing.windowsArgvToCommandLine true [ str ]
 
     /// Adds quotes around the string if needed
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let quoteIfNeeded str = quote str
         //if String.isNullOrEmpty str then ""
         //elif str.Contains " " then quote str
@@ -608,32 +694,39 @@ module Process =
 
     /// Adds quotes and a blank around the string´.
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let toParam x = " " + quoteIfNeeded x
 
     /// Use default Parameters
     /// [omit]
+    [<Obsolete "Use 'id' instead">]
     let UseDefaults = id
 
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let stringParam (paramName, paramValue) = 
         if String.isNullOrEmpty paramValue then None
         else Some(paramName, paramValue)
 
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let multipleStringParams paramName = Seq.map (fun x -> stringParam (paramName, x)) >> Seq.toList
 
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let optionParam (paramName, paramValue) = 
         match paramValue with
         | Some x -> Some(paramName, x.ToString())
         | None -> None
 
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let boolParam (paramName, paramValue) = 
         if paramValue then Some(paramName, null)
         else None
 
     /// [omit]
+    [<Obsolete "Use the Arguments and Args modules/types instead">]
     let parametersToString flagPrefix delimiter parameters = 
         parameters
         |> Seq.choose id
@@ -646,70 +739,25 @@ module Process =
             else 
               [ flagPrefix + paramName
                 paramValue ])
-        |> CmdLineParsing.windowsArgvToCommandLine
+        |> CmdLineParsing.windowsArgvToCommandLine true
 
-    /// Searches the given directories for all occurrences of the given file name
-    /// [omit]
-    let findFiles dirs file = 
-        let files = 
-            dirs
-            |> Seq.map (fun (path : string) -> 
-                   let dir = 
-                       path
-                       |> String.replace "[ProgramFiles]" Environment.ProgramFiles
-                       |> String.replace "[ProgramFilesX86]" Environment.ProgramFilesX86
-                       |> String.replace "[SystemRoot]" Environment.SystemRoot
-                       |> DirectoryInfo.ofPath
-                   if not dir.Exists then ""
-                   else 
-                       let fi = dir.FullName @@ file
-                                |> FileInfo.ofPath
-                       if fi.Exists then fi.FullName
-                       else "")
-            |> Seq.filter ((<>) "")
-            |> Seq.cache
-        files
+    [<Obsolete "Use ProcessUtils.findFiles instead">]
+    let findFiles dirs file = ProcessUtils.findFiles dirs file
 
-    /// Searches the given directories for all occurrences of the given file name
-    /// [omit]
-    let tryFindFile dirs file =
-        let files = findFiles dirs file
-        if not (Seq.isEmpty files) then Some(Seq.head files)
-        else None
+    [<Obsolete "Use ProcessUtils.tryFindFile instead">]
+    let tryFindFile dirs file = ProcessUtils.tryFindFile dirs file
 
-    /// Searches the given directories for the given file, failing if not found.
-    /// [omit]
-    let findFile dirs file = 
-        match tryFindFile dirs file with
-        | Some found -> found
-        | None -> failwithf "%s not found in %A." file dirs
+    [<Obsolete "Use ProcessUtils.findFile instead">]
+    let findFile dirs file = ProcessUtils.findFile dirs file
 
-    /// Searches in PATH for the given file and returnes the result ordered by precendence
+    [<Obsolete "Use ProcessUtils.findFilesOnPath instead">]
     let findFilesOnPath (file : string) : string seq =
-        Environment.pathDirectories
-        |> Seq.filter Path.isValidPath
-        |> Seq.append [ "." ]
-        |> fun path ->
-            // See https://unix.stackexchange.com/questions/280528/is-there-a-unix-equivalent-of-the-windows-environment-variable-pathext
-            if Environment.isWindows then
-                // Prefer PATHEXT, see https://github.com/fsharp/FAKE/issues/1911
-                // and https://github.com/fsharp/FAKE/issues/1899
-                Environment.environVarOrDefault "PATHEXT" ".COM;.EXE;.BAT"
-                |> String.split ';'
-                |> Seq.collect (fun postFix -> findFiles path (file + postFix))
-                |> fun findings -> Seq.append findings (findFiles path file)
-            else findFiles path file
+        ProcessUtils.findFilesOnPath file
 
-    /// Searches the current directory and the directories within the PATH
-    /// environment variable for the given file. If successful returns the full
-    /// path to the file.
-    /// ## Parameters
-    ///  - `file` - The file to locate
+    [<Obsolete "Use ProcessUtils.tryFindFileOnPath instead">]
     let tryFindFileOnPath (file : string) : string option =
-        findFilesOnPath file |> Seq.tryHead
+        ProcessUtils.tryFindFileOnPath file
 
-    /// Returns the AppSettings for the key - Splitted on ;
-    /// [omit]
     [<Obsolete("This is no longer supported on dotnetcore.")>]
     let appSettings (key : string) (fallbackValue : string) = 
         let value = 
@@ -725,22 +773,17 @@ module Process =
             else fallbackValue
         value.Split([| ';' |], StringSplitOptions.RemoveEmptyEntries)
 
-    /// Tries to find the tool via Env-Var. If no path has the right tool we are trying the PATH system variable.
-    let tryFindTool envVar tool =
-        match Environment.environVarOrNone envVar with
-        | Some path -> Some path
-        | None -> tryFindFileOnPath tool
+    [<Obsolete "Use ProcessUtils.tryFindTool instead">]
+    let tryFindTool envVar tool = ProcessUtils.tryFindTool envVar tool
 
-    /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
-    /// [omit]
-    let tryFindPath settingsName fallbackValue tool = 
+    [<Obsolete "Use ProcessUtils.tryFindPath instead">]
+    let tryFindPath settingsName fallbackValue tool =
         let paths = appSettings settingsName fallbackValue
         match tryFindFile paths tool with
         | Some path -> Some path
         | None -> tryFindFileOnPath tool
 
-    /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
-    /// [omit]
+    [<Obsolete "Use ProcessUtils.findPath instead">]
     let findPath settingsName fallbackValue tool = 
         match tryFindPath settingsName fallbackValue tool with
         | Some file -> file
@@ -752,12 +795,13 @@ module Process =
             else str
         args
         |> Seq.collect (fun (k, v) -> [ delimit k; v ])
-        |> CmdLineParsing.windowsArgvToCommandLine
+        |> CmdLineParsing.windowsArgvToCommandLine true
 
     /// Execute an external program asynchronously and return the exit code,
     /// logging output and error messages to FAKE output. You can compose the result
     /// with Async.Parallel to run multiple external programs at once, but be
     /// sure that none of them depend on the output of another.
+    [<System.Obsolete("use the CreateProcess APIs instead.")>]
     let asyncShellExec (args : ExecParams) = 
         async { 
             if String.isNullOrEmpty args.Program then invalidArg "args" "You must specify a program to run!"
@@ -855,9 +899,8 @@ module Process =
     /// [omit]
     let shellExec args = args |> asyncShellExec |> Async.RunSynchronously
 
-
     let internal monoPath, monoVersion =
-        match tryFindTool "MONO" "mono" with
+        match ProcessUtils.tryFindTool "MONO" "mono" with
         | Some path ->
             let result =
                 try execWithResult(fun proc ->
@@ -987,3 +1030,67 @@ module ProcStartInfoExtensions =
 #endif
         /// When UseShellExecute is true, the fully qualified name of the directory that contains the process to be started. When the UseShellExecute property is false, the working directory for the process to be started. The default is an empty string ("").
         member x.WithWorkingDirectory dir = { x with WorkingDirectory = dir }
+
+
+
+
+
+[<RequireQualifiedAccess>]
+module Proc =
+    open Fake.Core.ProcessHelpers
+    let startRaw (c:CreateProcess<_>) = Process.Proc.startRaw c
+(*
+        let o, realResult =
+            match output with
+            | Some f -> f, true
+            | None -> { Output = ""; Error = "" }, false
+
+        let strip (s:string) =
+            let subString (s:string) =
+                let splitMax = 300
+                let half = splitMax / 2
+                if s.Length < splitMax then s
+                else sprintf "%s [...] %s" (s.Substring(0, half)) (s.Substring(s.Length - half))
+                
+            if s.Length < 1000 then
+                s
+            else
+                let splits = s.Split([|"\n"|], System.StringSplitOptions.None)
+                if splits.Length <= 1 then
+                    // We need to use substring
+                    subString s
+                else
+                    splits
+                    |> Seq.take 10
+                    |> fun s -> Seq.append s [" [ ... ] "]
+                    |> fun s -> Seq.append s (splits |> Seq.skip (splits.Length - 10))
+                    |> Seq.map subString
+                    |> fun s -> System.String.Join("\n", s)
+                    
+        let strippedOutput = lazy strip o.Output
+        let strippedError = lazy strip o.Error
+        if realResult then
+            Trace.tracefn "Process Output: %s, Error: %s" strippedOutput.Value strippedError.Value
+
+        let result =
+            try c.GetResult o
+            with e ->
+                let msg =
+                    if realResult then
+                        sprintf "Could not parse output from process, StdOutput: %s, StdError %s" strippedOutput.Value strippedError.Value
+                    else
+                        "Could not parse output from process, but RawOutput was not retrieved."
+                raise <| System.Exception(msg, e)
+        
+        do! hook.ParseSuccess exitCode
+        return { ExitCode = exitCode; CreateProcess = c; Result = result }*)
+    
+    let startRawSync c = Process.Proc.startRawSync c
+    let start c = Process.Proc.start c
+
+    /// Convenience method when you immediatly want to await the result of 'start', just note that
+    /// when used incorrectly this might lead to race conditions 
+    /// (ie if you use StartAsTask and access reference cells in CreateProcess after that returns)
+    let startAndAwait c = Process.Proc.startAndAwait c
+
+    let run c = Process.Proc.run
