@@ -405,9 +405,8 @@ module TeamCity =
                     reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState TagStatus.Warning ->
                     warning "Setting build state to warning."
-                    //reportBuildStatus "SUCCESS" "{build.status.text}"
                 | TraceData.BuildState TagStatus.Failed ->
-                    reportBuildStatus "FAILURE" (sprintf "%s - {build.status.text}" ("Failed"))
+                    reportBuildStatus "FAILURE" "Failure - {build.status.text}"
                 | TraceData.CloseTag (KnownTags.Test name, time, _) ->
                     finishTestCase name time
                 | TraceData.OpenTag (KnownTags.TestSuite name, _) ->
@@ -418,9 +417,6 @@ module TeamCity =
                     match description with
                     | Some d -> TeamCityWriter.sendOpenBlock tag.Name (sprintf "%s: %s" tag.Type d)
                     | _ -> TeamCityWriter.sendOpenBlock tag.Name tag.Type
-                | TraceData.CloseTag (tag, _, TagStatus.Failed) ->
-                    TeamCityWriter.sendCloseBlock tag.Name
-                    //reportBuildStatus "FAILURE" (sprintf "Failure in %s" tag.Name)
                 | TraceData.CloseTag (tag, _, _) ->
                     TeamCityWriter.sendCloseBlock tag.Name
                 | TraceData.ImportantMessage text ->
