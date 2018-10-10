@@ -57,6 +57,9 @@ module TeamCity =
     /// Sends an error to TeamCity
     let sendTeamCityError error = TeamCityWriter.sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
+    /// Reports build problem
+    let reportBuildProblem message = (sprintf "##teamcity[buildProblem description='%s']" (TeamCityWriter.encapsulateSpecialChars message)) |> TeamCityWriter.sendStrToTeamCity
+
     let internal sendTeamCityImportData typ file = TeamCityWriter.sendToTeamCity2 "##teamcity[importData type='%s' file='%s']" typ file
 
     module internal Import =
