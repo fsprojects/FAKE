@@ -23,7 +23,9 @@ let tests =
         | RawCommand(file, args) -> file, args
         | _ -> failwithf "expected RawCommand"
         //|> ArgumentHelper.checkIfMono
-    
-      Expect.equal file "specflow\\specflow.exe" "Expected specflow.exe"
-      Expect.equal cp.Command.CommandLine "specflow\\specflow.exe MsTestExecutionReport" "expected proper command line"
+      let expectedPath =
+        if Path.Combine("specflow", "specflow.exe")
+      Expect.equal file expectedPath "Expected specflow.exe"
+      Expect.equal cp.Command.CommandLine 
+        (sprintf "%s MsTestExecutionReport" expectedPath) "expected proper command line"
   ]
