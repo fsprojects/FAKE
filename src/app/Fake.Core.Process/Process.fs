@@ -1093,4 +1093,4 @@ module Proc =
     /// (ie if you use StartAsTask and access reference cells in CreateProcess after that returns)
     let startAndAwait c = Process.Proc.startAndAwait c
 
-    let run c = Process.Proc.run
+    let run c = Process.Proc.run c

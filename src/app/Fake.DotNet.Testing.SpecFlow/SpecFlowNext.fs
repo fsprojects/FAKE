@@ -59,14 +59,8 @@ let private SpecFlowDefaults = {
     XsltFile =          None
 }
 
-// Runs SpecFlow on a project.
-/// ## Parameters
-///
-///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
-let run setParams =    
+let internal createProcess setParams =
     let parameters = setParams SpecFlowDefaults
-
-    use __ = Trace.traceTask "SpecFlow " (parameters.SubCommand |> string)
     let tool = parameters.ToolPath </> parameters.ToolName
 
     let yieldIfSome paramName value =
@@ -80,8 +74,9 @@ let run setParams =
         [
             yield parameters.SubCommand |> string
             
-            yield "--ProjectFile"
-            yield parameters.ProjectFile
+            if not (isNull parameters.ProjectFile) then
+                yield "--ProjectFile"
+                yield parameters.ProjectFile
             
             yield! parameters.BinFolder 
                    |> yieldIfSome "binFolder"
@@ -106,16 +101,24 @@ let run setParams =
             yield! parameters.XsltFile
                    |> yieldIfSome "XsltFile"
         ]
-        |> Args.toWindowsCommandLine
+        |> Arguments.OfArgs
+        //|> Args.toWindowsCommandLine
 
-    Trace.trace (tool + " " + args)
+    Trace.trace (tool + " " + args.ToStartInfo)
 
-    let processStartInfo info = 
-         { info with FileName = tool
-                     WorkingDirectory = parameters.WorkingDir
-                     Arguments = args }
+    parameters,
+    CreateProcess.fromCommand (RawCommand(tool, args))
+    |> CreateProcess.withWorkingDirectory parameters.WorkingDir
+    |> CreateProcess.ensureExitCode
 
-    match Process.execSimple processStartInfo System.TimeSpan.MaxValue with
-    | 0 -> ()
-    | errorNumber -> failwithf "SpecFlow %s failed. Process finished with exit code %i" (parameters.SubCommand |> string) errorNumber
+// Runs SpecFlow on a project.
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
+let run setParams =
+    let parameters, cp = createProcess setParams
+    use __ = Trace.traceTask "SpecFlow " (parameters.SubCommand |> string)
+    cp
+    |> Proc.run
+    |> ignore
     __.MarkSuccess()

@@ -4,6 +4,9 @@ module internal CmdLineParsing =
     let escapeCommandLineForShell (cmdLine:string) =
         sprintf "'%s'" (cmdLine.Replace("'", "'\\''"))
     let windowsArgvToCommandLine shorten args =
+        if isNull args then
+            invalidArg "args" "'args' cannot be null"
+        
         let escapeBackslashes (sb:System.Text.StringBuilder) (s:string) (lastSearchIndex:int) =
             // Backslashes must be escaped if and only if they precede a double quote.
             [ lastSearchIndex .. -1 .. 0]
@@ -14,6 +17,8 @@ module internal CmdLineParsing =
         
         let sb = new System.Text.StringBuilder()
         for (s:string) in args do
+            if isNull s then
+                invalidArg "args" "'args' cannot contain null"
             if shorten && s.Length > 0 && s.IndexOfAny([|' '; '\"'; '\\'; '\t'|]) < 0 then
                 sb.Append s |> ignore
                 sb.Append " " |> ignore
