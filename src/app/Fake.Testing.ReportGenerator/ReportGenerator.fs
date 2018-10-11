@@ -140,13 +140,13 @@ let internal createProcess setParams (reports : string seq) =
         ]
         |> Arguments.OfArgs
 
-    Trace.trace (tool + " " + args.ToStartInfo)
-
     CreateProcess.fromCommand (RawCommand(tool, args))
     |> CreateProcess.withFramework
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
-
+    |> fun command -> 
+        Trace.trace command.CommandLine
+        command
 
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters
