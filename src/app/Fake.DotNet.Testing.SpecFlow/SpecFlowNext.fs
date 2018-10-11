@@ -25,7 +25,6 @@ type SubCommand =
 /// SpecFlow execution parameter type.
 type SpecFlowParams = { 
     SubCommand:         SubCommand
-    ProjectFile:        string
     ToolName:           string
     ToolPath:           string
     WorkingDir:         string
@@ -45,7 +44,6 @@ let private currentDirectory = Directory.GetCurrentDirectory ()
 /// SpecFlow default execution parameters.
 let private SpecFlowDefaults = { 
     SubCommand =        GenerateAll
-    ProjectFile =       null
     ToolName =          toolname
     ToolPath =          Tools.findToolFolderInSubPath toolname (currentDirectory </> "tools" </> "SpecFlow")
     WorkingDir =        null
@@ -59,7 +57,12 @@ let private SpecFlowDefaults = {
     XsltFile =          None
 }
 
-let internal createProcess setParams =
+let internal createProcess setParams projectFile =
+    if projectFile |> String.isNullOrWhiteSpace
+    then
+        Trace.traceError "SpecFlow needs a non empty project file!"
+        failwithf "SpecFlow needs a non empty project file!"
+
     let parameters = setParams SpecFlowDefaults
     let tool = parameters.ToolPath </> parameters.ToolName
 
@@ -74,9 +77,8 @@ let internal createProcess setParams =
         [
             yield parameters.SubCommand |> string
             
-            if not (isNull parameters.ProjectFile) then
-                yield "--ProjectFile"
-                yield parameters.ProjectFile
+            yield "--ProjectFile"
+            yield projectFile
             
             yield! parameters.BinFolder 
                    |> yieldIfSome "binFolder"
@@ -95,28 +97,30 @@ let internal createProcess setParams =
             yield! parameters.FeatureLanguage 
                    |> yieldIfSome "FeatureLanguage"
 
-            if parameters.Verbose then yield "verbose"
-            if parameters.ForceRegeneration then yield "force"
+            if parameters.Verbose then yield "--verbose"
+            if parameters.ForceRegeneration then yield "--force"
 
             yield! parameters.XsltFile
                    |> yieldIfSome "XsltFile"
         ]
         |> Arguments.OfArgs
-        //|> Args.toWindowsCommandLine
-
-    Trace.trace (tool + " " + args.ToStartInfo)
 
     parameters,
     CreateProcess.fromCommand (RawCommand(tool, args))
+    |> CreateProcess.withFramework
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
+    |> fun command ->
+        Trace.trace command.CommandLine
+        command
 
 // Runs SpecFlow on a project.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
-let run setParams =
-    let parameters, cp = createProcess setParams
+///  - `projectFile` - The required project file.
+let run setParams projectFile =
+    let parameters, cp = projectFile |> createProcess setParams
     use __ = Trace.traceTask "SpecFlow " (parameters.SubCommand |> string)
     cp
     |> Proc.run

@@ -28,16 +28,16 @@ open Fake.DotNet.Testing
 let specsProject = "IntegrationTests.csproj"
 
 Target.create "Regenerate Test Classes" (fun _ ->
-    SpecFlowNext.run (fun p ->
-        { p with ProjectFile = specsProject })
+    specsProject |> SpecFlowNext.run id
 )
 
 Target.create "Create StepDefinition Report" (fun _ ->
-    SpecFlowNext.run (fun p ->
-        { p with SubCommand = StepDefinitionReport
-                 ProjectFile = specsProject
-                 BinFolder = Some "bin/Debug"
-                 OutputFile = Some "StepDefinitionReport.html" })
+    specsProject
+    |>  SpecFlowNext.run (fun p ->
+            { p with 
+                SubCommand = StepDefinitionReport
+                BinFolder = Some "bin/Debug"
+                OutputFile = Some "StepDefinitionReport.html" })
 )
 
 Target.create "Default" Target.DoNothing
