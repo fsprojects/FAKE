@@ -105,13 +105,14 @@ let internal createProcess setParams projectFile =
         ]
         |> Arguments.OfArgs
 
-    Trace.trace (tool + " " + args.ToStartInfo)
-
     parameters,
     CreateProcess.fromCommand (RawCommand(tool, args))
     |> CreateProcess.withFramework
     |> CreateProcess.withWorkingDirectory parameters.WorkingDir
     |> CreateProcess.ensureExitCode
+    |> fun command ->
+        Trace.trace command.CommandLine
+        command
 
 // Runs SpecFlow on a project.
 /// ## Parameters
