@@ -21,7 +21,7 @@ let runCreateProcess setParams =
   let expectedPath = Path.Combine("specflow", "specflow.exe")
   Expect.equal file expectedPath "Expected specflow.exe"
 
-  expectedPath, (Command.RawCommand(file, Arguments.OfArgs args)).CommandLine
+  expectedPath, (RawCommand(file, args)).CommandLine
 
 [<Tests>]
 let tests =

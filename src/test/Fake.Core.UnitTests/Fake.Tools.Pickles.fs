@@ -22,7 +22,7 @@ let runCreateProcess setParams =
   let expectedPath = Path.Combine("pickles", "pickles.exe")
   Expect.equal file expectedPath "Expected pickles.exe"
   
-  expectedPath, (RawCommand(file,args)).CommandLine
+  expectedPath, (RawCommand(file, args)).CommandLine
 
 
 [<Tests>]
