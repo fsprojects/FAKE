@@ -99,7 +99,7 @@ module internal TeamCityWriter =
     let internal sendPublishArtifact path = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[publishArtifacts '%s']", path))
 
     /// Publish Named Artifact
-    let internal sendPublishNamedArtifact name path = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[publishArtifacts '%s' => '%s']", name, path))
+    let internal sendPublishNamedArtifact name path = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[publishArtifacts '%s' => '%s']", path, name))
 
     /// Build Number
     let internal sendBuildNumber buildNumber = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[buildNumber '%s']", buildNumber))
