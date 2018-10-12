@@ -1033,12 +1033,29 @@ module ProcStartInfoExtensions =
         member x.WithWorkingDirectory dir = { x with WorkingDirectory = dir }
 
 
-
-
-
+/// Module to start or run processes, used in combination with the `CreateProcess` API.
+/// 
+/// ### Example
+/// 
+///     #r "paket: 
+///     nuget Fake.Core.Process //"
+///     open Fake.Core
+///     CreateProcess.fromRawCommand "./folder/mytool.exe" ["arg1"; "arg2"]
+///     |> Proc.run
+///     |> ignore
+/// 
 [<RequireQualifiedAccess>]
 module Proc =
     open Fake.Core.ProcessHelpers
+
+    /// Starts a process. The process has been started successfully after the returned task has been completed.
+    /// After the task has been completed you retrieve two other tasks:
+    /// - One `Raw`-Task to indicate when the process exited (and return the exit-code for example)
+    /// - One `Result`-Task for the final result object.
+    /// 
+    /// Note: The `Result` task might finish while the `Raw` task is still running, 
+    /// this enables you to work with the result object before the process has exited.
+    /// For example consider a long running process where you are only interested in the first couple of output lines
     let startRaw (c:CreateProcess<_>) = Process.Proc.startRaw c
 (*
         let o, realResult =
@@ -1086,7 +1103,11 @@ module Proc =
         do! hook.ParseSuccess exitCode
         return { ExitCode = exitCode; CreateProcess = c; Result = result }*)
     
+    /// Similar to `startRaw` but waits until the process has been started. 
     let startRawSync c = Process.Proc.startRawSync c
+
+    /// Starts the given process and waits for the `Result` task. (see `startRaw` documentation). 
+    /// In most common scenarios the `Result` includes the `Raw` task or the exit-code one way or another.
     let start c = Process.Proc.start c
 
     /// Convenience method when you immediatly want to await the result of 'start', just note that
@@ -1094,4 +1115,5 @@ module Proc =
     /// (ie if you use StartAsTask and access reference cells in CreateProcess after that returns)
     let startAndAwait c = Process.Proc.startAndAwait c
 
+    /// Like `start` but waits for the result synchronously.
     let run c = Process.Proc.run c
