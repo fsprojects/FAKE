@@ -14,18 +14,23 @@ module ProcessUtils =
         let files = 
             dirs
             |> Seq.map (fun (path : string) -> 
-                   let dir = 
+                   let replacedPath = 
                        path
                        |> String.replace "[ProgramFiles]" Environment.ProgramFiles
                        |> String.replace "[ProgramFilesX86]" Environment.ProgramFilesX86
                        |> String.replace "[SystemRoot]" Environment.SystemRoot
-                       |> DirectoryInfo.ofPath
-                   if not dir.Exists then ""
-                   else 
-                       let fi = dir.FullName @@ file
-                                |> FileInfo.ofPath
-                       if fi.Exists then fi.FullName
-                       else "")
+                   try
+                       let dir =
+                           replacedPath   
+                           |> DirectoryInfo.ofPath
+                       if not dir.Exists then ""
+                       else 
+                           let fi = dir.FullName @@ file
+                                    |> FileInfo.ofPath
+                           if fi.Exists then fi.FullName
+                           else ""
+                   with e ->
+                       raise <| exn(sprintf "Error while trying to find files like '%s' in path '%s' (replaced '%s'). Please report this issue to FAKE and reference https://github.com/fsharp/FAKE/issues/2136." file path replacedPath, e))
             |> Seq.filter ((<>) "")
             |> Seq.cache
         files
