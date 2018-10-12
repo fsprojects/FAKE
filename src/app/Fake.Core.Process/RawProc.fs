@@ -105,6 +105,7 @@ type internal IRawProcessHook =
 type internal RawCreateProcess =
     internal {
         Command : Command
+        TraceCommand : bool
         WorkingDirectory : string option
         Environment : EnvMap option
         Streams : StreamSpecs
@@ -189,7 +190,7 @@ module internal RawProc =
                         toolProcess.EnableRaisingEvents <- true
                         setEcho true |> ignore
                         try
-                            startProcessRaw toolProcess
+                            startProcessRaw c toolProcess
                         finally
                             setEcho false |> ignore
                         c.OutputHook.OnStart (toolProcess)

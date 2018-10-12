@@ -401,14 +401,14 @@ module Process =
         rawStartProcessNoRecord proc
         recordProcess proc
 
-    let mutable internal processStarter =
-        RawProc.createProcessStarter (fun p ->
+    let internal processStarter = 
+        RawProc.createProcessStarter (fun (c:RawCreateProcess) (p:Process) ->
             let si = p.StartInfo
             if Environment.isMono || AlwaysSetProcessEncoding then
                 si.StandardOutputEncoding <- ProcessEncoding
                 si.StandardErrorEncoding <- ProcessEncoding
 
-            if shouldEnableProcessTracing() then 
+            if c.TraceCommand && shouldEnableProcessTracing() then 
                 let commandLine = 
                     sprintf "%s> \"%s\" %s" si.WorkingDirectory si.FileName si.Arguments
                 //Trace.tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
@@ -429,6 +429,7 @@ module Process =
                 async {
                     let procRaw =
                       { Command = c.Command
+                        TraceCommand = c.TraceCommand
                         WorkingDirectory = c.WorkingDirectory
                         Environment = c.Environment
                         Streams = c.Streams

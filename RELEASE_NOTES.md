@@ -2,7 +2,15 @@
 
 ## 5.9.0-alpha - tbd
 
-* tbd
+* ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - https://github.com/fsharp/FAKE/pull/2114
+* ENHANCEMENT: Added `SpecFlowNext` module to `Fake.DotNet.Testing.SpecFlow` with improved API and missing arguments - https://github.com/fsharp/FAKE/pull/2143
+* ENHANCEMENT (BREAKING): Updated and finalized the new (and undocumented) process API which is more unit-testable - https://github.com/fsharp/FAKE/pull/2131 
+* ENHANCEMENT: Updated `Fake.Testing.ReportGenerator` to include `ClassFilter` and `FileFilter` - https://github.com/fsharp/FAKE/pull/2120
+* ENHANCEMENT: Improve TeamCity integrations - https://github.com/fsharp/FAKE/pull/2138
+* ENHANCEMENT: Update `Fake.Tools.Pickles` to include latest CLI additions - https://github.com/fsharp/FAKE/pull/2133
+* BUGFIX: Fix TeamCity (named) Artifact upload - https://github.com/fsharp/FAKE/pull/2147
+* BUGFIX: AppVeyor module should not trace `appveyor.exe` calls - https://github.com/fsharp/FAKE/pull/2137
+
 
 ## 5.8.5 - 2018-10-10
 
