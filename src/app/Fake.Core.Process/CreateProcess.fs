@@ -45,6 +45,7 @@ type ProcessResult<'a> = { Result : 'a; ExitCode : int }
 type CreateProcess<'TRes> =
     internal {
         Command : Command
+        TraceCommand : bool
         WorkingDirectory : string option
         Environment : EnvMap option
         Streams : StreamSpecs
@@ -83,6 +84,7 @@ module CreateProcess =
     let fromCommand command =
         {   Command = command
             WorkingDirectory = None
+            TraceCommand = true
             // Problem: Environment not allowed when using ShellCommand
             Environment = None
             Streams =
@@ -100,6 +102,7 @@ module CreateProcess =
 
     let ofStartInfo (p:System.Diagnostics.ProcessStartInfo) =
         {   Command = if p.UseShellExecute then ShellCommand p.FileName else RawCommand(p.FileName, Arguments.OfStartInfo p.Arguments)
+            TraceCommand = true
             WorkingDirectory = if System.String.IsNullOrWhiteSpace p.WorkingDirectory then None else Some p.WorkingDirectory
             Environment = 
                 p.Environment
@@ -138,6 +141,11 @@ module CreateProcess =
     let withWorkingDirectory workDir (c:CreateProcess<_>)=
         { c with
             WorkingDirectory = Some workDir }
+
+    let disableTraceCommand (c:CreateProcess<_>)=
+        { c with
+            TraceCommand = false }
+    
     let withCommand command (c:CreateProcess<_>)=
         { c with
             Command = command }
@@ -155,6 +163,7 @@ module CreateProcess =
 
     let internal withHook h (c:CreateProcess<_>) =
       { Command = c.Command
+        TraceCommand = c.TraceCommand
         WorkingDirectory = c.WorkingDirectory
         Environment = c.Environment
         Streams = c.Streams
