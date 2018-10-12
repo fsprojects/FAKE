@@ -10,7 +10,7 @@
 * ENHANCEMENT: Update `Fake.Tools.Pickles` to include latest CLI additions - https://github.com/fsharp/FAKE/pull/2133
 * BUGFIX: Fix TeamCity (named) Artifact upload - https://github.com/fsharp/FAKE/pull/2147
 * BUGFIX: AppVeyor module should not trace `appveyor.exe` calls - https://github.com/fsharp/FAKE/pull/2137
-
+* BUGFIX: Always print the stack-trace when in verbose mode - https://github.com/fsharp/FAKE/issues/2136
 
 ## 5.8.5 - 2018-10-10
 
