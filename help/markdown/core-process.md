@@ -142,3 +142,25 @@ let output =
 
 // "process" output
 ```
+
+## Advanced usage scenarios
+
+
+Redirect output from one process `outgen.exe` to `processIn.exe`:
+
+
+```fsharp
+
+let input = StreamRef.Empty
+let p1 =
+    CreateProcess.fromRawCommand "processIn.exe" []
+    |> CreateProcess.withStandardInput (CreatePipe input)
+    |> Proc.start
+
+let p2 =
+    CreateProcess.fromRawCommand "outgen.exe" []
+    |> CreateProcess.withStandardOutput (UseStream(false, input.Value))
+    |> Proc.run
+
+
+```
