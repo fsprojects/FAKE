@@ -60,6 +60,8 @@ type CreateProcess<'TRes> =
 /// - Timeout for the process to exit
 /// - The result and the result transformations (`map`, `mapResult`)
 /// 
+/// More extensions can be found in the [CreateProcess Extensions](apidocs/v5/fake-core-createprocessext-createprocess.html)
+/// 
 /// ### Example
 /// 
 ///     Command.RawCommand("file", Arguments.OfArgs ["arg1"; "arg2"])
