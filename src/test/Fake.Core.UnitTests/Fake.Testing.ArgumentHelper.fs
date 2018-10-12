@@ -6,9 +6,14 @@ open Expecto
 let checkIfMono (file, args) =
     match Environment.isWindows, Process.monoPath with
     | false, Some s when file = s ->
-      Expect.isGreaterThanOrEqual args.Args.Length 3 "Expected mono arguments"
-      Expect.equal args.Args.[0] "--debug" "Expected first flag to be '--debug'"
-      args.Args.[1], Arguments.OfArgs args.Args.[2..]
+      match args.Args |> Array.toList with
+      | debugFlag :: file :: rest ->
+          Expect.equal debugFlag "--debug" "Expected first flag to be '--debug'"
+          file, Arguments.OfArgs rest
+      | a ->
+        Expect.isGreaterThanOrEqual a.Length 2 "Expected mono arguments"
+        file, args
+
     | true, _ -> file, args
     | _ ->
       Trace.traceFAKE "Mono was not found in test!"

@@ -21,7 +21,8 @@ let runCreateProcess setParams =
    
   let expectedPath = Path.Combine("reportgenerator", "ReportGenerator.exe")
   Expect.equal file expectedPath "Expected ReportGenerator.exe"
-  expectedPath, (Command.RawCommand(file, Arguments.OfArgs args)).CommandLine
+  
+  expectedPath, (RawCommand(file, args)).CommandLine
 
 [<Tests>]
 let tests =
