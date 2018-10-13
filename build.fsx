@@ -141,7 +141,11 @@ let chocoVersion =
         failwithf "%s" msg
     result
 
-Trace.setBuildNumber nugetVersion
+match TeamFoundation.Environment.SystemPullRequestIsFork with
+| None | Some false ->
+    Trace.setBuildNumber nugetVersion
+| _ ->
+    Trace.traceFAKE "Not setting buildNumber to '%s', because of https://developercommunity.visualstudio.com/content/problem/350007/build-from-github-pr-fork-error-tf400813-the-user-1.html"
 
 let dotnetSdk = lazy DotNet.install DotNet.Versions.FromGlobalJson
 let inline dtntWorkDir wd =
