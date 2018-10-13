@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.9.1-alpha - tbd
+## 5.9.1 - 2018-10-14
 
-* tbd
+* BUGFIX: Add a null-check to remove fake warning
 
 ## 5.9.0 - 2018-10-13
 

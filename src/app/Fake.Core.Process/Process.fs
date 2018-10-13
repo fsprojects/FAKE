@@ -451,7 +451,8 @@ module Process =
                     let! streams =
                         all.ContinueWith (new System.Func<System.Threading.Tasks.Task, unit> (fun t -> ()))
                         |> Async.AwaitTaskWithoutAggregate
-                    state.Dispose()
+                    if not (isNull state) then
+                        state.Dispose()
                 with e -> Trace.traceFAKE "Error in state dispose: %O" e }
                 |> Async.Start
             return { Result = output; Raw = exitCode }
