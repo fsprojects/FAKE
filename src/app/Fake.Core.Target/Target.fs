@@ -763,14 +763,27 @@ module Target =
         | Set c -> Some(c)
         | MaybeSet c -> c
 
+    /// Updates build status based on `OptionalTargetContext`
+    /// Will not update status if `OptionalTargetContext` is `MaybeSet` with value `None`
+    let updateBuildStatus (context:OptionalTargetContext) =
+        match getTargetContext(context) with
+        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning
+        | Some c when c.HasError -> let targets = c.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+                                    let targetStr = String.Join(", ", targets)
+                                    if c.ErrorTargets.Length = 1 then
+                                        Trace.setBuildStateWithMessage TagStatus.Failed (sprintf "Target '%s' failed." targetStr)
+                                    else
+                                        Trace.setBuildStateWithMessage TagStatus.Failed (sprintf "Targets '%s' failed." targetStr)                                    
+        | Some c -> Trace.setBuildState TagStatus.Success
+        | _ -> ()
+
     /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
     let raiseIfError (context:OptionalTargetContext) =
         let c = getTargetContext(context)
         if c.IsSome && c.Value.HasError && not c.Value.CancellationToken.IsCancellationRequested then
             getBuildFailedException c.Value
             |> raise
-        context
-   
+
     /// Runs a target and its dependencies and returns a `TargetContext`
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
 
