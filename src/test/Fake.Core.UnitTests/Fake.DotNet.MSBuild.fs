@@ -14,7 +14,7 @@ let tests =
               ConsoleLogParameters = []
               Properties = ["OutputPath", "C:\\Test\\"] })
       let expected =
-        if Environment.isUnix then "\"/p:RestorePackages=False\" \"/p:OutputPath=C:%5CTest%5C\""    
-        else "\"/m\" \"/nodeReuse:False\" \"/p:RestorePackages=False\" \"/p:OutputPath=C:%5CTest%5C\""    
+        if Environment.isUnix then "/p:RestorePackages=False /p:OutputPath=C:%5CTest%5C"    
+        else "/m /nodeReuse:False /p:RestorePackages=False /p:OutputPath=C:%5CTest%5C"    
       Expect.equal cmdLine expected "Expected a given cmdline."
   ]

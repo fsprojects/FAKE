@@ -54,6 +54,10 @@ and [<NoComparison>] [<NoEquality>] TargetContext =
         x.PreviousTargets |> List.tryFind (fun t -> t.Target.Name = name)
     member x.TryFindTarget name =
         x.AllExecutingTargets |> List.tryFind (fun t -> t.Name = name)
+    member x.ErrorTargets = 
+        x.PreviousTargets |> List.choose (fun tres -> match tres.Error with
+                                                      | Some er -> Some (er, tres.Target)
+                                                      | None -> None)    
 
 and [<NoComparison>] [<NoEquality>] TargetParameter =
     { TargetInfo : Target
@@ -446,16 +450,12 @@ module Target =
             aligned "Total:" total null
             if not context.HasError then 
                 aligned "Status:" "Ok" null
-                //Trace.setBuildState TagStatus.Success
             else
                 alignedError "Status:" "Failure" null
-                //Trace.setBuildState TagStatus.Failed
         else
             Trace.traceError "No target was successfully completed"
-            //Trace.setBuildState TagStatus.Warning
 
         Trace.traceLine()
-
 
     /// Determines a parallel build order for the given set of targets
     let internal determineBuildOrder (target : string) =
@@ -652,6 +652,16 @@ module Target =
             |> Observable.subscribe (fun _ ->  Environment.Exit 1)
         Process.killAllCreatedProcesses() |> ignore
         cts.Cancel()
+    
+    /// Optional `TargetContext`
+    type OptionalTargetContext = 
+        private
+            | Set of TargetContext
+            | MaybeSet of TargetContext option
+        member x.Context =
+            match x with
+            | Set t -> Some t
+            | MaybeSet o -> o
 
     /// Runs a target and its dependencies.
     let internal runInternal singleTarget parallelJobs targetName args =
@@ -705,29 +715,12 @@ module Target =
 
             if context.HasError && not context.CancellationToken.IsCancellationRequested then
                     runBuildFailureTargets context
-            else context
+            else 
+                context
 
         let context = runFinalTargets {context with IsRunningFinalTargets=true}
         writeTaskTimeSummary watch.Elapsed context
-        if context.HasError && not context.CancellationToken.IsCancellationRequested then
-            let errorTargets =
-                context.PreviousTargets
-                |> List.choose (fun tres ->
-                    match tres.Error with
-                    | Some er -> Some (er, tres.Target)
-                    | None -> None)
-            let targets = errorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
-            let targetStr = String.Join(", ", targets)
-            let errorMsg =
-                if errorTargets.Length = 1 then
-                    sprintf "Target '%s' failed." targetStr
-                else
-                    sprintf "Targets '%s' failed." targetStr
-            let inner = AggregateException(AggregateException().Message, errorTargets |> Seq.map fst)
-            BuildFailedException(context, errorMsg, inner)
-            |> raise
-
-        context
+        context           
 
     /// Creates a target in case of build failure (not activated).
     let createBuildFailure name body =
@@ -759,13 +752,43 @@ module Target =
         let t = get name // test if target is defined
         getFinalTargets().[name] <- false
 
-    /// Runs a target and its dependencies, used for testing - usually not called in scripts.
+    let internal getBuildFailedException (context:TargetContext) =
+        let targets = context.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+        let targetStr = String.Join(", ", targets)
+        let errorMsg =
+            if context.ErrorTargets.Length = 1 then
+                sprintf "Target '%s' failed." targetStr
+            else
+                sprintf "Targets '%s' failed." targetStr
+        let inner = AggregateException(AggregateException().Message, context.ErrorTargets |> Seq.map fst)
+        BuildFailedException(context, errorMsg, inner)
+
+    /// Updates build status based on `OptionalTargetContext`
+    /// Will not update status if `OptionalTargetContext` is `MaybeSet` with value `None`
+    let updateBuildStatus (context:OptionalTargetContext) =
+        match context.Context with
+        | Some c when c.PreviousTargets.Length = 0 -> Trace.setBuildState TagStatus.Warning
+        | Some c when c.HasError -> let targets = c.ErrorTargets |> Seq.map (fun (_er, target) -> target.Name) |> Seq.distinct
+                                    let targetStr = String.Join(", ", targets)
+                                    if c.ErrorTargets.Length = 1 then
+                                        Trace.setBuildStateWithMessage TagStatus.Failed (sprintf "Target '%s' failed." targetStr)
+                                    else
+                                        Trace.setBuildStateWithMessage TagStatus.Failed (sprintf "Targets '%s' failed." targetStr)                                    
+        | Some _ -> Trace.setBuildState TagStatus.Success
+        | _ -> ()
+
+    /// If `TargetContext option` is Some and has error, raise it as a BuildFailedException
+    let raiseIfError (context:OptionalTargetContext) =
+        let c = context.Context
+        if c.IsSome && c.Value.HasError && not c.Value.CancellationToken.IsCancellationRequested then
+            getBuildFailedException c.Value
+            |> raise
+
+
+    /// Runs a target and its dependencies and returns a `TargetContext`
+    [<Obsolete "Use Target.WithContext.run instead">]
     let runAndGetContext parallelJobs targetName args = runInternal false parallelJobs targetName args
-
-    /// Runs a target and its dependencies
-    let run parallelJobs targetName args = runInternal false parallelJobs targetName args |> ignore
-
-    let internal runWithDefault allowArgs fDefault =
+    let internal getRunFunction allowArgs defaultTarget =
         let ctx = Fake.Core.Context.forceFakeContext ()
         let trySplitEnvArg (arg:string) =
             let idx = arg.IndexOf('=')
@@ -790,11 +813,14 @@ module Target =
 
             if DocoptResult.hasFlag "--list" results then
                 listAvailable()
+                None
             elif DocoptResult.hasFlag "-h" results || DocoptResult.hasFlag "--help" results then
                 printfn "%s" TargetCli.targetCli
                 printfn "Hint: Run 'fake run <build.fsx> target <target> --help' to get help from your target."
+                None
             elif DocoptResult.hasFlag "--version" results then
                 printfn "Target Module Version: %s" AssemblyVersionInformation.AssemblyInformationalVersion
+                None
             else
                 let target =
                     match DocoptResult.tryGetArgument "<target>" results with
@@ -833,23 +859,50 @@ module Target =
                     | None -> []
                 if not allowArgs && arguments <> [] then
                     failwithf "The following arguments could not be parsed: %A\nTo forward arguments to your targets you need to use \nTarget.runOrDefaultWithArguments instead of Target.runOrDefault" arguments
-                match target with
-                | Some t -> runInternal singleTarget parallelJobs t arguments |> ignore
-                | None -> fDefault singleTarget parallelJobs arguments
+                match target, defaultTarget with
+                | Some t, _ -> Some(fun () -> Some(runInternal singleTarget parallelJobs t arguments))
+                | None, Some t -> Some(fun () -> Some(runInternal singleTarget parallelJobs t arguments))
+                | None, None -> Some (fun () -> listAvailable()
+                                                None)
         | Choice2Of2 e ->
             // To ensure exit code.
             raise <| exn (sprintf "Usage error: %s\n%s" e.Message TargetCli.targetCli, e)
 
-    /// Runs the command given on the command line or the given target when no target is given
-    let runOrDefault defaultTarget =
-        runWithDefault false (fun singleTarget parallelJobs arguments ->
-            runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
+    let private runFunction (targetFunction:(unit -> TargetContext option) Option) = 
+        match targetFunction with
+        | Some f -> OptionalTargetContext.MaybeSet(f())
+        | _ -> OptionalTargetContext.MaybeSet(None)
+    
+
+    /// Run functions which don't throw and return the context after all targets have been executed.
+    module WithContext =
+        /// Runs a target and its dependencies and returns an `OptionalTargetContext`
+        let run parallelJobs targetName args = runInternal false parallelJobs targetName args |> OptionalTargetContext.Set
+
+        /// Runs the command given on the command line or the given target when no target is given & get context
+        let runOrDefault defaultTarget =
+            getRunFunction false (Some(defaultTarget)) |> runFunction
+
+        /// Runs the command given on the command line or the given target when no target is given & get context
+        let runOrDefaultWithArguments defaultTarget =
+            getRunFunction true (Some(defaultTarget)) |> runFunction
+
+        /// Runs the target given by the target parameter or lists the available targets & get context
+        let runOrList() =
+            getRunFunction false None |> runFunction
+    
+    /// Runs a target and its dependencies
+    let run parallelJobs targetName args : unit =
+        WithContext.run parallelJobs targetName args |> raiseIfError
 
     /// Runs the command given on the command line or the given target when no target is given
-    let runOrDefaultWithArguments defaultTarget =
-        runWithDefault true (fun singleTarget parallelJobs arguments ->
-            runInternal singleTarget parallelJobs defaultTarget arguments |> ignore)
+    let runOrDefault (defaultTarget:string) : unit =
+        WithContext.runOrDefault defaultTarget |> raiseIfError
+
+    /// Runs the command given on the command line or the given target when no target is given
+    let runOrDefaultWithArguments (defaultTarget:string) : unit =
+        WithContext.runOrDefaultWithArguments defaultTarget |> raiseIfError
 
     /// Runs the target given by the target parameter or lists the available targets
-    let runOrList() =
-        runWithDefault false (fun _ _ _ -> listAvailable())
+    let runOrList() : unit =
+        WithContext.runOrList() |> raiseIfError

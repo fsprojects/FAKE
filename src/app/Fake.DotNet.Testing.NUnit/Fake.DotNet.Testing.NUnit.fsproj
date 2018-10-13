@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="VisibleTo.fs" />
     <Compile Include="Xml.fs" />
     <Compile Include="Common.fs" />
     <Compile Include="Sequential.fs" />

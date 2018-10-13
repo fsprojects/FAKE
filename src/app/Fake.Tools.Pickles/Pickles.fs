@@ -17,16 +17,16 @@
 module Fake.Tools.Pickles
 
 open System
-open System.Text
+open System.IO
+
 open Fake.Core
 open Fake.IO
 open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
-open System.IO
 
 (*
 .\packages\Pickles.CommandLine\tools\pickles.exe  --help                                                 
-Pickles version 2.18.1.0
+Pickles version 2.19.0.0
   -f, --feature-directory=VALUE
                              directory to start scanning recursively for
                                features
@@ -54,60 +54,70 @@ Pickles version 2.18.1.0
                              whether to enable comments in the output
       --et, --excludeTags=VALUE
                              exclude scenarios that match this tag
-*)
+      --ht, --hideTags=VALUE Technical tags that shouldn't be displayed
+                               (separated by ;)*)
 
 /// Option which allows to specify if failure of pickles should break the build.
-type ErrorLevel = 
-    /// This option instructs FAKE to break the build if pickles fails to execute
-    | Error
-    /// With this option set, no exception is thrown if pickles fails to execute
-    | DontFailBuild
+type ErrorLevel =
+  /// This option instructs FAKE to break the build if pickles fails to execute
+  | Error
+  /// With this option set, no exception is thrown if pickles fails to execute
+  | DontFailBuild
 
 /// The format of the test results
 type TestResultsFormat =
-    | NUnit
-    | NUnit3
-    | XUnit
-    | XUnit2
-    | MSTest
-    | CucumberJSON
-    | SpecRun
-    | VSTest
+  | NUnit
+  | NUnit3
+  | XUnit
+  | XUnit2
+  | MSTest
+  | CucumberJSON
+  | SpecRun
+  | VSTest
     
  type DocumentationFormat =
-    | DHTML
-    | HTML
-    | Word
-    | JSON
-    | Excel
+  | DHTML
+  | HTML
+  | Word
+  | JSON
+  | Excel
+  | CucumberJSON
 
 /// The Pickles parameter type
 type PicklesParams =
-    { /// The path to the Pickles console tool: 'pickles.exe'      
-      ToolPath : string
-      /// The directory to start scanning recursively for features
-      FeatureDirectory: string
-      /// The language of the feature files
-      FeatureFileLanguage: string option
-      /// The directory where output files will be placed
-      OutputDirectory: string
-      /// The format of the output documentation 
-      OutputFileFormat: DocumentationFormat
-      /// the format of the linked test results
-      TestResultsFormat: TestResultsFormat
-      /// the paths to the linked test results files
-      LinkedTestResultFiles: string list
-      /// The name of the system under test
-      SystemUnderTestName: string option
-      /// The version of the system under test
-      SystemUnderTestVersion: string option
-      /// Maximum time to allow xUnit to run before being killed.
-      TimeOut : TimeSpan
-      /// Option which allows to specify if failure of pickles should break the build.
-      ErrorLevel : ErrorLevel
-      /// Option which allows to enable some experimental features
-      IncludeExperimentalFeatures : bool option
-    }
+  { /// The path to the Pickles console tool: 'pickles.exe'      
+    ToolPath : string
+    /// The working directory
+    WorkingDir: string
+    /// The directory to start scanning recursively for features
+    FeatureDirectory: string
+    /// The language of the feature files
+    FeatureFileLanguage: string option
+    /// The directory where output files will be placed
+    OutputDirectory: string
+    /// The format of the output documentation 
+    OutputFileFormat: DocumentationFormat
+    /// the format of the linked test results
+    TestResultsFormat: TestResultsFormat
+    /// the paths to the linked test results files
+    LinkedTestResultFiles: string list
+    /// The name of the system under test
+    SystemUnderTestName: string option
+    /// The version of the system under test
+    SystemUnderTestVersion: string option
+    /// Maximum time to allow xUnit to run before being killed.
+    TimeOut : TimeSpan
+    /// Option which allows to specify if failure of pickles should break the build.
+    ErrorLevel : ErrorLevel
+    /// Option which allows to enable some experimental features
+    IncludeExperimentalFeatures : bool option
+    /// As of version 2.6, Pickles includes Gherkin #-style comments. As of version 2.7, this inclusion is configurable.
+    EnableComments: bool option
+    /// exclude scenarios that match this tags
+    ExcludeTags: string list
+    /// Technical tags that shouldn't be displayed
+    HideTags: string list
+  }
 
 let private currentDirectory = Directory.GetCurrentDirectory()
 
@@ -127,82 +137,141 @@ let private currentDirectory = Directory.GetCurrentDirectory()
 /// - `TimeOut` - 5 minutes
 /// - `ErrorLevel` - `Error`
 /// - `IncludeExperimentalFeatures` - `None` 
+/// - `EnableComments` - true
+/// - `ExcludeTags` - []
+/// - `HideTags` - []
 let private PicklesDefaults =
-    {
-      ToolPath = Tools.findToolInSubPath "pickles.exe" currentDirectory
-      FeatureDirectory = currentDirectory
-      FeatureFileLanguage = None
-      OutputDirectory = currentDirectory </> "Documentation"
-      OutputFileFormat = DHTML
-      TestResultsFormat = NUnit
-      LinkedTestResultFiles = []
-      SystemUnderTestName = None
-      SystemUnderTestVersion = None
-      TimeOut = TimeSpan.FromMinutes 5.
-      ErrorLevel = Error
-      IncludeExperimentalFeatures = None
-    }
+  {
+    ToolPath = Tools.findToolInSubPath "pickles.exe" currentDirectory
+    WorkingDir = currentDirectory
+    FeatureDirectory = null
+    FeatureFileLanguage = None
+    OutputDirectory = null
+    OutputFileFormat = DHTML
+    TestResultsFormat = NUnit
+    LinkedTestResultFiles = []
+    SystemUnderTestName = None
+    SystemUnderTestVersion = None
+    TimeOut = TimeSpan.FromMinutes 5.
+    ErrorLevel = Error
+    IncludeExperimentalFeatures = None
+    EnableComments = None
+    ExcludeTags = []
+    HideTags = []
+  }
     
 let private buildPicklesArgs parameters =
-    let outputFormat = match parameters.OutputFileFormat with
-                       | DHTML -> "dhtml"
-                       | HTML -> "html"
-                       | Word -> "word"
-                       | JSON -> "json"
-                       | Excel -> "excel"
-                       
-    let testResultFormat = match parameters.LinkedTestResultFiles with
-                           | [] -> None
-                           | _  -> match parameters.TestResultsFormat with
-                                   | NUnit -> Some "nunit"
-                                   | NUnit3 -> Some "nunit3"
-                                   | XUnit -> Some "xunit"
-                                   | XUnit2 -> Some "xunit2"
-                                   | MSTest -> Some "mstest"
-                                   | CucumberJSON -> Some "cucumberjson"
-                                   | SpecRun -> Some "specrun"
-                                   | VSTest -> Some "vstest"
-    
-    let linkedResultFiles = match parameters.LinkedTestResultFiles with
-                            | [] -> None
-                            | _ -> parameters.LinkedTestResultFiles
-                                   |> Seq.map (fun f -> sprintf "\"%s\"" f) 
-                                   |> String.concat ";"
-                                   |> Some
-    let experimentalFeatures = match parameters.IncludeExperimentalFeatures with
-                               | Some true -> Some "--exp"
-                               | _ -> None
+  let experimentalFeatures =
+    seq {
+      match parameters.IncludeExperimentalFeatures with
+      | Some true -> yield "--exp"
+      | _ -> ()
+    }
                                    
-    new StringBuilder()
-    |> StringBuilder.appendWithoutQuotes (sprintf " -f \"%s\"" parameters.FeatureDirectory)
-    |> StringBuilder.appendWithoutQuotes (sprintf " -o \"%s\"" parameters.OutputDirectory)
-    |> StringBuilder.appendIfSome parameters.SystemUnderTestName (sprintf " --sn %s")
-    |> StringBuilder.appendIfSome parameters.SystemUnderTestVersion (sprintf " --sv %s")
-    |> StringBuilder.appendIfSome parameters.FeatureFileLanguage (sprintf " -l %s")
-    |> StringBuilder.appendWithoutQuotes (sprintf " --df %s" outputFormat)
-    |> StringBuilder.appendIfSome testResultFormat (sprintf " --trfmt %s")
-    |> StringBuilder.appendIfSome linkedResultFiles (sprintf " --lr %s")
-    |> StringBuilder.appendIfSome experimentalFeatures (sprintf "%s")
-    |> StringBuilder.toText
+  let enableComments =
+    seq {
+      match parameters.EnableComments with
+      | Some true -> yield "--enableComments=true"
+      | Some false -> yield "--enableComments=false"
+      | _ -> ()
+    }
+  
+  let yieldIfNotNullOrWhitespace paramName value =
+    seq {
+      if String.isNullOrWhiteSpace value
+      then ()
+      else 
+        yield sprintf "-%s" paramName
+        yield value
+    }
 
-module internal ResultHandling = 
-    let (|OK|Failure|) = function
-        | 0 -> OK
-        | x -> Failure x
+  let yieldIfSome paramName value =
+    seq {
+      match value with
+      | Some v ->
+          yield sprintf "--%s" paramName
+          yield v
+      | _ -> ()
+    }
+
+  let yieldTags paramName value =
+    seq {
+      match value with
+      | [] -> ()
+      | tags ->
+          yield sprintf "--%s" paramName
+          yield tags |> String.concat ";" 
+    }
+    
+  [
+    yield! parameters.FeatureDirectory |> yieldIfNotNullOrWhitespace "f"
+    yield! parameters.OutputDirectory |> yieldIfNotNullOrWhitespace "o"
+    yield! parameters.SystemUnderTestName |> yieldIfSome "sn"
+    yield! parameters.SystemUnderTestVersion |> yieldIfSome "sv"
+    yield! parameters.FeatureFileLanguage |> yieldIfSome "l"
+    yield! match parameters.OutputFileFormat |> string |> String.toLower with
+           | "html" -> None
+           | v -> Some v 
+           |> yieldIfSome "df"
+    yield! match parameters.LinkedTestResultFiles with
+           | [] -> None
+           | _  -> parameters.TestResultsFormat 
+                   |> string 
+                   |> String.toLower 
+                   |> Some 
+           |> yieldIfSome "trfmt"
+    yield! match parameters.LinkedTestResultFiles with
+           | [] -> None
+           | _ -> parameters.LinkedTestResultFiles
+                  |> String.concat ";"
+                  |> Some
+           |> yieldIfSome "lr"
+    yield! experimentalFeatures
+    yield! enableComments
+    yield! parameters.ExcludeTags |> yieldTags "et"
+    yield! parameters.HideTags |> yieldTags "ht"
+  ]
+  |> Arguments.OfArgs
+
+module internal ResultHandling =
+  let (|OK|Failure|) = function
+  | 0 -> OK
+  | x -> Failure x
         
-    let buildErrorMessage = function
-        | OK -> None
-        | Failure errorCode ->
-            Some (sprintf "Pickles reported an error (Error code %d)" errorCode)
+  let buildErrorMessage = function
+  | OK -> None
+  | Failure errorCode ->
+      Some (sprintf "Pickles reported an error (Error code %d)" errorCode)
             
-    let failBuildWithMessage = function
-        | DontFailBuild -> Trace.traceImportant
-        | _ -> failwith
+  let failBuildWithMessage = function
+  | DontFailBuild -> Trace.traceImportant
+  | _ -> failwith
         
-    let failBuildIfPicklesReportedError errorLevel =
-        buildErrorMessage
-        >> Option.iter (failBuildWithMessage errorLevel)
+  let failBuildIfPicklesReportedError errorLevel =
+    buildErrorMessage
+    >> Option.iter (failBuildWithMessage errorLevel)
         
+
+/// Builds the report generator command line arguments and process from the given parameters and reports
+/// [omit]
+let internal createProcess setParams =
+  let parameters = setParams PicklesDefaults
+  let args = buildPicklesArgs parameters
+  let tool = parameters.ToolPath
+  
+  CreateProcess.fromCommand (RawCommand(tool, args))
+  |> CreateProcess.withFramework
+  |> CreateProcess.withWorkingDirectory parameters.WorkingDir
+  |> CreateProcess.withTimeout parameters.TimeOut
+  |> CreateProcess.addOnExited 
+      (fun data exitCode ->
+        ResultHandling.failBuildIfPicklesReportedError parameters.ErrorLevel exitCode
+        data)
+  |> fun command ->
+    Trace.trace command.CommandLine
+    command
+
+
 /// Runs pickles living documentation generator via the given tool
 /// Will fail if the pickles command line tool terminates with a non zero exit code.
 ///
@@ -212,15 +281,11 @@ module internal ResultHandling =
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default `PicklesParams` value
 let convert setParams =
-    use __ = Trace.traceTask "Pickles" ""
-    let parameters = setParams PicklesDefaults
-    let makeProcessStartInfo info =
-        { info with FileName = parameters.ToolPath
-                    WorkingDirectory = "."
-                    Arguments = parameters |> buildPicklesArgs }
-        |> Process.withFramework
+  use __ = Trace.traceTask "Pickles" "Generating documentations"
+
+  let result =
+    createProcess setParams
+    |> Proc.run
+    |> ignore
     
-    let result = Process.execSimple makeProcessStartInfo parameters.TimeOut
-    
-    ResultHandling.failBuildIfPicklesReportedError parameters.ErrorLevel result
-    __.MarkSuccess()
+  __.MarkSuccess()

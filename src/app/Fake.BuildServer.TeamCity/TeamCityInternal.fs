@@ -4,61 +4,11 @@ namespace Fake.BuildServer
 open System
 open System.IO
 open Fake.Core
-open Microsoft.FSharp.Reflection
-open System.Text.RegularExpressions
 
 module internal TeamCityWriter =
 
-    // Probably too slow...
-(*
-    // From https://gist.github.com/mausch/465668
-    // I think we need some cache here...
-    let PrintfFormatProc (worker: string * obj list -> 'd)  (query: PrintfFormat<'a, _, _, 'd>) : 'a = 
-        if not (FSharpType.IsFunction typeof<'a>) then 
-            unbox (worker (query.Value, [])) 
-        else 
-            let rec getFlattenedFunctionElements (functionType: Type) = 
-                let domain, range = FSharpType.GetFunctionElements functionType 
-                if not (FSharpType.IsFunction range) 
-                then domain::[range] 
-                else domain::getFlattenedFunctionElements(range) 
-            let types = getFlattenedFunctionElements typeof<'a> 
-            let rec proc (types: Type list) (values: obj list) (a: obj) : obj = 
-                let values = a::values 
-                match types with 
-                | [x;_] -> 
-                    let result = worker (query.Value, List.rev values) 
-                    box result 
-                | x::y::z::xs -> 
-                    let cont = proc (y::z::xs) values 
-                    let ft = FSharpType.MakeFunctionType(y,z) 
-                    let cont = FSharpValue.MakeFunction(ft, cont) 
-                    box cont 
-                | _ -> failwith "shouldn't happen" 
-            let handler = proc types [] 
-            unbox (FSharpValue.MakeFunction(typeof<'a>, handler))
-    let processor (format: string, values: obj list) =
-        let stripFormatting s =
-            let i = ref -1
-            let eval (rxMatch: Match) =
-                incr i
-                sprintf "{%d}" !i
-            Regex.Replace(s, "%.", eval)
-        let newFormat = stripFormatting format
-        let args =
-            values
-            |> List.map (sprintf "%O" >> scrub)
-            |> List.toArray
-        String.Format(newFormat, args)
-        |> printfn "%s"
-
-    /// Send message to TeamCity
-    let sendToTeamCity format =
-        PrintfFormatProc processor format
-*)
-
     /// Encapsulates special chars
-    let inline encapsulateSpecialChars text =
+    let private encapsulateSpecialChars text =
         text
         |> String.replace "|" "||"
         |> String.replace "'" "|'"
@@ -67,31 +17,108 @@ module internal TeamCityWriter =
         |> String.replace "[" "|["
         |> String.replace "]" "|]"
 
-    let scrub = String.removeLineBreaks >> encapsulateSpecialChars
+    let private singleLine = String.removeLineBreaks >> encapsulateSpecialChars
 
-    /// Send message to TeamCity
-    let sendToTeamCity (format:Printf.StringFormat<string -> string>) message =
-        sprintf format (scrub message)
+    type private TeamCityMessage = 
+        | OneParamMultiLine of (Printf.StringFormat<string -> string>)*string
+        | OneParamSingleLine of (Printf.StringFormat<string -> string>)*string
+        | TwoParamMultiLine of (Printf.StringFormat<string -> string ->string>)*string*string
+        | TwoParamSingleLineBoth of (Printf.StringFormat<string -> string -> string>)*string*string
+        | TwoParamSingleLineParam1 of (Printf.StringFormat<string -> string -> string>)*string*string
+        | ThreeParamSingleLineAll of (Printf.StringFormat<string -> string -> string -> string>)*string*string*string
+        | ThreeParamSingleLineParam1 of (Printf.StringFormat<string -> string -> string -> string>)*string*string*string
+        | FiveParamSingleLineParam1 of (Printf.StringFormat<string -> string -> string -> string -> string -> string>)*string*string*string*string*string
+
+    /// Send message to TeamCity with single param
+    let private sendToTeamCity (message:TeamCityMessage) =
+        let content = match message with
+                      | OneParamMultiLine (fmt, param1) -> sprintf fmt (encapsulateSpecialChars param1)
+                      | OneParamSingleLine (fmt, param1) -> sprintf fmt (singleLine param1)
+                      | TwoParamMultiLine (fmt, param1, param2) -> sprintf fmt (encapsulateSpecialChars param1) (encapsulateSpecialChars param2)
+                      | TwoParamSingleLineBoth (fmt, param1, param2) -> sprintf fmt (singleLine param1) (singleLine param2)
+                      | TwoParamSingleLineParam1 (fmt, param1, param2) -> sprintf fmt (singleLine param1) (encapsulateSpecialChars param2)
+                      | ThreeParamSingleLineAll (fmt, param1, param2, param3) -> sprintf fmt (singleLine param1) (singleLine param2) (singleLine param3)
+                      | ThreeParamSingleLineParam1 (fmt, param1, param2, param3) -> sprintf fmt (singleLine param1) (encapsulateSpecialChars param2) (encapsulateSpecialChars param3)
+                      | FiveParamSingleLineParam1 (fmt, param1, param2, param3, param4, param5) -> sprintf fmt (singleLine param1) (encapsulateSpecialChars param2) (encapsulateSpecialChars param3) (encapsulateSpecialChars param4) (encapsulateSpecialChars param5)
+
         // printf is racing with others in parallel mode
-        |> fun s -> System.Console.WriteLine("\n{0}", s)
-
-    let sendToTeamCity2 (format:Printf.StringFormat<string -> string -> string>) param1 param2 =
-        sprintf format (scrub param1) (scrub param2)
-        // printf is racing with others in parallel mode
-        |> fun s -> System.Console.WriteLine("\n{0}", s)
-
-    let sendStrToTeamCity str =
-        sprintf "%s" str
-        // printf is racing with others in parallel mode
-        |> fun s -> System.Console.WriteLine("\n{0}", s)
-
+        System.Console.WriteLine("{0}", content)
+  
     /// Open Named Block
-    let sendOpenBlock name description = sendToTeamCity2 "##teamcity[blockOpened name='%s' description='%s']" name description
+    let internal sendOpenBlock name description = sendToTeamCity (TeamCityMessage.TwoParamSingleLineBoth("##teamcity[blockOpened name='%s' description='%s']", name, description))
 
     /// Close Named Block
-    let sendCloseBlock = sendToTeamCity "##teamcity[blockClosed name='%s']"
+    let internal sendCloseBlock name = sendToTeamCity (TeamCityMessage.OneParamSingleLine("##teamcity[blockClosed name='%s']", name))
 
+    /// Build status
+    let internal sendBuildStatus status text = sendToTeamCity (TeamCityMessage.TwoParamSingleLineParam1("##teamcity[buildStatus status='%s' text='%s']", status, text))
 
+    /// Build Problem
+    let internal sendBuildProblem description = sendToTeamCity (TeamCityMessage.OneParamMultiLine("##teamcity[buildProblem description='%s']", description))
+
+    // Import Data
+    let internal sendImportData typ file = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[importData type='%s' file='%s']", typ, file))
+
+    // Import Data With Tool
+    let internal sendImportDataWithTool typ tool path = sendToTeamCity(TeamCityMessage.ThreeParamSingleLineAll("##teamcity[importData type='%s' tool='%s' path='%s']", typ, tool, path))
+
+    // Import Data With Tool
+    let internal sendDotNetCoverage typ value = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[dotNetCoverage %s='%s']", typ, value))
+
+    /// Test Started
+    let internal sendTestStarted name = sendToTeamCity(TeamCityMessage.OneParamMultiLine("##teamcity[testStarted name='%s' captureStandardOutput='true']", name))
+
+    /// Test Finshed
+    let internal sendTestFinished name duration = sendToTeamCity(TeamCityMessage.TwoParamMultiLine("##teamcity[testFinished name='%s' duration='%s']", name, duration))
+
+    /// Test Ignored
+    let internal sendTestIgnored name message = sendToTeamCity(TeamCityMessage.TwoParamMultiLine("##teamcity[testIgnored name='%s' message='%s']", name, message))
+
+    /// Test Std Out
+    let internal sendTestStdOut name out = sendToTeamCity(TeamCityMessage.TwoParamMultiLine("##teamcity[testStdOut name='%s' out='%s']", name, out))
+
+    /// Test Std Error
+    let internal sendTestStdError name out = sendToTeamCity(TeamCityMessage.TwoParamMultiLine("##teamcity[testStdErr name='%s' out='%s']", name, out))
+
+    /// Test Suite Finished
+    let internal sendTestSuiteFinished name = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[testSuiteFinished name='%s']", name))
+
+    /// Test Suite Started
+    let internal sendTestSuiteStarted name = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[testSuiteStarted name='%s']", name))
+
+    /// Progress Message
+    let internal sendProgressMessage message = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[progressMessage '%s']", message))
+
+    /// Progress Start
+    let internal sendProgressStart message = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[progressStart '%s']", message))
+
+    /// Progress Finish
+    let internal sendProgressFinish message = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[progressFinish '%s']", message))
+
+    /// Publish Artifact
+    let internal sendPublishArtifact path = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[publishArtifacts '%s']", path))
+
+    /// Publish Named Artifact
+    let internal sendPublishNamedArtifact name path = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[publishArtifacts '%s' => '%s']", path, name))
+
+    /// Build Number
+    let internal sendBuildNumber buildNumber = sendToTeamCity(TeamCityMessage.OneParamSingleLine("##teamcity[buildNumber '%s']", buildNumber))
+
+    /// Build Statistic
+    let internal sendBuildStatistic key value = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[buildStatisticValue key='%s' value='%s']", key, value))
+
+    /// Set Parameter
+    let internal sendSetParameter name value = sendToTeamCity(TeamCityMessage.TwoParamSingleLineBoth("##teamcity[setParameter name='%s' value='%s']", name, value))
+
+    /// Test Failure
+    let internal sendTestFailed name message details = sendToTeamCity(TeamCityMessage.ThreeParamSingleLineParam1("##teamcity[testFailed name='%s' message='%s' details='%s']", name, message, details))
+    
+    /// Comparison Failed
+    let internal sendComparisonFailed name message details expected actual = sendToTeamCity(TeamCityMessage.FiveParamSingleLineParam1("##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']", name, message, details, expected, actual))
+
+    /// Message
+    let internal sendMessage status text = sendToTeamCity(TeamCityMessage.TwoParamSingleLineParam1("##teamcity[message status='%s' text='%s']", text, status))
+    
 module private JavaPropertiesFile =
     open System.Text
     open System.IO

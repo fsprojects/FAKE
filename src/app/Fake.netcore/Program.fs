@@ -88,7 +88,7 @@ let reportExn (verb:VerboseLevel) exn =
     else { new IDisposable with member __.Dispose () = () }      
   if Environment.GetEnvironmentVariable "FAKE_DETAILED_ERRORS" = "true" then
       Paket.Logging.printErrorExt true true true exn
-  else Paket.Logging.printErrorExt verb.PrintVerbose verb.PrintVerbose false exn
+  else Paket.Logging.printErrorExt verb.PrintVerbose verb.PrintVerbose verb.PrintVerbose exn
 
 let runOrBuild (args : RunArguments) =
   if args.VerboseLevel.PrintVerbose then

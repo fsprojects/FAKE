@@ -1,5 +1,6 @@
 /// Contains a task which allows to run [SpecFlow](http://www.specflow.org/) tests.
 [<RequireQualifiedAccess>]
+[<System.Obsolete("This API is obsolete after SpecFlow V2.4. Please use the SpecFlowNext module instead.")>]
 module Fake.DotNet.Testing.SpecFlow
 
 open Fake.Core
@@ -8,6 +9,7 @@ open Fake.IO.Globbing
 open Fake.IO.FileSystemOperators
 open System.IO
 open System.Text
+open System.Runtime.CompilerServices
 
 /// SpecFlow execution parameter type.
 type SpecFlowParams = { 
@@ -57,20 +59,40 @@ let run setParams =
 
     let isMsTest = String.toLower >> ((=) "mstestexecutionreport")
 
-    let commandLineBuilder = 
-        new StringBuilder()
-        |> StringBuilder.append           parameters.SubCommand
-        |> StringBuilder.append           parameters.ProjectFile
-        |> StringBuilder.appendIfNotNull  parameters.BinFolder "/binFolder:"
-        |> StringBuilder.appendIfNotNull  parameters.OutputFile "/out:"
-        |> StringBuilder.appendIfNotNull  parameters.XmlTestResultFile 
-                                          (if isMsTest parameters.SubCommand then "/testResult:" else "/xmlTestResult:")
-        |> StringBuilder.appendIfNotNull  parameters.TestOutputFile "/testOutput:"
-        |> StringBuilder.appendIfTrue     parameters.Verbose "/verbose"
-        |> StringBuilder.appendIfTrue     parameters.ForceRegeneration "/force"
-        |> StringBuilder.appendIfNotNull  parameters.XsltFile "/xsltFile:"
+    let yieldIfNotNull paramName value =
+        seq {
+            match value with
+            | null -> ()
+            | "" -> ()
+            | v -> yield (sprintf "/%s:%s" paramName v)
+        }
 
-    let args = commandLineBuilder.ToString()
+    let args = 
+        [
+            yield parameters.SubCommand            
+            yield parameters.ProjectFile
+
+            yield! parameters.BinFolder 
+                   |> yieldIfNotNull "binFolder" 
+
+            yield! parameters.OutputFile 
+                   |> yieldIfNotNull "out"
+
+            yield! parameters.XmlTestResultFile 
+                   |> yieldIfNotNull (if isMsTest parameters.SubCommand 
+                                      then "testResult" 
+                                      else "xmlTestResult")
+
+            yield! parameters.TestOutputFile 
+                   |> yieldIfNotNull "testOutput"
+
+            if parameters.Verbose then yield "/verbose"
+            if parameters.ForceRegeneration then yield "/force"
+
+            yield! parameters.XsltFile 
+                   |> yieldIfNotNull "xsltFile"
+        ]
+        |> Args.toWindowsCommandLine
 
     Trace.trace (tool + " " + args)
 

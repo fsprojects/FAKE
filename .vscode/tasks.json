@@ -27,6 +27,29 @@
             ]
         },
         {
+            "label": "dotnet:restore:fake-netcore.fsproj",            
+            "group": "build",
+            "command": "dotnet restore src/app/Fake.netcore/Fake.netcore.fsproj",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet:build:fake-netcore.fsproj",            
+            "group": "build",
+            "command": "dotnet build src/app/Fake.netcore/Fake.netcore.fsproj",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile",
+            "dependsOn": [
+                "dotnet:restore:fake-netcore.fsproj"
+            ]
+        },
+        {
             "label": "dotnet:run:unitTests",            
             "group": "test",
             "command": "dotnet run -p src/test/Fake.Core.UnitTests/Fake.Core.UnitTests.fsproj",
