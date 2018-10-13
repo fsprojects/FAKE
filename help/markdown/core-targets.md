@@ -128,7 +128,7 @@ You can access the arguments from every target executed along the way.
 
 ## Setting build status
 
-You can set the build status automatically using `Target.updateBuildStatus`
+You can set the build status automatically using `Target.updateBuildStatus`. To do this you need to use the `Target.WithContext` functions to run a target and retrieve the context information:
 
 Example: 
 
@@ -159,9 +159,9 @@ open Fake.Core.TargetOperators
     ==> "Deploy"
 
 // *** Start Build ***
-let ctx = Target.runOrDefaultAndGetContext "Deploy"  //Could also use: Target.runAndGetOptionalContext "Deploy"
+let ctx = Target.WithContext.runOrDefault "Deploy"
 Target.updateBuildStatus ctx
-Target.raiseIfError ctx
+Target.raiseIfError ctx // important to have proper exit code on build failures.
 ```
 
 ## Final targets
