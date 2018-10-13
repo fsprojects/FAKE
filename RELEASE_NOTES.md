@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.9.1-alpha - tbd
+
+* tbd
+
 ## 5.9.0 - 2018-10-13
 
 * ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - https://github.com/fsharp/FAKE/pull/2114
