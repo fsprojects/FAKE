@@ -622,7 +622,7 @@ module Process =
     ///  - `timeOut` - The timeout for the process.
     /// ## Sample
     ///
-    ///     let result = ExecProcess (fun info ->  
+    ///     let result = Process.execSimple (fun info ->  
     ///                       info.FileName <- "c:/MyProc.exe"
     ///                       info.WorkingDirectory <- "c:/workingDirectory"
     ///                       info.Arguments <- "-v") (TimeSpan.FromMinutes 5.0)
