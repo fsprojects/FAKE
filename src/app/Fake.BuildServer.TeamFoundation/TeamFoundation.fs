@@ -248,7 +248,7 @@ module TeamFoundation =
                         | TagStatus.Failed -> LogDetailResult.Failed
                         | TagStatus.Success -> LogDetailResult.Succeeded               
                     setLogDetailFinished id result
-                | TraceData.BuildState state ->
+                | TraceData.BuildState (state, _) ->
                     let vsoState, msg =
                         match state with
                         | TagStatus.Success -> "Succeeded", "OK" 
