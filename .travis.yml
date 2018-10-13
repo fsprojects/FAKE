@@ -3,7 +3,7 @@ sudo: required
 dist: trusty # Ubuntu 14.04
 dotnet : 2.1.402
 env:
- - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
+ - FAKE_DETAILED_ERRORS=true HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
 
 
 before_install:
