@@ -35,6 +35,19 @@ let testCaseMultipleRuns name f = [
 let tests =
   testList "Fake.Core.Target.Tests" (
     [
+        
+    Fake.ContextHelper.fakeContextTestCase "basic performance" <| fun _ ->
+        // Increase counter to 100000 and run with dotTrace
+        Target.create "A" ignore
+        Target.create "U" ignore
+        for i in 1 .. 100 do
+            let n = sprintf "T%d" i
+            Target.create n ignore
+            "A" ==> n ==> "U" |> ignore
+            
+        let context = run "U"
+        ignore context
+    
     Fake.ContextHelper.fakeContextTestCase "handle casing in target runner" <| fun _ ->
         Target.create "aA" ignore
         Target.create "bB" ignore

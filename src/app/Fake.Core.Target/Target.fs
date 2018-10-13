@@ -6,6 +6,7 @@ open Fake.Core
 open System.Threading.Tasks
 open System.Threading
 open FSharp.Control.Reactive
+open System.Collections.Immutable
 module internal TargetCli =
     let targetCli =
         """
@@ -244,7 +245,7 @@ module Target =
         let rec checkDependencies dependentTarget =
               fGetDependencies dependentTarget
               |> List.iter (fun dep ->
-                   if String.toLower dep = String.toLower targetName then
+                   if String.Equals(dep, targetName, StringComparison.OrdinalIgnoreCase) then
                       failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
                    checkDependencies (get dep))
 
@@ -268,27 +269,20 @@ module Target =
 
         getTargetDict().[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
 
-    /// Appends the dependency to the list of dependencies.
-    /// [omit]
-    let internal dependencyAtEnd targetName dependentTargetName =
-        let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
-
-        getTargetDict().[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
-
     /// Appends the dependency to the list of soft dependencies.
     /// [omit]
-    let internal softDependencyAtEnd targetName dependentTargetName =
+    let internal softDependencyAtFront targetName dependentTargetName =
         let target,_ = checkIfDependencyCanBeAdded targetName dependentTargetName
 
-        getTargetDict().[targetName] <- { target with SoftDependencies = target.SoftDependencies @ [dependentTargetName] }
+        getTargetDict().[targetName] <- { target with SoftDependencies = dependentTargetName :: target.SoftDependencies }
 
     /// Adds the dependency to the list of dependencies.
     /// [omit]
-    let internal dependency targetName dependentTargetName = dependencyAtEnd targetName dependentTargetName
+    let internal dependency targetName dependentTargetName = dependencyAtFront targetName dependentTargetName
 
     /// Adds the dependency to the list of soft dependencies.
     /// [omit]
-    let internal softDependency targetName dependentTargetName = softDependencyAtEnd targetName dependentTargetName
+    let internal softDependency targetName dependentTargetName = softDependencyAtFront targetName dependentTargetName
 
     /// Adds the dependencies to the list of dependencies.
     /// [omit]
@@ -367,10 +361,10 @@ module Target =
             visited, ordered
 
         // First pass is to accumulate targets in (hard) dependency graph
-        let visited, _ = visit (fun t -> t.Dependencies |> withDependencyType DependencyType.Hard) ignore targetName
+        let visited, _ = visit (fun t -> t.Dependencies |> List.rev |> withDependencyType DependencyType.Hard) ignore targetName
 
         let getAllDependencies (t: Target) =
-             (t.Dependencies |> withDependencyType DependencyType.Hard) @
+             (t.Dependencies |> List.rev |> withDependencyType DependencyType.Hard) @
              // Note that we only include the soft dependency if it is present in the set of targets that were
              // visited.
              (t.SoftDependencies |> List.filter visited.Contains |> withDependencyType DependencyType.Soft)
@@ -463,7 +457,9 @@ module Target =
 
         let rec visitDependenciesAux fGetDependencies (visited:string list) level (_depType, targetName) =
             let target = get targetName
-            let isVisited = visited |> Seq.exists (fun t -> t = String.toLower targetName)
+            let isVisited =
+                visited
+                |> Seq.exists (fun t -> String.Equals(t, targetName, StringComparison.OrdinalIgnoreCase))
             //fVisit (target, depType, level, isVisited)
             let dependencies =
                 fGetDependencies target
@@ -474,13 +470,25 @@ module Target =
             else dependencies
 
         // first find the list of targets we "have" to build
-        let targets = visitDependenciesAux (fun t -> t.Dependencies |> withDependencyType DependencyType.Hard) [] 0 (DependencyType.Hard, target)
+        let targets = visitDependenciesAux (fun t -> t.Dependencies |> List.rev |> withDependencyType DependencyType.Hard) [] 0 (DependencyType.Hard, target)
 
         // Try to build the optimal tree by starting with the targets without dependencies and remove them from the list iteratively
+        let baseDict =
+            ImmutableDictionary.Empty
+                .WithComparers(StringComparer.OrdinalIgnoreCase)
+
+        let fromTargets targets =
+            baseDict
+                .AddRange(targets |> Seq.map (fun t -> KeyValuePair<_,_>(t.Name, t)))
+        
         let rec findOrder (targetLeft:Target list) =
-            let isValidTarget name = targetLeft |> Seq.exists (fun t -> String.toLower t.Name = String.toLower name)
+            let targetsDict = fromTargets targetLeft
+            let isValidTarget name =
+                targetsDict.ContainsKey(name)
+                //|> Seq.exists (fun t -> System.String.Equals(t.Name, name, System.StringComparison.OrdinalIgnoreCase))
             let canBeExecuted (t:Target) =
                 t.Dependencies @ t.SoftDependencies
+                //|> List.rev
                 |> Seq.filter isValidTarget
                 |> Seq.isEmpty
             let map =
