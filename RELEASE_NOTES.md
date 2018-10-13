@@ -1,6 +1,6 @@
 # Release Notes
 
-## 5.9.0-alpha - tbd
+## 5.9.0 - 2018-10-13
 
 * ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - https://github.com/fsharp/FAKE/pull/2114
 * ENHANCEMENT: Added `SpecFlowNext` module to `Fake.DotNet.Testing.SpecFlow` with improved API and missing arguments - https://github.com/fsharp/FAKE/pull/2143
@@ -8,9 +8,13 @@
 * ENHANCEMENT: Updated `Fake.Testing.ReportGenerator` to include `ClassFilter` and `FileFilter` - https://github.com/fsharp/FAKE/pull/2120
 * ENHANCEMENT: Improve TeamCity integrations - https://github.com/fsharp/FAKE/pull/2138
 * ENHANCEMENT: Update `Fake.Tools.Pickles` to include latest CLI additions - https://github.com/fsharp/FAKE/pull/2133
+* ENHANCEMENT: The `Trace` module can now report build-state with a message - https://github.com/fsharp/FAKE/pull/2139
+* ENHANCEMENT: The target module not supports a `Trace.WithContext` mode to retrieve the context and handle potenial problems manually - https://github.com/fsharp/FAKE/pull/2140
+* ENHANCEMENT: The target module now allows to set the build-state by using the new `WithContext`-mode - https://github.com/fsharp/FAKE/pull/2141
 * BUGFIX: Fix TeamCity (named) Artifact upload - https://github.com/fsharp/FAKE/pull/2147
 * BUGFIX: AppVeyor module should not trace `appveyor.exe` calls - https://github.com/fsharp/FAKE/pull/2137
 * BUGFIX: Always print the stack-trace when in verbose mode - https://github.com/fsharp/FAKE/issues/2136
+* DOCUMENTATION: Some smaller fixes
 
 ## 5.8.5 - 2018-10-10
 
