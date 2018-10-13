@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>ProcessResults<'a> - FAKE - F# Make</title>
+		<title>IMap - FAKE - F# Make</title>
 		<meta charset="utf-8" />
 		<meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull, Matthias Dittrich" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -151,6 +151,7 @@
 														<li>
 															<a href="/core-targets.html">DSL</a>
 															<ul>
+																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
 																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
 															</ul>
 														</li>
@@ -283,27 +284,31 @@
 <p>
 
 </p>
-<a name="ProcessResults<'a>" class="anchor" href="#ProcessResults<'a>" ><h1>ProcessResults<'a></h1></a>
+<a name="IMap" class="anchor" href="#IMap"><h1>IMap</h1></a>
+
 <div class="xmldoc">
 </div>
-  <a name="Record Fields" class="anchor" href="#Record Fields"><h3>Record Fields</h3></a>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <a name="Functions and values" class="anchor" href="#Functions and values"><h3>Functions and values</h3></a>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1619', 1619)" onmouseover="showTip(event, '1619', 1619)">
-            CreateProcess
+          <code onmouseout="hideTip(event, '212', 212)" onmouseover="showTip(event, '212', 212)">
+            add k v m
           </code>
-          <div class="tip" id="1619">
-            <strong>Signature:</strong> CreateProcess&lt;&#39;a&gt;<br />
-                                  </div>
+          <div class="tip" id="212">
+            <strong>Signature:</strong> k:&#39;b -&gt; v:&#39;c -&gt; m:IMap&lt;&#39;b,&#39;c&gt; -&gt; IMap&lt;&#39;b,&#39;c&gt;<br />
+                          <strong>Type parameters:</strong> 'b, 'c                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L316-316" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L23-23" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -313,15 +318,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1620', 1620)" onmouseover="showTip(event, '1620', 1620)">
-            ExitCode
+          <code onmouseout="hideTip(event, '213', 213)" onmouseover="showTip(event, '213', 213)">
+            empty
           </code>
-          <div class="tip" id="1620">
-            <strong>Signature:</strong> int<br />
-                                  </div>
+          <div class="tip" id="213">
+            <strong>Signature:</strong> IMap&lt;&#39;key,&#39;value&gt;<br />
+                          <strong>Type parameters:</strong> 'key, 'value                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L315-315" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L13-13" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -331,15 +336,69 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1621', 1621)" onmouseover="showTip(event, '1621', 1621)">
-            Result
+          <code onmouseout="hideTip(event, '214', 214)" onmouseover="showTip(event, '214', 214)">
+            iter f m
           </code>
-          <div class="tip" id="1621">
-            <strong>Signature:</strong> &#39;a<br />
-                                  </div>
+          <div class="tip" id="214">
+            <strong>Signature:</strong> f:(&#39;?9217 -&gt; &#39;?9218 -&gt; unit) -&gt; m:IMap&lt;&#39;?9217,&#39;?9218&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?9217, '?9218                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L317-317" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L20-20" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '215', 215)" onmouseover="showTip(event, '215', 215)">
+            remove k m
+          </code>
+          <div class="tip" id="215">
+            <strong>Signature:</strong> k:&#39;?9214 -&gt; m:IMap&lt;&#39;?9214,&#39;?9215&gt; -&gt; IMap&lt;&#39;?9214,&#39;?9215&gt;<br />
+                          <strong>Type parameters:</strong> '?9214, '?9215                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L18-18" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '216', 216)" onmouseover="showTip(event, '216', 216)">
+            toSeq(m)
+          </code>
+          <div class="tip" id="216">
+            <strong>Signature:</strong> m:IMap&lt;&#39;?9223,&#39;?9224&gt; -&gt; seq&lt;&#39;?9223 * &#39;?9224&gt;<br />
+                          <strong>Type parameters:</strong> '?9223, '?9224                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L25-25" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '217', 217)" onmouseover="showTip(event, '217', 217)">
+            tryFind k m
+          </code>
+          <div class="tip" id="217">
+            <strong>Signature:</strong> k:&#39;?9211 -&gt; m:IMap&lt;&#39;?9211,&#39;?9212&gt; -&gt; &#39;?9212 option<br />
+                          <strong>Type parameters:</strong> '?9211, '?9212                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/RawProc.fs#L14-14" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -453,7 +512,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.5</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.0</a></li>
 									</ul>
 								</div>
 							</div>

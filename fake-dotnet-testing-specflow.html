@@ -152,6 +152,7 @@
 														<li>
 															<a href="/core-targets.html">DSL</a>
 															<ul>
+																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
 																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
 															</ul>
 														</li>
@@ -275,8 +276,9 @@
 <p>Use <a href="http://specflow.org">SpecFlow</a> to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>
 <p>SpecFlow is open source and provided under a BSD license. As part of the Cucumber family, SpecFlow uses the official Gherkin parser and supports the .NET framework, Xamarin and Mono.</p>
 <p>The package Fake.DotNet.Testing.SpecFlow is a bridge to the <a href="http://specflow.org">SpecFlow</a> CLI (specflow.exe).</p>
+<p><strong>If you use SpecFlow in a version &gt;= 2.4, then please use the SpecFlowNext module</strong></p>
 <p><a href="https://fake.build/apidocs/v5/fake-dotnet-testing-specflow.html">API-Reference</a></p>
-<h2><a name="Minimal-working-example" class="anchor" href="#Minimal-working-example">Minimal working example</a></h2>
+<h2><a name="Minimal-working-example-v2-4" class="anchor" href="#Minimal-working-example-v2-4">Minimal working example (v2.4+)</a></h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -320,14 +322,83 @@
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">specsProject</span> <span class="o">=</span> <span class="s">&quot;IntegrationTests.csproj&quot;</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Regenerate Test Classes&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">specsProject</span> <span class="o">|&gt;</span> <span class="id">SpecFlowNext</span><span class="pn">.</span><span class="id">run</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">id</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Create StepDefinition Report&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">specsProject</span>
+    <span class="o">|&gt;</span>  <span class="id">SpecFlowNext</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+            <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> 
+                <span class="id">SubCommand</span> <span class="o">=</span> <span class="id">StepDefinitionReport</span>
+                <span class="id">BinFolder</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="id">Some</span> <span class="s">&quot;bin/Debug&quot;</span>
+                <span class="id">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="id">Some</span> <span class="s">&quot;StepDefinitionReport.html&quot;</span> <span class="pn">}</span><span class="pn">)</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Default&quot;</span> <span class="id">Target</span><span class="pn">.</span><span class="id">DoNothing</span>
+
+<span class="s">&quot;Clean&quot;</span>
+<span class="o">==&gt;</span> <span class="s">&quot;Regenerate Test Classes&quot;</span>
+<span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+<span class="o">==&gt;</span> <span class="s">&quot;Run Integration Tests&quot;</span>
+<span class="o">==&gt;</span> <span class="s">&quot;Create StepDefinition Report&quot;</span>
+<span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Minimal-working-example-pre-v2-4" class="anchor" href="#Minimal-working-example-pre-v2-4">Minimal working example (pre v2.4)</a></h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target</span>
+<span class="s">nuget Fake.DotNet.Testing.SpecFlow //&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">DotNet</span><span class="pn">.</span><span class="id">Testing</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="id">specsProject</span> <span class="o">=</span> <span class="s">&quot;IntegrationTests.csproj&quot;</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Regenerate Test Classes&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="id">SpecFlow</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
-        <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">ProjectFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="id">specsProject</span> <span class="pn">}</span><span class="pn">)</span>
+        <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">ProjectFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">specsProject</span> <span class="pn">}</span><span class="pn">)</span>
 <span class="pn">)</span>
 
 <span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Create StepDefinition Report&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
     <span class="id">SpecFlow</span><span class="pn">.</span><span class="id">run</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
         <span class="pn">{</span> <span class="id">p</span> <span class="k">with</span> <span class="id">SubCommand</span> <span class="o">=</span> <span class="s">&quot;stepdefinitionreport&quot;</span>
-                 <span class="id">ProjectFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">specsProject</span>
+                 <span class="id">ProjectFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="id">specsProject</span>
                  <span class="id">BinFolder</span> <span class="o">=</span> <span class="s">&quot;bin/Debug&quot;</span>
                  <span class="id">OutputFile</span> <span class="o">=</span> <span class="s">&quot;StepDefinitionReport.html&quot;</span> <span class="pn">}</span><span class="pn">)</span>
 <span class="pn">)</span>
@@ -347,6 +418,8 @@
 </table>
 
 <div class="tip" id="fs1">val specsProject : string</div>
+<div class="tip" id="fs2">val id : x:&#39;T -&gt; &#39;T</div>
+<div class="tip" id="fs3">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
 
                       </article>
 								</div>
@@ -452,7 +525,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.5</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.0</a></li>
 									</ul>
 								</div>
 							</div>

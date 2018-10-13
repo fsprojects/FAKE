@@ -152,6 +152,7 @@
 														<li>
 															<a href="/core-targets.html">DSL</a>
 															<ul>
+																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
 																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
 															</ul>
 														</li>
@@ -268,6 +269,22 @@
 									<!-- Content -->
                       <article>
 <h1><a name="Release-Notes" class="anchor" href="#Release-Notes">Release Notes</a></h1>
+<h2><a name="5-9-0-2018-10-13" class="anchor" href="#5-9-0-2018-10-13">5.9.0 - 2018-10-13</a></h2>
+<ul>
+<li>ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - <a href="https://github.com/fsharp/FAKE/pull/2114">https://github.com/fsharp/FAKE/pull/2114</a></li>
+<li>ENHANCEMENT: Added <code>SpecFlowNext</code> module to <code>Fake.DotNet.Testing.SpecFlow</code> with improved API and missing arguments - <a href="https://github.com/fsharp/FAKE/pull/2143">https://github.com/fsharp/FAKE/pull/2143</a></li>
+<li>ENHANCEMENT (BREAKING): Updated and finalized the new (and undocumented) process API which is more unit-testable - <a href="https://github.com/fsharp/FAKE/pull/2131">https://github.com/fsharp/FAKE/pull/2131</a></li>
+<li>ENHANCEMENT: Updated <code>Fake.Testing.ReportGenerator</code> to include <code>ClassFilter</code> and <code>FileFilter</code> - <a href="https://github.com/fsharp/FAKE/pull/2120">https://github.com/fsharp/FAKE/pull/2120</a></li>
+<li>ENHANCEMENT: Improve TeamCity integrations - <a href="https://github.com/fsharp/FAKE/pull/2138">https://github.com/fsharp/FAKE/pull/2138</a></li>
+<li>ENHANCEMENT: Update <code>Fake.Tools.Pickles</code> to include latest CLI additions - <a href="https://github.com/fsharp/FAKE/pull/2133">https://github.com/fsharp/FAKE/pull/2133</a></li>
+<li>ENHANCEMENT: The <code>Trace</code> module can now report build-state with a message - <a href="https://github.com/fsharp/FAKE/pull/2139">https://github.com/fsharp/FAKE/pull/2139</a></li>
+<li>ENHANCEMENT: The target module not supports a <code>Trace.WithContext</code> mode to retrieve the context and handle potenial problems manually - <a href="https://github.com/fsharp/FAKE/pull/2140">https://github.com/fsharp/FAKE/pull/2140</a></li>
+<li>ENHANCEMENT: The target module now allows to set the build-state by using the new <code>WithContext</code>-mode - <a href="https://github.com/fsharp/FAKE/pull/2141">https://github.com/fsharp/FAKE/pull/2141</a></li>
+<li>BUGFIX: Fix TeamCity (named) Artifact upload - <a href="https://github.com/fsharp/FAKE/pull/2147">https://github.com/fsharp/FAKE/pull/2147</a></li>
+<li>BUGFIX: AppVeyor module should not trace <code>appveyor.exe</code> calls - <a href="https://github.com/fsharp/FAKE/pull/2137">https://github.com/fsharp/FAKE/pull/2137</a></li>
+<li>BUGFIX: Always print the stack-trace when in verbose mode - <a href="https://github.com/fsharp/FAKE/issues/2136">https://github.com/fsharp/FAKE/issues/2136</a></li>
+<li>DOCUMENTATION: Some smaller fixes</li>
+</ul>
 <h2><a name="5-8-5-2018-10-10" class="anchor" href="#5-8-5-2018-10-10">5.8.5 - 2018-10-10</a></h2>
 <ul>
 <li>BUGFIX: PATH Variable was overwritten when using the <code>DotNet.Cli</code> module - <a href="https://github.com/fsharp/FAKE/issues/2134">https://github.com/fsharp/FAKE/issues/2134</a></li>
@@ -2083,7 +2100,7 @@ New tasks:
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.5</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.0</a></li>
 									</ul>
 								</div>
 							</div>

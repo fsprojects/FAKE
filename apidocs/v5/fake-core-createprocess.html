@@ -151,6 +151,7 @@
 														<li>
 															<a href="/core-targets.html">DSL</a>
 															<ul>
+																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
 																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
 															</ul>
 														</li>
@@ -286,6 +287,32 @@
 <a name="CreateProcess" class="anchor" href="#CreateProcess"><h1>CreateProcess</h1></a>
 
 <div class="xmldoc">
+<p>Module for creating and modifying CreateProcess<'TRes> instances.
+You can manage:</p>
+<ul>
+<li>The command (ie file to execute and arguments)</li>
+<li>The working directory</li>
+<li>The process environment</li>
+<li>Stream redirection and pipes</li>
+<li>Timeout for the process to exit</li>
+<li>The result and the result transformations (<code>map</code>, <code>mapResult</code>)</li>
+</ul>
+<p>More extensions can be found in the <a href="apidocs/v5/fake-core-createprocessext-createprocess.html">CreateProcess Extensions</a></p>
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Command</span><span class="pn">.</span><span class="id">RawCommand</span><span class="pn">(</span><span class="s">&quot;file&quot;</span><span class="pn">,</span> <span class="id">Arguments</span><span class="pn">.</span><span class="id">OfArgs</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span><span class="pn">)</span>
+<span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromCommand</span>
+<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">ignore</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -299,433 +326,680 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '172', 172)" onmouseover="showTip(event, '172', 172)">
-            addOnExited f r
-          </code>
-          <div class="tip" id="172">
-            <strong>Signature:</strong> f:(int -&gt; unit) -&gt; r:CreateProcess&lt;&#39;?8641&gt; -&gt; CreateProcess&lt;&#39;?8641&gt;<br />
-                          <strong>Type parameters:</strong> '?8641                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L272-272" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '173', 173)" onmouseover="showTip(event, '173', 173)">
-            addSetup f c
-          </code>
-          <div class="tip" id="173">
-            <strong>Signature:</strong> f:(unit -&gt; &#39;?8619) -&gt; c:CreateProcess&lt;&#39;?8620&gt; -&gt; CreateProcess&lt;&#39;?8620&gt;<br />
-                          <strong>Type parameters:</strong> '?8619, '?8620                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L218-218" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '174', 174)" onmouseover="showTip(event, '174', 174)">
-            copyRedirectedProcessOutputsToStandardOutputs(...)
-          </code>
-          <div class="tip" id="174">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8608&gt; -&gt; CreateProcess&lt;&#39;?8608&gt;<br />
-                          <strong>Type parameters:</strong> '?8608                      </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L187-187" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '175', 175)" onmouseover="showTip(event, '175', 175)">
-            emptyHook
-          </code>
-          <div class="tip" id="175">
-            <strong>Signature:</strong> IProcessHook<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L126-126" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '176', 176)" onmouseover="showTip(event, '176', 176)">
-            ensureExitCode(r)
+            addOnExited f c
           </code>
           <div class="tip" id="176">
-            <strong>Signature:</strong> r:CreateProcess&lt;&#39;?8645&gt; -&gt; CreateProcess&lt;&#39;?8645&gt;<br />
-                          <strong>Type parameters:</strong> '?8645                      </div>
+            <strong>Signature:</strong> f:(&#39;?8965 -&gt; int -&gt; &#39;?8966) -&gt; c:CreateProcess&lt;&#39;?8965&gt; -&gt; CreateProcess&lt;&#39;?8966&gt;<br />
+                          <strong>Type parameters:</strong> '?8965, '?8966                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L286-286" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L467-467" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Execute the given function after the process has been exited and the previous result has been calculated.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '177', 177)" onmouseover="showTip(event, '177', 177)">
-            ensureExitCodeWithMessage msg r
+            addOnFinally f c
           </code>
           <div class="tip" id="177">
-            <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;&#39;?8643&gt; -&gt; CreateProcess&lt;&#39;?8643&gt;<br />
-                          <strong>Type parameters:</strong> '?8643                      </div>
+            <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?8935&gt; -&gt; CreateProcess&lt;&#39;?8935&gt;<br />
+                          <strong>Type parameters:</strong> '?8935                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L280-280" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L301-301" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Execute the given function when the process is cleaned up.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '178', 178)" onmouseover="showTip(event, '178', 178)">
-            fromCommand(command)
+            addOnSetup f c
           </code>
           <div class="tip" id="178">
-            <strong>Signature:</strong> command:Command -&gt; CreateProcess&lt;unit&gt;<br />
-                                  </div>
+            <strong>Signature:</strong> f:(unit -&gt; &#39;?8932) -&gt; c:CreateProcess&lt;&#39;?8933&gt; -&gt; CreateProcess&lt;&#39;?8933&gt;<br />
+                          <strong>Type parameters:</strong> '?8932, '?8933                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L143-143" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L292-292" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Execute the given function before the process is started</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '179', 179)" onmouseover="showTip(event, '179', 179)">
-            fromRawCommand command args
+            addOnStarted f c
           </code>
           <div class="tip" id="179">
-            <strong>Signature:</strong> command:FilePath -&gt; args:string array -&gt; CreateProcess&lt;unit&gt;<br />
-                                  </div>
+            <strong>Signature:</strong> f:(unit -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?8937&gt; -&gt; CreateProcess&lt;&#39;?8937&gt;<br />
+                          <strong>Type parameters:</strong> '?8937                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L159-159" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L309-309" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Execute the given function right after the process is started.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
-            fromRawWindowsCommandLine(...)
+            appendSimpleFuncs(...)
           </code>
           <div class="tip" id="180">
-            <strong>Signature:</strong> command:FilePath -&gt; windowsCommandLine:string -&gt; CreateProcess&lt;unit&gt;<br />
-                                  </div>
+            <strong>Signature:</strong> prepareState:(unit -&gt; &#39;?8928) -&gt; onStart:(&#39;?8928 -&gt; Process -&gt; unit) -&gt; onResult:(Async&lt;&#39;?8929&gt; -&gt; &#39;?8928 -&gt; Task&lt;RawProcessResult&gt; -&gt; Async&lt;&#39;?8930&gt;) -&gt; onDispose:(&#39;?8928 -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?8929&gt; -&gt; CreateProcess&lt;&#39;?8930&gt;<br />
+                          <strong>Type parameters:</strong> '?8928, '?8929, '?8930                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L157-157" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L282-282" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Attaches the given functions to the current CreateProcess instance.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
-            interceptStream target s
+            copyRedirectedProcessOutputsToStandardOutputs(...)
           </code>
           <div class="tip" id="181">
-            <strong>Signature:</strong> target:Stream -&gt; s:StreamSpecification -&gt; StreamSpecification<br />
-                                  </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8879&gt; -&gt; CreateProcess&lt;&#39;?8879&gt;<br />
+                          <strong>Type parameters:</strong> '?8879                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L178-178" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L171-171" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Copies std-out and std-err into the corresponding <code>System.Console</code> streams (by using interceptStream).</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
-            map f x
+            disableTraceCommand(c)
           </code>
           <div class="tip" id="182">
-            <strong>Signature:</strong> f:(&#39;?8633 -&gt; &#39;?8634) -&gt; x:CreateProcess&lt;&#39;?8633&gt; -&gt; CreateProcess&lt;&#39;?8634&gt;<br />
-                          <strong>Type parameters:</strong> '?8633, '?8634                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8883&gt; -&gt; CreateProcess&lt;&#39;?8883&gt;<br />
+                          <strong>Type parameters:</strong> '?8883                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L245-245" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L188-188" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Disable the default trace of started processes.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
-            mapFilePath f c
+            ensureExitCode(r)
           </code>
           <div class="tip" id="183">
-            <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?8616&gt; -&gt; CreateProcess&lt;&#39;?8616&gt;<br />
-                          <strong>Type parameters:</strong> '?8616                      </div>
+            <strong>Signature:</strong> r:CreateProcess&lt;&#39;?8971&gt; -&gt; CreateProcess&lt;&#39;?8971&gt;<br />
+                          <strong>Type parameters:</strong> '?8971                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L209-209" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L498-498" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Makes sure the exit code is <code>0</code>, if now a detailed exception is thrown (showing the command line).</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
-            ofProc(x)
+            ensureExitCodeWithMessage msg r
           </code>
           <div class="tip" id="184">
-            <strong>Signature:</strong> x:CreateProcess&lt;&#39;?8601&gt; -&gt; CreateProcess&lt;unit&gt;<br />
-                          <strong>Type parameters:</strong> '?8601                      </div>
+            <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;&#39;?8968&gt; -&gt; CreateProcess&lt;&#39;?8968&gt;<br />
+                          <strong>Type parameters:</strong> '?8968                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L132-132" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L482-482" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>throws an exception with the given message if <code>exitCode &lt;&gt; 0</code></p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
-            ofStartInfo(p)
+            fromCommand(command)
           </code>
           <div class="tip" id="185">
-            <strong>Signature:</strong> p:ProcessStartInfo -&gt; CreateProcess&lt;unit&gt;<br />
+            <strong>Signature:</strong> command:Command -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L162-162" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L104-104" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Create a simple <code>CreateProcess&lt;_&gt;</code> instance from the given command.</p>
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Command</span><span class="pn">.</span><span class="id">RawCommand</span><span class="pn">(</span><span class="s">&quot;file&quot;</span><span class="pn">,</span> <span class="id">Arguments</span><span class="pn">.</span><span class="id">OfArgs</span> <span class="pn">[</span><span class="s">&quot;arg1&quot;</span><span class="pn">;</span> <span class="s">&quot;arg2&quot;</span><span class="pn">]</span><span class="pn">)</span>
+<span class="o">|&gt;</span> <span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromCommand</span>
+<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">ignore</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
-            redirectOutput(c)
+            fromRawCommand command args
           </code>
           <div class="tip" id="186">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8636&gt; -&gt; CreateProcess&lt;ProcessOutput&gt;<br />
-                          <strong>Type parameters:</strong> '?8636                      </div>
+            <strong>Signature:</strong> command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
+                                  </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L247-247" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L136-136" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Create a CreateProcess from the given file and arguments</p>
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawCommand</span> <span class="s">&quot;cmd&quot;</span> <span class="pn">[</span> <span class="s">&quot;/C&quot;</span><span class="pn">;</span>  <span class="s">&quot;echo test&quot;</span> <span class="pn">]</span>
+<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">ignore</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '187', 187)" onmouseover="showTip(event, '187', 187)">
-            replaceFilePath newFilePath c
+            fromRawWindowsCommandLine(...)
           </code>
           <div class="tip" id="187">
-            <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?8614&gt; -&gt; CreateProcess&lt;&#39;?8614&gt;<br />
-                          <strong>Type parameters:</strong> '?8614                      </div>
+            <strong>Signature:</strong> command:FilePath -&gt; windowsCommandLine:string -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
+                                  </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L203-203" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L126-126" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Create a CreateProcess from the given file and arguments</p>
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">CreateProcess</span><span class="pn">.</span><span class="id">fromRawWindowsCommandLine</span> <span class="s">&quot;cmd&quot;</span> <span class="s">&quot;/C \&quot;echo test\&quot;&quot;</span>
+<span class="o">|&gt;</span> <span class="id">Proc</span><span class="pn">.</span><span class="id">run</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="fn">ignore</span>
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">val ignore : value:&#39;T -&gt; unit</div>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '188', 188)" onmouseover="showTip(event, '188', 188)">
-            warnOnExitCode msg r
+            getEnvironmentMap(c)
           </code>
           <div class="tip" id="188">
-            <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;&#39;?8647&gt; -&gt; CreateProcess&lt;&#39;?8647&gt;<br />
-                          <strong>Type parameters:</strong> '?8647                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8943&gt; -&gt; EnvMap<br />
+                          <strong>Type parameters:</strong> '?8943                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L300-300" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L327-327" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Retrieve the current environment map.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '189', 189)" onmouseover="showTip(event, '189', 189)">
-            withCommand command c
+            interceptStream target s
           </code>
           <div class="tip" id="189">
-            <strong>Signature:</strong> command:Command -&gt; c:CreateProcess&lt;&#39;?8612&gt; -&gt; CreateProcess&lt;&#39;?8612&gt;<br />
-                          <strong>Type parameters:</strong> '?8612                      </div>
+            <strong>Signature:</strong> target:Stream -&gt; s:StreamSpecification -&gt; StreamSpecification<br />
+                                  </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L199-199" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L167-167" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>intercept the given StreamSpecification and writes the intercepted data into target.
+Throws if the stream is not redirected (ie is Inherit).</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '190', 190)" onmouseover="showTip(event, '190', 190)">
-            withEnvironment env c
+            map f c
           </code>
           <div class="tip" id="190">
-            <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?8622&gt; -&gt; CreateProcess&lt;&#39;?8622&gt;<br />
-                          <strong>Type parameters:</strong> '?8622                      </div>
+            <strong>Signature:</strong> f:(&#39;?8953 -&gt; &#39;?8954) -&gt; c:CreateProcess&lt;&#39;?8953&gt; -&gt; CreateProcess&lt;&#39;?8954&gt;<br />
+                          <strong>Type parameters:</strong> '?8953, '?8954                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L222-222" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L360-360" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Map the current result to a new type.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '191', 191)" onmouseover="showTip(event, '191', 191)">
-            withResultFunc f x
+            mapFilePath f c
           </code>
           <div class="tip" id="191">
-            <strong>Signature:</strong> f:(ProcessOutput -&gt; &#39;?8638) -&gt; x:CreateProcess&lt;&#39;?8639&gt; -&gt; CreateProcess&lt;&#39;?8638&gt;<br />
-                          <strong>Type parameters:</strong> '?8638, '?8639                      </div>
+            <strong>Signature:</strong> f:(FilePath -&gt; FilePath) -&gt; c:CreateProcess&lt;&#39;?8889&gt; -&gt; CreateProcess&lt;&#39;?8889&gt;<br />
+                          <strong>Type parameters:</strong> '?8889                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L267-267" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L206-206" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Map the file-path according to the given function.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '192', 192)" onmouseover="showTip(event, '192', 192)">
-            withStandardError stdErr c
+            mapResult f c
           </code>
           <div class="tip" id="192">
-            <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?8626&gt; -&gt; CreateProcess&lt;&#39;?8626&gt;<br />
-                          <strong>Type parameters:</strong> '?8626                      </div>
+            <strong>Signature:</strong> f:(&#39;a -&gt; &#39;b) -&gt; c:CreateProcess&lt;ProcessResult&lt;&#39;a&gt;&gt; -&gt; CreateProcess&lt;ProcessResult&lt;&#39;b&gt;&gt;<br />
+                          <strong>Type parameters:</strong> 'a, 'b                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L228-228" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L373-373" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Map only the result object and leave the exit code in the result type.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '193', 193)" onmouseover="showTip(event, '193', 193)">
-            withStandardInput stdIn c
+            ofStartInfo(p)
           </code>
           <div class="tip" id="193">
-            <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?8628&gt; -&gt; CreateProcess&lt;&#39;?8628&gt;<br />
-                          <strong>Type parameters:</strong> '?8628                      </div>
+            <strong>Signature:</strong> p:ProcessStartInfo -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;<br />
+                                  </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L231-231" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L140-140" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Create a CreateProcess from the given <code>ProcessStartInfo</code></p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '194', 194)" onmouseover="showTip(event, '194', 194)">
-            withStandardOutput stdOut c
+            redirectOutput(c)
           </code>
           <div class="tip" id="194">
-            <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?8624&gt; -&gt; CreateProcess&lt;&#39;?8624&gt;<br />
-                          <strong>Type parameters:</strong> '?8624                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;ProcessResult&lt;ProcessOutput&gt;&gt;<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L225-225" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L379-379" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Starts redirecting the output streams and collects all data at the end.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '195', 195)" onmouseover="showTip(event, '195', 195)">
-            withWorkingDirectory workDir c
+            replaceFilePath newFilePath c
           </code>
           <div class="tip" id="195">
-            <strong>Signature:</strong> workDir:string -&gt; c:CreateProcess&lt;&#39;?8610&gt; -&gt; CreateProcess&lt;&#39;?8610&gt;<br />
-                          <strong>Type parameters:</strong> '?8610                      </div>
+            <strong>Signature:</strong> newFilePath:FilePath -&gt; c:CreateProcess&lt;&#39;?8887&gt; -&gt; CreateProcess&lt;&#39;?8887&gt;<br />
+                          <strong>Type parameters:</strong> '?8887                      </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Proc.fs#L196-196" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L198-198" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Replace the file-path</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '196', 196)" onmouseover="showTip(event, '196', 196)">
+            setEnvironmentVariable envKey envVar c
+          </code>
+          <div class="tip" id="196">
+            <strong>Signature:</strong> envKey:string -&gt; envVar:string -&gt; c:CreateProcess&lt;&#39;?8945&gt; -&gt; CreateProcess&lt;&#39;?8945&gt;<br />
+                          <strong>Type parameters:</strong> '?8945                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L333-333" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the given environment variable.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '197', 197)" onmouseover="showTip(event, '197', 197)">
+            warnOnExitCode msg r
+          </code>
+          <div class="tip" id="197">
+            <strong>Signature:</strong> msg:string -&gt; r:CreateProcess&lt;unit&gt; -&gt; CreateProcess&lt;unit&gt;<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L514-514" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Like<code>ensureExitCode</code> but only triggers a warning instead of failing.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '198', 198)" onmouseover="showTip(event, '198', 198)">
+            withCommand command c
+          </code>
+          <div class="tip" id="198">
+            <strong>Signature:</strong> command:Command -&gt; c:CreateProcess&lt;&#39;?8885&gt; -&gt; CreateProcess&lt;&#39;?8885&gt;<br />
+                          <strong>Type parameters:</strong> '?8885                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L193-193" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the command to the given one.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '199', 199)" onmouseover="showTip(event, '199', 199)">
+            withEnvironment env c
+          </code>
+          <div class="tip" id="199">
+            <strong>Signature:</strong> env:(string * string) list -&gt; c:CreateProcess&lt;&#39;?8939&gt; -&gt; CreateProcess&lt;&#39;?8939&gt;<br />
+                          <strong>Type parameters:</strong> '?8939                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L318-318" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Sets the given environment variables</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '200', 200)" onmouseover="showTip(event, '200', 200)">
+            withEnvironmentMap env c
+          </code>
+          <div class="tip" id="200">
+            <strong>Signature:</strong> env:EnvMap -&gt; c:CreateProcess&lt;&#39;?8941&gt; -&gt; CreateProcess&lt;&#39;?8941&gt;<br />
+                          <strong>Type parameters:</strong> '?8941                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L323-323" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Sets the given environment map.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '201', 201)" onmouseover="showTip(event, '201', 201)">
+            withOutputEvents onStdOut onStdErr c
+          </code>
+          <div class="tip" id="201">
+            <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L410-410" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Calls the given functions whenever a new output-line is received.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '202', 202)" onmouseover="showTip(event, '202', 202)">
+            withOutputEventsNotNull(...)
+          </code>
+          <div class="tip" id="202">
+            <strong>Signature:</strong> onStdOut:(string -&gt; unit) -&gt; onStdErr:(string -&gt; unit) -&gt; c:CreateProcess&lt;&#39;?8963&gt; -&gt; CreateProcess&lt;&#39;?8963&gt;<br />
+                          <strong>Type parameters:</strong> '?8963                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L461-461" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Like <code>withOutputEvents</code> but skips <code>null</code> objects.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '203', 203)" onmouseover="showTip(event, '203', 203)">
+            withStandardError stdErr c
+          </code>
+          <div class="tip" id="203">
+            <strong>Signature:</strong> stdErr:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?8949&gt; -&gt; CreateProcess&lt;&#39;?8949&gt;<br />
+                          <strong>Type parameters:</strong> '?8949                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L347-347" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the standard error stream.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '204', 204)" onmouseover="showTip(event, '204', 204)">
+            withStandardInput stdIn c
+          </code>
+          <div class="tip" id="204">
+            <strong>Signature:</strong> stdIn:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?8951&gt; -&gt; CreateProcess&lt;&#39;?8951&gt;<br />
+                          <strong>Type parameters:</strong> '?8951                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L353-353" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the standard input stream.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '205', 205)" onmouseover="showTip(event, '205', 205)">
+            withStandardOutput stdOut c
+          </code>
+          <div class="tip" id="205">
+            <strong>Signature:</strong> stdOut:StreamSpecification -&gt; c:CreateProcess&lt;&#39;?8947&gt; -&gt; CreateProcess&lt;&#39;?8947&gt;<br />
+                          <strong>Type parameters:</strong> '?8947                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L341-341" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the standard output stream.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '206', 206)" onmouseover="showTip(event, '206', 206)">
+            withTimeout timeout c
+          </code>
+          <div class="tip" id="206">
+            <strong>Signature:</strong> timeout:TimeSpan -&gt; c:CreateProcess&lt;&#39;a&gt; -&gt; CreateProcess&lt;&#39;a&gt;<br />
+                          <strong>Type parameters:</strong> 'a                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L533-533" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the given timeout</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '207', 207)" onmouseover="showTip(event, '207', 207)">
+            withWorkingDirectory workDir c
+          </code>
+          <div class="tip" id="207">
+            <strong>Signature:</strong> workDir:string -&gt; c:CreateProcess&lt;&#39;?8881&gt; -&gt; CreateProcess&lt;&#39;?8881&gt;<br />
+                          <strong>Type parameters:</strong> '?8881                      </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/CreateProcess.fs#L183-183" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set the working directory of the new process.</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -835,7 +1109,7 @@
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.5</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.0</a></li>
 									</ul>
 								</div>
 							</div>

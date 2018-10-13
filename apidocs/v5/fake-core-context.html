@@ -151,6 +151,7 @@
 														<li>
 															<a href="/core-targets.html">DSL</a>
 															<ul>
+																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
 																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
 															</ul>
 														</li>
@@ -330,10 +331,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
+          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
             fakeVar(name)
           </code>
-          <div class="tip" id="107">
+          <div class="tip" id="108">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -346,7 +347,7 @@ This allows us to run some modules without any context and change behavior depen
                 <h5>OBSOLETE</h5>
                 <p>Please use &#39;Fake.Core.FakeVar.define&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L134-134" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L145-145" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -356,10 +357,10 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
+          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
             fakeVarAllowNoContext(name)
           </code>
-          <div class="tip" id="108">
+          <div class="tip" id="109">
             <strong>Signature:</strong> name:string -&gt; (unit -&gt; &#39;a option) * (unit -&gt; unit) * (&#39;a -&gt; unit)<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -372,25 +373,7 @@ This allows us to run some modules without any context and change behavior depen
                 <h5>OBSOLETE</h5>
                 <p>Please use &#39;Fake.Core.FakeVar.defineAllowNoContext&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L140-140" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
-            forceFakeContext()
-          </code>
-          <div class="tip" id="109">
-            <strong>Signature:</strong> unit -&gt; FakeExecutionContext<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L106-106" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L151-151" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -401,14 +384,14 @@ This allows us to run some modules without any context and change behavior depen
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
-            getExecutionContext()
+            forceFakeContext()
           </code>
           <div class="tip" id="110">
-            <strong>Signature:</strong> unit -&gt; RuntimeContext<br />
+            <strong>Signature:</strong> unit -&gt; FakeExecutionContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L76-76" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L117-117" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -419,14 +402,14 @@ This allows us to run some modules without any context and change behavior depen
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '111', 111)" onmouseover="showTip(event, '111', 111)">
-            getFakeContext name f
+            getExecutionContext()
           </code>
           <div class="tip" id="111">
-            <strong>Signature:</strong> name:string -&gt; f:FakeExecutionContext -&gt; obj option<br />
+            <strong>Signature:</strong> unit -&gt; RuntimeContext<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L90-90" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L85-85" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -437,54 +420,10 @@ This allows us to run some modules without any context and change behavior depen
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '112', 112)" onmouseover="showTip(event, '112', 112)">
-            getFakeExecutionContext(e)
+            getFakeContext name f
           </code>
           <div class="tip" id="112">
-            <strong>Signature:</strong> e:RuntimeContext -&gt; FakeExecutionContext option<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L84-84" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '113', 113)" onmouseover="showTip(event, '113', 113)">
-            getFakeVar(name)
-          </code>
-          <div class="tip" id="113">
-            <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
-                          <strong>Type parameters:</strong> 'a                            <span>
-                    <strong>Attributes:</strong><br />
-[&lt;Obsolete(&quot;Please use &#39;Fake.Core.FakeVar.get&#39; instead&quot;)&gt;]<br />
-                </span>
-          </div>
-        </td>
-        <td class="xmldoc">
-            <div class="alert alert-warning">
-                <h5>OBSOLETE</h5>
-                <p>Please use &#39;Fake.Core.FakeVar.get&#39; instead</p>
-            </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L116-116" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
-            isFakeContext()
-          </code>
-          <div class="tip" id="114">
-            <strong>Signature:</strong> unit -&gt; bool<br />
+            <strong>Signature:</strong> name:string -&gt; f:FakeExecutionContext -&gt; obj option<br />
                                   </div>
         </td>
         <td class="xmldoc">
@@ -498,15 +437,59 @@ This allows us to run some modules without any context and change behavior depen
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
-            removeFakeContext name f
+          <code onmouseout="hideTip(event, '113', 113)" onmouseover="showTip(event, '113', 113)">
+            getFakeExecutionContext(e)
           </code>
-          <div class="tip" id="115">
-            <strong>Signature:</strong> name:string -&gt; f:FakeExecutionContext -&gt; obj option<br />
+          <div class="tip" id="113">
+            <strong>Signature:</strong> e:RuntimeContext -&gt; FakeExecutionContext option<br />
                                   </div>
         </td>
         <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L94-94" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L95-95" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
+            getFakeVar(name)
+          </code>
+          <div class="tip" id="114">
+            <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
+                          <strong>Type parameters:</strong> 'a                            <span>
+                    <strong>Attributes:</strong><br />
+[&lt;Obsolete(&quot;Please use &#39;Fake.Core.FakeVar.get&#39; instead&quot;)&gt;]<br />
+                </span>
+          </div>
+        </td>
+        <td class="xmldoc">
+            <div class="alert alert-warning">
+                <h5>OBSOLETE</h5>
+                <p>Please use &#39;Fake.Core.FakeVar.get&#39; instead</p>
+            </div> 
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L127-127" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
+            isFakeContext()
+          </code>
+          <div class="tip" id="115">
+            <strong>Signature:</strong> unit -&gt; bool<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L112-112" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -517,9 +500,45 @@ This allows us to run some modules without any context and change behavior depen
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
-            removeFakeVar(name)
+            removeExecutionContext()
           </code>
           <div class="tip" id="116">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L93-93" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
+            removeFakeContext name f
+          </code>
+          <div class="tip" id="117">
+            <strong>Signature:</strong> name:string -&gt; f:FakeExecutionContext -&gt; obj option<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L105-105" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
+            removeFakeVar(name)
+          </code>
+          <div class="tip" id="118">
             <strong>Signature:</strong> name:string -&gt; &#39;a option<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -532,43 +551,7 @@ This allows us to run some modules without any context and change behavior depen
                 <h5>OBSOLETE</h5>
                 <p>Please use &#39;Fake.Core.FakeVar.remove&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L122-122" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
-            setExecutionContext(e)
-          </code>
-          <div class="tip" id="117">
-            <strong>Signature:</strong> e:RuntimeContext -&gt; unit<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L82-82" class="github-link">
-              <img src="/assets/img/github.png" class="normal" />
-              <img src="/assets/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
-            setFakeContext name v updateF f
-          </code>
-          <div class="tip" id="118">
-            <strong>Signature:</strong> name:string -&gt; v:obj -&gt; updateF:(obj -&gt; obj) -&gt; f:FakeExecutionContext -&gt; obj<br />
-                                  </div>
-        </td>
-        <td class="xmldoc">
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L98-98" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L133-133" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -579,9 +562,45 @@ This allows us to run some modules without any context and change behavior depen
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
-            setFakeVar name v
+            setExecutionContext(e)
           </code>
           <div class="tip" id="119">
+            <strong>Signature:</strong> e:RuntimeContext -&gt; unit<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L91-91" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
+            setFakeContext name v updateF f
+          </code>
+          <div class="tip" id="120">
+            <strong>Signature:</strong> name:string -&gt; v:obj -&gt; updateF:(obj -&gt; obj) -&gt; f:FakeExecutionContext -&gt; obj<br />
+                                  </div>
+        </td>
+        <td class="xmldoc">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L109-109" class="github-link">
+              <img src="/assets/img/github.png" class="normal" />
+              <img src="/assets/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
+            setFakeVar name v
+          </code>
+          <div class="tip" id="121">
             <strong>Signature:</strong> name:string -&gt; v:&#39;a -&gt; &#39;a<br />
                           <strong>Type parameters:</strong> 'a                            <span>
                     <strong>Attributes:</strong><br />
@@ -594,7 +613,7 @@ This allows us to run some modules without any context and change behavior depen
                 <h5>OBSOLETE</h5>
                 <p>Please use &#39;Fake.Core.FakeVar.set&#39; instead</p>
             </div> 
-                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L128-128" class="github-link">
+                      <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Context/Context.fs#L139-139" class="github-link">
               <img src="/assets/img/github.png" class="normal" />
               <img src="/assets/img/github-blue.png" class="hover" />
             </a>
@@ -708,7 +727,7 @@ This allows us to run some modules without any context and change behavior depen
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.5</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.0</a></li>
 									</ul>
 								</div>
 							</div>

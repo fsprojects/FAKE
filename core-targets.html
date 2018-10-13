@@ -152,6 +152,7 @@
 														<li>
 															<a href="/core-targets.html">DSL</a>
 															<ul>
+																<li><a href="https://github.com/vbfox/FoxSharp/blob/master/src/BlackFox.Fake.BuildTask/Readme.md">BlackFox.Fake.BuildTask</a></li>
 																<li><a href="https://github.com/xakebuild/Xake">Xake</a></li>
 															</ul>
 														</li>
@@ -424,6 +425,71 @@ or <code>fake build --list</code> to list your targets.</p>
 <li><code>fake build -t MyTarget --arg</code> --&gt; <code>--arg</code> will be contained in <code>p.Context.Arguments</code>, because --arg is not a valid argument for the <code>Fake.Core.Target</code> (see command line spec above)</li>
 </ul>
 <p>You can access the arguments from every target executed along the way.</p>
+<h2><a name="Setting-build-status" class="anchor" href="#Setting-build-status">Setting build status</a></h2>
+<p>You can set the build status automatically using <code>Target.updateBuildStatus</code>. To do this you need to use the <code>Target.WithContext</code> functions to run a target and retrieve the context information:</p>
+<p>Example:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pp">#r</span> <span class="s">&quot;paket:</span>
+<span class="s">nuget Fake.Core.Target //&quot;</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span>
+
+<span class="c">// *** Define Targets ***</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Clean&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">p</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Build&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+<span class="pn">)</span>
+
+<span class="id">Target</span><span class="pn">.</span><span class="id">create</span> <span class="s">&quot;Deploy&quot;</span> <span class="pn">(</span><span class="k">fun</span> <span class="id">_</span> <span class="k">-&gt;</span>
+    <span class="id">Trace</span><span class="pn">.</span><span class="id">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
+<span class="pn">)</span>
+
+<span class="k">open</span> <span class="id">Fake</span><span class="pn">.</span><span class="id">Core</span><span class="pn">.</span><span class="id">TargetOperators</span>
+
+<span class="c">// *** Define Dependencies ***</span>
+<span class="s">&quot;Clean&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
+
+<span class="c">// *** Start Build ***</span>
+<span class="k">let</span> <span class="id">ctx</span> <span class="o">=</span> <span class="id">Target</span><span class="pn">.</span><span class="id">WithContext</span><span class="pn">.</span><span class="id">runOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">updateBuildStatus</span> <span class="id">ctx</span>
+<span class="id">Target</span><span class="pn">.</span><span class="id">raiseIfError</span> <span class="id">ctx</span> <span class="c">// important to have proper exit code on build failures.</span>
+</code></pre></td>
+</tr>
+</table>
 <h2><a name="Final-targets" class="anchor" href="#Final-targets">Final targets</a></h2>
 <p>Final targets can be used for TearDown functionality.
 These targets will be executed even if the build fails but have to be activated via Target.ActivateFinal().</p>
@@ -687,7 +753,7 @@ say that target B has a soft dependency on target A:</p>
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.8.5</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.0</a></li>
 									</ul>
 								</div>
 							</div>
