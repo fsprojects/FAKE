@@ -121,8 +121,6 @@ BuildServer.install [
     GitLab.Installer
 ]
 
-
-
 let version = ``Legacy-build``.version
 let simpleVersion = ``Legacy-build``.simpleVersion
 let nugetVersion = ``Legacy-build``.nugetVersion
