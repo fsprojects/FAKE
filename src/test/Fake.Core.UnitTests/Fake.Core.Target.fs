@@ -81,7 +81,7 @@ let tests =
         Target.runOrDefaultWithArguments "Run.1"
 
     Fake.ContextHelper.fakeContextTestCaseAssertTime (TimeSpan.FromSeconds 10.0) "basic performance (1)" <| fun _ ->
-        let counter = 10000
+        let counter = 5000
         CoreTracing.setTraceListeners [] // silence
         Target.create "A" ignore
         Target.create "U" ignore
