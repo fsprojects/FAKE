@@ -1,5 +1,10 @@
 # Release Notes
 
+## 5.9.2 - 2018-10-14
+
+* BUGFIX: `Fake.Core.Target` module no longer crashes with stackoverflow on some occations - https://github.com/fsharp/FAKE/pull/2156
+* PERFORMANCE: The `Fake.Core.Target` module is now several orders of magnitude faster when using lots of targets - https://github.com/fsharp/FAKE/pull/2156
+
 ## 5.9.1 - 2018-10-14
 
 * BUGFIX: Add a null-check to remove fake warning
