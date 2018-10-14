@@ -6,9 +6,7 @@ open Fake.Core
 open System.Threading.Tasks
 open System.Threading
 open FSharp.Control.Reactive
-open System.Collections.Immutable
-open System
-open System.Collections.Generic
+
 module internal TargetCli =
     let targetCli =
         """
