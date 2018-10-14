@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.9.3-alpha - tbd
+
+* tbd
+
 ## 5.9.2 - 2018-10-14
 
 * BUGFIX: `Fake.Core.Target` module no longer crashes with stackoverflow on some occations - https://github.com/fsharp/FAKE/pull/2156
