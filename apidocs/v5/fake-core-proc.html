@@ -307,7 +307,7 @@
 </table>
 <div class="tip" id="fs1">namespace Fake</div>
 <div class="tip" id="fs2">namespace Fake.Core</div>
-<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------<br />type CreateProcess&lt;&#39;TRes&gt; =<br />&#160;&#160;private {Command: Command;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;TraceCommand: bool;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;WorkingDirectory: string option;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Environment: EnvMap option;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Streams: StreamSpecs;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Hook: IProcessHook&lt;&#39;TRes&gt;;}<br />&#160;&#160;&#160;&#160;member CommandLine : string</div>
+<div class="tip" id="fs3">Multiple items<br />module CreateProcess<br /><br />from Fake.Core.CreateProcessExt<br /><br />--------------------<br />module CreateProcess<br /><br />from Fake.Core<br /><br />--------------------</div>
 <div class="tip" id="fs4">val fromRawCommand : command:FilePath -&gt; args:seq&lt;string&gt; -&gt; CreateProcess&lt;ProcessResult&lt;unit&gt;&gt;</div>
 <div class="tip" id="fs5">module Proc<br /><br />from Fake.Core</div>
 <div class="tip" id="fs6">val run : c:CreateProcess&lt;&#39;a&gt; -&gt; &#39;a</div>
@@ -330,8 +330,8 @@
             Proc.run(c)
           </code>
           <div class="tip" id="220">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8822&gt; -&gt; &#39;?8822<br />
-                          <strong>Type parameters:</strong> '?8822                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9098&gt; -&gt; &#39;?9098<br />
+                          <strong>Type parameters:</strong> '?9098                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1120-1120" class="github-link">
@@ -350,8 +350,8 @@
             Proc.start(c)
           </code>
           <div class="tip" id="221">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8818&gt; -&gt; Task&lt;&#39;?8818&gt;<br />
-                          <strong>Type parameters:</strong> '?8818                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9094&gt; -&gt; Task&lt;&#39;?9094&gt;<br />
+                          <strong>Type parameters:</strong> '?9094                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1112-1112" class="github-link">
@@ -371,8 +371,8 @@ In most common scenarios the <a href="fake-net-result-result.html" title="Result
             Proc.startAndAwait(c)
           </code>
           <div class="tip" id="222">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8820&gt; -&gt; Async&lt;&#39;?8820&gt;<br />
-                          <strong>Type parameters:</strong> '?8820                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9096&gt; -&gt; Async&lt;&#39;?9096&gt;<br />
+                          <strong>Type parameters:</strong> '?9096                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1117-1117" class="github-link">
@@ -393,8 +393,8 @@ when used incorrectly this might lead to race conditions
             Proc.startRaw(c)
           </code>
           <div class="tip" id="223">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8814&gt; -&gt; Task&lt;AsyncProcessResult&lt;&#39;?8814&gt;&gt;<br />
-                          <strong>Type parameters:</strong> '?8814                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9090&gt; -&gt; Task&lt;AsyncProcessResult&lt;&#39;?9090&gt;&gt;<br />
+                          <strong>Type parameters:</strong> '?9090                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1060-1060" class="github-link">
@@ -419,8 +419,8 @@ For example consider a long running process where you are only interested in the
             Proc.startRawSync(c)
           </code>
           <div class="tip" id="224">
-            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?8816&gt; -&gt; AsyncProcessResult&lt;&#39;?8816&gt;<br />
-                          <strong>Type parameters:</strong> '?8816                      </div>
+            <strong>Signature:</strong> c:CreateProcess&lt;&#39;?9092&gt; -&gt; AsyncProcessResult&lt;&#39;?9092&gt;<br />
+                          <strong>Type parameters:</strong> '?9092                      </div>
         </td>
         <td class="xmldoc">
                       <a href="https://github.com/fsharp/FAKE/blob/master/src/app/Fake.Core.Process/Process.fs#L1108-1108" class="github-link">
@@ -539,7 +539,7 @@ For example consider a long running process where you are only interested in the
 									<ul class="menu">
 										<li>&copy; FAKE. All rights reserved</li>
 										<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.1</a></li>
+										<li>Page generated with Version: <a href="https://github.com/fsharp/FAKE/releases">5.9.2</a></li>
 									</ul>
 								</div>
 							</div>
