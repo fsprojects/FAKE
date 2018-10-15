@@ -1,8 +1,8 @@
 # Release Notes
 
-## 5.9.3-alpha - tbd
+## 5.9.3 - 2018-10-15
 
-* tbd
+* BUGFIX: `/restore` was missing from msbuild command line - https://github.com/fsharp/FAKE/issues/2160
 
 ## 5.9.2 - 2018-10-14
 
