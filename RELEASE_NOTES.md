@@ -1,5 +1,9 @@
 # Release Notes
 
+## 5.9.3 - 2018-10-15
+
+* BUGFIX: `/restore` was missing from msbuild command line - https://github.com/fsharp/FAKE/issues/2160
+
 ## 5.9.2 - 2018-10-14
 
 * BUGFIX: `Fake.Core.Target` module no longer crashes with stackoverflow on some occations - https://github.com/fsharp/FAKE/pull/2156

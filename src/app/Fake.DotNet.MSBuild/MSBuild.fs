@@ -521,6 +521,10 @@ module MSBuild =
                  | Some v -> v.ToString()
                  | _ -> "")
 
+    let restoreFlag =
+        if p.DoRestore then Some("restore", "")
+        else None
+
     let noLogo =
         if p.NoLogo then Some("nologo", "")
         else None
@@ -638,7 +642,8 @@ module MSBuild =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    [ yield targets;
+    [ yield restoreFlag
+      yield targets
       if not Environment.isUnix then
           yield maxcpu
           yield noLogo
