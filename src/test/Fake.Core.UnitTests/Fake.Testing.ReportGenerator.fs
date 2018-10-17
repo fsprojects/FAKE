@@ -49,4 +49,13 @@ let tests =
 
       Expect.equal commandLine
         (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Html;MHtml -sourcedirs:source1;source2 -historydir:history -assemblyfilters:+a1*;-a2* -classfilters:+c1*;-c2* -filefilters:+f1*;-f2* -tag:mytag -verbosity:Verbose" expectedPath) "expected proper command line"
+
+    testCase "Test that ReportType Cobertura works" <| fun _ ->
+      let expectedPath, commandLine =
+        runCreateProcess (fun p ->
+          { p with 
+              ReportTypes = [ ReportGenerator.ReportType.Cobertura ] })
+
+      Expect.equal commandLine
+        (sprintf "%s -reports:report1.xml;report2.xml -targetdir:targetDir -reporttypes:Cobertura -verbosity:Verbose" expectedPath) "expected proper command line"
   ]
