@@ -30,42 +30,29 @@ let private checkSubDirs absolute (dir : string) root =
         if di.Exists then [ di.FullName ]
         else []
 
-let rec private buildPaths acc (input : SearchOption list) = 
+let rec private buildPaths acc (input : SearchOption list) =
     match input with
     | [] -> acc
-    | Directory(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs false name)
-            |> List.concat
+    | Directory name :: t ->
+        let subDirs = List.collect (checkSubDirs false name) acc
         buildPaths subDirs t
-    | Drive(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs true name)
-            |> List.concat
+    | Drive name :: t ->
+        let subDirs = List.collect (checkSubDirs true name) acc
         buildPaths subDirs t
-    | Recursive :: [] -> 
-        let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc 
-            |> Seq.toList
-        buildPaths (acc @ dirs) []
-    | Recursive :: t -> 
-        let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc 
-            |> Seq.toList
-        buildPaths (acc @ dirs) t
-    | FilePattern(pattern) :: t -> 
-         Seq.collect (fun dir -> 
-                            if Directory.Exists(Path.Combine(dir, pattern))
-                            then seq { yield Path.Combine(dir, pattern) }
-                            else 
-                                try
-                                    Directory.EnumerateFiles(dir, pattern)
-                                with
-                                    | :? System.IO.PathTooLongException as ex ->
-                                        Array.toSeq [| |]
-                            ) acc |> Seq.toList
+    | Recursive :: [] ->
+        let dirs = Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
+        buildPaths (acc @ Seq.toList dirs) []
+    | Recursive :: t ->
+        let dirs = Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
+        buildPaths (acc @ Seq.toList dirs) t
+    | FilePattern pattern :: _ ->
+        acc |> List.collect (fun dir ->
+            if Directory.Exists (Path.Combine (dir, pattern)) then [Path.Combine (dir, pattern)]
+            else
+                try
+                    Directory.EnumerateFiles (dir, pattern) |> Seq.toList
+                with
+                    | :? System.IO.PathTooLongException -> [])
 
 let private driveRegex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
 
