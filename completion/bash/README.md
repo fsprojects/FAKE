@@ -17,6 +17,6 @@ fi
 
 ## Install completion for FAKE
 ```bash
-cd bash-completion
+cd completion/bash
 ./install.sh
 ```
