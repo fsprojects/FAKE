@@ -98,9 +98,9 @@ let internal getRoot (baseDirectory : string) (pattern : string) =
     if Path.IsPathRooted globRoot then globRoot
     else Path.Combine(baseDirectory, globRoot)
 
-let internal search (baseDir : string) (input : string) = 
+let internal search (baseDir : string) (originalInput : string) =
     let baseDir = normalizePath baseDir
-    let input = normalizePath input
+    let input = normalizePath originalInput
     let input =
         if String.IsNullOrEmpty baseDir
         then input
@@ -126,7 +126,11 @@ let internal search (baseDir : string) (input : string) =
             elif splits.Length >= 2 && Path.IsPathRooted input && input.StartsWith "/" then
                 [ Directory("/") ], splits |> Array.toSeq
             else
-                if Path.IsPathRooted input then failwithf "Unknown globbing input '%s', try to use a relative path and report an issue!" input
+                if Path.IsPathRooted input then
+                    if input.StartsWith "\\"
+                    then // https://github.com/fsharp/FAKE/issues/2073
+                         failwithf "Please remove the leading '\\' or '/' and replace them with '.\\' or './' if you want to use a relative path. Leading slashes are considered an absolute path (input was '%s')!" originalInput
+                    else failwithf "Unknown globbing input '%s', try to use a relative path and report an issue!" originalInput
                 [], splits |> Array.toSeq
         let restList =
             rest    

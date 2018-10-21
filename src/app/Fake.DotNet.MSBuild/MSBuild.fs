@@ -498,6 +498,8 @@ module MSBuild =
     let escapePropertyValue (v:string) =
         // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters?view=vs-2017
         v.Replace("%", "%25")
+         .Replace("\\", "%5C")
+         .Replace("\"", "%22")
          .Replace(";", "%3B")
          .Replace(",", "%2C")
          .Replace("$", "%24")
@@ -518,6 +520,10 @@ module MSBuild =
                  match x with
                  | Some v -> v.ToString()
                  | _ -> "")
+
+    let restoreFlag =
+        if p.DoRestore then Some("restore", "")
+        else None
 
     let noLogo =
         if p.NoLogo then Some("nologo", "")
@@ -636,7 +642,8 @@ module MSBuild =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    [ yield targets;
+    [ yield restoreFlag
+      yield targets
       if not Environment.isUnix then
           yield maxcpu
           yield noLogo
@@ -740,6 +747,43 @@ module MSBuild =
             |> List.choose (fun m -> if m.IsError then Some m.Message else None)
         let errorMessage = sprintf "'%s %s' failed with exitcode %d." command project exitCode
         raise (MSBuildException(errorMessage, errors))
+
+  // TODO: Make this API public? Remove "Choice" return value
+  let internal buildWithRedirect setParams project =
+    let msBuildParams, argsString = buildArgs setParams
+
+    let args = Process.toParam project + " " +  argsString
+
+    // used for detection
+    let callMsBuildExe args =
+        let result =
+            Process.execWithResult (fun info ->
+            { info with
+                FileName = msBuildParams.ToolPath
+                Arguments = args }
+            |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
+        if not result.OK then
+            failwithf "msbuild failed with exitcode '%d'" result.ExitCode
+        String.Join("\n", result.Messages)
+
+    let binlogPath, args = addBinaryLogger msBuildParams.ToolPath callMsBuildExe args msBuildParams.DisableInternalBinLog
+    let wd =
+        if msBuildParams.WorkingDirectory = System.IO.Directory.GetCurrentDirectory()
+        then ""
+        else sprintf "%s>" msBuildParams.WorkingDirectory
+    Trace.tracefn "%s%s %s" wd msBuildParams.ToolPath args
+
+    let result =
+        Process.execWithResult (fun info ->
+        { info with
+            FileName = msBuildParams.ToolPath
+            WorkingDirectory = msBuildParams.WorkingDirectory
+            Arguments = args }
+        |> Process.setEnvironment msBuildParams.Environment) TimeSpan.MaxValue
+    try 
+        handleAfterRun "msbuild" binlogPath result.ExitCode project
+        Choice1Of2 result
+    with e -> Choice2Of2 (e, result)
 
 
   /// Runs a MSBuild project

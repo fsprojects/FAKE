@@ -1,6 +1,6 @@
 # Getting started
 
-In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
+In this tutorial you will learn how to set up a complete build infrastructure with FAKE. This includes:
 
 * how to install the latest FAKE version
 * how to edit and run scripts
@@ -9,7 +9,7 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 
 ## Install FAKE
 
-"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.
+FAKE is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the FAKE syntax is hopefully very easy to learn.
 
 There are various ways to install FAKE 5:
 

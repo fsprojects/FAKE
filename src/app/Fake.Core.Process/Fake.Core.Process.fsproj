@@ -14,7 +14,7 @@
     <DefineConstants>$(DefineConstants);FX_PASSWORD;FX_WINDOWSTLE;FX_VERB;FX_CONFIGURATION_MANAGER;FX_ERROR_DIALOG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>$(DefineConstants);FX_PASSWORD_CLEAR_TEXT</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_PASSWORD_CLEAR_TEXT;FX_NO_HANDLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
@@ -28,14 +28,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="VisibleTo.fs" />
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="Event.fs" />
     <Compile Include="Async.fs" />
     <Compile Include="CmdLineParsing.fs" />
-    <Compile Include="Process.fs" />
+    <Compile Include="ProcessUtils.fs" />
     <Compile Include="RawProc.fs" />
-    <Compile Include="Proc.fs" />
+    <Compile Include="InternalStreams.fs" />
+    <Compile Include="CreateProcess.fs" />
+    <Compile Include="Process.fs" />
     <Compile Include="Mono.fs" />
+    <Compile Include="CreateProcessExt.fs" />
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>

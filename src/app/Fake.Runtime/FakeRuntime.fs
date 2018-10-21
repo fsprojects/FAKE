@@ -187,7 +187,7 @@ let paketCachingProvider (config:FakeConfig) cacheDir (paketApi:Paket.Dependenci
     // be compatible with the runtime we are currently running on.
     let rootDir = Directory.GetCurrentDirectory()
     let packageName = Domain.PackageName("NETStandard.Library")
-    let version = SemVer.Parse("2.0.2")
+    let version = SemVer.Parse("2.0.3")
     let existingpkg = NuGetCache.GetTargetUserNupkg packageName version
     let extractedFolder =
       if File.Exists existingpkg then
@@ -602,7 +602,7 @@ let createConfig (logLevel:Trace.VerboseLevel) (fsiOptions:string list) scriptPa
   let tokenized = lazy (File.ReadLines scriptPath |> FSharpParser.getTokenized scriptPath ("FAKE_DEPENDENCIES" :: newFsiOptions.Defines))
 
   { Runners.FakeConfig.VerboseLevel = logLevel
-    Runners.FakeConfig.ScriptFilePath = scriptPath
+    Runners.FakeConfig.ScriptFilePath = Path.GetFullPath scriptPath
     Runners.FakeConfig.ScriptTokens = tokenized
     Runners.FakeConfig.CompileOptions = 
       { FsiOptions = newFsiOptions; RuntimeDependencies = [] }

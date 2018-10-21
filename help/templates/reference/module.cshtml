@@ -52,7 +52,7 @@
     if (!byCategory.Any(g => g.GroupKey == sec.Key))
     {
       if (sec.Key != "<default>")        {
-        <h2>@sec.Key</h2>
+        <h2><a name="@sec.Key" class="anchor" href="#@sec.Key">@sec.Key</a></h2>
       }
       @sec.Value  
     }
@@ -73,7 +73,7 @@
 <!-- Render nested types and modules, if there are any -->
 @if (nestTypes.Count() + nestModules.Count() > 0)
 {
-  <h2>Nested types and modules</h2>
+  <h2><a name="Nested types and modules" class="anchor" href="#Nested types and modules">Nested types and modules</a></h2>
   <div>
     @RenderPart("part-nested", new {
       Types = nestTypes,

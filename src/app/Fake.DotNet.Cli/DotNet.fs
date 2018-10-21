@@ -628,15 +628,17 @@ module DotNet =
             let f (info:ProcStartInfo) =
                 let dir = System.IO.Path.GetDirectoryName options.DotNetCliPath
                 let oldPath =
-                    match options.Environment |> Map.tryFind "PATH" with
-                    | None -> ""
-                    | Some s -> s
+                    options
+                    |> Process.getEnvironmentVariable "PATH"
                 { info with
                     FileName = options.DotNetCliPath
                     WorkingDirectory = options.WorkingDirectory
                     Arguments = Args.toWindowsCommandLine cmdArgs }
                 |> Process.setEnvironment options.Environment
-                |> Process.setEnvironmentVariable "PATH" (sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath)
+                |> Process.setEnvironmentVariable "PATH" (
+                    match oldPath with
+                    | Some oldPath -> sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
+                    | None -> dir)
 
 
             withGlobalJson options.WorkingDirectory options.Version (fun () ->
@@ -777,7 +779,7 @@ module DotNet =
                             let result = getVersion (fun opt -> opt.WithCommon (fun c -> { c with DotNetCliPath = dotnet; Version = None}))
                             result = version
                         with e ->
-                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %s" e.Message
+                            Trace.traceFAKE "Retrieving version failed, assuming because it doesn't match global.json, error was: %O" e
                             false
                     )
                 ), passVersion
@@ -794,6 +796,21 @@ module DotNet =
         let passVersion = if fromGlobalJson then None else checkVersion
         let installScript = downloadInstaller param.InstallerOptions
 
+        // check if existing processes exists:
+        let dotnetExe = Path.Combine(dir, if Environment.isUnix then "dotnet" else "dotnet.exe")
+        if Environment.isWindows && File.Exists(dotnetExe) then
+            System.Diagnostics.Process.GetProcesses()
+            |> Seq.filter (fun p -> 
+                   try 
+                       not p.HasExited
+                   with _ -> false)
+            |> Seq.filter (fun p -> 
+                   try 
+                       Path.GetFullPath(Process.getFileName p).ToLowerInvariant() =
+                            Path.GetFullPath(dotnetExe)
+                   with _ -> false)
+            |> Seq.iter Process.kill              
+            ()
         let exitCode =
             let args, fileName =
                 if Environment.isUnix then
@@ -853,6 +870,10 @@ module DotNet =
         /// Changes the "Common" properties according to the given function
         member inline x.WithCommon f =
             { x with Common = f x.Common }
+    
+        /// Changes the "MSBuildParams" properties according to the given function
+        member inline x.WithMSBuildParams f =
+            { x with MSBuildParams = f x.MSBuildParams }
 
     let internal addBinaryLogger disableFakeBinLog args (common:Options) =
         // used for detection
@@ -877,6 +898,15 @@ module DotNet =
         let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
         let result = exec (fun _ -> common) command args
         MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
+
+    let internal tryExecWithBinLog project common command args msBuildArgs =
+        let argString = MSBuild.fromCliArguments msBuildArgs
+        let binLogPath, args = addBinaryLogger msBuildArgs.DisableInternalBinLog (args + " " + argString) common
+        let result = exec (fun _ -> common) command args
+        try
+            MSBuild.handleAfterRun (sprintf "dotnet %s" command) binLogPath result.ExitCode project
+            Choice1Of2 result
+        with e -> Choice2Of2 (e, result)
 
     /// Runs a MSBuild project
     /// ## Parameters
@@ -911,6 +941,18 @@ module DotNet =
         let args = Args.toWindowsCommandLine args
         execWithBinLog project param.Common "msbuild" args param.MSBuildParams
         __.MarkSuccess()
+
+    // TODO: Make this API public? change return code?
+    let internal msbuildWithResult setParams project =
+        //use __ = Trace.traceTask "DotNet:msbuild" project
+        
+        let param = MSBuildOptions.Create() |> setParams
+        let args = [project]
+        let args = Args.toWindowsCommandLine args
+        let r = tryExecWithBinLog project param.Common "msbuild" args param.MSBuildParams
+        //__.MarkSuccess()
+        r  
+
 
     /// dotnet restore command options
     type RestoreOptions =

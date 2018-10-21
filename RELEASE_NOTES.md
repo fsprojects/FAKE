@@ -1,12 +1,53 @@
 # Release Notes
 
-## 5.8.0 - 2018-09-27
+## 5.9.3 - 2018-10-15
 
-* NEW: Fake.Sql.SqlServer module - https://github.com/fsharp/FAKE/pull/2074
+* BUGFIX: `/restore` was missing from msbuild command line - https://github.com/fsharp/FAKE/issues/2160
+
+## 5.9.2 - 2018-10-14
+
+* BUGFIX: `Fake.Core.Target` module no longer crashes with stackoverflow on some occations - https://github.com/fsharp/FAKE/pull/2156
+* PERFORMANCE: The `Fake.Core.Target` module is now several orders of magnitude faster when using lots of targets - https://github.com/fsharp/FAKE/pull/2156
+
+## 5.9.1 - 2018-10-14
+
+* BUGFIX: Add a null-check to remove fake warning
+
+## 5.9.0 - 2018-10-13
+
+* ENHANCEMENT: Write NUnit arguments to an arguments file, fixes problems with long command lines - https://github.com/fsharp/FAKE/pull/2114
+* ENHANCEMENT: Added `SpecFlowNext` module to `Fake.DotNet.Testing.SpecFlow` with improved API and missing arguments - https://github.com/fsharp/FAKE/pull/2143
+* ENHANCEMENT (BREAKING): Updated and finalized the new (and undocumented) process API which is more unit-testable - https://github.com/fsharp/FAKE/pull/2131 
+* ENHANCEMENT: Updated `Fake.Testing.ReportGenerator` to include `ClassFilter` and `FileFilter` - https://github.com/fsharp/FAKE/pull/2120
+* ENHANCEMENT: Improve TeamCity integrations - https://github.com/fsharp/FAKE/pull/2138
+* ENHANCEMENT: Update `Fake.Tools.Pickles` to include latest CLI additions - https://github.com/fsharp/FAKE/pull/2133
+* ENHANCEMENT: The `Trace` module can now report build-state with a message - https://github.com/fsharp/FAKE/pull/2139
+* ENHANCEMENT: The target module not supports a `Trace.WithContext` mode to retrieve the context and handle potenial problems manually - https://github.com/fsharp/FAKE/pull/2140
+* ENHANCEMENT: The target module now allows to set the build-state by using the new `WithContext`-mode - https://github.com/fsharp/FAKE/pull/2141
+* BUGFIX: Fix TeamCity (named) Artifact upload - https://github.com/fsharp/FAKE/pull/2147
+* BUGFIX: AppVeyor module should not trace `appveyor.exe` calls - https://github.com/fsharp/FAKE/pull/2137
+* BUGFIX: Always print the stack-trace when in verbose mode - https://github.com/fsharp/FAKE/issues/2136
+* DOCUMENTATION: Some smaller fixes
+
+## 5.8.5 - 2018-10-10
+
+* BUGFIX: PATH Variable was overwritten when using the `DotNet.Cli` module - https://github.com/fsharp/FAKE/issues/2134
+* BUGFIX: Fix an instance where TraceSecrets did not work - https://github.com/fsharp/FAKE/issues/2122
+* WORKAROUND: Do not try to publish artifacts on github PRs when using Azure Pipelines - https://github.com/fsharp/FAKE/pull/2129/commits/bb723c41160f60002169246cb70ecbb9aad45fa3
+
+## 5.8.4 - 2018-10-08
+
 * ENHANCEMENT: Some modules are now usable without FAKE context (ie. in your regular projects)
 * ENHANCEMENT: Inform when the `target` environment variable is used - https://github.com/fsharp/FAKE/issues/2107
+* ENHANCEMENT: Improve TeamCity support - https://github.com/fsharp/FAKE/pull/2111
+* ENHANCEMENT: Update Netstandard.Library package to `2.0.3` - https://github.com/fsharp/FAKE/pull/2106
+* ENHANCEMENT: Add `Process.getFileName` api to retrieve the full-path of a given process
+* ENHANCEMENT: Kill existing running `dotnet.exe` processes before running the dotnet-cli installer
 * BUGFIX: Environment variables are case insensitive on windows, fake will now throw exceptions if it detects invalid environment maps
 * BUGFIX: MSBuild properties containing special characters lead to errors - https://github.com/fsharp/FAKE/issues/2112
+* BUGFIX: Improve error message when release notes are invalid - https://github.com/fsharp/FAKE/issues/2085
+* BUGFIX: Improve error message when globbing pattern is invalid - https://github.com/fsharp/FAKE/issues/2073
+* BUGFIX: Do no longer provide the `--parallel` argument by default when running expecto - https://github.com/fsharp/FAKE/issues/2039
 * DOCS: Fix syntax errors in dacpac docs - https://github.com/fsharp/FAKE/pull/2115
 
 ## 5.7.2 - 2018-09-24
@@ -109,7 +150,7 @@
 * NEW: module Fake.Tools.GitVersion to interact with gitversion.exe - https://github.com/fsharp/FAKE/pull/1988
 * ENHANCEMENT: Add `traceImportantf` and `traceErrorf` - https://github.com/fsharp/FAKE/pull/1986
 * ENHANCEMENT: Minimalize dependencies between FAKE packages - https://github.com/fsharp/FAKE/pull/1980
-* ENHANCEMENT: Change chocolatey package accoding to feedback - https://github.com/fsharp/FAKE/pull/1983
+* ENHANCEMENT: Change chocolatey package according to feedback - https://github.com/fsharp/FAKE/pull/1983
 * BUGFIX: Fix locating kudusync.cmd in Fake.Azure.Kudu - https://github.com/fsharp/FAKE/pull/1995
 * NEW: module Fake.Core.UserInput - https://github.com/fsharp/FAKE/pull/1997
 
@@ -144,7 +185,7 @@
 
 ## 5.0.0-rc017 - 2018-05-22
 
-* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes accoding to API-Guidelines (Target, Globbing, AssemblyInfoFile)
+* BREAKING: Add some `[<RequireQualifiedAccess>]` attributes according to API-Guidelines (Target, Globbing, AssemblyInfoFile)
 * ENHANCEMENT: Mark `Target.DoNothing` as obsolete
 * ENHANCEMENT: Mark `Target.Description` as obsolete and add `Target.description`
 * BUGFIX: Includes fixes from 4.64.12

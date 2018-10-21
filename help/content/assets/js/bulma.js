@@ -56,7 +56,7 @@ function generateTableOfContent() {
 
         menu.innerHTML = menuHtml;
         if (headersCount > 0) {
-            menu.classList.style.display = '';
+            menu.style.display = '';
         } else {
             hideMenu(menu);
         }

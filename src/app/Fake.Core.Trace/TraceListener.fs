@@ -146,7 +146,7 @@ type TraceData =
     | TestStatus of testName:string * status:TestStatus
     | TestOutput of testName:string * out:string * err:string
     | CloseTag of KnownTags * time:TimeSpan * TagStatus
-    | BuildState of TagStatus
+    | BuildState of TagStatus * string option
     member x.NewLine =
         match x with
         | ImportantMessage _
@@ -165,7 +165,8 @@ type TraceData =
         | ImportantMessage text
         | ErrorMessage text
         | LogMessage (text, _)
-        | TraceMessage (text, _) -> Some text
+        | TraceMessage (text, _)
+        | BuildState (_, Some text) -> Some text
         | BuildNumber _
         | TestStatus _
         | TestOutput _
@@ -175,6 +176,14 @@ type TraceData =
         | CloseTag _ -> None
 
 module TraceData =
+    let inline mapKnownTags f (t:KnownTags) = 
+        match t with
+        | KnownTags.Task tag -> KnownTags.Task(f tag)
+        | KnownTags.Target tag -> KnownTags.Target(f tag)
+        | KnownTags.FinalTarget tag -> KnownTags.FinalTarget(f tag)
+        | KnownTags.FailureTarget tag -> KnownTags.FailureTarget(f tag)
+        | _ -> t
+
     let inline mapMessage f (t:TraceData) =
         match t with
         | TraceData.ImportantMessage text -> TraceData.ImportantMessage (f text)
@@ -183,6 +192,10 @@ module TraceData =
         | TraceData.TraceMessage (text, d) -> TraceData.TraceMessage (f text, d)
         | TraceData.TestStatus (testName,status) -> TraceData.TestStatus(testName, TestStatus.mapMessage f status)
         | TraceData.TestOutput (testName,out,err) -> TraceData.TestOutput (testName,f out,f err)
+        | TraceData.OpenTag(tag, Some d) -> TraceData.OpenTag((mapKnownTags f tag), Some(f d))
+        | TraceData.OpenTag(tag, None) -> TraceData.OpenTag((mapKnownTags f tag), None)
+        | TraceData.CloseTag(tag, time, status) -> TraceData.CloseTag((mapKnownTags f tag), time, status)        
+        | TraceData.BuildState(tag, Some message) -> TraceData.BuildState(tag, Some(f message))    
         | _ -> t
 
     let internal repl (oldStr:string) (repl:string) (s:string) =
@@ -283,8 +296,10 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap, ansiColor) =
                 write false color true (sprintf "Finished (%A) '%s' in %O" status tag.Name time)
             | TraceData.ImportData (typ, path) ->
                 write false color true (sprintf "Import data '%O': %s" typ path)
-            | TraceData.BuildState state ->
+            | TraceData.BuildState (state, None) ->
                 write false color true (sprintf "Changing BuildState to: %A" state)
+            | TraceData.BuildState (state, Some message) ->
+                write false color true (sprintf "Changing BuildState to: %A - %s" state message)            
             | TraceData.TestOutput (test, out, err) ->
                 write false color true (sprintf "Test '%s' output:\n\tOutput: %s\n\tError: %s" test out err)
             | TraceData.BuildNumber number ->

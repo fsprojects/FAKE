@@ -1,6 +1,6 @@
 #if FAKE_DEPENDENCIES
 #r "paket:
-source https://nuget.org/api/v2
+source https://api.nuget.org/v3/index.json
 source ../../../release/dotnetcore
 //source https://ci.appveyor.com/nuget/paket
 
