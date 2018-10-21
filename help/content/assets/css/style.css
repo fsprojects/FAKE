@@ -1,41 +1,143 @@
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Open+Sans:400,600,700);
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+  
+#content {
+    flex: 1;
+}
+  
+nav.navbar {
+    z-index: 99 !important;
+}
+
+.navbar a {
+    color: #f5f5f5;
+}
+
+.navbar-item .buttons a:hover {
+    color: #aeb9c7;
+}
+
+.same-height-columns {    
+    display: flex !important;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.same-height-column {
+    display: flex !important;
+    flex-flow: column nowrap;
+}
+
+.same-height-columns .button.at-bottom {
+    margin-top: auto;
+    width: 160px;
+}
+
+footer {
+    position: relative;
+    z-index: 99;
+}
+
+footer ul li {
+    border-top: solid 1px rgba(238, 238, 238, 0.075);
+    padding: 0.5em 0 0 0;
+    margin: 0.5em 0 0 0;
+}
+
+footer ul li:first-child {
+    border-top: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact .column {
+    padding: 0.25rem 0.75rem;
+}
+
+.navbar-item.no-hover:hover {
+    background: none !important;
+}
+
+aside.menu {
+    position: fixed;
+    top: 65px;
+    right: 0;
+    z-index: 95;
+}
+
+section.is-small {
+    padding: 6rem 1.5rem;
+}
+
+.content a {
+    color: #222;
+}
+
+@media screen and (min-width: 1088px) {
+    .navbar-dropdown .navbar-item .navbar-dropdown {
+        left: 100%;
+        top: -0.6rem;
+    }
+
+    .navbar-item:hover .navbar-dropdown .navbar-item:not(:hover) .navbar-dropdown {
+        display: none;
+    }
+
+    .navbar-item:hover {
+        background-color: #282e37;
+    }
+
+    .navbar-item .navbar-dropdown .navbar-item.has-dropdown {
+        padding-right: 0 !important;
+    }
+
+    .navbar-item .navbar-dropdown .navbar-item .navbar-link {
+        background: none !important;
+        padding: 0 4rem 0 0;
+        width: 100%;
+    }
+}
+
 /*-------------------------------------------------------------------------- 
   Formatting for F# code snippets 
 /*--------------------------------------------------------------------------*/
 
 /* identifier */
 
-span.i {
+span.i, .token.identifier {
     color: #d1d1d1;
 }
 
 /* string */
 
-span.s {
+span.s, .token.string {
     color: #d4b43c;
 }
 
 /* keywords */
 
-span.k {
+span.k, .token.keyword {
     color: #4e98dc;
 }
 
 /* comment */
 
-span.c {
+span.c, .token.comment {
     color: #96C71D;
 }
 
 /* operators */
 
-span.o {
+span.o, .token.operator {
     color: #af75c1;
 }
 
 /* numbers */
 
-span.n {
+span.n, .token.number {
     color: #96C71D;
 }
 
@@ -53,8 +155,8 @@ span.inactive {
 
 /* preprocessor */
 
-span.prep {
-    color: #af75c1;
+span.prep, .token.preprocessor {
+    color: #d1d1d1;
 }
 
 /* fsi output */
@@ -126,267 +228,84 @@ table.pre td.lines {
     width: 30px;
 }
 
-/*-------------------------------------------------------------------------- 
-  Formatting for page & standard document content
-/*--------------------------------------------------------------------------*/
-
-body {
-    font-family: 'Open Sans', serif;
-    padding-top: 0px;
-    padding-bottom: 40px;
-}
-
-pre {
-    word-wrap: inherit;
-}
-
-/* Format the heading - nicer spacing etc. */
-
-.masthead {
-    overflow: hidden;
-}
-
-.masthead .muted a {
-    text-decoration: none;
-    color: #999999;
-}
-
-.masthead ul,
-.masthead li {
-    margin-bottom: 0px;
-}
-
-.masthead .nav li {
-    margin-top: 15px;
-    font-size: 110%;
-}
-
-.masthead h3 {
-    margin-bottom: 5px;
-    font-size: 170%;
-}
-
-hr {
-    margin: 0px 0px 20px 0px;
-}
-
-/* Style for articles (content) */
-
-#content h2 {
-    margin: 1em 0 .5em 0;
-}
-
-#content p,
-#content ul,
-#content ol,
-#content dl,
-#content table {
-    margin-bottom: 0.9em;
-}
-
-#content ul {
-    margin-left: 2em;
-}
-
-#content ul,
-#content ol {
-    list-style: disc;
-}
-
-#content blockquote p {
-    margin: .3em 0 .3em 0;
-}
-
-#content blockquote {
-    border-left: solid 0.5em #ddd;
-    padding: 0.1em 0 0.1em 1em;
-    font-style: italic;
-    margin: 1em 0em 1em 0em;
-}
-
-/* Make table headings and td.title bold */
-
-td.title,
-thead tr td {
-    font-weight: bold;
-}
-
-/* Format the right-side menu */
-
-#menu {
-    margin-top: 50px;
-    font-size: 11pt;
-    padding-left: 20px;
-}
-
-#menu .nav-header {
-    font-size: 12pt;
-    color: #606060;
-    margin-top: 20px;
-}
-
-#menu li {
-    line-height: 25px;
-}
-
-/* Change font sizes for headings etc. */
-
-#main h1 {
-    font-size: 26pt;
-    margin: 10px 0px 15px 0px;
-    font-weight: 400;
-}
-
-#main h2 {
-    font-size: 20pt;
-    margin: 20px 0px 0px 0px;
-    font-weight: 400;
-}
-
-#main h3 {
-    font-size: 14pt;
-    margin: 15px 0px 0px 0px;
-    font-weight: 600;
-}
-
-#main p {
-    font-size: 11pt;
-    margin: 5px 0px 15px 0px;
-}
-
-#main ul {
-    font-size: 11pt;
-    margin-top: 10px;
-}
-
-#main li {
-    font-size: 11pt;
-    margin: 5px 0px 5px 0px;
-}
-
-#main strong {
-    font-weight: 700;
-}
-
-/*-------------------------------------------------------------------------- 
-  Formatting for API reference
-/*--------------------------------------------------------------------------*/
-
-.type-list .type-name,
-.module-list .module-name {
-    width: 25%;
-    font-weight: bold;
-}
-
-.member-list .member-name {
-    width: 35%;
-}
-
-#main .xmldoc h2 {
-    font-size: 14pt;
-    margin: 10px 0px 0px 0px;
-}
-
-#main .xmldoc h3 {
-    font-size: 12pt;
-    margin: 10px 0px 0px 0px;
-}
-
-.github-link {
-    float: right;
-    text-decoration: none;
-}
-
-.github-link img {
-    border-style: none;
-    margin-left: 10px;
-}
-
-.github-link .hover {
-    display: none;
-}
-
-.github-link:hover .hover {
-    display: block;
-}
-
-.github-link .normal {
-    display: block;
-}
-
-.github-link:hover .normal {
-    display: none;
-}
-
-#content .member-list .xmldoc h2 {
-    margin-top: 0;
-    font-size: 1em;
-}
-
-.member-list td>code,
-.member-list li>code {
-    padding: 2px 4px;
-    color: #d14;
-    background-color: #f7f7f9;
-    border: 1px solid #e1e1e8;
-    font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
-    font-size: 12px;
-    border-radius: 3px;
-}
-
-table {
-    max-width: 100%;
-    background-color: transparent;
-    border-spacing: 0;
-}
-
-.table-bordered {
-    border: 1px solid #dddddd;
-    border-collapse: separate;
-    border-left: 0;
-    border-radius: 4px;
-}
-
-.table caption+thead tr:first-child th,
-.table caption+thead tr:first-child td,
-.table colgroup+thead tr:first-child th,
-.table colgroup+thead tr:first-child td,
-.table thead:first-child tr:first-child th,
-.table thead:first-child tr:first-child td {
-    border-top: 0;
-}
-
-.table th,
-.table td {
-    padding: 8px;
-    line-height: 20px;
-    text-align: left;
-    vertical-align: top;
-    border-top: 1px solid #dddddd;
-}
-
-.table-bordered th,
-.table-bordered td {
-    border-left: 1px solid #dddddd;
-}
-
-/*-------------------------------------------------------------------------- 
-  Additional formatting for the homepage 
-/*--------------------------------------------------------------------------*/
-
-#nuget {
-    margin-top: 20px;
-    font-size: 11pt;
-    padding: 20px;
-}
-
-#nuget pre {
-    font-size: 11pt;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
-    background: #404040;
-    border-style: none;
-    color: #e0e0e0;
-    margin-top: 15px;
-}
+/* Spacing Helper */
+.m-none { margin: 0; }
+.p-none { padding: 0; }
+.m-t-none { margin-top: 0; }
+.p-t-none { padding-top: 0; }
+.m-r-none { margin-right: 0; }
+.p-r-none { padding-right: 0; }
+.m-b-none { margin-bottom: 0; }
+.p-b-none { padding-bottom: 0; }
+.m-l-none { margin-left: 0; }
+.p-l-none { padding-left: 0; }
+.m-xxs { margin: 0.125rem; }
+.p-xxs { padding: 0.125rem; }
+.m-t-xxs { margin-top: 0.125rem; }
+.p-t-xxs { padding-top: 0.125rem; }
+.m-r-xxs { margin-right: 0.125rem; }
+.p-r-xxs { padding-right: 0.125rem; }
+.m-b-xxs { margin-bottom: 0.125rem; }
+.p-b-xxs { padding-bottom: 0.125rem; }
+.m-l-xxs { margin-left: 0.125rem; }
+.p-l-xxs { padding-left: 0.125rem; }
+.m-xs { margin: 0.25rem; }
+.p-xs { padding: 0.25rem; }
+.m-t-xs { margin-top: 0.25rem; }
+.p-t-xs { padding-top: 0.25rem; }
+.m-r-xs { margin-right: 0.25rem; }
+.p-r-xs { padding-right: 0.25rem; }
+.m-b-xs { margin-bottom: 0.25rem; }
+.p-b-xs { padding-bottom: 0.25rem; }
+.m-l-xs { margin-left: 0.25rem; }
+.p-l-xs { padding-left: 0.25rem; }
+.m-sm { margin: 0.5rem; }
+.p-sm { padding: 0.5rem; }
+.m-t-sm { margin-top: 0.5rem; }
+.p-t-sm { padding-top: 0.5rem; }
+.m-r-sm { margin-right: 0.5rem; }
+.p-r-sm { padding-right: 0.5rem; }
+.m-b-sm { margin-bottom: 0.5rem; }
+.p-b-sm { padding-bottom: 0.5rem; }
+.m-l-sm { margin-left: 0.5rem; }
+.p-l-sm { padding-left: 0.5rem; }
+.m-md { margin: 1rem; }
+.p-md { padding: 1rem; }
+.m-t-md { margin-top: 1rem; }
+.p-t-md { padding-top: 1rem; }
+.m-r-md { margin-right: 1rem; }
+.p-r-md { padding-right: 1rem; }
+.m-b-md { margin-bottom: 1rem; }
+.p-b-md { padding-bottom: 1rem; }
+.m-l-md { margin-left: 1rem; }
+.p-l-md { padding-left: 1rem; }
+.m-lg { margin: 2rem; }
+.p-lg { padding: 2rem; }
+.m-t-lg { margin-top: 2rem; }
+.p-t-lg { padding-top: 2rem; }
+.m-r-lg { margin-right: 2rem; }
+.p-r-lg { padding-right: 2rem; }
+.m-b-lg { margin-bottom: 2rem; }
+.p-b-lg { padding-bottom: 2rem; }
+.m-l-lg { margin-left: 2rem; }
+.p-l-lg { padding-left: 2rem; }
+.m-xl { margin: 4rem; }
+.p-xl { padding: 4rem; }
+.m-t-xl { margin-top: 4rem; }
+.p-t-xl { padding-top: 4rem; }
+.m-r-xl { margin-right: 4rem; }
+.p-r-xl { padding-right: 4rem; }
+.m-b-xl { margin-bottom: 4rem; }
+.p-b-xl { padding-bottom: 4rem; }
+.m-l-xl { margin-left: 4rem; }
+.p-l-xl { padding-left: 4rem; }
+.m-xxl { margin: 8rem; }
+.p-xxl { padding: 8rem; }
+.m-t-xxl { margin-top: 8rem; }
+.p-t-xxl { padding-top: 8rem; }
+.m-r-xxl { margin-right: 8rem; }
+.p-r-xxl { padding-right: 8rem; }
+.m-b-xxl { margin-bottom: 8rem; }
+.p-b-xxl { padding-bottom: 8rem; }
+.m-l-xxl { margin-left: 8rem; }
+.p-l-xxl { padding-left: 8rem; }

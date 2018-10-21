@@ -1,10 +1,5 @@
 # FAKE Command Line
 
-<div class="alert alert-info">
-    <h5>INFO</h5>
-    <p>This documentation is for FAKE version 5.0 or later. The old documentation can be found <a href="legacy-commandline.html">here</a></p>
-</div>
-
 The `fake.exe` command line interface (CLI) is defined as follows:
 ```bash
 Usage:
