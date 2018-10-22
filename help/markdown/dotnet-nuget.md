@@ -58,6 +58,7 @@ Placeholder | replaced by (`NuGetParams` record field)
 `@copyright@` | `Copyright`
 `@dependencies@` | a combination of `Dependencies` and `DependenciesByFramework`
 `@references@` | a combination of `References` and `ReferencesByFramework`
+`@contentFiles@` | a list of [contentFiles](https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files) to be included in the nuget package
 `@files@` | a list of source, target, and exclude strings for files to be included in the nuget package
 
 ## Setting up the build script
@@ -152,6 +153,34 @@ NuGet (fun p ->
         Files = [
             (@"tools\**\*.*", None, None)
             (@"bin\Debug\*.dll", Some "lib", Some "badfile.css;otherbadfile.css")
+        ]
+        // ...
+    })
+    "template.nuspec"
+```
+
+## NuGet ContentFiles
+
+ContentFiles in NuGet are static files that the NuGet client will make available to a project for inclusion in the project.  For more information see this [blog post](https://blog.nuget.org/20160126/nuget-contentFiles-demystified.html) explaining the difference and relationship to the Files element.
+
+The ContentFiles param supports all the documented nuspec contentFiles [attributes](https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files).
+
+It takes a value of type `list<string*string option*string option*bool option*bool option>` where each tuple part maps respectively to the following [attributes]((https://docs.microsoft.com/en-us/nuget/reference/nuspec#using-the-contentfiles-element-for-content-files)):
+
+* include
+* exclude
+* buildAction
+* copyToOutput
+* flatten
+
+Here is a code snippet showing how to use ContentFiles:
+
+```fsharp
+NuGet (fun p ->
+    {p with
+        // ...
+        ContentFiles = [
+            (@"**/*.md", Some @"**/Exclude/*.md", Some @"Content", None, None)
         ]
         // ...
     })
