@@ -6,6 +6,7 @@ body {
   
 #content {
     flex: 1;
+    overflow: auto;
 }
   
 nav.navbar {
@@ -20,20 +21,8 @@ nav.navbar {
     color: #aeb9c7;
 }
 
-.same-height-columns {    
-    display: flex !important;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
-.same-height-column {
-    display: flex !important;
-    flex-flow: column nowrap;
-}
-
-.same-height-columns .button.at-bottom {
-    margin-top: auto;
-    width: 160px;
+a i.fa {
+    color: #222;
 }
 
 footer {
@@ -74,6 +63,34 @@ section.is-small {
 
 .content a {
     color: #222;
+}
+
+@media screen and (max-width: 768px) {
+    table.pre pre.fssnip.highlighted {
+        width: calc(100vw - 6rem);
+    }
+
+    .section .fssnip.line-numbers {
+        width: calc(100vw - 3rem);
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .same-height-columns {    
+        display: flex !important;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+    }
+
+    .same-height-column {
+        display: flex !important;
+        flex-flow: column nowrap;
+    }
+
+    .same-height-columns .button.at-bottom {
+        margin-top: auto;
+        width: 160px;
+    }
 }
 
 @media screen and (min-width: 1088px) {
@@ -202,8 +219,6 @@ pre {
     border: 1px solid #d8d8d8;
     border-collapse: separate;
     white-space: pre;
-    font: 9pt 'Droid Sans Mono', consolas, monospace;
-    width: 90%;
     background-color: #2d2d2d;
     padding: 10px;
     border-radius: 5px;
