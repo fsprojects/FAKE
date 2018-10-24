@@ -246,6 +246,7 @@ let dotnetAssemblyInfos =
       "Fake.DotNet.Fsc", "Running the f# compiler - fsc"
       "Fake.DotNet.FSFormatting", "Running fsformatting.exe and generating documentation"
       "Fake.DotNet.Fsi", "FSharp Interactive - fsi"
+      "Fake.DotNet.FxCop", "Running FxCop for static analysis"
       "Fake.DotNet.Mage", "Manifest Generation and Editing Tool"
       "Fake.DotNet.MSBuild", "Running msbuild"
       "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"

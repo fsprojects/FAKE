@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <AssemblyName>Fake.DotNet.FxCop</AssemblyName>
+    <OutputType>Library</OutputType>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);FX_NO_REMOTING;USE_ASYNC_LOCAL</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="FxCop.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" / -->
+    <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Trace\Fake.Core.Trace.fsproj" />
+    <!-- ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" / -->
+    <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
+    <!-- ProjectReference Include="..\Fake.DotNet.MSBuild\Fake.DotNet.MSBuild.fsproj" / -->
+    <!-- ProjectReference Include="..\Fake.Tools.Git\Fake.Tools.Git.fsproj" / -->
+  </ItemGroup>
+  <Import Project="..\..\..\.paket\Paket.Restore.targets" />
+</Project>
