@@ -1,4 +1,4 @@
-[<RequireQualifiedAccess>]
+﻿[<RequireQualifiedAccess>]
 module Fake.DotNet.FxCop
 
 open System
@@ -7,7 +7,7 @@ open Fake.IO
 open Fake.IO.FileSystemOperators
 
 /// The FxCop error reporting level
-type FxCopErrorLevel =
+type ErrorLevel =
     | Warning = 5
     | CriticalWarning = 4
     | Error = 3
@@ -17,7 +17,7 @@ type FxCopErrorLevel =
 
 /// Parameter type for the FxCop tool
 [<NoComparison>]
-type FxCopParams =
+type Params =
     { ApplyOutXsl : bool
       DirectOutputToConsole : bool
       DependencyDirectories : string seq
@@ -37,7 +37,7 @@ type FxCopParams =
       SaveResultsInProjectFile : bool
       WorkingDir : string
       Verbose : bool
-      FailOnError : FxCopErrorLevel
+      FailOnError : ErrorLevel
       ToolPath : string
       ForceOutput : bool
       CustomDictionary : string }
@@ -73,9 +73,9 @@ type FxCopParams =
           SaveResultsInProjectFile = false
           WorkingDir = Shell.pwd()
           Verbose = true
-          FailOnError = FxCopErrorLevel.DontFailBuild
+          FailOnError = ErrorLevel.DontFailBuild
           ToolPath =
-              FxCopParams.vsInstallPath()
+              Params.vsInstallPath()
               @@ "Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe"
           ForceOutput = false
           CustomDictionary = String.Empty }
@@ -93,7 +93,7 @@ let checkForErrors resultFile =
     getErrorValue "Warning"
 
 /// Run FxCop on a group of assemblies.
-let FxCop fxparams (assemblies : string seq) =
+let Run fxparams (assemblies : string seq) =
     use __ = Trace.traceTask "FxCop" ""
 
     let param =
@@ -151,18 +151,18 @@ let FxCop fxparams (assemblies : string seq) =
         |> Proc.run
 
     let ok = 0 = run.ExitCode
-    if not ok && (param.FailOnError >= FxCopErrorLevel.ToolError) then
+    if not ok && (param.FailOnError >= ErrorLevel.ToolError) then
         failwith "FxCop test failed."
-    if param.FailOnError <> FxCopErrorLevel.DontFailBuild
+    if param.FailOnError <> ErrorLevel.DontFailBuild
        && param.ReportFileName <> String.Empty then
         let criticalErrors, errors, criticalWarnings, warnings =
             checkForErrors param.ReportFileName
-        if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalError then
+        if criticalErrors <> 0 && param.FailOnError >= ErrorLevel.CriticalError then
             failwithf "FxCop found %d critical errors." criticalErrors
-        if errors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
+        if errors <> 0 && param.FailOnError >= ErrorLevel.Error then
             failwithf "FxCop found %d errors." errors
-        if criticalWarnings <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalWarning then
+        if criticalWarnings <> 0 && param.FailOnError >= ErrorLevel.CriticalWarning then
             failwithf "FxCop found %d critical warnings." criticalWarnings
-        if warnings <> 0 && param.FailOnError >= FxCopErrorLevel.Warning then
+        if warnings <> 0 && param.FailOnError >= ErrorLevel.Warning then
             failwithf "FxCop found %d warnings." warnings
     __.MarkSuccess()
