@@ -93,7 +93,7 @@ let checkForErrors resultFile =
     getErrorValue "Warning"
 
 /// Run FxCop on a group of assemblies.
-let Run fxparams (assemblies : string seq) =
+let run fxparams (assemblies : string seq) =
     use __ = Trace.traceTask "FxCop" ""
 
     let param =
