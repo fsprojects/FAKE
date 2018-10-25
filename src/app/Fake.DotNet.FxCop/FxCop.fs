@@ -84,10 +84,8 @@ type FxCopParams =
 /// [omit]
 let checkForErrors resultFile =
     // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
-    let FxCopCriticalWarnings = 0
-
     let getErrorValue s =
-        let found, value =
+        let _, value =
             Xml.read_Int false resultFile String.Empty String.Empty
                 (sprintf "string(count(//Issue[@Level='%s']))" s)
         value
@@ -145,7 +143,7 @@ let FxCop fxparams (assemblies : string seq) =
           Flag param.UseGACSwitch "/gac"
           Item "/dic:\"%s\"" param.CustomDictionary ]
         |> List.concat
-    Trace.logfn "FxCop command\n%s %s" param.ToolPath (String.separated " " args)
+
     let run =
         CreateProcess.fromRawCommand param.ToolPath args
         |> if String.IsNullOrWhiteSpace param.WorkingDir then id
@@ -167,3 +165,4 @@ let FxCop fxparams (assemblies : string seq) =
             failwithf "FxCop found %d critical warnings." criticalWarnings
         if warnings <> 0 && param.FailOnError >= FxCopErrorLevel.Warning then
             failwithf "FxCop found %d warnings." warnings
+    __.MarkSuccess()
