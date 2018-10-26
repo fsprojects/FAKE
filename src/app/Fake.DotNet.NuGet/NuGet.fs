@@ -612,6 +612,7 @@ type HttpClient with
         return
             result,
             response.Headers :> seq<KeyValuePair<string, seq<string>>>
+            |> Seq.append (response.Content.Headers :> seq<KeyValuePair<string, seq<string>>>)
             |> Seq.map (fun kv -> kv.Key, kv.Value |> Seq.toList)
             |> Map.ofSeq
       } |> Async.RunSynchronously
