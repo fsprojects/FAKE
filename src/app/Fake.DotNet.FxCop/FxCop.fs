@@ -1,7 +1,8 @@
-﻿[<RequireQualifiedAccess>]
+[<RequireQualifiedAccess>]
 module Fake.DotNet.FxCop
 
 open System
+open Microsoft.Win32
 open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
@@ -18,8 +19,7 @@ type ErrorLevel =
 /// Parameter type for the FxCop tool
 [<NoComparison>]
 type Params =
-    { 
-      /// Apply the XSL style sheet to the output.  Default false.
+    { /// Apply the XSL style sheet to the output.  Default false.
       ApplyOutXsl : bool
       /// Output messages to console, including file and line number information.  Default true.
       DirectOutputToConsole : bool
@@ -55,16 +55,16 @@ type Params =
       /// Search Global Assembly Cache for missing references.  Default false.
       UseGAC : bool
       /// Analyze only these types and members.  Default empty
-      TypeList : string seq
+      Types : string seq
       /// Update the project file if there are any changes.  Default false.
       SaveResultsInProjectFile : bool
       /// Working directory for relative file paths.  Default is the current working directory
-      WorkingDir : string
+      WorkingDirectory : string
       /// Give verbose output during analysis.  Default true.
       Verbose : bool
       /// The error level that will cause a build failure.  Default ontFailBuild.
       FailOnError : ErrorLevel
-      /// Path to the FxCop executable.  Default = %VSINSTALLDIR%/Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe 
+      /// Path to the FxCop executable.  Default = %VSINSTALLDIR%/Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe
       /// where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from the registry
       ToolPath : string
       /// Write output XML and project files even in the case where no violations
@@ -76,11 +76,10 @@ type Params =
     static member private vsInstallPath() =
         if Environment.isWindows then
             use hklmKey =
-                Microsoft.Win32.RegistryKey.OpenBaseKey
-                    (Microsoft.Win32.RegistryHive.LocalMachine,
-                     Microsoft.Win32.RegistryView.Registry32)
+                RegistryKey.OpenBaseKey
+                    (RegistryHive.LocalMachine, RegistryView.Registry32)
             use key = hklmKey.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\SxS\VS7")
-            key.GetValue("15.0") :?> string
+            key.GetValue("15.0", String.Empty) :?> string
         else String.Empty
 
     /// FxCop Default parameters, values as above
@@ -99,10 +98,10 @@ type Params =
           PlatformDirectory = String.Empty
           ProjectFile = String.Empty
           IncludeSummaryReport = true
-          TypeList = Seq.empty
+          Types = Seq.empty
           UseGAC = false
           SaveResultsInProjectFile = false
-          WorkingDir = Shell.pwd()
+          WorkingDirectory = Shell.pwd()
           Verbose = true
           FailOnError = ErrorLevel.DontFailBuild
           ToolPath =
@@ -123,10 +122,12 @@ let checkForErrors resultFile =
     getErrorValue "CriticalError", getErrorValue "Error", getErrorValue "CriticalWarning",
     getErrorValue "Warning"
 
-/// Run FxCop on a group of assemblies.
-let run fxparams (assemblies : string seq) =
-    use __ = Trace.traceTask "FxCop" ""
+let internal createProcess param args =
+    CreateProcess.fromRawCommand param.ToolPath args
+    |> if String.IsNullOrWhiteSpace param.WorkingDirectory then id
+       else CreateProcess.withWorkingDirectory param.WorkingDirectory
 
+let internal createArgs fxparams assemblies =
     let param =
         if fxparams.ApplyOutXsl && (String.IsNullOrWhiteSpace fxparams.OutputXslFileName) then
             { fxparams with OutputXslFileName =
@@ -150,38 +151,31 @@ let run fxparams (assemblies : string seq) =
 
     let rules =
         param.RuleLibraries |> Seq.map (fun item -> param.ToolPath @@ "Rules" @@ item)
+    [ Flag param.ApplyOutXsl "/aXsl"
+      Flag param.DirectOutputToConsole "/c"
+      Flag param.ForceOutput "/fo"
+      Item "/cXsl:\"%s\"" param.ConsoleXslFileName
+      ItemList "/d:\"%s\"" param.DependencyDirectories
+      ItemList "/f:\"%s\"" assemblies
+      ItemList "/i:\"%s\"" param.ImportFiles
+      Item "/o:\"%s\"" param.ReportFileName
+      Item "/oXsl:\"%s\"" param.OutputXslFileName
+      Item "/plat:\"%s\"" param.PlatformDirectory
+      Item "/p:\"%s\"" param.ProjectFile
+      Item "/ruleset:=\"%s\"" param.CustomRuleset
+      ItemList "/r:\"%s\"" rules
+      ItemList "/rid:%s" param.Rules
+      Flag param.IgnoreGeneratedCode "/ignoregeneratedcode"
+      Flag param.IncludeSummaryReport "/s"
+      Item "/t:%s" (String.separated "," param.Types)
+      Flag param.SaveResultsInProjectFile "/u"
+      Flag param.Verbose "/v"
+      Flag param.UseGAC "/gac"
+      Item "/dic:\"%s\"" param.CustomDictionary ]
+    |> List.concat
 
-    let args =
-        [ Flag param.ApplyOutXsl "/aXsl"
-          Flag param.DirectOutputToConsole "/c"
-          Flag param.ForceOutput "/fo"
-          Item "/cXsl:\"%s\"" param.ConsoleXslFileName
-          ItemList "/d:\"%s\"" param.DependencyDirectories
-          ItemList "/f:\"%s\"" assemblies
-          ItemList "/i:\"%s\"" param.ImportFiles
-          Item "/o:\"%s\"" param.ReportFileName
-          Item "/oXsl:\"%s\"" param.OutputXslFileName
-          Item "/plat:\"%s\"" param.PlatformDirectory
-          Item "/p:\"%s\"" param.ProjectFile
-          Item "/ruleset:=\"%s\"" param.CustomRuleset
-          ItemList "/r:\"%s\"" rules
-          ItemList "/rid:%s" param.Rules
-          Flag param.IgnoreGeneratedCode "/ignoregeneratedcode"
-          Flag param.IncludeSummaryReport "/s"
-          Item "/t:%s" (String.separated "," param.TypeList)
-          Flag param.SaveResultsInProjectFile "/u"
-          Flag param.Verbose "/v"
-          Flag param.UseGAC "/gac"
-          Item "/dic:\"%s\"" param.CustomDictionary ]
-        |> List.concat
-
-    let run =
-        CreateProcess.fromRawCommand param.ToolPath args
-        |> if String.IsNullOrWhiteSpace param.WorkingDir then id
-           else CreateProcess.withWorkingDirectory param.WorkingDir
-        |> Proc.run
-
-    let ok = 0 = run.ExitCode
+let internal failAsrequired param result =
+    let ok = 0 = result.ExitCode
     if not ok && (param.FailOnError >= ErrorLevel.ToolError) then
         failwith "FxCop test failed."
     if param.FailOnError <> ErrorLevel.DontFailBuild
@@ -196,4 +190,12 @@ let run fxparams (assemblies : string seq) =
             failwithf "FxCop found %d critical warnings." criticalWarnings
         if warnings <> 0 && param.FailOnError >= ErrorLevel.Warning then
             failwithf "FxCop found %d warnings." warnings
+
+/// Run FxCop on a group of assemblies.
+let run param (assemblies : string seq) =
+    use __ = Trace.traceTask "FxCop" ""
+    let args = createArgs param assemblies
+    createProcess param args
+    |> Proc.run
+    |> failAsrequired param
     __.MarkSuccess()
