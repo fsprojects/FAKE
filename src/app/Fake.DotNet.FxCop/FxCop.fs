@@ -6,7 +6,7 @@ open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 
-/// The FxCop error reporting level
+/// The FxCop error reporting level : warning, critical warning, error, critical error, tool error, don't fail build (Default: DontFailBuild)
 type ErrorLevel =
     | Warning = 5
     | CriticalWarning = 4
@@ -18,28 +18,59 @@ type ErrorLevel =
 /// Parameter type for the FxCop tool
 [<NoComparison>]
 type Params =
-    { ApplyOutXsl : bool
+    { 
+      /// Apply the XSL style sheet to the output.  Default false.
+      ApplyOutXsl : bool
+      /// Output messages to console, including file and line number information.  Default true.
       DirectOutputToConsole : bool
+      /// Locations to search for assembly dependencies.  Default empty.
       DependencyDirectories : string seq
+      /// Import XML report(s) or FxCop project file(s).  Default empty.
       ImportFiles : string seq
+      /// Directory containing rule assemblies or path to rule assembly. Enables all rules.  Default empty.
       RuleLibraries : string seq
+      /// Namespace and CheckId strings that identify a Rule. '+' enables the rule; '-' disables the rule.  Default empty.
       Rules : string seq
+      /// Rule set to be used for the analysis. It can be a file path to the rule set
+      /// file or the file name of a built-in rule set. '+' enables all rules in the
+      /// rule set; '-' disables all rules in the rule set; '=' sets rules to match the
+      /// rule set and disables all rules that are not enabled in the rule set.
+      /// Default empty.
       CustomRuleset : string
+      /// Suppress analysis results against generated code.  Default false.
       IgnoreGeneratedCode : bool
+      /// Apply specified XSL to console output.  Default empty.
       ConsoleXslFileName : string
+      /// FxCop project or XML report output file.  Default "FXCopResults.html" in the current working directory
       ReportFileName : string
+      /// Reference the specified XSL in the XML report file or "none" to generate an XML report with no XSL style sheet.
+      /// Default empty.
       OutputXslFileName : string
+      /// Location of platform assemblies.  Default empty.
       PlatformDirectory : string
+      /// Project file to load.  Default empty.
       ProjectFile : string
+      /// Display summary after analysis.  Default true.
       IncludeSummaryReport : bool
-      UseGACSwitch : bool
+      /// Search Global Assembly Cache for missing references.  Default false.
+      UseGAC : bool
+      /// Analyze only these types and members.  Default empty
       TypeList : string seq
+      /// Update the project file if there are any changes.  Default false.
       SaveResultsInProjectFile : bool
+      /// Working directory for relative file paths.  Default is the current working directory
       WorkingDir : string
+      /// Give verbose output during analysis.  Default true.
       Verbose : bool
+      /// The error level that will cause a build failure.  Default ontFailBuild.
       FailOnError : ErrorLevel
+      /// Path to the FxCop executable.  Default = %VSINSTALLDIR%/Team Tools/Static Analysis Tools/FxCop/FxCopCmd.exe 
+      /// where %VSINSTALLDIR% is a Visual Stdio 2017 installation location derived from the registry
       ToolPath : string
+      /// Write output XML and project files even in the case where no violations
+      /// occurred.  Default false.
       ForceOutput : bool
+      /// Custom dictionary used by spelling rules.  Default empty.
       CustomDictionary : string }
 
     static member private vsInstallPath() =
@@ -52,7 +83,7 @@ type Params =
             key.GetValue("15.0") :?> string
         else String.Empty
 
-    /// FxCop Default parameters
+    /// FxCop Default parameters, values as above
     static member Create() =
         { ApplyOutXsl = false
           DirectOutputToConsole = true
@@ -69,7 +100,7 @@ type Params =
           ProjectFile = String.Empty
           IncludeSummaryReport = true
           TypeList = Seq.empty
-          UseGACSwitch = false
+          UseGAC = false
           SaveResultsInProjectFile = false
           WorkingDir = Shell.pwd()
           Verbose = true
@@ -140,7 +171,7 @@ let run fxparams (assemblies : string seq) =
           Item "/t:%s" (String.separated "," param.TypeList)
           Flag param.SaveResultsInProjectFile "/u"
           Flag param.Verbose "/v"
-          Flag param.UseGACSwitch "/gac"
+          Flag param.UseGAC "/gac"
           Item "/dic:\"%s\"" param.CustomDictionary ]
         |> List.concat
 
